@@ -52,7 +52,7 @@ with PHPUnit:
         }
     }
     ?>
-
+|
     *Martin Fowler*:
 
     Whenever you are tempted to type something into a
