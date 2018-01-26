@@ -8,7 +8,7 @@ Copyright
 
 .. code-block:: php
 
-    Copyright (c) 2005-2017 Sebastian Bergmann.
+    Copyright (c) 2005-2018 Sebastian Bergmann.
 
     This work is licensed under the Creative Commons Attribution 3.0
     Unported License.
