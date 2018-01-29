@@ -274,7 +274,7 @@ dependencies of your project:
 
 .. code-block:: bash
 
-    composer require --dev phpunit/phpunit ^6.5
+    composer require --dev phpunit/phpunit ^7.0
 
 .. _installation.optional-packages:
 
