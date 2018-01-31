@@ -340,9 +340,9 @@ the following code:
 
     Only search for test files with specified suffix(es).
 
-``--report-useless-tests``
+``--dont-report-useless-tests``
 
-    Be strict about tests that do not test anything. See :ref:`risky-tests` for details.
+    Do not report tests that do not test anything. See :ref:`risky-tests` for details.
 
 ``--strict-coverage``
 
