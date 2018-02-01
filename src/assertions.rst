@@ -136,7 +136,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
 assertArraySubset()
 ###################
 
-``assertArraySubset(array $subset, array $array[, bool $strict = '', string $message = ''])``
+``assertArraySubset(array $subset, array $array[, bool $strict = false, string $message = ''])``
 
 Reports an error identified by ``$message`` if ``$array`` does not contains the ``$subset``.
 
