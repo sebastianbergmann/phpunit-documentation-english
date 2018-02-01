@@ -483,6 +483,11 @@ the following code:
     *not* used, the configuration will be automatically
     read from that file.
 
+    If a directory is specified and if
+    :file:`phpunit.xml` or :file:`phpunit.xml.dist` (in that order)
+    exists in this directory, the configuration will be
+    automatically read from that file.
+
 ``--no-configuration``
 
     Ignore :file:`phpunit.xml` and
