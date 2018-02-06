@@ -143,9 +143,10 @@ depends upon ``testPush()``.
 
    The return value yielded by a producer is passed "as-is" to its
    consumers by default. This means that when a producer returns an object,
-   a reference to that object is passed to the consumers. When a copy
-   should be used instead of a reference, then @depends clone
-   should be used instead of @depends.
+   a reference to that object is passed to the consumers. Instead of 
+   a reference either (a) a (deep) copy via ``@depends clone``, or (b) a
+   (normal shallow) clone (based on PHP keyword ``clone``) via
+   ``@depends shallowClone`` are possible too.
 
 To quickly localize defects, we want our attention to be focussed on
 relevant failing tests. This is why PHPUnit skips the execution of a test
