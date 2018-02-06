@@ -236,12 +236,10 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
          * @depends testProducerFirst
          * @depends testProducerSecond
          */
-        public function testConsumer()
+        public function testConsumer($a, $b)
         {
-            $this->assertSame(
-                ['first', 'second'],
-                func_get_args()
-            );
+            $this->assertSame('first', $a);
+            $this->assertSame('second', $b);
         }
     }
     ?>
