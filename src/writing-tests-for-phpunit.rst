@@ -589,7 +589,7 @@ whether an exception is thrown by the code under test.
     There was 1 failure:
 
     1) ExceptionTest::testException
-    Expected exception InvalidArgumentException
+    Failed asserting that exception of type "InvalidArgumentException" is thrown.
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -644,7 +644,7 @@ shows an example.
     There was 1 failure:
 
     1) ExceptionTest::testException
-    Expected exception InvalidArgumentException
+    Failed asserting that exception of type "InvalidArgumentException" is thrown.
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -676,7 +676,7 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
     class ExpectedErrorTest extends TestCase
     {
         /**
-         * @expectedException PHPUnit\Framework\Error
+         * @expectedException PHPUnit\Framework\Error\Error
          */
         public function testFailingInclude()
         {
@@ -706,7 +706,7 @@ and warnings, respectively.
    for classes that are too generic might lead to undesirable
    side-effects. Accordingly, testing for the ``Exception``
    class with ``@expectedException`` or
-   ``setExpectedException()`` is no longer permitted.
+   ``expectException()`` is no longer permitted.
 
 When testing that relies on php functions that trigger errors like
 ``fopen`` it can sometimes be useful to use error
