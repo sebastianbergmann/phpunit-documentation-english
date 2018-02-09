@@ -1100,10 +1100,11 @@ with the DB DataSet to filter the columns of the datasets.
         }
     }
     ?>
+    
+.. admonition:: Note
 
-    *NOTE* You cannot use both exclude
-    and include column filtering on the same table, only on different
-    ones. Plus it is only possible to either white- or blacklist
+    You cannot use both exclude and include column filtering on the same table,
+    only on different ones. Plus it is only possible to either white- or blacklist
     tables, not both of them.
 
 .. _database.composite-dataset:
