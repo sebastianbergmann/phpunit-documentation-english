@@ -40,7 +40,7 @@ creation of the ``array`` fixture into the
 ``setUp()`` method. Finally, we remove the redundant code
 from the test methods and use the newly introduced instance variable,
 ``$this->stack``, instead of the method-local variable
-``$stack`` with the ``assertEquals()``
+``$stack`` with the ``assertSame()``
 assertion method.
 
 .. code-block:: php
@@ -67,14 +67,14 @@ assertion method.
         public function testPush()
         {
             array_push($this->stack, 'foo');
-            $this->assertEquals('foo', $this->stack[count($this->stack)-1]);
+            $this->assertSame('foo', $this->stack[count($this->stack)-1]);
             $this->assertFalse(empty($this->stack));
         }
 
         public function testPop()
         {
             array_push($this->stack, 'foo');
-            $this->assertEquals('foo', array_pop($this->stack));
+            $this->assertSame('foo', array_pop($this->stack));
             $this->assertTrue(empty($this->stack));
         }
     }
