@@ -264,7 +264,7 @@ specify which method(s) a test method wants to test:
      */
     public function testBalanceIsInitiallyZero()
     {
-        $this->assertEquals(0, $this->ba->getBalance());
+        $this->assertSame(0, $this->ba->getBalance());
     }
 
 If provided, only the code coverage information for the specified
@@ -728,7 +728,7 @@ annotation in a method's DocBlock to mark it as a test method.
      */
     public function initialBalanceShouldBe0()
     {
-        $this->assertEquals(0, $this->ba->getBalance());
+        $this->assertSame(0, $this->ba->getBalance());
     }
 
 .. _appendixes.annotations.testdox:
@@ -752,7 +752,7 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
          */
         public function balanceIsInitiallyZero()
         {
-            $this->assertEquals(0, $this->ba->getBalance());
+            $this->assertSame(0, $this->ba->getBalance());
         }
     }
 
@@ -783,7 +783,7 @@ you can define a data set using the ``@testWith`` annotation.
      */
     public function testStringLength(string $input, int $expectedLength)
     {
-        $this->assertEquals($expectedLength, strlen($input));
+        $this->assertSame($expectedLength, strlen($input));
     }
 
 .. _appendixes.annotations.ticket:

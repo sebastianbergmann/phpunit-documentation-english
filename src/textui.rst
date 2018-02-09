@@ -58,7 +58,7 @@ indicate progress:
 
 PHPUnit distinguishes between *failures* and
 *errors*. A failure is a violated PHPUnit
-assertion such as a failing ``assertEquals()`` call.
+assertion such as a failing ``assertSame()`` call.
 An error is an unexpected exception or a PHP error. Sometimes
 this distinction proves useful since errors tend to be easier to fix
 than failures. If you have a big list of problems, it is best to

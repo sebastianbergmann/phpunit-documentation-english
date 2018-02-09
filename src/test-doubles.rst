@@ -113,7 +113,7 @@ the example. This leads to more readable and "fluent" code.
 
             // Calling $stub->doSomething() will now return
             // 'foo'.
-            $this->assertEquals('foo', $stub->doSomething());
+            $this->assertSame('foo', $stub->doSomething());
         }
     }
     ?>
@@ -146,7 +146,7 @@ the same best practice defaults used by ``createMock()``.
         public function testStub()
         {
             // Create a stub for the SomeClass class.
-            $stub = $this->getMockBuilder($originalClassName)
+            $stub = $this->getMockBuilder(SomeClass::class)
                          ->disableOriginalConstructor()
                          ->disableOriginalClone()
                          ->disableArgumentCloning()
@@ -159,7 +159,7 @@ the same best practice defaults used by ``createMock()``.
 
             // Calling $stub->doSomething() will now return
             // 'foo'.
-            $this->assertEquals('foo', $stub->doSomething());
+            $this->assertSame('foo', $stub->doSomething());
         }
     }
     ?>
@@ -194,10 +194,10 @@ can achieve this using ``returnArgument()`` instead of
                  ->will($this->returnArgument(0));
 
             // $stub->doSomething('foo') returns 'foo'
-            $this->assertEquals('foo', $stub->doSomething('foo'));
+            $this->assertSame('foo', $stub->doSomething('foo'));
 
             // $stub->doSomething('bar') returns 'bar'
-            $this->assertEquals('bar', $stub->doSomething('bar'));
+            $this->assertSame('bar', $stub->doSomething('bar'));
         }
     }
     ?>
@@ -264,8 +264,8 @@ an example.
 
             // $stub->doSomething() returns different values depending on
             // the provided arguments.
-            $this->assertEquals('d', $stub->doSomething('a', 'b', 'c'));
-            $this->assertEquals('h', $stub->doSomething('e', 'f', 'g'));
+            $this->assertSame('d', $stub->doSomething('a', 'b', 'c'));
+            $this->assertSame('h', $stub->doSomething('e', 'f', 'g'));
         }
     }
     ?>
@@ -296,7 +296,7 @@ result of a callback function or method. See
                  ->will($this->returnCallback('str_rot13'));
 
             // $stub->doSomething($argument) returns str_rot13($argument)
-            $this->assertEquals('fbzrguvat', $stub->doSomething('something'));
+            $this->assertSame('fbzrguvat', $stub->doSomething('something'));
         }
     }
     ?>
@@ -326,9 +326,9 @@ an example.
                  ->will($this->onConsecutiveCalls(2, 3, 5, 7));
 
             // $stub->doSomething() returns a different value each time
-            $this->assertEquals(2, $stub->doSomething());
-            $this->assertEquals(3, $stub->doSomething());
-            $this->assertEquals(5, $stub->doSomething());
+            $this->assertSame(2, $stub->doSomething());
+            $this->assertSame(3, $stub->doSomething());
+            $this->assertSame(5, $stub->doSomething());
         }
     }
     ?>

@@ -216,7 +216,7 @@ shows an example.
          */
         public function testBalanceIsInitiallyZero()
         {
-            $this->assertEquals(0, $this->ba->getBalance());
+            $this->assertSame(0, $this->ba->getBalance());
         }
 
         /**
@@ -229,7 +229,7 @@ shows an example.
             }
 
             catch (BankAccountException $e) {
-                $this->assertEquals(0, $this->ba->getBalance());
+                $this->assertSame(0, $this->ba->getBalance());
 
                 return;
             }
@@ -247,7 +247,7 @@ shows an example.
             }
 
             catch (BankAccountException $e) {
-                $this->assertEquals(0, $this->ba->getBalance());
+                $this->assertSame(0, $this->ba->getBalance());
 
                 return;
             }
@@ -262,11 +262,11 @@ shows an example.
          */
         public function testDepositWithdrawMoney()
         {
-            $this->assertEquals(0, $this->ba->getBalance());
+            $this->assertSame(0, $this->ba->getBalance());
             $this->ba->depositMoney(1);
-            $this->assertEquals(1, $this->ba->getBalance());
+            $this->assertSame(1, $this->ba->getBalance());
             $this->ba->withdrawMoney(1);
-            $this->assertEquals(0, $this->ba->getBalance());
+            $this->assertSame(0, $this->ba->getBalance());
         }
     }
     ?>
