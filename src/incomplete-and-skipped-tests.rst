@@ -33,17 +33,17 @@ test as a success.
 If we think of a successful test as a green light and a test failure
 as a red light, we need an additional yellow light to mark a test
 as being incomplete or not yet implemented.
-``PHPUnit_Framework_IncompleteTest`` is a marker
+``PHPUnit\Framework\IncompleteTest`` is a marker
 interface for marking an exception that is raised by a test method as
 the result of the test being incomplete or currently not implemented.
-``PHPUnit_Framework_IncompleteTestError`` is the
+``PHPUnit\Framework\IncompleteTestError`` is the
 standard implementation of this interface.
 
 :numref:`incomplete-and-skipped-tests.incomplete-tests.examples.SampleTest.php`
 shows a test case class, ``SampleTest``, that contains one test
 method, ``testSomething()``. By calling the convenience
 method ``markTestIncomplete()`` (which automatically
-raises an ``PHPUnit_Framework_IncompleteTestError``
+raises an ``PHPUnit\Framework\IncompleteTestError``
 exception) in the test method, we mark the test as being incomplete.
 
 .. code-block:: php

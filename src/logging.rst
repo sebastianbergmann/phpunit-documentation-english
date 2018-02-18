@@ -66,7 +66,7 @@ shows how failures and errors are denoted.
                   line="6"
                   assertions="1"
                   time="0.011456">
-          <failure type="PHPUnit_Framework_ExpectationFailedException">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">
     testFailure(FailureErrorTest)
     Failed asserting that &lt;integer:2&gt; matches expected value &lt;integer:1&gt;.
 

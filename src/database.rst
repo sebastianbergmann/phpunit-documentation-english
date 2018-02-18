@@ -228,7 +228,7 @@ abstract TestCase requiring you to implement two abstract methods
         use TestCaseTrait;
 
         /**
-         * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
+         * @return PHPUnit\DbUnit\Database\Connection
          */
         public function getConnection()
         {
@@ -237,7 +237,7 @@ abstract TestCase requiring you to implement two abstract methods
         }
 
         /**
-         * @return PHPUnit_Extensions_Database_DataSet_IDataSet
+         * @return PHPUnit\DbUnit\DataSet\IDataSet
          */
         public function getDataSet()
         {
@@ -263,7 +263,7 @@ and pass it to the ``createDefaultDBConnection``
 method which wraps the PDO instance and the second parameter (the
 database-name) in a very simple abstraction layer for database
 connections of the type
-``PHPUnit_Extensions_Database_DB_IDatabaseConnection``.
+``PHPUnit\DbUnit\Database\Connection``.
 
 The section “Using the Database Connection API“ explains
 the API of this interface and how you can make the best use of it.
@@ -278,8 +278,8 @@ state of the database should look before each test is
 executed. The state of a database is abstracted through the
 concepts DataSet and DataTable both being represented by the
 interfaces
-``PHPUnit_Extensions_Database_DataSet_IDataSet`` and
-``PHPUnit_Extensions_Database_DataSet_IDataTable``.
+``PHPUnit\DbUnit\DataSet\IDataSet`` and
+``PHPUnit\DbUnit\DataSet\IDataTable``.
 The next section will describe in detail how these concepts work
 and what the benefits are for using them in database testing.
 
@@ -345,7 +345,7 @@ different data-fixture for each test case:
         // only instantiate pdo once for test clean-up/fixture load
         static private $pdo = null;
 
-        // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+        // only instantiate PHPUnit\DbUnit\Database\Connection once per test
         private $conn = null;
 
         final public function getConnection()
@@ -397,7 +397,7 @@ We can now modify our test-case to look like:
         // only instantiate pdo once for test clean-up/fixture load
         static private $pdo = null;
 
-        // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+        // only instantiate PHPUnit\DbUnit\Database\Connection once per test
         private $conn = null;
 
         final public function getConnection()
@@ -877,7 +877,13 @@ straightforward:
 .. code-block:: php
 
     <?php
-    class MyApp_DbUnit_ArrayDataSet extends PHPUnit_Extensions_Database_DataSet_AbstractDataSet
+
+    use PHPUnit\DbUnit\DataSet\AbstractDataSet;
+    use PHPUnit\DbUnit\DataSet\DefaultTableMetaData
+    use PHPUnit\DbUnit\DataSet\DefaultTable
+    use PHPUnit\DbUnit\DataSet\DefaultTableIterator
+
+    class MyApp_DbUnit_ArrayDataSet extends AbstractDataSet
     {
         /**
          * @var array
@@ -895,8 +901,8 @@ straightforward:
                     $columns = array_keys($rows[0]);
                 }
 
-                $metaData = new PHPUnit_Extensions_Database_DataSet_DefaultTableMetaData($tableName, $columns);
-                $table = new PHPUnit_Extensions_Database_DataSet_DefaultTable($metaData);
+                $metaData = new DefaultTableMetaData($tableName, $columns);
+                $table = new DefaultTable($metaData);
 
                 foreach ($rows AS $row) {
                     $table->addRow($row);
@@ -907,7 +913,7 @@ straightforward:
 
         protected function createIterator($reverse = false)
         {
-            return new PHPUnit_Extensions_Database_DataSet_DefaultTableIterator($this->tables, $reverse);
+            return new DefaultTableIterator($this->tables, $reverse);
         }
 
         public function getTable($tableName)
@@ -933,7 +939,7 @@ contents of the database. This is where the Query DataSet shines:
 .. code-block:: php
 
     <?php
-    $ds = new PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
+    $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook');
     ?>
 
@@ -943,7 +949,7 @@ data-table with the following query:
 .. code-block:: php
 
     <?php
-    $ds = new PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
+    $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook', 'SELECT * FROM guestbook');
     ?>
 
@@ -954,7 +960,7 @@ tables, for example restricting rows, column or adding
 .. code-block:: php
 
     <?php
-    $ds = new PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
+    $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook', 'SELECT id, content FROM guestbook ORDER BY created DESC');
     ?>
 
@@ -987,7 +993,7 @@ specified table names with a whitelist as shown in
         use TestCaseTrait;
 
         /**
-         * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
+         * @return PHPUnit\DbUnit\Database\Connection
          */
         public function getConnection()
         {
@@ -1050,7 +1056,7 @@ We then wrap the Flat XML DataSet into a Replacement DataSet:
         public function getDataSet()
         {
             $ds = $this->createFlatXmlDataSet('myFlatXmlFixture.xml');
-            $rds = new PHPUnit_Extensions_Database_DataSet_ReplacementDataSet($ds);
+            $rds = new PHPUnit\DbUnit\DataSet\ReplacementDataSet($ds);
             $rds->addFullReplacement('##NULL##', null);
             return $rds;
         }
@@ -1082,7 +1088,7 @@ with the DB DataSet to filter the columns of the datasets.
             $tableNames = ['guestbook'];
             $dataSet = $this->getConnection()->createDataSet();
 
-            $filterDataSet = new PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+            $filterDataSet = new PHPUnit\DbUnit\DataSet\DataSetFilter($dataSet);
             $filterDataSet->addIncludeTables(['guestbook']);
             $filterDataSet->setIncludeColumnsForTable('guestbook', ['id', 'content']);
             // ..
@@ -1093,14 +1099,14 @@ with the DB DataSet to filter the columns of the datasets.
             $tableNames = ['guestbook'];
             $dataSet = $this->getConnection()->createDataSet();
 
-            $filterDataSet = new PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+            $filterDataSet = new PHPUnit\DbUnit\DataSet\DataSetFilter($dataSet);
             $filterDataSet->addExcludeTables(['foo', 'bar', 'baz']); // only keep the guestbook table!
             $filterDataSet->setExcludeColumnsForTable('guestbook', ['user', 'created']);
             // ..
         }
     }
     ?>
-    
+
 .. admonition:: Note
 
     You cannot use both exclude and include column filtering on the same table,
@@ -1151,7 +1157,7 @@ Using the Composite DataSet we can aggregate both fixture files:
             $ds1 = $this->createFlatXmlDataSet('fixture1.xml');
             $ds2 = $this->createFlatXmlDataSet('fixture2.xml');
 
-            $compositeDs = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
+            $compositeDs = new PHPUnit\DbUnit\DataSet\CompositeDataSet();
             $compositeDs->addDataSet($ds1);
             $compositeDs->addDataSet($ds2);
 
@@ -1183,12 +1189,14 @@ do not plan to implement your own DataSet or DataTable.
 .. code-block:: php
 
     <?php
-    interface PHPUnit_Extensions_Database_DataSet_IDataSet extends IteratorAggregate
+    namespace PHPUnit\DbUnit\DataSet;
+
+    interface IDataSet extends IteratorAggregate
     {
         public function getTableNames();
         public function getTableMetaData($tableName);
         public function getTable($tableName);
-        public function assertEquals(PHPUnit_Extensions_Database_DataSet_IDataSet $other);
+        public function assertEquals(IDataSet $other);
 
         public function getReverseIterator();
     }
@@ -1214,13 +1222,15 @@ A table is also represented by the following interface:
 .. code-block:: php
 
     <?php
-    interface PHPUnit_Extensions_Database_DataSet_ITable
+    namespace PHPUnit\DbUnit\DataSet;
+
+    interface ITable
     {
         public function getTableMetaData();
         public function getRowCount();
         public function getValue($row, $column);
         public function getRow($row);
-        public function assertEquals(PHPUnit_Extensions_Database_DataSet_ITable $other);
+        public function assertEquals(ITable $other);
     }
     ?>
 
@@ -1230,7 +1240,7 @@ the different assertions of the Database Extension that are
 explained in the next chapter. The
 ``getTableMetaData()`` method has to return an
 implementation of the
-``PHPUnit_Extensions_Database_DataSet_ITableMetaData``
+``PHPUnit\DbUnit\DataSet\ITableMetaData``
 interface, which describes the structure of the table. It holds
 information on:
 
@@ -1263,7 +1273,9 @@ which has to be returned from the
 .. code-block:: php
 
     <?php
-    interface PHPUnit_Extensions_Database_DB_IDatabaseConnection
+    namespace PHPUnit\DbUnit\Database;
+
+    interface Connection
     {
         public function createDataSet(Array $tableNames = NULL);
         public function createQueryTable($resultName, $sql);
@@ -1543,6 +1555,7 @@ different ways for DataSet assertions.
        <?php
        use PHPUnit\Framework\TestCase;
        use PHPUnit\DbUnit\TestCaseTrait;
+       use PHPUnit\DbUnit\DataSet\QueryDataSet;
 
        class DataSetAssertionsTest extends TestCase
        {
@@ -1550,7 +1563,7 @@ different ways for DataSet assertions.
 
            public function testManualDataSetAssertion()
            {
-               $dataSet = new PHPUnit_Extensions_Database_DataSet_QueryDataSet();
+               $dataSet = new QueryDataSet();
                $dataSet->addTable('guestbook', 'SELECT id, content, user FROM guestbook'); // additional tables
                $expectedDataSet = $this->createFlatXmlDataSet('guestbook.xml');
 

@@ -176,9 +176,9 @@ the following code:
     ``UnitTest`` must be either a class that inherits
     from ``PHPUnit\Framework\TestCase`` or a class that
     provides a ``public static suite()`` method which
-    returns a ``PHPUnit_Framework_Test`` object, for
+    returns a ``PHPUnit\Framework\Test`` object, for
     example an instance of the
-    ``PHPUnit_Framework_TestSuite`` class.
+    ``PHPUnit\Framework\TestSuite`` class.
 
 ``phpunit UnitTest UnitTest.php``
 
@@ -443,7 +443,7 @@ the following code:
 
 ``--loader``
 
-    Specifies the ``PHPUnit_Runner_TestSuiteLoader``
+    Specifies the ``PHPUnit\Runner\TestSuiteLoader``
     implementation to use.
 
     The standard test suite loader will look for the sourcefile in the
@@ -465,7 +465,7 @@ the following code:
 ``--printer``
 
     Specifies the result printer to use. The printer class must extend
-    ``PHPUnit_Util_Printer`` and implement the
+    ``PHPUnit\Util\Printer`` and implement the
     ``PHPUnit\Framework\TestListener`` interface.
 
 ``--bootstrap``
