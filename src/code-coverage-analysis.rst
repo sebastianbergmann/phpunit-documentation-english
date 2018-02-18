@@ -283,9 +283,9 @@ generate code coverage with unit tests.
     :name: code-coverage-analysis.specifying-covered-methods.examples.GuestbookIntegrationTest.php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase
 
-    class GuestbookIntegrationTest extends PHPUnit_Extensions_Database_TestCase
+    class GuestbookIntegrationTest extends TestCase
     {
         /**
          * @coversNothing

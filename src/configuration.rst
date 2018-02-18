@@ -29,7 +29,7 @@ be used to configure PHPUnit's core functionality.
              convertWarningsToExceptions="true"
              forceCoversAnnotation="false"
              mapTestClassNameToCoveredClassName="false"
-             printerClass="PHPUnit_TextUI_ResultPrinter"
+             printerClass="PHPUnit\TextUI\ResultPrinter"
              <!--printerFile="/path/to/ResultPrinter.php"-->
              processIsolation="false"
              stopOnError="false"
@@ -37,7 +37,7 @@ be used to configure PHPUnit's core functionality.
              stopOnIncomplete="false"
              stopOnSkipped="false"
              stopOnRisky="false"
-             testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+             testSuiteLoaderClass="PHPUnit\Runner\StandardTestSuiteLoader"
              <!--testSuiteLoaderFile="/path/to/StandardTestSuiteLoader.php"-->
              timeoutForSmallTests="1"
              timeoutForMediumTests="10"

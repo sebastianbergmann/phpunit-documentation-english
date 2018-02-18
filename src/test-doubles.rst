@@ -706,17 +706,17 @@ invocations.
 
     * - Matcher
       - Meaning
-    * - ``PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount any()``
+    * - ``PHPUnit\Framework\MockObject\Matcher\AnyInvokedCount any()``
       - Returns a matcher that matches when the method it is evaluated for is executed zero or more times.
-    * - ``PHPUnit_Framework_MockObject_Matcher_InvokedCount never()``
+    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedCount never()``
       - Returns a matcher that matches when the method it is evaluated for is never executed.
-    * - ``PHPUnit_Framework_MockObject_Matcher_InvokedAtLeastOnce atLeastOnce()``
+    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedAtLeastOnce atLeastOnce()``
       - Returns a matcher that matches when the method it is evaluated for is executed at least once.
-    * - ``PHPUnit_Framework_MockObject_Matcher_InvokedCount once()``
+    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedCount once()``
       - Returns a matcher that matches when the method it is evaluated for is executed exactly once.
-    * - ``PHPUnit_Framework_MockObject_Matcher_InvokedCount exactly(int $count)``
+    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedCount exactly(int $count)``
       - Returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times.
-    * - ``PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex at(int $index)``
+    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedAtIndex at(int $index)``
       - Returns a matcher that matches when the method it is evaluated for is invoked at the given ``$index``.
 
 .. admonition:: Note
