@@ -23,9 +23,7 @@ Contents:
    incomplete-and-skipped-tests
    database
    test-doubles
-   testing-practices
    code-coverage-analysis
-   other-uses-for-tests
    logging
    extending-phpunit
 

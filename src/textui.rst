@@ -235,8 +235,7 @@ the following code:
 ``--testdox-html`` and ``--testdox-text``
 
     Generates agile documentation in HTML or plain text format for the
-    tests that are run. See :ref:`other-uses-for-tests` for
-    more details.
+    tests that are run (see :ref:`textui.testdox`).
 
 ``--filter``
 
@@ -459,8 +458,7 @@ the following code:
 
 ``--testdox``
 
-    Reports the test progress as agile documentation. See
-    :ref:`other-uses-for-tests` for more details.
+    Reports the test progress in TestDox format (see :ref:`textui.testdox`).
 
 ``--printer``
 
@@ -506,4 +504,45 @@ the following code:
 
    Please note that as of 4.8, options can be put after the argument(s).
 
+.. _textui.testdox:
+
+TestDox
+#######
+
+PHPUnit's TestDox functionality looks at a test class and all the test
+method names and converts them from camel case (or snake_case) PHP names to sentences:
+``testBalanceIsInitiallyZero()`` (or ``test_balance_is_initially_zero()`` becomes "Balance is
+initially zero". If there are several test methods whose names only
+differ in a suffix of one or more digits, such as
+``testBalanceCannotBecomeNegative()`` and
+``testBalanceCannotBecomeNegative2()``, the sentence
+"Balance cannot become negative" will appear only once, assuming that
+all of these tests succeed.
+
+Let us take a look at the agile documentation generated for a
+``BankAccount`` class:
+
+.. code-block:: bash
+
+    $ phpunit --testdox BankAccountTest
+    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+
+    BankAccount
+     ✔ Balance is initially zero
+     ✔ Balance cannot become negative
+
+Alternatively, the agile documentation can be generated in HTML or plain
+text format and written to a file using the ``--testdox-html``
+and ``--testdox-text`` arguments.
+
+Agile Documentation can be used to document the assumptions you make
+about the external packages that you use in your project. When you use
+an external package, you are exposed to the risks that the package will
+not behave as you expect, and that future versions of the package will
+change in subtle ways that will break your code, without you knowing it.
+You can address these risks by writing a test every time you make an
+assumption. If your test succeeds, your assumption is valid. If you
+document all your assumptions with tests, future releases of the
+external package will be no cause for concern: if the tests succeed,
+your system should continue working.
 

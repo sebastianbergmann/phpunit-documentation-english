@@ -737,7 +737,8 @@ annotation in a method's DocBlock to mark it as a test method.
 ########
 
 Specifies an alternative description used when generating the agile
-documentation sentences (see :ref:`other-uses-for-tests.agile-documentation`).
+documentation sentences.
+
 The ``@testdox`` annotation can be applied to both test classes and test methods.
 
 .. code-block:: php
