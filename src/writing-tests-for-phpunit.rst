@@ -51,7 +51,6 @@ with PHPUnit:
             $this->assertSame(0, count($stack));
         }
     }
-    ?>
 |
     *Martin Fowler*:
 
@@ -130,7 +129,6 @@ dependencies between test methods.
             $this->assertEmpty($stack);
         }
     }
-    ?>
 
 In the example above, the first test, ``testEmpty()``,
 creates a new array and asserts that it is empty. The test then returns
@@ -175,7 +173,6 @@ exploiting the dependencies between tests as shown in
         {
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -242,7 +239,6 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
             $this->assertSame('second', $b);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -299,7 +295,6 @@ of the array as its arguments.
             ];
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -350,7 +345,6 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
             ];
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -395,7 +389,6 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
             return new CsvFileIterator('data.csv');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -459,7 +452,6 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
             $this->key++;
         }
     }
-    ?>
 
 When a test receives input from both a ``@dataProvider``
 method and from one or more tests it ``@depends`` on, the
@@ -507,7 +499,6 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -574,7 +565,6 @@ whether an exception is thrown by the code under test.
             $this->expectException(InvalidArgumentException::class);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -629,7 +619,6 @@ shows an example.
         {
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -682,7 +671,6 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
             include 'not_existing_file.php';
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -724,21 +712,23 @@ suppressing notices that would lead to a phpunit
     {
         public function testFileWriting() {
             $writer = new FileWriter;
+
             $this->assertFalse(@$writer->write('/is-not-writeable/file', 'stuff'));
         }
     }
+
     class FileWriter
     {
         public function write($file, $content) {
             $file = fopen($file, 'w');
+
             if($file == false) {
                 return false;
             }
+
             // ...
         }
     }
-
-    ?>
 
 .. code-block:: bash
 
@@ -752,8 +742,7 @@ suppressing notices that would lead to a phpunit
     OK (1 test, 1 assertion)
 
 Without the error suppression the test would fail reporting
-``fopen(/is-not-writeable/file): failed to open stream:
-    No such file or directory``.
+``fopen(/is-not-writeable/file): failed to open stream: No such file or directory``.
 
 .. _writing-tests-for-phpunit.output:
 
@@ -794,7 +783,6 @@ test will be counted as a failure.
             print 'baz';
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -865,7 +853,6 @@ context as possible that can help to identify the problem.
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -920,7 +907,6 @@ and provide a few lines of context around every difference.
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -981,7 +967,6 @@ functions on arrays or objects.
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
