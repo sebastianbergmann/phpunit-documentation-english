@@ -213,68 +213,6 @@ In :ref:`appendixes.configuration.test-listeners` you can see
 how to configure PHPUnit to attach your test listener to the test
 execution.
 
-.. _extending-phpunit.PHPUnit_Extensions_TestDecorator:
-
-Subclass PHPUnit_Extensions_TestDecorator
-#########################################
-
-You can wrap test cases or test suites in a subclass of
-``PHPUnit_Extensions_TestDecorator`` and use the
-Decorator design pattern to perform some actions before and after the
-test runs.
-
-PHPUnit ships with one concrete test decorator:
-``PHPUnit_Extensions_RepeatedTest``. It is used to run a
-test repeatedly and only count it as a success if all iterations are
-successful.
-
-:numref:`extending-phpunit.examples.RepeatedTest.php`
-shows a cut-down version of the ``PHPUnit_Extensions_RepeatedTest``
-test decorator that illustrates how to write your own test decorators.
-
-.. code-block:: php
-    :caption: The RepeatedTest Decorator
-    :name: extending-phpunit.examples.RepeatedTest.php
-
-    <?php
-    use PHPUnit\Framework\TestCase;
-
-    require_once 'PHPUnit/Extensions/TestDecorator.php';
-
-    class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
-    {
-        private $timesRepeat = 1;
-
-        public function __construct(PHPUnit\Framework\Test $test, $timesRepeat = 1)
-        {
-            parent::__construct($test);
-
-            if (is_integer($timesRepeat) &&
-                $timesRepeat >= 0) {
-                $this->timesRepeat = $timesRepeat;
-            }
-        }
-
-        public function count()
-        {
-            return $this->timesRepeat * $this->test->count();
-        }
-
-        public function run(PHPUnit\Framework\TestResult $result = null)
-        {
-            if ($result === null) {
-                $result = $this->createResult();
-            }
-
-            for ($i = 0; $i < $this->timesRepeat && !$result->shouldStop(); $i++) {
-                $this->test->run($result);
-            }
-
-            return $result;
-        }
-    }
-    ?>
-
 .. _extending-phpunit.PHPUnit_Framework_Test:
 
 Implement PHPUnit\Framework\Test
