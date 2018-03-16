@@ -301,17 +301,35 @@ the following code:
     See :numref:`textui.examples.filter-patterns` for examples
     of valid filter patterns.
 
-    .. code-block:: php
+    .. code-block:: shell
         :caption: Filter pattern examples
         :name: textui.examples.filter-patterns
+
+        --filter 'TestNamespace\\TestCaseClass::testMethod'
+        --filter 'TestNamespace\\TestCaseClass'
+        --filter TestNamespace
+        --filter TestCaseClase
+        --filter testMethod
+        --filter '/::testMethod .*"my named data"/'
+        --filter '/::testMethod .*#5$/'
+        --filter '/::testMethod .*#(5|6|7)$/'
 
     See :numref:`textui.examples.filter-shortcuts` for some
     additional shortcuts that are available for matching data
     providers.
 
-    .. code-block:: php
+    .. code-block:: shell
         :caption: Filter shortcuts
         :name: textui.examples.filter-shortcuts
+
+        --filter 'testMethod#2'
+        --filter 'testMethod#2-4'
+        --filter '#2'
+        --filter '#2-4'
+        --filter 'testMethod@my named data'
+        --filter 'testMethod@my.*data'
+        --filter '@my named data'
+        --filter '@my.*data'
 
 ``--testsuite``
 
