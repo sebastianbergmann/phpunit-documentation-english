@@ -51,7 +51,10 @@ return a value when called.
    Please note that ``final``, ``private``,
    ``protected``, and ``static`` methods cannot
    be stubbed or mocked. They are ignored by PHPUnit's test double
-   functionality and retain their original behavior.
+   functionality and retain their original behavior except for ``static``
+   methods that will be replaced by a method throwing a
+   ``\PHPUnit\Framework\MockObject\BadMethodCallException`` exception.
+
 
 .. _test-doubles.stubs:
 
