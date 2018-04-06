@@ -141,7 +141,7 @@ depends upon ``testPush()``.
 
    The return value yielded by a producer is passed "as-is" to its
    consumers by default. This means that when a producer returns an object,
-   a reference to that object is passed to the consumers. Instead of 
+   a reference to that object is passed to the consumers. Instead of
    a reference either (a) a (deep) copy via ``@depends clone``, or (b) a
    (normal shallow) clone (based on PHP keyword ``clone``) via
    ``@depends shallowClone`` are possible too.
@@ -177,7 +177,7 @@ exploiting the dependencies between tests as shown in
 .. code-block:: bash
 
     $ phpunit --verbose DependencyFailureTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     FS
 
@@ -243,7 +243,7 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
 .. code-block:: bash
 
     $ phpunit --verbose MultipleDependenciesTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...
 
@@ -299,7 +299,7 @@ of the array as its arguments.
 .. code-block:: bash
 
     $ phpunit DataTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...F
 
@@ -349,7 +349,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
 .. code-block:: bash
 
     $ phpunit DataTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...F
 
@@ -393,7 +393,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
 .. code-block:: bash
 
     $ phpunit DataTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...F
 
@@ -503,7 +503,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 .. code-block:: bash
 
     $ phpunit --verbose DependencyAndDataProviderComboTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...F
 
@@ -566,7 +566,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
 .. code-block:: bash
     $ phpunit DataTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ..F...                                                              6 / 6 (100%)
 
@@ -624,7 +624,7 @@ whether an exception is thrown by the code under test.
 .. code-block:: bash
 
     $ phpunit ExceptionTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -678,7 +678,7 @@ shows an example.
 .. code-block:: bash
 
     $ phpunit ExceptionTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -730,7 +730,7 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
 .. code-block:: bash
 
     $ phpunit -d error_reporting=2 ExpectedErrorTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .
 
@@ -788,7 +788,7 @@ suppressing notices that would lead to a phpunit
 .. code-block:: bash
 
     $ phpunit ErrorSuppressionTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .
 
@@ -842,7 +842,7 @@ test will be counted as a failure.
 .. code-block:: bash
 
     $ phpunit OutputTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .F
 
@@ -912,7 +912,7 @@ context as possible that can help to identify the problem.
 .. code-block:: bash
 
     $ phpunit ArrayDiffTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -966,7 +966,7 @@ and provide a few lines of context around every difference.
 .. code-block:: bash
 
     $ phpunit LongArrayDiffTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1026,7 +1026,7 @@ functions on arrays or objects.
 .. code-block:: bash
 
     $ phpunit ArrayWeakComparisonTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
