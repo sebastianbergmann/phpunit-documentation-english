@@ -69,7 +69,7 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
 .. code-block:: bash
 
     $ phpunit ArrayHasKeyTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -115,7 +115,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
 .. code-block:: bash
 
     $ phpunit ClassHasAttributeTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -161,7 +161,7 @@ Reports an error identified by ``$message`` if ``$array`` does not contains the 
 .. code-block:: bash
 
     $ phpunit ArraySubsetTest
-    PHPUnit 7.0.0 by Sebastian Bergmann.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -212,7 +212,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
 .. code-block:: bash
 
     $ phpunit ClassHasStaticAttributeTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -260,7 +260,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
 .. code-block:: bash
 
     $ phpunit ContainsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -301,7 +301,7 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
 .. code-block:: bash
 
     $ phpunit ContainsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -341,7 +341,7 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
 .. code-block:: bash
 
     $ phpunit ContainsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F.
 
@@ -391,7 +391,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 .. code-block:: bash
 
     $ phpunit ContainsOnlyTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -442,7 +442,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 .. code-block:: bash
 
     $ phpunit ContainsOnlyInstancesOfTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -488,7 +488,7 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
 .. code-block:: bash
 
     $ phpunit CountTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -534,7 +534,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 .. code-block:: bash
 
     $ phpunit DirectoryExistsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -580,7 +580,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 .. code-block:: bash
 
     $ phpunit DirectoryIsReadableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -626,7 +626,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 .. code-block:: bash
 
     $ phpunit DirectoryIsWritableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -674,7 +674,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
 .. code-block:: bash
 
     $ phpunit EmptyTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -760,7 +760,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
 .. code-block:: bash
 
     $ phpunit EqualXMLStructureTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     FFFF
 
@@ -845,7 +845,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     FFF
 
@@ -916,7 +916,7 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .F
 
@@ -961,7 +961,7 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1018,7 +1018,7 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1066,7 +1066,7 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1122,7 +1122,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
 .. code-block:: bash
 
     $ phpunit FalseTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1168,7 +1168,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 .. code-block:: bash
 
     $ phpunit FileEqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1220,7 +1220,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 .. code-block:: bash
 
     $ phpunit FileExistsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1266,7 +1266,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 .. code-block:: bash
 
     $ phpunit FileIsReadableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1312,7 +1312,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 .. code-block:: bash
 
     $ phpunit FileIsWritableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1358,7 +1358,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
 .. code-block:: bash
 
     $ phpunit GreaterThanTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1404,7 +1404,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
 .. code-block:: bash
 
     $ phpunit GreaterThanOrEqualTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1450,7 +1450,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
 .. code-block:: bash
 
     $ phpunit InfiniteTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1498,7 +1498,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
 .. code-block:: bash
 
     $ phpunit InstanceOfTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1546,7 +1546,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of the ``$expe
 .. code-block:: bash
 
     $ phpunit InternalTypeTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1592,7 +1592,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
 .. code-block:: bash
 
     $ phpunit IsReadableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1638,7 +1638,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
 .. code-block:: bash
 
     $ phpunit IsWritableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1684,7 +1684,7 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
 .. code-block:: bash
 
     $ phpunit JsonFileEqualsJsonFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1731,7 +1731,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
 .. code-block:: bash
 
     $ phpunit JsonStringEqualsJsonFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1779,7 +1779,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
 .. code-block:: bash
 
     $ phpunit JsonStringEqualsJsonStringTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1832,7 +1832,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
 .. code-block:: bash
 
     $ phpunit LessThanTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1878,7 +1878,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
 .. code-block:: bash
 
     $ phpunit LessThanOrEqualTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1922,7 +1922,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
 .. code-block:: bash
 
     $ phpunit NanTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1968,7 +1968,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
 .. code-block:: bash
 
     $ phpunit NotNullTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2014,7 +2014,7 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
 .. code-block:: bash
 
     $ phpunit ObjectHasAttributeTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2060,7 +2060,7 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
 .. code-block:: bash
 
     $ phpunit RegExpTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2106,7 +2106,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 .. code-block:: bash
 
     $ phpunit StringMatchesFormatTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2198,7 +2198,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 .. code-block:: bash
 
     $ phpunit StringMatchesFormatFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2247,7 +2247,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 .. code-block:: bash
 
     $ phpunit SameTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2286,7 +2286,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 .. code-block:: bash
 
     $ phpunit SameTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2332,7 +2332,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
 .. code-block:: bash
 
     $ phpunit StringEndsWithTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2378,7 +2378,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 .. code-block:: bash
 
     $ phpunit StringEqualsFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2430,7 +2430,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
 .. code-block:: bash
 
     $ phpunit StringStartsWithTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2594,7 +2594,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
 .. code-block:: bash
 
     $ phpunit TrueTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2641,7 +2641,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
 .. code-block:: bash
 
     $ phpunit XmlFileEqualsXmlFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2696,7 +2696,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
 .. code-block:: bash
 
     $ phpunit XmlStringEqualsXmlFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2751,7 +2751,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
 .. code-block:: bash
 
     $ phpunit XmlStringEqualsXmlStringTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
