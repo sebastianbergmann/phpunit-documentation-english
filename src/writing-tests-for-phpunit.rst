@@ -257,7 +257,7 @@ Data Providers
 ##############
 
 A test method can accept arbitrary arguments. These arguments are to be
-provided by a data provider method (``additionProvider()`` in
+provided by one ore more data provider methods (``additionProvider()`` in
 :numref:`writing-tests-for-phpunit.data-providers.examples.DataTest.php`).
 The data provider method to be used is specified using the
 ``@dataProvider`` annotation.
@@ -526,6 +526,61 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
     FAILURES!
     Tests: 4, Assertions: 4, Failures: 1.
+
+.. code-block:: php
+    :caption: Using multiple data providers for a single test
+      :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
+
+      <?php
+      use PHPUnit\Framework\TestCase;
+
+      class DataTest extends TestCase
+      {
+          /**
+           * @dataProvider additionWithNonNegativeNumbersProvider
+           * @dataProvider additionWithNegativeNumbersProvider
+           */
+          public function testAdd($a, $b, $expected)
+          {
+              $this->assertSame($expected, $a + $b);
+          }
+
+          public function additionWithNonNegativeNumbersProvider()
+          {
+              return [
+                  [0, 1, 1],
+                  [1, 0, 1],
+                  [1, 1, 3]
+              ];
+          }
+
+          public function additionWithNegativeNumbersProvider()
+          {
+              return [
+                  [-1, 1, 0],
+                  [-1, -1, -2],
+                  [1, -1, 0]
+              ];
+          }
+       }
+
+.. code-block:: bash
+    $ phpunit DataTest
+    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+
+    ..F...                                                              6 / 6 (100%)
+
+    Time: 0 seconds, Memory: 5.75Mb
+
+    There was 1 failure:
+
+    1) DataTest::testAdd with data set #3 (1, 1, 3)
+    Failed asserting that 2 is identical to 3.
+
+    /home/sb/DataTest.php:12
+
+    FAILURES!
+    Tests: 6, Assertions: 6, Failures: 1.
 
 .. admonition:: Note
 
