@@ -773,6 +773,13 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
 Instead of implementing a method for use with ``@dataProvider``,
 you can define a data set using the ``@testWith`` annotation.
 
+A data set consists of one or many elements. To define a data set
+with multiple elements, define each element in a separate line.
+Each element of the data set must be an array defined in JSON.
+
+See :ref:`writing-tests-for-phpunit.data-providers` to learn
+more about passing a set of data to a test.
+
 .. code-block:: php
 
     /**
@@ -785,6 +792,21 @@ you can define a data set using the ``@testWith`` annotation.
     public function testStringLength(string $input, int $expectedLength)
     {
         $this->assertSame($expectedLength, strlen($input));
+    }
+
+An object representation in JSON will be converted into an associative array.
+
+.. code-block:: php
+
+    /**
+     * @param array     $array
+     * @param array     $keys
+     *
+     * @testWith        [{"day": "monday", "conditions": "sunny"}, ["day", "conditions"]]
+     */
+    public function testArrayKeys($array, $keys)
+    {
+        $this->assertSame($keys, array_keys($array));
     }
 
 .. _appendixes.annotations.ticket:
