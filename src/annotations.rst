@@ -814,7 +814,9 @@ An object representation in JSON will be converted into an associative array.
 @ticket
 #######
 
-.. code-block:: php
+The ``@ticket`` annotation is an alias for the
+``@group`` annotation (see :ref:`appendixes.annotations.group`) and allows to filter tests based
+on their ticket ID.
 
 .. _appendixes.annotations.uses:
 
