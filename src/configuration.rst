@@ -18,7 +18,7 @@ be used to configure PHPUnit's core functionality.
 
     <phpunit
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.0/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/|version|/phpunit.xsd"
              backupGlobals="true"
              backupStaticAttributes="false"
              <!--bootstrap="/path/to/bootstrap.php"-->
@@ -330,6 +330,28 @@ The XML configuration above corresponds to attaching the
         null,
         new stdClass
     );
+
+.. _appendixes.configuration.extensions:
+
+Registering TestRunner Extensions
+#################################
+
+The ``<extensions>`` element and its ``<extension>`` children
+can be used to register custom TestRunner extensions.
+
+:numref:`configuration.examples.RegisterExtension` shows how to register
+such an extension.
+
+.. code-block:: xml
+    :caption: Registering a TestRunner Extension
+    :name: configuration.examples.RegisterExtension
+
+      <?xml version="1.0" encoding="UTF-8"?>
+      <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.1/phpunit.xsd">
+          <extensions>
+              <extension class="Vendor\MyExtension"/>
+          </extensions>
+      </phpunit>
 
 .. _appendixes.configuration.php-ini-constants-variables:
 

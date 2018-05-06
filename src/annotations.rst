@@ -356,7 +356,7 @@ will override any ``@covers`` tags.
 #############
 
 A test method can accept arbitrary arguments. These arguments are to be
-provided by a data provider method (``provider()`` in
+provided by one or more data provider methods (``provider()`` in
 :ref:`writing-tests-for-phpunit.data-providers.examples.DataTest.php`).
 The data provider method to be used is specified using the
 ``@dataProvider`` annotation.
