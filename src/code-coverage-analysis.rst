@@ -19,7 +19,7 @@ functionality that provides an insight into what parts of the production
 code are executed when the tests are run. It makes use of the
 `php-code-coverage <https://github.com/sebastianbergmann/php-code-coverage>`_
 component, which in turn leverages the code coverage functionality provided
-by the `Xdebug <http://xdebug.org/>`_ extension for PHP.
+by the `Xdebug <https://xdebug.org/>`_ extension for PHP.
 
 .. admonition:: Note
 
@@ -27,7 +27,7 @@ by the `Xdebug <http://xdebug.org/>`_ extension for PHP.
    while running tests that the Xdebug extension is not loaded, it means
    that Xdebug is either not installed or not configured properly. Before
    you can use the code coverage analysis features in PHPUnit, you should
-   read `the Xdebug installation guide <http://xdebug.org/docs/install>`_.
+   read `the Xdebug installation guide <https://xdebug.org/docs/install>`_.
 
 PHPUnit can generate an HTML-based code coverage report as well as
 XML-based logfiles with code coverage information in various formats
