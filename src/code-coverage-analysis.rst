@@ -29,6 +29,9 @@ by the `Xdebug <https://xdebug.org/>`_ extension for PHP.
    you can use the code coverage analysis features in PHPUnit, you should
    read `the Xdebug installation guide <https://xdebug.org/docs/install>`_.
 
+   php-code-coverage also supports `phpdbg <https://phpdbg.room11.org/introduction.html>`_
+   as an alternative source for code coverage data.
+
 PHPUnit can generate an HTML-based code coverage report as well as
 XML-based logfiles with code coverage information in various formats
 (Clover, Crap4J, PHPUnit). Code coverage information can also be reported
