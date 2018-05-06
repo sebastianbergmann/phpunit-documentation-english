@@ -24,7 +24,7 @@ by the `Xdebug <https://xdebug.org/>`_ extension for PHP.
 .. admonition:: Note
 
    Xdebug is not distributed as part of PHPUnit. If you receive a notice
-   while running tests that the Xdebug extension is not loaded, it means
+   while running tests that no code coverage driver is available, it means
    that Xdebug is either not installed or not configured properly. Before
    you can use the code coverage analysis features in PHPUnit, you should
    read `the Xdebug installation guide <https://xdebug.org/docs/install>`_.
