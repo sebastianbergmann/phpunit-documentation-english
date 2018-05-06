@@ -45,7 +45,7 @@ command-line test runner to the test directory:
 .. code-block:: bash
 
     $ phpunit --bootstrap src/autoload.php tests
-    PHPUnit 7.0.0 by Sebastian Bergmann.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .................................
 
@@ -65,7 +65,7 @@ the following command:
 .. code-block:: bash
 
     $ phpunit --bootstrap src/autoload.php tests/CurrencyTest
-    PHPUnit 7.0.0 by Sebastian Bergmann.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ........
 
@@ -79,7 +79,7 @@ For more fine-grained control of which tests to run we can use the
 .. code-block:: bash
 
     $ phpunit --bootstrap src/autoload.php --filter testObjectCanBeConstructedForValidConstructorArgument tests
-    PHPUnit 7.0.0 by Sebastian Bergmann.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ..
 

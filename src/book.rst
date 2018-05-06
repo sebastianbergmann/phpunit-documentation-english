@@ -6,7 +6,7 @@
 PHPUnit Manual
 ==============
 
-*Edition for PHPUnit 7.0. Updated on format="Y-m-d".*
+*Edition for PHPUnit |version|. Updated on format="Y-m-d".*
 Sebastian Bergmann
 
 2005

@@ -297,7 +297,7 @@ and the second value is the actual one.
 
 .. code-block:: bash
 
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .F
 

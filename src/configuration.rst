@@ -18,7 +18,7 @@ be used to configure PHPUnit's core functionality.
 
     <phpunit
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.0/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/|version|/phpunit.xsd"
              backupGlobals="true"
              backupStaticAttributes="false"
              <!--bootstrap="/path/to/bootstrap.php"-->
