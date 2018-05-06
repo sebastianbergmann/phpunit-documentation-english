@@ -17,7 +17,7 @@ Code Coverage Analysis
 In this chapter you will learn all about PHPUnit's code coverage
 functionality that provides an insight into what parts of the production
 code are executed when the tests are run. It makes use of the
-`PHP_CodeCoverage <https://github.com/sebastianbergmann/php-code-coverage>`_
+`php-code-coverage <https://github.com/sebastianbergmann/php-code-coverage>`_
 component, which in turn leverages the code coverage functionality provided
 by the `Xdebug <http://xdebug.org/>`_ extension for PHP.
 
@@ -55,14 +55,14 @@ Various software metrics exist to measure code coverage:
 
     The *Function and Method Coverage* software
     metric measures whether each function or method has been invoked.
-    PHP_CodeCoverage only considers a function or method as covered when
+    php-code-coverage only considers a function or method as covered when
     all of its executable lines are covered.
 
 *Class and Trait Coverage*
 
     The *Class and Trait Coverage* software metric
     measures whether each method of a class or trait is covered.
-    PHP_CodeCoverage only considers a class or trait as covered when all
+    php-code-coverage only considers a class or trait as covered when all
     of its methods are covered.
 
 *Opcode Coverage*
@@ -102,7 +102,7 @@ Various software metrics exist to measure code coverage:
    The *Opcode Coverage*,
    *Branch Coverage*, and
    *Path Coverage* software metrics are not yet
-   supported by PHP_CodeCoverage.
+   supported by php-code-coverage.
 
 .. _code-coverage-analysis.whitelisting-files:
 
