@@ -537,40 +537,40 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
 .. code-block:: php
     :caption: Using multiple data providers for a single test
-      :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
+    :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
 
-      <?php
-      use PHPUnit\Framework\TestCase;
+    <?php
+    use PHPUnit\Framework\TestCase;
 
-      class DataTest extends TestCase
-      {
-          /**
-           * @dataProvider additionWithNonNegativeNumbersProvider
-           * @dataProvider additionWithNegativeNumbersProvider
-           */
-          public function testAdd($a, $b, $expected)
-          {
-              $this->assertSame($expected, $a + $b);
-          }
+    class DataTest extends TestCase
+    {
+        /**
+         * @dataProvider additionWithNonNegativeNumbersProvider
+         * @dataProvider additionWithNegativeNumbersProvider
+         */
+        public function testAdd($a, $b, $expected)
+        {
+            $this->assertSame($expected, $a + $b);
+        }
 
-          public function additionWithNonNegativeNumbersProvider()
-          {
-              return [
-                  [0, 1, 1],
-                  [1, 0, 1],
-                  [1, 1, 3]
-              ];
-          }
+        public function additionWithNonNegativeNumbersProvider()
+        {
+            return [
+                [0, 1, 1],
+                [1, 0, 1],
+                [1, 1, 3]
+            ];
+        }
 
-          public function additionWithNegativeNumbersProvider()
-          {
-              return [
-                  [-1, 1, 0],
-                  [-1, -1, -2],
-                  [1, -1, 0]
-              ];
-          }
-       }
+        public function additionWithNegativeNumbersProvider()
+        {
+            return [
+                [-1, 1, 0],
+                [-1, -1, -2],
+                [1, -1, 0]
+            ];
+        }
+     }
 
 .. code-block:: bash
     $ phpunit DataTest
@@ -758,10 +758,10 @@ and warnings, respectively.
    class with ``@expectedException`` or
    ``expectException()`` is no longer permitted.
 
-When testing that relies on php functions that trigger errors like
+When testing that relies on PHP functions that trigger errors like
 ``fopen`` it can sometimes be useful to use error
 suppression while testing. This allows you to check the return values by
-suppressing notices that would lead to a phpunit
+suppressing notices that would lead to a PHPUnit
 ``PHPUnit\Framework\Error\Notice``.
 
 .. code-block:: php
@@ -1070,6 +1070,6 @@ functions on arrays or objects.
 
 In this example the difference in the first index between
 ``1`` and ``'1'`` is
-reported even though assertEquals considers the values as a match.
+reported even though ``assertEquals()`` method considers the values as a match.
 
 
