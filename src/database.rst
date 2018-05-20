@@ -1336,7 +1336,7 @@ which has to be returned from the
 
 #.
 
-   The ``getRowCount()`` method is a convienent way to
+   The ``getRowCount()`` method is a convenient way to
    access the number of rows in a table, optionally filtered by an
    additional where clause. This can be used with a simple equality
    assertion:
