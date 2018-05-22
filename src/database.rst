@@ -305,7 +305,7 @@ testing.
 
 #.
 
-   If you are using a persistent database (not Sqlite Memory) you can
+   If you are using a persistent database (not SQLite In-Memory) you can
    easily setup the database once with tools such as phpMyAdmin for
    MySQL and re-use the database for every test-run.
 
@@ -506,7 +506,7 @@ initial fixture and to describe the expected state of the database.
 Flat XML DataSet
 ----------------
 
-The most common dataset is called Flat XML. It is a very simple xml
+The most common dataset is called Flat XML. It is a very simple XML
 format where a tag inside the root node
 ``<dataset>`` represents exactly one row in the
 database. The tags name equals the table to insert the row into and
@@ -531,7 +531,7 @@ However, this simplicity comes at a cost.
 
 From the previous example it isn't obvious how you would specify an
 empty table. You can insert a tag with no attributes with the name
-of the empty table. A flat xml file for an empty guestbook table
+of the empty table. A flat XML file for an empty guestbook table
 would then look like:
 
 .. code-block:: bash
@@ -541,10 +541,10 @@ would then look like:
         <guestbook />
     </dataset>
 
-The handling of NULL values with the flat xml dataset is tedious. A
+The handling of NULL values with the flat XML dataset is tedious. A
 NULL value is different than an empty string value in almost any
 database (Oracle being an exception), something that is difficult
-to describe in the flat xml format. You can represent a NULL's value
+to describe in the flat XML format. You can represent a NULL's value
 by omitting the attribute from the row specification. If our
 guestbook would allow anonymous entries represented by a NULL value
 in the user column, a hypothetical state of the guestbook table
@@ -565,7 +565,7 @@ table holds. If an attribute is NULL for all the rows of a
 data-table, how would the Database Extension know that the column
 should be part of the table?
 
-The flat xml dataset makes a crucial assumption now, defining that
+The flat XML dataset makes a crucial assumption now, defining that
 the attributes on the first defined row of a table define the
 columns of this table. In the previous example this would mean
 “id“, “content“, “user“ and
@@ -592,7 +592,7 @@ defined as “NOT NULL DEFAULT NULL“.
 In conclusion I can only advise using the Flat XML datasets if you
 do not need NULL values.
 
-You can create a flat xml dataset instance from within your
+You can create a flat XML dataset instance from within your
 Database TestCase by calling the
 ``createFlatXmlDataSet($filename)`` method:
 
@@ -661,7 +661,7 @@ order of the previously given ``<column>``
 elements. The ``<null />`` tag obviously means
 that the value is NULL.
 
-You can create a xml dataset instance from within your
+You can create a XML dataset instance from within your
 Database TestCase by calling the
 ``createXmlDataSet($filename)`` method:
 
@@ -904,7 +904,7 @@ straightforward:
                 $metaData = new DefaultTableMetaData($tableName, $columns);
                 $table = new DefaultTable($metaData);
 
-                foreach ($rows AS $row) {
+                foreach ($rows as $row) {
                     $table->addRow($row);
                 }
                 $this->tables[$tableName] = $table;
@@ -1277,9 +1277,9 @@ which has to be returned from the
 
     interface Connection
     {
-        public function createDataSet(Array $tableNames = NULL);
+        public function createDataSet(array $tableNames = null);
         public function createQueryTable($resultName, $sql);
-        public function getRowCount($tableName, $whereClause = NULL);
+        public function getRowCount($tableName, $whereClause = null);
 
         // ...
     }
