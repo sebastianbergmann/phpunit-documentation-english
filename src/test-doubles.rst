@@ -35,7 +35,7 @@ The ``createMock($type)`` method immediately returns a test
 double object for the specified type (interface or class). The creation of
 this test double is performed using best practice defaults. The
 ``__construct()`` and ``__clone()`` methods of
-the original class are not executed) and the arguments passed to a method of
+the original class are not executed and the arguments passed to a method of
 the test double will not be cloned. If these defaults are not what you need
 then you can use the ``getMockBuilder($type)`` method to
 customize the test double generation using a fluent interface.

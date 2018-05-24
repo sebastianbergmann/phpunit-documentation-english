@@ -537,7 +537,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
 .. code-block:: php
     :caption: Using multiple data providers for a single test
-    :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
+    :name: writing-tests-for-phpunit.data-providers.examples2.DataTest.php
 
     <?php
     use PHPUnit\Framework\TestCase;
@@ -573,6 +573,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
      }
 
 .. code-block:: bash
+
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 

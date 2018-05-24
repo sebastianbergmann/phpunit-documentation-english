@@ -890,7 +890,7 @@ More specialized comparisons are used for specific argument types for ``$expecte
 
 Reports an error identified by ``$message`` if the absolute difference between two floats ``$expected`` and ``$actual`` is greater than ``$delta``. If the absolute difference between two floats ``$expected`` and ``$actual`` is less than *or equal to* ``$delta``, the assertion will pass.
 
-Please read "`What Every Computer Scientist Should Know About Floating-Point Arithmetic <http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html>`_" to understand why ``$delta`` is neccessary.
+Please read "`What Every Computer Scientist Should Know About Floating-Point Arithmetic <http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html>`_" to understand why ``$delta`` is necessary.
 
 .. code-block:: php
     :caption: Usage of assertEquals() with floats
