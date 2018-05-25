@@ -292,7 +292,6 @@ the following code:
                     ];
                 }
             }
-            ?>
 
     ``/path/to/my/test.phpt``
 

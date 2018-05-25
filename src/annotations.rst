@@ -332,7 +332,6 @@ repeated for every ``@covers`` annotation. See
             $o->publicMethod();
         }
     }
-    ?>
 
 .. _appendixes.annotations.coversNothing:
 

@@ -209,7 +209,6 @@ following way:
             $this->assertSame(2, 1 + 1);
         }
     }
-    ?>
 
 If you want to test code that works with the Database Extension the
 setup is a bit more complex and you have to extend a different
@@ -244,7 +243,6 @@ abstract TestCase requiring you to implement two abstract methods
             return $this->createFlatXMLDataSet(dirname(__FILE__).'/_files/guestbook-seed.xml');
         }
     }
-    ?>
 
 .. _database.implementing-getconnection:
 
@@ -360,7 +358,6 @@ different data-fixture for each test case:
             return $this->conn;
         }
     }
-    ?>
 
 This has the database connection hardcoded in the PDO connection
 though. PHPUnit has another awesome feature that could make this
@@ -412,7 +409,6 @@ We can now modify our test-case to look like:
             return $this->conn;
         }
     }
-    ?>
 
 We can now run the database test suite using different
 configurations from the command-line interface:
@@ -611,7 +607,6 @@ Database TestCase by calling the
             return $this->createFlatXmlDataSet('myFlatXmlFixture.xml');
         }
     }
-    ?>
 
 .. _database.xml-dataset:
 
@@ -680,7 +675,6 @@ Database TestCase by calling the
             return $this->createXMLDataSet('myXmlFixture.xml');
         }
     }
-    ?>
 
 .. _database.mysql-xml-dataset:
 
@@ -719,7 +713,6 @@ This file can be used in your Database TestCase by calling the
             return $this->createMySQLXMLDataSet('/path/to/file.xml');
         }
     }
-    ?>
 
 .. _database.yaml-dataset:
 
@@ -766,7 +759,6 @@ currently, so you have to instantiate it manually:
             return new YamlDataSet(dirname(__FILE__)."/_files/guestbook.yml");
         }
     }
-    ?>
 
 .. _database.csv-dataset:
 
@@ -808,7 +800,6 @@ You can create a CSV DataSet by calling:
             return $dataSet;
         }
     }
-    ?>
 
 .. _database.array-dataset:
 
@@ -851,7 +842,6 @@ should look like:
             );
         }
     }
-    ?>
 
 A PHP DataSet has obvious advantages over all the other file-based
 datasets:
@@ -925,7 +915,6 @@ straightforward:
             return $this->tables[$tableName];
         }
     }
-    ?>
 
 .. _database.query-sql-dataset:
 
@@ -941,7 +930,6 @@ contents of the database. This is where the Query DataSet shines:
     <?php
     $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook');
-    ?>
 
 Adding a table just by name is an implicit way to define the
 data-table with the following query:
@@ -951,7 +939,6 @@ data-table with the following query:
     <?php
     $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook', 'SELECT * FROM guestbook');
-    ?>
 
 You can make use of this by specifying arbitrary queries for your
 tables, for example restricting rows, column or adding
@@ -962,7 +949,6 @@ tables, for example restricting rows, column or adding
     <?php
     $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook', 'SELECT id, content FROM guestbook ORDER BY created DESC');
-    ?>
 
 The section on Database Assertions will show some more details on
 how to make use of the Query DataSet.
@@ -1017,7 +1003,6 @@ specified table names with a whitelist as shown in
             // ...
         }
     }
-    ?>
 
 .. _database.replacement-dataset:
 
@@ -1061,7 +1046,6 @@ We then wrap the Flat XML DataSet into a Replacement DataSet:
             return $rds;
         }
     }
-    ?>
 
 .. _database.dataset-filter:
 
@@ -1105,7 +1089,6 @@ with the DB DataSet to filter the columns of the datasets.
             // ..
         }
     }
-    ?>
 
 .. admonition:: Note
 
@@ -1164,7 +1147,6 @@ Using the Composite DataSet we can aggregate both fixture files:
             return $compositeDs;
         }
     }
-    ?>
 
 .. _database.beware-of-foreign-keys:
 
@@ -1200,7 +1182,6 @@ do not plan to implement your own DataSet or DataTable.
 
         public function getReverseIterator();
     }
-    ?>
 
 The public interface is used internally by the
 ``assertDataSetsEqual()`` assertion on the Database
@@ -1232,7 +1213,6 @@ A table is also represented by the following interface:
         public function getRow($row);
         public function assertEquals(ITable $other);
     }
-    ?>
 
 Except the ``getTableMetaData()`` method it is
 pretty self-explainatory. The used methods are all required for
@@ -1283,7 +1263,6 @@ which has to be returned from the
 
         // ...
     }
-    ?>
 
 #.
 
@@ -1306,7 +1285,6 @@ which has to be returned from the
                $dataSet = $this->getConnection()->createDataSet();
            }
        }
-       ?>
 
 #.
 
@@ -1332,7 +1310,6 @@ which has to be returned from the
                $queryTable = $this->getConnection()->createQueryTable('guestbook', 'SELECT * FROM guestbook');
            }
        }
-       ?>
 
 #.
 
@@ -1356,7 +1333,6 @@ which has to be returned from the
                $this->assertSame(2, $this->getConnection()->getRowCount('guestbook'));
            }
        }
-       ?>
 
 .. _database.database-assertions-api:
 
@@ -1400,7 +1376,6 @@ examples, but a third one:
             $this->assertSame(3, $this->getConnection()->getRowCount('guestbook'), "Inserting failed");
         }
     }
-    ?>
 
 .. _database.asserting-the-state-of-a-table:
 
@@ -1439,7 +1414,6 @@ File/Array Based Data Set:
             $this->assertTablesEqual($expectedTable, $queryTable);
         }
     }
-    ?>
 
 Now we have to write the *expectedBook.xml* Flat
 XML file for this assertion:
@@ -1480,7 +1454,6 @@ We have to fix up the Query Table call:
     $queryTable = $this->getConnection()->createQueryTable(
         'guestbook', 'SELECT id, content, user FROM guestbook'
     );
-    ?>
 
 .. _database.asserting-the-result-of-a-query:
 
@@ -1511,7 +1484,6 @@ compare it to a dataset:
             $this->assertTablesEqual($expectedTable, $queryTable);
         }
     }
-    ?>
 
 .. _database.asserting-the-state-of-multiple-tables:
 
@@ -1544,7 +1516,6 @@ different ways for DataSet assertions.
                $this->assertDataSetsEqual($expectedDataSet, $dataSet);
            }
        }
-       ?>
 
 #.
 
@@ -1570,7 +1541,6 @@ different ways for DataSet assertions.
                $this->assertDataSetsEqual($expectedDataSet, $dataSet);
            }
        }
-       ?>
 
 .. _database.frequently-asked-questions:
 

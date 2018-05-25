@@ -78,7 +78,6 @@ assertion method.
             $this->assertTrue(empty($this->stack));
         }
     }
-    ?>
 
 The ``setUp()`` and ``tearDown()`` template
 methods are run once for each test method (and on fresh instances) of the
@@ -149,7 +148,6 @@ case class.
             throw $e;
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -257,7 +255,6 @@ database after the last test of the test case, respectively.
             self::$dbh = null;
         }
     }
-    ?>
 
 It cannot be emphasized enough that sharing fixtures between tests
 reduces the value of the tests. The underlying design problem is
