@@ -72,7 +72,7 @@ PHPUnit's own assertions are implemented. As you can see in
         }
 
         // ...
-    }?>
+    }
 
 :numref:`extending-phpunit.examples.IsTrue.php` shows how
 ``PHPUnit\Framework\Constraint\IsTrue`` extends the
