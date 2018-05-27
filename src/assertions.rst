@@ -17,27 +17,27 @@ PHPUnit's assertions are implemented in PHPUnit\\Framework\\Assert.
 PHPUnit\\Framework\\TestCase inherits from PHPUnit\\Framework\\Assert.
 
 The assertion methods are declared static and can be invoked
-from any context using PHPUnit\\Framework\\Assert::assertTrue(),
-for instance, or using $this->assertTrue() or self::assertTrue(),
+from any context using ``PHPUnit\\Framework\\Assert::assertTrue()``,
+for instance, or using ``$this->assertTrue()`` or ``self::assertTrue()``,
 for instance, in a class that extends PHPUnit\\Framework\\TestCase.
 
-In fact, you can even use global function wrappers such as assertTrue() in
+In fact, you can even use global function wrappers such as ``assertTrue()`` in
 any context (including classes that extend PHPUnit\\Framework\\TestCase)
 when you (manually) include the :file:`src/Framework/Assert/Functions.php`
 sourcecode file that comes with PHPUnit.
 
 A common question, especially from developers new to PHPUnit, is whether
-using $this->assertTrue() or self::assertTrue(),
+using ``$this->assertTrue()`` or ``self::assertTrue()``,
 for instance, is "the right way" to invoke an assertion. The short answer
 is: there is no right way. And there is no wrong way, either. It is a
 matter of personal preference.
 
-For most people it just "feels right" to use $this->assertTrue()
+For most people it just "feels right" to use ``$this->assertTrue()``
 because the test method is invoked on a test object. The fact that the
 assertion methods are declared static allows for (re)using
 them outside the scope of a test object. Lastly, the global function
-wrappers allow developers to type less characters (assertTrue() instead
-of $this->assertTrue() or self::assertTrue()).
+wrappers allow developers to type less characters (``assertTrue()`` instead
+of ``$this->assertTrue()`` or ``self::assertTrue()``).
 
 .. _appendixes.assertions.assertArrayHasKey:
 

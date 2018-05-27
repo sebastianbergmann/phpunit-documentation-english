@@ -281,25 +281,25 @@ the syntax of the ``@covers`` annotation.
     * - Annotation
       - Description
     * - ``@covers ClassName::methodName``
-      - ``Specifies that the annotated test method covers the specified method.``
+      - Specifies that the annotated test method covers the specified method.
     * - ``@covers ClassName``
-      - ``Specifies that the annotated test method covers all methods of a given class.``
+      - Specifies that the annotated test method covers all methods of a given class.
     * - ``@covers ClassName<extended>``
-      - ``Specifies that the annotated test method covers all methods of a given class and its parent class(es) and interface(s).``
+      - Specifies that the annotated test method covers all methods of a given class and its parent class(es) and interface(s).
     * - ``@covers ClassName::<public>``
-      - ``Specifies that the annotated test method covers all public methods of a given class.``
+      - Specifies that the annotated test method covers all public methods of a given class.
     * - ``@covers ClassName::<protected>``
-      - ``Specifies that the annotated test method covers all protected methods of a given class.``
+      - Specifies that the annotated test method covers all protected methods of a given class.
     * - ``@covers ClassName::<private>``
-      - ``Specifies that the annotated test method covers all private methods of a given class.``
+      - Specifies that the annotated test method covers all private methods of a given class.
     * - ``@covers ClassName::<!public>``
-      - ``Specifies that the annotated test method covers all methods of a given class that are not public.``
+      - Specifies that the annotated test method covers all methods of a given class that are not public.
     * - ``@covers ClassName::<!protected>``
-      - ``Specifies that the annotated test method covers all methods of a given class that are not protected.``
+      - Specifies that the annotated test method covers all methods of a given class that are not protected.
     * - ``@covers ClassName::<!private>``
-      - ``Specifies that the annotated test method covers all methods of a given class that are not private.``
+      - Specifies that the annotated test method covers all methods of a given class that are not private.
     * - ``@covers ::functionName``
-      - ``Specifies that the annotated test method covers the specified global function.``
+      - Specifies that the annotated test method covers the specified global function.
 
 .. _appendixes.annotations.coversDefaultClass:
 

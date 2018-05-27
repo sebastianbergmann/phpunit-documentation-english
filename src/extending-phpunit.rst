@@ -354,22 +354,22 @@ for an extension implementing ``BeforeFirstTestHook`` and ``AfterLastTestHook``:
     :caption: TestRunner Extension Example
     :name: extending-phpunit.examples.TestRunnerExtension
 
-        <?php
+    <?php
 
-        namespace Vendor;
+    namespace Vendor;
 
-        use PHPUnit\Runner\AfterLastTestHook;
-        use PHPUnit\Runner\BeforeFirstTestHook;
+    use PHPUnit\Runner\AfterLastTestHook;
+    use PHPUnit\Runner\BeforeFirstTestHook;
 
-        final class MyExtension implements BeforeFirstTestHook, AfterLastTestHook
+    final class MyExtension implements BeforeFirstTestHook, AfterLastTestHook
+    {
+        public function executeAfterLastTest(): void
         {
-            public function executeAfterLastTest(): void
-            {
-                // called after the last test has been run
-            }
-
-            public function executeBeforeFirstTest(): void
-            {
-                // called before the first test is being run
-            }
+            // called after the last test has been run
         }
+
+        public function executeBeforeFirstTest(): void
+        {
+            // called before the first test is being run
+        }
+    }
