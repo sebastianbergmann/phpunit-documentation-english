@@ -13,16 +13,16 @@ This appendix lists the various assertion methods that are available.
 Static vs. Non-Static Usage of Assertion Methods
 ################################################
 
-PHPUnit's assertions are implemented in PHPUnit\\Framework\\Assert.
-PHPUnit\\Framework\\TestCase inherits from PHPUnit\\Framework\\Assert.
+PHPUnit's assertions are implemented in ``PHPUnit\Framework\Assert``.
+``PHPUnit\Framework\TestCase`` inherits from ``PHPUnit\Framework\Assert``.
 
 The assertion methods are declared static and can be invoked
-from any context using ``PHPUnit\\Framework\\Assert::assertTrue()``,
+from any context using ``PHPUnit\Framework\Assert::assertTrue()``,
 for instance, or using ``$this->assertTrue()`` or ``self::assertTrue()``,
-for instance, in a class that extends PHPUnit\\Framework\\TestCase.
+for instance, in a class that extends ``PHPUnit\Framework\TestCase``.
 
 In fact, you can even use global function wrappers such as ``assertTrue()`` in
-any context (including classes that extend PHPUnit\\Framework\\TestCase)
+any context (including classes that extend ``PHPUnit\Framework\TestCase``)
 when you (manually) include the :file:`src/Framework/Assert/Functions.php`
 sourcecode file that comes with PHPUnit.
 
