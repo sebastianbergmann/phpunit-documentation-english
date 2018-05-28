@@ -762,8 +762,6 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
    the ``@testdox`` annotation also activated the behaviour
    of the ``@test`` annotation.
 
-.. code-block:: php
-
 .. _appendixes.annotations.testWith:
 
 @testWith
