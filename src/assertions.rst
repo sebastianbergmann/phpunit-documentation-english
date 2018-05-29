@@ -13,16 +13,16 @@ This appendix lists the various assertion methods that are available.
 Static vs. Non-Static Usage of Assertion Methods
 ################################################
 
-PHPUnit's assertions are implemented in PHPUnit\\Framework\\Assert.
-PHPUnit\\Framework\\TestCase inherits from PHPUnit\\Framework\\Assert.
+PHPUnit's assertions are implemented in ``PHPUnit\Framework\Assert``.
+``PHPUnit\Framework\TestCase`` inherits from ``PHPUnit\Framework\Assert``.
 
 The assertion methods are declared static and can be invoked
-from any context using ``PHPUnit\\Framework\\Assert::assertTrue()``,
+from any context using ``PHPUnit\Framework\Assert::assertTrue()``,
 for instance, or using ``$this->assertTrue()`` or ``self::assertTrue()``,
-for instance, in a class that extends PHPUnit\\Framework\\TestCase.
+for instance, in a class that extends ``PHPUnit\Framework\TestCase``.
 
 In fact, you can even use global function wrappers such as ``assertTrue()`` in
-any context (including classes that extend PHPUnit\\Framework\\TestCase)
+any context (including classes that extend ``PHPUnit\Framework\TestCase``)
 when you (manually) include the :file:`src/Framework/Assert/Functions.php`
 sourcecode file that comes with PHPUnit.
 
@@ -2476,51 +2476,51 @@ available ``PHPUnit\Framework\Constraint`` classes.
     * - ``PHPUnit\Framework\Constraint\IsAnything anything()``
       - Constraint that accepts any input value.
     * - ``PHPUnit\Framework\Constraint\ArrayHasKey arrayHasKey(mixed $key)``
-      - Constraint that asserts that the array it is evaluated for has a given key.
+      - Constraint that asserts that the array has a given key.
     * - ``PHPUnit\Framework\Constraint\TraversableContains contains(mixed $value)``
-      - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface it is evaluated for contains a given value.
+      - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains a given value.
     * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnly(string $type)``
-      - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface it is evaluated for contains only values of a given type.
+      - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only values of a given type.
     * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyInstancesOf(string $classname)``
-      - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface it is evaluated for contains only instances of a given classname.
+      - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only instances of a given classname.
     * - ``PHPUnit\Framework\Constraint\IsEqual equalTo($value, $delta = 0, $maxDepth = 10)``
       - Constraint that checks if one value is equal to another.
     * - ``PHPUnit\Framework\Constraint\Attribute attributeEqualTo($attributeName, $value, $delta = 0, $maxDepth = 10)``
       - Constraint that checks if a value is equal to an attribute of a class or of an object.
     * - ``PHPUnit\Framework\Constraint\DirectoryExists directoryExists()``
-      - Constraint that checks if the directory that it is evaluated for exists.
+      - Constraint that checks if the directory exists.
     * - ``PHPUnit\Framework\Constraint\FileExists fileExists()``
-      - Constraint that checks if the file(name) that it is evaluated for exists.
+      - Constraint that checks if the file(name) exists.
     * - ``PHPUnit\Framework\Constraint\IsReadable isReadable()``
-      - Constraint that checks if the file(name) that it is evaluated for is readable.
+      - Constraint that checks if the file(name) is readable.
     * - ``PHPUnit\Framework\Constraint\IsWritable isWritable()``
-      - Constraint that checks if the file(name) that it is evaluated for is writable.
+      - Constraint that checks if the file(name) is writable.
     * - ``PHPUnit\Framework\Constraint\GreaterThan greaterThan(mixed $value)``
-      - Constraint that asserts that the value it is evaluated for is greater than a given value.
+      - Constraint that asserts that the value is greater than a given value.
     * - ``PHPUnit\Framework\Constraint\Or greaterThanOrEqual(mixed $value)``
-      - Constraint that asserts that the value it is evaluated for is greater than or equal to a given value.
+      - Constraint that asserts that the value is greater than or equal to a given value.
     * - ``PHPUnit\Framework\Constraint\ClassHasAttribute classHasAttribute(string $attributeName)``
-      - Constraint that asserts that the class it is evaluated for has a given attribute.
+      - Constraint that asserts that the class has a given attribute.
     * - ``PHPUnit\Framework\Constraint\ClassHasStaticAttribute classHasStaticAttribute(string $attributeName)``
-      - Constraint that asserts that the class it is evaluated for has a given static attribute.
+      - Constraint that asserts that the class has a given static attribute.
     * - ``PHPUnit\Framework\Constraint\ObjectHasAttribute hasAttribute(string $attributeName)``
-      - Constraint that asserts that the object it is evaluated for has a given attribute.
+      - Constraint that asserts that the object has a given attribute.
     * - ``PHPUnit\Framework\Constraint\IsIdentical identicalTo(mixed $value)``
       - Constraint that asserts that one value is identical to another.
     * - ``PHPUnit\Framework\Constraint\IsFalse isFalse()``
-      - Constraint that asserts that the value it is evaluated is ``false``.
+      - Constraint that asserts that the value is ``false``.
     * - ``PHPUnit\Framework\Constraint\IsInstanceOf isInstanceOf(string $className)``
-      - Constraint that asserts that the object it is evaluated for is an instance of a given class.
+      - Constraint that asserts that the object is an instance of a given class.
     * - ``PHPUnit\Framework\Constraint\IsNull isNull()``
-      - Constraint that asserts that the value it is evaluated is ``null``.
+      - Constraint that asserts that the value is ``null``.
     * - ``PHPUnit\Framework\Constraint\IsTrue isTrue()``
-      - Constraint that asserts that the value it is evaluated is ``true``.
+      - Constraint that asserts that the value is ``true``.
     * - ``PHPUnit\Framework\Constraint\IsType isType(string $type)``
-      - Constraint that asserts that the value it is evaluated for is of a specified type.
+      - Constraint that asserts that the value is of a specified type.
     * - ``PHPUnit\Framework\Constraint\LessThan lessThan(mixed $value)``
-      - Constraint that asserts that the value it is evaluated for is smaller than a given value.
+      - Constraint that asserts that the value is smaller than a given value.
     * - ``PHPUnit\Framework\Constraint\Or lessThanOrEqual(mixed $value)``
-      - Constraint that asserts that the value it is evaluated for is smaller than or equal to a given value.
+      - Constraint that asserts that the value is smaller than or equal to a given value.
     * - ``logicalAnd()``
       - Logical AND.
     * - ``logicalNot(PHPUnit\Framework\Constraint $constraint)``
@@ -2530,13 +2530,13 @@ available ``PHPUnit\Framework\Constraint`` classes.
     * - ``logicalXor()``
       - Logical XOR.
     * - ``PHPUnit\Framework\Constraint\PCREMatch matchesRegularExpression(string $pattern)``
-      - Constraint that asserts that the string it is evaluated for matches a regular expression.
+      - Constraint that asserts that the string matches a regular expression.
     * - ``PHPUnit\Framework\Constraint\StringContains stringContains(string $string, bool $case)``
-      - Constraint that asserts that the string it is evaluated for contains a given string.
+      - Constraint that asserts that the string contains a given string.
     * - ``PHPUnit\Framework\Constraint\StringEndsWith stringEndsWith(string $suffix)``
-      - Constraint that asserts that the string it is evaluated for ends with a given suffix.
+      - Constraint that asserts that the string ends with a given suffix.
     * - ``PHPUnit\Framework\Constraint\StringStartsWith stringStartsWith(string $prefix)``
-      - Constraint that asserts that the string it is evaluated for starts with a given prefix.
+      - Constraint that asserts that the string starts with a given prefix.
 
 .. _appendixes.assertions.assertTrue:
 
