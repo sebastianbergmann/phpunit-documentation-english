@@ -416,38 +416,46 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     <?php
     use PHPUnit\Framework\TestCase;
 
-    class CsvFileIterator implements Iterator {
+    class CsvFileIterator implements Iterator
+    {
         protected $file;
         protected $key = 0;
         protected $current;
 
-        public function __construct($file) {
+        public function __construct($file)
+        {
             $this->file = fopen($file, 'r');
         }
 
-        public function __destruct() {
+        public function __destruct()
+        {
             fclose($this->file);
         }
 
-        public function rewind() {
+        public function rewind()
+        {
             rewind($this->file);
             $this->current = fgetcsv($this->file);
             $this->key = 0;
         }
 
-        public function valid() {
+        public function valid()
+        {
             return !feof($this->file);
         }
 
-        public function key() {
+        public function key()
+        {
             return $this->key;
         }
 
-        public function current() {
+        public function current()
+        {
             return $this->current;
         }
 
-        public function next() {
+        public function next()
+        {
             $this->current = fgetcsv($this->file);
             $this->key++;
         }
@@ -529,42 +537,43 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
 .. code-block:: php
     :caption: Using multiple data providers for a single test
-      :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
+    :name: writing-tests-for-phpunit.data-providers.examples2.DataTest.php
 
-      <?php
-      use PHPUnit\Framework\TestCase;
+    <?php
+    use PHPUnit\Framework\TestCase;
 
-      class DataTest extends TestCase
-      {
-          /**
-           * @dataProvider additionWithNonNegativeNumbersProvider
-           * @dataProvider additionWithNegativeNumbersProvider
-           */
-          public function testAdd($a, $b, $expected)
-          {
-              $this->assertSame($expected, $a + $b);
-          }
+    class DataTest extends TestCase
+    {
+        /**
+         * @dataProvider additionWithNonNegativeNumbersProvider
+         * @dataProvider additionWithNegativeNumbersProvider
+         */
+        public function testAdd($a, $b, $expected)
+        {
+            $this->assertSame($expected, $a + $b);
+        }
 
-          public function additionWithNonNegativeNumbersProvider()
-          {
-              return [
-                  [0, 1, 1],
-                  [1, 0, 1],
-                  [1, 1, 3]
-              ];
-          }
+        public function additionWithNonNegativeNumbersProvider()
+        {
+            return [
+                [0, 1, 1],
+                [1, 0, 1],
+                [1, 1, 3]
+            ];
+        }
 
-          public function additionWithNegativeNumbersProvider()
-          {
-              return [
-                  [-1, 1, 0],
-                  [-1, -1, -2],
-                  [1, -1, 0]
-              ];
-          }
-       }
+        public function additionWithNegativeNumbersProvider()
+        {
+            return [
+                [-1, 1, 0],
+                [-1, -1, -2],
+                [1, -1, 0]
+            ];
+        }
+     }
 
 .. code-block:: bash
+
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
@@ -750,10 +759,10 @@ and warnings, respectively.
    class with ``@expectedException`` or
    ``expectException()`` is no longer permitted.
 
-When testing that relies on php functions that trigger errors like
+When testing that relies on PHP functions that trigger errors like
 ``fopen`` it can sometimes be useful to use error
 suppression while testing. This allows you to check the return values by
-suppressing notices that would lead to a phpunit
+suppressing notices that would lead to a PHPUnit
 ``PHPUnit\Framework\Error\Notice``.
 
 .. code-block:: php
@@ -765,7 +774,8 @@ suppressing notices that would lead to a phpunit
 
     class ErrorSuppressionTest extends TestCase
     {
-        public function testFileWriting() {
+        public function testFileWriting()
+        {
             $writer = new FileWriter;
 
             $this->assertFalse(@$writer->write('/is-not-writeable/file', 'stuff'));
@@ -774,10 +784,11 @@ suppressing notices that would lead to a phpunit
 
     class FileWriter
     {
-        public function write($file, $content) {
+        public function write($file, $content)
+        {
             $file = fopen($file, 'w');
 
-            if($file == false) {
+            if ($file == false) {
                 return false;
             }
 
@@ -901,7 +912,8 @@ context as possible that can help to identify the problem.
 
     class ArrayDiffTest extends TestCase
     {
-        public function testEquality() {
+        public function testEquality()
+        {
             $this->assertSame(
                 [1, 2,  3, 4, 5, 6],
                 [1, 2, 33, 4, 5, 6]
@@ -955,7 +967,8 @@ and provide a few lines of context around every difference.
 
     class LongArrayDiffTest extends TestCase
     {
-        public function testEquality() {
+        public function testEquality()
+        {
             $this->assertSame(
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,  3, 4, 5, 6],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 33, 4, 5, 6]
@@ -1015,7 +1028,8 @@ functions on arrays or objects.
 
     class ArrayWeakComparisonTest extends TestCase
     {
-        public function testEquality() {
+        public function testEquality()
+        {
             $this->assertEquals(
                 [1, 2, 3, 4, 5, 6],
                 ['1', 2, 33, 4, 5, 6]
@@ -1057,6 +1071,6 @@ functions on arrays or objects.
 
 In this example the difference in the first index between
 ``1`` and ``'1'`` is
-reported even though assertEquals considers the values as a match.
+reported even though ``assertEquals()`` method considers the values as a match.
 
 

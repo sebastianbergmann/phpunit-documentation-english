@@ -64,7 +64,6 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
             $this->assertArrayHasKey('foo', ['bar' => 'baz']);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -110,7 +109,6 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
             $this->assertClassHasAttribute('foo', stdClass::class);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -156,7 +154,6 @@ Reports an error identified by ``$message`` if ``$array`` does not contains the 
             $this->assertArraySubset(['config' => ['key-a', 'key-b']], ['config' => ['key-a']]);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -207,7 +204,6 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
             $this->assertClassHasStaticAttribute('foo', stdClass::class);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -255,7 +251,6 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
             $this->assertContains(4, [1, 2, 3]);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -296,7 +291,6 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
             $this->assertContains('baz', 'foobar');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -336,7 +330,6 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
             $this->assertContains('foo', 'FooBar', '', true);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -386,7 +379,6 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
             $this->assertContainsOnly('string', ['1', '2', 3]);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -437,7 +429,6 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -483,7 +474,6 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
             $this->assertCount(0, ['foo']);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -529,7 +519,6 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
             $this->assertDirectoryExists('/path/to/directory');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -575,7 +564,6 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
             $this->assertDirectoryIsReadable('/path/to/directory');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -621,7 +609,6 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
             $this->assertDirectoryIsWritable('/path/to/directory');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -669,7 +656,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
             $this->assertEmpty(['foo']);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -755,7 +741,6 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -840,7 +825,6 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
             $this->assertEquals("foo\nbar\nbaz\n", "foo\nbah\nbaz\n");
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -890,7 +874,7 @@ More specialized comparisons are used for specific argument types for ``$expecte
 
 Reports an error identified by ``$message`` if the absolute difference between two floats ``$expected`` and ``$actual`` is greater than ``$delta``. If the absolute difference between two floats ``$expected`` and ``$actual`` is less than *or equal to* ``$delta``, the assertion will pass.
 
-Please read "`What Every Computer Scientist Should Know About Floating-Point Arithmetic <http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html>`_" to understand why ``$delta`` is neccessary.
+Please read "`What Every Computer Scientist Should Know About Floating-Point Arithmetic <http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html>`_" to understand why ``$delta`` is necessary.
 
 .. code-block:: php
     :caption: Usage of assertEquals() with floats
@@ -911,7 +895,6 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
             $this->assertEquals(1.0, 1.1);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -956,7 +939,6 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
             $this->assertEquals($expected, $actual);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1013,7 +995,6 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
             $this->assertEquals($expected, $actual);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1061,7 +1042,6 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
             $this->assertEquals(['a', 'b', 'c'], ['a', 'c', 'd']);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1117,7 +1097,6 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
             $this->assertFalse(true);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1163,7 +1142,6 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
             $this->assertFileEquals('/home/sb/expected', '/home/sb/actual');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1215,7 +1193,6 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
             $this->assertFileExists('/path/to/file');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1261,7 +1238,6 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
             $this->assertFileIsReadable('/path/to/file');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1307,7 +1283,6 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
             $this->assertFileIsWritable('/path/to/file');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1353,7 +1328,6 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
             $this->assertGreaterThan(2, 1);
         }
     }
-    ?>
 
 .. code-block:: bash
 

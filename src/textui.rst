@@ -292,7 +292,6 @@ the following code:
                     ];
                 }
             }
-            ?>
 
     ``/path/to/my/test.phpt``
 
@@ -340,9 +339,9 @@ the following code:
     Only runs tests from the specified group(s). A test can be tagged as
     belonging to a group using the ``@group`` annotation.
 
-    The ``@author`` annotation is an alias for
+    The ``@author`` and ``@ticket`` annotations are aliases for
     ``@group`` allowing to filter tests based on their
-    authors.
+    authors or their ticket identifiers, respectively.
 
 ``--exclude-group``
 
