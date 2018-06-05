@@ -187,22 +187,24 @@ interface.
     }
     ?>
 
-:numref:`extending-phpunit.examples.BaseTestListener.php`
-shows how to subclass the ``PHPUnit\Framework\BaseTestListener``
-abstract class, which lets you specify only the interface methods that
+:numref:`extending-phpunit.examples.ExtendedTestListener.php`
+shows how to use the ``PHPUnit\Framework\TestListenerDefaultImplementation``
+trait, which lets you specify only the interface methods that
 are interesting for your use case, while providing empty implementations
 for all the others.
 
 .. code-block:: php
-    :caption: Using base test listener
-    :name: extending-phpunit.examples.BaseTestListener.php
+    :caption: Using test listener default implementation trait
+    :name: extending-phpunit.examples.ExtendedTestListener.php
 
     <?php
-    use PHPUnit\Framework\BaseTestListener;
+    use PHPUnit\Framework\TestListenerDefaultImplementation;
 
-    class ShortTestListener extends BaseTestListener
+    class ShortTestListener
     {
-        public function endTest(PHPUnit\Framework\Test $test, $time)
+        use TestListenerDefaultImplementation;
+
+        public function endTest(PHPUnit\Framework\Test $test, $time): time
         {
             printf("Test '%s' ended.\n", $test->getName());
         }
