@@ -204,7 +204,7 @@ for all the others.
     {
         use TestListenerDefaultImplementation;
 
-        public function endTest(PHPUnit\Framework\Test $test, $time): time
+        public function endTest(PHPUnit\Framework\Test $test, $time): void
         {
             printf("Test '%s' ended.\n", $test->getName());
         }
