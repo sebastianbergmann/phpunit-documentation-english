@@ -2529,7 +2529,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the class has a given attribute.
     * - ``PHPUnit\Framework\Constraint\ClassHasStaticAttribute classHasStaticAttribute(string $attributeName)``
       - Constraint that asserts that the class has a given static attribute.
-    * - ``PHPUnit\Framework\Constraint\ObjectHasAttribute hasAttribute(string $attributeName)``
+    * - ``PHPUnit\Framework\Constraint\ObjectHasAttribute objectHasAttribute(string $attributeName)``
       - Constraint that asserts that the object has a given attribute.
     * - ``PHPUnit\Framework\Constraint\IsIdentical identicalTo(mixed $value)``
       - Constraint that asserts that one value is identical to another.
