@@ -220,7 +220,7 @@ abstract TestCase requiring you to implement two abstract methods
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class MyGuestbookTest extends TestCase
@@ -335,7 +335,7 @@ different data-fixture for each test case:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     abstract class MyApp_Tests_DatabaseTestCase extends TestCase
@@ -387,7 +387,7 @@ We can now modify our test-case to look like:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     abstract class Generic_Tests_DatabaseTestCase extends TestCase
@@ -707,7 +707,7 @@ This file can be used in your Database TestCase by calling the
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class MyTestCase extends TestCase
@@ -753,7 +753,7 @@ currently, so you have to instantiate it manually:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
     use PHPUnit\DbUnit\DataSet\YamlDataSet;
 
@@ -793,7 +793,7 @@ You can create a CSV DataSet by calling:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
     use PHPUnit\DbUnit\DataSet\CsvDataSet;
 
@@ -822,7 +822,7 @@ should look like:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class ArrayGuestbookTest extends TestCase
@@ -985,7 +985,7 @@ specified table names with a whitelist as shown in
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class MySqlGuestbookTest extends TestCase
@@ -1046,7 +1046,7 @@ We then wrap the Flat XML DataSet into a Replacement DataSet:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class ReplacementTest extends TestCase
@@ -1076,7 +1076,7 @@ with the DB DataSet to filter the columns of the datasets.
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class DataSetFilterTest extends TestCase
@@ -1145,7 +1145,7 @@ Using the Composite DataSet we can aggregate both fixture files:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class CompositeTest extends TestCase
@@ -1293,7 +1293,7 @@ which has to be returned from the
    .. code-block:: php
 
        <?php
-       use PHPUnit\Framework\TestCase;
+       use PHPUnit\DbUnit\TestCase;
        use PHPUnit\DbUnit\TestCaseTrait;
 
        class ConnectionTest extends TestCase
@@ -1319,7 +1319,7 @@ which has to be returned from the
    .. code-block:: php
 
        <?php
-       use PHPUnit\Framework\TestCase;
+       use PHPUnit\DbUnit\TestCase;
        use PHPUnit\DbUnit\TestCaseTrait;
 
        class ConnectionTest extends TestCase
@@ -1383,7 +1383,7 @@ examples, but a third one:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class GuestbookTest extends TestCase
@@ -1419,7 +1419,7 @@ File/Array Based Data Set:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class GuestbookTest extends TestCase
@@ -1494,7 +1494,7 @@ compare it to a dataset:
 .. code-block:: php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase;
     use PHPUnit\DbUnit\TestCaseTrait;
 
     class ComplexQueryTest extends TestCase
@@ -1530,7 +1530,7 @@ different ways for DataSet assertions.
    .. code-block:: php
 
        <?php
-       use PHPUnit\Framework\TestCase;
+       use PHPUnit\DbUnit\TestCase;
        use PHPUnit\DbUnit\TestCaseTrait;
 
        class DataSetAssertionsTest extends TestCase
@@ -1553,7 +1553,7 @@ different ways for DataSet assertions.
    .. code-block:: php
 
        <?php
-       use PHPUnit\Framework\TestCase;
+       use PHPUnit\DbUnit\TestCase;
        use PHPUnit\DbUnit\TestCaseTrait;
        use PHPUnit\DbUnit\DataSet\QueryDataSet;
 
