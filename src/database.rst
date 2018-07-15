@@ -682,10 +682,10 @@ MySQL XML DataSet
 -----------------
 
 This new XML format is specific to the
-`MySQL database server <http://www.mysql.com>`_.
+`MySQL database server <https://www.mysql.com>`_.
 Support for it was added in PHPUnit 3.5. Files in this format can
 be generated using the
-`mysqldump <http://dev.mysql.com/doc/refman/5.0/en/mysqldump.html>`_
+`mysqldump <https://dev.mysql.com/doc/refman/5.0/en/mysqldump.html>`_
 utility. Unlike CSV datasets, which ``mysqldump``
 also supports, a single file in this XML format can contain data
 for multiple tables. You can create a file in this format by
@@ -885,7 +885,7 @@ straightforward:
          */
         public function __construct(array $data)
         {
-            foreach ($data AS $tableName => $rows) {
+            foreach ($data as $tableName => $rows) {
                 $columns = [];
                 if (isset($rows[0])) {
                     $columns = array_keys($rows[0]);
