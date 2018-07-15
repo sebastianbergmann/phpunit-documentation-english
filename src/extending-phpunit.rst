@@ -140,7 +140,7 @@ interface.
 
     class SimpleTestListener implements TestListener
     {
-        public function addError(PHPUnit\Framework\Test $test, \Throwable $e, float $time) :void
+        public function addError(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
         {
             printf("Error while running test '%s'.\n", $test->getName());
         }
@@ -150,42 +150,42 @@ interface.
             printf("Warning while running test '%s'.\n", $test->getName());
         }
 
-        public function addFailure(PHPUnit\Framework\Test $test, PHPUnit\Framework\AssertionFailedError $e, float $time) : void
+        public function addFailure(PHPUnit\Framework\Test $test, PHPUnit\Framework\AssertionFailedError $e, float $time): void
         {
             printf("Test '%s' failed.\n", $test->getName());
         }
 
-        public function addIncompleteTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time) : void
+        public function addIncompleteTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
         {
             printf("Test '%s' is incomplete.\n", $test->getName());
         }
 
-        public function addRiskyTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time) : void
+        public function addRiskyTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
         {
             printf("Test '%s' is deemed risky.\n", $test->getName());
         }
 
-        public function addSkippedTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time) : void
+        public function addSkippedTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
         {
             printf("Test '%s' has been skipped.\n", $test->getName());
         }
 
-        public function startTest(PHPUnit\Framework\Test $test) : void
+        public function startTest(PHPUnit\Framework\Test $test): void
         {
             printf("Test '%s' started.\n", $test->getName());
         }
 
-        public function endTest(PHPUnit\Framework\Test $test, float $time) : void
+        public function endTest(PHPUnit\Framework\Test $test, float $time): void
         {
             printf("Test '%s' ended.\n", $test->getName());
         }
 
-        public function startTestSuite(PHPUnit\Framework\TestSuite $suite) : void
+        public function startTestSuite(PHPUnit\Framework\TestSuite $suite): void
         {
             printf("TestSuite '%s' started.\n", $suite->getName());
         }
 
-        public function endTestSuite(PHPUnit\Framework\TestSuite $suite) : void
+        public function endTestSuite(PHPUnit\Framework\TestSuite $suite): void
         {
             printf("TestSuite '%s' ended.\n", $suite->getName());
         }
