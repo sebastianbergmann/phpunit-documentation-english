@@ -145,6 +145,11 @@ interface.
             printf("Error while running test '%s'.\n", $test->getName());
         }
 
+        public function addWarning(PHPUnit\Framework\Test $test, PHPUnit\Framework\Warning $e, float $time): void
+        {
+            printf("Warning while running test '%s'.\n", $test->getName());
+        }
+
         public function addFailure(PHPUnit\Framework\Test $test, PHPUnit\Framework\AssertionFailedError $e, float $time) : void
         {
             printf("Test '%s' failed.\n", $test->getName());
