@@ -77,12 +77,16 @@ longer than 10 seconds to execute. This timeout is configurable via the
 ``timeoutForMediumTests`` attribute in the XML
 configuration file.
 
-A test that is not annotated with ``@medium`` or
-``@large`` will be treated as if it were annotated with
-``@small``. A small test will fail if it takes longer than
+A test annotated with ``@small`` will fail if it takes longer than
 1 second to execute. This timeout is configurable via the
 ``timeoutForSmallTests`` attribute in the XML configuration
 file.
+
+.. admonition:: Note
+
+   Tests need to be explicitly annotated by either ``@small``,
+   ``@medium``, or ``@large`` to enable run time limits.
+
 
 .. _risky-tests.global-state-manipulation:
 
