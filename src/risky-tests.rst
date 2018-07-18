@@ -64,7 +64,7 @@ A time limit can be enforced for the execution of a test if the
 ``pcntl`` extension is available. The enforcing of this
 time limit can be enabled by using the
 ``--enforce-time-limit`` option on the commandline or by
-setting ``beStrictAboutTestSize="true"`` in PHPUnit's XML
+setting ``enforceTimeLimit="true"`` in PHPUnit's XML
 configuration file.
 
 A test annotated with ``@large`` will fail if it takes
