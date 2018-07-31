@@ -115,7 +115,7 @@ non-database tests you can easily get away in under a minute even
 for large test suites.
 
 The `Doctrine 2
-project <http://www.doctrine-project.org>`_'s test suite, for example, currently has a test suite of
+project <https://www.doctrine-project.org>`_'s test suite, for example, currently has a test suite of
 about 1000 tests where nearly half of them accesses the database
 and still runs in 15 seconds against a MySQL database on a standard
 desktop computer.
@@ -312,7 +312,7 @@ testing.
 #.
 
    If you are using libraries such as
-   `Doctrine 2 <http://www.doctrine-project.org>`_ or
+   `Doctrine 2 <https://www.doctrine-project.org>`_ or
    `Propel <http://www.propelorm.org/>`_
    you can use their APIs to create the database schema you
    need once before you run the tests. You can utilize
@@ -1586,7 +1586,7 @@ No, PHPUnit requires all database objects to be available when the
 suite is started. The Database, tables, sequences, triggers and
 views have to be created before you run the test suite.
 
-`Doctrine 2 <http://www.doctrine-project.org>`_ or
+`Doctrine 2 <https://www.doctrine-project.org>`_ or
 `eZ Components <http://www.ezcomponents.org>`_ have
 powerful tools that allow you to create the database schema from
 pre-defined datastructures. However, these have to be hooked into
