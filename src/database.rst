@@ -48,8 +48,8 @@ Supported Vendors for Database Testing
 ######################################
 
 DbUnit currently supports MySQL, PostgreSQL, Oracle and SQLite. Through
-`Zend Framework <http://framework.zend.com>`_ or
-`Doctrine 2 <http://www.doctrine-project.org>`_
+`Zend Framework <https://framework.zend.com>`_ or
+`Doctrine 2 <https://www.doctrine-project.org>`_
 integrations it has access to other database systems such as IBM DB2 or
 Microsoft SQL Server.
 
