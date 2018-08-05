@@ -34,7 +34,7 @@ PHPUnit's own assertions are implemented. As you can see in
 ``assertThat()`` for evaluation.
 
 .. code-block:: php
-    :caption: The assertTrue() and isTrue() methods of the PHPUnit\Framework\Assert class
+    :caption: The assertTrue() and isTrue() methods of the PHPUnit\\Framework\\Assert class
     :name: extending-phpunit.examples.Assert.php
 
     <?php
@@ -80,7 +80,7 @@ abstract base class for matcher objects (or constraints),
 ``PHPUnit\Framework\Constraint``.
 
 .. code-block:: php
-    :caption: The PHPUnit\Framework\Constraint\IsTrue class
+    :caption: The PHPUnit\\Framework\Constraint\\IsTrue class
     :name: extending-phpunit.examples.IsTrue.php
 
     <?php
@@ -223,8 +223,8 @@ execution.
 
 .. _extending-phpunit.PHPUnit_Framework_Test:
 
-Implement PHPUnit\Framework\Test
-################################
+Implement PHPUnit\\Framework\\Test
+##################################
 
 The ``PHPUnit\Framework\Test`` interface is narrow and
 easy to implement. You can write an implementation of
