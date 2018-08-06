@@ -257,7 +257,7 @@ Data Providers
 ##############
 
 A test method can accept arbitrary arguments. These arguments are to be
-provided by one ore more data provider methods (``additionProvider()`` in
+provided by one or more data provider methods (``additionProvider()`` in
 :numref:`writing-tests-for-phpunit.data-providers.examples.DataTest.php`).
 The data provider method to be used is specified using the
 ``@dataProvider`` annotation.
