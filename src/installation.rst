@@ -125,7 +125,7 @@ For Cygwin and/or MingW32 (e.g., TortoiseGit) shell environments, you
 may skip step 5. above, simply save the file as
 :file:`phpunit` (without :file:`.phar`
 extension), and make it executable via
-chmod 775 phpunit.
+``chmod 775 phpunit``.
 
 .. _installation.phar.verification:
 
