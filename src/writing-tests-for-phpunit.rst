@@ -591,8 +591,8 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
 .. admonition:: Note
 
-   All data providers are executed before both the call to the ``setUpBeforeClass``
-   static method and the first call to the ``setUp`` method.
+   All data providers are executed before both the call to the ``setUpBeforeClass()``
+   static method and the first call to the ``setUp()`` method.
    Because of that you can't access any variables you create there from
    within a data provider. This is required in order for PHPUnit to be able
    to compute the total number of tests.
@@ -1003,7 +1003,7 @@ When a comparison fails PHPUnit creates textual representations of the
 input values and compares those. Due to that implementation a diff
 might show more problems than actually exist.
 
-This only happens when using assertEquals or other 'weak' comparison
+This only happens when using ``assertEquals()`` or other 'weak' comparison
 functions on arrays or objects.
 
 .. code-block:: php
@@ -1057,6 +1057,6 @@ functions on arrays or objects.
 
 In this example the difference in the first index between
 ``1`` and ``'1'`` is
-reported even though assertEquals considers the values as a match.
+reported even though ``assertEquals()`` considers the values as a match.
 
 
