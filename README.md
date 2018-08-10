@@ -9,6 +9,7 @@ repository:
 * [Brazilian Portuguese Documentation](https://github.com/sebastianbergmann/phpunit-documentation-brazilian-portuguese)
 * [Japanese Documentation](https://github.com/sebastianbergmann/phpunit-documentation-japanese)
 * [Simplified Chinese Documentation](https://github.com/sebastianbergmann/phpunit-documentation-chinese)
+* [Russian Documentation](https://github.com/sebastianbergmann/phpunit-documentation-russian)
 
 ## Adding a new translation
 
