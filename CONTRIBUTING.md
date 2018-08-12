@@ -36,4 +36,4 @@ documentation.
 * [Brazilian Portuguese Documentation](https://github.com/sebastianbergmann/phpunit-documentation-brazilian-portuguese/issues)
 * [Japanese Documentation](https://github.com/sebastianbergmann/phpunit-documentation-japanese/issues)
 * [Simplified Chinese Documentation](https://github.com/sebastianbergmann/phpunit-documentation-chinese/issues)
-
+* [Russian Documentation](https://github.com/sebastianbergmann/phpunit-documentation-russian/issues)
