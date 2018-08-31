@@ -2168,6 +2168,10 @@ The format string may contain the following placeholders:
 
   ``%c``: A single character of any sort.
 
+-
+
+  ``%%``: A literal percent character: ``%``.
+
 .. _appendixes.assertions.assertStringMatchesFormatFile:
 
 assertStringMatchesFormatFile()
