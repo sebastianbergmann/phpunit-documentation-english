@@ -49,7 +49,7 @@ return a value when called.
 .. admonition:: Limitation: final, private, and static methods
 
    Please note that ``final``, ``private``,
-   ``protected``, and ``static`` methods cannot
+   and ``static`` methods cannot
    be stubbed or mocked. They are ignored by PHPUnit's test double
    functionality and retain their original behavior except for ``static``
    methods that will be replaced by a method throwing a
