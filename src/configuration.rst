@@ -22,6 +22,7 @@ be used to configure PHPUnit's core functionality.
              backupGlobals="true"
              backupStaticAttributes="false"
              <!--bootstrap="/path/to/bootstrap.php"-->
+             cacheResult="false"
              cacheTokens="false"
              colors="false"
              convertErrorsToExceptions="true"
