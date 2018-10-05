@@ -371,4 +371,10 @@ The XML configuration above corresponds to the following PHP code:
     $_FILES['foo'] = 'bar';
     $_REQUEST['foo'] = 'bar';
 
+By default, environment variables are not overwritten if they exist already.
+To force overwriting existing variables, use the ``force`` attribute:
 
+.. code-block:: xml
+
+    <php>
+      <env name="foo" value="bar" force="true"/>
