@@ -72,7 +72,7 @@ PHPUnit's own assertions are implemented. As you can see in
         }
 
         // ...
-    }?>
+    }
 
 :numref:`extending-phpunit.examples.IsTrue.php` shows how
 ``PHPUnit\Framework\Constraint\IsTrue`` extends the
@@ -324,4 +324,60 @@ and the second value is the actual one.
     FAILURES!
     Tests: 2, Failures: 1.
 
+.. _extending-phpunit.TestRunner:
 
+Extending the TestRunner
+########################
+
+PHPUnit |version| supports TestRunner extensions that can hook
+into various events during the test execution.
+See :ref:`appendixes.configuration.extensions` for details on how
+to register extensions in PHPUnit's XML configuration.
+
+Each available event that the extension can hook into is represented by an
+interface that the extension needs to implement.
+:ref:`extending-phpunit.hooks` lists the available events in
+PHPUnit |version|.
+
+.. _extending-phpunit.hooks:
+
+Available Hook Interfaces
+-------------------------
+
+- ``AfterIncompleteTestHook``
+- ``AfterLastTestHook``
+- ``AfterRiskyTestHook``
+- ``AfterSkippedTestHook``
+- ``AfterSuccessfulTestHook``
+- ``AfterTestErrorHook``
+- ``AfterTestFailureHook``
+- ``AfterTestWarningHook``
+- ``BeforeFirstTestHook``
+- ``BeforeTestHook``
+
+:numref:`extending-phpunit.examples.TestRunnerExtension` shows an example
+for an extension implementing ``BeforeFirstTestHook`` and ``AfterLastTestHook``:
+
+.. code-block:: php
+    :caption: TestRunner Extension Example
+    :name: extending-phpunit.examples.TestRunnerExtension
+
+    <?php
+
+    namespace Vendor;
+
+    use PHPUnit\Runner\AfterLastTestHook;
+    use PHPUnit\Runner\BeforeFirstTestHook;
+
+    final class MyExtension implements BeforeFirstTestHook, AfterLastTestHook
+    {
+        public function executeAfterLastTest(): void
+        {
+            // called after the last test has been run
+        }
+
+        public function executeBeforeFirstTest(): void
+        {
+            // called before the first test is being run
+        }
+    }

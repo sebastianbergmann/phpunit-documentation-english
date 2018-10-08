@@ -332,7 +332,6 @@ repeated for every ``@covers`` annotation. See
             $o->publicMethod();
         }
     }
-    ?>
 
 .. _appendixes.annotations.coversNothing:
 
@@ -419,7 +418,7 @@ specific exception.
          * @expectedException     MyException
          * @expectedExceptionCode 20
          */
-        public function testExceptionHasErrorcode20()
+        public function testExceptionHasErrorCode20()
         {
             throw new MyException('Some Message', 20);
         }
@@ -440,7 +439,7 @@ specify a class constant as an
           * @expectedException     MyException
           * @expectedExceptionCode MyClass::ERRORCODE
           */
-        public function testExceptionHasErrorcode20()
+        public function testExceptionHasErrorCode20()
         {
           throw new MyException('Some Message', 20);
         }
@@ -762,8 +761,6 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
    Prior to PHPUnit 7.0 (due to a bug in the annotation parsing), using
    the ``@testdox`` annotation also activated the behaviour
    of the ``@test`` annotation.
-
-.. code-block:: php
 
 .. _appendixes.annotations.testWith:
 

@@ -40,7 +40,8 @@ work and get stuck by one of the following problems:
 
 The DbUnit extension considerably simplifies the setup of a database for
 testing purposes and allows you to verify the contents of a database after
-performing a series of operations.
+performing a series of operations. Installation of the DbUnit extention is 
+easy and is documented in :ref:`installation.optional-packages` 
 
 .. _database.supported-vendors-for-database-testing:
 
@@ -209,7 +210,6 @@ following way:
             $this->assertSame(2, 1 + 1);
         }
     }
-    ?>
 
 If you want to test code that works with the Database Extension the
 setup is a bit more complex and you have to extend a different
@@ -244,7 +244,6 @@ abstract TestCase requiring you to implement two abstract methods
             return $this->createFlatXMLDataSet(dirname(__FILE__).'/_files/guestbook-seed.xml');
         }
     }
-    ?>
 
 .. _database.implementing-getconnection:
 
@@ -305,7 +304,7 @@ testing.
 
 #.
 
-   If you are using a persistent database (not Sqlite Memory) you can
+   If you are using a persistent database (not SQLite In-Memory) you can
    easily setup the database once with tools such as phpMyAdmin for
    MySQL and re-use the database for every test-run.
 
@@ -360,7 +359,6 @@ different data-fixture for each test case:
             return $this->conn;
         }
     }
-    ?>
 
 This has the database connection hardcoded in the PDO connection
 though. PHPUnit has another awesome feature that could make this
@@ -412,7 +410,6 @@ We can now modify our test-case to look like:
             return $this->conn;
         }
     }
-    ?>
 
 We can now run the database test suite using different
 configurations from the command-line interface:
@@ -506,7 +503,7 @@ initial fixture and to describe the expected state of the database.
 Flat XML DataSet
 ----------------
 
-The most common dataset is called Flat XML. It is a very simple xml
+The most common dataset is called Flat XML. It is a very simple XML
 format where a tag inside the root node
 ``<dataset>`` represents exactly one row in the
 database. The tags name equals the table to insert the row into and
@@ -531,7 +528,7 @@ However, this simplicity comes at a cost.
 
 From the previous example it isn't obvious how you would specify an
 empty table. You can insert a tag with no attributes with the name
-of the empty table. A flat xml file for an empty guestbook table
+of the empty table. A flat XML file for an empty guestbook table
 would then look like:
 
 .. code-block:: bash
@@ -541,10 +538,10 @@ would then look like:
         <guestbook />
     </dataset>
 
-The handling of NULL values with the flat xml dataset is tedious. A
+The handling of NULL values with the flat XML dataset is tedious. A
 NULL value is different than an empty string value in almost any
 database (Oracle being an exception), something that is difficult
-to describe in the flat xml format. You can represent a NULL's value
+to describe in the flat XML format. You can represent a NULL's value
 by omitting the attribute from the row specification. If our
 guestbook would allow anonymous entries represented by a NULL value
 in the user column, a hypothetical state of the guestbook table
@@ -565,7 +562,7 @@ table holds. If an attribute is NULL for all the rows of a
 data-table, how would the Database Extension know that the column
 should be part of the table?
 
-The flat xml dataset makes a crucial assumption now, defining that
+The flat XML dataset makes a crucial assumption now, defining that
 the attributes on the first defined row of a table define the
 columns of this table. In the previous example this would mean
 “id“, “content“, “user“ and
@@ -592,7 +589,7 @@ defined as “NOT NULL DEFAULT NULL“.
 In conclusion I can only advise using the Flat XML datasets if you
 do not need NULL values.
 
-You can create a flat xml dataset instance from within your
+You can create a flat XML dataset instance from within your
 Database TestCase by calling the
 ``createFlatXmlDataSet($filename)`` method:
 
@@ -611,7 +608,6 @@ Database TestCase by calling the
             return $this->createFlatXmlDataSet('myFlatXmlFixture.xml');
         }
     }
-    ?>
 
 .. _database.xml-dataset:
 
@@ -661,7 +657,7 @@ order of the previously given ``<column>``
 elements. The ``<null />`` tag obviously means
 that the value is NULL.
 
-You can create a xml dataset instance from within your
+You can create a XML dataset instance from within your
 Database TestCase by calling the
 ``createXmlDataSet($filename)`` method:
 
@@ -680,7 +676,6 @@ Database TestCase by calling the
             return $this->createXMLDataSet('myXmlFixture.xml');
         }
     }
-    ?>
 
 .. _database.mysql-xml-dataset:
 
@@ -719,7 +714,6 @@ This file can be used in your Database TestCase by calling the
             return $this->createMySQLXMLDataSet('/path/to/file.xml');
         }
     }
-    ?>
 
 .. _database.yaml-dataset:
 
@@ -766,7 +760,6 @@ currently, so you have to instantiate it manually:
             return new YamlDataSet(dirname(__FILE__)."/_files/guestbook.yml");
         }
     }
-    ?>
 
 .. _database.csv-dataset:
 
@@ -808,7 +801,6 @@ You can create a CSV DataSet by calling:
             return $dataSet;
         }
     }
-    ?>
 
 .. _database.array-dataset:
 
@@ -851,7 +843,6 @@ should look like:
             );
         }
     }
-    ?>
 
 A PHP DataSet has obvious advantages over all the other file-based
 datasets:
@@ -925,7 +916,6 @@ straightforward:
             return $this->tables[$tableName];
         }
     }
-    ?>
 
 .. _database.query-sql-dataset:
 
@@ -941,7 +931,6 @@ contents of the database. This is where the Query DataSet shines:
     <?php
     $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook');
-    ?>
 
 Adding a table just by name is an implicit way to define the
 data-table with the following query:
@@ -951,7 +940,6 @@ data-table with the following query:
     <?php
     $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook', 'SELECT * FROM guestbook');
-    ?>
 
 You can make use of this by specifying arbitrary queries for your
 tables, for example restricting rows, column or adding
@@ -962,7 +950,6 @@ tables, for example restricting rows, column or adding
     <?php
     $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook', 'SELECT id, content FROM guestbook ORDER BY created DESC');
-    ?>
 
 The section on Database Assertions will show some more details on
 how to make use of the Query DataSet.
@@ -1017,7 +1004,6 @@ specified table names with a whitelist as shown in
             // ...
         }
     }
-    ?>
 
 .. _database.replacement-dataset:
 
@@ -1061,7 +1047,6 @@ We then wrap the Flat XML DataSet into a Replacement DataSet:
             return $rds;
         }
     }
-    ?>
 
 .. _database.dataset-filter:
 
@@ -1105,7 +1090,6 @@ with the DB DataSet to filter the columns of the datasets.
             // ..
         }
     }
-    ?>
 
 .. admonition:: Note
 
@@ -1164,7 +1148,6 @@ Using the Composite DataSet we can aggregate both fixture files:
             return $compositeDs;
         }
     }
-    ?>
 
 .. _database.beware-of-foreign-keys:
 
@@ -1200,7 +1183,6 @@ do not plan to implement your own DataSet or DataTable.
 
         public function getReverseIterator();
     }
-    ?>
 
 The public interface is used internally by the
 ``assertDataSetsEqual()`` assertion on the Database
@@ -1232,7 +1214,6 @@ A table is also represented by the following interface:
         public function getRow($row);
         public function assertEquals(ITable $other);
     }
-    ?>
 
 Except the ``getTableMetaData()`` method it is
 pretty self-explainatory. The used methods are all required for
@@ -1277,13 +1258,12 @@ which has to be returned from the
 
     interface Connection
     {
-        public function createDataSet(Array $tableNames = null);
+        public function createDataSet(array $tableNames = null);
         public function createQueryTable($resultName, $sql);
         public function getRowCount($tableName, $whereClause = null);
 
         // ...
     }
-    ?>
 
 #.
 
@@ -1306,7 +1286,6 @@ which has to be returned from the
                $dataSet = $this->getConnection()->createDataSet();
            }
        }
-       ?>
 
 #.
 
@@ -1332,11 +1311,10 @@ which has to be returned from the
                $queryTable = $this->getConnection()->createQueryTable('guestbook', 'SELECT * FROM guestbook');
            }
        }
-       ?>
 
 #.
 
-   The ``getRowCount()`` method is a convienent way to
+   The ``getRowCount()`` method is a convenient way to
    access the number of rows in a table, optionally filtered by an
    additional where clause. This can be used with a simple equality
    assertion:
@@ -1356,7 +1334,6 @@ which has to be returned from the
                $this->assertSame(2, $this->getConnection()->getRowCount('guestbook'));
            }
        }
-       ?>
 
 .. _database.database-assertions-api:
 
@@ -1400,7 +1377,6 @@ examples, but a third one:
             $this->assertSame(3, $this->getConnection()->getRowCount('guestbook'), "Inserting failed");
         }
     }
-    ?>
 
 .. _database.asserting-the-state-of-a-table:
 
@@ -1439,7 +1415,6 @@ File/Array Based Data Set:
             $this->assertTablesEqual($expectedTable, $queryTable);
         }
     }
-    ?>
 
 Now we have to write the *expectedBook.xml* Flat
 XML file for this assertion:
@@ -1480,7 +1455,6 @@ We have to fix up the Query Table call:
     $queryTable = $this->getConnection()->createQueryTable(
         'guestbook', 'SELECT id, content, user FROM guestbook'
     );
-    ?>
 
 .. _database.asserting-the-result-of-a-query:
 
@@ -1511,7 +1485,6 @@ compare it to a dataset:
             $this->assertTablesEqual($expectedTable, $queryTable);
         }
     }
-    ?>
 
 .. _database.asserting-the-state-of-multiple-tables:
 
@@ -1544,7 +1517,6 @@ different ways for DataSet assertions.
                $this->assertDataSetsEqual($expectedDataSet, $dataSet);
            }
        }
-       ?>
 
 #.
 
@@ -1570,7 +1542,6 @@ different ways for DataSet assertions.
                $this->assertDataSetsEqual($expectedDataSet, $dataSet);
            }
        }
-       ?>
 
 .. _database.frequently-asked-questions:
 
