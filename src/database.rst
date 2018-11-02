@@ -376,10 +376,10 @@ directory of the application that looks like:
     <?xml version="1.0" encoding="UTF-8" ?>
     <phpunit>
         <php>
-            <var name="DB_DSN" value="mysql:dbname=myguestbook;host=localhost" />
-            <var name="DB_USER" value="user" />
-            <var name="DB_PASSWD" value="passwd" />
-            <var name="DB_DBNAME" value="myguestbook" />
+            <env name="DB_DSN" value="mysql:dbname=myguestbook;host=localhost" />
+            <env name="DB_USER" value="user" />
+            <env name="DB_PASSWD" value="passwd" />
+            <env name="DB_DBNAME" value="myguestbook" />
         </php>
     </phpunit>
 
@@ -405,9 +405,9 @@ We can now modify our test-case to look like:
         {
             if ($this->conn === null) {
                 if (self::$pdo == null) {
-                    self::$pdo = new PDO( $GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
+                    self::$pdo = new PDO( $_ENV['DB_DSN'], $_ENV['DB_USER'], $_ENV['DB_PASSWD'] );
                 }
-                $this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
+                $this->conn = $this->createDefaultDBConnection(self::$pdo, $_ENV['DB_DBNAME']);
             }
 
             return $this->conn;
