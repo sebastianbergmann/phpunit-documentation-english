@@ -1,0 +1,15 @@
+{
+  "filters": {},
+  "plugins": [
+    "rst"
+  ],
+  "rules": {
+    "alex": true,
+    "common-misspellings": true,
+    "en-capitalization": true,
+    "no-todo": true,
+    "stop-words": true,
+    "terminology": true,
+    "write-good": true
+  }
+}
