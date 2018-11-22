@@ -40,7 +40,7 @@ work and get stuck by one of the following problems:
 
 The DbUnit extension considerably simplifies the setup of a database for
 testing purposes and allows you to verify the contents of a database after
-performing a series of operations. Installation of the DbUnit extention is 
+performing a series of operations. Installation of the DbUnit extension is 
 easy and is documented in :ref:`installation.optional-packages` 
 
 .. _database.supported-vendors-for-database-testing:
