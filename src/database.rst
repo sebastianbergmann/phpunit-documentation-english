@@ -212,11 +212,10 @@ following way:
     }
     ?>
 
-If you want to test code that works with the Database Extension the
-setup is a bit more complex and you have to extend a different
-abstract TestCase requiring you to implement two abstract methods
-``getConnection()`` and
-``getDataSet()``:
+If you want to test code that works with the Database Extension, the
+setup is a bit more complex and you have to use the additional
+``TestCaseTrait`` requiring you to implement two abstract methods
+``getConnection()`` and ``getDataSet()``:
 
 .. code-block:: php
 
