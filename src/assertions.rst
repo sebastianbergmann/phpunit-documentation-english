@@ -229,7 +229,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
 assertContains()
 ################
 
-``assertContains(mixed $needle, Iterator|array $haystack[, string $message = ''])``
+``assertContains(mixed $needle, iterable $haystack[, string $message = ''])``
 
 Reports an error identified by ``$message`` if ``$needle`` is not an element of ``$haystack``.
 
@@ -355,7 +355,7 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
 assertContainsOnly()
 ####################
 
-``assertContainsOnly(string $type, Iterator|array $haystack[, boolean $isNativeType = null, string $message = ''])``
+``assertContainsOnly(string $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
 
 Reports an error identified by ``$message`` if ``$haystack`` does not contain only variables of type ``$type``.
 
@@ -1490,36 +1490,33 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
 
 .. _appendixes.assertions.assertInternalType:
 
-assertInternalType()
-####################
+assertIsArray()
+###############
 
-``assertInternalType($expected, $actual[, $message = ''])``
+``assertIsArray($actual[, $message = ''])``
 
-Reports an error identified by ``$message`` if ``$actual`` is not of the ``$expected`` type.
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``array``.
 
-``assertNotInternalType()`` is the inverse of this assertion and takes the same arguments.
-
-``assertAttributeInternalType()`` and ``assertAttributeNotInternalType()`` are convenience wrappers that can be applied to a ``public``, ``protected``, or ``private`` attribute of a class or object.
+``assertIsNotArray()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
-    :caption: Usage of assertInternalType()
-    :name: appendixes.assertions.assertInternalType.example
+    :caption: Usage of assertIsArray()
+    :name: appendixes.assertions.assertIsArray.example
 
     <?php
     use PHPUnit\Framework\TestCase;
 
-    class InternalTypeTest extends TestCase
+    class ArrayTest extends TestCase
     {
         public function testFailure()
         {
-            $this->assertInternalType('string', 42);
+            $this->assertIsArray(null);
         }
     }
-    ?>
 
 .. code-block:: bash
 
-    $ phpunit InternalTypeTest
+    $ phpunit ArrayTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1528,10 +1525,440 @@ Reports an error identified by ``$message`` if ``$actual`` is not of the ``$expe
 
     There was 1 failure:
 
-    1) InternalTypeTest::testFailure
-    Failed asserting that 42 is of type "string".
+    1) ArrayTest::testFailure
+    Failed asserting that null is of type "array".
 
-    /home/sb/InternalTypeTest.php:6
+    /home/sb/ArrayTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsBool()
+##############
+
+``assertIsBool($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``bool``.
+
+``assertIsNotBool()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsBool()
+    :name: appendixes.assertions.assertIsBool.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class BoolTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsBool(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit BoolTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) BoolTest::testFailure
+    Failed asserting that null is of type "bool".
+
+    /home/sb/BoolTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsCallable()
+##################
+
+``assertIsCallable($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``callable``.
+
+``assertIsNotCallable()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsCallable()
+    :name: appendixes.assertions.assertIsCallable.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class CallableTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsCallable(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit CallableTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) CallableTest::testFailure
+    Failed asserting that null is of type "callable".
+
+    /home/sb/CallableTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsFloat()
+###############
+
+``assertIsFloat($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``float``.
+
+``assertIsNotFloat()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsFloat()
+    :name: appendixes.assertions.assertIsFloat.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class FloatTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsFloat(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit FloatTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) FloatTest::testFailure
+    Failed asserting that null is of type "float".
+
+    /home/sb/FloatTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsInt()
+#############
+
+``assertIsInt($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``int``.
+
+``assertIsNotInt()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsInt()
+    :name: appendixes.assertions.assertIsInt.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class IntTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsInt(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit IntTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) IntTest::testFailure
+    Failed asserting that null is of type "int".
+
+    /home/sb/IntTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsIterable()
+##################
+
+``assertIsIterable($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``iterable``.
+
+``assertIsNotIterable()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsIterable()
+    :name: appendixes.assertions.assertIsIterable.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class IterableTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsIterable(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit IterableTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) IterableTest::testFailure
+    Failed asserting that null is of type "iterable".
+
+    /home/sb/IterableTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsNumeric()
+#################
+
+``assertIsNumeric($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``numeric``.
+
+``assertIsNotNumeric()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsNumeric()
+    :name: appendixes.assertions.assertIsNumeric.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class NumericTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsNumeric(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit NumericTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) NumericTest::testFailure
+    Failed asserting that null is of type "numeric".
+
+    /home/sb/NumericTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsObject()
+################
+
+``assertIsObject($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``object``.
+
+``assertIsNotObject()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsObject()
+    :name: appendixes.assertions.assertIsObject.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class ObjectTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsObject(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit ObjectTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) ObjectTest::testFailure
+    Failed asserting that null is of type "object".
+
+    /home/sb/ObjectTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsResource()
+##################
+
+``assertIsResource($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``resource``.
+
+``assertIsNotResource()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsResource()
+    :name: appendixes.assertions.assertIsResource.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class ResourceTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsResource(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit ResourceTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) ResourceTest::testFailure
+    Failed asserting that null is of type "resource".
+
+    /home/sb/ResourceTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsScalar()
+################
+
+``assertIsScalar($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``scalar``.
+
+``assertIsNotScalar()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsScalar()
+    :name: appendixes.assertions.assertIsScalar.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class ScalarTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsScalar(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit ScalarTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) ScalarTest::testFailure
+    Failed asserting that null is of type "scalar".
+
+    /home/sb/ScalarTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsString()
+################
+
+``assertIsString($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``string``.
+
+``assertIsNotString()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsString()
+    :name: appendixes.assertions.assertIsString.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class StringTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsString(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit StringTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) StringTest::testFailure
+    Failed asserting that null is of type "string".
+
+    /home/sb/StringTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
