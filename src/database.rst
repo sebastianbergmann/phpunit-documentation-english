@@ -870,7 +870,7 @@ straightforward:
     <?php
 
     use PHPUnit\DbUnit\DataSet\AbstractDataSet;
-    use PHPUnit\DbUnit\DataSet\DefaultTableMetaData;
+    use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
     use PHPUnit\DbUnit\DataSet\DefaultTable;
     use PHPUnit\DbUnit\DataSet\DefaultTableIterator;
 
@@ -892,7 +892,7 @@ straightforward:
                     $columns = array_keys($rows[0]);
                 }
 
-                $metaData = new DefaultTableMetaData($tableName, $columns);
+                $metaData = new DefaultTableMetadata($tableName, $columns);
                 $table = new DefaultTable($metaData);
 
                 foreach ($rows as $row) {
