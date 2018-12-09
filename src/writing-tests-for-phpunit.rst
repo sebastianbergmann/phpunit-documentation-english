@@ -249,7 +249,7 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
 
     Time: 0 seconds, Memory: 3.25Mb
 
-    OK (3 tests, 3 assertions)
+    OK (3 tests, 4 assertions)
 
 .. _writing-tests-for-phpunit.data-providers:
 
