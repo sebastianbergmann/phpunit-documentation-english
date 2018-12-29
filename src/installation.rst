@@ -295,15 +295,3 @@ The following optional packages are available:
 
         composer require --dev phpunit/php-invoker
 
-``DbUnit``
-
-    DbUnit port for PHP/PHPUnit to support database interaction testing.
-
-    This package is not included in the PHAR distribution of PHPUnit. It can
-    be installed via Composer using the following command:
-
-    .. code-block:: bash
-
-        composer require --dev phpunit/dbunit
-
-
