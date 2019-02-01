@@ -972,7 +972,7 @@ is a `stream wrapper <http://www.php.net/streams>`_ for a
 filesystem <http://en.wikipedia.org/wiki/Virtual_file_system>`_ that may be helpful in unit tests to mock the real
 filesystem.
 
-Simply add a dependency on ``mikey179/vfsStream`` to your
+Simply add a dependency on ``mikey179/vfsstream`` to your
 project's ``composer.json`` file if you use
 `Composer <https://getcomposer.org/>`_ to manage the
 dependencies of your project. Here is a minimal example of a
@@ -984,7 +984,7 @@ dependency on PHPUnit 4.6 and vfsStream:
     {
         "require-dev": {
             "phpunit/phpunit": "~4.6",
-            "mikey179/vfsStream": "~1"
+            "mikey179/vfsstream": "~1"
         }
     }
 
