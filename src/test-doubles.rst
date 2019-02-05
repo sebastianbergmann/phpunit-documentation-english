@@ -1031,7 +1031,7 @@ influence (see :numref:`test-doubles.mocking-the-filesystem.examples.ExampleTest
 
     class ExampleTest extends TestCase
     {
-        protected function setUp()
+        protected function setUp(): void
         {
             if (file_exists(dirname(__FILE__) . '/id')) {
                 rmdir(dirname(__FILE__) . '/id');
@@ -1047,7 +1047,7 @@ influence (see :numref:`test-doubles.mocking-the-filesystem.examples.ExampleTest
             $this->assertTrue(file_exists(dirname(__FILE__) . '/id'));
         }
 
-        protected function tearDown()
+        protected function tearDown(): void
         {
             if (file_exists(dirname(__FILE__) . '/id')) {
                 rmdir(dirname(__FILE__) . '/id');
@@ -1082,7 +1082,7 @@ class that interacts with the filesystem.
 
     class ExampleTest extends TestCase
     {
-        public function setUp()
+        public function setUp(): void
         {
             vfsStreamWrapper::register();
             vfsStreamWrapper::setRoot(new vfsStreamDirectory('exampleDir'));
