@@ -11,7 +11,7 @@ Installing PHPUnit
 Requirements
 ############
 
-PHPUnit |version| requires PHP 7.1; using the latest version of PHP is highly
+PHPUnit |version| requires PHP 7.2; using the latest version of PHP is highly
 recommended.
 
 PHPUnit requires the `dom <http://php.net/manual/en/dom.setup.php>`_ and `json <http://php.net/manual/en/json.installation.php>`_
@@ -25,7 +25,7 @@ extensions. These standard extensions are enabled by default and cannot be
 disabled without patching PHP's build system and/or C sources.
 
 The code coverage report feature requires the
-`Xdebug <http://xdebug.org/>`_ (2.5.0 or later) and
+`Xdebug <http://xdebug.org/>`_ (2.7.0 or later) and
 `tokenizer <http://php.net/manual/en/tokenizer.installation.php>`_
 extensions.
 Generating XML reports requires the
