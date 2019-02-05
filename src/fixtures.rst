@@ -54,7 +54,7 @@ assertion method.
     {
         protected $stack;
 
-        protected function setUp()
+        protected function setUp(): void
         {
             $this->stack = [];
         }
@@ -100,17 +100,17 @@ case class.
 
     class TemplateMethodsTest extends TestCase
     {
-        public static function setUpBeforeClass()
+        public static function setUpBeforeClass(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        protected function setUp()
+        protected function setUp(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        protected function assertPreConditions()
+        protected function assertPreConditions(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
@@ -127,25 +127,25 @@ case class.
             $this->assertTrue(false);
         }
 
-        protected function assertPostConditions()
+        protected function assertPostConditions(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        protected function tearDown()
+        protected function tearDown(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        public static function tearDownAfterClass()
+        public static function tearDownAfterClass(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        protected function onNotSuccessfulTest(Exception $e)
+        protected function onNotSuccessfulTest(Throwable $t): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
-            throw $e;
+            throw $t;
         }
     }
 
@@ -245,12 +245,12 @@ database after the last test of the test case, respectively.
     {
         protected static $dbh;
 
-        public static function setUpBeforeClass()
+        public static function setUpBeforeClass(): void
         {
             self::$dbh = new PDO('sqlite::memory:');
         }
 
-        public static function tearDownAfterClass()
+        public static function tearDownAfterClass(): void
         {
             self::$dbh = null;
         }
