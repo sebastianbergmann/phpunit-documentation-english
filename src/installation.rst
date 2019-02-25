@@ -52,80 +52,22 @@ enabled, you need to allow execution of PHARs in your
 
     suhosin.executor.include.whitelist = phar
 
-To globally install the PHAR:
+The PHPUnit PHAR can be used immediately after download:
 
 .. code-block:: bash
 
-    $  wget https://phar.phpunit.de/phpunit-|version|.phar
-    $  chmod +x phpunit-|version|.phar
-    $  sudo mv phpunit-|version|.phar /usr/local/bin/phpunit
-    $  phpunit --version
+    $ wget https://phar.phpunit.de/phpunit-|version|.phar
+    $ php phpunit-|version|.phar --version
     PHPUnit x.y.z by Sebastian Bergmann and contributors.
 
-You may also use the downloaded PHAR file directly:
+It is a common practice to make the PHAR executable:
 
 .. code-block:: bash
 
-    $  wget https://phar.phpunit.de/phpunit-|version|.phar
-    $  php phpunit-|version|.phar --version
+    $ wget https://phar.phpunit.de/phpunit-|version|.phar
+    $ chmod +x phpunit-|version|.phar
+    $ ./phpunit-|version|.phar --version
     PHPUnit x.y.z by Sebastian Bergmann and contributors.
-
-.. _installation.phar.windows:
-
-Windows
-=======
-
-Globally installing the PHAR involves the same procedure as manually
-`installing Composer on Windows <https://getcomposer.org/doc/00-intro.md#installation-windows>`_:
-
-#.
-
-   Create a directory for PHP binaries; e.g., :file:`C:\\bin`
-
-#.
-
-   Append ;C:\bin to your ``PATH``
-   environment variable
-   (`related help <http://stackoverflow.com/questions/6318156/adding-python-path-on-windows-7>`_)
-
-#.
-
-   Download `<https://phar.phpunit.de/phpunit-|version|.phar>`_ and
-   save the file as :file:`C:\\bin\\phpunit.phar`
-
-#.
-
-   Open a command line (e.g.,
-   press :kbd:`Windows`:kbd:`R`
-   » type cmd
-   » :kbd:`ENTER`)
-
-#.
-
-   Create a wrapping batch script (results in
-   :file:`C:\\bin\\phpunit.cmd`):
-
-   .. code-block:: bash
-
-       C:\Users\username>  cd C:\bin
-       C:\bin>  echo @php "%~dp0phpunit.phar" %* > phpunit.cmd
-       C:\bin>  exit
-
-#.
-
-   Open a new command line and confirm that you can execute PHPUnit
-   from any path:
-
-   .. code-block:: bash
-
-       C:\Users\username>  phpunit --version
-       PHPUnit x.y.z by Sebastian Bergmann and contributors.
-
-For Cygwin and/or MingW32 (e.g., TortoiseGit) shell environments, you
-may skip step 5. above, simply save the file as
-:file:`phpunit` (without :file:`.phar`
-extension), and make it executable via
-``chmod 775 phpunit``.
 
 .. _installation.phar.verification:
 
@@ -133,7 +75,7 @@ Verifying PHPUnit PHAR Releases
 ===============================
 
 All official releases of code distributed by the PHPUnit Project are
-signed by the release manager for the release. PGP signatures and SHA1
+signed by the release manager for the release. PGP signatures and SHA256
 hashes are available for verification on `phar.phpunit.de <https://phar.phpunit.de/>`_.
 
 The following example details how release verification works. We start
@@ -142,15 +84,15 @@ detached PGP signature :file:`phpunit.phar.asc`:
 
 .. code-block:: bash
 
-    wget https://phar.phpunit.de/phpunit.phar
-    wget https://phar.phpunit.de/phpunit.phar.asc
+    $ wget https://phar.phpunit.de/phpunit-|version|.phar
+    $ wget https://phar.phpunit.de/phpunit-|version|.phar.asc
 
-We want to verify PHPUnit's PHP Archive (:file:`phpunit.phar`)
-against its detached signature (:file:`phpunit.phar.asc`):
+We want to verify PHPUnit's PHP Archive (:file:`phpunit-|version|.phar`)
+against its detached signature (:file:`phpunit-|version|.phar.asc`):
 
 .. code-block:: bash
 
-    gpg phpunit.phar.asc
+    $ gpg phpunit-|version|.phar.asc
     gpg: Signature made Sat 19 Jul 2014 01:28:02 PM CEST using RSA key ID 6372C20A
     gpg: Can't check signature: public key not found
 
@@ -162,7 +104,7 @@ are linked together, so you should be able to connect to any key server.
 
 .. code-block:: bash
 
-    gpg --keyserver pgp.uni-mainz.de --recv-keys 0x4AA394086372C20A
+    $ gpg --keyserver pgp.uni-mainz.de --recv-keys 0x4AA394086372C20A
     gpg: requesting key 6372C20A from hkp server pgp.uni-mainz.de
     gpg: key 6372C20A: public key "Sebastian Bergmann <sb@sebastian-bergmann.de>" imported
     gpg: Total number processed: 1
@@ -175,7 +117,7 @@ Bergmann. But, let's try to verify the release signature again.
 
 .. code-block:: bash
 
-    gpg phpunit.phar.asc
+    $ gpg phpunit-|version|.phar.asc
     gpg: Signature made Sat 19 Jul 2014 01:28:02 PM CEST using RSA key ID 6372C20A
     gpg: Good signature from "Sebastian Bergmann <sb@sebastian-bergmann.de>"
     gpg:                 aka "Sebastian Bergmann <sebastian@php.net>"
@@ -201,66 +143,9 @@ need to validate the authenticity of this key. Validating the
 authenticity of a public key, however, is outside the scope of this
 documentation.
 
-It may be prudent to create a shell script to manage PHPUnit installation
-that verifies the GnuPG signature before running your test suite. For
-example:
-
-.. code-block:: bash
-
-    #!/usr/bin/env bash
-    clean=1 # Delete phpunit.phar after the tests are complete?
-    aftercmd="php phpunit.phar --bootstrap bootstrap.php src/tests"
-    gpg --fingerprint D8406D0D82947747293778314AA394086372C20A
-    if [ $? -ne 0 ]; then
-        echo -e "\033[33mDownloading PGP Public Key...\033[0m"
-        gpg --recv-keys D8406D0D82947747293778314AA394086372C20A
-        # Sebastian Bergmann <sb@sebastian-bergmann.de>
-        gpg --fingerprint D8406D0D82947747293778314AA394086372C20A
-        if [ $? -ne 0 ]; then
-            echo -e "\033[31mCould not download PGP public key for verification\033[0m"
-            exit
-        fi
-    fi
-
-    if [ "$clean" -eq 1 ]; then
-        # Let's clean them up, if they exist
-        if [ -f phpunit.phar ]; then
-            rm -f phpunit.phar
-        fi
-        if [ -f phpunit.phar.asc ]; then
-            rm -f phpunit.phar.asc
-        fi
-    fi
-
-    # Let's grab the latest release and its signature
-    if [ ! -f phpunit.phar ]; then
-        wget https://phar.phpunit.de/phpunit.phar
-    fi
-    if [ ! -f phpunit.phar.asc ]; then
-        wget https://phar.phpunit.de/phpunit.phar.asc
-    fi
-
-    # Verify before running
-    gpg --verify phpunit.phar.asc phpunit.phar
-    if [ $? -eq 0 ]; then
-        echo
-        echo -e "\033[33mBegin Unit Testing\033[0m"
-        # Run the testing suite
-        `$after_cmd`
-        # Cleanup
-        if [ "$clean" -eq 1 ]; then
-            echo -e "\033[32mCleaning Up!\033[0m"
-            rm -f phpunit.phar
-            rm -f phpunit.phar.asc
-        fi
-    else
-        echo
-        chmod -x phpunit.phar
-        mv phpunit.phar /tmp/bad-phpunit.phar
-        mv phpunit.phar.asc /tmp/bad-phpunit.phar.asc
-        echo -e "\033[31mSignature did not match! PHPUnit has been moved to /tmp/bad-phpunit.phar\033[0m"
-        exit 1
-    fi
+Manually verifying the authenticity and integrity of a PHPUnit PHAR using
+GPG is tedious. This is why PHIVE, the PHAR Installation and Verification
+Environment, was created. You can learn about PHIVE on its `website <https://phar.io/>`_
 
 .. _installation.composer:
 
@@ -276,22 +161,16 @@ dependencies of your project:
 
     composer require --dev phpunit/phpunit ^|version|
 
-.. _installation.optional-packages:
+.. _installation.global:
 
-Optional packages
-#################
+Global Installation
+###################
 
-The following optional packages are available:
+Please note that it is not recommended to install PHPUnit globally, as ``/usr/bin/phpunit`` or
+``/usr/local/bin/phpunit``, for instance.
 
-``PHP_Invoker``
+Instead, PHPUnit should be managed as a project-local dependency.
 
-    A utility class for invoking callables with a timeout. This package is
-    required to enforce test timeouts in strict mode.
-
-    This package is included in the PHAR distribution of PHPUnit. It can
-    be installed via Composer using the following command:
-
-    .. code-block:: bash
-
-        composer require --dev phpunit/php-invoker
-
+Either put the PHAR of the specific PHPUnit version you need in your project's
+``tools`` directory (which should be managed by PHIVE) or depend on the specific PHPUnit version
+you need in your project's ``composer.json`` if you use Composer.
