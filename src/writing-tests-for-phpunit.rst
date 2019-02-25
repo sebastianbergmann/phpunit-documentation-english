@@ -51,6 +51,7 @@ with PHPUnit:
             $this->assertSame(0, count($stack));
         }
     }
+
 |
     *Martin Fowler*:
 
