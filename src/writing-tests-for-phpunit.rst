@@ -51,6 +51,7 @@ with PHPUnit:
             $this->assertSame(0, count($stack));
         }
     }
+
 |
     *Martin Fowler*:
 
@@ -565,6 +566,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
        }
 
 .. code-block:: bash
+
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
