@@ -21,7 +21,6 @@ Contents:
    organizing-tests
    risky-tests
    incomplete-and-skipped-tests
-   database
    test-doubles
    code-coverage-analysis
    logging
