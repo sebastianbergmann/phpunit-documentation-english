@@ -660,48 +660,6 @@ expectations for exceptions raised by the code under test.
    message contains the ``$expected`` message and doesn't perform
    an exact string comparison.
 
-Alternatively, you can use the ``@expectedException``,
-``@expectedExceptionCode``,
-``@expectedExceptionMessage``, and
-``@expectedExceptionMessageRegExp`` annotations to set up
-expectations for exceptions raised by the code under test.
-:numref:`writing-tests-for-phpunit.exceptions.examples.ExceptionTest2.php`
-shows an example.
-
-.. code-block:: php
-    :caption: Using the @expectedException annotation
-    :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest2.php
-
-    <?php
-    use PHPUnit\Framework\TestCase;
-
-    class ExceptionTest extends TestCase
-    {
-        /**
-         * @expectedException InvalidArgumentException
-         */
-        public function testException()
-        {
-        }
-    }
-
-.. code-block:: bash
-
-    $ phpunit ExceptionTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) ExceptionTest::testException
-    Failed asserting that exception of type "InvalidArgumentException" is thrown.
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
 .. _writing-tests-for-phpunit.errors:
 
 Testing PHP Errors
@@ -720,7 +678,7 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
    suppress the type of errors you're testing.
 
 .. code-block:: php
-    :caption: Expecting a PHP error using @expectedException
+    :caption: Expecting a PHP error using expectException
     :name: writing-tests-for-phpunit.exceptions.examples.ErrorTest.php
 
     <?php
@@ -728,11 +686,10 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
 
     class ExpectedErrorTest extends TestCase
     {
-        /**
-         * @expectedException PHPUnit\Framework\Error\Error
-         */
         public function testFailingInclude()
         {
+            $this->expectException(PHPUnit\Framework\Error\Error::class);
+
             include 'not_existing_file.php';
         }
     }
@@ -757,8 +714,7 @@ and warnings, respectively.
    You should be as specific as possible when testing exceptions. Testing
    for classes that are too generic might lead to undesirable
    side-effects. Accordingly, testing for the ``Exception``
-   class with ``@expectedException`` or
-   ``expectException()`` is no longer permitted.
+   class with ``expectException()`` is no longer permitted.
 
 When testing that relies on PHP functions that trigger errors like
 ``fopen`` it can sometimes be useful to use error
