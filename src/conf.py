@@ -71,7 +71,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'PHPUnit'
-copyright = u'2018, Sebastian Bergmann'
+copyright = u'2019, Sebastian Bergmann'
 author = u'Sebastian Bergmann'
 epub_author = u'Sebastian Bergmann'
 
