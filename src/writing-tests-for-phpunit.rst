@@ -648,8 +648,8 @@ expectations for exceptions raised by the code under test.
 
 .. admonition:: Note
 
-   Note that expectExceptionMessage asserts that the ``$actual``
-   message contains the ``$expected`` message and doesn't perform
+   Note that ``expectExceptionMessage()`` asserts that the ``$actual``
+   message contains the ``$expected`` message and does not perform
    an exact string comparison.
 
 .. _writing-tests-for-phpunit.errors:
@@ -670,17 +670,18 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
    suppress the type of errors you're testing.
 
 .. code-block:: php
-    :caption: Expecting a PHP error using expectException
+    :caption: Expecting a PHP error using expectException()
     :name: writing-tests-for-phpunit.exceptions.examples.ErrorTest.php
 
     <?php
     use PHPUnit\Framework\TestCase;
+    use PHPUnit\Framework\Error\Error;
 
     class ExpectedErrorTest extends TestCase
     {
         public function testFailingInclude()
         {
-            $this->expectException(PHPUnit\Framework\Error\Error::class);
+            $this->expectException(Error::class);
 
             include 'not_existing_file.php';
         }
