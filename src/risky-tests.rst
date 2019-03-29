@@ -21,8 +21,8 @@ option on the commandline or by setting
 PHPUnit's XML configuration file.
 
 A test that does not perform an assertion will be marked as risky
-when this check is enabled. Expectations on mock objects or annotations
-such as @expectedException count as an assertion.
+when this check is enabled. Expectations on mock objects
+count as an assertion.
 
 .. _risky-tests.unintentionally-covered-code:
 
