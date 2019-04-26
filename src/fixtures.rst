@@ -149,7 +149,7 @@ case class.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit TemplateMethodsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
