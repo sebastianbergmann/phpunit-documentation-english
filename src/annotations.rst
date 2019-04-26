@@ -255,7 +255,7 @@ For usage see :ref:`code-coverage-analysis.ignoring-code-blocks`.
 #######
 
 The ``@covers`` annotation can be used in the test code to
-specify which method(s) a test method wants to test:
+specify which parts of the code it is supposed to test:
 
 .. code-block:: php
 
@@ -267,11 +267,22 @@ specify which method(s) a test method wants to test:
         $this->assertSame(0, $this->ba->getBalance());
     }
 
-If provided, only the code coverage information for the specified
-method(s) will be considered.
+If provided, this effectively filters the code coverage report
+to include executed code from the referenced code parts only.
+
+This annotation can be added to the docblock of the test class or the individual
+test methods. The recommended way is to add the annotation to the docblock
+of the test class, not to the docblock of the test methods.
+
+When the ``forceCoversAnnotation`` configuration option in the
+:ref:`configuration file <appendixes.configuration>` is set to ``true``,
+every test method needs to have an associated ``@covers`` annotation
+(either on the test class or the individual test method).
 
 :numref:`appendixes.annotations.covers.tables.annotations` shows
 the syntax of the ``@covers`` annotation.
+The section :ref:`code-coverage-analysis.specifying-covered-parts`
+provides a longer example for using the annotation.
 
 .. rst-class:: table
 .. list-table:: Annotations for specifying which methods are covered by a test
@@ -280,25 +291,25 @@ the syntax of the ``@covers`` annotation.
 
     * - Annotation
       - Description
-    * - ``@covers ClassName::methodName``
+    * - ``@covers ClassName::methodName`` (not recommended)
       - Specifies that the annotated test method covers the specified method.
-    * - ``@covers ClassName``
+    * - ``@covers ClassName`` (recommended)
       - Specifies that the annotated test method covers all methods of a given class.
-    * - ``@covers ClassName<extended>``
-      - Specifies that the annotated test method covers all methods of a given class and its parent class(es) and interface(s).
-    * - ``@covers ClassName::<public>``
+    * - ``@covers ClassName<extended>`` (not recommended)
+      - Specifies that the annotated test method covers all methods of a given class and its parent class(es).
+    * - ``@covers ClassName::<public>`` (not recommended)
       - Specifies that the annotated test method covers all public methods of a given class.
-    * - ``@covers ClassName::<protected>``
+    * - ``@covers ClassName::<protected>`` (not recommended)
       - Specifies that the annotated test method covers all protected methods of a given class.
-    * - ``@covers ClassName::<private>``
+    * - ``@covers ClassName::<private>`` (not recommended)
       - Specifies that the annotated test method covers all private methods of a given class.
-    * - ``@covers ClassName::<!public>``
+    * - ``@covers ClassName::<!public>`` (not recommended)
       - Specifies that the annotated test method covers all methods of a given class that are not public.
-    * - ``@covers ClassName::<!protected>``
+    * - ``@covers ClassName::<!protected>`` (not recommended)
       - Specifies that the annotated test method covers all methods of a given class that are not protected.
-    * - ``@covers ClassName::<!private>``
+    * - ``@covers ClassName::<!private>`` (not recommended)
       - Specifies that the annotated test method covers all methods of a given class that are not private.
-    * - ``@covers ::functionName``
+    * - ``@covers ::functionName`` (recommended)
       - Specifies that the annotated test method covers the specified global function.
 
 .. _appendixes.annotations.coversDefaultClass:
@@ -343,7 +354,7 @@ test code to specify that no code coverage information will be
 recorded for the annotated test case.
 
 This can be used for integration testing. See
-:ref:`code-coverage-analysis.specifying-covered-methods.examples.GuestbookIntegrationTest.php`
+:ref:`code-coverage-analysis.specifying-covered-parts.examples.GuestbookIntegrationTest.php`
 for an example.
 
 The annotation can be used on the class and the method level and
@@ -693,9 +704,10 @@ example is a value object which is necessary for testing a unit of code.
         // ...
     }
 
-This annotation is especially useful in strict coverage mode where
-unintentionally covered code will cause a test to fail. See
-:ref:`risky-tests.unintentionally-covered-code` for more
+In addition to being helpful for persons reading the code,
+this annotation is useful in strict coverage mode
+where unintentionally covered code will cause a test to fail.
+See :ref:`risky-tests.unintentionally-covered-code` for more
 information regarding strict coverage mode.
 
 
