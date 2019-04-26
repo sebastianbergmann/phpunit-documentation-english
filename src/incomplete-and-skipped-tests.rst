@@ -72,7 +72,7 @@ An incomplete test is denoted by an ``I`` in the output
 of the PHPUnit command-line test runner, as shown in the following
 example:
 
-.. code-block:: bash
+.. code-block:: none
 
     $ phpunit --verbose SampleTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -151,7 +151,7 @@ A test that has been skipped is denoted by an ``S`` in
 the output of the PHPUnit command-line test runner, as shown in the
 following example:
 
-.. code-block:: bash
+.. code-block:: none
 
     $ phpunit --verbose DatabaseTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.

@@ -303,7 +303,7 @@ and the second value is the actual one.
     $result = PHPUnit\TextUI\TestRunner::run($test);
     ?>
 
-.. code-block:: bash
+.. code-block:: none
 
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 

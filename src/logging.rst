@@ -18,7 +18,7 @@ used by the `JUnit
 task for Apache Ant <http://ant.apache.org/manual/Tasks/junit.html>`_. The following example shows the XML
 logfile generated for the tests in ``ArrayTest``:
 
-.. code-block:: bash
+.. code-block:: none
 
     <?xml version="1.0" encoding="UTF-8"?>
     <testsuites>
@@ -49,7 +49,7 @@ The following XML logfile was generated for two tests,
 of a test case class named ``FailureErrorTest`` and
 shows how failures and errors are denoted.
 
-.. code-block:: bash
+.. code-block:: none
 
     <?xml version="1.0" encoding="UTF-8"?>
     <testsuites>
@@ -97,7 +97,7 @@ The XML format for code coverage information logging produced by PHPUnit
 is loosely based upon the one used by `Clover <http://www.atlassian.com/software/clover/>`_. The following example shows the XML
 logfile generated for the tests in ``BankAccountTest``:
 
-.. code-block:: bash
+.. code-block:: none
 
     <?xml version="1.0" encoding="UTF-8"?>
     <coverage generated="1184835473" phpunit="3.6.0">
