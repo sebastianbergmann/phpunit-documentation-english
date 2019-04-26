@@ -7,7 +7,7 @@ Test Doubles
 ============
 
 Gerard Meszaros introduces the concept of Test Doubles in
-:ref:`Meszaros2007` like this:
+:ref:`Meszaros2007 <appendixes.bibliography>` like this:
 
     *Gerard Meszaros*:
 
