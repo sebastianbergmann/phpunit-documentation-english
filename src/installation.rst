@@ -54,7 +54,7 @@ enabled, you need to allow execution of PHARs in your
 
 The PHPUnit PHAR can be used immediately after download:
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ wget https://phar.phpunit.de/phpunit-|version|.phar
     $ php phpunit-|version|.phar --version
@@ -62,7 +62,7 @@ The PHPUnit PHAR can be used immediately after download:
 
 It is a common practice to make the PHAR executable:
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ wget https://phar.phpunit.de/phpunit-|version|.phar
     $ chmod +x phpunit-|version|.phar
@@ -82,15 +82,15 @@ The following example details how release verification works. We start
 by downloading :file:`phpunit.phar` as well as its
 detached PGP signature :file:`phpunit.phar.asc`:
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ wget https://phar.phpunit.de/phpunit-|version|.phar
     $ wget https://phar.phpunit.de/phpunit-|version|.phar.asc
 
-We want to verify PHPUnit's PHP Archive (:file:`phpunit-|version|.phar`)
-against its detached signature (:file:`phpunit-|version|.phar.asc`):
+We want to verify PHPUnit's PHP Archive (:file:`phpunit-x.y.phar`)
+against its detached signature (:file:`phpunit-x.y.phar.asc`):
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ gpg phpunit-|version|.phar.asc
     gpg: Signature made Sat 19 Jul 2014 01:28:02 PM CEST using RSA key ID 6372C20A
@@ -102,7 +102,7 @@ to retrieve the release manager's public key from a key server. One such
 server is :file:`pgp.uni-mainz.de`. The public key servers
 are linked together, so you should be able to connect to any key server.
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ gpg --keyserver pgp.uni-mainz.de --recv-keys 0x4AA394086372C20A
     gpg: requesting key 6372C20A from hkp server pgp.uni-mainz.de
@@ -115,7 +115,7 @@ Bergmann <sb@sebastian-bergmann.de>". However, we have no way of
 verifying this key was created by the person known as Sebastian
 Bergmann. But, let's try to verify the release signature again.
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ gpg phpunit-|version|.phar.asc
     gpg: Signature made Sat 19 Jul 2014 01:28:02 PM CEST using RSA key ID 6372C20A
@@ -157,9 +157,9 @@ Simply add a (development-time) dependency on
 ``composer.json`` file if you use `Composer <https://getcomposer.org/>`_ to manage the
 dependencies of your project:
 
-.. code-block:: bash
+.. parsed-literal::
 
-    composer require --dev phpunit/phpunit ^|version|
+    composer require --dev phpunit/phpunit ^\ |version|
 
 .. _installation.global:
 
