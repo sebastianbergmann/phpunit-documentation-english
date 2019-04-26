@@ -175,7 +175,7 @@ exploiting the dependencies between tests as shown in
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit --verbose DependencyFailureTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -241,7 +241,7 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit --verbose MultipleDependenciesTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -297,7 +297,7 @@ of the array as its arguments.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -347,7 +347,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -391,7 +391,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -501,7 +501,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit --verbose DependencyAndDataProviderComboTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -565,7 +565,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
           }
        }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -623,7 +623,7 @@ whether an exception is thrown by the code under test.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ExceptionTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -687,7 +687,7 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit -d error_reporting=2 ExpectedErrorTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -744,7 +744,7 @@ suppressing notices that would lead to a phpunit
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ErrorSuppressionTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -798,7 +798,7 @@ test will be counted as a failure.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit OutputTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -868,7 +868,7 @@ context as possible that can help to identify the problem.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ArrayDiffTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -922,7 +922,7 @@ and provide a few lines of context around every difference.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit LongArrayDiffTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -982,7 +982,7 @@ functions on arrays or objects.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ArrayWeakComparisonTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.

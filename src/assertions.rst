@@ -66,7 +66,7 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ArrayHasKeyTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -112,7 +112,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ClassHasAttributeTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -158,7 +158,7 @@ Reports an error identified by ``$message`` if ``$array`` does not contains the 
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ArraySubsetTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -209,7 +209,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ClassHasStaticAttributeTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -257,7 +257,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ContainsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -298,7 +298,7 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ContainsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -338,7 +338,7 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ContainsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -388,7 +388,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ContainsOnlyTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -439,7 +439,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ContainsOnlyInstancesOfTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -485,7 +485,7 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit CountTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -531,7 +531,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DirectoryExistsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -577,7 +577,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DirectoryIsReadableTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -623,7 +623,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DirectoryIsWritableTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -671,7 +671,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit EmptyTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -757,7 +757,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit EqualXMLStructureTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -842,7 +842,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit EqualsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -913,7 +913,7 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit EqualsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -958,7 +958,7 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit EqualsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1015,7 +1015,7 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit EqualsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1063,7 +1063,7 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit EqualsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1119,7 +1119,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit FalseTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1165,7 +1165,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit FileEqualsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1217,7 +1217,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit FileExistsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1263,7 +1263,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit FileIsReadableTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1309,7 +1309,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit FileIsWritableTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1355,7 +1355,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit GreaterThanTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1401,7 +1401,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit GreaterThanOrEqualTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1447,7 +1447,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit InfiniteTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1495,7 +1495,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit InstanceOfTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1543,7 +1543,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of the ``$expe
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit InternalTypeTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1589,7 +1589,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit IsReadableTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1635,7 +1635,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit IsWritableTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1681,7 +1681,7 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit JsonFileEqualsJsonFileTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1728,7 +1728,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit JsonStringEqualsJsonFileTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1776,7 +1776,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit JsonStringEqualsJsonStringTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1829,7 +1829,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit LessThanTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1875,7 +1875,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit LessThanOrEqualTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1919,7 +1919,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit NanTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1965,7 +1965,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit NotNullTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2011,7 +2011,7 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ObjectHasAttributeTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2057,7 +2057,7 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit RegExpTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2103,7 +2103,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit StringMatchesFormatTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2199,7 +2199,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit StringMatchesFormatFileTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2248,7 +2248,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit SameTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2287,7 +2287,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit SameTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2333,7 +2333,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit StringEndsWithTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2379,7 +2379,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit StringEqualsFileTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2431,7 +2431,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit StringStartsWithTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2595,7 +2595,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit TrueTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2642,7 +2642,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit XmlFileEqualsXmlFileTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2697,7 +2697,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit XmlStringEqualsXmlFileTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -2752,7 +2752,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit XmlStringEqualsXmlStringTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
