@@ -131,7 +131,7 @@ method to skip the test if it is not.
 
     class DatabaseTest extends TestCase
     {
-        protected function setUp()
+        protected function setUp(): void
         {
             if (!extension_loaded('mysqli')) {
                 $this->markTestSkipped(
