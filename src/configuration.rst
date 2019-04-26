@@ -14,11 +14,11 @@ PHPUnit
 The attributes of the ``<phpunit>`` element can
 be used to configure PHPUnit's core functionality.
 
-.. code-block:: bash
+.. parsed-literal::
 
     <phpunit
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/|version|/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/\ |version|/phpunit.xsd"
              backupGlobals="true"
              backupStaticAttributes="false"
              <!--bootstrap="/path/to/bootstrap.php"-->
@@ -126,7 +126,7 @@ The ``<testsuites>`` element and its
 one or more ``<testsuite>`` children can be
 used to compose a test suite out of test suites and test cases.
 
-.. code-block:: bash
+.. code-block:: xml
 
     <testsuites>
       <testsuite name="My Test Suite">
@@ -143,7 +143,7 @@ can be specified. The example below will only add the
 :file:`/path/to/MyTest.php` file if the PHP version is at
 least 5.3.0.
 
-.. code-block:: bash
+.. code-block:: xml
 
       <testsuites>
         <testsuite name="My Test Suite">
@@ -168,7 +168,7 @@ groups of tests marked with the ``@group`` annotation
 (documented in :ref:`appendixes.annotations.group`)
 that should (not) be run.
 
-.. code-block:: bash
+.. code-block:: xml
 
     <groups>
       <include>
@@ -198,7 +198,7 @@ Whitelisting Files for Code Coverage
 The ``<filter>`` element and its children can
 be used to configure the whitelist for the code coverage reporting.
 
-.. code-block:: bash
+.. code-block:: xml
 
     <filter>
       <whitelist processUncoveredFilesFromWhitelist="true">
@@ -220,7 +220,7 @@ The ``<logging>`` element and its
 ``<log>`` children can be used to configure the
 logging of the test execution.
 
-.. code-block:: bash
+.. code-block:: xml
 
     <logging>
       <log type="coverage-html" target="/tmp/report" lowUpperBound="35"
@@ -297,7 +297,7 @@ The ``<listeners>`` element and its
 ``<listener>`` children can be used to attach
 additional test listeners to the test execution.
 
-.. code-block:: bash
+.. code-block:: xml
 
     <listeners>
       <listener class="MyListener" file="/optional/path/to/MyListener.php">
@@ -319,7 +319,7 @@ additional test listeners to the test execution.
 The XML configuration above corresponds to attaching the
 ``$listener`` object (see below) to the test execution:
 
-.. code-block:: bash
+.. code-block:: php
 
     $listener = new MyListener(
         ['Sebastian'],
@@ -361,7 +361,7 @@ The ``<php>`` element and its children can be
 used to configure PHP settings, constants, and global variables. It can
 also be used to prepend the ``include_path``.
 
-.. code-block:: bash
+.. code-block:: xml
 
     <php>
       <includePath>.</includePath>
@@ -379,7 +379,7 @@ also be used to prepend the ``include_path``.
 
 The XML configuration above corresponds to the following PHP code:
 
-.. code-block:: bash
+.. code-block:: php
 
     ini_set('foo', 'bar');
     define('foo', 'bar');

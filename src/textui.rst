@@ -10,7 +10,7 @@ The PHPUnit command-line test runner can be invoked through the
 :file:`phpunit` command. The following code shows how to run
 tests with the PHPUnit command-line test runner:
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ArrayTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -73,7 +73,7 @@ Command-Line Options
 Let's take a look at the command-line test runner's options in
 the following code:
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit --help
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -539,7 +539,7 @@ all of these tests succeed.
 Let us take a look at the agile documentation generated for a
 ``BankAccount`` class:
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit --testdox BankAccountTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
