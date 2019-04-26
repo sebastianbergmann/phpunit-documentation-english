@@ -38,8 +38,9 @@ XML-based logfiles with code coverage information in various formats
 as text (and printed to STDOUT) and exported as PHP code for further
 processing.
 
-Please refer to :ref:`textui` for a list of commandline switches
-that control code coverage functionality as well as :ref:`appendixes.configuration.logging` for the relevant
+Please refer to :ref:`textui` for a list of command line switches
+that control code coverage functionality as well as
+:ref:`appendixes.configuration.logging` for the relevant
 configuration settings.
 
 .. _code-coverage-analysis.metrics:
@@ -115,7 +116,8 @@ Whitelisting Files
 It is mandatory to configure a *whitelist* for telling
 PHPUnit which sourcecode files to include in the code coverage report.
 This can either be done using the ``--whitelist``
-commandline option or via the configuration file (see :ref:`appendixes.configuration.whitelisting-files`).
+:ref:`command line <textui.clioptions>` option or via the
+configuration file (see :ref:`appendixes.configuration.whitelisting-files`).
 
 The ``addUncoveredFilesFromWhitelist`` and ``processUncoveredFilesFromWhitelist`` configuration settings are available to configure how the whitelist is used:
 
@@ -186,22 +188,33 @@ The ignored lines of code (marked as ignored using the annotations)
 are counted as executed (if they are executable) and will not be
 highlighted.
 
-.. _code-coverage-analysis.specifying-covered-methods:
+.. _code-coverage-analysis.specifying-covered-parts:
 
-Specifying Covered Methods
-##########################
+Specifying Covered Code Parts
+#############################
 
-The ``@covers`` annotation (see
-:ref:`appendixes.annotations.covers.tables.annotations`) can be
-used in the test code to specify which method(s) a test method wants to
-test. If provided, only the code coverage information for the specified
-method(s) will be considered.
-:numref:`code-coverage-analysis.specifying-covered-methods.examples.BankAccountTest.php`
+The ``@covers`` annotation (see the
+:ref:`annotaction documentation <appendixes.annotations.covers.tables.annotations>`)
+can be used in the test code to specify which code parts a test class
+(or test method) wants to test. If provided, this effectively filters the
+code coverage report to include executed code from the referenced code parts only.
+:numref:`code-coverage-analysis.specifying-covered-parts.examples.BankAccountTest.php`
 shows an example.
+
+
+.. admonition:: Note
+
+    If a method is specificed with the ``@covers`` annotation, only the
+    referenced method will be considered as covered, but not methods called
+    by this method.
+    Hence, when a covered method is refactored using the *extract method*
+    refactoring, corresponding ``@covers`` annotations need to be added.
+    This is the reason it is recommended to use this annotation with class scope,
+    not with method scope.
 
 .. code-block:: php
     :caption: Tests that specify which method they want to cover
-    :name: code-coverage-analysis.specifying-covered-methods.examples.BankAccountTest.php
+    :name: code-coverage-analysis.specifying-covered-parts.examples.BankAccountTest.php
 
     <?php
     use PHPUnit\Framework\TestCase;
@@ -284,7 +297,7 @@ generate code coverage with unit tests.
 
 .. code-block:: php
     :caption: A test that specifies that no method should be covered
-    :name: code-coverage-analysis.specifying-covered-methods.examples.GuestbookIntegrationTest.php
+    :name: code-coverage-analysis.specifying-covered-parts.examples.GuestbookIntegrationTest.php
 
     <?php
     use PHPUnit\DbUnit\TestCase
