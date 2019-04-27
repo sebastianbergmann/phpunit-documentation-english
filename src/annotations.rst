@@ -260,7 +260,7 @@ specify which parts of the code it is supposed to test:
 .. code-block:: php
 
     /**
-     * @covers BankAccount::getBalance
+     * @covers BankAccount
      */
     public function testBalanceIsInitiallyZero()
     {
@@ -286,7 +286,7 @@ every test method needs to have an associated ``@covers`` annotation
 :numref:`appendixes.annotations.covers.tables.annotations` shows
 the syntax of the ``@covers`` annotation.
 The section :ref:`code-coverage-analysis.specifying-covered-parts`
-provides a longer example for using the annotation.
+provides longer examples for using the annotation.
 
 .. rst-class:: table
 .. list-table:: Annotations for specifying which methods are covered by a test
@@ -703,13 +703,16 @@ example is a value object which is necessary for testing a unit of code.
 .. code-block:: php
 
     /**
-     * @covers BankAccount::deposit
+     * @covers BankAccount
      * @uses   Money
      */
     public function testMoneyCanBeDepositedInAccount()
     {
         // ...
     }
+
+:numref:`code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php`
+shows another example.
 
 In addition to being helpful for persons reading the code,
 this annotation is useful in strict coverage mode
