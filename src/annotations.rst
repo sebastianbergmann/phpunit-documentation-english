@@ -269,6 +269,10 @@ specify which parts of the code it is supposed to test:
 
 If provided, this effectively filters the code coverage report
 to include executed code from the referenced code parts only.
+This will make sure that code is only marked as covered if there
+are dedicated tests for it, but not if it used indirectly by the
+tests for a different class, thus avoiding false positives for code
+coverage.
 
 This annotation can be added to the docblock of the test class or the individual
 test methods. The recommended way is to add the annotation to the docblock
