@@ -198,7 +198,7 @@ The ``@covers`` annotation (see the
 can be used in the test code to specify which code parts a test class
 (or test method) wants to test. If provided, this effectively filters the
 code coverage report to include executed code from the referenced code parts only.
-:numref:`code-coverage-analysis.specifying-covered-parts.examples.BankAccountTest.php`
+:numref:`code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php`
 shows an example.
 
 
@@ -211,6 +211,33 @@ shows an example.
     refactoring, corresponding ``@covers`` annotations need to be added.
     This is the reason it is recommended to use this annotation with class scope,
     not with method scope.
+
+.. code-block:: php
+    :caption: Test class that specifies which class it wants to cover
+    :name: code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    /**
+     * @covers Invoice
+     * @uses Money
+     */
+    class InvoiceTest extends TestCase
+    {
+        protected $subject;
+
+        protected function setUp(): void
+        {
+            $this->subject = new Invoice();
+        }
+
+        public function testAmountInitiallyIsEmpty()
+        {
+            $this->assertEquals(new Money(), $this->subject->getAmount);
+        }
+    }
+    ?>
 
 .. code-block:: php
     :caption: Tests that specify which method they want to cover
