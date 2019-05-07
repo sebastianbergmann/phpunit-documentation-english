@@ -157,7 +157,7 @@ the following code:
       --printer <printer>         TestListener implementation to use
 
       --resolve-dependencies      Resolve dependencies between tests
-      --order-by=<order>          Run tests in order: default|reverse|random|defects|depends
+      --order-by=<order>          Run tests in order: default|defects|duration|no-depends|random|reverse
       --random-order-seed=<N>     Use a specific random seed <N> for random order
       --cache-result              Write run result to cache to enable ordering tests defects-first
 
