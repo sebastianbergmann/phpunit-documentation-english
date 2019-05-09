@@ -260,7 +260,7 @@ specify which parts of the code it is supposed to test:
 .. code-block:: php
 
     /**
-     * @covers BankAccount
+     * @covers \BankAccount
      */
     public function testBalanceIsInitiallyZero()
     {
@@ -287,6 +287,10 @@ every test method needs to have an associated ``@covers`` annotation
 the syntax of the ``@covers`` annotation.
 The section :ref:`code-coverage-analysis.specifying-covered-parts`
 provides longer examples for using the annotation.
+
+Pleae note that this annotation requires a fully-qualified class name (FQCN).
+To make this more obvious to the reader, it is recommended to use a leading
+backslash (even if this not required for the annotation to work correctly).
 
 .. rst-class:: table
 .. list-table:: Annotations for specifying which methods are covered by a test
@@ -325,6 +329,10 @@ The ``@coversDefaultClass`` annotation can be used to
 specify a default namespace or class name. That way long names don't need to be
 repeated for every ``@covers`` annotation. See
 :numref:`appendixes.annotations.examples.CoversDefaultClassTest.php`.
+
+Pleae note that this annotation requires a fully-qualified class name (FQCN).
+To make this more obvious to the reader, it is recommended to use a leading
+backslash (even if this not required for the annotation to work correctly).
 
 .. code-block:: php
     :caption: Using @coversDefaultClass to shorten annotations
@@ -700,8 +708,8 @@ example is a value object which is necessary for testing a unit of code.
 .. code-block:: php
 
     /**
-     * @covers BankAccount
-     * @uses   Money
+     * @covers \BankAccount
+     * @uses   \Money
      */
     public function testMoneyCanBeDepositedInAccount()
     {
@@ -717,4 +725,7 @@ where unintentionally covered code will cause a test to fail.
 See :ref:`risky-tests.unintentionally-covered-code` for more
 information regarding strict coverage mode.
 
+Pleae note that this annotation requires a fully-qualified class name (FQCN).
+To make this more obvious to the reader, it is recommended to use a leading
+backslash (even if this not required for the annotation to work correctly).
 
