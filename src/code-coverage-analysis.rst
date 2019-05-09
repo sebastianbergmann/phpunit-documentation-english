@@ -220,8 +220,8 @@ shows an example.
     use PHPUnit\Framework\TestCase;
 
     /**
-     * @covers Invoice
-     * @uses Money
+     * @covers \Invoice
+     * @uses \Money
      */
     class InvoiceTest extends TestCase
     {
@@ -256,7 +256,7 @@ shows an example.
         }
 
         /**
-         * @covers BankAccount::getBalance
+         * @covers \BankAccount::getBalance
          */
         public function testBalanceIsInitiallyZero()
         {
@@ -264,7 +264,7 @@ shows an example.
         }
 
         /**
-         * @covers BankAccount::withdrawMoney
+         * @covers \BankAccount::withdrawMoney
          */
         public function testBalanceCannotBecomeNegative()
         {
@@ -282,7 +282,7 @@ shows an example.
         }
 
         /**
-         * @covers BankAccount::depositMoney
+         * @covers \BankAccount::depositMoney
          */
         public function testBalanceCannotBecomeNegative2()
         {
@@ -300,9 +300,9 @@ shows an example.
         }
 
         /**
-         * @covers BankAccount::getBalance
-         * @covers BankAccount::depositMoney
-         * @covers BankAccount::withdrawMoney
+         * @covers \BankAccount::getBalance
+         * @covers \BankAccount::depositMoney
+         * @covers \BankAccount::withdrawMoney
          */
         public function testDepositWithdrawMoney()
         {
