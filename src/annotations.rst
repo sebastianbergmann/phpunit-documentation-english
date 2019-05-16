@@ -288,7 +288,7 @@ the syntax of the ``@covers`` annotation.
 The section :ref:`code-coverage-analysis.specifying-covered-parts`
 provides longer examples for using the annotation.
 
-Pleae note that this annotation requires a fully-qualified class name (FQCN).
+Please note that this annotation requires a fully-qualified class name (FQCN).
 To make this more obvious to the reader, it is recommended to use a leading
 backslash (even if this not required for the annotation to work correctly).
 
@@ -330,7 +330,7 @@ specify a default namespace or class name. That way long names don't need to be
 repeated for every ``@covers`` annotation. See
 :numref:`appendixes.annotations.examples.CoversDefaultClassTest.php`.
 
-Pleae note that this annotation requires a fully-qualified class name (FQCN).
+Please note that this annotation requires a fully-qualified class name (FQCN).
 To make this more obvious to the reader, it is recommended to use a leading
 backslash (even if this not required for the annotation to work correctly).
 
