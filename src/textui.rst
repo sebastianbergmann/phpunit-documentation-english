@@ -172,7 +172,7 @@ the following code:
       --include-path <path(s)>    Prepend PHP's include_path with given path(s)
       -d key[=value]              Sets a php.ini value
       --generate-configuration    Generate configuration file with suggested settings
-      --cache-result-file==<FILE> Specify result cache path and filename
+      --cache-result-file=<FILE> Specify result cache path and filename
 
     Miscellaneous Options:
 
