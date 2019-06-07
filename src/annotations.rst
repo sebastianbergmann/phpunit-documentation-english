@@ -643,6 +643,29 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
    the ``@testdox`` annotation also activated the behaviour
    of the ``@test`` annotation.
 
+When using the ``@testdox`` annotaion at method level with a ``@dataProvider`` you may use the method parameters as placeholders in your alternative description
+
+.. code-block:: php
+
+    /**
+     * @dataProvider additionProvider
+     * @testdox Adding $a to $b results in $expected
+     */
+    public function testAdd($a, $b, $expected)
+    {
+        $this->assertSame($expected, $a + $b);
+    }
+
+    public function additionProvider()
+    {
+        return [
+            [0, 0, 0],
+            [0, 1, 1],
+            [1, 0, 1],
+            [1, 1, 3]
+        ];
+    }
+
 .. _appendixes.annotations.testWith:
 
 @testWith
