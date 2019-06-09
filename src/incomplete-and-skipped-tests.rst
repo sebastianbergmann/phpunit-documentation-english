@@ -202,13 +202,13 @@ In addition to the above methods it is also possible to use the
       - Examples
       - Another example
     * - ``PHP``
-      - Any PHP version identifier
-      - @requires PHP 5.3.3
-      - @requires PHP 7.1-dev
+      - Any PHP version identifier along with an optional operator
+      - @requires PHP 7.1.20
+      - @requires PHP >= 7.2
     * - ``PHPUnit``
-      - Any PHPUnit version identifier
-      - @requires PHPUnit 3.6.3
-      - @requires PHPUnit 4.6
+      - Any PHPUnit version identifier along with an optional operator
+      - @requires PHPUnit 7.3.1
+      - @requires PHPUnit < 8
     * - ``OS``
       - A regexp matching `PHP_OS <http://php.net/manual/en/reserved.constants.php#constant.php-os>`_
       - @requires OS Linux
@@ -222,9 +222,11 @@ In addition to the above methods it is also possible to use the
       - @requires function imap_open
       - @requires function ReflectionMethod::setAccessible
     * - ``extension``
-      - Any extension name along with an optional version identifier
+      - Any extension name along with an optional version identifier and optional operator
       - @requires extension mysqli
-      - @requires extension redis 2.2.0
+      - @requires extension redis >= 2.2.0
+
+The following operators are supported for PHP, PHPUnit, and extension version constraints: ``<``, ``<=``, ``>``, ``>=``, ``=``, ``==``, ``!=``, ``<>``.
 
 .. code-block:: php
     :caption: Skipping test cases using @requires
@@ -239,7 +241,7 @@ In addition to the above methods it is also possible to use the
     class DatabaseTest extends TestCase
     {
         /**
-         * @requires PHP 5.3
+         * @requires PHP >= 5.3
          */
         public function testConnection()
         {
