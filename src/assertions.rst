@@ -235,8 +235,6 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
 
 ``assertNotContains()`` is the inverse of this assertion and takes the same arguments.
 
-``assertAttributeContains()`` and ``assertAttributeNotContains()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the haystack.
-
 .. code-block:: php
     :caption: Usage of assertContains()
     :name: appendixes.assertions.assertContains.example
@@ -362,8 +360,6 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 ``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type or not.
 
 ``assertNotContainsOnly()`` is the inverse of this assertion and takes the same arguments.
-
-``assertAttributeContainsOnly()`` and ``assertAttributeNotContainsOnly()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the haystack.
 
 .. code-block:: php
     :caption: Usage of assertContainsOnly()
@@ -640,8 +636,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
 
 ``assertNotEmpty()`` is the inverse of this assertion and takes the same arguments.
 
-``assertAttributeEmpty()`` and ``assertAttributeNotEmpty()`` are convenience wrappers that can be applied to a ``public``, ``protected``, or ``private`` attribute of a class or object.
-
 .. code-block:: php
     :caption: Usage of assertEmpty()
     :name: appendixes.assertions.assertEmpty.example
@@ -798,8 +792,6 @@ assertEquals()
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` are not equal.
 
 ``assertNotEquals()`` is the inverse of this assertion and takes the same arguments.
-
-``assertAttributeEquals()`` and ``assertAttributeNotEquals()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
 
 .. code-block:: php
     :caption: Usage of assertEquals()
@@ -1312,8 +1304,6 @@ assertGreaterThan()
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than the value of ``$expected``.
 
-``assertAttributeGreaterThan()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
-
 .. code-block:: php
     :caption: Usage of assertGreaterThan()
     :name: appendixes.assertions.assertGreaterThan.example
@@ -1356,8 +1346,6 @@ assertGreaterThanOrEqual()
 ``assertGreaterThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than or equal to the value of ``$expected``.
-
-``assertAttributeGreaterThanOrEqual()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
 
 .. code-block:: php
     :caption: Usage of assertGreaterThanOrEqual()
@@ -1451,8 +1439,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
 
 ``assertNotInstanceOf()`` is the inverse of this assertion and takes the same arguments.
 
-``assertAttributeInstanceOf()`` and ``assertAttributeNotInstanceOf()`` are convenience wrappers that can be applied to a ``public``, ``protected``, or ``private`` attribute of a class or object.
-
 .. code-block:: php
     :caption: Usage of assertInstanceOf()
     :name: appendixes.assertions.assertInstanceOf.example
@@ -1488,50 +1474,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-.. _appendixes.assertions.assertInternalType:
-
-assertIsArray()
-###############
-
-``assertIsArray($actual[, $message = ''])``
-
-Reports an error identified by ``$message`` if ``$actual`` is not of type ``array``.
-
-``assertIsNotArray()`` is the inverse of this assertion and takes the same arguments.
-
-.. code-block:: php
-    :caption: Usage of assertIsArray()
-    :name: appendixes.assertions.assertIsArray.example
-
-    <?php
-    use PHPUnit\Framework\TestCase;
-
-    class ArrayTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsArray(null);
-        }
-    }
-
-.. code-block:: bash
-
-    $ phpunit ArrayTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ArrayTest::testFailure
-    Failed asserting that null is of type "array".
-
-    /home/sb/ArrayTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsBool()
 ##############
@@ -2212,8 +2154,6 @@ assertLessThan()
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not less than the value of ``$expected``.
 
-``assertAttributeLessThan()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
-
 .. code-block:: php
     :caption: Usage of assertLessThan()
     :name: appendixes.assertions.assertLessThan.example
@@ -2257,8 +2197,6 @@ assertLessThanOrEqual()
 ``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not less than or equal to the value of ``$expected``.
-
-``assertAttributeLessThanOrEqual()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
 
 .. code-block:: php
     :caption: Usage of assertLessThanOrEqual()
@@ -2630,8 +2568,6 @@ assertSame()
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` do not have the same type and value.
 
 ``assertNotSame()`` is the inverse of this assertion and takes the same arguments.
-
-``assertAttributeSame()`` and ``assertAttributeNotSame()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
 
 .. code-block:: php
     :caption: Usage of assertSame()
