@@ -235,8 +235,6 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
 
 ``assertNotContains()`` is the inverse of this assertion and takes the same arguments.
 
-``assertAttributeContains()`` and ``assertAttributeNotContains()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the haystack.
-
 .. code-block:: php
     :caption: Usage of assertContains()
     :name: appendixes.assertions.assertContains.example
@@ -271,84 +269,93 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-``assertContains(string $needle, string $haystack[, string $message = '', boolean $ignoreCase = false])``
+assertStringContainsString()
+############################
+
+``assertStringContainsString(string $needle, string $haystack[, string $message = ''])``
 
 Reports an error identified by ``$message`` if ``$needle`` is not a substring of ``$haystack``.
 
-If ``$ignoreCase`` is ``true``, the test will be case insensitive.
+``assertStringNotContainsString()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
-    :caption: Usage of assertContains()
-    :name: appendixes.assertions.assertContains.example2
+    :caption: Usage of assertStringContainsString()
+    :name: appendixes.assertions.assertStringContainsString.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsTest extends TestCase
+    final class StringContainsStringTest extends TestCase
     {
         public function testFailure()
         {
-            $this->assertContains('baz', 'foobar');
+            $this->assertStringContainsString('foo', 'bar');
         }
     }
 
 .. parsed-literal::
 
-    $ phpunit ContainsTest
+    $ phpunit StringContainsStringTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    F
+    F                                                                   1 / 1 (100%)
 
-    Time: 0 seconds, Memory: 5.00Mb
+    Time: 37 ms, Memory: 6.00 MB
 
     There was 1 failure:
 
-    1) ContainsTest::testFailure
-    Failed asserting that 'foobar' contains "baz".
+    1) StringContainsStringTest::testFailure
+    Failed asserting that 'bar' contains "foo".
 
-    /home/sb/ContainsTest.php:6
+    /home/sb/StringContainsStringTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-.. code-block:: php
-    :caption: Usage of assertContains() with $ignoreCase
-    :name: appendixes.assertions.assertContains.example3
+assertStringContainsStringIgnoringCase()
+########################################
 
-    <?php
+``assertStringContainsStringIgnoringCase(string $needle, string $haystack[, string $message = ''])``
+
+Reports an error identified by ``$message`` if ``$needle`` is not a substring of ``$haystack``.
+
+Differences in casing are ignored when ``$needle`` is searched for in ``$haystack``.
+
+``assertStringNotContainsStringIgnoringCase()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertStringContainsStringIgnoringCase()
+    :name: appendixes.assertions.assertStringContainsStringIgnoringCase.example
+
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsTest extends TestCase
+    final class StringContainsStringIgnoringCaseTest extends TestCase
     {
         public function testFailure()
         {
-            $this->assertContains('foo', 'FooBar');
-        }
-
-        public function testOK()
-        {
-            $this->assertContains('foo', 'FooBar', '', true);
+            $this->assertStringContainsStringIgnoringCase('foo', 'bar');
         }
     }
 
 .. parsed-literal::
 
-    $ phpunit ContainsTest
+    $ phpunit StringContainsStringIgnoringCaseTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    F.
+    F                                                                   1 / 1 (100%)
 
-    Time: 0 seconds, Memory: 2.75Mb
+    Time: 40 ms, Memory: 6.00 MB
 
     There was 1 failure:
 
-    1) ContainsTest::testFailure
-    Failed asserting that 'FooBar' contains "foo".
+    1) StringContainsStringTest::testFailure
+    Failed asserting that 'bar' contains "foo".
 
-    /home/sb/ContainsTest.php:6
+    /home/sb/StringContainsStringIgnoringCaseTest.php:8
 
     FAILURES!
-    Tests: 2, Assertions: 2, Failures: 1.
+    Tests: 1, Assertions: 1, Failures: 1.
 
 .. _appendixes.assertions.assertContainsOnly:
 
@@ -362,8 +369,6 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 ``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type or not.
 
 ``assertNotContainsOnly()`` is the inverse of this assertion and takes the same arguments.
-
-``assertAttributeContainsOnly()`` and ``assertAttributeNotContainsOnly()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the haystack.
 
 .. code-block:: php
     :caption: Usage of assertContainsOnly()
@@ -640,8 +645,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
 
 ``assertNotEmpty()`` is the inverse of this assertion and takes the same arguments.
 
-``assertAttributeEmpty()`` and ``assertAttributeNotEmpty()`` are convenience wrappers that can be applied to a ``public``, ``protected``, or ``private`` attribute of a class or object.
-
 .. code-block:: php
     :caption: Usage of assertEmpty()
     :name: appendixes.assertions.assertEmpty.example
@@ -799,8 +802,6 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 
 ``assertNotEquals()`` is the inverse of this assertion and takes the same arguments.
 
-``assertAttributeEquals()`` and ``assertAttributeNotEquals()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
-
 .. code-block:: php
     :caption: Usage of assertEquals()
     :name: appendixes.assertions.assertEquals.example
@@ -869,51 +870,6 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     Tests: 3, Assertions: 3, Failures: 3.
 
 More specialized comparisons are used for specific argument types for ``$expected`` and ``$actual``, see below.
-
-``assertEquals(float $expected, float $actual[, string $message = '', float $delta = 0])``
-
-Reports an error identified by ``$message`` if the absolute difference between two floats ``$expected`` and ``$actual`` is greater than ``$delta``. If the absolute difference between two floats ``$expected`` and ``$actual`` is less than *or equal to* ``$delta``, the assertion will pass.
-
-Please read "`What Every Computer Scientist Should Know About Floating-Point Arithmetic <http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html>`_" to understand why ``$delta`` is necessary.
-
-.. code-block:: php
-    :caption: Usage of assertEquals() with floats
-    :name: appendixes.assertions.assertEquals.example2
-
-    <?php
-    use PHPUnit\Framework\TestCase;
-
-    class EqualsTest extends TestCase
-    {
-        public function testSuccess()
-        {
-            $this->assertEquals(1.0, 1.1, '', 0.1);
-        }
-
-        public function testFailure()
-        {
-            $this->assertEquals(1.0, 1.1);
-        }
-    }
-
-.. parsed-literal::
-
-    $ phpunit EqualsTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    .F
-
-    Time: 0 seconds, Memory: 5.75Mb
-
-    There was 1 failure:
-
-    1) EqualsTest::testFailure
-    Failed asserting that 1.1 matches expected 1.0.
-
-    /home/sb/EqualsTest.php:11
-
-    FAILURES!
-    Tests: 2, Assertions: 2, Failures: 1.
 
 ``assertEquals(DOMDocument $expected, DOMDocument $actual[, string $message = ''])``
 
@@ -1068,6 +1024,158 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
      )
 
     /home/sb/EqualsTest.php:6
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertEqualsCanonicalizing()
+############################
+
+``assertEqualsCanonicalizing(mixed $expected, mixed $actual[, string $message = ''])``
+
+Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` are not equal.
+
+The contents of ``$expected`` and ``$actual`` is canonicalized before they are compared. For instance, this means that if the two variables ``$expected`` and ``$actual`` are array then these arrays are sorted before they are compared, for instance.
+
+``assertNotEqualsCanonicalizing()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertEqualsCanonicalizing()
+    :name: appendixes.assertions.assertEqualsCanonicalizing.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class EqualsCanonicalizingTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertEqualsCanonicalizing([3, 2, 1], [2, 3, 0, 1]);
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit EqualsCanonicalizingTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F                                                                   1 / 1 (100%)
+
+    Time: 42 ms, Memory: 6.00 MB
+
+    There was 1 failure:
+
+    1) EqualsCanonicalizingTest::testFailure
+    Failed asserting that two arrays are equal.
+    --- Expected
+    +++ Actual
+    @@ @@
+     Array (
+    -    0 => 1
+    -    1 => 2
+    -    2 => 3
+    +    0 => 0
+    +    1 => 1
+    +    2 => 2
+    +    3 => 3
+     )
+
+    /home/sb/EqualsCanonicalizingTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertEqualsIgnoringCase()
+##########################
+
+``assertEqualsIgnoringCase(mixed $expected, mixed $actual[, string $message = ''])``
+
+Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` are not equal.
+
+Differences in casing are ignored for the comparison of ``$expected`` and ``$actual``.
+
+``assertNotEqualsIgnoringCase()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertEqualsIgnoringCase()
+    :name: appendixes.assertions.assertEqualsIgnoringCase.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class EqualsIgnoringCaseTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertEqualsIgnoringCase('foo', 'BAR');
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit EqualsIgnoringCaseTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F                                                                   1 / 1 (100%)
+
+    Time: 51 ms, Memory: 6.00 MB
+
+    There was 1 failure:
+
+    1) EqualsIgnoringCaseTest::testFailure
+    Failed asserting that two strings are equal.
+    --- Expected
+    +++ Actual
+    @@ @@
+    -'foo'
+    +'BAR'
+
+    /home/sb/EqualsIgnoringCaseTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertEqualsWithDelta()
+#######################
+
+``assertEqualsWithDelta(mixed $expected, mixed $actual, float $delta[, string $message = ''])``
+
+Reports an error identified by ``$message`` if the absolute difference between ``$expected`` and ``$actual`` is greater than ``$delta``.
+
+Please read "`What Every Computer Scientist Should Know About Floating-Point Arithmetic <http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html>`_" to understand why ``$delta`` is necessary.
+
+``assertNotEqualsWithDelta()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertEqualsWithDelta()
+    :name: appendixes.assertions.assertEqualsWithDelta.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class EqualsWithDeltaTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertEqualsWithDelta(1.0, 1.5, 0.1);
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit EqualsWithDeltaTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F                                                                   1 / 1 (100%)
+
+    Time: 41 ms, Memory: 6.00 MB
+
+    There was 1 failure:
+
+    1) EqualsWithDeltaTest::testFailure
+    Failed asserting that 1.5 matches expected 1.0.
+
+    /home/sb/EqualsWithDeltaTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1312,8 +1420,6 @@ assertGreaterThan()
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than the value of ``$expected``.
 
-``assertAttributeGreaterThan()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
-
 .. code-block:: php
     :caption: Usage of assertGreaterThan()
     :name: appendixes.assertions.assertGreaterThan.example
@@ -1356,8 +1462,6 @@ assertGreaterThanOrEqual()
 ``assertGreaterThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than or equal to the value of ``$expected``.
-
-``assertAttributeGreaterThanOrEqual()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
 
 .. code-block:: php
     :caption: Usage of assertGreaterThanOrEqual()
@@ -1451,8 +1555,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
 
 ``assertNotInstanceOf()`` is the inverse of this assertion and takes the same arguments.
 
-``assertAttributeInstanceOf()`` and ``assertAttributeNotInstanceOf()`` are convenience wrappers that can be applied to a ``public``, ``protected``, or ``private`` attribute of a class or object.
-
 .. code-block:: php
     :caption: Usage of assertInstanceOf()
     :name: appendixes.assertions.assertInstanceOf.example
@@ -1488,50 +1590,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-.. _appendixes.assertions.assertInternalType:
-
-assertIsArray()
-###############
-
-``assertIsArray($actual[, $message = ''])``
-
-Reports an error identified by ``$message`` if ``$actual`` is not of type ``array``.
-
-``assertIsNotArray()`` is the inverse of this assertion and takes the same arguments.
-
-.. code-block:: php
-    :caption: Usage of assertIsArray()
-    :name: appendixes.assertions.assertIsArray.example
-
-    <?php
-    use PHPUnit\Framework\TestCase;
-
-    class ArrayTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsArray(null);
-        }
-    }
-
-.. code-block:: bash
-
-    $ phpunit ArrayTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ArrayTest::testFailure
-    Failed asserting that null is of type "array".
-
-    /home/sb/ArrayTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsBool()
 ##############
@@ -2212,8 +2270,6 @@ assertLessThan()
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not less than the value of ``$expected``.
 
-``assertAttributeLessThan()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
-
 .. code-block:: php
     :caption: Usage of assertLessThan()
     :name: appendixes.assertions.assertLessThan.example
@@ -2257,8 +2313,6 @@ assertLessThanOrEqual()
 ``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not less than or equal to the value of ``$expected``.
-
-``assertAttributeLessThanOrEqual()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
 
 .. code-block:: php
     :caption: Usage of assertLessThanOrEqual()
@@ -2630,8 +2684,6 @@ assertSame()
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` do not have the same type and value.
 
 ``assertNotSame()`` is the inverse of this assertion and takes the same arguments.
-
-``assertAttributeSame()`` and ``assertAttributeNotSame()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
 
 .. code-block:: php
     :caption: Usage of assertSame()
