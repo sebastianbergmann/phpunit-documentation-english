@@ -1035,7 +1035,7 @@ assertEqualsCanonicalizing()
 
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` are not equal.
 
-The contents of ``$expected`` and ``$actual`` is canonicalized before they are compared. For instance, this means that if the two variables ``$expected`` and ``$actual`` are array then these arrays are sorted before they are compared, for instance.
+The contents of ``$expected`` and ``$actual`` are canonicalized before they are compared. This means that if the two variables ``$expected`` and ``$actual`` are arrays, then these arrays are sorted before they are compared. Where `$expected`` and ``$actual`` are objects, each object is converted to an array containing all private, protected and public properties.
 
 ``assertNotEqualsCanonicalizing()`` is the inverse of this assertion and takes the same arguments.
 
