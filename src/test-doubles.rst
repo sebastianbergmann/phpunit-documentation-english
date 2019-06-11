@@ -503,9 +503,8 @@ shows how to use a mock object to test the interaction between
 
 We first use the ``getMockBuilder()`` method that is provided by
 the ``PHPUnit\Framework\TestCase`` class to set up a mock
-object for the ``Observer``. Since we give an array as the
-second (optional) parameter for the ``getMock()`` method,
-only the ``update()`` method of the
+object for the ``Observer``. We then use ``setMethods(['update'])``
+to configure that only the ``update()`` method of the
 ``Observer`` class is replaced by a mock implementation.
 
 Because we are interested in verifying that a method is called, and which
