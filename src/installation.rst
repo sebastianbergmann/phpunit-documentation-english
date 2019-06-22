@@ -104,11 +104,13 @@ are linked together, so you should be able to connect to any key server.
 
 .. parsed-literal::
 
-    $ gpg --keyserver pgp.uni-mainz.de --recv-keys 0x4AA394086372C20A
-    gpg: requesting key 6372C20A from hkp server pgp.uni-mainz.de
-    gpg: key 6372C20A: public key "Sebastian Bergmann <sb@sebastian-bergmann.de>" imported
+    $ curl --silent https://sebastian-bergmann.de/gpg.asc | gpg --import
+    gpg: key 4AA394086372C20A: 452 signatures not checked due to missing keys
+    gpg: /root/.gnupg/trustdb.gpg: trustdb created
+    gpg: key 4AA394086372C20A: public key "Sebastian Bergmann <sb@sebastian-bergmann.de>" imported
     gpg: Total number processed: 1
-    gpg:               imported: 1  (RSA: 1)
+    gpg:               imported: 1
+    gpg: no ultimately trusted keys found
 
 Now we have received a public key for an entity known as "Sebastian
 Bergmann <sb@sebastian-bergmann.de>". However, we have no way of
