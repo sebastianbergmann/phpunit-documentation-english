@@ -377,3 +377,5 @@ To force overwriting existing variables, use the ``force`` attribute:
 
     <php>
       <env name="foo" value="bar" force="true"/>
+    </php>
+
