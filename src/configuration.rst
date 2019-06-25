@@ -93,9 +93,8 @@ Additional options that are not available as command-line options are:
 
 ``forceCoversAnnotation``
 
-    Code Coverage will only be recorded for tests that use the
-    ``@covers`` annotation documented in
-    :ref:`appendixes.annotations.covers`.
+    A test will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`)
+    when it does not have a :ref:`@covers <appendixes.annotations.covers>` annotation.
 
 ``timeoutForLargeTests``
 
@@ -400,3 +399,5 @@ To force overwriting existing variables, use the ``force`` attribute:
 
     <php>
       <env name="foo" value="bar" force="true"/>
+    </php>
+
