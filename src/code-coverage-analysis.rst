@@ -19,18 +19,16 @@ functionality that provides an insight into what parts of the production
 code are executed when the tests are run. It makes use of the
 `php-code-coverage <https://github.com/sebastianbergmann/php-code-coverage>`_
 component, which in turn leverages the code coverage functionality provided
-by the `Xdebug <https://xdebug.org/>`_ extension for PHP.
+by the `Xdebug <https://xdebug.org/>`_ or `PCOV <https://github.com/krakjoe/pcov>`_
+extensions for PHP or by `PHPDBG <https://www.php.net/manual/en/book.phpdbg.php>`_.
 
 .. admonition:: Note
 
-   Xdebug is not distributed as part of PHPUnit. If you receive a notice
-   while running tests that no code coverage driver is available, it means
-   that Xdebug is either not installed or not configured properly. Before
-   you can use the code coverage analysis features in PHPUnit, you should
-   read `the Xdebug installation guide <https://xdebug.org/docs/install>`_.
-
-   php-code-coverage also supports `phpdbg <https://phpdbg.room11.org/introduction.html>`_
-   as an alternative source for code coverage data.
+   If you see a warning while running tests that no code coverage driver is
+   available, it means that you are using the PHP CLI binary (``php``) and do not
+   have Xdebug loaded. The `Xdebug installation guide <https://xdebug.org/docs/install>`_
+   explains how Xdebug can be installed and configured. Alternatively, you may use
+   the PHPDBG binary (``phpdbg``) instead of the PHP CLI one.
 
 PHPUnit can generate an HTML-based code coverage report as well as
 XML-based logfiles with code coverage information in various formats
