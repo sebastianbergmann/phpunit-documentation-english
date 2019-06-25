@@ -41,6 +41,11 @@ is not listed using a :ref:`@covers <appendixes.annotations.covers>`
 or :ref:`@uses <appendixes.annotations.uses>`
 annotation will be marked as risky when this check is enabled.
 
+Furthermore, by setting ``forceCoversAnnotation="true"`` in PHPUnit's
+:ref:`configuration file <appendixes.configuration>`, a test can be marked as
+risky when it does not have a :ref:`@covers <appendixes.annotations.covers>`
+annotation.
+
 .. _risky-tests.output-during-test-execution:
 
 Output During Test Execution
