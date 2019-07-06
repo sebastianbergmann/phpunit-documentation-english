@@ -38,7 +38,7 @@ processing.
 
 Please refer to :ref:`textui` for a list of command line switches
 that control code coverage functionality as well as
-:ref:`appendixes.configuration.logging` for the relevant
+:ref:`appendixes.configuration.phpunit.logging` for the relevant
 configuration settings.
 
 .. _code-coverage-analysis.metrics:
@@ -115,7 +115,7 @@ It is mandatory to configure a *whitelist* for telling
 PHPUnit which sourcecode files to include in the code coverage report.
 This can either be done using the ``--whitelist``
 :ref:`command line <textui.clioptions>` option or via the
-configuration file (see :ref:`appendixes.configuration.whitelisting-files`).
+configuration file (see :ref:`appendixes.configuration.phpunit.filter`).
 
 The ``addUncoveredFilesFromWhitelist`` and ``processUncoveredFilesFromWhitelist`` configuration settings are available to configure how the whitelist is used:
 
