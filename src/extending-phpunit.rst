@@ -217,7 +217,7 @@ for all the others.
     }
     ?>
 
-In :ref:`appendixes.configuration.test-listeners` you can see
+In :ref:`appendixes.configuration.phpunit.listeners` you can see
 how to configure PHPUnit to attach your test listener to the test
 execution.
 
@@ -329,7 +329,7 @@ Extending the TestRunner
 
 PHPUnit |version| supports TestRunner extensions that can hook
 into various events during the test execution.
-See :ref:`appendixes.configuration.extensions` for details on how
+See :ref:`appendixes.configuration.phpunit.extensionsDirectory` for details on how
 to register extensions in PHPUnit's XML configuration.
 
 Each available event that the extension can hook into is represented by an
