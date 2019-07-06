@@ -45,7 +45,7 @@ This attribute configures the bootstrap script that is loaded before the tests a
 The ``cacheResult`` Attribute
 -----------------------------
 
-Possible values: ``true`` or ``false`` (default: ``false``)
+Possible values: ``true`` or ``false`` (default: ``true``)
 
 This attribute configures the caching of test results. This caching is required for certain other features to work.
 
@@ -430,7 +430,7 @@ When ``phpunit.phar`` is used then this attribute may be used to configure a dir
 The ``executionOrder`` Attribute
 --------------------------------
 
-Possible values: ``default``, ``defects``, ``depends``, ``random``, ``reverse``
+Possible values: ``default``, ``defects``, ``depends``, ``no-depends``, ``duration``, ``random``, ``reverse``
 
 Using multiple values is possible. These need to be separated by ``,``.
 
@@ -441,7 +441,7 @@ This attribute configures the order in which tests are executed.
 The ``resolveDependencies`` Attribute
 -----------------------------------------------------------------
 
-Possible values: ``true`` or ``false`` (default: ``false``)
+Possible values: ``true`` or ``false`` (default: ``true``)
 
 This attribute configures whether dependencies between tests (expressed using the ``@depends`` annotation) should be resolved.
 
