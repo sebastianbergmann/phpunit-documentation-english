@@ -445,6 +445,22 @@ Possible values: ``true`` or ``false`` (default: ``true``)
 
 This attribute configures whether dependencies between tests (expressed using the ``@depends`` annotation) should be resolved.
 
+.. _appendixes.configuration.phpunit.testdox:
+
+The ``testdox`` Attribute
+-------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the output should be printed in TestDox format.
+
+The ``noInteraction`` Attribute
+-------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether progress should be animated when TestDox format is used, for instance.
+
 .. _appendixes.configuration.phpunit.testsuites:
 
 The ``<testsuites>`` Element
