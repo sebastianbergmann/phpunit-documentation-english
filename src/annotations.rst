@@ -101,15 +101,16 @@ class have been run to clean up shared fixtures.
 @backupGlobals
 ##############
 
-The backup and restore operations for global variables can be completely
-disabled for all tests of a test case class like this
+PHPUnit can optionally backup all global and super-global variables before each test and restore this backup after each test.
+
+The ``@backupGlobals enabled`` annotation can be used on the class level to enable this operation for all tests of a test case class:
 
 .. code-block:: php
 
     use PHPUnit\Framework\TestCase;
 
     /**
-     * @backupGlobals disabled
+     * @backupGlobals enabled
      */
     class MyTest extends TestCase
     {
@@ -125,14 +126,19 @@ backup and restore operations:
     use PHPUnit\Framework\TestCase;
 
     /**
-     * @backupGlobals disabled
+     * @backupGlobals enabled
      */
     class MyTest extends TestCase
     {
-        /**
-         * @backupGlobals enabled
-         */
         public function testThatInteractsWithGlobalVariables()
+        {
+            // ...
+        }
+
+        /**
+         * @backupGlobals disabled
+         */
+        public function testThatDoesNotInteractWithGlobalVariables()
         {
             // ...
         }
@@ -143,10 +149,9 @@ backup and restore operations:
 @backupStaticAttributes
 #######################
 
-The ``@backupStaticAttributes`` annotation can be used to
-back up all static property values in all declared classes before each
-test and restore them afterwards. It may be used at the test case class or
-test method level:
+PHPUnit can optionally backup all static attributes in all declared classes before each test and restore this backup after each test.
+
+The ``@backupStaticAttributes enabled`` annotation can be used on the class level to enable this operation for all tests of a test case class:
 
 .. code-block:: php
 
@@ -157,10 +162,31 @@ test method level:
      */
     class MyTest extends TestCase
     {
+        // ...
+    }
+
+The ``@backupStaticAttributes`` annotation can also be used on the
+test method level. This allows for a fine-grained configuration of the
+backup and restore operations:
+
+.. code-block:: php
+
+    use PHPUnit\Framework\TestCase;
+
+    /**
+     * @backupStaticAttributes enabled
+     */
+    class MyTest extends TestCase
+    {
+        public function testThatInteractsWithStaticAttributes()
+        {
+            // ...
+        }
+
         /**
          * @backupStaticAttributes disabled
          */
-        public function testThatInteractsWithStaticAttributes()
+        public function testThatDoesNotInteractWithStaticAttributes()
         {
             // ...
         }
