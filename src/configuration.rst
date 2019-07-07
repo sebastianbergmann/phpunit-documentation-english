@@ -430,7 +430,7 @@ When ``phpunit.phar`` is used then this attribute may be used to configure a dir
 The ``executionOrder`` Attribute
 --------------------------------
 
-Possible values: ``default``, ``defects``, ``depends``, ``no-depends``, ``duration``, ``random``, ``reverse``
+Possible values: ``default``, ``defects``, ``depends``, ``no-depends``, ``duration``, ``random``, ``reverse``, ``size``
 
 Using multiple values is possible. These need to be separated by ``,``.
 
