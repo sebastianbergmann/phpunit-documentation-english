@@ -136,7 +136,7 @@ Please note that ``createMock()`` will automatically and recursively stub return
     :caption: A method with a return type declaration
     :name: test-doubles.stubs.examples.returnTypeDeclaration.php
 
-    <?php declare(strict_type=1);
+    <?php declare(strict_types=1);
     class C
     {
         public function m(): D
