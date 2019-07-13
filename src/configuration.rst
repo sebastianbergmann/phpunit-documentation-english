@@ -607,6 +607,12 @@ The XML configuration above corresponds to attaching the
         new stdClass
     );
 
+.. admonition:: Note
+
+    Please note that the ``PHPUnit\Framework\TestListener`` interface is
+    deprecated and will be removed in the future. TestRunner extensions
+    should be used instead of test listeners.
+
 .. _appendixes.configuration.phpunit.logging:
 
 The ``<logging>`` Element
