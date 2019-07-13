@@ -137,6 +137,7 @@ one or more of the following interfaces:
 - ``AfterTestErrorHook``
 - ``AfterTestFailureHook``
 - ``AfterTestWarningHook``
+- ``AfterTestHook``
 - ``BeforeFirstTestHook``
 - ``BeforeTestHook``
 
