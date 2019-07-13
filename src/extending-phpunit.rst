@@ -144,7 +144,7 @@ one or more of the following interfaces:
 Each "hook", meaning each of the interfaces listed above, represents an event
 that can occur while the tests are being executed.
 
-See :ref:`appendixes.configuration.phpunit.extensionsDirectory` for details on how
+See :ref:`appendixes.configuration.phpunit.extensions` for details on how
 to register extensions in PHPUnit's XML configuration.
 
 :numref:`extending-phpunit.examples.TestRunnerExtension` shows an example

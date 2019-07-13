@@ -613,6 +613,28 @@ The XML configuration above corresponds to attaching the
     deprecated and will be removed in the future. TestRunner extensions
     should be used instead of test listeners.
 
+.. _appendixes.configuration.phpunit.extensions:
+
+The ``<extensions>`` Element
+############################
+
+Parent element: ``<phpunit>``
+
+The ``<extensions>`` element and its ``<extension>`` children can be used to register test runner extensions.
+
+.. _appendixes.configuration.phpunit.extensions.extension:
+
+The ``<extension>`` Element
+---------------------------
+
+Parent element: ``<extensions>``
+
+.. code-block:: xml
+
+    <extensions>
+        <extension class="Vendor\MyExtension"/>
+    </extensions>
+
 .. _appendixes.configuration.phpunit.logging:
 
 The ``<logging>`` Element
