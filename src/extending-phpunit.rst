@@ -126,20 +126,8 @@ used as a matcher when configuring mock objects.
 Extending the TestRunner
 ########################
 
-PHPUnit |version| supports TestRunner extensions that can hook
-into various events during the test execution.
-See :ref:`appendixes.configuration.phpunit.extensionsDirectory` for details on how
-to register extensions in PHPUnit's XML configuration.
-
-Each available event that the extension can hook into is represented by an
-interface that the extension needs to implement.
-:ref:`extending-phpunit.hooks` lists the available events in
-PHPUnit |version|.
-
-.. _extending-phpunit.hooks:
-
-Available Hook Interfaces
--------------------------
+PHPUnit's test runner can be extended by registering objects that implement
+one or more of the following interfaces:
 
 - ``AfterIncompleteTestHook``
 - ``AfterLastTestHook``
@@ -149,8 +137,15 @@ Available Hook Interfaces
 - ``AfterTestErrorHook``
 - ``AfterTestFailureHook``
 - ``AfterTestWarningHook``
+- ``AfterTestHook``
 - ``BeforeFirstTestHook``
 - ``BeforeTestHook``
+
+Each "hook", meaning each of the interfaces listed above, represents an event
+that can occur while the tests are being executed.
+
+See :ref:`appendixes.configuration.phpunit.extensionsDirectory` for details on how
+to register extensions in PHPUnit's XML configuration.
 
 :numref:`extending-phpunit.examples.TestRunnerExtension` shows an example
 for an extension implementing ``BeforeFirstTestHook`` and ``AfterLastTestHook``:
@@ -159,22 +154,21 @@ for an extension implementing ``BeforeFirstTestHook`` and ``AfterLastTestHook``:
     :caption: TestRunner Extension Example
     :name: extending-phpunit.examples.TestRunnerExtension
 
-    <?php
-
+    <?php declare(strict_types=1);
     namespace Vendor;
 
-    use PHPUnit\Runner\AfterLastTestHook;
     use PHPUnit\Runner\BeforeFirstTestHook;
+    use PHPUnit\Runner\AfterLastTestHook;
 
     final class MyExtension implements BeforeFirstTestHook, AfterLastTestHook
     {
-        public function executeAfterLastTest(): void
-        {
-            // called after the last test has been run
-        }
-
         public function executeBeforeFirstTest(): void
         {
             // called before the first test is being run
+        }
+
+        public function executeAfterLastTest(): void
+        {
+            // called after the last test has been run
         }
     }
