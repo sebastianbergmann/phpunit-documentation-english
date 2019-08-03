@@ -662,53 +662,83 @@ expectations for exceptions raised by the code under test.
 
 .. _writing-tests-for-phpunit.errors:
 
-Testing PHP Errors
-##################
+Testing PHP Errors, Warnings, and Notices
+#########################################
 
 By default, PHPUnit converts PHP errors, warnings, and notices that are
-triggered during the execution of a test to an exception. Using these
-exceptions, you can, for instance, expect a test to trigger a PHP error as
-shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
+triggered during the execution of a test to an exception. Among other benefits,
+this makes it possible to expect that a PHP error, warning, or notice is
+triggered in a test as shown in
+:numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
 
 .. admonition:: Note
 
    PHP's ``error_reporting`` runtime configuration can
    limit which errors PHPUnit will convert to exceptions. If you are
    having issues with this feature, be sure PHP is not configured to
-   suppress the type of errors you're testing.
+   suppress the type of error you are interested in.
 
 .. code-block:: php
-    :caption: Expecting a PHP error using expectException()
+    :caption: Expecting PHP errors, warnings, and notices
     :name: writing-tests-for-phpunit.exceptions.examples.ErrorTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
-    use PHPUnit\Framework\Error\Error;
 
-    class ExpectedErrorTest extends TestCase
+    final class ErrorTest extends TestCase
     {
-        public function testFailingInclude()
+        public function testDeprecationCanBeExpected(): void
         {
-            $this->expectException(Error::class);
+            $this->expectDeprecation();
 
-            include 'not_existing_file.php';
+            // Optionally test that the message is equal to a string
+            $this->expectDeprecationMessage('foo');
+
+            // Or optionally test that the message matches a regular expression
+            $this->expectDeprecationMessageMatches('/foo/');
+
+            \trigger_error('foo', \E_USER_DEPRECATED);
+        }
+
+        public function testNoticeCanBeExpected(): void
+        {
+            $this->expectNotice();
+
+            // Optionally test that the message is equal to a string
+            $this->expectNoticeMessage('foo');
+
+            // Or optionally test that the message matches a regular expression
+            $this->expectNoticeMessageMatches('/foo/');
+
+            \trigger_error('foo', \E_USER_NOTICE);
+        }
+
+        public function testWarningCanBeExpected(): void
+        {
+            $this->expectWarning();
+
+            // Optionally test that the message is equal to a string
+            $this->expectWarningMessage('foo');
+
+            // Or optionally test that the message matches a regular expression
+            $this->expectWarningMessageMatches('/foo/');
+
+            \trigger_error('foo', \E_USER_WARNING);
+        }
+
+        public function testErrorCanBeExpected(): void
+        {
+            $this->expectError();
+
+            // Optionally test that the message is equal to a string
+            $this->expectErrorMessage('foo');
+
+            // Or optionally test that the message matches a regular expression
+            $this->expectErrorMessageMatches('/foo/');
+
+            \trigger_error('foo', \E_USER_ERROR);
         }
     }
-
-.. parsed-literal::
-
-    $ phpunit -d error_reporting=2 ExpectedErrorTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    .
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    OK (1 test, 1 assertion)
-
-``PHPUnit\Framework\Error\Notice`` and
-``PHPUnit\Framework\Error\Warning`` represent PHP notices
-and warnings, respectively.
 
 When testing code that uses PHP built-in functions such as ``fopen()`` that
 may trigger errors it can sometimes be useful to use error suppression while
