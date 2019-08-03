@@ -710,18 +710,10 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
 ``PHPUnit\Framework\Error\Warning`` represent PHP notices
 and warnings, respectively.
 
-.. admonition:: Note
-
-   You should be as specific as possible when testing exceptions. Testing
-   for classes that are too generic might lead to undesirable
-   side-effects. Accordingly, testing for the ``Exception``
-   class with ``expectException()`` is no longer permitted.
-
-When testing that relies on PHP functions that trigger errors like
-``fopen`` it can sometimes be useful to use error
-suppression while testing. This allows you to check the return values by
-suppressing notices that would lead to a PHPUnit
-``PHPUnit\Framework\Error\Notice``.
+When testing code that uses PHP built-in functions such as ``fopen()`` that
+may trigger errors it can sometimes be useful to use error suppression while
+testing. This allows you to check the return values by suppressing notices
+that would lead to an exception raised by PHPUnit's error handler.
 
 .. code-block:: php
     :caption: Testing return values of code that uses PHP Errors
