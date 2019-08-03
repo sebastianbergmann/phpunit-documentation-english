@@ -702,11 +702,10 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
 ``PHPUnit\Framework\Error\Warning`` represent PHP notices
 and warnings, respectively.
 
-When testing that relies on php functions that trigger errors like
-``fopen`` it can sometimes be useful to use error
-suppression while testing. This allows you to check the return values by
-suppressing notices that would lead to a phpunit
-``PHPUnit\Framework\Error\Notice``.
+When testing code that uses PHP built-in functions such as ``fopen()`` that
+may trigger errors it can sometimes be useful to use error suppression while
+testing. This allows you to check the return values by suppressing notices
+that would lead to an exception raised by PHPUnit's error handler.
 
 .. code-block:: php
     :caption: Testing return values of code that uses PHP Errors
@@ -717,7 +716,8 @@ suppressing notices that would lead to a phpunit
 
     class ErrorSuppressionTest extends TestCase
     {
-        public function testFileWriting() {
+        public function testFileWriting()
+        {
             $writer = new FileWriter;
 
             $this->assertFalse(@$writer->write('/is-not-writeable/file', 'stuff'));
@@ -729,7 +729,7 @@ suppressing notices that would lead to a phpunit
         public function write($file, $content) {
             $file = fopen($file, 'w');
 
-            if($file == false) {
+            if ($file == false) {
                 return false;
             }
 
