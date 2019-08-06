@@ -669,7 +669,7 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
    the ``@testdox`` annotation also activated the behaviour
    of the ``@test`` annotation.
 
-When using the ``@testdox`` annotaion at method level with a ``@dataProvider`` you may use the method parameters as placeholders in your alternative description.
+When using the ``@testdox`` annotation at method level with a ``@dataProvider`` you may use the method parameters as placeholders in your alternative description.
 
 .. code-block:: php
 
