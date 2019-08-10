@@ -635,6 +635,53 @@ Parent element: ``<extensions>``
         <extension class="Vendor\MyExtension"/>
     </extensions>
 
+.. _appendixes.configuration.phpunit.extensions.extension.arguments:
+
+The ``<arguments>`` Element
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parent element: ``<extension>``
+
+The ``<arguments>`` element can be used to configure a single ``<extension>``.
+
+Accepts a list of elements of types, which are then used to configure individual
+extensions. The arguments are passed to the extension class' ``__constructor``
+method in the order they are defined in the configuration.
+
+Available types:
+
+- ``<boolean>``
+- ``<integer>``
+- ``<string>``
+- ``<double>`` (float)
+- ``<array>``
+- ``<object>``
+
+.. code-block:: xml
+
+    <extension class="Vendor\MyExtension">
+        <arguments>
+            <integer>1</integer>
+            <integer>2</integer>
+            <integer>3</integer>
+            <string>hello world</string>
+            <boolean>true</boolean>
+            <double>1.23</double>
+            <array>
+                <element index="0">
+                    <string>value1</string>
+                </element>
+                <element index="1">
+                    <string>value2</string>
+                </element>
+            </array>
+            <object class="Vendor\MyPhpClass">
+                <string>constructor arg 1</string>
+                <string>constructor arg 2</string>
+            </object>
+        </arguments>
+    </extension>
+
 .. _appendixes.configuration.phpunit.logging:
 
 The ``<logging>`` Element
