@@ -171,3 +171,76 @@ for an extension implementing ``BeforeFirstTestHook`` and ``AfterLastTestHook``:
             // called after the last test has been run
         }
     }
+
+Configuring extensions
+----------------------
+
+You can configure PHPUnit extensions, assuming the extension accepts
+configuration values.
+
+:numref:`extending-phpunit.examples.TestRunnerConfigurableExtension` shows an
+example how to make an extension configurable, by adding an ``__constructor()``
+definition to the extension class:
+
+.. code-block:: php
+    :caption: TestRunner Extension with constructor
+    :name: extending-phpunit.examples.TestRunnerConfigurableExtension
+
+    <?php declare(strict_types=1);
+    namespace Vendor;
+
+    use PHPUnit\Runner\BeforeFirstTestHook;
+    use PHPUnit\Runner\AfterLastTestHook;
+
+    final class MyConfigurableExtension implements BeforeFirstTestHook, AfterLastTestHook
+    {
+        protected $config_value_1 = '';
+
+        protected $config_value_2 = 0;
+
+        public function __construct(string $value1 = '', int $value2 = 0)
+        {
+            $this->config_value_1 = $config_1;
+            $this->config_value_2 = $config_2;
+        }
+
+        public function executeBeforeFirstTest(): void
+        {
+            if (strlen($this-config_value_1) {
+                echo 'Testing with configuration value: ' . $this->config_value_1;
+            }
+        }
+
+        public function executeAfterLastTest(): void
+        {
+            if ($this->config_value_2 > 10) {
+                echo 'Second config value is OK!';
+            }
+        }
+    }
+
+To input configuration to the extension via XML, the XML configuration file's
+``extensions`` section needs to be updated to have configuration values, as
+shown in
+:numref:`extending-phpunit.examples.TestRunnerConfigurableExtensionConfig`:
+
+.. code-block:: xml
+    :caption: TestRunner Extension configuration
+    :name: extending-phpunit.examples.TestRunnerConfigurableExtensionConfig
+
+    <extensions>
+        <extension class="Vendor\MyUnconfigurableExtension" />
+        <extension class="Vendor\MyConfigurableExtension">
+            <arguments>
+                <string>Hello world!</string>
+                <int>15</int>
+            </arguments>
+        </extension>
+    </extensions>
+
+See :ref:`appendixes.configuration.phpunit.extensions.extension.arguments` for
+details on how to use the ``arguments`` configuration.
+
+Remember: all configuration is optional, so make sure your extension either has
+sane defaults in place, or that it disables itself in case configuration is
+missing.
