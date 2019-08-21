@@ -1589,7 +1589,39 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
+assertIsArray()
 
+###############
+
+``assertIsArray($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``array``.
+
+``assertIsNotArray()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsArray()
+    :name: appendixes.assertions.assertIsArray.example
+    <?php
+    use PHPUnit\Framework\TestCase;
+    class ArrayTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsArray(null);
+        }
+    }
+.. code-block:: bash
+    $ phpunit ArrayTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+    F
+    Time: 0 seconds, Memory: 5.00Mb
+    There was 1 failure:
+    1) ArrayTest::testFailure
+    Failed asserting that null is of type "array".
+    /home/sb/ArrayTest.php:8
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsBool()
 ##############
