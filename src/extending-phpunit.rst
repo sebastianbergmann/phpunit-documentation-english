@@ -111,7 +111,7 @@ abstract base class for matcher objects (or constraints),
         {
             return 'is true';
         }
-    }?>
+    }
 
 The effort of implementing the ``assertTrue()`` and
 ``isTrue()`` methods as well as the
@@ -120,6 +120,114 @@ benefit that ``assertThat()`` automatically takes care of
 evaluating the assertion and bookkeeping tasks such as counting it for
 statistics. Furthermore, the ``isTrue()`` method can be
 used as a matcher when configuring mock objects.
+
+.. _extending-phpunit.custom-comparators:
+
+Write custom comparators
+#######################
+
+Instead of writing a custom assertion, it is not uncommon to achieve
+your goal by writing a custom comparator for the ``assertEquals`` method.
+
+For example: I have a ValueObject interface that enforces an ``equals`` method.
+I want PHPUnit to use that equals method whenever it encounters a ValueObject
+instance.
+
+This is remarkably easy to implement. ``assertEquals`` first checks the type
+of the objects to compare, and when it finds a match with a registered
+comparator, it will use that.
+
+Let's clarify this with an example.
+
+.. code-block:: php
+    :caption: The ValueObjectComparator class
+    :name: extending-phpunit.examples.ValueObjectComparator.php
+
+    <?php
+    namespace ShiftingGear\Support\Testing;
+
+    use SebastianBergmann\Comparator\Comparator;
+    use SebastianBergmann\Comparator\ComparisonFailure;
+    use ShiftingGear\Support\Contracts\ValueObject;
+
+    final class ValueObjectComparator extends Comparator
+    {
+        /**
+         * Returns whether the comparator can compare two values.
+         *
+         * @param mixed $expected The first value to compare
+         * @param mixed $actual   The second value to compare
+         *
+         * @return bool
+         */
+        public function accepts($expected, $actual)
+        {
+            // Whenever the $expected is a ValueObject, the $actual should be one too or the test should fail.
+            return $expected instanceof ValueObject;
+        }
+
+        /**
+         * Asserts that two values are equal.
+         *
+         * @param mixed $expected     First value to compare
+         * @param mixed $actual       Second value to compare
+         * @param float $delta        Allowed numerical distance between two values to consider them equal
+         * @param bool  $canonicalize Arrays are sorted before comparison when set to true
+         * @param bool  $ignoreCase   Case is ignored when set to true
+         *
+         * @throws ComparisonFailure
+         */
+        public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
+        {
+            if ( ! $actual instanceof ValueObject) {
+                throw new ComparisonFailure(
+                    $expected,
+                    $actual,
+                    // no diff is required
+                    '',
+                    '',
+                    false,
+                    \sprintf(
+                        'Failed asserting that %s matches expected value object %s.',
+                        $this->exporter->export($actual),
+                        $this->exporter->export($expected)
+                    )
+                );
+            }
+
+            // The equals method will handle the type comparison
+            if ( ! $actual->equals($expected)) {
+                throw new ComparisonFailure(
+                    $expected,
+                    $actual,
+                    $this->exporter->export($expected),
+                    $this->exporter->export($actual),
+                    false,
+                    'Failed asserting that two value objects are equal.'
+                );
+            }
+        }
+    }
+
+
+:numref:`extending-phpunit.examples.ValueObjectComparator.php` shows how
+the ``accepts`` method determines if this Comparator should be used and
+the ``assertEquals`` method contains the logic of the comparison.
+
+Now all that's left is to register the Comparator in bootstrap.php, and
+whenever I use a ValueObject in my unit tests, my custom comparator
+will be used to compare these objects using their ``equals`` method.
+
+.. code-block:: php
+    :caption: bootstrap.php
+    :name: extending-phpunit.examples.bootstrap-comparator.php
+
+    <?php
+
+    // ... autoloading and stuff
+
+    $comparatorFactory = SebastianBergmann\Comparator\Factory::getInstance();
+    $comparatorFactory->register(new ShiftingGear\Support\Testing\ValueObjectComparator());
 
 .. _extending-phpunit.TestRunner:
 
