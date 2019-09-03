@@ -776,5 +776,4 @@ information regarding strict coverage mode.
 
 Please note that this annotation requires a fully-qualified class name (FQCN).
 To make this more obvious to the reader, it is recommended to use a leading
-backslash (even if this not required for the annotation to work correctly).
-
+backslash (even if this is not required for the annotation to work correctly).
