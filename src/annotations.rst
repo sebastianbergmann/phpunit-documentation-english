@@ -774,7 +774,6 @@ where unintentionally covered code will cause a test to fail.
 See :ref:`risky-tests.unintentionally-covered-code` for more
 information regarding strict coverage mode.
 
-Pleae note that this annotation requires a fully-qualified class name (FQCN).
+Please note that this annotation requires a fully-qualified class name (FQCN).
 To make this more obvious to the reader, it is recommended to use a leading
-backslash (even if this not required for the annotation to work correctly).
-
+backslash (even if this is not required for the annotation to work correctly).
