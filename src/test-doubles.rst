@@ -24,14 +24,14 @@ Gerard Meszaros introduces the concept of Test Doubles in
     has to provide the same API as the real one so that the SUT thinks it is
     the real one!
 
-The ``createMock($type)`` and
+The ``createStub($type)``, ``createMock($type)``, and
 ``getMockBuilder($type)`` methods provided by PHPUnit can be
 used in a test to automatically generate an object that can act as a test
 double for the specified original type (interface or class name). This test
 double object can be used in every context where an object of the original
 type is expected or required.
 
-The ``createMock($type)`` method immediately returns a test
+The ``createStub($type)`` and ``createMock($type)`` method immediately return a test
 double object for the specified type (interface or class). The creation of
 this test double is performed using best practice defaults. The
 ``__construct()`` and ``__clone()`` methods of
@@ -70,7 +70,7 @@ force the SUT down paths it might not otherwise execute".
 
 :numref:`test-doubles.stubs.examples.StubTest.php` shows how
 to stub method calls and set up return values. We first use the
-``createMock()`` method that is provided by the
+``createStub()`` method that is provided by the
 ``PHPUnit\Framework\TestCase`` class to set up a stub
 object that looks like an object of ``SomeClass``
 (:numref:`test-doubles.stubs.examples.SomeClass.php`). We then
@@ -105,7 +105,7 @@ the example. This leads to more readable and "fluent" code.
         public function testStub()
         {
             // Create a stub for the SomeClass class.
-            $stub = $this->createMock(SomeClass::class);
+            $stub = $this->createStub(SomeClass::class);
 
             // Configure the stub.
             $stub->method('doSomething')
@@ -125,10 +125,10 @@ the example. This leads to more readable and "fluent" code.
    If the original class does declare a method named "method" then ``$stub->expects($this->any())->method('doSomething')->willReturn('foo');`` has to be used.
 
 "Behind the scenes", PHPUnit automatically generates a new PHP class that
-implements the desired behavior when the ``createMock()``
+implements the desired behavior when the ``createStub()``
 method is used.
 
-Please note that ``createMock()`` will automatically and recursively stub return values based on a method's return type. Consider the example shown below:
+Please note that ``createStub()`` will automatically and recursively stub return values based on a method's return type. Consider the example shown below:
 
 .. code-block:: php
     :caption: A method with a return type declaration
@@ -150,7 +150,7 @@ Similarily, if ``m`` had a return type declaration for a scalar type then a retu
 :numref:`test-doubles.stubs.examples.StubTest2.php` shows an
 example of how to use the Mock Builder's fluent interface to configure the
 creation of the test double. The configuration of this test double uses
-the same best practice defaults used by ``createMock()``.
+the same best practice defaults used by ``createStub()``.
 
 .. code-block:: php
     :caption: Using the Mock Builder API can be used to configure the generated test double class
@@ -204,7 +204,7 @@ can achieve this using ``returnArgument()`` instead of
         public function testReturnArgumentStub()
         {
             // Create a stub for the SomeClass class.
-            $stub = $this->createMock(SomeClass::class);
+            $stub = $this->createStub(SomeClass::class);
 
             // Configure the stub.
             $stub->method('doSomething')
@@ -235,7 +235,7 @@ can use ``returnSelf()`` to achieve this.
         public function testReturnSelf()
         {
             // Create a stub for the SomeClass class.
-            $stub = $this->createMock(SomeClass::class);
+            $stub = $this->createStub(SomeClass::class);
 
             // Configure the stub.
             $stub->method('doSomething')
@@ -265,7 +265,7 @@ an example.
         public function testReturnValueMapStub()
         {
             // Create a stub for the SomeClass class.
-            $stub = $this->createMock(SomeClass::class);
+            $stub = $this->createStub(SomeClass::class);
 
             // Create a map of arguments to return values.
             $map = [
@@ -303,7 +303,7 @@ result of a callback function or method. See
         public function testReturnCallbackStub()
         {
             // Create a stub for the SomeClass class.
-            $stub = $this->createMock(SomeClass::class);
+            $stub = $this->createStub(SomeClass::class);
 
             // Configure the stub.
             $stub->method('doSomething')
@@ -332,7 +332,7 @@ an example.
         public function testOnConsecutiveCallsStub()
         {
             // Create a stub for the SomeClass class.
-            $stub = $this->createMock(SomeClass::class);
+            $stub = $this->createStub(SomeClass::class);
 
             // Configure the stub.
             $stub->method('doSomething')
@@ -361,7 +361,7 @@ shows how to use ``throwException()`` to do this.
         public function testThrowExceptionStub()
         {
             // Create a stub for the SomeClass class.
-            $stub = $this->createMock(SomeClass::class);
+            $stub = $this->createStub(SomeClass::class);
 
             // Configure the stub.
             $stub->method('doSomething')
@@ -731,7 +731,7 @@ invocations.
    closely tied to specific implementation details.
 
 As mentioned in the beginning, when the defaults used by the
-``createMock()`` method to generate the test double do not
+``createStub()`` and ``createMock()`` methods to generate the test double do not
 match your needs then you can use the ``getMockBuilder($type)``
 method to customize the test double generation using a fluent interface.
 Here is a list of methods provided by the Mock Builder:
