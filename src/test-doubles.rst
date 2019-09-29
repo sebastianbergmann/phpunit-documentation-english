@@ -491,11 +491,9 @@ classes that are part of the System under Test (SUT).
 shows how to use a mock object to test the interaction between
 ``Subject`` and ``Observer`` objects.
 
-We first use the ``getMockBuilder()`` method that is provided by
+We first use the ``createMock()`` method that is provided by
 the ``PHPUnit\Framework\TestCase`` class to set up a mock
-object for the ``Observer``. We then use ``setMethods(['update'])``
-to configure that only the ``update()`` method of the
-``Observer`` class is replaced by a mock implementation.
+object for the ``Observer``.
 
 Because we are interested in verifying that a method is called, and which
 arguments it is called with, we introduce the ``expects()`` and
@@ -514,9 +512,7 @@ arguments it is called with, we introduce the ``expects()`` and
         {
             // Create a mock for the Observer class,
             // only mock the update() method.
-            $observer = $this->getMockBuilder(Observer::class)
-                             ->setMethods(['update'])
-                             ->getMock();
+            $observer = $this->createMock(Observer::class);
 
             // Set up the expectation for the update() method
             // to be called only once and with the string 'something'
@@ -555,9 +551,7 @@ on the method's arguments than a simple match.
         {
             // Create a mock for the Observer class, mocking the
             // reportError() method
-            $observer = $this->getMockBuilder(Observer::class)
-                             ->setMethods(['reportError'])
-                             ->getMock();
+            $observer = $this->createMock(Observer::class);
 
             $observer->expects($this->once())
                      ->method('reportError')
@@ -627,18 +621,19 @@ argument passes verification and ``false`` otherwise.
         {
             // Create a mock for the Observer class, mocking the
             // reportError() method
-            $observer = $this->getMockBuilder(Observer::class)
-                             ->setMethods(['reportError'])
-                             ->getMock();
+            $observer = $this->createMock(Observer::class);
 
             $observer->expects($this->once())
                      ->method('reportError')
-                     ->with($this->greaterThan(0),
-                            $this->stringContains('Something'),
-                            $this->callback(function($subject){
-                              return is_callable([$subject, 'getName']) &&
-                                     $subject->getName() == 'My subject';
-                            }));
+                     ->with(
+                         $this->greaterThan(0),
+                         $this->stringContains('Something'),
+                         $this->callback(function($subject)
+                         {
+                             return is_callable([$subject, 'getName']) &&
+                                    $subject->getName() == 'My subject';
+                         }
+                     ));
 
             $subject = new Subject('My subject');
             $subject->attach($observer);
