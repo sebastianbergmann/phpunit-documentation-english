@@ -18,7 +18,7 @@ PHPUnit's assertions are implemented in ``PHPUnit\Framework\Assert``.
 
 The assertion methods are declared static and can be invoked
 from any context using ``PHPUnit\Framework\Assert::assertTrue()``,
-for instance, or using ``self::assertTrue()`` or ``self::assertTrue()``,
+for instance, or using ``$this->assertTrue()`` or ``self::assertTrue()``,
 for instance, in a class that extends ``PHPUnit\Framework\TestCase``.
 
 In fact, you can even use global function wrappers such as ``assertTrue()`` in
@@ -27,17 +27,17 @@ when you (manually) include the :file:`src/Framework/Assert/Functions.php`
 sourcecode file that comes with PHPUnit.
 
 A common question, especially from developers new to PHPUnit, is whether
-using ``self::assertTrue()`` or ``self::assertTrue()``,
+using ``$this->assertTrue()`` or ``self::assertTrue()``,
 for instance, is "the right way" to invoke an assertion. The short answer
 is: there is no right way. And there is no wrong way, either. It is a
 matter of personal preference.
 
-For most people it just "feels right" to use ``self::assertTrue()``
+For most people it just "feels right" to use ``$this->assertTrue()``
 because the test method is invoked on a test object. The fact that the
 assertion methods are declared static allows for (re)using
 them outside the scope of a test object. Lastly, the global function
 wrappers allow developers to type less characters (``assertTrue()`` instead
-of ``self::assertTrue()`` or ``self::assertTrue()``).
+of ``$this->assertTrue()`` or ``self::assertTrue()``).
 
 .. _appendixes.assertions.assertArrayHasKey:
 
@@ -61,7 +61,7 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
     {
         public function testFailure()
         {
-            self::assertArrayHasKey('foo', ['bar' => 'baz']);
+            $this->assertArrayHasKey('foo', ['bar' => 'baz']);
         }
     }
 
@@ -106,7 +106,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
     {
         public function testFailure()
         {
-            self::assertClassHasAttribute('foo', stdClass::class);
+            $this->assertClassHasAttribute('foo', stdClass::class);
         }
     }
 
@@ -151,7 +151,7 @@ Reports an error identified by ``$message`` if ``$array`` does not contains the 
     {
         public function testFailure()
         {
-            self::assertArraySubset(['config' => ['key-a', 'key-b']], ['config' => ['key-a']]);
+            $this->assertArraySubset(['config' => ['key-a', 'key-b']], ['config' => ['key-a']]);
         }
     }
 
@@ -201,7 +201,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
     {
         public function testFailure()
         {
-            self::assertClassHasStaticAttribute('foo', stdClass::class);
+            $this->assertClassHasStaticAttribute('foo', stdClass::class);
         }
     }
 
@@ -246,7 +246,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
     {
         public function testFailure()
         {
-            self::assertContains(4, [1, 2, 3]);
+            $this->assertContains(4, [1, 2, 3]);
         }
     }
 
@@ -289,7 +289,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not a substring of
     {
         public function testFailure()
         {
-            self::assertStringContainsString('foo', 'bar');
+            $this->assertStringContainsString('foo', 'bar');
         }
     }
 
@@ -334,7 +334,7 @@ Differences in casing are ignored when ``$needle`` is searched for in ``$haystac
     {
         public function testFailure()
         {
-            self::assertStringContainsStringIgnoringCase('foo', 'bar');
+            $this->assertStringContainsStringIgnoringCase('foo', 'bar');
         }
     }
 
@@ -381,7 +381,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
     {
         public function testFailure()
         {
-            self::assertContainsOnly('string', ['1', '2', 3]);
+            $this->assertContainsOnly('string', ['1', '2', 3]);
         }
     }
 
@@ -428,7 +428,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
     {
         public function testFailure()
         {
-            self::assertContainsOnlyInstancesOf(
+            $this->assertContainsOnlyInstancesOf(
                 Foo::class,
                 [new Foo, new Bar, new Foo]
             );
@@ -476,7 +476,7 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
     {
         public function testFailure()
         {
-            self::assertCount(0, ['foo']);
+            $this->assertCount(0, ['foo']);
         }
     }
 
@@ -521,7 +521,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     {
         public function testFailure()
         {
-            self::assertDirectoryExists('/path/to/directory');
+            $this->assertDirectoryExists('/path/to/directory');
         }
     }
 
@@ -566,7 +566,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     {
         public function testFailure()
         {
-            self::assertDirectoryIsReadable('/path/to/directory');
+            $this->assertDirectoryIsReadable('/path/to/directory');
         }
     }
 
@@ -611,7 +611,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     {
         public function testFailure()
         {
-            self::assertDirectoryIsWritable('/path/to/directory');
+            $this->assertDirectoryIsWritable('/path/to/directory');
         }
     }
 
@@ -656,7 +656,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
     {
         public function testFailure()
         {
-            self::assertEmpty(['foo']);
+            $this->assertEmpty(['foo']);
         }
     }
 
@@ -702,7 +702,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
             $expected = new DOMElement('foo');
             $actual = new DOMElement('bar');
 
-            self::assertEqualXMLStructure($expected, $actual);
+            $this->assertEqualXMLStructure($expected, $actual);
         }
 
         public function testFailureWithDifferentNodeAttributes()
@@ -713,7 +713,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
             $actual = new DOMDocument;
             $actual->loadXML('<foo/>');
 
-            self::assertEqualXMLStructure(
+            $this->assertEqualXMLStructure(
               $expected->firstChild, $actual->firstChild, true
             );
         }
@@ -726,7 +726,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
             $actual = new DOMDocument;
             $actual->loadXML('<foo><bar/></foo>');
 
-            self::assertEqualXMLStructure(
+            $this->assertEqualXMLStructure(
               $expected->firstChild, $actual->firstChild
             );
         }
@@ -739,7 +739,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
             $actual = new DOMDocument;
             $actual->loadXML('<foo><baz/><baz/><baz/></foo>');
 
-            self::assertEqualXMLStructure(
+            $this->assertEqualXMLStructure(
               $expected->firstChild, $actual->firstChild
             );
         }
@@ -813,17 +813,17 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     {
         public function testFailure()
         {
-            self::assertEquals(1, 0);
+            $this->assertEquals(1, 0);
         }
 
         public function testFailure2()
         {
-            self::assertEquals('bar', 'baz');
+            $this->assertEquals('bar', 'baz');
         }
 
         public function testFailure3()
         {
-            self::assertEquals("foo\nbar\nbaz\n", "foo\nbah\nbaz\n");
+            $this->assertEquals("foo\nbar\nbaz\n", "foo\nbah\nbaz\n");
         }
     }
 
@@ -892,7 +892,7 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
             $actual = new DOMDocument;
             $actual->loadXML('<bar><foo/></bar>');
 
-            self::assertEquals($expected, $actual);
+            $this->assertEquals($expected, $actual);
         }
     }
 
@@ -948,7 +948,7 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
             $actual->foo = 'bar';
             $actual->baz = 'bar';
 
-            self::assertEquals($expected, $actual);
+            $this->assertEquals($expected, $actual);
         }
     }
 
@@ -995,7 +995,7 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
     {
         public function testFailure()
         {
-            self::assertEquals(['a', 'b', 'c'], ['a', 'c', 'd']);
+            $this->assertEquals(['a', 'b', 'c'], ['a', 'c', 'd']);
         }
     }
 
@@ -1050,7 +1050,7 @@ The contents of ``$expected`` and ``$actual`` are canonicalized before they are 
     {
         public function testFailure()
         {
-            self::assertEqualsCanonicalizing([3, 2, 1], [2, 3, 0, 1]);
+            $this->assertEqualsCanonicalizing([3, 2, 1], [2, 3, 0, 1]);
         }
     }
 
@@ -1107,7 +1107,7 @@ Differences in casing are ignored for the comparison of ``$expected`` and ``$act
     {
         public function testFailure()
         {
-            self::assertEqualsIgnoringCase('foo', 'BAR');
+            $this->assertEqualsIgnoringCase('foo', 'BAR');
         }
     }
 
@@ -1157,7 +1157,7 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
     {
         public function testFailure()
         {
-            self::assertEqualsWithDelta(1.0, 1.5, 0.1);
+            $this->assertEqualsWithDelta(1.0, 1.5, 0.1);
         }
     }
 
@@ -1202,7 +1202,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
     {
         public function testFailure()
         {
-            self::assertFalse(true);
+            $this->assertFalse(true);
         }
     }
 
@@ -1247,7 +1247,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     {
         public function testFailure()
         {
-            self::assertFileEquals('/home/sb/expected', '/home/sb/actual');
+            $this->assertFileEquals('/home/sb/expected', '/home/sb/actual');
         }
     }
 
@@ -1298,7 +1298,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     {
         public function testFailure()
         {
-            self::assertFileExists('/path/to/file');
+            $this->assertFileExists('/path/to/file');
         }
     }
 
@@ -1343,7 +1343,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     {
         public function testFailure()
         {
-            self::assertFileIsReadable('/path/to/file');
+            $this->assertFileIsReadable('/path/to/file');
         }
     }
 
@@ -1388,7 +1388,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     {
         public function testFailure()
         {
-            self::assertFileIsWritable('/path/to/file');
+            $this->assertFileIsWritable('/path/to/file');
         }
     }
 
@@ -1431,7 +1431,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     {
         public function testFailure()
         {
-            self::assertGreaterThan(2, 1);
+            $this->assertGreaterThan(2, 1);
         }
     }
 
@@ -1474,7 +1474,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     {
         public function testFailure()
         {
-            self::assertGreaterThanOrEqual(2, 1);
+            $this->assertGreaterThanOrEqual(2, 1);
         }
     }
     ?>
@@ -1520,7 +1520,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
     {
         public function testFailure()
         {
-            self::assertInfinite(1);
+            $this->assertInfinite(1);
         }
     }
     ?>
@@ -1566,7 +1566,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
     {
         public function testFailure()
         {
-            self::assertInstanceOf(RuntimeException::class, new Exception);
+            $this->assertInstanceOf(RuntimeException::class, new Exception);
         }
     }
     ?>
@@ -1610,7 +1610,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``arra
     {
         public function testFailure()
         {
-            self::assertIsArray(null);
+            $this->assertIsArray(null);
         }
     }
 
@@ -1653,7 +1653,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``bool
     {
         public function testFailure()
         {
-            self::assertIsBool(null);
+            $this->assertIsBool(null);
         }
     }
 
@@ -1696,7 +1696,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``call
     {
         public function testFailure()
         {
-            self::assertIsCallable(null);
+            $this->assertIsCallable(null);
         }
     }
 
@@ -1739,7 +1739,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``floa
     {
         public function testFailure()
         {
-            self::assertIsFloat(null);
+            $this->assertIsFloat(null);
         }
     }
 
@@ -1782,7 +1782,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``int`
     {
         public function testFailure()
         {
-            self::assertIsInt(null);
+            $this->assertIsInt(null);
         }
     }
 
@@ -1825,7 +1825,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``iter
     {
         public function testFailure()
         {
-            self::assertIsIterable(null);
+            $this->assertIsIterable(null);
         }
     }
 
@@ -1868,7 +1868,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``nume
     {
         public function testFailure()
         {
-            self::assertIsNumeric(null);
+            $this->assertIsNumeric(null);
         }
     }
 
@@ -1911,7 +1911,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``obje
     {
         public function testFailure()
         {
-            self::assertIsObject(null);
+            $this->assertIsObject(null);
         }
     }
 
@@ -1954,7 +1954,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``reso
     {
         public function testFailure()
         {
-            self::assertIsResource(null);
+            $this->assertIsResource(null);
         }
     }
 
@@ -1997,7 +1997,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``scal
     {
         public function testFailure()
         {
-            self::assertIsScalar(null);
+            $this->assertIsScalar(null);
         }
     }
 
@@ -2040,7 +2040,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``stri
     {
         public function testFailure()
         {
-            self::assertIsString(null);
+            $this->assertIsString(null);
         }
     }
 
@@ -2085,7 +2085,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
     {
         public function testFailure()
         {
-            self::assertIsReadable('/path/to/unreadable');
+            $this->assertIsReadable('/path/to/unreadable');
         }
     }
     ?>
@@ -2131,7 +2131,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
     {
         public function testFailure()
         {
-            self::assertIsWritable('/path/to/unwritable');
+            $this->assertIsWritable('/path/to/unwritable');
         }
     }
     ?>
@@ -2176,7 +2176,7 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
     {
         public function testFailure()
         {
-            self::assertJsonFileEqualsJsonFile(
+            $this->assertJsonFileEqualsJsonFile(
               'path/to/fixture/file', 'path/to/actual/file');
         }
     }
@@ -2222,7 +2222,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
     {
         public function testFailure()
         {
-            self::assertJsonStringEqualsJsonFile(
+            $this->assertJsonStringEqualsJsonFile(
                 'path/to/fixture/file', json_encode(['Mascot' => 'ux'])
             );
         }
@@ -2269,7 +2269,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
     {
         public function testFailure()
         {
-            self::assertJsonStringEqualsJsonString(
+            $this->assertJsonStringEqualsJsonString(
                 json_encode(['Mascot' => 'Tux']),
                 json_encode(['Mascot' => 'ux'])
             );
@@ -2323,7 +2323,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     {
         public function testFailure()
         {
-            self::assertLessThan(1, 2);
+            $this->assertLessThan(1, 2);
         }
     }
     ?>
@@ -2367,7 +2367,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     {
         public function testFailure()
         {
-            self::assertLessThanOrEqual(1, 2);
+            $this->assertLessThanOrEqual(1, 2);
         }
     }
     ?>
@@ -2411,7 +2411,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
     {
         public function testFailure()
         {
-            self::assertNan(1);
+            $this->assertNan(1);
         }
     }
     ?>
@@ -2457,7 +2457,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
     {
         public function testFailure()
         {
-            self::assertNull('foo');
+            $this->assertNull('foo');
         }
     }
     ?>
@@ -2503,7 +2503,7 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
     {
         public function testFailure()
         {
-            self::assertObjectHasAttribute('foo', new stdClass);
+            $this->assertObjectHasAttribute('foo', new stdClass);
         }
     }
     ?>
@@ -2549,7 +2549,7 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
     {
         public function testFailure()
         {
-            self::assertRegExp('/foo/', 'bar');
+            $this->assertRegExp('/foo/', 'bar');
         }
     }
     ?>
@@ -2595,7 +2595,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     {
         public function testFailure()
         {
-            self::assertStringMatchesFormat('%i', 'foo');
+            $this->assertStringMatchesFormat('%i', 'foo');
         }
     }
     ?>
@@ -2691,7 +2691,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     {
         public function testFailure()
         {
-            self::assertStringMatchesFormatFile('/path/to/expected.txt', 'foo');
+            $this->assertStringMatchesFormatFile('/path/to/expected.txt', 'foo');
         }
     }
     ?>
@@ -2738,7 +2738,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     {
         public function testFailure()
         {
-            self::assertSame('2204', 2204);
+            $this->assertSame('2204', 2204);
         }
     }
     ?>
@@ -2777,7 +2777,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     {
         public function testFailure()
         {
-            self::assertSame(new stdClass, new stdClass);
+            $this->assertSame(new stdClass, new stdClass);
         }
     }
     ?>
@@ -2823,7 +2823,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
     {
         public function testFailure()
         {
-            self::assertStringEndsWith('suffix', 'foo');
+            $this->assertStringEndsWith('suffix', 'foo');
         }
     }
     ?>
@@ -2869,7 +2869,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     {
         public function testFailure()
         {
-            self::assertStringEqualsFile('/home/sb/expected', 'actual');
+            $this->assertStringEqualsFile('/home/sb/expected', 'actual');
         }
     }
     ?>
@@ -2921,7 +2921,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
     {
         public function testFailure()
         {
-            self::assertStringStartsWith('prefix', 'foo');
+            $this->assertStringStartsWith('prefix', 'foo');
         }
     }
     ?>
@@ -2976,7 +2976,7 @@ Reports an error identified by ``$message`` if the ``$value`` does not match the
             $theBiscuit = new Biscuit('Ginger');
             $myBiscuit  = new Biscuit('Ginger');
 
-            self::assertThat(
+            $this->assertThat(
               $theBiscuit,
               $this->logicalNot(
                 $this->equalTo($myBiscuit)
@@ -3085,7 +3085,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
     {
         public function testFailure()
         {
-            self::assertTrue(false);
+            $this->assertTrue(false);
         }
     }
     ?>
@@ -3131,7 +3131,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
     {
         public function testFailure()
         {
-            self::assertXmlFileEqualsXmlFile(
+            $this->assertXmlFileEqualsXmlFile(
               '/home/sb/expected.xml', '/home/sb/actual.xml');
         }
     }
@@ -3186,7 +3186,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     {
         public function testFailure()
         {
-            self::assertXmlStringEqualsXmlFile(
+            $this->assertXmlStringEqualsXmlFile(
               '/home/sb/expected.xml', '<foo><baz/></foo>');
         }
     }
@@ -3241,7 +3241,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     {
         public function testFailure()
         {
-            self::assertXmlStringEqualsXmlString(
+            $this->assertXmlStringEqualsXmlString(
               '<foo><bar/></foo>', '<foo><baz/></foo>');
         }
     }
