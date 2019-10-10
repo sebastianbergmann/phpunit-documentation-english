@@ -290,7 +290,7 @@ specify which parts of the code it is supposed to test:
      */
     public function testBalanceIsInitiallyZero()
     {
-        $this->assertSame(0, $this->ba->getBalance());
+        self::assertSame(0, $this->ba->getBalance());
     }
 
 If provided, this effectively filters the code coverage report
@@ -634,7 +634,7 @@ annotation in a method's DocBlock to mark it as a test method.
      */
     public function initialBalanceShouldBe0()
     {
-        $this->assertSame(0, $this->ba->getBalance());
+        self::assertSame(0, $this->ba->getBalance());
     }
 
 .. _appendixes.annotations.testdox:
@@ -659,7 +659,7 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
          */
         public function balanceIsInitiallyZero()
         {
-            $this->assertSame(0, $this->ba->getBalance());
+            self::assertSame(0, $this->ba->getBalance());
         }
     }
 
@@ -679,7 +679,7 @@ When using the ``@testdox`` annotation at method level with a ``@dataProvider`` 
      */
     public function testAdd($a, $b, $expected)
     {
-        $this->assertSame($expected, $a + $b);
+        self::assertSame($expected, $a + $b);
     }
 
     public function additionProvider()
@@ -718,7 +718,7 @@ more about passing a set of data to a test.
      */
     public function testStringLength(string $input, int $expectedLength)
     {
-        $this->assertSame($expectedLength, strlen($input));
+        self::assertSame($expectedLength, strlen($input));
     }
 
 An object representation in JSON will be converted into an associative array.
@@ -733,7 +733,7 @@ An object representation in JSON will be converted into an associative array.
      */
     public function testArrayKeys($array, $keys)
     {
-        $this->assertSame($keys, array_keys($array));
+        self::assertSame($keys, array_keys($array));
     }
 
 .. _appendixes.annotations.ticket:

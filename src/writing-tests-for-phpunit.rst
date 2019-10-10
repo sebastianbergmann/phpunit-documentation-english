@@ -41,14 +41,14 @@ with PHPUnit:
         public function testPushAndPop()
         {
             $stack = [];
-            $this->assertSame(0, count($stack));
+            self::assertSame(0, count($stack));
 
             array_push($stack, 'foo');
-            $this->assertSame('foo', $stack[count($stack)-1]);
-            $this->assertSame(1, count($stack));
+            self::assertSame('foo', $stack[count($stack)-1]);
+            self::assertSame(1, count($stack));
 
-            $this->assertSame('foo', array_pop($stack));
-            $this->assertSame(0, count($stack));
+            self::assertSame('foo', array_pop($stack));
+            self::assertSame(0, count($stack));
         }
     }
 
@@ -104,7 +104,7 @@ dependencies between test methods.
         public function testEmpty()
         {
             $stack = [];
-            $this->assertEmpty($stack);
+            self::assertEmpty($stack);
 
             return $stack;
         }
@@ -115,8 +115,8 @@ dependencies between test methods.
         public function testPush(array $stack)
         {
             array_push($stack, 'foo');
-            $this->assertSame('foo', $stack[count($stack)-1]);
-            $this->assertNotEmpty($stack);
+            self::assertSame('foo', $stack[count($stack)-1]);
+            self::assertNotEmpty($stack);
 
             return $stack;
         }
@@ -126,8 +126,8 @@ dependencies between test methods.
          */
         public function testPop(array $stack)
         {
-            $this->assertSame('foo', array_pop($stack));
-            $this->assertEmpty($stack);
+            self::assertSame('foo', array_pop($stack));
+            self::assertEmpty($stack);
         }
     }
 
@@ -164,7 +164,7 @@ exploiting the dependencies between tests as shown in
     {
         public function testOne()
         {
-            $this->assertTrue(false);
+            self::assertTrue(false);
         }
 
         /**
@@ -220,13 +220,13 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
     {
         public function testProducerFirst()
         {
-            $this->assertTrue(true);
+            self::assertTrue(true);
             return 'first';
         }
 
         public function testProducerSecond()
         {
-            $this->assertTrue(true);
+            self::assertTrue(true);
             return 'second';
         }
 
@@ -236,8 +236,8 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
          */
         public function testConsumer($a, $b)
         {
-            $this->assertSame('first', $a);
-            $this->assertSame('second', $b);
+            self::assertSame('first', $a);
+            self::assertSame('second', $b);
         }
     }
 
@@ -283,7 +283,7 @@ of the array as its arguments.
          */
         public function testAdd($a, $b, $expected)
         {
-            $this->assertSame($expected, $a + $b);
+            self::assertSame($expected, $a + $b);
         }
 
         public function additionProvider()
@@ -333,7 +333,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
          */
         public function testAdd($a, $b, $expected)
         {
-            $this->assertSame($expected, $a + $b);
+            self::assertSame($expected, $a + $b);
         }
 
         public function additionProvider()
@@ -382,7 +382,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
          */
         public function testAdd($a, $b, $expected)
         {
-            $this->assertSame($expected, $a + $b);
+            self::assertSame($expected, $a + $b);
         }
 
         public function additionProvider()
@@ -485,13 +485,13 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
         public function testProducerFirst()
         {
-            $this->assertTrue(true);
+            self::assertTrue(true);
             return 'first';
         }
 
         public function testProducerSecond()
         {
-            $this->assertTrue(true);
+            self::assertTrue(true);
             return 'second';
         }
 
@@ -502,7 +502,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
          */
         public function testConsumer()
         {
-            $this->assertSame(
+            self::assertSame(
                 ['provider1', 'first', 'second'],
                 func_get_args()
             );
@@ -551,7 +551,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
          */
         public function testAdd($a, $b, $expected)
         {
-            $this->assertSame($expected, $a + $b);
+            self::assertSame($expected, $a + $b);
         }
 
         public function additionWithNonNegativeNumbersProvider()
@@ -758,7 +758,7 @@ that would lead to an exception raised by PHPUnit's error handler.
         {
             $writer = new FileWriter;
 
-            $this->assertFalse(@$writer->write('/is-not-writeable/file', 'stuff'));
+            self::assertFalse(@$writer->write('/is-not-writeable/file', 'stuff'));
         }
     }
 
@@ -894,7 +894,7 @@ context as possible that can help to identify the problem.
     {
         public function testEquality()
         {
-            $this->assertSame(
+            self::assertSame(
                 [1, 2,  3, 4, 5, 6],
                 [1, 2, 33, 4, 5, 6]
             );
@@ -949,7 +949,7 @@ and provide a few lines of context around every difference.
     {
         public function testEquality()
         {
-            $this->assertSame(
+            self::assertSame(
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,  3, 4, 5, 6],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 33, 4, 5, 6]
             );
@@ -1010,7 +1010,7 @@ functions on arrays or objects.
     {
         public function testEquality()
         {
-            $this->assertEquals(
+            self::assertEquals(
                 [1, 2, 3, 4, 5, 6],
                 ['1', 2, 33, 4, 5, 6]
             );

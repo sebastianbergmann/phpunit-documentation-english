@@ -113,7 +113,7 @@ the example. This leads to more readable and "fluent" code.
 
             // Calling $stub->doSomething() will now return
             // 'foo'.
-            $this->assertSame('foo', $stub->doSomething());
+            self::assertSame('foo', $stub->doSomething());
         }
     }
 
@@ -177,7 +177,7 @@ the same best practice defaults used by ``createStub()``.
 
             // Calling $stub->doSomething() will now return
             // 'foo'.
-            $this->assertSame('foo', $stub->doSomething());
+            self::assertSame('foo', $stub->doSomething());
         }
     }
 
@@ -211,10 +211,10 @@ can achieve this using ``returnArgument()`` instead of
                  ->will($this->returnArgument(0));
 
             // $stub->doSomething('foo') returns 'foo'
-            $this->assertSame('foo', $stub->doSomething('foo'));
+            self::assertSame('foo', $stub->doSomething('foo'));
 
             // $stub->doSomething('bar') returns 'bar'
-            $this->assertSame('bar', $stub->doSomething('bar'));
+            self::assertSame('bar', $stub->doSomething('bar'));
         }
     }
 
@@ -242,7 +242,7 @@ can use ``returnSelf()`` to achieve this.
                  ->will($this->returnSelf());
 
             // $stub->doSomething() returns $stub
-            $this->assertSame($stub, $stub->doSomething());
+            self::assertSame($stub, $stub->doSomething());
         }
     }
 
@@ -279,8 +279,8 @@ an example.
 
             // $stub->doSomething() returns different values depending on
             // the provided arguments.
-            $this->assertSame('d', $stub->doSomething('a', 'b', 'c'));
-            $this->assertSame('h', $stub->doSomething('e', 'f', 'g'));
+            self::assertSame('d', $stub->doSomething('a', 'b', 'c'));
+            self::assertSame('h', $stub->doSomething('e', 'f', 'g'));
         }
     }
 
@@ -310,7 +310,7 @@ result of a callback function or method. See
                  ->will($this->returnCallback('str_rot13'));
 
             // $stub->doSomething($argument) returns str_rot13($argument)
-            $this->assertSame('fbzrguvat', $stub->doSomething('something'));
+            self::assertSame('fbzrguvat', $stub->doSomething('something'));
         }
     }
 
@@ -339,9 +339,9 @@ an example.
                  ->will($this->onConsecutiveCalls(2, 3, 5, 7));
 
             // $stub->doSomething() returns a different value each time
-            $this->assertSame(2, $stub->doSomething());
-            $this->assertSame(3, $stub->doSomething());
-            $this->assertSame(5, $stub->doSomething());
+            self::assertSame(2, $stub->doSomething());
+            self::assertSame(3, $stub->doSomething());
+            self::assertSame(5, $stub->doSomething());
         }
     }
 
@@ -848,7 +848,7 @@ are mocked. This allows for testing the concrete methods of a trait.
                  ->method('abstractMethod')
                  ->will($this->returnValue(true));
 
-            $this->assertTrue($mock->concreteMethod());
+            self::assertTrue($mock->concreteMethod());
         }
     }
 
@@ -884,7 +884,7 @@ abstract class.
                  ->method('abstractMethod')
                  ->will($this->returnValue(true));
 
-            $this->assertTrue($stub->concreteMethod());
+            self::assertTrue($stub->concreteMethod());
         }
     }
 
@@ -956,7 +956,7 @@ example, the web service described in :file:`GoogleSearch.wsdl`.
              * $googleSearch->doGoogleSearch() will now return a stubbed result and
              * the web service's doGoogleSearch() method will not be invoked.
              */
-            $this->assertEquals(
+            self::assertEquals(
               $result,
               $googleSearch->doGoogleSearch(
                 '00000000000000000000000000000000',

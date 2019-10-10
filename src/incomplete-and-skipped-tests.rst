@@ -58,7 +58,7 @@ exception) in the test method, we mark the test as being incomplete.
         public function testSomething()
         {
             // Optional: Test anything here, if you want.
-            $this->assertTrue(true, 'This should already work.');
+            self::assertTrue(true, 'This should already work.');
 
             // Stop here and mark this test as incomplete.
             $this->markTestIncomplete(

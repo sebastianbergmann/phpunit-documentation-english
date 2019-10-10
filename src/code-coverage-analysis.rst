@@ -232,7 +232,7 @@ shows an example.
 
         public function testAmountInitiallyIsEmpty()
         {
-            $this->assertEquals(new Money(), $this->subject->getAmount);
+            self::assertEquals(new Money(), $this->subject->getAmount);
         }
     }
     ?>
@@ -258,7 +258,7 @@ shows an example.
          */
         public function testBalanceIsInitiallyZero()
         {
-            $this->assertSame(0, $this->ba->getBalance());
+            self::assertSame(0, $this->ba->getBalance());
         }
 
         /**
@@ -271,7 +271,7 @@ shows an example.
             }
 
             catch (BankAccountException $e) {
-                $this->assertSame(0, $this->ba->getBalance());
+                self::assertSame(0, $this->ba->getBalance());
 
                 return;
             }
@@ -289,7 +289,7 @@ shows an example.
             }
 
             catch (BankAccountException $e) {
-                $this->assertSame(0, $this->ba->getBalance());
+                self::assertSame(0, $this->ba->getBalance());
 
                 return;
             }
@@ -304,11 +304,11 @@ shows an example.
          */
         public function testDepositWithdrawMoney()
         {
-            $this->assertSame(0, $this->ba->getBalance());
+            self::assertSame(0, $this->ba->getBalance());
             $this->ba->depositMoney(1);
-            $this->assertSame(1, $this->ba->getBalance());
+            self::assertSame(1, $this->ba->getBalance());
             $this->ba->withdrawMoney(1);
-            $this->assertSame(0, $this->ba->getBalance());
+            self::assertSame(0, $this->ba->getBalance());
         }
     }
     ?>
@@ -344,7 +344,7 @@ generate code coverage with unit tests.
             $expectedTable = $this->createFlatXmlDataSet("expectedBook.xml")
                                   ->getTable("guestbook");
 
-            $this->assertTablesEqual($expectedTable, $queryTable);
+            self::assertTablesEqual($expectedTable, $queryTable);
         }
     }
     ?>

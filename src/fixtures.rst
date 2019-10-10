@@ -61,21 +61,21 @@ assertion method.
 
         public function testEmpty()
         {
-            $this->assertTrue(empty($this->stack));
+            self::assertTrue(empty($this->stack));
         }
 
         public function testPush()
         {
             array_push($this->stack, 'foo');
-            $this->assertSame('foo', $this->stack[count($this->stack)-1]);
-            $this->assertFalse(empty($this->stack));
+            self::assertSame('foo', $this->stack[count($this->stack)-1]);
+            self::assertFalse(empty($this->stack));
         }
 
         public function testPop()
         {
             array_push($this->stack, 'foo');
-            $this->assertSame('foo', array_pop($this->stack));
-            $this->assertTrue(empty($this->stack));
+            self::assertSame('foo', array_pop($this->stack));
+            self::assertTrue(empty($this->stack));
         }
     }
 
@@ -118,13 +118,13 @@ case class.
         public function testOne()
         {
             fwrite(STDOUT, __METHOD__ . "\n");
-            $this->assertTrue(true);
+            self::assertTrue(true);
         }
 
         public function testTwo()
         {
             fwrite(STDOUT, __METHOD__ . "\n");
-            $this->assertTrue(false);
+            self::assertTrue(false);
         }
 
         protected function assertPostConditions(): void

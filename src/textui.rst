@@ -295,7 +295,7 @@ the following code:
                  */
                 public function testMethod($data)
                 {
-                    $this->assertTrue($data);
+                    self::assertTrue($data);
                 }
 
                 public function provider()
