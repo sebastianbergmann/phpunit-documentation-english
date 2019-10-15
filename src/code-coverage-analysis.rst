@@ -119,7 +119,7 @@ configuration file (see :ref:`appendixes.configuration.phpunit.filter`).
 
 The ``addUncoveredFilesFromWhitelist`` and ``processUncoveredFilesFromWhitelist`` configuration settings are available to configure how the whitelist is used:
 
-- ``addUncoveredFilesFromWhitelist="false"`` means that only whitelisted files that have at least one of line of executed code are included in the code coverage report
+- ``addUncoveredFilesFromWhitelist="false"`` means that only whitelisted files that have at least one line of executed code are included in the code coverage report
 
 - ``addUncoveredFilesFromWhitelist="true"`` (default) means that all whitelisted files are included in the code coverage report even if not a single line of code of such a file is executed
 
@@ -192,7 +192,7 @@ Specifying Covered Code Parts
 #############################
 
 The ``@covers`` annotation (see the
-:ref:`annotaction documentation <appendixes.annotations.covers.tables.annotations>`)
+:ref:`annotation documentation <appendixes.annotations.covers.tables.annotations>`)
 can be used in the test code to specify which code parts a test class
 (or test method) wants to test. If provided, this effectively filters the
 code coverage report to include executed code from the referenced code parts only.
