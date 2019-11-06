@@ -226,6 +226,14 @@ html_show_sphinx = False
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'PHPUnitdoc'
 
+html_context = {
+    "display_github": True,
+    "github_user": "sebastianbergmann",
+    "github_repo": "phpunit-documentation-english",
+    "github_version": version,
+    "conf_py_path": "/src/",
+}
+
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
