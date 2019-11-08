@@ -119,7 +119,7 @@ configuration file (see :ref:`appendixes.configuration.whitelisting-files`).
 
 The ``addUncoveredFilesFromWhitelist`` and ``processUncoveredFilesFromWhitelist`` configuration settings are available to configure how the whitelist is used:
 
-- ``addUncoveredFilesFromWhitelist="false"`` means that only whitelisted files that have at least one of line of executed code are included in the code coverage report
+- ``addUncoveredFilesFromWhitelist="false"`` means that only whitelisted files that have at least one line of executed code are included in the code coverage report
 
 - ``addUncoveredFilesFromWhitelist="true"`` (default) means that all whitelisted files are included in the code coverage report even if not a single line of code of such a file is executed
 
