@@ -431,7 +431,7 @@ A test can be tagged as belonging to one or more groups using the
         }
 
         /**
-         * @group regresssion
+         * @group regression
          * @group bug2204
          */
         public function testSomethingElse()
