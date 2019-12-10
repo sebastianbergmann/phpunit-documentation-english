@@ -176,3 +176,12 @@ Instead, PHPUnit should be managed as a project-local dependency.
 Either put the PHAR of the specific PHPUnit version you need in your project's
 ``tools`` directory (which should be managed by PHIVE) or depend on the specific PHPUnit version
 you need in your project's ``composer.json`` if you use Composer.
+
+Webserver
+#########
+
+PHPUnit is a framework for writing as well as a commandline tool for running tests. Writing and running tests is a development-time activity. There is no reason why PHPUnit should be installed on a webserver.
+
+**If you upload PHPUnit to a webserver then your deployment process is broken. On a more general note, if your** ``vendor`` **directory is publicly accessible on your webserver then your deployment process is also broken.**
+
+Please note that if you upload PHPUnit to a webserver "bad things" may happen. You have been warned.
