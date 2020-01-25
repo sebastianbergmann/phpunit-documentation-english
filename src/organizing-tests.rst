@@ -64,7 +64,7 @@ the following command:
 
 .. parsed-literal::
 
-    $ phpunit --bootstrap src/autoload.php tests/CurrencyTest
+    $ phpunit --bootstrap src/autoload.php tests/CurrencyTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ........
@@ -119,6 +119,19 @@ directory is recursively traversed.
         </testsuite>
       </testsuites>
     </phpunit>
+
+To run the test suite, use the the ``--testsuite`` option:
+
+.. parsed-literal::
+
+    $ phpunit --bootstrap src/autoload.php --testsuite money
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    ..
+
+    Time: 167 ms, Memory: 3.00Mb
+
+    OK (2 test, 2 assertions)
 
 If :file:`phpunit.xml` or
 :file:`phpunit.xml.dist` (in that order) exist in the
