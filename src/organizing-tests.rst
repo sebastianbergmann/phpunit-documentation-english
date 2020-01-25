@@ -64,7 +64,7 @@ the following command:
 
 .. parsed-literal::
 
-    $ phpunit --bootstrap src/autoload.php tests/CurrencyTest
+    $ phpunit --bootstrap src/autoload.php tests/CurrencyTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ........
