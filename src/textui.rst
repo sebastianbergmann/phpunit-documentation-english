@@ -555,7 +555,7 @@ Let us take a look at the agile documentation generated for a
 
 .. parsed-literal::
 
-    $ phpunit --testdox BankAccountTest
+    $ phpunit --testdox BankAccountTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     BankAccount
