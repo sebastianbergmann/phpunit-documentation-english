@@ -78,7 +78,7 @@ the following code:
     $ phpunit --help
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Usage: phpunit [options] UnitTest [UnitTest.php]
+    Usage: phpunit [options] UnitTest.php
            phpunit [options] <directory>
 
     Code Coverage Options:
