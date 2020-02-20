@@ -129,56 +129,6 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-.. _appendixes.assertions.assertArraySubset:
-
-assertArraySubset()
-###################
-
-``assertArraySubset(array $subset, array $array[, bool $strict = false, string $message = ''])``
-
-Reports an error identified by ``$message`` if ``$array`` does not contains the ``$subset``.
-
-``$strict`` is a flag used to compare the identity of objects within arrays.
-
-.. code-block:: php
-    :caption: Usage of assertArraySubset()
-    :name: appendixes.assertions.assertArraySubset.example
-
-    <?php
-    use PHPUnit\Framework\TestCase;
-
-    class ArraySubsetTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertArraySubset(['config' => ['key-a', 'key-b']], ['config' => ['key-a']]);
-        }
-    }
-
-.. parsed-literal::
-
-    $ phpunit ArraySubsetTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) Epilog\EpilogTest::testNoFollowOption
-    Failed asserting that an array has the subset Array &0 (
-        'config' => Array &1 (
-            0 => 'key-a'
-            1 => 'key-b'
-        )
-    ).
-
-    /home/sb/ArraySubsetTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
 .. _appendixes.assertions.assertClassHasStaticAttribute:
 
 assertClassHasStaticAttribute()
