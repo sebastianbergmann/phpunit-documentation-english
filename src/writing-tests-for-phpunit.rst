@@ -651,7 +651,7 @@ whether an exception is thrown by the code under test.
 In addition to the ``expectException()`` method the
 ``expectExceptionCode()``,
 ``expectExceptionMessage()``, and
-``expectExceptionMessageRegExp()`` methods exist to set up
+``expectExceptionMessageMatches()`` methods exist to set up
 expectations for exceptions raised by the code under test.
 
 .. admonition:: Note
