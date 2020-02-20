@@ -2996,8 +2996,6 @@ available ``PHPUnit\Framework\Constraint`` classes.
 
     * - Constraint
       - Meaning
-    * - ``PHPUnit\Framework\Constraint\Attribute attribute(PHPUnit\Framework\Constraint $constraint, $attributeName)``
-      - Constraint that applies another constraint to an attribute of a class or an object.
     * - ``PHPUnit\Framework\Constraint\IsAnything anything()``
       - Constraint that accepts any input value.
     * - ``PHPUnit\Framework\Constraint\ArrayHasKey arrayHasKey(mixed $key)``
@@ -3010,8 +3008,6 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only instances of a given classname.
     * - ``PHPUnit\Framework\Constraint\IsEqual equalTo($value, $delta = 0, $maxDepth = 10)``
       - Constraint that checks if one value is equal to another.
-    * - ``PHPUnit\Framework\Constraint\Attribute attributeEqualTo($attributeName, $value, $delta = 0, $maxDepth = 10)``
-      - Constraint that checks if a value is equal to an attribute of a class or of an object.
     * - ``PHPUnit\Framework\Constraint\DirectoryExists directoryExists()``
       - Constraint that checks if the directory exists.
     * - ``PHPUnit\Framework\Constraint\FileExists fileExists()``
