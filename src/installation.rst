@@ -184,4 +184,4 @@ PHPUnit is a framework for writing as well as a commandline tool for running tes
 
 **If you upload PHPUnit to a webserver then your deployment process is broken. On a more general note, if your** ``vendor`` **directory is publicly accessible on your webserver then your deployment process is also broken.**
 
-Please note that if you upload PHPUnit to a webserver "bad things" may happen. You have been warned.
+Please note that if you upload PHPUnit to a webserver "bad things" may happen. `You have been warned. <https://thephp.cc/news/2020/02/phpunit-a-security-risk>`_
