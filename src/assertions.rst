@@ -458,7 +458,7 @@ assertDirectoryExists()
 
 Reports an error identified by ``$message`` if the directory specified by ``$directory`` does not exist.
 
-``assertDirectoryNotExists()`` is the inverse of this assertion and takes the same arguments.
+``assertDirectoryDoesNotExist()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
     :caption: Usage of assertDirectoryExists()
@@ -503,7 +503,7 @@ assertDirectoryIsReadable()
 
 Reports an error identified by ``$message`` if the directory specified by ``$directory`` is not a directory or is not readable.
 
-``assertDirectoryNotIsReadable()`` is the inverse of this assertion and takes the same arguments.
+``assertDirectoryIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
     :caption: Usage of assertDirectoryIsReadable()
@@ -548,7 +548,7 @@ assertDirectoryIsWritable()
 
 Reports an error identified by ``$message`` if the directory specified by ``$directory`` is not a directory or is not writable.
 
-``assertDirectoryNotIsWritable()`` is the inverse of this assertion and takes the same arguments.
+``assertDirectoryIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
     :caption: Usage of assertDirectoryIsWritable()
@@ -1235,7 +1235,7 @@ assertFileExists()
 
 Reports an error identified by ``$message`` if the file specified by ``$filename`` does not exist.
 
-``assertFileNotExists()`` is the inverse of this assertion and takes the same arguments.
+``assertFileDoesNotExist()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
     :caption: Usage of assertFileExists()
@@ -1280,7 +1280,7 @@ assertFileIsReadable()
 
 Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not readable.
 
-``assertFileNotIsReadable()`` is the inverse of this assertion and takes the same arguments.
+``assertFileIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
     :caption: Usage of assertFileIsReadable()
@@ -1325,7 +1325,7 @@ assertFileIsWritable()
 
 Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not writable.
 
-``assertFileNotIsWritable()`` is the inverse of this assertion and takes the same arguments.
+``assertFileIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
     :caption: Usage of assertFileIsWritable()
@@ -2022,7 +2022,7 @@ assertIsReadable()
 
 Reports an error identified by ``$message`` if the file or directory specified by ``$filename`` is not readable.
 
-``assertNotIsReadable()`` is the inverse of this assertion and takes the same arguments.
+``assertIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
     :caption: Usage of assertIsReadable()
@@ -2068,7 +2068,7 @@ assertIsWritable()
 
 Reports an error identified by ``$message`` if the file or directory specified by ``$filename`` is not writable.
 
-``assertNotIsWritable()`` is the inverse of this assertion and takes the same arguments.
+``assertIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
     :caption: Usage of assertIsWritable()
@@ -2477,20 +2477,20 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-.. _appendixes.assertions.assertRegExp:
+.. _appendixes.assertions.assertMatchesRegularExpression:
 
-assertRegExp()
+assertMatchesRegularExpression()
 ##############
 
-``assertRegExp(string $pattern, string $string[, string $message = ''])``
+``assertMatchesRegularExpression(string $pattern, string $string[, string $message = ''])``
 
 Reports an error identified by ``$message`` if ``$string`` does not match the regular expression ``$pattern``.
 
-``assertNotRegExp()`` is the inverse of this assertion and takes the same arguments.
+``assertDoesNotMatchRegularExpression()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
-    :caption: Usage of assertRegExp()
-    :name: appendixes.assertions.assertRegExp.example
+    :caption: Usage of assertMatchesRegularExpression()
+    :name: appendixes.assertions.assertMatchesRegularExpression.example
 
     <?php
     use PHPUnit\Framework\TestCase;
@@ -2499,7 +2499,7 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
     {
         public function testFailure()
         {
-            $this->assertRegExp('/foo/', 'bar');
+            $this->assertMatchesRegularExpression('/foo/', 'bar');
         }
     }
     ?>
