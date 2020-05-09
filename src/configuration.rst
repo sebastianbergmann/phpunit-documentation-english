@@ -222,14 +222,18 @@ logging of the test execution.
 .. code-block:: xml
 
     <logging>
-      <log type="coverage-html" target="/tmp/report" lowUpperBound="35"
+      <log type="coverage-html" target="/tmp/report/html" lowUpperBound="35"
            highLowerBound="70"/>
-      <log type="coverage-clover" target="/tmp/coverage.xml"/>
-      <log type="coverage-php" target="/tmp/coverage.serialized"/>
+      <log type="coverage-xml" target="tmp/report/xml"/>
+      <log type="coverage-clover" target="/tmp/coverage.clover.xml"/>
+      <log type="coverage-crap4j" target="/tmp/coverage.crap4j.xml"/>
+      <log type="coverage-php" target="/tmp/coverage.serialized.php"/>
       <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
       <log type="junit" target="/tmp/logfile.xml"/>
+      <log type="teamcity" target="/tmp/teamcity.txt"/>
       <log type="testdox-html" target="/tmp/testdox.html"/>
       <log type="testdox-text" target="/tmp/testdox.txt"/>
+      <log type="testdox-xml" target="/tmp/testdox.xml"/>
     </logging>
 
 The XML configuration above corresponds to invoking the TextUI test runner
@@ -237,15 +241,23 @@ with the following options:
 
 -
 
-  ``--coverage-html /tmp/report``
+  ``--coverage-html /tmp/report/html``
 
 -
 
-  ``--coverage-clover /tmp/coverage.xml``
+  ``--coverage-xml /tmp/report/xml``
 
 -
 
-  ``--coverage-php /tmp/coverage.serialized``
+  ``--coverage-clover /tmp/coverage.clover.xml``
+
+-
+
+  ``--coverage-crap4j /tmp/coverage.crap4j.xml``
+
+-
+
+  ``--coverage-php /tmp/coverage.serialized.php``
 
 -
 
@@ -261,11 +273,19 @@ with the following options:
 
 -
 
+  ``--log-teamcity /tmp/teamcity.txt``
+
+-
+
   ``--testdox-html /tmp/testdox.html``
 
 -
 
   ``--testdox-text /tmp/testdox.txt``
+
+-
+
+  ``--testdox-xml /tmp/testdox.xml``
 
 The ``lowUpperBound``, ``highLowerBound``,
 and ``showUncoveredFiles`` attributes have no equivalent TextUI
