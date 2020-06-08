@@ -545,17 +545,15 @@ The ``<filter>`` Element
 
 Parent element: ``<phpunit>``
 
-The ``<filter/whitelist>`` element and its children can be used to configure the whitelist for the code coverage reporting:
+The ``<filter>`` element and its children can be used to configure the files to be included for the code coverage reporting:
 
 .. code-block:: xml
 
-    <filter>
-      <whitelist processUncoveredFilesFromWhitelist="true">
-        <directory suffix=".php">src</directory>
-        <exclude>
-          <file>src/autoload.php</file>
-        </exclude>
-      </whitelist>
+    <filter processUncoveredFilesForCodeCoverageReport="true">
+      <directory suffix=".php">src</directory>
+      <exclude>
+        <file>src/autoload.php</file>
+      </exclude>
     </filter>
 
 .. _appendixes.configuration.phpunit.listeners:
@@ -756,7 +754,7 @@ The ``lowUpperBound``, ``highLowerBound``, and ``showUncoveredFiles`` attributes
 
 -
 
-  ``showUncoveredFiles``: Show all whitelisted files in ``--coverage-text`` output not just the ones with coverage information.
+  ``showUncoveredFiles``: Show all files in ``--coverage-text`` output not just the ones with coverage information.
 
 -
 

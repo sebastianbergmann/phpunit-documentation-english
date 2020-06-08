@@ -106,31 +106,31 @@ Various software metrics exist to measure code coverage:
    *Path Coverage* software metrics are not yet
    supported by php-code-coverage.
 
-.. _code-coverage-analysis.whitelisting-files:
+.. _code-coverage-analysis.including-files:
 
-Whitelisting Files
-##################
+Including Files
+###############
 
-It is mandatory to configure a *whitelist* for telling
+It is mandatory to configure a filter for telling
 PHPUnit which sourcecode files to include in the code coverage report.
-This can either be done using the ``--whitelist``
+This can either be done using the ``--coverage-filter``
 :ref:`command line <textui.clioptions>` option or via the
 configuration file (see :ref:`appendixes.configuration.phpunit.filter`).
 
-The ``addUncoveredFilesFromWhitelist`` and ``processUncoveredFilesFromWhitelist`` configuration settings are available to configure how the whitelist is used:
+The ``includeUncoveredFilesInCodeCoverageReport`` and ``processUncoveredFilesForCodeCoverageReport`` configuration settings are available to configure how the filter is used:
 
-- ``addUncoveredFilesFromWhitelist="false"`` means that only whitelisted files that have at least one line of executed code are included in the code coverage report
+- ``includeUncoveredFilesInCodeCoverageReport="false"`` means that only files that have at least one line of executed code are included in the code coverage report
 
-- ``addUncoveredFilesFromWhitelist="true"`` (default) means that all whitelisted files are included in the code coverage report even if not a single line of code of such a file is executed
+- ``includeUncoveredFilesInCodeCoverageReport="true"`` (default) means that all files are included in the code coverage report even if not a single line of code of such a file is executed
 
-- ``processUncoveredFilesFromWhitelist="false"`` (default) means that a whitelisted file that has no executed lines of code will be added to the code coverage report (if ``addUncoveredFilesFromWhitelist="true"`` is set) but it will not be loaded by PHPUnit and it will therefore not be analysed for correct executable lines of code information
+- ``processUncoveredFilesForCodeCoverageReport="false"`` (default) means that a file that has no executed lines of code will be added to the code coverage report (if ``includeUncoveredFilesInCodeCoverageReport="true"`` is set) but it will not be loaded by PHPUnit and it will therefore not be analysed for correct executable lines of code information
 
-- ``processUncoveredFilesFromWhitelist="true"`` means that a whitelisted file that has no executed lines of code will be loaded by PHPUnit so that it can be analysed for correct executable lines of code information
+- ``processUncoveredFilesForCodeCoverageReport="true"`` means that a file that has no executed lines of code will be loaded by PHPUnit so that it can be analysed for correct executable lines of code information
 
 .. admonition:: Note
 
    Please note that the loading of sourcecode files that is performed when
-   ``processUncoveredFilesFromWhitelist="true"`` is set can
+   ``processUncoveredFilesForCodeCoverageReport="true"`` is set can
    cause problems when a sourcecode file contains code outside the scope of
    a class or function, for instance.
 
@@ -384,7 +384,7 @@ Speeding Up Code Coverage with Xdebug
 #####################################
 
 The performance of code coverage data collection with Xdebug 2.6 (and later) can
-be significantly improved by delegating whitelist filtering to Xdebug.
+be significantly improved by delegating filtering to Xdebug.
 
 In order to do this, the first step is to generate the filter script for Xdebug
 using the ``--dump-xdebug-filter`` option:
