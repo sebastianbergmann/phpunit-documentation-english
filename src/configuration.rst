@@ -312,7 +312,7 @@ The ``ignoreDeprecatedCodeUnitsFromCodeCoverage`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether code units annotated with ``@deprecated`` should be ignored from code covreage.
+This attribute configures whether code units annotated with ``@deprecated`` should be ignored from code coverage.
 
 .. _appendixes.configuration.phpunit.enforceTimeLimit:
 
