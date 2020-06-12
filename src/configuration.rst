@@ -56,17 +56,6 @@ The ``cacheResultFile`` Attribute
 
 This attribute configures the file in which the test result cache (see above) is stored.
 
-.. _appendixes.configuration.phpunit.cacheTokens:
-
-The ``cacheTokens`` Attribute
------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures the in-memory cache of the token streams that are used for code coverage analysis.
-
-When more than one code coverage report is generated in a single run, enabling this cache will increase memory usage and may reduce the time to generate the reports.
-
 .. _appendixes.configuration.phpunit.colors:
 
 The ``colors`` Attribute
@@ -126,15 +115,6 @@ The ``convertWarningsToExceptions`` Attribute
 Possible values: ``true`` or ``false`` (default: ``true``)
 
 This attribute configures whether ``E_WARNING`` and ``E_USER_WARNING`` events triggered by the code under test are converted to an exception (and mark the test as error).
-
-.. _appendixes.configuration.phpunit.disableCodeCoverageIgnore:
-
-The ``disableCodeCoverageIgnore`` Attribute
--------------------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether the ``@codeCoverageIgnore*`` annotations should be ignored.
 
 .. _appendixes.configuration.phpunit.forceCoversAnnotation:
 
@@ -305,15 +285,6 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether PHPUnit should mark a test as risky when it executes code that is not specified using ``@covers`` or ``@uses``.
 
-.. _appendixes.configuration.phpunit.ignoreDeprecatedCodeUnitsFromCodeCoverage:
-
-The ``ignoreDeprecatedCodeUnitsFromCodeCoverage`` Attribute
------------------------------------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether code units annotated with ``@deprecated`` should be ignored from code coverage.
-
 .. _appendixes.configuration.phpunit.enforceTimeLimit:
 
 The ``enforceTimeLimit`` Attribute
@@ -439,7 +410,7 @@ This attribute configures the order in which tests are executed.
 .. _appendixes.configuration.phpunit.resolveDependencies:
 
 The ``resolveDependencies`` Attribute
------------------------------------------------------------------
+-------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
@@ -507,6 +478,283 @@ Using the ``phpVersion`` and ``phpVersionOperator`` attributes, a required PHP v
 
 In the example above, the tests from the ``tests/unit`` directory are only added to the test suite if the PHP version is at least 8.0.0. The ``phpVersionOperator`` attribute is optional and defaults to ``>=``.
 
+.. _appendixes.configuration.phpunit.coverage:
+
+The ``<coverage>`` Element
+##########################
+
+Parent element: ``<phpunit>``
+
+The ``<coverage>`` element and its children can be used to configure code coverage:
+
+.. code-block:: xml
+
+    <coverage includeUncoveredFiles="true"
+              processUncoveredFiles="true"
+              ignoreDeprecatedCodeUnits="true"
+              disableCodeCoverageIgnore="true"
+              cacheTokens="true">
+        <!-- ... -->
+    </coverage>
+
+The ``includeUncoveredFiles`` Attribute
+---------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+TODO
+
+The ``processUncoveredFiles`` Attribute
+---------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+TODO
+
+The ``ignoreDeprecatedCodeUnits`` Attribute
+-------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether code units annotated with ``@deprecated`` should be ignored from code coverage.
+
+The ``disableCodeCoverageIgnore`` Attribute
+-------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the ``@codeCoverageIgnore*`` annotations should be ignored.
+
+The ``cacheTokens`` Attribute
+-----------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures the in-memory cache of the token streams that are used for code coverage analysis.
+
+When more than one code coverage report is generated in a single run, enabling this cache will increase memory usage and may reduce the time to generate the reports.
+
+.. _appendixes.configuration.phpunit.coverage.include:
+
+The ``<include>`` Element
+#########################
+
+Parent element: ``<coverage>``
+
+TODO
+
+.. code-block:: xml
+
+    <include>
+        <directory suffix=".php">src</directory>
+    </include>
+
+.. _appendixes.configuration.phpunit.coverage.exclude:
+
+The ``<exclude>`` Element
+#########################
+
+Parent element: ``<coverage>``
+
+TODO
+
+.. code-block:: xml
+
+    <exclude>
+        <directory suffix=".php">src/generated</directory>
+        <file>src/autoload.php</file>
+    </exclude>
+
+.. _appendixes.configuration.phpunit.coverage.directory:
+
+The ``<directory>`` Element
+###########################
+
+Parent elements: ``<include>``, ``<exclude>``
+
+TODO
+
+The ``prefix`` Attribute
+------------------------
+
+Possible values: string
+
+TODO
+
+The ``suffix`` Attribute
+------------------------
+
+Possible values: string (default: ``'.php'``)
+
+TODO
+
+The ``phpVersion`` Attribute
+----------------------------
+
+Possible values: string
+
+TODO
+
+The ``phpVersionOperator`` Attribute
+------------------------------------
+
+Possible values: ``'<'``, ``'lt'``, ``'<='``, ``'le'``, ``'>'``, ``'gt'``, ``'>='``, ``'ge'``, ``'=='``, ``'='``, ``'eq'``, ``'!='``, ``'<>'``, ``'ne'`` (default: ``'>='``)
+
+TODO
+
+.. _appendixes.configuration.phpunit.coverage.file:
+
+The ``<file>`` Element
+######################
+
+Parent elements: ``<include>``, ``<exclude>``
+
+TODO
+
+The ``phpVersion`` and ``phpVersionOperator`` attributes ... TODO
+
+.. _appendixes.configuration.phpunit.coverage.report:
+
+The ``<report>`` Element
+########################
+
+Parent element: ``<coverage>``
+
+TODO
+
+.. code-block:: xml
+
+    <report>
+        <clover outputFile="clover.xml"/>
+        <crap4j outputFile="crap4j.xml" threshold="50"/>
+        <html outputDirectory="html-coverage" lowUpperBound="50" highLowerBound="90"/>
+        <php outputFile="coverage.php"/>
+        <text outputFile="coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
+        <xml outputDirectory="xml-coverage"/>
+    </report>
+
+.. _appendixes.configuration.phpunit.coverage.report.clover:
+
+The ``<clover>`` Element
+########################
+
+Parent element: ``<report>``
+
+TODO
+
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+TODO
+
+.. _appendixes.configuration.phpunit.coverage.report.crap4j:
+
+The ``<crap4j>`` Element
+########################
+
+Parent element: ``<report>``
+
+TODO
+
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+TODO
+
+The ``threshold`` Attribute
+---------------------------
+
+Possible values: integer (default: ``50``)
+
+TODO
+
+.. _appendixes.configuration.phpunit.coverage.report.html:
+
+The ``<html>`` Element
+######################
+
+Parent element: ``<report>``
+
+TODO
+
+The ``outputDirectory`` Attribute
+---------------------------------
+
+Possible values: string
+
+TODO
+
+The ``lowUpperBound`` Attribute
+-------------------------------
+
+Possible values: integer (default: ``50``)
+
+TODO
+
+The ``highLowerBound`` Attribute
+--------------------------------
+
+Possible values: integer (default: ``90``)
+
+TODO
+
+.. _appendixes.configuration.phpunit.coverage.report.php:
+
+The ``<php>`` Element
+#####################
+
+Parent element: ``<report>``
+
+TODO
+
+The ``outputFile`` attribute ... TODO
+
+.. _appendixes.configuration.phpunit.coverage.report.text:
+
+The ``<text>`` Element
+########################
+
+Parent element: ``<report>``
+
+TODO
+
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+TODO
+
+The ``showUncoveredFiles`` Attribute
+-----------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+The ``showOnlySummary`` Attribute
+-----------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+.. _appendixes.configuration.phpunit.coverage.report.xml:
+
+The ``<xml>`` Element
+########################
+
+Parent element: ``<report>``
+
+TODO
+
+The ``outputDirectory`` Attribute
+---------------------------------
+
+Possible values: string
+
+TODO
+
 .. _appendixes.configuration.phpunit.groups:
 
 The ``<groups>`` Element
@@ -537,24 +785,6 @@ The ``<testdoxGroups>`` Element
 Parent element: ``<phpunit>``
 
 ... TBD ...
-
-.. _appendixes.configuration.phpunit.filter:
-
-The ``<filter>`` Element
-########################
-
-Parent element: ``<phpunit>``
-
-The ``<filter>`` element and its children can be used to configure the files to be included for the code coverage reporting:
-
-.. code-block:: xml
-
-    <filter processUncoveredFilesForCodeCoverageReport="true">
-      <directory suffix=".php">src</directory>
-      <exclude>
-        <file>src/autoload.php</file>
-      </exclude>
-    </filter>
 
 .. _appendixes.configuration.phpunit.listeners:
 
