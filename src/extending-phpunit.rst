@@ -192,8 +192,9 @@ definition to the extension class:
 
     use PHPUnit\Runner\BeforeFirstTestHook;
     use PHPUnit\Runner\AfterLastTestHook;
-
-    final class MyConfigurableExtension implements BeforeFirstTestHook, AfterLastTestHook
+    use PHPUnit\Runner\AfterSuccessfulTestHook;
+    
+    final class MyConfigurableExtension implements BeforeFirstTestHook, AfterLastTestHook, AfterSuccessfulTestHook
     {
         protected $config_value_1 = '';
 
@@ -201,15 +202,20 @@ definition to the extension class:
 
         public function __construct(string $value1 = '', int $value2 = 0)
         {
-            $this->config_value_1 = $config_1;
-            $this->config_value_2 = $config_2;
+            $this->config_value_1 = $value1;
+            $this->config_value_2 = $value2;
         }
 
         public function executeBeforeFirstTest(): void
         {
-            if (strlen($this->config_value_1) {
+            if (strlen($this->config_value_1)) {
                 echo 'Testing with configuration value: ' . $this->config_value_1;
             }
+        }
+
+        public function executeAfterSuccessfulTest(string $test, float $time): void
+        {
+          echo "Sucessful Test finished";
         }
 
         public function executeAfterLastTest(): void
@@ -225,19 +231,30 @@ To input configuration to the extension via XML, the XML configuration file's
 shown in
 :numref:`extending-phpunit.examples.TestRunnerConfigurableExtensionConfig`:
 
+Create a file named extension.xml with the following content:
+
 .. code-block:: xml
     :caption: TestRunner Extension configuration
     :name: extending-phpunit.examples.TestRunnerConfigurableExtensionConfig
 
-    <extensions>
-        <extension class="Vendor\MyUnconfigurableExtension" />
-        <extension class="Vendor\MyConfigurableExtension">
-            <arguments>
-                <string>Hello world!</string>
-                <int>15</int>
-            </arguments>
-        </extension>
-    </extensions>
+    <phpunit>
+      <extensions>
+          <extension class="Vendor\MyUnconfigurableExtension" />
+          <extension class="Vendor\MyConfigurableExtension">
+              <arguments>
+                  <string>Hello world!</string>
+                  <integer>15</integer>
+              </arguments>
+          </extension>
+      </extensions>
+    </phpunit>
+
+**Tips**:
+
+Now to see this in execution inside your project folder run:
+``vendor/bin/phpunit /path/to/your/tests/folder --configuration extension.xml``
+
+If you run some trouble with configuration add ``--debug`` and/or ``--verbose`` to help you.
 
 See :ref:`appendixes.configuration.phpunit.extensions.extension.arguments` for
 details on how to use the ``arguments`` configuration.
