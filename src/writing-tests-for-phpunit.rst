@@ -279,14 +279,14 @@ of the array as its arguments.
     class DataTest extends TestCase
     {
         /**
-         * @dataProvider additionProvider
+         * @dataProvider provideAddCases
          */
         public function testAdd($a, $b, $expected)
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function provideAddCases()
         {
             return [
                 [0, 0, 0],
