@@ -142,9 +142,9 @@ Code Coverage (TEXT)
 
 Human readable code coverage output for the command-line or a text file.
 
-The aim of this output format is to provide a quick coverage overview while
+The aim of this output format is to provide a coverage overview while
 working on a small set of classes. For bigger projects this output can be
-useful to get an quick overview of the projects coverage or when used with
+useful to get an overview of the projects coverage or when used with
 the ``--filter`` functionality.
 When used from the command-line by writing to ``php://stdout``
 this will honor the ``--colors`` setting.
