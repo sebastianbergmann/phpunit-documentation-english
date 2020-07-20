@@ -12,8 +12,8 @@ original state when the test is complete. This known state is called
 the *fixture* of the test.
 
 In :ref:`writing-tests-for-phpunit.examples.StackTest.php`, the
-fixture was simply the array that is stored in the ``$stack``
-variable. Most of the time, though, the fixture will be more complex
+fixture was the array that is stored in the ``$stack`` variable.
+Most of the time, though, the fixture will be more complex
 than a simple array, and the amount of code needed to set it up will
 grow accordingly. The actual content of the test gets lost in the noise
 of setting up the fixture. This problem gets even worse when you write

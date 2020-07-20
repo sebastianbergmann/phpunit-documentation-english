@@ -154,7 +154,7 @@ Environment, was created. You can learn about PHIVE on its `website <https://pha
 Composer
 ########
 
-Simply add a (development-time) dependency on
+Add a (development-time) dependency on
 ``phpunit/phpunit`` to your project's
 ``composer.json`` file if you use `Composer <https://getcomposer.org/>`_ to manage the
 dependencies of your project:

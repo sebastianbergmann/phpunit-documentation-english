@@ -41,7 +41,7 @@ then you can use the ``getMockBuilder($type)`` method to
 customize the test double generation using a fluent interface.
 
 By default, all methods of the original class are replaced with a dummy
-implementation that just returns ``null`` (without calling
+implementation that returns ``null`` (without calling
 the original method). Using the ``will($this->returnValue())``
 method, for instance, you can configure these dummy implementations to
 return a value when called.
@@ -383,7 +383,7 @@ shows how to use ``throwException()`` to do this.
 
 Alternatively, you can write the stub yourself and improve your design
 along the way. Widely used resources are accessed through a single façade,
-so you can easily replace the resource with the stub. For example,
+so you can replace the resource with the stub. For example,
 instead of having direct database calls scattered throughout the code,
 you have a single ``Database`` object, an implementor of
 the ``IDatabase`` interface. Then, you can create a stub
@@ -918,9 +918,9 @@ Stubbing and Mocking Web Services
 #################################
 
 When your application interacts with a web service you want to test it
-without actually interacting with the web service. To make the stubbing
-and mocking of web services easy, the ``getMockFromWsdl()``
-can be used just like ``getMock()`` (see above). The only
+without actually interacting with the web service. To create stubs
+and mocks of web services, the ``getMockFromWsdl()``
+can be used like ``getMock()`` (see above). The only
 difference is that ``getMockFromWsdl()`` returns a stub or
 mock based on a web service description in WSDL and ``getMock()``
 returns a stub or mock based on a PHP class or interface.
