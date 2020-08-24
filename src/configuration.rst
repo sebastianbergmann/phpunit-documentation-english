@@ -501,21 +501,23 @@ The ``<coverage>`` element and its children can be used to configure code covera
 The ``cacheDirectory`` Attribute
 --------------------------------
 
-TODO
+Possible values: string
+
+When code coverage data is collected and processed, static code analysis is performed to improve reasoning about the covered code. This is an expensive operation, whose result can be cached. When the ``cacheDirectory`` attribute is set, static analysis results will be cached in the specified directory.
 
 The ``includeUncoveredFiles`` Attribute
 ---------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
-TODO
+When set to ``true``, all sourcecode files that are configured to be considered for code coverage analysis will be included in the code coverage report(s). This includes sourcecode files that are not executed while the tests are running.
 
 The ``processUncoveredFiles`` Attribute
 ---------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-TODO
+When set to ``true``, all sourcecode files that are configured to be considered for code coverage analysis will be processed. This includes sourcecode files that are not executed while the tests are running.
 
 The ``ignoreDeprecatedCodeUnits`` Attribute
 -------------------------------------------
@@ -529,7 +531,9 @@ The ``pathCoverage`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-TODO
+When set to ``false``, only line coverage data will be collected, processed, and reported.
+
+When set to ``true``, line coverage, branch coverage, and path coverage data will be collected, processed, and reported. This requires a code coverage driver that supports path coverage. Path Coverage is currently only implemented by Xdebug.
 
 The ``disableCodeCoverageIgnore`` Attribute
 -------------------------------------------
@@ -545,13 +549,16 @@ The ``<include>`` Element
 
 Parent element: ``<coverage>``
 
-TODO
+Configures a set of files to be included in code coverage report(s).
 
 .. code-block:: xml
 
     <include>
         <directory suffix=".php">src</directory>
     </include>
+
+The example shown above instructs PHPUnit to include all sourcecode files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report(s).
+
 
 .. _appendixes.configuration.phpunit.coverage.exclude:
 
@@ -560,14 +567,21 @@ The ``<exclude>`` Element
 
 Parent element: ``<coverage>``
 
-TODO
+Configures a set of files to be excluded from code coverage report(s).
 
 .. code-block:: xml
+
+    <include>
+        <directory suffix=".php">src</directory>
+    </include>
 
     <exclude>
         <directory suffix=".php">src/generated</directory>
         <file>src/autoload.php</file>
     </exclude>
+
+The example shown above instructs PHPUnit to include all sourcecode files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report but exclude all files with ``.php`` suffix in the ``src/generated`` directory and its sub-directories as well as the ``src/autoload.php`` file from the code coverage report(s).
+
 
 .. _appendixes.configuration.phpunit.coverage.directory:
 
@@ -576,35 +590,36 @@ The ``<directory>`` Element
 
 Parent elements: ``<include>``, ``<exclude>``
 
-TODO
+Configures a directory and its sub-directories for inclusion in or exclusion from code coverage report(s).
 
 The ``prefix`` Attribute
 ------------------------
 
 Possible values: string
 
-TODO
+Configures a prefix-based filter that is applied to the names of files in the directory and its sub-directories.
 
 The ``suffix`` Attribute
 ------------------------
 
 Possible values: string (default: ``'.php'``)
 
-TODO
+Configures a suffix-based filter that is applied to the names of files in the directory and its sub-directories.
 
 The ``phpVersion`` Attribute
 ----------------------------
 
 Possible values: string
 
-TODO
+Configures a filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
 
 The ``phpVersionOperator`` Attribute
 ------------------------------------
 
 Possible values: ``'<'``, ``'lt'``, ``'<='``, ``'le'``, ``'>'``, ``'gt'``, ``'>='``, ``'ge'``, ``'=='``, ``'='``, ``'eq'``, ``'!='``, ``'<>'``, ``'ne'`` (default: ``'>='``)
 
-TODO
+Configures the comparison operator to be used with ``version_compare()`` for the filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
+
 
 .. _appendixes.configuration.phpunit.coverage.file:
 
@@ -613,9 +628,22 @@ The ``<file>`` Element
 
 Parent elements: ``<include>``, ``<exclude>``
 
-TODO
+Configures a file for inclusion in or exclusion from code coverage report(s).
 
-The ``phpVersion`` and ``phpVersionOperator`` attributes ... TODO
+The ``phpVersion`` Attribute
+----------------------------
+
+Possible values: string
+
+Configures a filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
+
+The ``phpVersionOperator`` Attribute
+------------------------------------
+
+Possible values: ``'<'``, ``'lt'``, ``'<='``, ``'le'``, ``'>'``, ``'gt'``, ``'>='``, ``'ge'``, ``'=='``, ``'='``, ``'eq'``, ``'!='``, ``'<>'``, ``'ne'`` (default: ``'>='``)
+
+Configures the comparison operator to be used with ``version_compare()`` for the filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
+
 
 .. _appendixes.configuration.phpunit.coverage.report:
 
@@ -624,7 +652,7 @@ The ``<report>`` Element
 
 Parent element: ``<coverage>``
 
-TODO
+Configures the code coverage reports to be generated.
 
 .. code-block:: xml
 
@@ -637,6 +665,7 @@ TODO
         <xml outputDirectory="xml-coverage"/>
     </report>
 
+
 .. _appendixes.configuration.phpunit.coverage.report.clover:
 
 The ``<clover>`` Element
@@ -644,14 +673,15 @@ The ``<clover>`` Element
 
 Parent element: ``<report>``
 
-TODO
+Configures a code coverage report in Clover XML format.
 
 The ``outputFile`` Attribute
 ----------------------------
 
 Possible values: string
 
-TODO
+The file to which the Clover XML report is written.
+
 
 .. _appendixes.configuration.phpunit.coverage.report.crap4j:
 
@@ -660,21 +690,20 @@ The ``<crap4j>`` Element
 
 Parent element: ``<report>``
 
-TODO
+Configures a code coverage report in Crap4J XML format.
 
 The ``outputFile`` Attribute
 ----------------------------
 
 Possible values: string
 
-TODO
+The file to which the Crap4J XML report is written.
 
 The ``threshold`` Attribute
 ---------------------------
 
 Possible values: integer (default: ``50``)
 
-TODO
 
 .. _appendixes.configuration.phpunit.coverage.report.html:
 
@@ -683,28 +712,27 @@ The ``<html>`` Element
 
 Parent element: ``<report>``
 
-TODO
+Configures a code coverage report in HTML format.
 
 The ``outputDirectory`` Attribute
 ---------------------------------
 
-Possible values: string
-
-TODO
+The directory to which the HTML report is written.
 
 The ``lowUpperBound`` Attribute
 -------------------------------
 
 Possible values: integer (default: ``50``)
 
-TODO
+The upper bound of what should be considered "low coverage".
 
 The ``highLowerBound`` Attribute
 --------------------------------
 
 Possible values: integer (default: ``90``)
 
-TODO
+The lower bound of what should be considered "high coverage".
+
 
 .. _appendixes.configuration.phpunit.coverage.report.php:
 
@@ -713,9 +741,15 @@ The ``<php>`` Element
 
 Parent element: ``<report>``
 
-TODO
+Configures a code coverage report in PHP format.
 
-The ``outputFile`` attribute ... TODO
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+The file to which the PHP report is written.
+
 
 .. _appendixes.configuration.phpunit.coverage.report.text:
 
@@ -724,14 +758,14 @@ The ``<text>`` Element
 
 Parent element: ``<report>``
 
-TODO
+Configures a code coverage report in text format.
 
 The ``outputFile`` Attribute
 ----------------------------
 
 Possible values: string
 
-TODO
+The file to which the text report is written.
 
 The ``showUncoveredFiles`` Attribute
 -----------------------------
@@ -743,6 +777,7 @@ The ``showOnlySummary`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
+
 .. _appendixes.configuration.phpunit.coverage.report.xml:
 
 The ``<xml>`` Element
@@ -750,14 +785,14 @@ The ``<xml>`` Element
 
 Parent element: ``<report>``
 
-TODO
+Configures a code coverage report in PHPUnit XML format.
 
 The ``outputDirectory`` Attribute
 ---------------------------------
 
 Possible values: string
 
-TODO
+The directory to which the PHPUnit XML report is written.
 
 .. _appendixes.configuration.phpunit.groups:
 
