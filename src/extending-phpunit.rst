@@ -28,7 +28,7 @@ Write custom assertions
 When writing custom assertions it is the best practice to follow how
 PHPUnit's own assertions are implemented. As you can see in
 :numref:`extending-phpunit.examples.Assert.php`, the
-``assertTrue()`` method is just a wrapper around the
+``assertTrue()`` method is a wrapper around the
 ``isTrue()`` and ``assertThat()`` methods:
 ``isTrue()`` creates a matcher object that is passed on to
 ``assertThat()`` for evaluation.
