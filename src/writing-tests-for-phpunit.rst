@@ -147,7 +147,7 @@ depends upon ``testPush()``.
    (normal shallow) clone (based on PHP keyword ``clone``) via
    ``@depends shallowClone`` are possible too.
 
-To quickly localize defects, we want our attention to be focussed on
+To localize defects, we want our attention to be focussed on
 relevant failing tests. This is why PHPUnit skips the execution of a test
 when a depended-upon test has failed. This improves defect localization by
 exploiting the dependencies between tests as shown in
