@@ -373,14 +373,14 @@ not static variables within functions.
    instead (and ideally also ``tearDown()``, so as to not
    affect subsequently executed tests).
 
-You can provide a blacklist of static attributes that are to be excluded
+You can provide a list of static attributes that are to be excluded
 from the backup and restore operations:
 
 .. code-block:: php
 
     class MyTest extends TestCase
     {
-        protected $backupStaticAttributesBlacklist = [
+        protected $backupStaticAttributesExcludeList = [
             'className' => ['attributeName']
         ];
 
@@ -389,7 +389,7 @@ from the backup and restore operations:
 
 .. admonition:: Note
 
-   Setting the ``$backupStaticAttributesBlacklist`` property
+   Setting the ``$backupStaticAttributesExcludeList`` property
    inside e.g. the ``setUp()`` method has no effect.
 
 
