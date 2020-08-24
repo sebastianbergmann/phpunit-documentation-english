@@ -2368,7 +2368,7 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
 .. _appendixes.assertions.assertMatchesRegularExpression:
 
 assertMatchesRegularExpression()
-##############
+################################
 
 ``assertMatchesRegularExpression(string $pattern, string $string[, string $message = ''])``
 

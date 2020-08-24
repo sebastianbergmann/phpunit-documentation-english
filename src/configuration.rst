@@ -768,12 +768,12 @@ Possible values: string
 The file to which the text report is written.
 
 The ``showUncoveredFiles`` Attribute
------------------------------
+------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 The ``showOnlySummary`` Attribute
------------------------------
+---------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -781,7 +781,7 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 .. _appendixes.configuration.phpunit.coverage.report.xml:
 
 The ``<xml>`` Element
-########################
+#####################
 
 Parent element: ``<report>``
 
