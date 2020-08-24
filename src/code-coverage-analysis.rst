@@ -364,30 +364,3 @@ coverage information.
         this_call_will_never_show_up_as_covered();
     }
     ?>
-
-Speeding Up Code Coverage with Xdebug
-#####################################
-
-The performance of code coverage data collection with Xdebug 2.6 (and later) can
-be significantly improved by delegating filtering to Xdebug.
-
-In order to do this, the first step is to generate the filter script for Xdebug
-using the ``--dump-xdebug-filter`` option:
-
-.. code-block:: bash
-
-    $ phpunit --dump-xdebug-filter build/xdebug-filter.php
-    PHPUnit 7.4.0 by Sebastian Bergmann and contributors.
-
-    Runtime:       PHP 7.2.11 with Xdebug 2.6.1
-    Configuration: /workspace/project/phpunit.xml
-
-    Wrote Xdebug filter script to build/xdebug-filter.php
-
-Now we can use the ``--prepend`` option to load the Xdebug filter script as early
-as possible when we want to generate a code coverage report:
-
-.. code-block:: bash
-
-    $ phpunit --prepend build/xdebug-filter.php --coverage-html build/coverage-report
-
