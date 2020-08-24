@@ -489,13 +489,19 @@ The ``<coverage>`` element and its children can be used to configure code covera
 
 .. code-block:: xml
 
-    <coverage includeUncoveredFiles="true"
+    <coverage cacheDirectory="/path/to/directory"
+              includeUncoveredFiles="true"
               processUncoveredFiles="true"
               pathCoverage="false"
               ignoreDeprecatedCodeUnits="true"
               disableCodeCoverageIgnore="true">
         <!-- ... -->
     </coverage>
+
+The ``cacheDirectory`` Attribute
+--------------------------------
+
+TODO
 
 The ``includeUncoveredFiles`` Attribute
 ---------------------------------------
