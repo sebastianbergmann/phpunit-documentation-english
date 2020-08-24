@@ -493,8 +493,7 @@ The ``<coverage>`` element and its children can be used to configure code covera
               processUncoveredFiles="true"
               pathCoverage="false"
               ignoreDeprecatedCodeUnits="true"
-              disableCodeCoverageIgnore="true"
-              cacheTokens="true">
+              disableCodeCoverageIgnore="true">
         <!-- ... -->
     </coverage>
 
@@ -532,15 +531,6 @@ The ``disableCodeCoverageIgnore`` Attribute
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the ``@codeCoverageIgnore*`` annotations should be ignored.
-
-The ``cacheTokens`` Attribute
------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures the in-memory cache of the token streams that are used for code coverage analysis.
-
-When more than one code coverage report is generated in a single run, enabling this cache will increase memory usage and may reduce the time to generate the reports.
 
 .. _appendixes.configuration.phpunit.coverage.include:
 
