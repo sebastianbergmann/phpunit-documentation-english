@@ -53,28 +53,6 @@ Various software metrics exist to measure code coverage:
     The *Line Coverage* software metric measures
     whether each executable line was executed.
 
-*Function and Method Coverage*
-
-    The *Function and Method Coverage* software
-    metric measures whether each function or method has been invoked.
-    php-code-coverage only considers a function or method as covered when
-    all of its executable lines are covered.
-
-*Class and Trait Coverage*
-
-    The *Class and Trait Coverage* software metric
-    measures whether each method of a class or trait is covered.
-    php-code-coverage only considers a class or trait as covered when all
-    of its methods are covered.
-
-*Opcode Coverage*
-
-    The *Opcode Coverage* software metric measures
-    whether each opcode of a function or method has been executed while
-    running the test suite. A line of code usually compiles into more
-    than one opcode. Line Coverage regards a line of code as covered as
-    soon as one of its opcodes is executed.
-
 *Branch Coverage*
 
     The *Branch Coverage* software metric measures
@@ -90,6 +68,20 @@ Various software metrics exist to measure code coverage:
     a unique sequence of branches from the entry of the function or
     method to its exit.
 
+*Function and Method Coverage*
+
+    The *Function and Method Coverage* software
+    metric measures whether each function or method has been invoked.
+    php-code-coverage only considers a function or method as covered when
+    all of its executable lines are covered.
+
+*Class and Trait Coverage*
+
+    The *Class and Trait Coverage* software metric
+    measures whether each method of a class or trait is covered.
+    php-code-coverage only considers a class or trait as covered when all
+    of its methods are covered.
+
 *Change Risk Anti-Patterns (CRAP) Index*
 
     The *Change Risk Anti-Patterns (CRAP) Index* is
@@ -98,13 +90,6 @@ Various software metrics exist to measure code coverage:
     coverage will have a low CRAP index. The CRAP index can be lowered
     by writing tests and by refactoring the code to lower its
     complexity.
-
-.. admonition:: Note
-
-   The *Opcode Coverage*,
-   *Branch Coverage*, and
-   *Path Coverage* software metrics are not yet
-   supported by php-code-coverage.
 
 .. _code-coverage-analysis.including-files:
 
