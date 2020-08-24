@@ -327,21 +327,21 @@ attributes of classes.
 The ``@backupGlobals`` annotation that is discussed in
 :ref:`appendixes.annotations.backupGlobals` can be used to
 control the backup and restore operations for global variables.
-Alternatively, you can provide a blacklist of global variables that are to
+Alternatively, you can provide a list of global variables that are to
 be excluded from the backup and restore operations like this
 
 .. code-block:: php
 
     class MyTest extends TestCase
     {
-        protected $backupGlobalsBlacklist = ['globalVariable'];
+        protected $backupGlobalsExcludeList = ['globalVariable'];
 
         // ...
     }
 
 .. admonition:: Note
 
-   Setting the ``$backupGlobalsBlacklist`` property inside
+   Setting the ``$backupGlobalsExcludeList`` property inside
    e.g. the ``setUp()`` method has no effect.
 
 The ``@backupStaticAttributes`` annotation discussed in
