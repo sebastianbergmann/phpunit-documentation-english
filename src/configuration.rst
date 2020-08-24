@@ -794,6 +794,130 @@ Possible values: string
 
 The directory to which the PHPUnit XML report is written.
 
+
+.. _appendixes.configuration.phpunit.logging:
+
+The ``<logging>`` Element
+#########################
+
+Parent element: ``<phpunit>``
+
+The ``<logging>`` element and its children can be used to configure the logging of the test execution.
+
+.. code-block:: xml
+
+    <logging>
+        <junit outputFile="junit.xml"/>
+        <teamcity outputFile="teamcity.txt"/>
+        <testdoxHtml outputFile="testdox.html"/>
+        <testdoxText outputFile="testdox.txt"/>
+        <testdoxXml outputFile="testdox.xml"/>
+        <text outputFile="logfile.txt"/>
+    </logging>
+
+
+.. _appendixes.configuration.phpunit.logging.junit:
+
+The ``<junit>`` Element
+#######################
+
+Parent element: ``<report>``
+
+Configures a test result logfile in JUnit XML format.
+
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+The file to which the test result logfile in JUnit XML format is written.
+
+
+.. _appendixes.configuration.phpunit.logging.teamcity:
+
+The ``<teamcity>`` Element
+##########################
+
+Parent element: ``<report>``
+
+Configures a test result logfile in TeamCity format.
+
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+The file to which the test result logfile in TeamCity format is written.
+
+
+.. _appendixes.configuration.phpunit.logging.testdoxHtml:
+
+The ``<testdoxHtml>`` Element
+#############################
+
+Parent element: ``<report>``
+
+Configures a test result logfile in TestDox HTML format.
+
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+The file to which the test result logfile in TestDox HTML format is written.
+
+
+.. _appendixes.configuration.phpunit.logging.testdoxText:
+
+The ``<testdoxText>`` Element
+#############################
+
+Parent element: ``<report>``
+
+Configures a test result logfile in TestDox text format.
+
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+The file to which the test result logfile in TestDox text format is written.
+
+
+.. _appendixes.configuration.phpunit.logging.testdoxXml:
+
+The ``<testdoxXml>`` Element
+############################
+
+Parent element: ``<report>``
+
+Configures a test result logfile in TestDox XML format.
+
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+The file to which the test result logfile in TestDox XML format is written.
+
+
+.. _appendixes.configuration.phpunit.logging.text:
+
+The ``<text>`` Element
+######################
+
+Parent element: ``<report>``
+
+Configures a test result logfile in text format.
+
+The ``outputFile`` Attribute
+----------------------------
+
+Possible values: string
+
+The file to which the test result logfile in text format is written.
+
+
 .. _appendixes.configuration.phpunit.groups:
 
 The ``<groups>`` Element
@@ -949,85 +1073,6 @@ Available types:
         </arguments>
     </extension>
 
-.. _appendixes.configuration.phpunit.logging:
-
-The ``<logging>`` Element
-#########################
-
-Parent element: ``<phpunit>``
-
-The ``<logging>`` element and its ``<log>`` children can be used to configure the logging of the test execution.
-
-.. _appendixes.configuration.phpunit.logging.log:
-
-The ``<log>`` Element
----------------------
-
-Parent element: ``<logging>``
-
-.. code-block:: xml
-
-    <logging>
-      <log type="coverage-html" target="/tmp/report" lowUpperBound="35" highLowerBound="70"/>
-      <log type="coverage-clover" target="/tmp/coverage.xml"/>
-      <log type="coverage-php" target="/tmp/coverage.serialized"/>
-      <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
-      <log type="junit" target="/tmp/logfile.xml"/>
-      <log type="testdox-html" target="/tmp/testdox.html"/>
-      <log type="testdox-text" target="/tmp/testdox.txt"/>
-    </logging>
-
-The XML configuration above corresponds to invoking the TextUI test runner with the following options:
-
--
-
-  ``--coverage-html /tmp/report``
-
--
-
-  ``--coverage-clover /tmp/coverage.xml``
-
--
-
-  ``--coverage-php /tmp/coverage.serialized``
-
--
-
-  ``--coverage-text``
-
--
-
-  ``> /tmp/logfile.txt``
-
--
-
-  ``--log-junit /tmp/logfile.xml``
-
--
-
-  ``--testdox-html /tmp/testdox.html``
-
--
-
-  ``--testdox-text /tmp/testdox.txt``
-
-The ``lowUpperBound``, ``highLowerBound``, and ``showUncoveredFiles`` attributes have no equivalent TextUI test runner option.
-
--
-
-  ``lowUpperBound``: Maximum coverage percentage to be considered "lowly" covered.
-
--
-
-  ``highLowerBound``: Minimum coverage percentage to be considered "highly" covered.
-
--
-
-  ``showUncoveredFiles``: Show all files in ``--coverage-text`` output not just the ones with coverage information.
-
--
-
-  ``showOnlySummary``: Show only the summary in ``--coverage-text`` output.
 
 .. _appendixes.configuration.phpunit.php:
 
