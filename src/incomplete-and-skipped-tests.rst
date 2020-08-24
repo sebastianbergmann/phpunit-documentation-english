@@ -112,8 +112,8 @@ Skipping Tests
 
 Not all tests can be run in every environment. Consider, for instance,
 a database abstraction layer that has several drivers for the different
-database systems it supports. The tests for the MySQL driver can of
-course only be run if a MySQL server is available.
+database systems it supports. The tests for the MySQL driver can
+only be run if a MySQL server is available.
 
 :numref:`incomplete-and-skipped-tests.skipping-tests.examples.DatabaseTest.php`
 shows a test case class, ``DatabaseTest``, that contains one test
