@@ -26,9 +26,7 @@ extensions for PHP or by `PHPDBG <https://www.php.net/manual/en/book.phpdbg.php>
 
    If you see a warning while running tests that no code coverage driver is
    available, it means that you are using the PHP CLI binary (``php``) and do not
-   have Xdebug loaded. The `Xdebug installation guide <https://xdebug.org/docs/install>`_
-   explains how Xdebug can be installed and configured. Alternatively, you may use
-   the PHPDBG binary (``phpdbg``) instead of the PHP CLI one.
+   have Xdebug or PCOV loaded.
 
 PHPUnit can generate an HTML-based code coverage report as well as
 XML-based logfiles with code coverage information in various formats
