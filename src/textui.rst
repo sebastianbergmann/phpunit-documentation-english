@@ -204,41 +204,26 @@ the following code:
     Generates a logfile in XML format with the code coverage information
     for the tests run. See :ref:`code-coverage-analysis` for more details.
 
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
-
 ``--coverage-crap4j``
 
     Generates a code coverage report in Crap4j format. See
     :ref:`code-coverage-analysis` for more details.
-
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
 
 ``--coverage-html``
 
     Generates a code coverage report in HTML format. See
     :ref:`code-coverage-analysis` for more details.
 
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
-
 ``--coverage-php``
 
     Generates a serialized PHP_CodeCoverage object with the
     code coverage information.
-
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
 
 ``--coverage-text``
 
     Generates a logfile or command-line output in human readable format
     with the code coverage information for the tests run.
     See :ref:`logging` for more details.
-
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
 
 ``--log-junit``
 
