@@ -202,7 +202,7 @@ the following code:
 ``--coverage-clover``
 
     Generates a logfile in XML format with the code coverage information
-    for the tests run. See :ref:`logging` for more details.
+    for the tests run. See :ref:`code-coverage-analysis` for more details.
 
     Please note that this functionality is only available when the
     tokenizer and Xdebug extensions are installed.
