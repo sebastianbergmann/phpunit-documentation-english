@@ -461,7 +461,7 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether progress should be animated when TestDox format is used, for instance.
 
-.. _appendixes.configuration.phpunit.testsuites:
+.. _appendixes.configuration.testsuites:
 
 The ``<testsuites>`` Element
 ############################
@@ -470,7 +470,7 @@ Parent element: ``<phpunit>``
 
 This element is the root for one or more ``<testsuite>`` elements that are used to configure the tests that are to be executed.
 
-.. _appendixes.configuration.phpunit.testsuites.testsuite:
+.. _appendixes.configuration.testsuites.testsuite:
 
 The ``<testsuite>`` Element
 ---------------------------
@@ -507,7 +507,7 @@ Using the ``phpVersion`` and ``phpVersionOperator`` attributes, a required PHP v
 
 In the example above, the tests from the ``tests/unit`` directory are only added to the test suite if the PHP version is at least 8.0.0. The ``phpVersionOperator`` attribute is optional and defaults to ``>=``.
 
-.. _appendixes.configuration.phpunit.groups:
+.. _appendixes.configuration.groups:
 
 The ``<groups>`` Element
 ########################
@@ -529,7 +529,7 @@ The ``<groups>`` element and its ``<include>``, ``<exclude>``, and ``<group>`` c
 
 The example shown above is equivalent to invoking the PHPUnit test runner with ``--group name --exclude-group name``.
 
-.. _appendixes.configuration.phpunit.testdoxGroups:
+.. _appendixes.configuration.testdoxGroups:
 
 The ``<testdoxGroups>`` Element
 ###############################
@@ -538,7 +538,7 @@ Parent element: ``<phpunit>``
 
 ... TBD ...
 
-.. _appendixes.configuration.phpunit.filter:
+.. _appendixes.configuration.filter:
 
 The ``<filter>`` Element
 ########################
@@ -558,7 +558,7 @@ The ``<filter/whitelist>`` element and its children can be used to configure the
       </whitelist>
     </filter>
 
-.. _appendixes.configuration.phpunit.listeners:
+.. _appendixes.configuration.listeners:
 
 The ``<listeners>`` Element
 ###########################
@@ -567,7 +567,7 @@ Parent element: ``<phpunit>``
 
 The ``<listeners>`` element and its ``<listener>`` children can be used to attach additional test listeners to the test execution.
 
-.. _appendixes.configuration.phpunit.listeners.listener:
+.. _appendixes.configuration.listeners.listener:
 
 The ``<listener>`` Element
 --------------------------
@@ -613,7 +613,7 @@ The XML configuration above corresponds to attaching the
     deprecated and will be removed in the future. TestRunner extensions
     should be used instead of test listeners.
 
-.. _appendixes.configuration.phpunit.extensions:
+.. _appendixes.configuration.extensions:
 
 The ``<extensions>`` Element
 ############################
@@ -622,7 +622,7 @@ Parent element: ``<phpunit>``
 
 The ``<extensions>`` element and its ``<extension>`` children can be used to register test runner extensions.
 
-.. _appendixes.configuration.phpunit.extensions.extension:
+.. _appendixes.configuration.extensions.extension:
 
 The ``<extension>`` Element
 ---------------------------
@@ -635,7 +635,7 @@ Parent element: ``<extensions>``
         <extension class="Vendor\MyExtension"/>
     </extensions>
 
-.. _appendixes.configuration.phpunit.extensions.extension.arguments:
+.. _appendixes.configuration.extensions.extension.arguments:
 
 The ``<arguments>`` Element
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -682,7 +682,7 @@ Available types:
         </arguments>
     </extension>
 
-.. _appendixes.configuration.phpunit.logging:
+.. _appendixes.configuration.logging:
 
 The ``<logging>`` Element
 #########################
@@ -691,7 +691,7 @@ Parent element: ``<phpunit>``
 
 The ``<logging>`` element and its ``<log>`` children can be used to configure the logging of the test execution.
 
-.. _appendixes.configuration.phpunit.logging.log:
+.. _appendixes.configuration.logging.log:
 
 The ``<log>`` Element
 ---------------------
@@ -762,7 +762,7 @@ The ``lowUpperBound``, ``highLowerBound``, and ``showUncoveredFiles`` attributes
 
   ``showOnlySummary``: Show only the summary in ``--coverage-text`` output.
 
-.. _appendixes.configuration.phpunit.php:
+.. _appendixes.configuration.php:
 
 The ``<php>`` Element
 #####################
@@ -771,7 +771,7 @@ Parent element: ``<phpunit>``
 
 The ``<php>`` element and its children can be used to configure PHP settings, constants, and global variables. It can also be used to prepend the ``include_path``.
 
-.. _appendixes.configuration.phpunit.php.includePath:
+.. _appendixes.configuration.php.includePath:
 
 The ``<includePath>`` Element
 -----------------------------
@@ -780,7 +780,7 @@ Parent element: ``<php>``
 
 This element can be used to prepend a path to the ``include_path``.
 
-.. _appendixes.configuration.phpunit.php.ini:
+.. _appendixes.configuration.php.ini:
 
 The ``<ini>`` Element
 ---------------------
@@ -801,7 +801,7 @@ The XML configuration above corresponds to the following PHP code:
 
     ini_set('foo', 'bar');
 
-.. _appendixes.configuration.phpunit.php.const:
+.. _appendixes.configuration.php.const:
 
 The ``<const>`` Element
 -----------------------
@@ -822,7 +822,7 @@ The XML configuration above corresponds to the following PHP code:
 
     define('foo', 'bar');
 
-.. _appendixes.configuration.phpunit.php.var:
+.. _appendixes.configuration.php.var:
 
 The ``<var>`` Element
 ---------------------
@@ -843,7 +843,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $GLOBALS['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.env:
+.. _appendixes.configuration.php.env:
 
 The ``<env>`` Element
 ---------------------
@@ -873,7 +873,7 @@ To force overwriting existing variables, use the ``force`` attribute:
       <env name="foo" value="bar" force="true"/>
     </php>
 
-.. _appendixes.configuration.phpunit.php.get:
+.. _appendixes.configuration.php.get:
 
 The ``<get>`` Element
 ---------------------
@@ -894,7 +894,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_GET['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.post:
+.. _appendixes.configuration.php.post:
 
 The ``<post>`` Element
 ----------------------
@@ -915,7 +915,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_POST['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.cookie:
+.. _appendixes.configuration.php.cookie:
 
 The ``<cookie>`` Element
 ------------------------
@@ -936,7 +936,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_COOKIE['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.server:
+.. _appendixes.configuration.php.server:
 
 The ``<server>`` Element
 ------------------------
@@ -957,7 +957,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_SERVER['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.files:
+.. _appendixes.configuration.php.files:
 
 The ``<files>`` Element
 -----------------------
@@ -978,7 +978,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_FILES['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.request:
+.. _appendixes.configuration.php.request:
 
 The ``<request>`` Element
 -------------------------

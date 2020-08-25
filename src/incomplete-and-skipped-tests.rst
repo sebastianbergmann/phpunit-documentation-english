@@ -253,6 +253,6 @@ The following operators are supported for PHP, PHPUnit, and extension version co
     ?>
 
 If you are using syntax that doesn't compile with a certain PHP Version look into the xml
-configuration for version dependent includes in :ref:`appendixes.configuration.phpunit.testsuites`
+configuration for version dependent includes in :ref:`appendixes.configuration.testsuites`
 
 
