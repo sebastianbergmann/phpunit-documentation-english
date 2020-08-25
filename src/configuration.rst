@@ -821,7 +821,7 @@ The ``<logging>`` element and its children can be used to configure the logging 
 The ``<junit>`` Element
 -----------------------
 
-Parent element: ``<report>``
+Parent element: ``<logging>``
 
 Configures a test result logfile in JUnit XML format.
 
@@ -838,7 +838,7 @@ The file to which the test result logfile in JUnit XML format is written.
 The ``<teamcity>`` Element
 --------------------------
 
-Parent element: ``<report>``
+Parent element: ``<logging>``
 
 Configures a test result logfile in TeamCity format.
 
@@ -855,7 +855,7 @@ The file to which the test result logfile in TeamCity format is written.
 The ``<testdoxHtml>`` Element
 -----------------------------
 
-Parent element: ``<report>``
+Parent element: ``<logging>``
 
 Configures a test result logfile in TestDox HTML format.
 
@@ -872,7 +872,7 @@ The file to which the test result logfile in TestDox HTML format is written.
 The ``<testdoxText>`` Element
 -----------------------------
 
-Parent element: ``<report>``
+Parent element: ``<logging>``
 
 Configures a test result logfile in TestDox text format.
 
@@ -889,7 +889,7 @@ The file to which the test result logfile in TestDox text format is written.
 The ``<testdoxXml>`` Element
 ----------------------------
 
-Parent element: ``<report>``
+Parent element: ``<logging>``
 
 Configures a test result logfile in TestDox XML format.
 
@@ -906,7 +906,7 @@ The file to which the test result logfile in TestDox XML format is written.
 The ``<text>`` Element
 ----------------------
 
-Parent element: ``<report>``
+Parent element: ``<logging>``
 
 Configures a test result logfile in text format.
 
