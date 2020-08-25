@@ -515,7 +515,7 @@ the following code:
 
 .. admonition:: Note
 
-   Please note that as of 4.8, options can be put after the argument(s).
+   Please note that options can be put after the argument(s).
 
 .. _textui.testdox:
 
