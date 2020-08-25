@@ -223,12 +223,10 @@ the following code:
 
     Generates a logfile or command-line output in human readable format
     with the code coverage information for the tests run.
-    See :ref:`logging` for more details.
 
 ``--log-junit``
 
     Generates a logfile in JUnit XML format for the tests run.
-    See :ref:`logging` for more details.
 
 ``--testdox-html`` and ``--testdox-text``
 
