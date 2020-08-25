@@ -38,7 +38,7 @@ processing.
 
 Please refer to :ref:`textui` for a list of command line switches
 that control code coverage functionality as well as
-:ref:`appendixes.configuration.phpunit.logging` for the relevant
+:ref:`appendixes.configuration.logging` for the relevant
 configuration settings.
 
 .. _code-coverage-analysis.metrics:
@@ -100,7 +100,7 @@ It is mandatory to configure a filter for telling
 PHPUnit which sourcecode files to include in the code coverage report.
 This can either be done using the ``--coverage-filter``
 :ref:`command line <textui.clioptions>` option or via the
-configuration file (see :ref:`appendixes.configuration.phpunit.coverage.include`).
+configuration file (see :ref:`appendixes.configuration.coverage.include`).
 
 The ``includeUncoveredFilesInCodeCoverageReport`` and ``processUncoveredFilesForCodeCoverageReport`` configuration settings are available to configure how the filter is used:
 

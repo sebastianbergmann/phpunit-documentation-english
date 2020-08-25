@@ -432,7 +432,7 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether progress should be animated when TestDox format is used, for instance.
 
-.. _appendixes.configuration.phpunit.testsuites:
+.. _appendixes.configuration.testsuites:
 
 The ``<testsuites>`` Element
 ############################
@@ -441,7 +441,7 @@ Parent element: ``<phpunit>``
 
 This element is the root for one or more ``<testsuite>`` elements that are used to configure the tests that are to be executed.
 
-.. _appendixes.configuration.phpunit.testsuites.testsuite:
+.. _appendixes.configuration.testsuites.testsuite:
 
 The ``<testsuite>`` Element
 ---------------------------
@@ -478,7 +478,7 @@ Using the ``phpVersion`` and ``phpVersionOperator`` attributes, a required PHP v
 
 In the example above, the tests from the ``tests/unit`` directory are only added to the test suite if the PHP version is at least 8.0.0. The ``phpVersionOperator`` attribute is optional and defaults to ``>=``.
 
-.. _appendixes.configuration.phpunit.coverage:
+.. _appendixes.configuration.coverage:
 
 The ``<coverage>`` Element
 ##########################
@@ -542,10 +542,10 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the ``@codeCoverageIgnore*`` annotations should be ignored.
 
-.. _appendixes.configuration.phpunit.coverage.include:
+.. _appendixes.configuration.coverage.include:
 
 The ``<include>`` Element
-#########################
+-------------------------
 
 Parent element: ``<coverage>``
 
@@ -560,10 +560,10 @@ Configures a set of files to be included in code coverage report(s).
 The example shown above instructs PHPUnit to include all sourcecode files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report(s).
 
 
-.. _appendixes.configuration.phpunit.coverage.exclude:
+.. _appendixes.configuration.coverage.exclude:
 
 The ``<exclude>`` Element
-#########################
+-------------------------
 
 Parent element: ``<coverage>``
 
@@ -583,72 +583,72 @@ Configures a set of files to be excluded from code coverage report(s).
 The example shown above instructs PHPUnit to include all sourcecode files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report but exclude all files with ``.php`` suffix in the ``src/generated`` directory and its sub-directories as well as the ``src/autoload.php`` file from the code coverage report(s).
 
 
-.. _appendixes.configuration.phpunit.coverage.directory:
+.. _appendixes.configuration.coverage.directory:
 
 The ``<directory>`` Element
-###########################
+---------------------------
 
 Parent elements: ``<include>``, ``<exclude>``
 
 Configures a directory and its sub-directories for inclusion in or exclusion from code coverage report(s).
 
 The ``prefix`` Attribute
-------------------------
+************************
 
 Possible values: string
 
 Configures a prefix-based filter that is applied to the names of files in the directory and its sub-directories.
 
 The ``suffix`` Attribute
-------------------------
+************************
 
 Possible values: string (default: ``'.php'``)
 
 Configures a suffix-based filter that is applied to the names of files in the directory and its sub-directories.
 
 The ``phpVersion`` Attribute
-----------------------------
+****************************
 
 Possible values: string
 
 Configures a filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
 
 The ``phpVersionOperator`` Attribute
-------------------------------------
+************************************
 
 Possible values: ``'<'``, ``'lt'``, ``'<='``, ``'le'``, ``'>'``, ``'gt'``, ``'>='``, ``'ge'``, ``'=='``, ``'='``, ``'eq'``, ``'!='``, ``'<>'``, ``'ne'`` (default: ``'>='``)
 
 Configures the comparison operator to be used with ``version_compare()`` for the filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
 
 
-.. _appendixes.configuration.phpunit.coverage.file:
+.. _appendixes.configuration.coverage.file:
 
 The ``<file>`` Element
-######################
+----------------------
 
 Parent elements: ``<include>``, ``<exclude>``
 
 Configures a file for inclusion in or exclusion from code coverage report(s).
 
 The ``phpVersion`` Attribute
-----------------------------
+****************************
 
 Possible values: string
 
 Configures a filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
 
 The ``phpVersionOperator`` Attribute
-------------------------------------
+************************************
 
 Possible values: ``'<'``, ``'lt'``, ``'<='``, ``'le'``, ``'>'``, ``'gt'``, ``'>='``, ``'ge'``, ``'=='``, ``'='``, ``'eq'``, ``'!='``, ``'<>'``, ``'ne'`` (default: ``'>='``)
 
 Configures the comparison operator to be used with ``version_compare()`` for the filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
 
 
-.. _appendixes.configuration.phpunit.coverage.report:
+.. _appendixes.configuration.coverage.report:
 
 The ``<report>`` Element
-########################
+------------------------
 
 Parent element: ``<coverage>``
 
@@ -666,136 +666,136 @@ Configures the code coverage reports to be generated.
     </report>
 
 
-.. _appendixes.configuration.phpunit.coverage.report.clover:
+.. _appendixes.configuration.coverage.report.clover:
 
 The ``<clover>`` Element
-########################
+************************
 
 Parent element: ``<report>``
 
 Configures a code coverage report in Clover XML format.
 
 The ``outputFile`` Attribute
-----------------------------
+++++++++++++++++++++++++++++
 
 Possible values: string
 
 The file to which the Clover XML report is written.
 
 
-.. _appendixes.configuration.phpunit.coverage.report.crap4j:
+.. _appendixes.configuration.coverage.report.crap4j:
 
 The ``<crap4j>`` Element
-########################
+************************
 
 Parent element: ``<report>``
 
 Configures a code coverage report in Crap4J XML format.
 
 The ``outputFile`` Attribute
-----------------------------
+++++++++++++++++++++++++++++
 
 Possible values: string
 
 The file to which the Crap4J XML report is written.
 
 The ``threshold`` Attribute
----------------------------
++++++++++++++++++++++++++++
 
 Possible values: integer (default: ``50``)
 
 
-.. _appendixes.configuration.phpunit.coverage.report.html:
+.. _appendixes.configuration.coverage.report.html:
 
 The ``<html>`` Element
-######################
+**********************
 
 Parent element: ``<report>``
 
 Configures a code coverage report in HTML format.
 
 The ``outputDirectory`` Attribute
----------------------------------
++++++++++++++++++++++++++++++++++
 
 The directory to which the HTML report is written.
 
 The ``lowUpperBound`` Attribute
--------------------------------
++++++++++++++++++++++++++++++++
 
 Possible values: integer (default: ``50``)
 
 The upper bound of what should be considered "low coverage".
 
 The ``highLowerBound`` Attribute
---------------------------------
+++++++++++++++++++++++++++++++++
 
 Possible values: integer (default: ``90``)
 
 The lower bound of what should be considered "high coverage".
 
 
-.. _appendixes.configuration.phpunit.coverage.report.php:
+.. _appendixes.configuration.coverage.report.php:
 
 The ``<php>`` Element
-#####################
+*********************
 
 Parent element: ``<report>``
 
 Configures a code coverage report in PHP format.
 
 The ``outputFile`` Attribute
-----------------------------
+++++++++++++++++++++++++++++
 
 Possible values: string
 
 The file to which the PHP report is written.
 
 
-.. _appendixes.configuration.phpunit.coverage.report.text:
+.. _appendixes.configuration.coverage.report.text:
 
 The ``<text>`` Element
-########################
+**********************
 
 Parent element: ``<report>``
 
 Configures a code coverage report in text format.
 
 The ``outputFile`` Attribute
-----------------------------
+++++++++++++++++++++++++++++
 
 Possible values: string
 
 The file to which the text report is written.
 
 The ``showUncoveredFiles`` Attribute
-------------------------------------
+++++++++++++++++++++++++++++++++++++
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 The ``showOnlySummary`` Attribute
----------------------------------
++++++++++++++++++++++++++++++++++
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 
-.. _appendixes.configuration.phpunit.coverage.report.xml:
+.. _appendixes.configuration.coverage.report.xml:
 
 The ``<xml>`` Element
-#####################
+*********************
 
 Parent element: ``<report>``
 
 Configures a code coverage report in PHPUnit XML format.
 
 The ``outputDirectory`` Attribute
----------------------------------
++++++++++++++++++++++++++++++++++
 
 Possible values: string
 
 The directory to which the PHPUnit XML report is written.
 
 
-.. _appendixes.configuration.phpunit.logging:
+.. _appendixes.configuration.logging:
 
 The ``<logging>`` Element
 #########################
@@ -816,109 +816,109 @@ The ``<logging>`` element and its children can be used to configure the logging 
     </logging>
 
 
-.. _appendixes.configuration.phpunit.logging.junit:
+.. _appendixes.configuration.logging.junit:
 
 The ``<junit>`` Element
-#######################
+-----------------------
 
 Parent element: ``<report>``
 
 Configures a test result logfile in JUnit XML format.
 
 The ``outputFile`` Attribute
-----------------------------
+****************************
 
 Possible values: string
 
 The file to which the test result logfile in JUnit XML format is written.
 
 
-.. _appendixes.configuration.phpunit.logging.teamcity:
+.. _appendixes.configuration.logging.teamcity:
 
 The ``<teamcity>`` Element
-##########################
+--------------------------
 
 Parent element: ``<report>``
 
 Configures a test result logfile in TeamCity format.
 
 The ``outputFile`` Attribute
-----------------------------
+****************************
 
 Possible values: string
 
 The file to which the test result logfile in TeamCity format is written.
 
 
-.. _appendixes.configuration.phpunit.logging.testdoxHtml:
+.. _appendixes.configuration.logging.testdoxHtml:
 
 The ``<testdoxHtml>`` Element
-#############################
+-----------------------------
 
 Parent element: ``<report>``
 
 Configures a test result logfile in TestDox HTML format.
 
 The ``outputFile`` Attribute
-----------------------------
+****************************
 
 Possible values: string
 
 The file to which the test result logfile in TestDox HTML format is written.
 
 
-.. _appendixes.configuration.phpunit.logging.testdoxText:
+.. _appendixes.configuration.logging.testdoxText:
 
 The ``<testdoxText>`` Element
-#############################
+-----------------------------
 
 Parent element: ``<report>``
 
 Configures a test result logfile in TestDox text format.
 
 The ``outputFile`` Attribute
-----------------------------
+****************************
 
 Possible values: string
 
 The file to which the test result logfile in TestDox text format is written.
 
 
-.. _appendixes.configuration.phpunit.logging.testdoxXml:
+.. _appendixes.configuration.logging.testdoxXml:
 
 The ``<testdoxXml>`` Element
-############################
+----------------------------
 
 Parent element: ``<report>``
 
 Configures a test result logfile in TestDox XML format.
 
 The ``outputFile`` Attribute
-----------------------------
+****************************
 
 Possible values: string
 
 The file to which the test result logfile in TestDox XML format is written.
 
 
-.. _appendixes.configuration.phpunit.logging.text:
+.. _appendixes.configuration.logging.text:
 
 The ``<text>`` Element
-######################
+----------------------
 
 Parent element: ``<report>``
 
 Configures a test result logfile in text format.
 
 The ``outputFile`` Attribute
-----------------------------
+****************************
 
 Possible values: string
 
 The file to which the test result logfile in text format is written.
 
 
-.. _appendixes.configuration.phpunit.groups:
+.. _appendixes.configuration.groups:
 
 The ``<groups>`` Element
 ########################
@@ -940,7 +940,7 @@ The ``<groups>`` element and its ``<include>``, ``<exclude>``, and ``<group>`` c
 
 The example shown above is equivalent to invoking the PHPUnit test runner with ``--group name --exclude-group name``.
 
-.. _appendixes.configuration.phpunit.testdoxGroups:
+.. _appendixes.configuration.testdoxGroups:
 
 The ``<testdoxGroups>`` Element
 ###############################
@@ -949,7 +949,7 @@ Parent element: ``<phpunit>``
 
 ... TBD ...
 
-.. _appendixes.configuration.phpunit.listeners:
+.. _appendixes.configuration.listeners:
 
 The ``<listeners>`` Element
 ###########################
@@ -958,7 +958,7 @@ Parent element: ``<phpunit>``
 
 The ``<listeners>`` element and its ``<listener>`` children can be used to attach additional test listeners to the test execution.
 
-.. _appendixes.configuration.phpunit.listeners.listener:
+.. _appendixes.configuration.listeners.listener:
 
 The ``<listener>`` Element
 --------------------------
@@ -1004,7 +1004,7 @@ The XML configuration above corresponds to attaching the
     deprecated and will be removed in the future. TestRunner extensions
     should be used instead of test listeners.
 
-.. _appendixes.configuration.phpunit.extensions:
+.. _appendixes.configuration.extensions:
 
 The ``<extensions>`` Element
 ############################
@@ -1013,7 +1013,7 @@ Parent element: ``<phpunit>``
 
 The ``<extensions>`` element and its ``<extension>`` children can be used to register test runner extensions.
 
-.. _appendixes.configuration.phpunit.extensions.extension:
+.. _appendixes.configuration.extensions.extension:
 
 The ``<extension>`` Element
 ---------------------------
@@ -1026,10 +1026,10 @@ Parent element: ``<extensions>``
         <extension class="Vendor\MyExtension"/>
     </extensions>
 
-.. _appendixes.configuration.phpunit.extensions.extension.arguments:
+.. _appendixes.configuration.extensions.extension.arguments:
 
 The ``<arguments>`` Element
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***************************
 
 Parent element: ``<extension>``
 
@@ -1074,7 +1074,7 @@ Available types:
     </extension>
 
 
-.. _appendixes.configuration.phpunit.php:
+.. _appendixes.configuration.php:
 
 The ``<php>`` Element
 #####################
@@ -1083,7 +1083,7 @@ Parent element: ``<phpunit>``
 
 The ``<php>`` element and its children can be used to configure PHP settings, constants, and global variables. It can also be used to prepend the ``include_path``.
 
-.. _appendixes.configuration.phpunit.php.includePath:
+.. _appendixes.configuration.php.includePath:
 
 The ``<includePath>`` Element
 -----------------------------
@@ -1092,7 +1092,7 @@ Parent element: ``<php>``
 
 This element can be used to prepend a path to the ``include_path``.
 
-.. _appendixes.configuration.phpunit.php.ini:
+.. _appendixes.configuration.php.ini:
 
 The ``<ini>`` Element
 ---------------------
@@ -1113,7 +1113,7 @@ The XML configuration above corresponds to the following PHP code:
 
     ini_set('foo', 'bar');
 
-.. _appendixes.configuration.phpunit.php.const:
+.. _appendixes.configuration.php.const:
 
 The ``<const>`` Element
 -----------------------
@@ -1134,7 +1134,7 @@ The XML configuration above corresponds to the following PHP code:
 
     define('foo', 'bar');
 
-.. _appendixes.configuration.phpunit.php.var:
+.. _appendixes.configuration.php.var:
 
 The ``<var>`` Element
 ---------------------
@@ -1155,7 +1155,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $GLOBALS['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.env:
+.. _appendixes.configuration.php.env:
 
 The ``<env>`` Element
 ---------------------
@@ -1185,7 +1185,7 @@ To force overwriting existing variables, use the ``force`` attribute:
       <env name="foo" value="bar" force="true"/>
     </php>
 
-.. _appendixes.configuration.phpunit.php.get:
+.. _appendixes.configuration.php.get:
 
 The ``<get>`` Element
 ---------------------
@@ -1206,7 +1206,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_GET['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.post:
+.. _appendixes.configuration.php.post:
 
 The ``<post>`` Element
 ----------------------
@@ -1227,7 +1227,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_POST['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.cookie:
+.. _appendixes.configuration.php.cookie:
 
 The ``<cookie>`` Element
 ------------------------
@@ -1248,7 +1248,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_COOKIE['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.server:
+.. _appendixes.configuration.php.server:
 
 The ``<server>`` Element
 ------------------------
@@ -1269,7 +1269,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_SERVER['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.files:
+.. _appendixes.configuration.php.files:
 
 The ``<files>`` Element
 -----------------------
@@ -1290,7 +1290,7 @@ The XML configuration above corresponds to the following PHP code:
 
     $_FILES['foo'] = 'bar';
 
-.. _appendixes.configuration.phpunit.php.request:
+.. _appendixes.configuration.php.request:
 
 The ``<request>`` Element
 -------------------------
