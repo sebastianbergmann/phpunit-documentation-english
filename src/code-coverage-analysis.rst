@@ -156,14 +156,14 @@ using the ``@codeCoverageIgnore``,
     /**
      * @codeCoverageIgnore
      */
-    class Foo
+    final class Foo
     {
         public function bar()
         {
         }
     }
 
-    class Bar
+    final class Bar
     {
         /**
          * @codeCoverageIgnore
@@ -221,7 +221,7 @@ shows an example.
      * @covers \Invoice
      * @uses \Money
      */
-    class InvoiceTest extends TestCase
+    final class InvoiceTest extends TestCase
     {
         protected $subject;
 
@@ -244,7 +244,7 @@ shows an example.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class BankAccountTest extends TestCase
+    final class BankAccountTest extends TestCase
     {
         protected $ba;
 
@@ -327,7 +327,7 @@ generate code coverage with unit tests.
     <?php declare(strict_types=1);
     use PHPUnit\DbUnit\TestCase
 
-    class GuestbookIntegrationTest extends TestCase
+    final class GuestbookIntegrationTest extends TestCase
     {
         /**
          * @coversNothing
