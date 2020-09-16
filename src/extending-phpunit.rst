@@ -72,7 +72,7 @@ PHPUnit's own assertions are implemented. As you can see in
         }
 
         // ...
-    }?>
+    }
 
 :numref:`extending-phpunit.examples.IsTrue.php` shows how
 ``PHPUnit\Framework\Constraint\IsTrue`` extends the
@@ -111,7 +111,7 @@ abstract base class for matcher objects (or constraints),
         {
             return 'is true';
         }
-    }?>
+    }
 
 The effort of implementing the ``assertTrue()`` and
 ``isTrue()`` methods as well as the
@@ -190,7 +190,6 @@ interface.
             printf("TestSuite '%s' ended.\n", $suite->getName());
         }
     }
-    ?>
 
 :numref:`extending-phpunit.examples.ExtendedTestListener.php`
 shows how to use the ``PHPUnit\Framework\TestListenerDefaultImplementation``
@@ -215,7 +214,6 @@ for all the others.
             printf("Test '%s' ended.\n", $test->getName());
         }
     }
-    ?>
 
 In :ref:`appendixes.configuration.test-listeners` you can see
 how to configure PHPUnit to attach your test listener to the test
