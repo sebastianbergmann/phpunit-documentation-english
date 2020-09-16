@@ -47,33 +47,35 @@ assertion method.
     :caption: Using setUp() to create the stack fixture
     :name: fixtures.examples.StackTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
-        protected $stack;
+        private $stack;
 
         protected function setUp(): void
         {
             $this->stack = [];
         }
 
-        public function testEmpty()
+        public function testEmpty(): void
         {
             $this->assertTrue(empty($this->stack));
         }
 
-        public function testPush()
+        public function testPush(): void
         {
             array_push($this->stack, 'foo');
+
             $this->assertSame('foo', $this->stack[count($this->stack)-1]);
             $this->assertFalse(empty($this->stack));
         }
 
-        public function testPop()
+        public function testPop(): void
         {
             array_push($this->stack, 'foo');
+
             $this->assertSame('foo', array_pop($this->stack));
             $this->assertTrue(empty($this->stack));
         }
@@ -95,10 +97,10 @@ case class.
     :caption: Example showing all template methods available
     :name: fixtures.examples.TemplateMethodsTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class TemplateMethodsTest extends TestCase
+    final class TemplateMethodsTest extends TestCase
     {
         public static function setUpBeforeClass(): void
         {
@@ -115,13 +117,13 @@ case class.
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        public function testOne()
+        public function testOne(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
             $this->assertTrue(true);
         }
 
-        public function testTwo()
+        public function testTwo(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
             $this->assertTrue(false);
@@ -238,12 +240,12 @@ database after the last test of the test case, respectively.
     :caption: Sharing fixture between the tests of a test suite
     :name: fixtures.sharing-fixture.examples.DatabaseTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DatabaseTest extends TestCase
+    final class DatabaseTest extends TestCase
     {
-        protected static $dbh;
+        private static $dbh;
 
         public static function setUpBeforeClass(): void
         {
@@ -332,7 +334,7 @@ be excluded from the backup and restore operations like this
 
 .. code-block:: php
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         protected $backupGlobalsBlacklist = ['globalVariable'];
 
@@ -378,7 +380,7 @@ from the backup and restore operations:
 
 .. code-block:: php
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         protected $backupStaticAttributesBlacklist = [
             'className' => ['attributeName']
