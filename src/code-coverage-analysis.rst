@@ -180,7 +180,6 @@ using the ``@codeCoverageIgnore``,
     }
 
     exit; // @codeCoverageIgnore
-    ?>
 
 The ignored lines of code (marked as ignored using the annotations)
 are counted as executed (if they are executable) and will not be
@@ -235,7 +234,6 @@ shows an example.
             $this->assertEquals(new Money(), $this->subject->getAmount);
         }
     }
-    ?>
 
 .. code-block:: php
     :caption: Tests that specify which method they want to cover
@@ -311,7 +309,6 @@ shows an example.
             $this->assertSame(0, $this->ba->getBalance());
         }
     }
-    ?>
 
 It is also possible to specify that a test should not cover
 *any* method by using the
@@ -347,7 +344,6 @@ generate code coverage with unit tests.
             $this->assertTablesEqual($expectedTable, $queryTable);
         }
     }
-    ?>
 
 .. _code-coverage-analysis.edge-cases:
 
@@ -378,4 +374,3 @@ coverage information.
     if (false) {
         this_call_will_never_show_up_as_covered();
     }
-    ?>
