@@ -92,7 +92,6 @@ the example. This leads to more readable and "fluent" code.
             // Do something.
         }
     }
-    ?>
 
 .. code-block:: php
     :caption: Stubbing a method call to return a fixed value
@@ -117,7 +116,6 @@ the example. This leads to more readable and "fluent" code.
             $this->assertSame('foo', $stub->doSomething());
         }
     }
-    ?>
 
 .. admonition:: Limitation: Methods named "method"
 
@@ -182,7 +180,6 @@ the same best practice defaults used by ``createMock()``.
             $this->assertSame('foo', $stub->doSomething());
         }
     }
-    ?>
 
 In the examples so far we have been returning simple values using
 ``willReturn($value)``. This short syntax is the same as
@@ -220,7 +217,6 @@ can achieve this using ``returnArgument()`` instead of
             $this->assertSame('bar', $stub->doSomething('bar'));
         }
     }
-    ?>
 
 When testing a fluent interface, it is sometimes useful to have a stubbed
 method return a reference to the stubbed object.
@@ -249,7 +245,6 @@ can use ``returnSelf()`` to achieve this.
             $this->assertSame($stub, $stub->doSomething());
         }
     }
-    ?>
 
 Sometimes a stubbed method should return different values depending on
 a predefined list of arguments.  You can use
@@ -288,7 +283,6 @@ an example.
             $this->assertSame('h', $stub->doSomething('e', 'f', 'g'));
         }
     }
-    ?>
 
 When the stubbed method call should return a calculated value instead of
 a fixed one (see ``returnValue()``) or an (unchanged)
@@ -319,7 +313,6 @@ result of a callback function or method. See
             $this->assertSame('fbzrguvat', $stub->doSomething('something'));
         }
     }
-    ?>
 
 A simpler alternative to setting up a callback method may be to
 specify a list of desired return values. You can do this with
@@ -351,7 +344,6 @@ an example.
             $this->assertSame(5, $stub->doSomething());
         }
     }
-    ?>
 
 Instead of returning a value, a stubbed method can also raise an
 exception. :numref:`test-doubles.stubs.examples.StubTest8.php`
@@ -379,7 +371,6 @@ shows how to use ``throwException()`` to do this.
             $stub->doSomething();
         }
     }
-    ?>
 
 Alternatively, you can write the stub yourself and improve your design
 along the way. Widely used resources are accessed through a single façade,
@@ -495,7 +486,6 @@ classes that are part of the System under Test (SUT).
 
         // Other methods.
     }
-    ?>
 
 :numref:`test-doubles.mock-objects.examples.SubjectTest.php`
 shows how to use a mock object to test the interaction between
@@ -546,7 +536,6 @@ arguments it is called with, we introduce the ``expects()`` and
             $subject->doSomething();
         }
     }
-    ?>
 
 The ``with()`` method can take any number of
 arguments, corresponding to the number of arguments to the
@@ -586,7 +575,6 @@ on the method's arguments than a simple match.
             $subject->doSomethingBad();
         }
     }
-    ?>
 
 The ``withConsecutive()`` method can take any number of
 arrays of arguments, depending on the calls you want to test against.
@@ -619,7 +607,6 @@ method being mocked, like in ``with()``.
             $mock->set('bar', 48);
         }
     }
-    ?>
 
 The ``callback()`` constraint can be used for more complex
 argument verification. This constraint takes a PHP callback as its only
@@ -661,7 +648,6 @@ argument passes verification and ``false`` otherwise.
             $subject->doSomethingBad();
         }
     }
-    ?>
 
 .. code-block:: php
     :caption: Testing that a method gets called once and with the identical object as was passed
@@ -687,7 +673,6 @@ argument passes verification and ``false`` otherwise.
             $mock->foo($expectedObject);
         }
     }
-    ?>
 
 .. code-block:: php
     :caption: Create a mock object with cloning parameters enabled
@@ -710,7 +695,6 @@ argument passes verification and ``false`` otherwise.
             // will fail.
         }
     }
-    ?>
 
 :ref:`appendixes.assertions.assertThat.tables.constraints`
 shows the constraints that can be applied to method arguments and
@@ -828,7 +812,6 @@ revelations:
             $subject->doSomething();
         }
     }
-    ?>
 
 Please refer to the `documentation <https://github.com/phpspec/prophecy#how-to-use-it>`_
 for Prophecy for further details on how to create, configure, and use
@@ -873,7 +856,6 @@ are mocked. This allows for testing the concrete methods of a trait.
             $this->assertTrue($mock->concreteMethod());
         }
     }
-    ?>
 
 The ``getMockForAbstractClass()`` method returns a mock
 object for an abstract class. All abstract methods of the given abstract
@@ -910,7 +892,6 @@ abstract class.
             $this->assertTrue($stub->concreteMethod());
         }
     }
-    ?>
 
 .. _test-doubles.stubbing-and-mocking-web-services:
 
@@ -997,4 +978,3 @@ example, the web service described in :file:`GoogleSearch.wsdl`.
             );
         }
     }
-    ?>
