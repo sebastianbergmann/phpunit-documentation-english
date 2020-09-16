@@ -166,7 +166,7 @@ Reports an error identified by ``$message`` if ``$array`` does not contains the 
 
     There was 1 failure:
 
-    1) Epilog\EpilogTest::testNoFollowOption
+    1) ArraySubset::testFailure
     Failed asserting that an array has the subset Array &0 (
         'config' => Array &1 (
             0 => 'key-a'
