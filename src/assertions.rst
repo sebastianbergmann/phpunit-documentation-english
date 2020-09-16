@@ -59,7 +59,7 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
 
     final class ArrayHasKeyTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertArrayHasKey('foo', ['bar' => 'baz']);
         }
@@ -104,7 +104,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
 
     final class ClassHasAttributeTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertClassHasAttribute('foo', stdClass::class);
         }
@@ -149,7 +149,7 @@ Reports an error identified by ``$message`` if ``$array`` does not contains the 
 
     final class ArraySubsetTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertArraySubset(['config' => ['key-a', 'key-b']], ['config' => ['key-a']]);
         }
@@ -199,7 +199,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
 
     final class ClassHasStaticAttributeTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertClassHasStaticAttribute('foo', stdClass::class);
         }
@@ -246,7 +246,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
 
     final class ContainsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertContains(4, [1, 2, 3]);
         }
@@ -286,7 +286,7 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
 
     final class ContainsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertContains('baz', 'foobar');
         }
@@ -320,12 +320,12 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
 
     final class ContainsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertContains('foo', 'FooBar');
         }
 
-        public function testOK()
+        public function testOK(): void
         {
             $this->assertContains('foo', 'FooBar', '', true);
         }
@@ -374,7 +374,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 
     final class ContainsOnlyTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertContainsOnly('string', ['1', '2', 3]);
         }
@@ -421,7 +421,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 
     final class ContainsOnlyInstancesOfTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertContainsOnlyInstancesOf(
                 Foo::class,
@@ -469,7 +469,7 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
 
     final class CountTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertCount(0, ['foo']);
         }
@@ -514,7 +514,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 
     final class DirectoryExistsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertDirectoryExists('/path/to/directory');
         }
@@ -559,7 +559,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 
     final class DirectoryIsReadableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertDirectoryIsReadable('/path/to/directory');
         }
@@ -604,7 +604,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 
     final class DirectoryIsWritableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertDirectoryIsWritable('/path/to/directory');
         }
@@ -651,7 +651,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
 
     final class EmptyTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertEmpty(['foo']);
         }
@@ -694,7 +694,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
 
     final class EqualXMLStructureTest extends TestCase
     {
-        public function testFailureWithDifferentNodeNames()
+        public function testFailureWithDifferentNodeNames(): void
         {
             $expected = new DOMElement('foo');
             $actual = new DOMElement('bar');
@@ -702,7 +702,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
             $this->assertEqualXMLStructure($expected, $actual);
         }
 
-        public function testFailureWithDifferentNodeAttributes()
+        public function testFailureWithDifferentNodeAttributes(): void
         {
             $expected = new DOMDocument;
             $expected->loadXML('<foo bar="true" />');
@@ -715,7 +715,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
             );
         }
 
-        public function testFailureWithDifferentChildrenCount()
+        public function testFailureWithDifferentChildrenCount(): void
         {
             $expected = new DOMDocument;
             $expected->loadXML('<foo><bar/><bar/><bar/></foo>');
@@ -728,7 +728,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
             );
         }
 
-        public function testFailureWithDifferentChildren()
+        public function testFailureWithDifferentChildren(): void
         {
             $expected = new DOMDocument;
             $expected->loadXML('<foo><bar/><bar/><bar/></foo>');
@@ -810,17 +810,17 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 
     final class EqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertEquals(1, 0);
         }
 
-        public function testFailure2()
+        public function testFailure2(): void
         {
             $this->assertEquals('bar', 'baz');
         }
 
-        public function testFailure3()
+        public function testFailure3(): void
         {
             $this->assertEquals("foo\nbar\nbaz\n", "foo\nbah\nbaz\n");
         }
@@ -885,12 +885,12 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
 
     final class EqualsTest extends TestCase
     {
-        public function testSuccess()
+        public function testSuccess(): void
         {
             $this->assertEquals(1.0, 1.1, '', 0.1);
         }
 
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertEquals(1.0, 1.1);
         }
@@ -928,7 +928,7 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
 
     final class EqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $expected = new DOMDocument;
             $expected->loadXML('<foo><bar/></foo>');
@@ -982,7 +982,7 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
 
     final class EqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $expected = new stdClass;
             $expected->foo = 'foo';
@@ -1037,7 +1037,7 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
 
     final class EqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertEquals(['a', 'b', 'c'], ['a', 'c', 'd']);
         }
@@ -1092,7 +1092,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
 
     final class FalseTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFalse(true);
         }
@@ -1137,7 +1137,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 
     final class FileEqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFileEquals('/home/sb/expected', '/home/sb/actual');
         }
@@ -1188,7 +1188,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 
     final class FileExistsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFileExists('/path/to/file');
         }
@@ -1233,7 +1233,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 
     final class FileIsReadableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFileIsReadable('/path/to/file');
         }
@@ -1278,7 +1278,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 
     final class FileIsWritableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFileIsWritable('/path/to/file');
         }
@@ -1323,7 +1323,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
 
     final class GreaterThanTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertGreaterThan(2, 1);
         }
@@ -1368,7 +1368,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
 
     final class GreatThanOrEqualTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertGreaterThanOrEqual(2, 1);
         }
@@ -1413,7 +1413,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
 
     final class InfiniteTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertInfinite(1);
         }
@@ -1460,7 +1460,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
 
     final class InstanceOfTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertInstanceOf(RuntimeException::class, new Exception);
         }
@@ -1507,7 +1507,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of the ``$expe
 
     final class InternalTypeTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertInternalType('string', 42);
         }
@@ -1552,7 +1552,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
 
     final class IsReadableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertIsReadable('/path/to/unreadable');
         }
@@ -1597,7 +1597,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
 
     final class IsWritableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertIsWritable('/path/to/unwritable');
         }
@@ -1641,7 +1641,7 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
 
     final class JsonFileEqualsJsonFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertJsonFileEqualsJsonFile(
               'path/to/fixture/file', 'path/to/actual/file');
@@ -1686,7 +1686,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
 
     final class JsonStringEqualsJsonFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertJsonStringEqualsJsonFile(
                 'path/to/fixture/file', json_encode(['Mascot' => 'ux'])
@@ -1732,7 +1732,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
 
     final class JsonStringEqualsJsonStringTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertJsonStringEqualsJsonString(
                 json_encode(['Mascot' => 'Tux']),
@@ -1787,7 +1787,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
 
     final class LessThanTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertLessThan(1, 2);
         }
@@ -1832,7 +1832,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
 
     final class LessThanOrEqualTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertLessThanOrEqual(1, 2);
         }
@@ -1875,7 +1875,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
 
     final class NanTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertNan(1);
         }
@@ -1920,7 +1920,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
 
     final class NullTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertNull('foo');
         }
@@ -1965,7 +1965,7 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
 
     final class ObjectHasAttributeTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertObjectHasAttribute('foo', new stdClass);
         }
@@ -2010,7 +2010,7 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
 
     final class RegExpTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertRegExp('/foo/', 'bar');
         }
@@ -2055,7 +2055,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 
     final class StringMatchesFormatTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringMatchesFormat('%i', 'foo');
         }
@@ -2150,7 +2150,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 
     final class StringMatchesFormatFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringMatchesFormatFile('/path/to/expected.txt', 'foo');
         }
@@ -2198,7 +2198,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 
     final class SameTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertSame('2204', 2204);
         }
@@ -2236,7 +2236,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 
     final class SameTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertSame(new stdClass, new stdClass);
         }
@@ -2281,7 +2281,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
 
     final class StringEndsWithTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringEndsWith('suffix', 'foo');
         }
@@ -2326,7 +2326,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 
     final class StringEqualsFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringEqualsFile('/home/sb/expected', 'actual');
         }
@@ -2377,7 +2377,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
 
     final class StringStartsWithTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringStartsWith('prefix', 'foo');
         }
@@ -2428,7 +2428,7 @@ Reports an error identified by ``$message`` if the ``$value`` does not match the
 
     final class BiscuitTest extends TestCase
     {
-        public function testEquals()
+        public function testEquals(): void
         {
             $theBiscuit = new Biscuit('Ginger');
             $myBiscuit  = new Biscuit('Ginger');
@@ -2539,7 +2539,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
 
     final class TrueTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertTrue(false);
         }
@@ -2584,7 +2584,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
 
     final class XmlFileEqualsXmlFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertXmlFileEqualsXmlFile(
               '/home/sb/expected.xml', '/home/sb/actual.xml');
@@ -2638,7 +2638,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
 
     final class XmlStringEqualsXmlFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertXmlStringEqualsXmlFile(
               '/home/sb/expected.xml', '<foo><baz/></foo>');
@@ -2692,7 +2692,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
 
     final class XmlStringEqualsXmlStringTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertXmlStringEqualsXmlString(
               '<foo><bar/></foo>', '<foo><baz/></foo>');
