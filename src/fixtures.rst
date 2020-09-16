@@ -50,7 +50,7 @@ assertion method.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
         protected $stack;
 
@@ -99,7 +99,7 @@ case class.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class TemplateMethodsTest extends TestCase
+    final class TemplateMethodsTest extends TestCase
     {
         public static function setUpBeforeClass(): void
         {
@@ -243,7 +243,7 @@ database after the last test of the test case, respectively.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DatabaseTest extends TestCase
+    final class DatabaseTest extends TestCase
     {
         protected static $dbh;
 
@@ -335,7 +335,7 @@ be excluded from the backup and restore operations like this
 
 .. code-block:: php
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         protected $backupGlobalsBlacklist = ['globalVariable'];
 
@@ -381,7 +381,7 @@ from the backup and restore operations:
 
 .. code-block:: php
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         protected $backupStaticAttributesBlacklist = [
             'className' => ['attributeName']
