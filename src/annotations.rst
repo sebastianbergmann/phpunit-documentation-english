@@ -43,14 +43,15 @@ that should be called after each test method in a test case class.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @after
          */
-        public function tearDownSomeFixtures()
+        public function tearDownSomeFixtures(): void
         {
             // ...
         }
@@ -58,7 +59,7 @@ that should be called after each test method in a test case class.
         /**
          * @after
          */
-        public function tearDownSomeOtherFixtures()
+        public function tearDownSomeOtherFixtures(): void
         {
             // ...
         }
@@ -75,14 +76,15 @@ class have been run to clean up shared fixtures.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @afterClass
          */
-        public static function tearDownSomeSharedFixtures()
+        public static function tearDownSomeSharedFixtures(): void
         {
             // ...
         }
@@ -90,7 +92,7 @@ class have been run to clean up shared fixtures.
         /**
          * @afterClass
          */
-        public static function tearDownSomeOtherSharedFixtures()
+        public static function tearDownSomeOtherSharedFixtures(): void
         {
             // ...
         }
@@ -106,12 +108,13 @@ disabled for all tests of a test case class like this
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @backupGlobals disabled
      */
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         // ...
     }
@@ -122,17 +125,18 @@ backup and restore operations:
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @backupGlobals disabled
      */
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @backupGlobals enabled
          */
-        public function testThatInteractsWithGlobalVariables()
+        public function testThatInteractsWithGlobalVariables(): void
         {
             // ...
         }
@@ -150,17 +154,18 @@ test method level:
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @backupStaticAttributes enabled
      */
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @backupStaticAttributes disabled
          */
-        public function testThatInteractsWithStaticAttributes()
+        public function testThatInteractsWithStaticAttributes(): void
         {
             // ...
         }
@@ -184,14 +189,15 @@ that should be called before each test method in a test case class.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @before
          */
-        public function setupSomeFixtures()
+        public function setupSomeFixtures(): void
         {
             // ...
         }
@@ -199,7 +205,7 @@ that should be called before each test method in a test case class.
         /**
          * @before
          */
-        public function setupSomeOtherFixtures()
+        public function setupSomeOtherFixtures(): void
         {
             // ...
         }
@@ -216,14 +222,15 @@ class are run to set up shared fixtures.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @beforeClass
          */
-        public static function setUpSomeSharedFixtures()
+        public static function setUpSomeSharedFixtures(): void
         {
             // ...
         }
@@ -231,7 +238,7 @@ class are run to set up shared fixtures.
         /**
          * @beforeClass
          */
-        public static function setUpSomeOtherSharedFixtures()
+        public static function setUpSomeOtherSharedFixtures(): void
         {
             // ...
         }
@@ -262,7 +269,7 @@ specify which parts of the code it is supposed to test:
     /**
      * @covers \BankAccount
      */
-    public function testBalanceIsInitiallyZero()
+    public function testBalanceIsInitiallyZero(): void
     {
         $this->assertSame(0, $this->ba->getBalance());
     }
@@ -338,18 +345,18 @@ backslash (even if this not required for the annotation to work correctly).
     :caption: Using @coversDefaultClass to shorten annotations
     :name: appendixes.annotations.examples.CoversDefaultClassTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @coversDefaultClass \Foo\CoveredClass
      */
-    class CoversDefaultClassTest extends TestCase
+    final class CoversDefaultClassTest extends TestCase
     {
         /**
          * @covers ::publicMethod
          */
-        public function testSomething()
+        public function testSomething(): void
         {
             $o = new Foo\CoveredClass;
             $o->publicMethod();
@@ -419,14 +426,15 @@ A test can be tagged as belonging to one or more groups using the
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @group specification
          */
-        public function testSomething()
+        public function testSomething(): void
         {
         }
 
@@ -434,7 +442,7 @@ A test can be tagged as belonging to one or more groups using the
          * @group regression
          * @group bug2204
          */
-        public function testSomethingElse()
+        public function testSomethingElse(): void
         {
         }
     }
@@ -491,15 +499,16 @@ PHPUnit from preserving global state with the
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @runInSeparateProcess
          * @preserveGlobalState disabled
          */
-        public function testInSeparateProcess()
+        public function testInSeparateProcess(): void
         {
             // ...
         }
@@ -526,12 +535,13 @@ PHP process.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @runTestsInSeparateProcesses
      */
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         // ...
     }
@@ -552,14 +562,15 @@ Indicates that a test should be run in a separate PHP process.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @runInSeparateProcess
          */
-        public function testInSeparateProcess()
+        public function testInSeparateProcess(): void
         {
             // ...
         }
@@ -606,7 +617,7 @@ annotation in a method's DocBlock to mark it as a test method.
     /**
      * @test
      */
-    public function initialBalanceShouldBe0()
+    public function initialBalanceShouldBe0(): void
     {
         $this->assertSame(0, $this->ba->getBalance());
     }
@@ -623,15 +634,18 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
     /**
      * @testdox A bank account
      */
-    class BankAccountTest extends TestCase
+    final class BankAccountTest extends TestCase
     {
         /**
          * @testdox has an initial balance of zero
          */
-        public function balanceIsInitiallyZero()
+        public function balanceIsInitiallyZero(): void
         {
             $this->assertSame(0, $this->ba->getBalance());
         }
@@ -661,13 +675,10 @@ more about passing a set of data to a test.
 .. code-block:: php
 
     /**
-     * @param string    $input
-     * @param int       $expectedLength
-     *
-     * @testWith        ["test", 4]
-     *                  ["longer-string", 13]
+     * @testWith ["test", 4]
+     *           ["longer-string", 13]
      */
-    public function testStringLength(string $input, int $expectedLength)
+    public function testStringLength(string $input, int $expectedLength): void
     {
         $this->assertSame($expectedLength, strlen($input));
     }
@@ -677,12 +688,9 @@ An object representation in JSON will be converted into an associative array.
 .. code-block:: php
 
     /**
-     * @param array     $array
-     * @param array     $keys
-     *
-     * @testWith        [{"day": "monday", "conditions": "sunny"}, ["day", "conditions"]]
+     * @testWith [{"day": "monday", "conditions": "sunny"}, ["day", "conditions"]]
      */
-    public function testArrayKeys($array, $keys)
+    public function testArrayKeys(array $array, array $keys): void
     {
         $this->assertSame($keys, array_keys($array));
     }
@@ -711,7 +719,7 @@ example is a value object which is necessary for testing a unit of code.
      * @covers \BankAccount
      * @uses   \Money
      */
-    public function testMoneyCanBeDepositedInAccount()
+    public function testMoneyCanBeDepositedInAccount(): void
     {
         // ...
     }
