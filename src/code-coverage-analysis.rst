@@ -133,25 +133,25 @@ using the ``@codeCoverageIgnore``,
     :caption: Using the ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
     :name: code-coverage-analysis.ignoring-code-blocks.examples.Sample.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @codeCoverageIgnore
      */
-    class Foo
+    final class Foo
     {
-        public function bar()
+        public function bar(): void
         {
         }
     }
 
-    class Bar
+    final class Bar
     {
         /**
          * @codeCoverageIgnore
          */
-        public function foo()
+        public function foo(): void
         {
         }
     }
@@ -163,7 +163,6 @@ using the ``@codeCoverageIgnore``,
     }
 
     exit; // @codeCoverageIgnore
-    ?>
 
 The ignored lines of code (marked as ignored using the annotations)
 are counted as executed (if they are executable) and will not be
@@ -197,39 +196,38 @@ shows an example.
     :caption: Test class that specifies which class it wants to cover
     :name: code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @covers \Invoice
      * @uses \Money
      */
-    class InvoiceTest extends TestCase
+    final class InvoiceTest extends TestCase
     {
-        protected $subject;
+        private $invoice;
 
         protected function setUp(): void
         {
-            $this->subject = new Invoice();
+            $this->invoice = new Invoice;
         }
 
-        public function testAmountInitiallyIsEmpty()
+        public function testAmountInitiallyIsEmpty(): void
         {
-            $this->assertEquals(new Money(), $this->subject->getAmount);
+            $this->assertEquals(new Money, $this->invoice->getAmount());
         }
     }
-    ?>
 
 .. code-block:: php
     :caption: Tests that specify which method they want to cover
     :name: code-coverage-analysis.specifying-covered-parts.examples.BankAccountTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class BankAccountTest extends TestCase
+    final class BankAccountTest extends TestCase
     {
-        protected $ba;
+        private $ba;
 
         protected function setUp(): void
         {
@@ -239,7 +237,7 @@ shows an example.
         /**
          * @covers \BankAccount::getBalance
          */
-        public function testBalanceIsInitiallyZero()
+        public function testBalanceIsInitiallyZero(): void
         {
             $this->assertSame(0, $this->ba->getBalance());
         }
@@ -247,7 +245,7 @@ shows an example.
         /**
          * @covers \BankAccount::withdrawMoney
          */
-        public function testBalanceCannotBecomeNegative()
+        public function testBalanceCannotBecomeNegative(): void
         {
             try {
                 $this->ba->withdrawMoney(1);
@@ -265,7 +263,7 @@ shows an example.
         /**
          * @covers \BankAccount::depositMoney
          */
-        public function testBalanceCannotBecomeNegative2()
+        public function testBalanceCannotBecomeNegative2(): void
         {
             try {
                 $this->ba->depositMoney(-1);
@@ -285,7 +283,7 @@ shows an example.
          * @covers \BankAccount::depositMoney
          * @covers \BankAccount::withdrawMoney
          */
-        public function testDepositWithdrawMoney()
+        public function testDepositWithdrawMoney(): void
         {
             $this->assertSame(0, $this->ba->getBalance());
             $this->ba->depositMoney(1);
@@ -294,7 +292,6 @@ shows an example.
             $this->assertSame(0, $this->ba->getBalance());
         }
     }
-    ?>
 
 It is also possible to specify that a test should not cover
 *any* method by using the
@@ -307,15 +304,15 @@ generate code coverage with unit tests.
     :caption: A test that specifies that no method should be covered
     :name: code-coverage-analysis.specifying-covered-parts.examples.GuestbookIntegrationTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\DbUnit\TestCase
 
-    class GuestbookIntegrationTest extends TestCase
+    final class GuestbookIntegrationTest extends TestCase
     {
         /**
          * @coversNothing
          */
-        public function testAddEntry()
+        public function testAddEntry(): void
         {
             $guestbook = new Guestbook();
             $guestbook->addEntry("suzy", "Hello world!");
@@ -330,7 +327,6 @@ generate code coverage with unit tests.
             $this->assertTablesEqual($expectedTable, $queryTable);
         }
     }
-    ?>
 
 .. _code-coverage-analysis.edge-cases:
 
@@ -343,7 +339,7 @@ coverage information.
 .. code-block:: php
     :name: code-coverage-analysis.edge-cases.examples.Sample.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     // Because it is "line based" and not statement base coverage
@@ -361,4 +357,3 @@ coverage information.
     if (false) {
         this_call_will_never_show_up_as_covered();
     }
-    ?>
