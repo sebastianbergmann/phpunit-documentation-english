@@ -158,7 +158,7 @@ using the ``@codeCoverageIgnore``,
      */
     final class Foo
     {
-        public function bar()
+        public function bar(): void
         {
         }
     }
@@ -168,7 +168,7 @@ using the ``@codeCoverageIgnore``,
         /**
          * @codeCoverageIgnore
          */
-        public function foo()
+        public function foo(): void
         {
         }
     }
@@ -230,7 +230,7 @@ shows an example.
             $this->subject = new Invoice();
         }
 
-        public function testAmountInitiallyIsEmpty()
+        public function testAmountInitiallyIsEmpty(): void
         {
             $this->assertEquals(new Money(), $this->subject->getAmount);
         }
@@ -256,7 +256,7 @@ shows an example.
         /**
          * @covers \BankAccount::getBalance
          */
-        public function testBalanceIsInitiallyZero()
+        public function testBalanceIsInitiallyZero(): void
         {
             $this->assertSame(0, $this->ba->getBalance());
         }
@@ -264,7 +264,7 @@ shows an example.
         /**
          * @covers \BankAccount::withdrawMoney
          */
-        public function testBalanceCannotBecomeNegative()
+        public function testBalanceCannotBecomeNegative(): void
         {
             try {
                 $this->ba->withdrawMoney(1);
@@ -282,7 +282,7 @@ shows an example.
         /**
          * @covers \BankAccount::depositMoney
          */
-        public function testBalanceCannotBecomeNegative2()
+        public function testBalanceCannotBecomeNegative2(): void
         {
             try {
                 $this->ba->depositMoney(-1);
@@ -302,7 +302,7 @@ shows an example.
          * @covers \BankAccount::depositMoney
          * @covers \BankAccount::withdrawMoney
          */
-        public function testDepositWithdrawMoney()
+        public function testDepositWithdrawMoney(): void
         {
             $this->assertSame(0, $this->ba->getBalance());
             $this->ba->depositMoney(1);
@@ -332,7 +332,7 @@ generate code coverage with unit tests.
         /**
          * @coversNothing
          */
-        public function testAddEntry()
+        public function testAddEntry(): void
         {
             $guestbook = new Guestbook();
             $guestbook->addEntry("suzy", "Hello world!");
