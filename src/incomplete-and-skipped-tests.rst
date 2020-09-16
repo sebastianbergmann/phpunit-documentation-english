@@ -16,7 +16,7 @@ by writing empty test methods such as:
 
 .. code-block:: php
 
-    public function testSomething()
+    public function testSomething(): void
     {
     }
 
@@ -55,7 +55,7 @@ exception) in the test method, we mark the test as being incomplete.
 
     class SampleTest extends TestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             // Optional: Test anything here, if you want.
             $this->assertTrue(true, 'This should already work.');
@@ -140,7 +140,7 @@ method to skip the test if it is not.
             }
         }
 
-        public function testConnection()
+        public function testConnection(): void
         {
             // ...
         }
@@ -243,7 +243,7 @@ The following operators are supported for PHP, PHPUnit, and extension version co
         /**
          * @requires PHP >= 5.3
          */
-        public function testConnection()
+        public function testConnection(): void
         {
             // Test requires the mysqli extension and PHP >= 5.3
         }
