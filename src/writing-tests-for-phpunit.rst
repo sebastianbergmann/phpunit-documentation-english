@@ -419,39 +419,49 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class CsvFileIterator implements Iterator {
-        protected $file;
-        protected $key = 0;
-        protected $current;
+    final class CsvFileIterator implements Iterator
+    {
+        private $file;
+        private $key = 0;
+        private $current;
 
-        public function __construct($file) {
+        public function __construct(string $file)
+        {
             $this->file = fopen($file, 'r');
         }
 
-        public function __destruct() {
+        public function __destruct()
+        {
             fclose($this->file);
         }
 
-        public function rewind() {
+        public function rewind(): void
+        {
             rewind($this->file);
+
             $this->current = fgetcsv($this->file);
-            $this->key = 0;
+            $this->key     = 0;
         }
 
-        public function valid() {
+        public function valid(): bool
+        {
             return !feof($this->file);
         }
 
-        public function key() {
+        public function key(): int
+        {
             return $this->key;
         }
 
-        public function current() {
+        public function current(): array
+        {
             return $this->current;
         }
 
-        public function next() {
+        public function next(): void
+        {
             $this->current = fgetcsv($this->file);
+
             $this->key++;
         }
     }
@@ -730,10 +740,11 @@ that would lead to an exception raised by PHPUnit's error handler.
 
     final class FileWriter
     {
-        public function write($file, $content) {
+        public function write($file, $content)
+        {
             $file = fopen($file, 'w');
 
-            if ($file == false) {
+            if ($file === false) {
                 return false;
             }
 
