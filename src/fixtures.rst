@@ -47,7 +47,7 @@ assertion method.
     :caption: Using setUp() to create the stack fixture
     :name: fixtures.examples.StackTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StackTest extends TestCase
@@ -96,7 +96,7 @@ case class.
     :caption: Example showing all template methods available
     :name: fixtures.examples.TemplateMethodsTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class TemplateMethodsTest extends TestCase
@@ -240,7 +240,7 @@ database after the last test of the test case, respectively.
     :caption: Sharing fixture between the tests of a test suite
     :name: fixtures.sharing-fixture.examples.DatabaseTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class DatabaseTest extends TestCase
