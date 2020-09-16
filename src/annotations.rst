@@ -636,6 +636,7 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
 .. code-block:: php
 
     <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
 
     /**
      * @testdox A bank account
