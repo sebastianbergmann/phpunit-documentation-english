@@ -50,7 +50,7 @@ exception) in the test method, we mark the test as being incomplete.
     :caption: Marking a test as incomplete
     :name: incomplete-and-skipped-tests.incomplete-tests.examples.SampleTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class SampleTest extends TestCase
@@ -126,7 +126,7 @@ method to skip the test if it is not.
     :caption: Skipping a test
     :name: incomplete-and-skipped-tests.skipping-tests.examples.DatabaseTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class DatabaseTest extends TestCase
@@ -232,7 +232,7 @@ The following operators are supported for PHP, PHPUnit, and extension version co
     :caption: Skipping test cases using @requires
     :name: incomplete-and-skipped-tests.skipping-tests.examples.DatabaseClassSkippingTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
