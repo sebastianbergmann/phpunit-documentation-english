@@ -43,6 +43,7 @@ that should be called after each test method in a test case class.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class MyTest extends TestCase
@@ -75,6 +76,7 @@ class have been run to clean up shared fixtures.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class MyTest extends TestCase
@@ -106,6 +108,7 @@ disabled for all tests of a test case class like this
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
@@ -122,6 +125,7 @@ backup and restore operations:
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
@@ -150,6 +154,7 @@ test method level:
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
@@ -184,6 +189,7 @@ that should be called before each test method in a test case class.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class MyTest extends TestCase
@@ -216,6 +222,7 @@ class are run to set up shared fixtures.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class MyTest extends TestCase
@@ -338,7 +345,7 @@ backslash (even if this not required for the annotation to work correctly).
     :caption: Using @coversDefaultClass to shorten annotations
     :name: appendixes.annotations.examples.CoversDefaultClassTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
@@ -420,6 +427,7 @@ A test can be tagged as belonging to one or more groups using the
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class MyTest extends TestCase
@@ -492,6 +500,7 @@ PHPUnit from preserving global state with the
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class MyTest extends TestCase
@@ -527,6 +536,7 @@ PHP process.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
@@ -553,6 +563,7 @@ Indicates that a test should be run in a separate PHP process.
 
 .. code-block:: php
 
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class MyTest extends TestCase
@@ -623,6 +634,8 @@ documentation sentences.
 The ``@testdox`` annotation can be applied to both test classes and test methods.
 
 .. code-block:: php
+
+    <?php declare(strict_types=1);
 
     /**
      * @testdox A bank account
