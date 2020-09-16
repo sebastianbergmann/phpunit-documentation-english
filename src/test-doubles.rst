@@ -84,7 +84,7 @@ the example. This leads to more readable and "fluent" code.
     :caption: The class we want to stub
     :name: test-doubles.stubs.examples.SomeClass.php
 
-    <?php
+    <?php declare(strict_types=1);
     class SomeClass
     {
         public function doSomething()
@@ -98,7 +98,7 @@ the example. This leads to more readable and "fluent" code.
     :caption: Stubbing a method call to return a fixed value
     :name: test-doubles.stubs.examples.StubTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StubTest extends TestCase
@@ -158,7 +158,7 @@ the same best practice defaults used by ``createMock()``.
     :caption: Using the Mock Builder API can be used to configure the generated test double class
     :name: test-doubles.stubs.examples.StubTest2.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StubTest extends TestCase
@@ -199,7 +199,7 @@ can achieve this using ``returnArgument()`` instead of
     :caption: Stubbing a method call to return one of the arguments
     :name: test-doubles.stubs.examples.StubTest3.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StubTest extends TestCase
@@ -231,7 +231,7 @@ can use ``returnSelf()`` to achieve this.
     :caption: Stubbing a method call to return a reference to the stub object
     :name: test-doubles.stubs.examples.StubTest4.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StubTest extends TestCase
@@ -262,7 +262,7 @@ an example.
     :caption: Stubbing a method call to return the value from a map
     :name: test-doubles.stubs.examples.StubTest5.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StubTest extends TestCase
@@ -301,7 +301,7 @@ result of a callback function or method. See
     :caption: Stubbing a method call to return a value from a callback
     :name: test-doubles.stubs.examples.StubTest6.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StubTest extends TestCase
@@ -331,7 +331,7 @@ an example.
     :caption: Stubbing a method call to return a list of values in the specified order
     :name: test-doubles.stubs.examples.StubTest7.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StubTest extends TestCase
@@ -361,7 +361,7 @@ shows how to use ``throwException()`` to do this.
     :caption: Stubbing a method call to throw an exception
     :name: test-doubles.stubs.examples.StubTest8.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StubTest extends TestCase
@@ -432,7 +432,7 @@ classes that are part of the System under Test (SUT).
     :caption: The Subject and Observer classes that are part of the System under Test (SUT)
     :name: test-doubles.mock-objects.examples.SUT.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class Subject
@@ -515,7 +515,7 @@ arguments it is called with, we introduce the ``expects()`` and
     :caption: Testing that a method gets called once and with a specified argument
     :name: test-doubles.mock-objects.examples.SubjectTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class SubjectTest extends TestCase
@@ -557,7 +557,7 @@ on the method's arguments than a simple match.
     :caption: Testing that a method gets called with a number of arguments constrained in different ways
     :name: test-doubles.mock-objects.examples.SubjectTest2.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class SubjectTest extends TestCase
@@ -597,7 +597,7 @@ method being mocked, like in ``with()``.
     :caption: Testing that a method gets called two times with specific arguments.
     :name: test-doubles.mock-objects.examples.with-consecutive.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class FooTest extends TestCase
@@ -631,7 +631,7 @@ argument passes verification and ``false`` otherwise.
     :caption: More complex argument verification
     :name: test-doubles.mock-objects.examples.SubjectTest3.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class SubjectTest extends TestCase
@@ -667,7 +667,7 @@ argument passes verification and ``false`` otherwise.
     :caption: Testing that a method gets called once and with the identical object as was passed
     :name: test-doubles.mock-objects.examples.clone-object-parameters-usecase.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class FooTest extends TestCase
@@ -693,7 +693,7 @@ argument passes verification and ``false`` otherwise.
     :caption: Create a mock object with cloning parameters enabled
     :name: test-doubles.mock-objects.examples.enable-clone-object-parameters.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class FooTest extends TestCase
@@ -801,7 +801,7 @@ revelations:
     :caption: Testing that a method gets called once and with a specified argument
     :name: test-doubles.prophecy.examples.SubjectTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class SubjectTest extends TestCase
@@ -847,7 +847,7 @@ are mocked. This allows for testing the concrete methods of a trait.
     :caption: Testing the concrete methods of a trait
     :name: test-doubles.mock-objects.examples.TraitClassTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     trait AbstractTrait
@@ -884,7 +884,7 @@ abstract class.
     :caption: Testing the concrete methods of an abstract class
     :name: test-doubles.mock-objects.examples.AbstractClassTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     abstract class AbstractClass
@@ -933,7 +933,7 @@ example, the web service described in :file:`GoogleSearch.wsdl`.
     :caption: Stubbing a web service
     :name: test-doubles.stubbing-and-mocking-web-services.examples.GoogleTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class GoogleTest extends TestCase
