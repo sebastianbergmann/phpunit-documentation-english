@@ -46,7 +46,7 @@ that should be called after each test method in a test case class.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @after
@@ -79,7 +79,7 @@ class have been run to clean up shared fixtures.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @afterClass
@@ -114,7 +114,7 @@ disabled for all tests of a test case class like this
     /**
      * @backupGlobals disabled
      */
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         // ...
     }
@@ -131,7 +131,7 @@ backup and restore operations:
     /**
      * @backupGlobals disabled
      */
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @backupGlobals enabled
@@ -160,7 +160,7 @@ test method level:
     /**
      * @backupStaticAttributes enabled
      */
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @backupStaticAttributes disabled
@@ -192,7 +192,7 @@ that should be called before each test method in a test case class.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @before
@@ -225,7 +225,7 @@ class are run to set up shared fixtures.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @beforeClass
@@ -351,7 +351,7 @@ backslash (even if this not required for the annotation to work correctly).
     /**
      * @coversDefaultClass \Foo\CoveredClass
      */
-    class CoversDefaultClassTest extends TestCase
+    final class CoversDefaultClassTest extends TestCase
     {
         /**
          * @covers ::publicMethod
@@ -430,7 +430,7 @@ A test can be tagged as belonging to one or more groups using the
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @group specification
@@ -503,7 +503,7 @@ PHPUnit from preserving global state with the
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @runInSeparateProcess
@@ -542,7 +542,7 @@ PHP process.
     /**
      * @runTestsInSeparateProcesses
      */
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         // ...
     }
@@ -566,7 +566,7 @@ Indicates that a test should be run in a separate PHP process.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
         /**
          * @runInSeparateProcess
@@ -640,7 +640,7 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
     /**
      * @testdox A bank account
      */
-    class BankAccountTest extends TestCase
+    final class BankAccountTest extends TestCase
     {
         /**
          * @testdox has an initial balance of zero
