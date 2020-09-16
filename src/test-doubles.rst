@@ -100,7 +100,7 @@ the example. This leads to more readable and "fluent" code.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StubTest extends TestCase
+    final class StubTest extends TestCase
     {
         public function testStub()
         {
@@ -159,7 +159,7 @@ the same best practice defaults used by ``createMock()``.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StubTest extends TestCase
+    final class StubTest extends TestCase
     {
         public function testStub()
         {
@@ -199,7 +199,7 @@ can achieve this using ``returnArgument()`` instead of
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StubTest extends TestCase
+    final class StubTest extends TestCase
     {
         public function testReturnArgumentStub()
         {
@@ -230,7 +230,7 @@ can use ``returnSelf()`` to achieve this.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StubTest extends TestCase
+    final class StubTest extends TestCase
     {
         public function testReturnSelf()
         {
@@ -260,7 +260,7 @@ an example.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StubTest extends TestCase
+    final class StubTest extends TestCase
     {
         public function testReturnValueMapStub()
         {
@@ -298,7 +298,7 @@ result of a callback function or method. See
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StubTest extends TestCase
+    final class StubTest extends TestCase
     {
         public function testReturnCallbackStub()
         {
@@ -327,7 +327,7 @@ an example.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StubTest extends TestCase
+    final class StubTest extends TestCase
     {
         public function testOnConsecutiveCallsStub()
         {
@@ -356,7 +356,7 @@ shows how to use ``throwException()`` to do this.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StubTest extends TestCase
+    final class StubTest extends TestCase
     {
         public function testThrowExceptionStub()
         {
@@ -508,7 +508,7 @@ arguments it is called with, we introduce the ``expects()`` and
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SubjectTest extends TestCase
+    final class SubjectTest extends TestCase
     {
         public function testObserversAreUpdated()
         {
@@ -549,7 +549,7 @@ on the method's arguments than a simple match.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SubjectTest extends TestCase
+    final class SubjectTest extends TestCase
     {
         public function testErrorReported()
         {
@@ -588,7 +588,7 @@ method being mocked, like in ``with()``.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FooTest extends TestCase
+    final class FooTest extends TestCase
     {
         public function testFunctionCalledTwoTimesWithSpecificArguments()
         {
@@ -621,7 +621,7 @@ argument passes verification and ``false`` otherwise.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SubjectTest extends TestCase
+    final class SubjectTest extends TestCase
     {
         public function testErrorReported()
         {
@@ -656,7 +656,7 @@ argument passes verification and ``false`` otherwise.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FooTest extends TestCase
+    final class FooTest extends TestCase
     {
         public function testIdenticalObjectPassed()
         {
@@ -681,7 +681,7 @@ argument passes verification and ``false`` otherwise.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FooTest extends TestCase
+    final class FooTest extends TestCase
     {
         public function testIdenticalObjectPassed()
         {
@@ -788,7 +788,7 @@ revelations:
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SubjectTest extends TestCase
+    final class SubjectTest extends TestCase
     {
         public function testObserversAreUpdated()
         {
@@ -843,7 +843,7 @@ are mocked. This allows for testing the concrete methods of a trait.
         public abstract function abstractMethod();
     }
 
-    class TraitClassTest extends TestCase
+    final class TraitClassTest extends TestCase
     {
         public function testConcreteMethod()
         {
@@ -879,7 +879,7 @@ abstract class.
         public abstract function abstractMethod();
     }
 
-    class AbstractClassTest extends TestCase
+    final class AbstractClassTest extends TestCase
     {
         public function testConcreteMethod()
         {
@@ -917,7 +917,7 @@ example, the web service described in :file:`GoogleSearch.wsdl`.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class GoogleTest extends TestCase
+    final class GoogleTest extends TestCase
     {
         public function testSearch()
         {
