@@ -150,7 +150,7 @@ using the ``@codeCoverageIgnore``,
     :caption: Using the ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
     :name: code-coverage-analysis.ignoring-code-blocks.examples.Sample.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
@@ -214,7 +214,7 @@ shows an example.
     :caption: Test class that specifies which class it wants to cover
     :name: code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
@@ -241,7 +241,7 @@ shows an example.
     :caption: Tests that specify which method they want to cover
     :name: code-coverage-analysis.specifying-covered-parts.examples.BankAccountTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class BankAccountTest extends TestCase
@@ -324,7 +324,7 @@ generate code coverage with unit tests.
     :caption: A test that specifies that no method should be covered
     :name: code-coverage-analysis.specifying-covered-parts.examples.GuestbookIntegrationTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\DbUnit\TestCase
 
     class GuestbookIntegrationTest extends TestCase
@@ -360,7 +360,7 @@ coverage information.
 .. code-block:: php
     :name: code-coverage-analysis.edge-cases.examples.Sample.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     // Because it is "line based" and not statement base coverage
