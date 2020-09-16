@@ -40,7 +40,7 @@ PHPUnit's own assertions are implemented. As you can see in
     <?php declare(strict_types=1);
     namespace PHPUnit\Framework;
 
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\Framework\Constraint\IsTrue;
 
     abstract class Assert
     {
