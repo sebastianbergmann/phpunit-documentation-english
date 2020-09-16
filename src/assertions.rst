@@ -57,7 +57,7 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ArrayHasKeyTest extends TestCase
+    final class ArrayHasKeyTest extends TestCase
     {
         public function testFailure()
         {
@@ -102,7 +102,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ClassHasAttributeTest extends TestCase
+    final class ClassHasAttributeTest extends TestCase
     {
         public function testFailure()
         {
@@ -147,7 +147,7 @@ Reports an error identified by ``$message`` if ``$array`` does not contains the 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ArraySubsetTest extends TestCase
+    final class ArraySubsetTest extends TestCase
     {
         public function testFailure()
         {
@@ -197,7 +197,7 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ClassHasStaticAttributeTest extends TestCase
+    final class ClassHasStaticAttributeTest extends TestCase
     {
         public function testFailure()
         {
@@ -244,7 +244,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsTest extends TestCase
+    final class ContainsTest extends TestCase
     {
         public function testFailure()
         {
@@ -284,7 +284,7 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsTest extends TestCase
+    final class ContainsTest extends TestCase
     {
         public function testFailure()
         {
@@ -318,7 +318,7 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsTest extends TestCase
+    final class ContainsTest extends TestCase
     {
         public function testFailure()
         {
@@ -372,7 +372,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsOnlyTest extends TestCase
+    final class ContainsOnlyTest extends TestCase
     {
         public function testFailure()
         {
@@ -419,7 +419,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsOnlyInstancesOfTest extends TestCase
+    final class ContainsOnlyInstancesOfTest extends TestCase
     {
         public function testFailure()
         {
@@ -467,7 +467,7 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class CountTest extends TestCase
+    final class CountTest extends TestCase
     {
         public function testFailure()
         {
@@ -512,7 +512,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DirectoryExistsTest extends TestCase
+    final class DirectoryExistsTest extends TestCase
     {
         public function testFailure()
         {
@@ -557,7 +557,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DirectoryIsReadableTest extends TestCase
+    final class DirectoryIsReadableTest extends TestCase
     {
         public function testFailure()
         {
@@ -602,7 +602,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DirectoryIsWritableTest extends TestCase
+    final class DirectoryIsWritableTest extends TestCase
     {
         public function testFailure()
         {
@@ -649,7 +649,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EmptyTest extends TestCase
+    final class EmptyTest extends TestCase
     {
         public function testFailure()
         {
@@ -692,7 +692,7 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualXMLStructureTest extends TestCase
+    final class EqualXMLStructureTest extends TestCase
     {
         public function testFailureWithDifferentNodeNames()
         {
@@ -808,7 +808,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualsTest extends TestCase
+    final class EqualsTest extends TestCase
     {
         public function testFailure()
         {
@@ -883,7 +883,7 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualsTest extends TestCase
+    final class EqualsTest extends TestCase
     {
         public function testSuccess()
         {
@@ -926,7 +926,7 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualsTest extends TestCase
+    final class EqualsTest extends TestCase
     {
         public function testFailure()
         {
@@ -980,7 +980,7 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualsTest extends TestCase
+    final class EqualsTest extends TestCase
     {
         public function testFailure()
         {
@@ -1035,7 +1035,7 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualsTest extends TestCase
+    final class EqualsTest extends TestCase
     {
         public function testFailure()
         {
@@ -1090,7 +1090,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FalseTest extends TestCase
+    final class FalseTest extends TestCase
     {
         public function testFailure()
         {
@@ -1135,7 +1135,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FileEqualsTest extends TestCase
+    final class FileEqualsTest extends TestCase
     {
         public function testFailure()
         {
@@ -1186,7 +1186,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FileExistsTest extends TestCase
+    final class FileExistsTest extends TestCase
     {
         public function testFailure()
         {
@@ -1231,7 +1231,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FileIsReadableTest extends TestCase
+    final class FileIsReadableTest extends TestCase
     {
         public function testFailure()
         {
@@ -1276,7 +1276,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FileIsWritableTest extends TestCase
+    final class FileIsWritableTest extends TestCase
     {
         public function testFailure()
         {
@@ -1321,7 +1321,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class GreaterThanTest extends TestCase
+    final class GreaterThanTest extends TestCase
     {
         public function testFailure()
         {
@@ -1366,7 +1366,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class GreatThanOrEqualTest extends TestCase
+    final class GreatThanOrEqualTest extends TestCase
     {
         public function testFailure()
         {
@@ -1411,7 +1411,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class InfiniteTest extends TestCase
+    final class InfiniteTest extends TestCase
     {
         public function testFailure()
         {
@@ -1458,7 +1458,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class InstanceOfTest extends TestCase
+    final class InstanceOfTest extends TestCase
     {
         public function testFailure()
         {
@@ -1505,7 +1505,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of the ``$expe
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class InternalTypeTest extends TestCase
+    final class InternalTypeTest extends TestCase
     {
         public function testFailure()
         {
@@ -1550,7 +1550,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class IsReadableTest extends TestCase
+    final class IsReadableTest extends TestCase
     {
         public function testFailure()
         {
@@ -1595,7 +1595,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class IsWritableTest extends TestCase
+    final class IsWritableTest extends TestCase
     {
         public function testFailure()
         {
@@ -1639,7 +1639,7 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class JsonFileEqualsJsonFileTest extends TestCase
+    final class JsonFileEqualsJsonFileTest extends TestCase
     {
         public function testFailure()
         {
@@ -1684,7 +1684,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class JsonStringEqualsJsonFileTest extends TestCase
+    final class JsonStringEqualsJsonFileTest extends TestCase
     {
         public function testFailure()
         {
@@ -1730,7 +1730,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class JsonStringEqualsJsonStringTest extends TestCase
+    final class JsonStringEqualsJsonStringTest extends TestCase
     {
         public function testFailure()
         {
@@ -1785,7 +1785,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class LessThanTest extends TestCase
+    final class LessThanTest extends TestCase
     {
         public function testFailure()
         {
@@ -1830,7 +1830,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class LessThanOrEqualTest extends TestCase
+    final class LessThanOrEqualTest extends TestCase
     {
         public function testFailure()
         {
@@ -1873,7 +1873,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class NanTest extends TestCase
+    final class NanTest extends TestCase
     {
         public function testFailure()
         {
@@ -1918,7 +1918,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class NullTest extends TestCase
+    final class NullTest extends TestCase
     {
         public function testFailure()
         {
@@ -1963,7 +1963,7 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ObjectHasAttributeTest extends TestCase
+    final class ObjectHasAttributeTest extends TestCase
     {
         public function testFailure()
         {
@@ -2008,7 +2008,7 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class RegExpTest extends TestCase
+    final class RegExpTest extends TestCase
     {
         public function testFailure()
         {
@@ -2053,7 +2053,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringMatchesFormatTest extends TestCase
+    final class StringMatchesFormatTest extends TestCase
     {
         public function testFailure()
         {
@@ -2148,7 +2148,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringMatchesFormatFileTest extends TestCase
+    final class StringMatchesFormatFileTest extends TestCase
     {
         public function testFailure()
         {
@@ -2196,7 +2196,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SameTest extends TestCase
+    final class SameTest extends TestCase
     {
         public function testFailure()
         {
@@ -2234,7 +2234,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SameTest extends TestCase
+    final class SameTest extends TestCase
     {
         public function testFailure()
         {
@@ -2279,7 +2279,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringEndsWithTest extends TestCase
+    final class StringEndsWithTest extends TestCase
     {
         public function testFailure()
         {
@@ -2324,7 +2324,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringEqualsFileTest extends TestCase
+    final class StringEqualsFileTest extends TestCase
     {
         public function testFailure()
         {
@@ -2375,7 +2375,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringStartsWithTest extends TestCase
+    final class StringStartsWithTest extends TestCase
     {
         public function testFailure()
         {
@@ -2426,7 +2426,7 @@ Reports an error identified by ``$message`` if the ``$value`` does not match the
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class BiscuitTest extends TestCase
+    final class BiscuitTest extends TestCase
     {
         public function testEquals()
         {
@@ -2537,7 +2537,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class TrueTest extends TestCase
+    final class TrueTest extends TestCase
     {
         public function testFailure()
         {
@@ -2582,7 +2582,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class XmlFileEqualsXmlFileTest extends TestCase
+    final class XmlFileEqualsXmlFileTest extends TestCase
     {
         public function testFailure()
         {
@@ -2636,7 +2636,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class XmlStringEqualsXmlFileTest extends TestCase
+    final class XmlStringEqualsXmlFileTest extends TestCase
     {
         public function testFailure()
         {
@@ -2690,7 +2690,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class XmlStringEqualsXmlStringTest extends TestCase
+    final class XmlStringEqualsXmlStringTest extends TestCase
     {
         public function testFailure()
         {
