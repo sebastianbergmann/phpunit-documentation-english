@@ -53,7 +53,7 @@ exception) in the test method, we mark the test as being incomplete.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SampleTest extends TestCase
+    final class SampleTest extends TestCase
     {
         public function testSomething(): void
         {
@@ -129,7 +129,7 @@ method to skip the test if it is not.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DatabaseTest extends TestCase
+    final class DatabaseTest extends TestCase
     {
         protected function setUp(): void
         {
@@ -238,7 +238,7 @@ The following operators are supported for PHP, PHPUnit, and extension version co
     /**
      * @requires extension mysqli
      */
-    class DatabaseTest extends TestCase
+    final class DatabaseTest extends TestCase
     {
         /**
          * @requires PHP >= 5.3
