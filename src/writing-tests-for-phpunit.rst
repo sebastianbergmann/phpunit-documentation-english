@@ -38,7 +38,7 @@ with PHPUnit:
 
     final class StackTest extends TestCase
     {
-        public function testPushAndPop()
+        public function testPushAndPop(): void
         {
             $stack = [];
             $this->assertSame(0, count($stack));
@@ -101,7 +101,7 @@ dependencies between test methods.
 
     final class StackTest extends TestCase
     {
-        public function testEmpty()
+        public function testEmpty(): array
         {
             $stack = [];
             $this->assertEmpty($stack);
@@ -112,7 +112,7 @@ dependencies between test methods.
         /**
          * @depends testEmpty
          */
-        public function testPush(array $stack)
+        public function testPush(array $stack): array
         {
             array_push($stack, 'foo');
             $this->assertSame('foo', $stack[count($stack)-1]);
@@ -124,7 +124,7 @@ dependencies between test methods.
         /**
          * @depends testPush
          */
-        public function testPop(array $stack)
+        public function testPop(array $stack): void
         {
             $this->assertSame('foo', array_pop($stack));
             $this->assertEmpty($stack);
@@ -162,7 +162,7 @@ exploiting the dependencies between tests as shown in
 
     final class DependencyFailureTest extends TestCase
     {
-        public function testOne()
+        public function testOne(): void
         {
             $this->assertTrue(false);
         }
@@ -170,7 +170,7 @@ exploiting the dependencies between tests as shown in
         /**
          * @depends testOne
          */
-        public function testTwo()
+        public function testTwo(): void
         {
         }
     }
@@ -218,15 +218,17 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
 
     final class MultipleDependenciesTest extends TestCase
     {
-        public function testProducerFirst()
+        public function testProducerFirst(): string
         {
             $this->assertTrue(true);
+
             return 'first';
         }
 
-        public function testProducerSecond()
+        public function testProducerSecond(): string
         {
             $this->assertTrue(true);
+
             return 'second';
         }
 
@@ -234,7 +236,7 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
          * @depends testProducerFirst
          * @depends testProducerSecond
          */
-        public function testConsumer($a, $b)
+        public function testConsumer(string $a, string $b): void
         {
             $this->assertSame('first', $a);
             $this->assertSame('second', $b);
@@ -281,12 +283,12 @@ of the array as its arguments.
         /**
          * @dataProvider additionProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd($a, $b, $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function additionProvider(): array
         {
             return [
                 [0, 0, 0],
@@ -331,12 +333,12 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
         /**
          * @dataProvider additionProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd($a, $b, $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function additionProvider(): array
         {
             return [
                 'adding zeros'  => [0, 0, 0],
@@ -380,12 +382,12 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
         /**
          * @dataProvider additionProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd($a, $b, $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function additionProvider(): CsvFileIterator
         {
             return new CsvFileIterator('data.csv');
         }
@@ -470,20 +472,22 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
     final class DependencyAndDataProviderComboTest extends TestCase
     {
-        public function provider()
+        public function provider(): array
         {
             return [['provider1'], ['provider2']];
         }
 
-        public function testProducerFirst()
+        public function testProducerFirst(): void
         {
             $this->assertTrue(true);
+
             return 'first';
         }
 
-        public function testProducerSecond()
+        public function testProducerSecond(): void
         {
             $this->assertTrue(true);
+
             return 'second';
         }
 
@@ -492,7 +496,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
          * @depends testProducerSecond
          * @dataProvider provider
          */
-        public function testConsumer()
+        public function testConsumer(): void
         {
             $this->assertSame(
                 ['provider1', 'first', 'second'],
@@ -541,12 +545,12 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
            * @dataProvider additionWithNonNegativeNumbersProvider
            * @dataProvider additionWithNegativeNumbersProvider
            */
-          public function testAdd($a, $b, $expected)
+          public function testAdd($a, $b, $expected): void
           {
               $this->assertSame($expected, $a + $b);
           }
 
-          public function additionWithNonNegativeNumbersProvider()
+          public function additionWithNonNegativeNumbersProvider(): array
           {
               return [
                   [0, 1, 1],
@@ -555,7 +559,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
               ];
           }
 
-          public function additionWithNegativeNumbersProvider()
+          public function additionWithNegativeNumbersProvider(): array
           {
               return [
                   [-1, 1, 0],
@@ -617,7 +621,7 @@ whether an exception is thrown by the code under test.
 
     final class ExceptionTest extends TestCase
     {
-        public function testException()
+        public function testException(): void
         {
             $this->expectException(InvalidArgumentException::class);
         }
@@ -679,7 +683,7 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
 
     final class ExpectedErrorTest extends TestCase
     {
-        public function testFailingInclude()
+        public function testFailingInclude(): void
         {
             $this->expectException(Error::class);
 
@@ -716,7 +720,7 @@ that would lead to an exception raised by PHPUnit's error handler.
 
     final class ErrorSuppressionTest extends TestCase
     {
-        public function testFileWriting()
+        public function testFileWriting(): void
         {
             $writer = new FileWriter;
 
@@ -778,15 +782,17 @@ test will be counted as a failure.
 
     final class OutputTest extends TestCase
     {
-        public function testExpectFooActualFoo()
+        public function testExpectFooActualFoo(): void
         {
             $this->expectOutputString('foo');
+
             print 'foo';
         }
 
-        public function testExpectBarActualBaz()
+        public function testExpectBarActualBaz(): void
         {
             $this->expectOutputString('bar');
+
             print 'baz';
         }
     }
@@ -853,7 +859,8 @@ context as possible that can help to identify the problem.
 
     final class ArrayDiffTest extends TestCase
     {
-        public function testEquality() {
+        public function testEquality(): void
+        {
             $this->assertSame(
                 [1, 2,  3, 4, 5, 6],
                 [1, 2, 33, 4, 5, 6]
@@ -967,7 +974,8 @@ functions on arrays or objects.
 
     final class ArrayWeakComparisonTest extends TestCase
     {
-        public function testEquality() {
+        public function testEquality(): void
+        {
             $this->assertEquals(
                 [1, 2, 3, 4, 5, 6],
                 ['1', 2, 33, 4, 5, 6]
