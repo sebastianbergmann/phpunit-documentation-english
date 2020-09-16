@@ -66,7 +66,6 @@ exception) in the test method, we mark the test as being incomplete.
             );
         }
     }
-    ?>
 
 An incomplete test is denoted by an ``I`` in the output
 of the PHPUnit command-line test runner, as shown in the following
@@ -145,7 +144,6 @@ method to skip the test if it is not.
             // ...
         }
     }
-    ?>
 
 A test that has been skipped is denoted by an ``S`` in
 the output of the PHPUnit command-line test runner, as shown in the
@@ -250,7 +248,6 @@ The following operators are supported for PHP, PHPUnit, and extension version co
 
         // ... All other tests require the mysqli extension
     }
-    ?>
 
 If you are using syntax that doesn't compile with a certain PHP Version look into the xml
 configuration for version dependent includes in :ref:`appendixes.configuration.testsuites`
