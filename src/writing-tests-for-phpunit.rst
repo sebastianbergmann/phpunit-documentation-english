@@ -33,12 +33,12 @@ with PHPUnit:
     :caption: Testing array operations with PHPUnit
     :name: writing-tests-for-phpunit.examples.StackTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
-        public function testPushAndPop()
+        public function testPushAndPop(): void
         {
             $stack = [];
             $this->assertSame(0, count($stack));
@@ -96,12 +96,12 @@ dependencies between test methods.
     :caption: Using the ``@depends`` annotation to express dependencies
     :name: writing-tests-for-phpunit.examples.StackTest2.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
-        public function testEmpty()
+        public function testEmpty(): array
         {
             $stack = [];
             $this->assertEmpty($stack);
@@ -112,7 +112,7 @@ dependencies between test methods.
         /**
          * @depends testEmpty
          */
-        public function testPush(array $stack)
+        public function testPush(array $stack): array
         {
             array_push($stack, 'foo');
             $this->assertSame('foo', $stack[count($stack)-1]);
@@ -124,7 +124,7 @@ dependencies between test methods.
         /**
          * @depends testPush
          */
-        public function testPop(array $stack)
+        public function testPop(array $stack): void
         {
             $this->assertSame('foo', array_pop($stack));
             $this->assertEmpty($stack);
@@ -157,12 +157,12 @@ exploiting the dependencies between tests as shown in
     :caption: Exploiting the dependencies between tests
     :name: writing-tests-for-phpunit.examples.DependencyFailureTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DependencyFailureTest extends TestCase
+    final class DependencyFailureTest extends TestCase
     {
-        public function testOne()
+        public function testOne(): void
         {
             $this->assertTrue(false);
         }
@@ -170,7 +170,7 @@ exploiting the dependencies between tests as shown in
         /**
          * @depends testOne
          */
-        public function testTwo()
+        public function testTwo(): void
         {
         }
     }
@@ -213,20 +213,22 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
     :caption: Test with multiple dependencies
     :name: writing-tests-for-phpunit.examples.MultipleDependencies.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MultipleDependenciesTest extends TestCase
+    final class MultipleDependenciesTest extends TestCase
     {
-        public function testProducerFirst()
+        public function testProducerFirst(): string
         {
             $this->assertTrue(true);
+
             return 'first';
         }
 
-        public function testProducerSecond()
+        public function testProducerSecond(): string
         {
             $this->assertTrue(true);
+
             return 'second';
         }
 
@@ -234,7 +236,7 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
          * @depends testProducerFirst
          * @depends testProducerSecond
          */
-        public function testConsumer($a, $b)
+        public function testConsumer(string $a, string $b): void
         {
             $this->assertSame('first', $a);
             $this->assertSame('second', $b);
@@ -273,20 +275,20 @@ of the array as its arguments.
     :caption: Using a data provider that returns an array of arrays
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd(int $a, int $b, int $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function additionProvider(): array
         {
             return [
                 [0, 0, 0],
@@ -323,20 +325,20 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     :caption: Using a data provider with named datasets
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest1.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd(int $a, int $b, int $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function additionProvider(): array
         {
             return [
                 'adding zeros'  => [0, 0, 0],
@@ -370,22 +372,20 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     :caption: Using a data provider that returns an Iterator object
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest2.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    require 'CsvFileIterator.php';
-
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd(int $a, int $b, int $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function additionProvider(): CsvFileIterator
         {
             return new CsvFileIterator('data.csv');
         }
@@ -414,16 +414,16 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     :caption: The CsvFileIterator class
     :name: writing-tests-for-phpunit.data-providers.examples.CsvFileIterator.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class CsvFileIterator implements Iterator
+    final class CsvFileIterator implements Iterator
     {
-        protected $file;
-        protected $key = 0;
-        protected $current;
+        private $file;
+        private $key = 0;
+        private $current;
 
-        public function __construct($file)
+        public function __construct(string $file)
         {
             $this->file = fopen($file, 'r');
         }
@@ -433,31 +433,33 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
             fclose($this->file);
         }
 
-        public function rewind()
+        public function rewind(): void
         {
             rewind($this->file);
+
             $this->current = fgetcsv($this->file);
-            $this->key = 0;
+            $this->key     = 0;
         }
 
-        public function valid()
+        public function valid(): bool
         {
             return !feof($this->file);
         }
 
-        public function key()
+        public function key(): int
         {
             return $this->key;
         }
 
-        public function current()
+        public function current(): array
         {
             return $this->current;
         }
 
-        public function next()
+        public function next(): void
         {
             $this->current = fgetcsv($this->file);
+
             $this->key++;
         }
     }
@@ -473,25 +475,27 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
     :caption: Combination of @depends and @dataProvider in same test
     :name: writing-tests-for-phpunit.data-providers.examples.DependencyAndDataProviderCombo.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DependencyAndDataProviderComboTest extends TestCase
+    final class DependencyAndDataProviderComboTest extends TestCase
     {
-        public function provider()
+        public function provider(): array
         {
             return [['provider1'], ['provider2']];
         }
 
-        public function testProducerFirst()
+        public function testProducerFirst(): void
         {
             $this->assertTrue(true);
+
             return 'first';
         }
 
-        public function testProducerSecond()
+        public function testProducerSecond(): void
         {
             $this->assertTrue(true);
+
             return 'second';
         }
 
@@ -500,7 +504,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
          * @depends testProducerSecond
          * @dataProvider provider
          */
-        public function testConsumer()
+        public function testConsumer(): void
         {
             $this->assertSame(
                 ['provider1', 'first', 'second'],
@@ -540,21 +544,21 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
     :caption: Using multiple data providers for a single test
     :name: writing-tests-for-phpunit.data-providers.examples2.DataTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionWithNonNegativeNumbersProvider
          * @dataProvider additionWithNegativeNumbersProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd(int $a, int $b, int $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionWithNonNegativeNumbersProvider()
+        public function additionWithNonNegativeNumbersProvider(): void
         {
             return [
                 [0, 1, 1],
@@ -563,7 +567,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
             ];
         }
 
-        public function additionWithNegativeNumbersProvider()
+        public function additionWithNegativeNumbersProvider(): array
         {
             return [
                 [-1, 1, 0],
@@ -620,12 +624,12 @@ whether an exception is thrown by the code under test.
     :caption: Using the expectException() method
     :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ExceptionTest extends TestCase
+    final class ExceptionTest extends TestCase
     {
-        public function testException()
+        public function testException(): void
         {
             $this->expectException(InvalidArgumentException::class);
         }
@@ -681,13 +685,13 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
     :caption: Expecting a PHP error using expectException()
     :name: writing-tests-for-phpunit.exceptions.examples.ErrorTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
     use PHPUnit\Framework\Error\Error;
 
-    class ExpectedErrorTest extends TestCase
+    final class ExpectedErrorTest extends TestCase
     {
-        public function testFailingInclude()
+        public function testFailingInclude(): void
         {
             $this->expectException(Error::class);
 
@@ -719,12 +723,12 @@ that would lead to an exception raised by PHPUnit's error handler.
     :caption: Testing return values of code that uses PHP Errors
     :name: writing-tests-for-phpunit.exceptions.examples.TriggerErrorReturnValue.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ErrorSuppressionTest extends TestCase
+    final class ErrorSuppressionTest extends TestCase
     {
-        public function testFileWriting()
+        public function testFileWriting(): void
         {
             $writer = new FileWriter;
 
@@ -732,13 +736,13 @@ that would lead to an exception raised by PHPUnit's error handler.
         }
     }
 
-    class FileWriter
+    final class FileWriter
     {
         public function write($file, $content)
         {
             $file = fopen($file, 'w');
 
-            if ($file == false) {
+            if ($file === false) {
                 return false;
             }
 
@@ -782,20 +786,22 @@ test will be counted as a failure.
     :caption: Testing the output of a function or method
     :name: writing-tests-for-phpunit.output.examples.OutputTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class OutputTest extends TestCase
+    final class OutputTest extends TestCase
     {
-        public function testExpectFooActualFoo()
+        public function testExpectFooActualFoo(): void
         {
             $this->expectOutputString('foo');
+
             print 'foo';
         }
 
-        public function testExpectBarActualBaz()
+        public function testExpectBarActualBaz(): void
         {
             $this->expectOutputString('bar');
+
             print 'baz';
         }
     }
@@ -857,12 +863,12 @@ context as possible that can help to identify the problem.
     :caption: Error output generated when an array comparison fails
     :name: writing-tests-for-phpunit.error-output.examples.ArrayDiffTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ArrayDiffTest extends TestCase
+    final class ArrayDiffTest extends TestCase
     {
-        public function testEquality()
+        public function testEquality(): void
         {
             $this->assertSame(
                 [1, 2,  3, 4, 5, 6],
@@ -912,12 +918,12 @@ and provide a few lines of context around every difference.
     :caption: Error output when an array comparison of an long array fails
     :name: writing-tests-for-phpunit.error-output.examples.LongArrayDiffTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class LongArrayDiffTest extends TestCase
+    final class LongArrayDiffTest extends TestCase
     {
-        public function testEquality()
+        public function testEquality(): void
         {
             $this->assertSame(
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,  3, 4, 5, 6],
@@ -959,7 +965,7 @@ and provide a few lines of context around every difference.
 
 .. _writing-tests-for-phpunit.error-output.edge-cases:
 
-Edge cases
+Edge Cases
 ==========
 
 When a comparison fails PHPUnit creates textual representations of the
@@ -973,12 +979,12 @@ functions on arrays or objects.
     :caption: Edge case in the diff generation when using weak comparison
     :name: writing-tests-for-phpunit.error-output.edge-cases.examples.ArrayWeakComparisonTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ArrayWeakComparisonTest extends TestCase
+    final class ArrayWeakComparisonTest extends TestCase
     {
-        public function testEquality()
+        public function testEquality(): void
         {
             $this->assertEquals(
                 [1, 2, 3, 4, 5, 6],
