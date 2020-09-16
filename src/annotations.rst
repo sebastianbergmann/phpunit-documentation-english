@@ -51,7 +51,7 @@ that should be called after each test method in a test case class.
         /**
          * @after
          */
-        public function tearDownSomeFixtures()
+        public function tearDownSomeFixtures(): void
         {
             // ...
         }
@@ -59,7 +59,7 @@ that should be called after each test method in a test case class.
         /**
          * @after
          */
-        public function tearDownSomeOtherFixtures()
+        public function tearDownSomeOtherFixtures(): void
         {
             // ...
         }
@@ -84,7 +84,7 @@ class have been run to clean up shared fixtures.
         /**
          * @afterClass
          */
-        public static function tearDownSomeSharedFixtures()
+        public static function tearDownSomeSharedFixtures(): void
         {
             // ...
         }
@@ -92,7 +92,7 @@ class have been run to clean up shared fixtures.
         /**
          * @afterClass
          */
-        public static function tearDownSomeOtherSharedFixtures()
+        public static function tearDownSomeOtherSharedFixtures(): void
         {
             // ...
         }
@@ -136,7 +136,7 @@ backup and restore operations:
         /**
          * @backupGlobals enabled
          */
-        public function testThatInteractsWithGlobalVariables()
+        public function testThatInteractsWithGlobalVariables(): void
         {
             // ...
         }
@@ -165,7 +165,7 @@ test method level:
         /**
          * @backupStaticAttributes disabled
          */
-        public function testThatInteractsWithStaticAttributes()
+        public function testThatInteractsWithStaticAttributes(): void
         {
             // ...
         }
@@ -197,7 +197,7 @@ that should be called before each test method in a test case class.
         /**
          * @before
          */
-        public function setupSomeFixtures()
+        public function setupSomeFixtures(): void
         {
             // ...
         }
@@ -205,7 +205,7 @@ that should be called before each test method in a test case class.
         /**
          * @before
          */
-        public function setupSomeOtherFixtures()
+        public function setupSomeOtherFixtures(): void
         {
             // ...
         }
@@ -230,7 +230,7 @@ class are run to set up shared fixtures.
         /**
          * @beforeClass
          */
-        public static function setUpSomeSharedFixtures()
+        public static function setUpSomeSharedFixtures(): void
         {
             // ...
         }
@@ -238,7 +238,7 @@ class are run to set up shared fixtures.
         /**
          * @beforeClass
          */
-        public static function setUpSomeOtherSharedFixtures()
+        public static function setUpSomeOtherSharedFixtures(): void
         {
             // ...
         }
@@ -269,7 +269,7 @@ specify which parts of the code it is supposed to test:
     /**
      * @covers \BankAccount
      */
-    public function testBalanceIsInitiallyZero()
+    public function testBalanceIsInitiallyZero(): void
     {
         $this->assertSame(0, $this->ba->getBalance());
     }
@@ -356,7 +356,7 @@ backslash (even if this not required for the annotation to work correctly).
         /**
          * @covers ::publicMethod
          */
-        public function testSomething()
+        public function testSomething(): void
         {
             $o = new Foo\CoveredClass;
             $o->publicMethod();
@@ -435,7 +435,7 @@ A test can be tagged as belonging to one or more groups using the
         /**
          * @group specification
          */
-        public function testSomething()
+        public function testSomething(): void
         {
         }
 
@@ -443,7 +443,7 @@ A test can be tagged as belonging to one or more groups using the
          * @group regression
          * @group bug2204
          */
-        public function testSomethingElse()
+        public function testSomethingElse(): void
         {
         }
     }
@@ -509,7 +509,7 @@ PHPUnit from preserving global state with the
          * @runInSeparateProcess
          * @preserveGlobalState disabled
          */
-        public function testInSeparateProcess()
+        public function testInSeparateProcess(): void
         {
             // ...
         }
@@ -571,7 +571,7 @@ Indicates that a test should be run in a separate PHP process.
         /**
          * @runInSeparateProcess
          */
-        public function testInSeparateProcess()
+        public function testInSeparateProcess(): void
         {
             // ...
         }
@@ -618,7 +618,7 @@ annotation in a method's DocBlock to mark it as a test method.
     /**
      * @test
      */
-    public function initialBalanceShouldBe0()
+    public function initialBalanceShouldBe0(): void
     {
         $this->assertSame(0, $this->ba->getBalance());
     }
@@ -645,7 +645,7 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
         /**
          * @testdox has an initial balance of zero
          */
-        public function balanceIsInitiallyZero()
+        public function balanceIsInitiallyZero(): void
         {
             $this->assertSame(0, $this->ba->getBalance());
         }
@@ -727,7 +727,7 @@ example is a value object which is necessary for testing a unit of code.
      * @covers \BankAccount
      * @uses   \Money
      */
-    public function testMoneyCanBeDepositedInAccount()
+    public function testMoneyCanBeDepositedInAccount(): void
     {
         // ...
     }
