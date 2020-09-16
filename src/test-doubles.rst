@@ -102,7 +102,7 @@ the example. This leads to more readable and "fluent" code.
 
     final class StubTest extends TestCase
     {
-        public function testStub()
+        public function testStub(): void
         {
             // Create a stub for the SomeClass class.
             $stub = $this->createMock(SomeClass::class);
@@ -161,7 +161,7 @@ the same best practice defaults used by ``createMock()``.
 
     final class StubTest extends TestCase
     {
-        public function testStub()
+        public function testStub(): void
         {
             // Create a stub for the SomeClass class.
             $stub = $this->getMockBuilder(SomeClass::class)
@@ -201,7 +201,7 @@ can achieve this using ``returnArgument()`` instead of
 
     final class StubTest extends TestCase
     {
-        public function testReturnArgumentStub()
+        public function testReturnArgumentStub(): void
         {
             // Create a stub for the SomeClass class.
             $stub = $this->createMock(SomeClass::class);
@@ -232,7 +232,7 @@ can use ``returnSelf()`` to achieve this.
 
     final class StubTest extends TestCase
     {
-        public function testReturnSelf()
+        public function testReturnSelf(): void
         {
             // Create a stub for the SomeClass class.
             $stub = $this->createMock(SomeClass::class);
@@ -262,7 +262,7 @@ an example.
 
     final class StubTest extends TestCase
     {
-        public function testReturnValueMapStub()
+        public function testReturnValueMapStub(): void
         {
             // Create a stub for the SomeClass class.
             $stub = $this->createMock(SomeClass::class);
@@ -300,7 +300,7 @@ result of a callback function or method. See
 
     final class StubTest extends TestCase
     {
-        public function testReturnCallbackStub()
+        public function testReturnCallbackStub(): void
         {
             // Create a stub for the SomeClass class.
             $stub = $this->createMock(SomeClass::class);
@@ -329,7 +329,7 @@ an example.
 
     final class StubTest extends TestCase
     {
-        public function testOnConsecutiveCallsStub()
+        public function testOnConsecutiveCallsStub(): void
         {
             // Create a stub for the SomeClass class.
             $stub = $this->createMock(SomeClass::class);
@@ -358,7 +358,7 @@ shows how to use ``throwException()`` to do this.
 
     final class StubTest extends TestCase
     {
-        public function testThrowExceptionStub()
+        public function testThrowExceptionStub(): void
         {
             // Create a stub for the SomeClass class.
             $stub = $this->createMock(SomeClass::class);
@@ -510,7 +510,7 @@ arguments it is called with, we introduce the ``expects()`` and
 
     final class SubjectTest extends TestCase
     {
-        public function testObserversAreUpdated()
+        public function testObserversAreUpdated(): void
         {
             // Create a mock for the Observer class,
             // only mock the update() method.
@@ -551,7 +551,7 @@ on the method's arguments than a simple match.
 
     final class SubjectTest extends TestCase
     {
-        public function testErrorReported()
+        public function testErrorReported(): void
         {
             // Create a mock for the Observer class, mocking the
             // reportError() method
@@ -590,7 +590,7 @@ method being mocked, like in ``with()``.
 
     final class FooTest extends TestCase
     {
-        public function testFunctionCalledTwoTimesWithSpecificArguments()
+        public function testFunctionCalledTwoTimesWithSpecificArguments(): void
         {
             $mock = $this->getMockBuilder(stdClass::class)
                          ->setMethods(['set'])
@@ -623,7 +623,7 @@ argument passes verification and ``false`` otherwise.
 
     final class SubjectTest extends TestCase
     {
-        public function testErrorReported()
+        public function testErrorReported(): void
         {
             // Create a mock for the Observer class, mocking the
             // reportError() method
@@ -658,7 +658,7 @@ argument passes verification and ``false`` otherwise.
 
     final class FooTest extends TestCase
     {
-        public function testIdenticalObjectPassed()
+        public function testIdenticalObjectPassed(): void
         {
             $expectedObject = new stdClass;
 
@@ -683,7 +683,7 @@ argument passes verification and ``false`` otherwise.
 
     final class FooTest extends TestCase
     {
-        public function testIdenticalObjectPassed()
+        public function testIdenticalObjectPassed(): void
         {
             $cloneArguments = true;
 
@@ -790,7 +790,7 @@ revelations:
 
     final class SubjectTest extends TestCase
     {
-        public function testObserversAreUpdated()
+        public function testObserversAreUpdated(): void
         {
             $subject = new Subject('My subject');
 
@@ -845,7 +845,7 @@ are mocked. This allows for testing the concrete methods of a trait.
 
     final class TraitClassTest extends TestCase
     {
-        public function testConcreteMethod()
+        public function testConcreteMethod(): void
         {
             $mock = $this->getMockForTrait(AbstractTrait::class);
 
@@ -881,7 +881,7 @@ abstract class.
 
     final class AbstractClassTest extends TestCase
     {
-        public function testConcreteMethod()
+        public function testConcreteMethod(): void
         {
             $stub = $this->getMockForAbstractClass(AbstractClass::class);
 
@@ -919,7 +919,7 @@ example, the web service described in :file:`GoogleSearch.wsdl`.
 
     final class GoogleTest extends TestCase
     {
-        public function testSearch()
+        public function testSearch(): void
         {
             $googleSearch = $this->getMockFromWsdl(
               'GoogleSearch.wsdl', 'GoogleSearch'
