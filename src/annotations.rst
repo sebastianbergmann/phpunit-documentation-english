@@ -678,13 +678,10 @@ more about passing a set of data to a test.
 .. code-block:: php
 
     /**
-     * @param string    $input
-     * @param int       $expectedLength
-     *
-     * @testWith        ["test", 4]
-     *                  ["longer-string", 13]
+     * @testWith ["test", 4]
+     *           ["longer-string", 13]
      */
-    public function testStringLength(string $input, int $expectedLength)
+    public function testStringLength(string $input, int $expectedLength): void
     {
         $this->assertSame($expectedLength, strlen($input));
     }
@@ -694,12 +691,9 @@ An object representation in JSON will be converted into an associative array.
 .. code-block:: php
 
     /**
-     * @param array     $array
-     * @param array     $keys
-     *
-     * @testWith        [{"day": "monday", "conditions": "sunny"}, ["day", "conditions"]]
+     * @testWith [{"day": "monday", "conditions": "sunny"}, ["day", "conditions"]]
      */
-    public function testArrayKeys($array, $keys)
+    public function testArrayKeys(array $array, array $keys): void
     {
         $this->assertSame($keys, array_keys($array));
     }
