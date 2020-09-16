@@ -36,7 +36,7 @@ with PHPUnit:
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
         public function testPushAndPop()
         {
@@ -99,7 +99,7 @@ dependencies between test methods.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
         public function testEmpty()
         {
@@ -160,7 +160,7 @@ exploiting the dependencies between tests as shown in
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DependencyFailureTest extends TestCase
+    final class DependencyFailureTest extends TestCase
     {
         public function testOne()
         {
@@ -216,7 +216,7 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MultipleDependenciesTest extends TestCase
+    final class MultipleDependenciesTest extends TestCase
     {
         public function testProducerFirst()
         {
@@ -276,7 +276,7 @@ of the array as its arguments.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionProvider
@@ -326,7 +326,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionProvider
@@ -375,7 +375,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
 
     require 'CsvFileIterator.php';
 
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionProvider
@@ -468,7 +468,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DependencyAndDataProviderComboTest extends TestCase
+    final class DependencyAndDataProviderComboTest extends TestCase
     {
         public function provider()
         {
@@ -535,7 +535,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
       <?php declare(strict_types=1);
       use PHPUnit\Framework\TestCase;
 
-      class DataTest extends TestCase
+      final class DataTest extends TestCase
       {
           /**
            * @dataProvider additionWithNonNegativeNumbersProvider
@@ -615,7 +615,7 @@ whether an exception is thrown by the code under test.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ExceptionTest extends TestCase
+    final class ExceptionTest extends TestCase
     {
         public function testException()
         {
@@ -677,7 +677,7 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
     use PHPUnit\Framework\TestCase;
     use PHPUnit\Framework\Error\Error;
 
-    class ExpectedErrorTest extends TestCase
+    final class ExpectedErrorTest extends TestCase
     {
         public function testFailingInclude()
         {
@@ -714,7 +714,7 @@ that would lead to an exception raised by PHPUnit's error handler.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ErrorSuppressionTest extends TestCase
+    final class ErrorSuppressionTest extends TestCase
     {
         public function testFileWriting()
         {
@@ -724,7 +724,7 @@ that would lead to an exception raised by PHPUnit's error handler.
         }
     }
 
-    class FileWriter
+    final class FileWriter
     {
         public function write($file, $content) {
             $file = fopen($file, 'w');
@@ -776,7 +776,7 @@ test will be counted as a failure.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class OutputTest extends TestCase
+    final class OutputTest extends TestCase
     {
         public function testExpectFooActualFoo()
         {
@@ -851,7 +851,7 @@ context as possible that can help to identify the problem.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ArrayDiffTest extends TestCase
+    final class ArrayDiffTest extends TestCase
     {
         public function testEquality() {
             $this->assertSame(
@@ -965,7 +965,7 @@ functions on arrays or objects.
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ArrayWeakComparisonTest extends TestCase
+    final class ArrayWeakComparisonTest extends TestCase
     {
         public function testEquality() {
             $this->assertEquals(
