@@ -222,16 +222,16 @@ shows an example.
      */
     final class InvoiceTest extends TestCase
     {
-        protected $subject;
+        private $invoice;
 
         protected function setUp(): void
         {
-            $this->subject = new Invoice();
+            $this->invoice = new Invoice;
         }
 
         public function testAmountInitiallyIsEmpty(): void
         {
-            $this->assertEquals(new Money(), $this->subject->getAmount);
+            $this->assertEquals(new Money, $this->invoice->getAmount());
         }
     }
 
@@ -244,7 +244,7 @@ shows an example.
 
     final class BankAccountTest extends TestCase
     {
-        protected $ba;
+        private $ba;
 
         protected function setUp(): void
         {
