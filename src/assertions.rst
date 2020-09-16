@@ -64,7 +64,6 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
             $this->assertArrayHasKey('foo', ['bar' => 'baz']);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -110,7 +109,6 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
             $this->assertClassHasAttribute('foo', stdClass::class);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -156,7 +154,6 @@ Reports an error identified by ``$message`` if ``$array`` does not contains the 
             $this->assertArraySubset(['config' => ['key-a', 'key-b']], ['config' => ['key-a']]);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -207,7 +204,6 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
             $this->assertClassHasStaticAttribute('foo', stdClass::class);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -255,7 +251,6 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
             $this->assertContains(4, [1, 2, 3]);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -296,7 +291,6 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
             $this->assertContains('baz', 'foobar');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -336,7 +330,6 @@ If ``$ignoreCase`` is ``true``, the test will be case insensitive.
             $this->assertContains('foo', 'FooBar', '', true);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -386,7 +379,6 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
             $this->assertContainsOnly('string', ['1', '2', 3]);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -437,7 +429,6 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
             );
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -483,7 +474,6 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
             $this->assertCount(0, ['foo']);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -529,7 +519,6 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
             $this->assertDirectoryExists('/path/to/directory');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -575,7 +564,6 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
             $this->assertDirectoryIsReadable('/path/to/directory');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -621,7 +609,6 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
             $this->assertDirectoryIsWritable('/path/to/directory');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -669,7 +656,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
             $this->assertEmpty(['foo']);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -755,7 +741,6 @@ Reports an error identified by ``$message`` if the XML Structure of the DOMEleme
             );
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -840,7 +825,6 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
             $this->assertEquals("foo\nbar\nbaz\n", "foo\nbah\nbaz\n");
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -911,7 +895,6 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
             $this->assertEquals(1.0, 1.1);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -956,7 +939,6 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
             $this->assertEquals($expected, $actual);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1013,7 +995,6 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
             $this->assertEquals($expected, $actual);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1061,7 +1042,6 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
             $this->assertEquals(['a', 'b', 'c'], ['a', 'c', 'd']);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1117,7 +1097,6 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
             $this->assertFalse(true);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1163,7 +1142,6 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
             $this->assertFileEquals('/home/sb/expected', '/home/sb/actual');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1215,7 +1193,6 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
             $this->assertFileExists('/path/to/file');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1261,7 +1238,6 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
             $this->assertFileIsReadable('/path/to/file');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1307,7 +1283,6 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
             $this->assertFileIsWritable('/path/to/file');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1353,7 +1328,6 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
             $this->assertGreaterThan(2, 1);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1399,7 +1373,6 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
             $this->assertGreaterThanOrEqual(2, 1);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1445,7 +1418,6 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
             $this->assertInfinite(1);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1493,7 +1465,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
             $this->assertInstanceOf(RuntimeException::class, new Exception);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1541,7 +1512,6 @@ Reports an error identified by ``$message`` if ``$actual`` is not of the ``$expe
             $this->assertInternalType('string', 42);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1587,7 +1557,6 @@ Reports an error identified by ``$message`` if the file or directory specified b
             $this->assertIsReadable('/path/to/unreadable');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1633,7 +1602,6 @@ Reports an error identified by ``$message`` if the file or directory specified b
             $this->assertIsWritable('/path/to/unwritable');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1679,7 +1647,6 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
               'path/to/fixture/file', 'path/to/actual/file');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1726,7 +1693,6 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
             );
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1774,7 +1740,6 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
             );
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1827,7 +1792,6 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
             $this->assertLessThan(1, 2);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1873,7 +1837,6 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
             $this->assertLessThanOrEqual(1, 2);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1917,7 +1880,6 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
             $this->assertNan(1);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1963,7 +1925,6 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
             $this->assertNull('foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2009,7 +1970,6 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
             $this->assertObjectHasAttribute('foo', new stdClass);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2055,7 +2015,6 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
             $this->assertRegExp('/foo/', 'bar');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2101,7 +2060,6 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
             $this->assertStringMatchesFormat('%i', 'foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2197,7 +2155,6 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
             $this->assertStringMatchesFormatFile('/path/to/expected.txt', 'foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2246,7 +2203,6 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
             $this->assertSame('2204', 2204);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2285,7 +2241,6 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
             $this->assertSame(new stdClass, new stdClass);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2331,7 +2286,6 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
             $this->assertStringEndsWith('suffix', 'foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2377,7 +2331,6 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
             $this->assertStringEqualsFile('/home/sb/expected', 'actual');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2429,7 +2382,6 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
             $this->assertStringStartsWith('prefix', 'foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2489,7 +2441,6 @@ Reports an error identified by ``$message`` if the ``$value`` does not match the
             );
         }
     }
-    ?>
 
 :numref:`appendixes.assertions.assertThat.tables.constraints` shows the
 available ``PHPUnit\Framework\Constraint`` classes.
@@ -2593,7 +2544,6 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
             $this->assertTrue(false);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2640,7 +2590,6 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
               '/home/sb/expected.xml', '/home/sb/actual.xml');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2695,7 +2644,6 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
               '/home/sb/expected.xml', '<foo><baz/></foo>');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2750,7 +2698,6 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
               '<foo><bar/></foo>', '<foo><baz/></foo>');
         }
     }
-    ?>
 
 .. parsed-literal::
 
