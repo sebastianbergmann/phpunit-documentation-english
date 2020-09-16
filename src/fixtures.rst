@@ -59,19 +59,19 @@ assertion method.
             $this->stack = [];
         }
 
-        public function testEmpty()
+        public function testEmpty(): void
         {
             $this->assertTrue(empty($this->stack));
         }
 
-        public function testPush()
+        public function testPush(): void
         {
             array_push($this->stack, 'foo');
             $this->assertSame('foo', $this->stack[count($this->stack)-1]);
             $this->assertFalse(empty($this->stack));
         }
 
-        public function testPop()
+        public function testPop(): void
         {
             array_push($this->stack, 'foo');
             $this->assertSame('foo', array_pop($this->stack));
@@ -116,13 +116,13 @@ case class.
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        public function testOne()
+        public function testOne(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
             $this->assertTrue(true);
         }
 
-        public function testTwo()
+        public function testTwo(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
             $this->assertTrue(false);
