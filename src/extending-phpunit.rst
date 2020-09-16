@@ -113,7 +113,7 @@ interface.
     use PHPUnit\Framework\TestCase;
     use PHPUnit\Framework\TestListener;
 
-    class SimpleTestListener implements TestListener
+    final class SimpleTestListener implements TestListener
     {
         public function addError(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
         {
@@ -180,7 +180,7 @@ for all the others.
     use PHPUnit\Framework\TestListener;
     use PHPUnit\Framework\TestListenerDefaultImplementation;
 
-    class ShortTestListener implements TestListener
+    final class ShortTestListener implements TestListener
     {
         use TestListenerDefaultImplementation;
 
