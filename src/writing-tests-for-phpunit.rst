@@ -33,7 +33,7 @@ with PHPUnit:
     :caption: Testing array operations with PHPUnit
     :name: writing-tests-for-phpunit.examples.StackTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StackTest extends TestCase
@@ -96,7 +96,7 @@ dependencies between test methods.
     :caption: Using the ``@depends`` annotation to express dependencies
     :name: writing-tests-for-phpunit.examples.StackTest2.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class StackTest extends TestCase
@@ -157,7 +157,7 @@ exploiting the dependencies between tests as shown in
     :caption: Exploiting the dependencies between tests
     :name: writing-tests-for-phpunit.examples.DependencyFailureTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class DependencyFailureTest extends TestCase
@@ -213,7 +213,7 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
     :caption: Test with multiple dependencies
     :name: writing-tests-for-phpunit.examples.MultipleDependencies.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class MultipleDependenciesTest extends TestCase
@@ -273,7 +273,7 @@ of the array as its arguments.
     :caption: Using a data provider that returns an array of arrays
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class DataTest extends TestCase
@@ -323,7 +323,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     :caption: Using a data provider with named datasets
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest1.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class DataTest extends TestCase
@@ -370,7 +370,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     :caption: Using a data provider that returns an Iterator object
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest2.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     require 'CsvFileIterator.php';
@@ -414,7 +414,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     :caption: The CsvFileIterator class
     :name: writing-tests-for-phpunit.data-providers.examples.CsvFileIterator.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class CsvFileIterator implements Iterator {
@@ -465,7 +465,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
     :caption: Combination of @depends and @dataProvider in same test
     :name: writing-tests-for-phpunit.data-providers.examples.DependencyAndDataProviderCombo.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class DependencyAndDataProviderComboTest extends TestCase
@@ -532,7 +532,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
     :caption: Using multiple data providers for a single test
       :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
 
-      <?php
+      <?php declare(strict_types=1);
       use PHPUnit\Framework\TestCase;
 
       class DataTest extends TestCase
@@ -612,7 +612,7 @@ whether an exception is thrown by the code under test.
     :caption: Using the expectException() method
     :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class ExceptionTest extends TestCase
@@ -673,7 +673,7 @@ shown in :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
     :caption: Expecting a PHP error using expectException()
     :name: writing-tests-for-phpunit.exceptions.examples.ErrorTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
     use PHPUnit\Framework\Error\Error;
 
@@ -711,7 +711,7 @@ that would lead to an exception raised by PHPUnit's error handler.
     :caption: Testing return values of code that uses PHP Errors
     :name: writing-tests-for-phpunit.exceptions.examples.TriggerErrorReturnValue.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class ErrorSuppressionTest extends TestCase
@@ -773,7 +773,7 @@ test will be counted as a failure.
     :caption: Testing the output of a function or method
     :name: writing-tests-for-phpunit.output.examples.OutputTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class OutputTest extends TestCase
@@ -848,7 +848,7 @@ context as possible that can help to identify the problem.
     :caption: Error output generated when an array comparison fails
     :name: writing-tests-for-phpunit.error-output.examples.ArrayDiffTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class ArrayDiffTest extends TestCase
@@ -902,7 +902,7 @@ and provide a few lines of context around every difference.
     :caption: Error output when an array comparison of an long array fails
     :name: writing-tests-for-phpunit.error-output.examples.LongArrayDiffTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class LongArrayDiffTest extends TestCase
@@ -962,7 +962,7 @@ functions on arrays or objects.
     :caption: Edge case in the diff generation when using weak comparison
     :name: writing-tests-for-phpunit.error-output.edge-cases.examples.ArrayWeakComparisonTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     class ArrayWeakComparisonTest extends TestCase
