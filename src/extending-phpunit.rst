@@ -37,7 +37,7 @@ PHPUnit's own assertions are implemented. As you can see in
     :caption: The assertTrue() and isTrue() methods of the PHPUnit\\Framework\\Assert class
     :name: extending-phpunit.examples.Assert.php
 
-    <?php
+    <?php declare(strict_types=1);
     namespace PHPUnit\Framework;
 
     use PHPUnit\Framework\TestCase;
@@ -83,7 +83,7 @@ abstract base class for matcher objects (or constraints),
     :caption: The PHPUnit\\Framework\Constraint\\IsTrue class
     :name: extending-phpunit.examples.IsTrue.php
 
-    <?php
+    <?php declare(strict_types=1);
     namespace PHPUnit\Framework\Constraint;
 
     use PHPUnit\Framework\Constraint;
@@ -134,7 +134,7 @@ interface.
     :caption: A simple test listener
     :name: extending-phpunit.examples.SimpleTestListener.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
     use PHPUnit\Framework\TestListener;
 
@@ -202,7 +202,7 @@ for all the others.
     :caption: Using test listener default implementation trait
     :name: extending-phpunit.examples.ExtendedTestListener.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestListener;
     use PHPUnit\Framework\TestListenerDefaultImplementation;
 
