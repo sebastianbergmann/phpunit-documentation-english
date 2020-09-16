@@ -52,7 +52,7 @@ assertion method.
 
     final class StackTest extends TestCase
     {
-        protected $stack;
+        private $stack;
 
         protected function setUp(): void
         {
@@ -67,6 +67,7 @@ assertion method.
         public function testPush(): void
         {
             array_push($this->stack, 'foo');
+
             $this->assertSame('foo', $this->stack[count($this->stack)-1]);
             $this->assertFalse(empty($this->stack));
         }
@@ -74,6 +75,7 @@ assertion method.
         public function testPop(): void
         {
             array_push($this->stack, 'foo');
+
             $this->assertSame('foo', array_pop($this->stack));
             $this->assertTrue(empty($this->stack));
         }
@@ -243,7 +245,7 @@ database after the last test of the test case, respectively.
 
     final class DatabaseTest extends TestCase
     {
-        protected static $dbh;
+        private static $dbh;
 
         public static function setUpBeforeClass(): void
         {
