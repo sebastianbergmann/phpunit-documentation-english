@@ -1112,6 +1112,68 @@ Please note:
 
 If any of the aforementioned assumptions is not fulfilled or if ``$actual->$method($expected)`` returns ``false`` then the assertion fails.
 
+.. _appendixes.assertions.assertExtendsClass:
+
+assertExtendsClass()
+####################
+
+``assertExtendsClass(string $parent, mixed $subject[, string $message = ''])``
+
+Reports an error identified by ``$message`` if ``$subject`` does not extend the
+``$parent`` class. The ``$subject`` may be an ``object`` or a class name as
+``string``:
+
+- if ``$subject`` is an ``object``, then its class, as returned by
+  ``get_class($subject)``, is examined against ``$parent``, the assertion
+  succeeds only if the class extends the ``$parent`` class,
+- otherwise, the necessary conditions for the assertion to succeed are that
+
+  - ``$subject`` is a string,
+  - ``class_exists($subject)`` is ``true``, and
+  - the ``$subject`` class extends the ``$parent`` class.
+
+``assertNotExtendsClass()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertExtendsClass()
+    :name: appendixes.assertions.assertExtendsClass.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class AssertExtendsClassTest extends TestCase
+    {
+        public function testAssertExtendsClass()
+        {
+            $this->assertExtendsClass(\Exception::class, \RuntimeException::class);
+            $this->assertExtendsClass(\Exception::class, new \RuntimeException);
+        }
+
+        public function testAssertExtendsClassFailure()
+        {
+            $this->assertExtendsClass(\Exception::class, self::class);
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit AssertExtendsClassTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    .F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) AssertExtendsClassTest::testAssertExtendsClassFailure
+    Failed asserting that AssertExtendsClassTest extends class Exception.
+
+    /home/sb/AssertExtendsClassTest.php:12
+
+    FAILURES!
+    Tests: 2, Assertions: 3, Failures: 1.
+
 .. _appendixes.assertions.assertFalse:
 
 assertFalse()
@@ -1428,6 +1490,69 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
 
     FAILURES!
     Tests: 1, Assertions: 2, Failures: 1.
+
+.. _appendixes.assertions.assertImplementsInterface:
+
+assertImplementsInterface()
+###########################
+
+``assertImplementsInterface(string $interface, mixed $subject[, string $message = ''])``
+
+Reports an error identified by ``$message`` if ``$subject`` does not implement
+the ``$interface``. The ``$subject`` may be an ``object`` or a class/interface
+name as ``string``:
+
+- if ``$subject`` is an ``object``, then its class, as returned by
+  ``get_class($subject)``, is examined against ``$interface``, the assertion
+  succeeds only if the class implements the ``$interface``,
+- otherwise, the necessary conditions for the assertion to succeed are that
+
+  - ``$subject`` is a string,
+  - ``class_exists($subject)`` is ``true`` or ``interface_exists($subject)`` is
+    ``true``, and
+  - the ``$subject`` implements the ``$interface``.
+
+``assertNotImplementsInterface()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertImplementsInterface()
+    :name: appendixes.assertions.assertImplementsInterface.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class AssertImplementsInterfaceTest extends TestCase
+    {
+        public function testAssertImplementsInterface()
+        {
+            $this->assertImplementsInterface(\Throwable::class, \RuntimeException::class);
+            $this->assertImplementsInterface(\Throwable::class, new \RuntimeException);
+        }
+
+        public function testAssertImplementsInterfaceFailure()
+        {
+            $this->assertImplementsInterface(\Throwable::class, self::class);
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit AssertImplementsInterfaceTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    .F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) AssertImplementsInterfaceTest::testAssertImplementsInterfaceFailure
+    Failed asserting that AssertImplementsInterfaceTest implements interface Throwable.
+
+    /home/sb/AssertImplementsInterfaceTest.php:12
+
+    FAILURES!
+    Tests: 2, Assertions: 3, Failures: 1.
 
 .. _appendixes.assertions.assertInfinite:
 
@@ -2918,10 +3043,14 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only instances of a given classname.
     * - ``PHPUnit\Framework\Constraint\IsEqual equalTo($value, $delta = 0, $maxDepth = 10)``
       - Constraint that checks if one value is equal to another.
+    * - ``PHPUnit\Framework\Constraint\ExtendsClass extendsClass(string $className)``
+      - Constraint that checks if the subject extends specified class.
     * - ``PHPUnit\Framework\Constraint\DirectoryExists directoryExists()``
       - Constraint that checks if the directory exists.
     * - ``PHPUnit\Framework\Constraint\FileExists fileExists()``
       - Constraint that checks if the file(name) exists.
+    * - ``PHPUnit\Framework\Constraint\ImplementsInterface implementsInterface(string $interfaceName)``
+      - Constraint that checks if the subject inherits specified interface.
     * - ``PHPUnit\Framework\Constraint\IsReadable isReadable()``
       - Constraint that checks if the file(name) is readable.
     * - ``PHPUnit\Framework\Constraint\IsWritable isWritable()``
@@ -2968,6 +3097,8 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the string ends with a given suffix.
     * - ``PHPUnit\Framework\Constraint\StringStartsWith stringStartsWith(string $prefix)``
       - Constraint that asserts that the string starts with a given prefix.
+    * - ``PHPUnit\Framework\Constraint\UsesTrait usesTrait(string $traitName)``
+      - Constraint that checks if the subject uses specified trait.
 
 .. _appendixes.assertions.assertTrue:
 
@@ -3013,6 +3144,73 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
+
+.. _appendixes.assertions.assertUsesTrait:
+
+assertUsesTrait()
+#################
+
+``assertUsesTrait(string $trait, mixed $subject[, string $message = ''])``
+
+Reports an error identified by ``$message`` if ``$subject`` does not use the
+``$trait``. The ``$subject`` may be an ``object`` or a class name as ``string``:
+
+- if ``$subject`` is an ``object``, then its class, as returned by
+  ``get_class($subject)``, is examined against ``$trait``, the assertion
+  succeeds only if the class uses the ``$trait``,
+- otherwise, the necessary conditions for the assertion to succeed are that
+
+  - ``$subject`` is a string,
+  - ``class_exists($subject)`` is ``true``, and
+  - the ``$subject`` implements the ``$trait``.
+
+``assertNotUsesTrait()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertUsesTrait()
+    :name: appendixes.assertions.assertUsesTrait.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    trait ExampleTrait
+    {
+    }
+
+    final class AssertUsesTraitTest extends TestCase
+    {
+        use ExampleTrait;
+
+        public function testAssertUsesTrait()
+        {
+            $this->assertUsesTrait(ExampleTrait::class, self::class);
+            $this->assertUsesTrait(ExampleTrait::class, $this);
+        }
+
+        public function testAssertUsesTraitFailure()
+        {
+            $this->assertUsesTrait(ExampleTrait::class, \RuntimeException::class);
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit AssertUsesTraitTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    .F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) AssertUsesTraitTest::testAssertUsesTraitFailure
+    Failed asserting that RuntimeException uses trait ExampleTrait.
+
+    /home/sb/AssertUsesTraitTest.php:18
+
+    FAILURES!
+    Tests: 2, Assertions: 3, Failures: 1.
 
 .. _appendixes.assertions.assertXmlFileEqualsXmlFile:
 
