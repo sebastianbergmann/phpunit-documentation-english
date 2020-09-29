@@ -3000,7 +3000,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that checks if the file(name) is writable.
     * - ``PHPUnit\Framework\Constraint\GreaterThan greaterThan(mixed $value)``
       - Constraint that asserts that the value is greater than a given value.
-    * - ``PHPUnit\Framework\Constraint\Or greaterThanOrEqual(mixed $value)``
+    * - ``PHPUnit\Framework\Constraint\LogicalOr greaterThanOrEqual(mixed $value)``
       - Constraint that asserts that the value is greater than or equal to a given value.
     * - ``PHPUnit\Framework\Constraint\ClassHasAttribute classHasAttribute(string $attributeName)``
       - Constraint that asserts that the class has a given attribute.
@@ -3022,7 +3022,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the value is of a specified type.
     * - ``PHPUnit\Framework\Constraint\LessThan lessThan(mixed $value)``
       - Constraint that asserts that the value is smaller than a given value.
-    * - ``PHPUnit\Framework\Constraint\Or lessThanOrEqual(mixed $value)``
+    * - ``PHPUnit\Framework\Constraint\LogicalOr lessThanOrEqual(mixed $value)``
       - Constraint that asserts that the value is smaller than or equal to a given value.
     * - ``logicalAnd()``
       - Logical AND.
