@@ -610,7 +610,7 @@ method being mocked, like in ``with()``.
         public function testFunctionCalledTwoTimesWithSpecificArguments(): void
         {
             $mock = $this->getMockBuilder(stdClass::class)
-                         ->setMethods(['set'])
+                         ->addMethods(['set'])
                          ->getMock();
 
             $mock->expects($this->exactly(2))
@@ -681,7 +681,7 @@ argument passes verification and ``false`` otherwise.
             $expectedObject = new stdClass;
 
             $mock = $this->getMockBuilder(stdClass::class)
-                         ->setMethods(['foo'])
+                         ->addMethods(['foo'])
                          ->getMock();
 
             $mock->expects($this->once())
@@ -756,11 +756,15 @@ Here is a list of methods provided by the Mock Builder:
 
 -
 
-  ``setMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. If you call ``setMethods(null)``, then no methods will be replaced.
+  ``onlyMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. Each method must exist in the given mock class.
 
 -
 
-  ``setMethodsExcept(array $methods)`` can be called on the Mock Builder object to specify the methods that will not be replaced with a configurable test double while replacing all other public methods. This works inverse to ``setMethods()``.
+  ``addMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that don't exist (yet) in the given mock class. The behavior of the other methods remains the same.
+
+-
+
+  ``setMethodsExcept(array $methods)`` can be called on the Mock Builder object to specify the methods that will not be replaced with a configurable test double while replacing all other public methods. This works inverse to ``onlyMethods()``.
 
 -
 
