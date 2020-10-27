@@ -96,100 +96,145 @@ evaluating the assertion and bookkeeping tasks such as counting it for
 statistics. Furthermore, the ``isTrue()`` method can be
 used as a matcher when configuring mock objects.
 
-.. _extending-phpunit.PHPUnit_Framework_TestListener:
+.. _extending-phpunit.TestRunner:
 
-Implement PHPUnit\\Framework\\TestListener
-##########################################
+Extending the TestRunner
+########################
 
-:numref:`extending-phpunit.examples.SimpleTestListener.php`
-shows a simple implementation of the ``PHPUnit\Framework\TestListener``
-interface.
+PHPUnit's test runner can be extended by registering objects that implement
+one or more of the following interfaces:
+
+- ``AfterIncompleteTestHook``
+- ``AfterLastTestHook``
+- ``AfterRiskyTestHook``
+- ``AfterSkippedTestHook``
+- ``AfterSuccessfulTestHook``
+- ``AfterTestErrorHook``
+- ``AfterTestFailureHook``
+- ``AfterTestWarningHook``
+- ``AfterTestHook``
+- ``BeforeFirstTestHook``
+- ``BeforeTestHook``
+
+Each "hook", meaning each of the interfaces listed above, represents an event
+that can occur while the tests are being executed.
+
+See :ref:`appendixes.configuration.phpunit.extensions` for details on how
+to register extensions in PHPUnit's XML configuration.
+
+:numref:`extending-phpunit.examples.TestRunnerExtension` shows an example
+for an extension implementing ``BeforeFirstTestHook`` and ``AfterLastTestHook``:
 
 .. code-block:: php
-    :caption: A simple test listener
-    :name: extending-phpunit.examples.SimpleTestListener.php
+    :caption: TestRunner Extension Example
+    :name: extending-phpunit.examples.TestRunnerExtension
 
     <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-    use PHPUnit\Framework\TestListener;
+    namespace Vendor;
 
-    final class SimpleTestListener implements TestListener
+    use PHPUnit\Runner\BeforeFirstTestHook;
+    use PHPUnit\Runner\AfterLastTestHook;
+
+    final class MyExtension implements BeforeFirstTestHook, AfterLastTestHook
     {
-        public function addError(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
+        public function executeBeforeFirstTest(): void
         {
-            printf("Error while running test '%s'.\n", $test->getName());
+            // called before the first test is being run
         }
 
-        public function addWarning(PHPUnit\Framework\Test $test, PHPUnit\Framework\Warning $e, float $time): void
+        public function executeAfterLastTest(): void
         {
-            printf("Warning while running test '%s'.\n", $test->getName());
-        }
-
-        public function addFailure(PHPUnit\Framework\Test $test, PHPUnit\Framework\AssertionFailedError $e, float $time): void
-        {
-            printf("Test '%s' failed.\n", $test->getName());
-        }
-
-        public function addIncompleteTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
-        {
-            printf("Test '%s' is incomplete.\n", $test->getName());
-        }
-
-        public function addRiskyTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
-        {
-            printf("Test '%s' is deemed risky.\n", $test->getName());
-        }
-
-        public function addSkippedTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
-        {
-            printf("Test '%s' has been skipped.\n", $test->getName());
-        }
-
-        public function startTest(PHPUnit\Framework\Test $test): void
-        {
-            printf("Test '%s' started.\n", $test->getName());
-        }
-
-        public function endTest(PHPUnit\Framework\Test $test, float $time): void
-        {
-            printf("Test '%s' ended.\n", $test->getName());
-        }
-
-        public function startTestSuite(PHPUnit\Framework\TestSuite $suite): void
-        {
-            printf("TestSuite '%s' started.\n", $suite->getName());
-        }
-
-        public function endTestSuite(PHPUnit\Framework\TestSuite $suite): void
-        {
-            printf("TestSuite '%s' ended.\n", $suite->getName());
+            // called after the last test has been run
         }
     }
 
-:numref:`extending-phpunit.examples.ExtendedTestListener.php`
-shows how to use the ``PHPUnit\Framework\TestListenerDefaultImplementation``
-trait, which lets you specify only the interface methods that
-are interesting for your use case, while providing empty implementations
-for all the others.
+Configuring extensions
+----------------------
+
+You can configure PHPUnit extensions, assuming the extension accepts
+configuration values.
+
+:numref:`extending-phpunit.examples.TestRunnerConfigurableExtension` shows an
+example how to make an extension configurable, by adding an ``__constructor()``
+definition to the extension class:
 
 .. code-block:: php
-    :caption: Using test listener default implementation trait
-    :name: extending-phpunit.examples.ExtendedTestListener.php
+    :caption: TestRunner Extension with constructor
+    :name: extending-phpunit.examples.TestRunnerConfigurableExtension
 
     <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestListener;
-    use PHPUnit\Framework\TestListenerDefaultImplementation;
+    namespace Vendor;
 
-    final class ShortTestListener implements TestListener
+    use PHPUnit\Runner\BeforeFirstTestHook;
+    use PHPUnit\Runner\AfterLastTestHook;
+    use PHPUnit\Runner\AfterSuccessfulTestHook;
+    
+    final class MyConfigurableExtension implements BeforeFirstTestHook, AfterLastTestHook, AfterSuccessfulTestHook
     {
-        use TestListenerDefaultImplementation;
+        protected $config_value_1 = '';
 
-        public function endTest(PHPUnit\Framework\Test $test, float $time): void
+        protected $config_value_2 = 0;
+
+        public function __construct(string $value1 = '', int $value2 = 0)
         {
-            printf("Test '%s' ended.\n", $test->getName());
+            $this->config_value_1 = $value1;
+            $this->config_value_2 = $value2;
+        }
+
+        public function executeBeforeFirstTest(): void
+        {
+            if (strlen($this->config_value_1)) {
+                echo 'Testing with configuration value: ' . $this->config_value_1;
+            }
+        }
+
+        public function executeAfterSuccessfulTest(string $test, float $time): void
+        {
+          echo "Sucessful Test finished";
+        }
+
+        public function executeAfterLastTest(): void
+        {
+            if ($this->config_value_2 > 10) {
+                echo 'Second config value is OK!';
+            }
         }
     }
 
-In :ref:`appendixes.configuration.test-listeners` you can see
-how to configure PHPUnit to attach your test listener to the test
-execution.
+To input configuration to the extension via XML, the XML configuration file's
+``extensions`` section needs to be updated to have configuration values, as
+shown in
+:numref:`extending-phpunit.examples.TestRunnerConfigurableExtensionConfig`:
+
+Create a file named extension.xml with the following content:
+
+.. code-block:: xml
+    :caption: TestRunner Extension configuration
+    :name: extending-phpunit.examples.TestRunnerConfigurableExtensionConfig
+
+    <phpunit>
+      <extensions>
+          <extension class="Vendor\MyUnconfigurableExtension" />
+          <extension class="Vendor\MyConfigurableExtension">
+              <arguments>
+                  <string>Hello world!</string>
+                  <integer>15</integer>
+              </arguments>
+          </extension>
+      </extensions>
+    </phpunit>
+
+**Tips**:
+
+Now to see this in execution inside your project folder run:
+``vendor/bin/phpunit /path/to/your/tests/folder --configuration extension.xml``
+
+If you run some trouble with configuration add ``--debug`` and/or ``--verbose`` to help you.
+
+See :ref:`appendixes.configuration.phpunit.extensions.extension.arguments` for
+details on how to use the ``arguments`` configuration.
+
+Remember: all configuration is optional, so make sure your extension either has
+sane defaults in place, or that it disables itself in case configuration is
+missing.
+
