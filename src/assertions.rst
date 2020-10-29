@@ -20,11 +20,7 @@ The assertion methods are declared static and can be invoked
 from any context using ``PHPUnit\Framework\Assert::assertTrue()``,
 for instance, or using ``$this->assertTrue()`` or ``self::assertTrue()``,
 for instance, in a class that extends ``PHPUnit\Framework\TestCase``.
-
-In fact, you can even use global function wrappers such as ``assertTrue()`` in
-any context (including classes that extend ``PHPUnit\Framework\TestCase``)
-when you (manually) include the :file:`src/Framework/Assert/Functions.php`
-sourcecode file that comes with PHPUnit.
+You can even use global function wrappers such as ``assertTrue()``.
 
 A common question, especially from developers new to PHPUnit, is whether
 using ``$this->assertTrue()`` or ``self::assertTrue()``,
@@ -54,12 +50,12 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
     :caption: Usage of assertArrayHasKey()
     :name: appendixes.assertions.assertArrayHasKey.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ArrayHasKeyTest extends TestCase
+    final class ArrayHasKeyTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertArrayHasKey('foo', ['bar' => 'baz']);
         }
@@ -99,12 +95,12 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
     :caption: Usage of assertClassHasAttribute()
     :name: appendixes.assertions.assertClassHasAttribute.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ClassHasAttributeTest extends TestCase
+    final class ClassHasAttributeTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertClassHasAttribute('foo', stdClass::class);
         }
@@ -144,12 +140,12 @@ Reports an error identified by ``$message`` if ``$className::attributeName`` doe
     :caption: Usage of assertClassHasStaticAttribute()
     :name: appendixes.assertions.assertClassHasStaticAttribute.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ClassHasStaticAttributeTest extends TestCase
+    final class ClassHasStaticAttributeTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertClassHasStaticAttribute('foo', stdClass::class);
         }
@@ -189,12 +185,12 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
     :caption: Usage of assertContains()
     :name: appendixes.assertions.assertContains.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsTest extends TestCase
+    final class ContainsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertContains(4, [1, 2, 3]);
         }
@@ -237,7 +233,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not a substring of
 
     final class StringContainsStringTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringContainsString('foo', 'bar');
         }
@@ -282,7 +278,7 @@ Differences in casing are ignored when ``$needle`` is searched for in ``$haystac
 
     final class StringContainsStringIgnoringCaseTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringContainsStringIgnoringCase('foo', 'bar');
         }
@@ -324,12 +320,12 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
     :caption: Usage of assertContainsOnly()
     :name: appendixes.assertions.assertContainsOnly.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsOnlyTest extends TestCase
+    final class ContainsOnlyTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertContainsOnly('string', ['1', '2', 3]);
         }
@@ -371,12 +367,12 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
     :caption: Usage of assertContainsOnlyInstancesOf()
     :name: appendixes.assertions.assertContainsOnlyInstancesOf.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ContainsOnlyInstancesOfTest extends TestCase
+    final class ContainsOnlyInstancesOfTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertContainsOnlyInstancesOf(
                 Foo::class,
@@ -419,12 +415,12 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
     :caption: Usage of assertCount()
     :name: appendixes.assertions.assertCount.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class CountTest extends TestCase
+    final class CountTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertCount(0, ['foo']);
         }
@@ -464,12 +460,12 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     :caption: Usage of assertDirectoryExists()
     :name: appendixes.assertions.assertDirectoryExists.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DirectoryExistsTest extends TestCase
+    final class DirectoryExistsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertDirectoryExists('/path/to/directory');
         }
@@ -509,12 +505,12 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     :caption: Usage of assertDirectoryIsReadable()
     :name: appendixes.assertions.assertDirectoryIsReadable.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DirectoryIsReadableTest extends TestCase
+    final class DirectoryIsReadableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertDirectoryIsReadable('/path/to/directory');
         }
@@ -554,12 +550,12 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     :caption: Usage of assertDirectoryIsWritable()
     :name: appendixes.assertions.assertDirectoryIsWritable.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DirectoryIsWritableTest extends TestCase
+    final class DirectoryIsWritableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertDirectoryIsWritable('/path/to/directory');
         }
@@ -599,12 +595,12 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
     :caption: Usage of assertEmpty()
     :name: appendixes.assertions.assertEmpty.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EmptyTest extends TestCase
+    final class EmptyTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertEmpty(['foo']);
         }
@@ -644,22 +640,22 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     :caption: Usage of assertEquals()
     :name: appendixes.assertions.assertEquals.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualsTest extends TestCase
+    final class EqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertEquals(1, 0);
         }
 
-        public function testFailure2()
+        public function testFailure2(): void
         {
             $this->assertEquals('bar', 'baz');
         }
 
-        public function testFailure3()
+        public function testFailure3(): void
         {
             $this->assertEquals("foo\nbar\nbaz\n", "foo\nbah\nbaz\n");
         }
@@ -717,12 +713,12 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
     :caption: Usage of assertEquals() with DOMDocument objects
     :name: appendixes.assertions.assertEquals.example3
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualsTest extends TestCase
+    final class EqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $expected = new DOMDocument;
             $expected->loadXML('<foo><bar/></foo>');
@@ -771,12 +767,12 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
     :caption: Usage of assertEquals() with objects
     :name: appendixes.assertions.assertEquals.example4
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualsTest extends TestCase
+    final class EqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $expected = new stdClass;
             $expected->foo = 'foo';
@@ -826,12 +822,12 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
     :caption: Usage of assertEquals() with arrays
     :name: appendixes.assertions.assertEquals.example5
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class EqualsTest extends TestCase
+    final class EqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertEquals(['a', 'b', 'c'], ['a', 'c', 'd']);
         }
@@ -1018,6 +1014,104 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
+.. _appendixes.assertions.assertObjectEquals:
+
+assertObjectEquals()
+####################
+
+``assertObjectEquals(object $expected, object $actual, string $method = 'equals', string $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not equal to ``$expected`` according to ``$actual->$method($expected)``.
+
+It is a bad practice to use ``assertEquals()`` (and its inverse, ``assertNotEquals()``) on objects without registering a custom comparator that customizes how objects are compared. Unfortunately, though, implementing custom comparators for each and every object you want to assert in your tests is inconvenient at best.
+
+The most common use case for custom comparators are Value Objects. These objects usually have an ``equals(self $other): bool`` method (or a method just like that but with a different name) for comparing two instances of the Value Object's type. ``assertObjectEquals()`` makes custom comparison of objects convenient for this common use case:
+
+.. code-block:: php
+    :caption: Usage of assertObjectEquals()
+    :name: appendixes.assertions.assertObjectEquals.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class SomethingThatUsesEmailTest extends TestCase
+    {
+        public function testSomething(): void
+        {
+            $a = new Email('user@example.org');
+            $b = new Email('user@example.org');
+            $c = new Email('user@example.com');
+
+            // This passes
+            $this->assertObjectEquals($a, $b);
+
+            // This fails
+            $this->assertObjectEquals($a, $c);
+        }
+    }
+
+.. code-block:: php
+    :caption: Email value object with equals() method
+    :name: appendixes.assertions.Email.example
+
+    <?php declare(strict_types=1);
+    final class Email
+    {
+        private string $email;
+
+        public function __construct(string $email)
+        {
+            $this->ensureIsValidEmail($email);
+
+            $this->email = $email;
+        }
+
+        public function asString(): string
+        {
+            return $this->email;
+        }
+
+        public function equals(self $other): bool
+        {
+            return $this->asString() === $other->asString();
+        }
+
+        private function ensureIsValidEmail(string $email): void
+        {
+            // ...
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit EqualsTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F                                                                   1 / 1 (100%)
+
+    Time: 00:00.017, Memory: 4.00 MB
+
+    There was 1 failure:
+
+    1) SomethingThatUsesEmailTest::testSomething
+    Failed asserting that two objects are equal.
+    The objects are not equal according to Email::equals().
+
+    /home/sb/SomethingThatUsesEmailTest.php:16
+
+    FAILURES!
+    Tests: 1, Assertions: 2, Failures: 1.
+
+Please note:
+
+* A method with name ``$method`` must exist on the ``$actual`` object
+* The method must accept exactly one argument
+* The respective parameter must have a declared type
+* The ``$expected`` object must be compatible with this declared type
+* The method must have a declared ``bool`` return type
+
+If any of the aforementioned assumptions is not fulfilled or if ``$actual->$method($expected)`` returns ``false`` then the assertion fails.
+
 .. _appendixes.assertions.assertFalse:
 
 assertFalse()
@@ -1033,12 +1127,12 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
     :caption: Usage of assertFalse()
     :name: appendixes.assertions.assertFalse.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FalseTest extends TestCase
+    final class FalseTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFalse(true);
         }
@@ -1078,12 +1172,12 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     :caption: Usage of assertFileEquals()
     :name: appendixes.assertions.assertFileEquals.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FileEqualsTest extends TestCase
+    final class FileEqualsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFileEquals('/home/sb/expected', '/home/sb/actual');
         }
@@ -1129,12 +1223,12 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     :caption: Usage of assertFileExists()
     :name: appendixes.assertions.assertFileExists.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FileExistsTest extends TestCase
+    final class FileExistsTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFileExists('/path/to/file');
         }
@@ -1174,12 +1268,12 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     :caption: Usage of assertFileIsReadable()
     :name: appendixes.assertions.assertFileIsReadable.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FileIsReadableTest extends TestCase
+    final class FileIsReadableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFileIsReadable('/path/to/file');
         }
@@ -1219,12 +1313,12 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     :caption: Usage of assertFileIsWritable()
     :name: appendixes.assertions.assertFileIsWritable.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class FileIsWritableTest extends TestCase
+    final class FileIsWritableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertFileIsWritable('/path/to/file');
         }
@@ -1262,12 +1356,12 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     :caption: Usage of assertGreaterThan()
     :name: appendixes.assertions.assertGreaterThan.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class GreaterThanTest extends TestCase
+    final class GreaterThanTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertGreaterThan(2, 1);
         }
@@ -1305,17 +1399,16 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     :caption: Usage of assertGreaterThanOrEqual()
     :name: appendixes.assertions.assertGreaterThanOrEqual.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class GreatThanOrEqualTest extends TestCase
+    final class GreatThanOrEqualTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertGreaterThanOrEqual(2, 1);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1351,17 +1444,16 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
     :caption: Usage of assertInfinite()
     :name: appendixes.assertions.assertInfinite.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class InfiniteTest extends TestCase
+    final class InfiniteTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertInfinite(1);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1397,17 +1489,16 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
     :caption: Usage of assertInstanceOf()
     :name: appendixes.assertions.assertInstanceOf.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class InstanceOfTest extends TestCase
+    final class InstanceOfTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertInstanceOf(RuntimeException::class, new Exception);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1484,12 +1575,12 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``bool
     :caption: Usage of assertIsBool()
     :name: appendixes.assertions.assertIsBool.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class BoolTest extends TestCase
+    final class BoolTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertIsBool(null);
         }
@@ -1916,17 +2007,16 @@ Reports an error identified by ``$message`` if the file or directory specified b
     :caption: Usage of assertIsReadable()
     :name: appendixes.assertions.assertIsReadable.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class IsReadableTest extends TestCase
+    final class IsReadableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertIsReadable('/path/to/unreadable');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1962,17 +2052,16 @@ Reports an error identified by ``$message`` if the file or directory specified b
     :caption: Usage of assertIsWritable()
     :name: appendixes.assertions.assertIsWritable.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class IsWritableTest extends TestCase
+    final class IsWritableTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertIsWritable('/path/to/unwritable');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2007,18 +2096,17 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
     :caption: Usage of assertJsonFileEqualsJsonFile()
     :name: appendixes.assertions.assertJsonFileEqualsJsonFile.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class JsonFileEqualsJsonFileTest extends TestCase
+    final class JsonFileEqualsJsonFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertJsonFileEqualsJsonFile(
               'path/to/fixture/file', 'path/to/actual/file');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2053,19 +2141,18 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
     :caption: Usage of assertJsonStringEqualsJsonFile()
     :name: appendixes.assertions.assertJsonStringEqualsJsonFile.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class JsonStringEqualsJsonFileTest extends TestCase
+    final class JsonStringEqualsJsonFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertJsonStringEqualsJsonFile(
                 'path/to/fixture/file', json_encode(['Mascot' => 'ux'])
             );
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2100,12 +2187,12 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
     :caption: Usage of assertJsonStringEqualsJsonString()
     :name: appendixes.assertions.assertJsonStringEqualsJsonString.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class JsonStringEqualsJsonStringTest extends TestCase
+    final class JsonStringEqualsJsonStringTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertJsonStringEqualsJsonString(
                 json_encode(['Mascot' => 'Tux']),
@@ -2113,7 +2200,6 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
             );
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2154,17 +2240,16 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     :caption: Usage of assertLessThan()
     :name: appendixes.assertions.assertLessThan.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class LessThanTest extends TestCase
+    final class LessThanTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertLessThan(1, 2);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2198,17 +2283,16 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     :caption: Usage of assertLessThanOrEqual()
     :name: appendixes.assertions.assertLessThanOrEqual.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class LessThanOrEqualTest extends TestCase
+    final class LessThanOrEqualTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertLessThanOrEqual(1, 2);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2242,17 +2326,16 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
     :caption: Usage of assertNan()
     :name: appendixes.assertions.assertNan.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class NanTest extends TestCase
+    final class NanTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertNan(1);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2288,17 +2371,16 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
     :caption: Usage of assertNull()
     :name: appendixes.assertions.assertNull.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class NullTest extends TestCase
+    final class NullTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertNull('foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2334,17 +2416,16 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
     :caption: Usage of assertObjectHasAttribute()
     :name: appendixes.assertions.assertObjectHasAttribute.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ObjectHasAttributeTest extends TestCase
+    final class ObjectHasAttributeTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertObjectHasAttribute('foo', new stdClass);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2368,7 +2449,7 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
 .. _appendixes.assertions.assertMatchesRegularExpression:
 
 assertMatchesRegularExpression()
-##############
+################################
 
 ``assertMatchesRegularExpression(string $pattern, string $string[, string $message = ''])``
 
@@ -2380,17 +2461,16 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
     :caption: Usage of assertMatchesRegularExpression()
     :name: appendixes.assertions.assertMatchesRegularExpression.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class RegExpTest extends TestCase
+    final class RegExpTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertMatchesRegularExpression('/foo/', 'bar');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2426,17 +2506,16 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     :caption: Usage of assertStringMatchesFormat()
     :name: appendixes.assertions.assertStringMatchesFormat.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringMatchesFormatTest extends TestCase
+    final class StringMatchesFormatTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringMatchesFormat('%i', 'foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2522,17 +2601,16 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     :caption: Usage of assertStringMatchesFormatFile()
     :name: appendixes.assertions.assertStringMatchesFormatFile.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringMatchesFormatFileTest extends TestCase
+    final class StringMatchesFormatFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringMatchesFormatFile('/path/to/expected.txt', 'foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2569,17 +2647,16 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     :caption: Usage of assertSame()
     :name: appendixes.assertions.assertSame.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SameTest extends TestCase
+    final class SameTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertSame('2204', 2204);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2608,17 +2685,16 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     :caption: Usage of assertSame() with objects
     :name: appendixes.assertions.assertSame.example2
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SameTest extends TestCase
+    final class SameTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertSame(new stdClass, new stdClass);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2654,17 +2730,16 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
     :caption: Usage of assertStringEndsWith()
     :name: appendixes.assertions.assertStringEndsWith.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringEndsWithTest extends TestCase
+    final class StringEndsWithTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringEndsWith('suffix', 'foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2700,17 +2775,16 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     :caption: Usage of assertStringEqualsFile()
     :name: appendixes.assertions.assertStringEqualsFile.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringEqualsFileTest extends TestCase
+    final class StringEqualsFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringEqualsFile('/home/sb/expected', 'actual');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2752,17 +2826,16 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
     :caption: Usage of assertStringStartsWith()
     :name: appendixes.assertions.assertStringStartsWith.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StringStartsWithTest extends TestCase
+    final class StringStartsWithTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertStringStartsWith('prefix', 'foo');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2804,12 +2877,12 @@ Reports an error identified by ``$message`` if the ``$value`` does not match the
     :caption: Usage of assertThat()
     :name: appendixes.assertions.assertThat.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class BiscuitTest extends TestCase
+    final class BiscuitTest extends TestCase
     {
-        public function testEquals()
+        public function testEquals(): void
         {
             $theBiscuit = new Biscuit('Ginger');
             $myBiscuit  = new Biscuit('Ginger');
@@ -2822,7 +2895,6 @@ Reports an error identified by ``$message`` if the ``$value`` does not match the
             );
         }
     }
-    ?>
 
 :numref:`appendixes.assertions.assertThat.tables.constraints` shows the
 available ``PHPUnit\Framework\Constraint`` classes.
@@ -2856,7 +2928,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that checks if the file(name) is writable.
     * - ``PHPUnit\Framework\Constraint\GreaterThan greaterThan(mixed $value)``
       - Constraint that asserts that the value is greater than a given value.
-    * - ``PHPUnit\Framework\Constraint\Or greaterThanOrEqual(mixed $value)``
+    * - ``PHPUnit\Framework\Constraint\LogicalOr greaterThanOrEqual(mixed $value)``
       - Constraint that asserts that the value is greater than or equal to a given value.
     * - ``PHPUnit\Framework\Constraint\ClassHasAttribute classHasAttribute(string $attributeName)``
       - Constraint that asserts that the class has a given attribute.
@@ -2878,7 +2950,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the value is of a specified type.
     * - ``PHPUnit\Framework\Constraint\LessThan lessThan(mixed $value)``
       - Constraint that asserts that the value is smaller than a given value.
-    * - ``PHPUnit\Framework\Constraint\Or lessThanOrEqual(mixed $value)``
+    * - ``PHPUnit\Framework\Constraint\LogicalOr lessThanOrEqual(mixed $value)``
       - Constraint that asserts that the value is smaller than or equal to a given value.
     * - ``logicalAnd()``
       - Logical AND.
@@ -2912,17 +2984,16 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
     :caption: Usage of assertTrue()
     :name: appendixes.assertions.assertTrue.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class TrueTest extends TestCase
+    final class TrueTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertTrue(false);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -2958,18 +3029,17 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
     :caption: Usage of assertXmlFileEqualsXmlFile()
     :name: appendixes.assertions.assertXmlFileEqualsXmlFile.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class XmlFileEqualsXmlFileTest extends TestCase
+    final class XmlFileEqualsXmlFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertXmlFileEqualsXmlFile(
               '/home/sb/expected.xml', '/home/sb/actual.xml');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -3013,18 +3083,17 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     :caption: Usage of assertXmlStringEqualsXmlFile()
     :name: appendixes.assertions.assertXmlStringEqualsXmlFile.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class XmlStringEqualsXmlFileTest extends TestCase
+    final class XmlStringEqualsXmlFileTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertXmlStringEqualsXmlFile(
               '/home/sb/expected.xml', '<foo><baz/></foo>');
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -3068,18 +3137,17 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     :caption: Usage of assertXmlStringEqualsXmlString()
     :name: appendixes.assertions.assertXmlStringEqualsXmlString.example
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class XmlStringEqualsXmlStringTest extends TestCase
+    final class XmlStringEqualsXmlStringTest extends TestCase
     {
-        public function testFailure()
+        public function testFailure(): void
         {
             $this->assertXmlStringEqualsXmlString(
               '<foo><bar/></foo>', '<foo><baz/></foo>');
         }
     }
-    ?>
 
 .. parsed-literal::
 

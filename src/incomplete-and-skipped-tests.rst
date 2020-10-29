@@ -16,7 +16,7 @@ by writing empty test methods such as:
 
 .. code-block:: php
 
-    public function testSomething()
+    public function testSomething(): void
     {
     }
 
@@ -50,12 +50,12 @@ exception) in the test method, we mark the test as being incomplete.
     :caption: Marking a test as incomplete
     :name: incomplete-and-skipped-tests.incomplete-tests.examples.SampleTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class SampleTest extends TestCase
+    final class SampleTest extends TestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             // Optional: Test anything here, if you want.
             $this->assertTrue(true, 'This should already work.');
@@ -66,7 +66,6 @@ exception) in the test method, we mark the test as being incomplete.
             );
         }
     }
-    ?>
 
 An incomplete test is denoted by an ``I`` in the output
 of the PHPUnit command-line test runner, as shown in the following
@@ -112,8 +111,8 @@ Skipping Tests
 
 Not all tests can be run in every environment. Consider, for instance,
 a database abstraction layer that has several drivers for the different
-database systems it supports. The tests for the MySQL driver can of
-course only be run if a MySQL server is available.
+database systems it supports. The tests for the MySQL driver can
+only be run if a MySQL server is available.
 
 :numref:`incomplete-and-skipped-tests.skipping-tests.examples.DatabaseTest.php`
 shows a test case class, ``DatabaseTest``, that contains one test
@@ -126,10 +125,10 @@ method to skip the test if it is not.
     :caption: Skipping a test
     :name: incomplete-and-skipped-tests.skipping-tests.examples.DatabaseTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DatabaseTest extends TestCase
+    final class DatabaseTest extends TestCase
     {
         protected function setUp(): void
         {
@@ -140,12 +139,11 @@ method to skip the test if it is not.
             }
         }
 
-        public function testConnection()
+        public function testConnection(): void
         {
             // ...
         }
     }
-    ?>
 
 A test that has been skipped is denoted by an ``S`` in
 the output of the PHPUnit command-line test runner, as shown in the
@@ -232,27 +230,26 @@ The following operators are supported for PHP, PHPUnit, and extension version co
     :caption: Skipping test cases using @requires
     :name: incomplete-and-skipped-tests.skipping-tests.examples.DatabaseClassSkippingTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @requires extension mysqli
      */
-    class DatabaseTest extends TestCase
+    final class DatabaseTest extends TestCase
     {
         /**
          * @requires PHP >= 5.3
          */
-        public function testConnection()
+        public function testConnection(): void
         {
             // Test requires the mysqli extension and PHP >= 5.3
         }
 
         // ... All other tests require the mysqli extension
     }
-    ?>
 
 If you are using syntax that doesn't compile with a certain PHP Version look into the xml
-configuration for version dependent includes in :ref:`appendixes.configuration.phpunit.testsuites`
+configuration for version dependent includes in :ref:`appendixes.configuration.testsuites`
 
 

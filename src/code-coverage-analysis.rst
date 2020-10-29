@@ -26,9 +26,7 @@ extensions for PHP or by `PHPDBG <https://www.php.net/manual/en/book.phpdbg.php>
 
    If you see a warning while running tests that no code coverage driver is
    available, it means that you are using the PHP CLI binary (``php``) and do not
-   have Xdebug loaded. The `Xdebug installation guide <https://xdebug.org/docs/install>`_
-   explains how Xdebug can be installed and configured. Alternatively, you may use
-   the PHPDBG binary (``phpdbg``) instead of the PHP CLI one.
+   have Xdebug or PCOV loaded.
 
 PHPUnit can generate an HTML-based code coverage report as well as
 XML-based logfiles with code coverage information in various formats
@@ -38,7 +36,7 @@ processing.
 
 Please refer to :ref:`textui` for a list of command line switches
 that control code coverage functionality as well as
-:ref:`appendixes.configuration.phpunit.logging` for the relevant
+:ref:`appendixes.configuration.logging` for the relevant
 configuration settings.
 
 .. _code-coverage-analysis.metrics:
@@ -52,28 +50,6 @@ Various software metrics exist to measure code coverage:
 
     The *Line Coverage* software metric measures
     whether each executable line was executed.
-
-*Function and Method Coverage*
-
-    The *Function and Method Coverage* software
-    metric measures whether each function or method has been invoked.
-    php-code-coverage only considers a function or method as covered when
-    all of its executable lines are covered.
-
-*Class and Trait Coverage*
-
-    The *Class and Trait Coverage* software metric
-    measures whether each method of a class or trait is covered.
-    php-code-coverage only considers a class or trait as covered when all
-    of its methods are covered.
-
-*Opcode Coverage*
-
-    The *Opcode Coverage* software metric measures
-    whether each opcode of a function or method has been executed while
-    running the test suite. A line of code usually compiles into more
-    than one opcode. Line Coverage regards a line of code as covered as
-    soon as one of its opcodes is executed.
 
 *Branch Coverage*
 
@@ -90,6 +66,20 @@ Various software metrics exist to measure code coverage:
     a unique sequence of branches from the entry of the function or
     method to its exit.
 
+*Function and Method Coverage*
+
+    The *Function and Method Coverage* software
+    metric measures whether each function or method has been invoked.
+    php-code-coverage only considers a function or method as covered when
+    all of its executable lines are covered.
+
+*Class and Trait Coverage*
+
+    The *Class and Trait Coverage* software metric
+    measures whether each method of a class or trait is covered.
+    php-code-coverage only considers a class or trait as covered when all
+    of its methods are covered.
+
 *Change Risk Anti-Patterns (CRAP) Index*
 
     The *Change Risk Anti-Patterns (CRAP) Index* is
@@ -98,13 +88,6 @@ Various software metrics exist to measure code coverage:
     coverage will have a low CRAP index. The CRAP index can be lowered
     by writing tests and by refactoring the code to lower its
     complexity.
-
-.. admonition:: Note
-
-   The *Opcode Coverage*,
-   *Branch Coverage*, and
-   *Path Coverage* software metrics are not yet
-   supported by php-code-coverage.
 
 .. _code-coverage-analysis.including-files:
 
@@ -115,7 +98,7 @@ It is mandatory to configure a filter for telling
 PHPUnit which sourcecode files to include in the code coverage report.
 This can either be done using the ``--coverage-filter``
 :ref:`command line <textui.clioptions>` option or via the
-configuration file (see :ref:`appendixes.configuration.phpunit.filter`).
+configuration file (see :ref:`appendixes.configuration.coverage.include`).
 
 The ``includeUncoveredFilesInCodeCoverageReport`` and ``processUncoveredFilesForCodeCoverageReport`` configuration settings are available to configure how the filter is used:
 
@@ -150,25 +133,25 @@ using the ``@codeCoverageIgnore``,
     :caption: Using the ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
     :name: code-coverage-analysis.ignoring-code-blocks.examples.Sample.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @codeCoverageIgnore
      */
-    class Foo
+    final class Foo
     {
-        public function bar()
+        public function bar(): void
         {
         }
     }
 
-    class Bar
+    final class Bar
     {
         /**
          * @codeCoverageIgnore
          */
-        public function foo()
+        public function foo(): void
         {
         }
     }
@@ -180,7 +163,6 @@ using the ``@codeCoverageIgnore``,
     }
 
     exit; // @codeCoverageIgnore
-    ?>
 
 The ignored lines of code (marked as ignored using the annotations)
 are counted as executed (if they are executable) and will not be
@@ -214,39 +196,38 @@ shows an example.
     :caption: Test class that specifies which class it wants to cover
     :name: code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     /**
      * @covers \Invoice
      * @uses \Money
      */
-    class InvoiceTest extends TestCase
+    final class InvoiceTest extends TestCase
     {
-        protected $subject;
+        private $invoice;
 
         protected function setUp(): void
         {
-            $this->subject = new Invoice();
+            $this->invoice = new Invoice;
         }
 
-        public function testAmountInitiallyIsEmpty()
+        public function testAmountInitiallyIsEmpty(): void
         {
-            $this->assertEquals(new Money(), $this->subject->getAmount);
+            $this->assertEquals(new Money, $this->invoice->getAmount());
         }
     }
-    ?>
 
 .. code-block:: php
     :caption: Tests that specify which method they want to cover
     :name: code-coverage-analysis.specifying-covered-parts.examples.BankAccountTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class BankAccountTest extends TestCase
+    final class BankAccountTest extends TestCase
     {
-        protected $ba;
+        private $ba;
 
         protected function setUp(): void
         {
@@ -256,7 +237,7 @@ shows an example.
         /**
          * @covers \BankAccount::getBalance
          */
-        public function testBalanceIsInitiallyZero()
+        public function testBalanceIsInitiallyZero(): void
         {
             $this->assertSame(0, $this->ba->getBalance());
         }
@@ -264,7 +245,7 @@ shows an example.
         /**
          * @covers \BankAccount::withdrawMoney
          */
-        public function testBalanceCannotBecomeNegative()
+        public function testBalanceCannotBecomeNegative(): void
         {
             try {
                 $this->ba->withdrawMoney(1);
@@ -282,7 +263,7 @@ shows an example.
         /**
          * @covers \BankAccount::depositMoney
          */
-        public function testBalanceCannotBecomeNegative2()
+        public function testBalanceCannotBecomeNegative2(): void
         {
             try {
                 $this->ba->depositMoney(-1);
@@ -302,7 +283,7 @@ shows an example.
          * @covers \BankAccount::depositMoney
          * @covers \BankAccount::withdrawMoney
          */
-        public function testDepositWithdrawMoney()
+        public function testDepositWithdrawMoney(): void
         {
             $this->assertSame(0, $this->ba->getBalance());
             $this->ba->depositMoney(1);
@@ -311,7 +292,6 @@ shows an example.
             $this->assertSame(0, $this->ba->getBalance());
         }
     }
-    ?>
 
 It is also possible to specify that a test should not cover
 *any* method by using the
@@ -324,15 +304,15 @@ generate code coverage with unit tests.
     :caption: A test that specifies that no method should be covered
     :name: code-coverage-analysis.specifying-covered-parts.examples.GuestbookIntegrationTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\DbUnit\TestCase
 
-    class GuestbookIntegrationTest extends TestCase
+    final class GuestbookIntegrationTest extends TestCase
     {
         /**
          * @coversNothing
          */
-        public function testAddEntry()
+        public function testAddEntry(): void
         {
             $guestbook = new Guestbook();
             $guestbook->addEntry("suzy", "Hello world!");
@@ -347,7 +327,6 @@ generate code coverage with unit tests.
             $this->assertTablesEqual($expectedTable, $queryTable);
         }
     }
-    ?>
 
 .. _code-coverage-analysis.edge-cases:
 
@@ -360,7 +339,7 @@ coverage information.
 .. code-block:: php
     :name: code-coverage-analysis.edge-cases.examples.Sample.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
     // Because it is "line based" and not statement base coverage
@@ -378,31 +357,3 @@ coverage information.
     if (false) {
         this_call_will_never_show_up_as_covered();
     }
-    ?>
-
-Speeding Up Code Coverage with Xdebug
-#####################################
-
-The performance of code coverage data collection with Xdebug 2.6 (and later) can
-be significantly improved by delegating filtering to Xdebug.
-
-In order to do this, the first step is to generate the filter script for Xdebug
-using the ``--dump-xdebug-filter`` option:
-
-.. code-block:: bash
-
-    $ phpunit --dump-xdebug-filter build/xdebug-filter.php
-    PHPUnit 7.4.0 by Sebastian Bergmann and contributors.
-
-    Runtime:       PHP 7.2.11 with Xdebug 2.6.1
-    Configuration: /workspace/project/phpunit.xml
-
-    Wrote Xdebug filter script to build/xdebug-filter.php
-
-Now we can use the ``--prepend`` option to load the Xdebug filter script as early
-as possible when we want to generate a code coverage report:
-
-.. code-block:: bash
-
-    $ phpunit --prepend build/xdebug-filter.php --coverage-html build/coverage-report
-

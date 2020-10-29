@@ -12,8 +12,8 @@ original state when the test is complete. This known state is called
 the *fixture* of the test.
 
 In :ref:`writing-tests-for-phpunit.examples.StackTest.php`, the
-fixture was simply the array that is stored in the ``$stack``
-variable. Most of the time, though, the fixture will be more complex
+fixture was the array that is stored in the ``$stack`` variable.
+Most of the time, though, the fixture will be more complex
 than a simple array, and the amount of code needed to set it up will
 grow accordingly. The actual content of the test gets lost in the noise
 of setting up the fixture. This problem gets even worse when you write
@@ -47,33 +47,35 @@ assertion method.
     :caption: Using setUp() to create the stack fixture
     :name: fixtures.examples.StackTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
-        protected $stack;
+        private $stack;
 
         protected function setUp(): void
         {
             $this->stack = [];
         }
 
-        public function testEmpty()
+        public function testEmpty(): void
         {
             $this->assertTrue(empty($this->stack));
         }
 
-        public function testPush()
+        public function testPush(): void
         {
             array_push($this->stack, 'foo');
+
             $this->assertSame('foo', $this->stack[count($this->stack)-1]);
             $this->assertFalse(empty($this->stack));
         }
 
-        public function testPop()
+        public function testPop(): void
         {
             array_push($this->stack, 'foo');
+
             $this->assertSame('foo', array_pop($this->stack));
             $this->assertTrue(empty($this->stack));
         }
@@ -95,10 +97,10 @@ case class.
     :caption: Example showing all template methods available
     :name: fixtures.examples.TemplateMethodsTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class TemplateMethodsTest extends TestCase
+    final class TemplateMethodsTest extends TestCase
     {
         public static function setUpBeforeClass(): void
         {
@@ -115,13 +117,13 @@ case class.
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        public function testOne()
+        public function testOne(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
             $this->assertTrue(true);
         }
 
-        public function testTwo()
+        public function testTwo(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
             $this->assertTrue(false);
@@ -238,12 +240,12 @@ database after the last test of the test case, respectively.
     :caption: Sharing fixture between the tests of a test suite
     :name: fixtures.sharing-fixture.examples.DatabaseTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DatabaseTest extends TestCase
+    final class DatabaseTest extends TestCase
     {
-        protected static $dbh;
+        private static $dbh;
 
         public static function setUpBeforeClass(): void
         {
@@ -327,21 +329,21 @@ attributes of classes.
 The ``@backupGlobals`` annotation that is discussed in
 :ref:`appendixes.annotations.backupGlobals` can be used to
 control the backup and restore operations for global variables.
-Alternatively, you can provide a blacklist of global variables that are to
+Alternatively, you can provide a list of global variables that are to
 be excluded from the backup and restore operations like this
 
 .. code-block:: php
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
-        protected $backupGlobalsBlacklist = ['globalVariable'];
+        protected $backupGlobalsExcludeList = ['globalVariable'];
 
         // ...
     }
 
 .. admonition:: Note
 
-   Setting the ``$backupGlobalsBlacklist`` property inside
+   Setting the ``$backupGlobalsExcludeList`` property inside
    e.g. the ``setUp()`` method has no effect.
 
 The ``@backupStaticAttributes`` annotation discussed in
@@ -373,14 +375,14 @@ not static variables within functions.
    instead (and ideally also ``tearDown()``, so as to not
    affect subsequently executed tests).
 
-You can provide a blacklist of static attributes that are to be excluded
+You can provide a list of static attributes that are to be excluded
 from the backup and restore operations:
 
 .. code-block:: php
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
-        protected $backupStaticAttributesBlacklist = [
+        protected $backupStaticAttributesExcludeList = [
             'className' => ['attributeName']
         ];
 
@@ -389,7 +391,7 @@ from the backup and restore operations:
 
 .. admonition:: Note
 
-   Setting the ``$backupStaticAttributesBlacklist`` property
+   Setting the ``$backupStaticAttributesExcludeList`` property
    inside e.g. the ``setUp()`` method has no effect.
 
 

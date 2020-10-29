@@ -28,7 +28,7 @@ Write custom assertions
 When writing custom assertions it is the best practice to follow how
 PHPUnit's own assertions are implemented. As you can see in
 :numref:`extending-phpunit.examples.Assert.php`, the
-``assertTrue()`` method is just a wrapper around the
+``assertTrue()`` method is a wrapper around the
 ``isTrue()`` and ``assertThat()`` methods:
 ``isTrue()`` creates a matcher object that is passed on to
 ``assertThat()`` for evaluation.
@@ -37,38 +37,25 @@ PHPUnit's own assertions are implemented. As you can see in
     :caption: The assertTrue() and isTrue() methods of the PHPUnit\\Framework\\Assert class
     :name: extending-phpunit.examples.Assert.php
 
-    <?php
+    <?php declare(strict_types=1);
     namespace PHPUnit\Framework;
 
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\Framework\Constraint\IsTrue;
 
     abstract class Assert
     {
         // ...
 
-        /**
-         * Asserts that a condition is true.
-         *
-         * @param  boolean $condition
-         * @param  string  $message
-         * @throws PHPUnit\Framework\AssertionFailedError
-         */
-        public static function assertTrue($condition, $message = '')
+        public static function assertTrue($condition, string $message = ''): void
         {
-            self::assertThat($condition, self::isTrue(), $message);
+            static::assertThat($condition, static::isTrue(), $message);
         }
 
         // ...
 
-        /**
-         * Returns a PHPUnit\Framework\Constraint\IsTrue matcher object.
-         *
-         * @return PHPUnit\Framework\Constraint\IsTrue
-         * @since  Method available since Release 3.3.0
-         */
-        public static function isTrue()
+        public static function isTrue(): IsTrue
         {
-            return new PHPUnit\Framework\Constraint\IsTrue;
+            return new IsTrue;
         }
 
         // ...
@@ -83,35 +70,23 @@ abstract base class for matcher objects (or constraints),
     :caption: The PHPUnit\\Framework\Constraint\\IsTrue class
     :name: extending-phpunit.examples.IsTrue.php
 
-    <?php
+    <?php declare(strict_types=1);
     namespace PHPUnit\Framework\Constraint;
 
     use PHPUnit\Framework\Constraint;
 
-    class IsTrue extends Constraint
+    final class IsTrue extends Constraint
     {
-        /**
-         * Evaluates the constraint for parameter $other. Returns true if the
-         * constraint is met, false otherwise.
-         *
-         * @param mixed $other Value or object to evaluate.
-         * @return bool
-         */
-        public function matches($other)
-        {
-            return $other === true;
-        }
-
-        /**
-         * Returns a string representation of the constraint.
-         *
-         * @return string
-         */
-        public function toString()
+        public function toString(): string
         {
             return 'is true';
         }
-    }?>
+
+        protected function matches($other): bool
+        {
+            return $other === true;
+        }
+    }
 
 The effort of implementing the ``assertTrue()`` and
 ``isTrue()`` methods as well as the
@@ -144,7 +119,7 @@ one or more of the following interfaces:
 Each "hook", meaning each of the interfaces listed above, represents an event
 that can occur while the tests are being executed.
 
-See :ref:`appendixes.configuration.phpunit.extensions` for details on how
+See :ref:`appendixes.configuration.extensions` for details on how
 to register extensions in PHPUnit's XML configuration.
 
 :numref:`extending-phpunit.examples.TestRunnerExtension` shows an example
@@ -239,7 +214,7 @@ shown in
         </extension>
     </extensions>
 
-See :ref:`appendixes.configuration.phpunit.extensions.extension.arguments` for
+See :ref:`appendixes.configuration.extensions.extension.arguments` for
 details on how to use the ``arguments`` configuration.
 
 Remember: all configuration is optional, so make sure your extension either has
