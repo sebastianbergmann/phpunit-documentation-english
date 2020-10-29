@@ -630,20 +630,6 @@ Parent elements: ``<include>``, ``<exclude>``
 
 Configures a file for inclusion in or exclusion from code coverage report(s).
 
-The ``phpVersion`` Attribute
-****************************
-
-Possible values: string
-
-Configures a filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
-
-The ``phpVersionOperator`` Attribute
-************************************
-
-Possible values: ``'<'``, ``'lt'``, ``'<='``, ``'le'``, ``'>'``, ``'gt'``, ``'>='``, ``'ge'``, ``'=='``, ``'='``, ``'eq'``, ``'!='``, ``'<>'``, ``'ne'`` (default: ``'>='``)
-
-Configures the comparison operator to be used with ``version_compare()`` for the filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
-
 
 .. _appendixes.configuration.coverage.report:
 
