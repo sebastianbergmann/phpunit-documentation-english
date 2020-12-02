@@ -215,6 +215,102 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
+assertContainsEquals()
+################
+
+``assertContainsEquals(mixed $needle, iterable $haystack[, string $message = ''])``
+
+Reports an error identified by ``$message`` if ``$needle`` is not an element of ``$haystack``.
+
+``assertNotContainsEquals()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertContainsEquals()
+    :name: appendixes.assertions.assertContainsEquals.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class ContainsEqualsTest extends TestCase
+    {
+        public function testFailure(): void
+        {
+            $needle = 'foo';
+            $haystack = ['bar'];
+
+            $this->assertContainsEquals($needle, $haystack);
+        }
+    }
+
+.. parsed-literal::
+    $ phpunit ContainsEqualsTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 00:00.004, Memory: 8.00 MB
+
+    There was 1 failure:
+
+    1) ContainsEqualsTest::testFailure
+    Failed asserting that an array contains 'foo'.
+
+    /home/sb/ContainsTest.php:11
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+``assertContainsEquals(object $needle, iterable $haystack[, string $message = ''])``
+
+Reports an error identified by ``$message`` if the object ``$needle`` is not an element of ``$haystack``.
+It only checks for the objects to have equal attribute values, but it does not check for the variables to reference the same object.
+
+.. code-block:: php
+    :caption: Usage of assertContainsEquals()
+    :name: appendixes.assertions.assertContainsEquals.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+    use \stdClass;
+
+    final class ContainsEqualsTest extends TestCase
+    {
+        public function testFailure(): void
+        {
+            $needle = new stdClass();
+            $needle->foo = 'foo';
+            $needle->bar = 'bar';
+
+            $actual = new stdClass;
+            $actual->foo = 'bar';
+            $actual->bar = 'bar';
+
+            $this->assertContainsEquals($needle, [$actual]);
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit ContainsEqualsTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 00:00.004, Memory: 8.00 MB
+
+    There was 1 failure:
+
+    1) ContainsEqualsTest::testFailure
+    Failed asserting that an array contains stdClass Object &0000000077d10c82000000004b2dd749 (
+        'foo' => 'foo'
+        'bar' => 'bar'
+    ).
+
+    /home/sb/ContainsTest.php:17
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
 assertStringContainsString()
 ############################
 
