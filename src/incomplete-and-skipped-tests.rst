@@ -226,6 +226,8 @@ In addition to the above methods it is also possible to use the
 
 The following operators are supported for PHP, PHPUnit, and extension version constraints: ``<``, ``<=``, ``>``, ``>=``, ``=``, ``==``, ``!=``, ``<>``.
 
+Versions are compared using PHP's `version_compare <https://www.php.net/version_compare>`_ function. Among other things, this means that the ``=`` and ``==`` operator can only be used with complete ``X.Y.Z`` version numbers and that just ``X.Y`` will not work.
+
 .. code-block:: php
     :caption: Skipping test cases using @requires
     :name: incomplete-and-skipped-tests.skipping-tests.examples.DatabaseClassSkippingTest.php
