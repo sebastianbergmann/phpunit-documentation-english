@@ -208,15 +208,15 @@ In addition to the above methods it is also possible to use the
       - @requires PHPUnit 7.3.1
       - @requires PHPUnit < 8
     * - ``OS``
-      - A regexp matching `PHP_OS <http://php.net/manual/en/reserved.constants.php#constant.php-os>`_
+      - A regexp matching `PHP_OS <https://www.php.net/manual/en/reserved.constants.php#constant.php-os>`_
       - @requires OS Linux
       - @requires OS WIN32|WINNT
     * - ``OSFAMILY``
-      - Any `OS family <http://php.net/manual/en/reserved.constants.php#constant.php-os-family>`_
+      - Any `OS family <https://www.php.net/manual/en/reserved.constants.php#constant.php-os-family>`_
       - @requires OSFAMILY Solaris
       - @requires OSFAMILY Windows
     * - ``function``
-      - Any valid parameter to `function_exists <http://php.net/function_exists>`_
+      - Any valid parameter to `function_exists <https://www.php.net/function_exists>`_
       - @requires function imap_open
       - @requires function ReflectionMethod::setAccessible
     * - ``extension``
