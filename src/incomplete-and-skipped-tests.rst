@@ -208,15 +208,15 @@ In addition to the above methods it is also possible to use the
       - @requires PHPUnit 7.3.1
       - @requires PHPUnit < 8
     * - ``OS``
-      - A regexp matching `PHP_OS <http://php.net/manual/en/reserved.constants.php#constant.php-os>`_
+      - A regexp matching `PHP_OS <https://www.php.net/manual/en/reserved.constants.php#constant.php-os>`_
       - @requires OS Linux
       - @requires OS WIN32|WINNT
     * - ``OSFAMILY``
-      - Any `OS family <http://php.net/manual/en/reserved.constants.php#constant.php-os-family>`_
+      - Any `OS family <https://www.php.net/manual/en/reserved.constants.php#constant.php-os-family>`_
       - @requires OSFAMILY Solaris
       - @requires OSFAMILY Windows
     * - ``function``
-      - Any valid parameter to `function_exists <http://php.net/function_exists>`_
+      - Any valid parameter to `function_exists <https://www.php.net/function_exists>`_
       - @requires function imap_open
       - @requires function ReflectionMethod::setAccessible
     * - ``extension``
@@ -225,6 +225,8 @@ In addition to the above methods it is also possible to use the
       - @requires extension redis >= 2.2.0
 
 The following operators are supported for PHP, PHPUnit, and extension version constraints: ``<``, ``<=``, ``>``, ``>=``, ``=``, ``==``, ``!=``, ``<>``.
+
+Versions are compared using PHP's `version_compare <https://www.php.net/version_compare>`_ function. Among other things, this means that the ``=`` and ``==`` operator can only be used with complete ``X.Y.Z`` version numbers and that just ``X.Y`` will not work.
 
 .. code-block:: php
     :caption: Skipping test cases using @requires
