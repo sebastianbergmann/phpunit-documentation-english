@@ -281,7 +281,7 @@ of the array as its arguments.
     final class DataTest extends TestCase
     {
         /**
-         * @dataProvider additionProvider
+         * @dataProvider provideAddCases
          */
         public function testAdd(int $a, int $b, int $expected): void
         {
