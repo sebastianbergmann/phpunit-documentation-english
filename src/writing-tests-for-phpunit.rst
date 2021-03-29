@@ -558,7 +558,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionWithNonNegativeNumbersProvider(): void
+        public function additionWithNonNegativeNumbersProvider(): array
         {
             return [
                 [0, 1, 1],
