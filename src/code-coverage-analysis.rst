@@ -100,7 +100,7 @@ This can either be done using the ``--coverage-filter``
 :ref:`command line <textui.clioptions>` option or via the
 configuration file (see :ref:`appendixes.configuration.coverage.include`).
 
-The ``includeUncoveredFiles` and ``processUncoveredFiles`` configuration settings are available to configure how the filter is used:
+The ``includeUncoveredFiles`` and ``processUncoveredFiles`` configuration settings are available to configure how the filter is used:
 
 - ``includeUncoveredFiles="false"`` means that only files that have at least one line of executed code are included in the code coverage report
 
