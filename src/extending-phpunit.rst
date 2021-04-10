@@ -174,10 +174,10 @@ definition to the extension class:
 
         protected $config_value_2 = 0;
 
-        public function __construct(string $value1 = '', int $value2 = 0)
+        public function __construct(string $config_value_1 = '', int $config_value_2 = 0)
         {
-            $this->config_value_1 = $config_1;
-            $this->config_value_2 = $config_2;
+            $this->config_value_1 = $config_value_1;
+            $this->config_value_2 = $config_value_2;
         }
 
         public function executeBeforeFirstTest(): void
