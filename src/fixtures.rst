@@ -190,11 +190,14 @@ symmetrical in theory but not in practice. In practice, you only need
 to implement ``tearDown()`` if you have allocated
 external resources like files or sockets in ``setUp()``.
 If your ``setUp()`` just creates plain PHP objects, you
-can generally ignore ``tearDown()``. However, if you
+can generally ignore ``tearDown()``. 
+
+However, if you
 create many objects in your ``setUp()``, you might want
 to ``unset()`` the variables pointing to those objects
 in your ``tearDown()`` so they can be garbage collected.
-The garbage collection of test case objects is not predictable.
+Test case objects created within ``setUp()`` are only automatically garbage 
+collected at the end of PHPUnit's execution, or per test when the "Process Isolation" option is used.
 
 .. _fixtures.variations:
 
