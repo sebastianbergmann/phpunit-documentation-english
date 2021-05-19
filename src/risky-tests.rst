@@ -67,25 +67,25 @@ Test Execution Timeout
 ######################
 
 A time limit can be enforced for the execution of a test if the
-``PHP_Invoker`` package is installed and the
-``pcntl`` extension is available. The enforcing of this
-time limit can be enabled by using the
-``--enforce-time-limit`` option on the :ref:`command line <textui.clioptions>`
-or by setting ``enforceTimeLimit="true"`` in PHPUnit's
+`PHP_Invoker <https://packagist.org/packages/phpunit/php-invoker>`_ package
+is installed and the ``pcntl`` extension is available. The enforcing of this
+time limit can be enabled by using the ``--enforce-time-limit`` option
+on the :ref:`command line <textui.clioptions>` or by setting
+``enforceTimeLimit="true"`` in PHPUnit's
 :ref:`configuration file <appendixes.configuration>`.
 
-A test annotated with ``@large`` will fail if it takes
+A test annotated with ``@large`` will be marked as risky if it takes
 longer than 60 seconds to execute. This timeout is configurable via the
 ``timeoutForLargeTests`` attribute in the
 :ref:`configuration file <appendixes.configuration>`.
 
-A test annotated with ``@medium`` will fail if it takes
+A test annotated with ``@medium`` will be marked as risky if it takes
 longer than 10 seconds to execute. This timeout is configurable via the
 ``timeoutForMediumTests`` attribute in the
 configuration :ref:`configuration file <appendixes.configuration>`.
 
-A test annotated with ``@small`` will fail if it takes longer than
-1 second to execute. This timeout is configurable via the
+A test annotated with ``@small`` will be marked as risky if it takes
+longer than 1 second to execute. This timeout is configurable via the
 ``timeoutForSmallTests`` attribute in the
 :ref:`configuration file <appendixes.configuration>`.
 
@@ -94,6 +94,11 @@ A test annotated with ``@small`` will fail if it takes longer than
    Tests need to be explicitly annotated by either ``@small``,
    ``@medium``, or ``@large`` to enable run time limits.
 
+   To exit the test run with a non-zero exit code when tests overrun
+   their time-limit, the ``--fail-on-risky`` option on the
+   :ref:`command line <textui.clioptions>` or the ``failOnRisky="true"``
+   setting in PHPUnit's :ref:`configuration file <appendixes.configuration>`
+   needs to be enabled.
 
 .. _risky-tests.global-state-manipulation:
 
