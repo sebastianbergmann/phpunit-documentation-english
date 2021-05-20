@@ -186,15 +186,17 @@ More setUp() than tearDown()
 ############################
 
 ``setUp()`` and ``tearDown()`` are nicely
-symmetrical in theory but not in practice. In practice, you only need
+symmetrical in theory, but not in practice. In practice, you only need
 to implement ``tearDown()`` if you have allocated
-external resources like files or sockets in ``setUp()``.
+external resources such as files or sockets in ``setUp()``.
 If your ``setUp()`` just creates plain PHP objects, you
-can generally ignore ``tearDown()``. However, if you
-create many objects in your ``setUp()``, you might want
-to ``unset()`` the variables pointing to those objects
-in your ``tearDown()`` so they can be garbage collected.
-The garbage collection of test case objects is not predictable.
+can generally ignore ``tearDown()``. 
+
+However, if you create many objects in your ``setUp()``, you may want
+to ``unset()`` the variables holding those objects
+in your ``tearDown()`` so that they can be garbage collected sooner.
+Objects created within ``setUp()`` are only automatically garbage
+collected at the end of the PHP process that runs PHPUnit.
 
 .. _fixtures.variations:
 
