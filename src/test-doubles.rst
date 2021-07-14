@@ -182,9 +182,32 @@ the same best practice defaults used by ``createMock()``.
     }
 
 In the examples so far we have been returning simple values using
-``willReturn($value)``. This short syntax is the same as
-``will($this->returnValue($value))``. We can use variations
-on this longer syntax to achieve more complex stubbing behaviour.
+``willReturn($value)`` – a short syntax for convenience. :numref:`test-doubles.stubs.shorthands` shows the
+available stubbing short hands alongside their longer counterparts.
+
+.. rst-class:: table
+.. list-table:: Stubbing short hands
+    :name: test-doubles.stubs.shorthands
+    :header-rows: 1
+
+    * - short hand
+      - longer syntax
+    * - ``willReturn($value)``
+      - ``will($this->returnValue($value))``
+    * - ``willReturnArgument($argumentIndex)``
+      - ``will($this->returnArgument($argumentIndex))``
+    * - ``willReturnCallback($callback)``
+      - ``will($this->returnCallback($callback))``
+    * - ``willReturnMap($valueMap)``
+      - ``will($this->returnValueMap($valueMap))``
+    * - ``willReturnOnConsecutiveCalls($value1, $value2)``
+      - ``will($this->onConsecutiveCalls($value1, $value2))``
+    * - ``willReturnSelf()``
+      - ``will($this->returnSelf())``
+    * - ``willThrowException($exception)``
+      - ``will($this->throwException($exception))``
+
+We can use variations on this longer syntax to achieve more complex stubbing behaviour.
 
 Sometimes you want to return one of the arguments of a method call
 (unchanged) as the result of a stubbed method call.
