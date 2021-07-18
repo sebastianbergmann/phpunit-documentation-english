@@ -915,7 +915,7 @@ When the generated output would be long to read PHPUnit will split it up
 and provide a few lines of context around every difference.
 
 .. code-block:: php
-    :caption: Error output when an array comparison of an long array fails
+    :caption: Error output when an array comparison of a long array fails
     :name: writing-tests-for-phpunit.error-output.examples.LongArrayDiffTest.php
 
     <?php declare(strict_types=1);
