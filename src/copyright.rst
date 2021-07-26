@@ -8,7 +8,7 @@ Copyright
 
 .. code-block:: text
 
-    Copyright (c) 2005-2020 Sebastian Bergmann.
+    Copyright (c) 2005-2021 Sebastian Bergmann.
 
     This work is licensed under the Creative Commons Attribution 3.0
     Unported License.
