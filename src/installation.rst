@@ -86,6 +86,17 @@ It is a common practice to make the PHAR executable:
     $ ./phpunit-|version|.phar --version
     PHPUnit x.y.z by Sebastian Bergmann and contributors.
 
+.. _installation.phar.implementation-details:
+
+PHAR Implementation Details
+===========================
+
+To avoid problems that occur when the code under test shares dependencies with PHPUnit but requires different versions than the ones bundled in the PHAR, the following measures have been implemented.
+
+With the exception of classes such as `PHPUnit\\Framework\\TestCase` that are part of PHPUnit's public API, all units of code bundled in PHPUnit's PHAR distribution, including all dependencies such as vendor directories, are moved to a new and distinct namespace.
+
+PHPUnit's PHAR distribution does not use dynamic autoloading to load the bundled units of code. Instead, all units of code bundled in the PHAR are loaded on startup.
+
 .. _installation.phar.verification:
 
 Verifying PHPUnit PHAR Releases
