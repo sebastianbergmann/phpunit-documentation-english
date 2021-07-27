@@ -120,9 +120,12 @@ against its detached signature (:file:`phpunit-x.y.phar.asc`):
 
 .. parsed-literal::
 
-    $ gpg phpunit-|version|.phar.asc
-    gpg: Signature made Sat 19 Jul 2014 01:28:02 PM CEST using RSA key ID 6372C20A
-    gpg: Can't check signature: public key not found
+    $ gpg --verify phpunit-|version|.phar.asc
+    gpg: assuming signed data in 'phpunit-8.5.phar'
+    gpg: Signature made Mon Jul 19 06:13:42 2021 UTC
+    gpg:                using RSA key D8406D0D82947747293778314AA394086372C20A
+    gpg:                issuer "sb@sebastian-bergmann.de"
+    gpg: Can't check signature: No public key
 
 We don't have the release manager's public key (``6372C20A``)
 in our local system. In order to proceed with the verification we need
@@ -134,7 +137,6 @@ are linked together, so you should be able to connect to any key server.
 
     $ curl --silent https://sebastian-bergmann.de/gpg.asc | gpg --import
     gpg: key 4AA394086372C20A: 452 signatures not checked due to missing keys
-    gpg: /root/.gnupg/trustdb.gpg: trustdb created
     gpg: key 4AA394086372C20A: public key "Sebastian Bergmann <sb@sebastian-bergmann.de>" imported
     gpg: Total number processed: 1
     gpg:               imported: 1
@@ -147,14 +149,17 @@ Bergmann. But, let's try to verify the release signature again.
 
 .. parsed-literal::
 
-    $ gpg phpunit-|version|.phar.asc
-    gpg: Signature made Sat 19 Jul 2014 01:28:02 PM CEST using RSA key ID 6372C20A
-    gpg: Good signature from "Sebastian Bergmann <sb@sebastian-bergmann.de>"
-    gpg:                 aka "Sebastian Bergmann <sebastian@php.net>"
-    gpg:                 aka "Sebastian Bergmann <sebastian@thephp.cc>"
-    gpg:                 aka "Sebastian Bergmann <sebastian@phpunit.de>"
-    gpg:                 aka "Sebastian Bergmann <sebastian.bergmann@thephp.cc>"
-    gpg:                 aka "[jpeg image of size 40635]"
+    $ gpg --verify phpunit-|version|.phar.asc
+    gpg: assuming signed data in 'phpunit-|version|.phar'
+    gpg: Signature made Mon Jul 19 06:13:42 2021 UTC
+    gpg:                using RSA key D8406D0D82947747293778314AA394086372C20A
+    gpg:                issuer "sb@sebastian-bergmann.de"
+    gpg: Good signature from "Sebastian Bergmann <sb@sebastian-bergmann.de>" [unknown]
+    gpg:                 aka "Sebastian Bergmann <sebastian@thephp.cc>" [unknown]
+    gpg:                 aka "Sebastian Bergmann <sebastian@phpunit.de>" [unknown]
+    gpg:                 aka "Sebastian Bergmann <sebastian@php.net>" [unknown]
+    gpg:                 aka "Sebastian Bergmann <sebastian.bergmann@thephp.cc>" [unknown]
+    gpg:                 aka "[jpeg image of size 40635]" [unknown]
     gpg: WARNING: This key is not certified with a trusted signature!
     gpg:          There is no indication that the signature belongs to the owner.
     Primary key fingerprint: D840 6D0D 8294 7747 2937  7831 4AA3 9408 6372 C20A
