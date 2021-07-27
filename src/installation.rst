@@ -73,7 +73,7 @@ The PHPUnit PHAR can be used immediately after download:
 
 .. parsed-literal::
 
-    $ wget https://phar.phpunit.de/phpunit-|version|.phar
+    $ curl -LO https://phar.phpunit.de/phpunit-|version|.phar
     $ php phpunit-|version|.phar --version
     PHPUnit x.y.z by Sebastian Bergmann and contributors.
 
@@ -81,7 +81,7 @@ It is a common practice to make the PHAR executable:
 
 .. parsed-literal::
 
-    $ wget https://phar.phpunit.de/phpunit-|version|.phar
+    $ curl -LO https://phar.phpunit.de/phpunit-|version|.phar
     $ chmod +x phpunit-|version|.phar
     $ ./phpunit-|version|.phar --version
     PHPUnit x.y.z by Sebastian Bergmann and contributors.
@@ -112,8 +112,8 @@ detached PGP signature :file:`phpunit.phar.asc`:
 
 .. parsed-literal::
 
-    $ wget https://phar.phpunit.de/phpunit-|version|.phar
-    $ wget https://phar.phpunit.de/phpunit-|version|.phar.asc
+    $ curl -LO https://phar.phpunit.de/phpunit-|version|.phar
+    $ curl -LO https://phar.phpunit.de/phpunit-|version|.phar.asc
 
 We want to verify PHPUnit's PHP Archive (:file:`phpunit-x.y.phar`)
 against its detached signature (:file:`phpunit-x.y.phar.asc`):
