@@ -121,7 +121,7 @@ against its detached signature (:file:`phpunit-x.y.phar.asc`):
 .. parsed-literal::
 
     $ gpg --verify phpunit-|version|.phar.asc
-    gpg: assuming signed data in 'phpunit-8.5.phar'
+    gpg: assuming signed data in 'phpunit-|version|.phar'
     gpg: Signature made Mon Jul 19 06:13:42 2021 UTC
     gpg:                using RSA key D8406D0D82947747293778314AA394086372C20A
     gpg:                issuer "sb@sebastian-bergmann.de"
