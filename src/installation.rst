@@ -127,11 +127,7 @@ against its detached signature (:file:`phpunit-x.y.phar.asc`):
     gpg:                issuer "sb@sebastian-bergmann.de"
     gpg: Can't check signature: No public key
 
-We don't have the release manager's public key (``6372C20A``)
-in our local system. In order to proceed with the verification we need
-to retrieve the release manager's public key from a key server. One such
-server is :file:`pgp.uni-mainz.de`. The public key servers
-are linked together, so you should be able to connect to any key server.
+We do not have the release manager's public key in our local system. In order to proceed with the verification we need to import this key:
 
 .. parsed-literal::
 
