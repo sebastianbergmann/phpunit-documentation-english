@@ -138,7 +138,7 @@ We do not have the release manager's public key in our local system. In order to
     gpg:               imported: 1
     gpg: no ultimately trusted keys found
 
-Now we have received a public key for an entity known as "Sebastian
+Now we have imported a public key for an entity known as "Sebastian
 Bergmann <sb@sebastian-bergmann.de>". However, we have no way of
 verifying this key was created by the person known as Sebastian
 Bergmann. But, let's try to verify the release signature again.
@@ -160,10 +160,10 @@ Bergmann. But, let's try to verify the release signature again.
     gpg:          There is no indication that the signature belongs to the owner.
     Primary key fingerprint: D840 6D0D 8294 7747 2937  7831 4AA3 9408 6372 C20A
 
-At this point, the signature is good, but we don't trust this key. A
+At this point, the signature is good, but we do not trust this key. A
 good signature means that the file has not been tampered. However, due
 to the nature of public key cryptography, you need to additionally
-verify that key ``6372C20A`` was created by the real
+verify that the key you just imported was created by the real
 Sebastian Bergmann.
 
 Any attacker can create a public key and upload it to the public key
