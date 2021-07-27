@@ -73,7 +73,7 @@ The PHPUnit PHAR can be used immediately after download:
 
 .. parsed-literal::
 
-    $ wget https://phar.phpunit.de/phpunit-|version|.phar
+    $ curl -LO https://phar.phpunit.de/phpunit-|version|.phar
     $ php phpunit-|version|.phar --version
     PHPUnit x.y.z by Sebastian Bergmann and contributors.
 
@@ -81,7 +81,7 @@ It is a common practice to make the PHAR executable:
 
 .. parsed-literal::
 
-    $ wget https://phar.phpunit.de/phpunit-|version|.phar
+    $ curl -LO https://phar.phpunit.de/phpunit-|version|.phar
     $ chmod +x phpunit-|version|.phar
     $ ./phpunit-|version|.phar --version
     PHPUnit x.y.z by Sebastian Bergmann and contributors.
@@ -112,57 +112,58 @@ detached PGP signature :file:`phpunit.phar.asc`:
 
 .. parsed-literal::
 
-    $ wget https://phar.phpunit.de/phpunit-|version|.phar
-    $ wget https://phar.phpunit.de/phpunit-|version|.phar.asc
+    $ curl -LO https://phar.phpunit.de/phpunit-|version|.phar
+    $ curl -LO https://phar.phpunit.de/phpunit-|version|.phar.asc
 
 We want to verify PHPUnit's PHP Archive (:file:`phpunit-x.y.phar`)
 against its detached signature (:file:`phpunit-x.y.phar.asc`):
 
 .. parsed-literal::
 
-    $ gpg phpunit-|version|.phar.asc
-    gpg: Signature made Sat 19 Jul 2014 01:28:02 PM CEST using RSA key ID 6372C20A
-    gpg: Can't check signature: public key not found
+    $ gpg --verify phpunit-|version|.phar.asc
+    gpg: assuming signed data in 'phpunit-|version|.phar'
+    gpg: Signature made Mon Jul 19 06:13:42 2021 UTC
+    gpg:                using RSA key D8406D0D82947747293778314AA394086372C20A
+    gpg:                issuer "sb@sebastian-bergmann.de"
+    gpg: Can't check signature: No public key
 
-We don't have the release manager's public key (``6372C20A``)
-in our local system. In order to proceed with the verification we need
-to retrieve the release manager's public key from a key server. One such
-server is :file:`pgp.uni-mainz.de`. The public key servers
-are linked together, so you should be able to connect to any key server.
+We do not have the release manager's public key in our local system. In order to proceed with the verification we need to import this key:
 
 .. parsed-literal::
 
     $ curl --silent https://sebastian-bergmann.de/gpg.asc | gpg --import
     gpg: key 4AA394086372C20A: 452 signatures not checked due to missing keys
-    gpg: /root/.gnupg/trustdb.gpg: trustdb created
     gpg: key 4AA394086372C20A: public key "Sebastian Bergmann <sb@sebastian-bergmann.de>" imported
     gpg: Total number processed: 1
     gpg:               imported: 1
     gpg: no ultimately trusted keys found
 
-Now we have received a public key for an entity known as "Sebastian
+Now we have imported a public key for an entity known as "Sebastian
 Bergmann <sb@sebastian-bergmann.de>". However, we have no way of
 verifying this key was created by the person known as Sebastian
 Bergmann. But, let's try to verify the release signature again.
 
 .. parsed-literal::
 
-    $ gpg phpunit-|version|.phar.asc
-    gpg: Signature made Sat 19 Jul 2014 01:28:02 PM CEST using RSA key ID 6372C20A
-    gpg: Good signature from "Sebastian Bergmann <sb@sebastian-bergmann.de>"
-    gpg:                 aka "Sebastian Bergmann <sebastian@php.net>"
-    gpg:                 aka "Sebastian Bergmann <sebastian@thephp.cc>"
-    gpg:                 aka "Sebastian Bergmann <sebastian@phpunit.de>"
-    gpg:                 aka "Sebastian Bergmann <sebastian.bergmann@thephp.cc>"
-    gpg:                 aka "[jpeg image of size 40635]"
+    $ gpg --verify phpunit-|version|.phar.asc
+    gpg: assuming signed data in 'phpunit-|version|.phar'
+    gpg: Signature made Mon Jul 19 06:13:42 2021 UTC
+    gpg:                using RSA key D8406D0D82947747293778314AA394086372C20A
+    gpg:                issuer "sb@sebastian-bergmann.de"
+    gpg: Good signature from "Sebastian Bergmann <sb@sebastian-bergmann.de>" [unknown]
+    gpg:                 aka "Sebastian Bergmann <sebastian@thephp.cc>" [unknown]
+    gpg:                 aka "Sebastian Bergmann <sebastian@phpunit.de>" [unknown]
+    gpg:                 aka "Sebastian Bergmann <sebastian@php.net>" [unknown]
+    gpg:                 aka "Sebastian Bergmann <sebastian.bergmann@thephp.cc>" [unknown]
+    gpg:                 aka "[jpeg image of size 40635]" [unknown]
     gpg: WARNING: This key is not certified with a trusted signature!
     gpg:          There is no indication that the signature belongs to the owner.
     Primary key fingerprint: D840 6D0D 8294 7747 2937  7831 4AA3 9408 6372 C20A
 
-At this point, the signature is good, but we don't trust this key. A
+At this point, the signature is good, but we do not trust this key. A
 good signature means that the file has not been tampered. However, due
 to the nature of public key cryptography, you need to additionally
-verify that key ``6372C20A`` was created by the real
+verify that the key you just imported was created by the real
 Sebastian Bergmann.
 
 Any attacker can create a public key and upload it to the public key
