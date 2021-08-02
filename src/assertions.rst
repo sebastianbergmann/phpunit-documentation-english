@@ -2788,7 +2788,7 @@ assertSameSize()
 
 ``assertSameSize($expected, $actual, string $message = '')``
 
-Reports an error identified by ``$message`` if the size of ``$actual`` and ``$expected`` is not the same.
+Reports an error identified by ``$message`` if the sizes of ``$actual`` and ``$expected`` are not the same.
 
 ``assertNotSameSize()`` is the inverse of this assertion and takes the same arguments.
 
