@@ -2715,6 +2715,49 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
+assertSameSize()
+######################
+
+``assertSameSize($expected, $actual, string $message = '')``
+
+Reports an error identified by ``$message`` if the size of ``$actual`` and ``$expected`` is not the same.
+
+``assertNotSameSize()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertSameSize()
+    :name: appendixes.assertions.assertSameSize.example
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class SameSizeTest extends TestCase
+    {
+        public function testFailure(): void
+        {
+            $this->assertSameSize([1, 2], [1]);
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit StringEndsWithTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 second, Memory: 4.00Mb
+
+    There was 1 failure:
+
+    1) SameSizeTest::testFailure
+    Failed asserting that actual size 1 matches expected size 2.
+
+    /home/sb/SameSizeTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
 .. _appendixes.assertions.assertStringEndsWith:
 
 assertStringEndsWith()
