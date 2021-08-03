@@ -438,6 +438,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
             rewind($this->file);
 
             $this->current = fgetcsv($this->file);
+
             if (is_array($row)) {
                 $row = array_map('intval', $row);
             }
@@ -463,6 +464,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
         public function next(): void
         {
             $this->current = fgetcsv($this->file);
+
             if (is_array($row)) {
                 $row = array_map('intval', $row);
             }
