@@ -684,6 +684,7 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
    of the ``@test`` annotation.
 
 When using the ``@testdox`` annotation at method level with a ``@dataProvider`` you may use the method parameters as placeholders in your alternative description.
+``$_dataName`` is available in addition to use the actual name of the current data. That would be ``data set 1`` up to 4 in below example.
 
 .. code-block:: php
 
@@ -699,10 +700,10 @@ When using the ``@testdox`` annotation at method level with a ``@dataProvider`` 
     public function additionProvider()
     {
         return [
-            [0, 0, 0],
-            [0, 1, 1],
-            [1, 0, 1],
-            [1, 1, 3]
+            'data set 1' => [0, 0, 0],
+            'data set 2' => [0, 1, 1],
+            'data set 3' => [1, 0, 1],
+            'data set 4' => [1, 1, 3]
         ];
     }
 
