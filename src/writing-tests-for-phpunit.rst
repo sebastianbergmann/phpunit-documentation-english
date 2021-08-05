@@ -368,6 +368,12 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
     FAILURES!
     Tests: 4, Assertions: 4, Failures: 1.
 
+.. admonition:: Note
+
+    You can make the test output more verbose by defining a sentence and using the test's parameter names as placeholders
+    (``$a``, ``$b`` and ``$expected`` in the example above) with the :ref:`appendixes.annotations.testdox` annotation.
+    You can also refer to the name of a named data set with ``$_dataName``.
+
 .. code-block:: php
     :caption: Using a data provider that returns an Iterator object
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest2.php
@@ -442,7 +448,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
             if (is_array($row)) {
                 $row = array_map('intval', $row);
             }
-            
+
             $this->key     = 0;
         }
 
