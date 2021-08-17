@@ -213,6 +213,15 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the test suite execution should be stopped after the first test finished with a status "error", "failure", "risky" or "warning".
 
+.. _appendixes.configuration.phpunit.failOnIncomplete:
+
+The ``failOnIncomplete`` Attribute
+-----------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that were marked as incomplete.
+
 .. _appendixes.configuration.phpunit.failOnRisky:
 
 The ``failOnRisky`` Attribute
@@ -221,6 +230,15 @@ The ``failOnRisky`` Attribute
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that were marked as risky.
+
+.. _appendixes.configuration.phpunit.failOnSkipped:
+
+The ``failOnSkipped`` Attribute
+-----------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that were marked as skipped.
 
 .. _appendixes.configuration.phpunit.failOnWarning:
 
