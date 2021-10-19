@@ -662,6 +662,7 @@ Configures the code coverage reports to be generated.
 
     <report>
         <clover outputFile="clover.xml"/>
+        <cobertura outputFile="cobertura.xml"/>
         <crap4j outputFile="crap4j.xml" threshold="50"/>
         <html outputDirectory="html-coverage" lowUpperBound="50" highLowerBound="90"/>
         <php outputFile="coverage.php"/>
@@ -686,6 +687,21 @@ Possible values: string
 
 The file to which the Clover XML report is written.
 
+.. _appendixes.configuration.coverage.report.cobertura:
+
+The ``<cobertura>`` Element
+************************
+
+Parent element: ``<report>``
+
+Configures a code coverage report in Cobertura XML format.
+
+The ``outputFile`` Attribute
+++++++++++++++++++++++++++++
+
+Possible values: string
+
+The file to which the Cobertura XML report is written.
 
 .. _appendixes.configuration.coverage.report.crap4j:
 
