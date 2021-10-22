@@ -6,7 +6,7 @@
 The XML Configuration File
 ==========================
 
-To get a best pratice ``phpunit.xml`` to start with, run ``phpunit --generate-configuration``.
+To get a best practice ``phpunit.xml`` to start with, run ``phpunit --generate-configuration``.
 
 .. _appendixes.configuration.phpunit:
 
