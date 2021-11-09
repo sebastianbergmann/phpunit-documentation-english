@@ -30,7 +30,7 @@ extensions for PHP or by `PHPDBG <https://www.php.net/manual/en/book.phpdbg.php>
 
 PHPUnit can generate an HTML-based code coverage report as well as
 XML-based logfiles with code coverage information in various formats
-(Clover, Crap4J, PHPUnit). Code coverage information can also be reported
+(Clover, Cobertura, Crap4J, PHPUnit). Code coverage information can also be reported
 as text (and printed to STDOUT) and exported as PHP code for further
 processing.
 
