@@ -140,7 +140,7 @@ html_theme_options = {
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = ['_templates']
 
-html_add_permalinks = ""
+#html_add_permalinks = ""
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
