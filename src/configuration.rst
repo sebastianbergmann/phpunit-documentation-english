@@ -216,7 +216,7 @@ This attribute configures whether the test suite execution should be stopped aft
 .. _appendixes.configuration.phpunit.failOnIncomplete:
 
 The ``failOnIncomplete`` Attribute
------------------------------
+----------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -234,7 +234,7 @@ This attribute configures whether the PHPUnit test runner should exit with a she
 .. _appendixes.configuration.phpunit.failOnSkipped:
 
 The ``failOnSkipped`` Attribute
------------------------------
+-------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -690,7 +690,7 @@ The file to which the Clover XML report is written.
 .. _appendixes.configuration.coverage.report.cobertura:
 
 The ``<cobertura>`` Element
-************************
+***************************
 
 Parent element: ``<report>``
 
