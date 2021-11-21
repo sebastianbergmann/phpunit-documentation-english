@@ -36,21 +36,3 @@ To build the complete documentation run:
 ```
 $ make html
 ```
-
-Afterwards you will find the HTML files in `build/html`.
-
-## Proofreading Automation
-
-### Setup
-
-```
-$ pip install docutils-ast-writer
-$ npm install
-```
-
-### Usage
-
-```
-$ ./node_modules/.bin/textlint src
-```
-
