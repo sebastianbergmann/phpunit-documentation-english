@@ -130,9 +130,9 @@ This attribute configures whether a test will be marked as risky (see :ref:`risk
 The ``printerClass`` Attribute
 ------------------------------
 
-Default: ``PHPUnit\TextUI\ResultPrinter``
+Default: ``PHPUnit\TextUI\DefaultResultPrinter``
 
-This attribute configures the name of a class that either is ``PHPUnit\TextUI\ResultPrinter`` or that extends ``PHPUnit\TextUI\ResultPrinter``. An object of this class is used to print progress and test results.
+This attribute configures the name of a class that implements the ``PHPUnit\TextUI\ResultPrinter`` interface. An object of this class is used to print progress and test results.
 
 .. _appendixes.configuration.phpunit.printerFile:
 
