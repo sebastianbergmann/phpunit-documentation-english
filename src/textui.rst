@@ -452,18 +452,6 @@ the following code:
     Output debug information such as the name of a test when its
     execution starts.
 
-``--loader``
-
-    Specifies the ``PHPUnit\Runner\TestSuiteLoader``
-    implementation to use.
-
-    The standard test suite loader will look for the sourcefile in the
-    current working directory and in each directory that is specified in
-    PHP's ``include_path`` configuration directive.
-    A class name such as ``Project_Package_Class`` is
-    mapped to the source filename
-    :file:`Project/Package/Class.php`.
-
 ``--repeat``
 
     Repeatedly runs the test(s) the specified number of times.
