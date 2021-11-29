@@ -474,7 +474,6 @@ The ``<coverage>`` element and its children can be used to configure code covera
 .. code-block:: xml
 
     <coverage includeUncoveredFiles="true"
-              processUncoveredFiles="true"
               pathCoverage="false"
               ignoreDeprecatedCodeUnits="true"
               disableCodeCoverageIgnore="true">
@@ -487,13 +486,6 @@ The ``includeUncoveredFiles`` Attribute
 Possible values: ``true`` or ``false`` (default: ``true``)
 
 When set to ``true``, all sourcecode files that are configured to be considered for code coverage analysis will be included in the code coverage report(s). This includes sourcecode files that are not executed while the tests are running.
-
-The ``processUncoveredFiles`` Attribute
----------------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-When set to ``true``, all sourcecode files that are configured to be considered for code coverage analysis will be processed. This includes sourcecode files that are not executed while the tests are running.
 
 The ``ignoreDeprecatedCodeUnits`` Attribute
 -------------------------------------------
