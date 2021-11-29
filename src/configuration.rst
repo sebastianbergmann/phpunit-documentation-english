@@ -348,22 +348,6 @@ Possible values: integer (default: ``60``)
 
 This attribute configures the time limit for tests annotated with ``@large`` (in seconds).
 
-.. _appendixes.configuration.phpunit.testSuiteLoaderClass:
-
-The ``testSuiteLoaderClass`` Attribute
---------------------------------------
-
-Default: ``PHPUnit\Runner\StandardTestSuiteLoader``
-
-This attribute configures the name of a class that implements the ``PHPUnit\Runner\TestSuiteLoader`` interface. An object of this class is used to load the test suite.
-
-.. _appendixes.configuration.phpunit.testSuiteLoaderFile:
-
-The ``testSuiteLoaderFile`` Attribute
--------------------------------------
-
-This attribute can be used to configure the path to the sourcecode file that declares the class configured with ``testSuiteLoaderClass`` in case that class cannot be autoloaded.
-
 .. _appendixes.configuration.phpunit.defaultTestSuite:
 
 The ``defaultTestSuite`` Attribute
