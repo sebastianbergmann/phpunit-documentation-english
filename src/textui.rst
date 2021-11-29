@@ -84,16 +84,16 @@ the following code:
 
     Code Coverage Options:
       --coverage-clover <file>    Generate code coverage report in Clover XML format
+      --coverage-cobertura <file> Generate code coverage report in Cobertura XML format
       --coverage-crap4j <file>    Generate code coverage report in Crap4J XML format
       --coverage-html <dir>       Generate code coverage report in HTML format
       --coverage-php <file>       Export PHP_CodeCoverage object to file
       --coverage-text=<file>      Generate code coverage report in text format [default: standard output]
       --coverage-xml <dir>        Generate code coverage report in PHPUnit XML format
-      --coverage-cache <dir>      Cache static analysis results
       --warm-coverage-cache       Warm static analysis cache
       --coverage-filter <dir>     Include <dir> in code coverage analysis
       --path-coverage             Perform path coverage analysis
-      --disable-coverage-ignore   Disable annotations for ignoring code coverage
+      --disable-coverage-ignore   Disable attributes and annotations for ignoring code coverage
       --no-coverage               Ignore code coverage configuration
 
     Logging Options:
@@ -106,29 +106,30 @@ the following code:
       --no-logging                Ignore logging configuration
 
     Test Selection Options:
-      --filter <pattern>          Filter which tests to run
-      --testsuite <name>          Filter which testsuite to run
-      --group <name>              Only runs tests from the specified group(s)
-      --exclude-group <name>      Exclude tests from the specified group(s)
-      --list-groups               List available test groups
       --list-suites               List available test suites
+      --testsuite <name>          Only run tests from the specified test suite(s)
+      --exclude-testsuite <name>  Exclude tests from the specified test suite(s)
+      --list-groups               List available test groups
+      --group <name>              Only run tests from the specified group(s)
+      --exclude-group <name>      Exclude tests from the specified group(s)
+      --covers <name>             Only run tests annotated with "@covers <name>"
+      --uses <name>               Only run tests annotated with "@uses <name>"
       --list-tests                List available tests
       --list-tests-xml <file>     List available tests in XML format
+      --filter <pattern>          Filter which tests to run
       --test-suffix <suffixes>    Only search for test in files with specified suffix(es). Default: Test.php,.phpt
 
     Test Execution Options:
       --dont-report-useless-tests Do not report tests that do not test anything
-      --strict-coverage           Be strict about @covers annotation usage
+      --strict-coverage           Be strict about code coverage attributes and annotations
       --strict-global-state       Be strict about changes to global state
       --disallow-test-output      Be strict about output during tests
-      --disallow-resource-usage   Be strict about resource usage during small tests
       --enforce-time-limit        Enforce time limit based on test size
-      --default-time-limit <sec>  Timeout in seconds for tests without @small, @medium or @large
-      --disallow-todo-tests       Disallow @todo-annotated tests
+      --default-time-limit <sec>  Timeout in seconds for tests that have no declared size
 
       --process-isolation         Run each test in a separate PHP process
       --globals-backup            Backup and restore $GLOBALS for each test
-      --static-backup             Backup and restore static attributes for each test
+      --static-backup             Backup and restore static properties for each test
 
       --colors <flag>             Use colors in output ("never", "auto" or "always")
       --columns <n>               Number of columns to use for progress output
@@ -146,6 +147,7 @@ the following code:
       --fail-on-skipped           Treat skipped tests as failures
       --fail-on-warning           Treat tests with warnings as failures
       -v|--verbose                Output more verbose information
+      --trace-text <file>         Stream events as plain text to file
 
       --repeat <times>            Runs the test(s) repeatedly
       --teamcity                  Report test execution progress in TeamCity format
@@ -163,11 +165,10 @@ the following code:
       --bootstrap <file>          A PHP script that is included before the tests run
       -c|--configuration <file>   Read configuration from XML file
       --no-configuration          Ignore default configuration file (phpunit.xml)
-      --extensions <extensions>   A comma separated list of PHPUnit extensions to load
       --no-extensions             Do not load PHPUnit extensions
       --include-path <path(s)>    Prepend PHP's include_path with given path(s)
       -d <key[=value]>            Sets a php.ini value
-      --cache-result-file <file>  Specify result cache path and filename
+      --cache-directory <dir>     Specify cache directory
       --generate-configuration    Generate configuration file with suggested settings
       --migrate-configuration     Migrate configuration file to current format
 
