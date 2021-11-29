@@ -49,12 +49,12 @@ Possible values: ``true`` or ``false`` (default: ``true``)
 
 This attribute configures the caching of test results. This caching is required for certain other features to work.
 
-.. _appendixes.configuration.phpunit.cacheResultFile:
+.. _appendixes.configuration.phpunit.cacheDirectory:
 
-The ``cacheResultFile`` Attribute
----------------------------------
+The ``cacheDirectory`` Attribute
+--------------------------------
 
-This attribute configures the file in which the test result cache (see above) is stored.
+This attribute configures the directory in which PHPUnit caches information such as test results (see above), for instance.
 
 .. _appendixes.configuration.phpunit.colors:
 
@@ -507,21 +507,13 @@ The ``<coverage>`` element and its children can be used to configure code covera
 
 .. code-block:: xml
 
-    <coverage cacheDirectory="/path/to/directory"
-              includeUncoveredFiles="true"
+    <coverage includeUncoveredFiles="true"
               processUncoveredFiles="true"
               pathCoverage="false"
               ignoreDeprecatedCodeUnits="true"
               disableCodeCoverageIgnore="true">
         <!-- ... -->
     </coverage>
-
-The ``cacheDirectory`` Attribute
---------------------------------
-
-Possible values: string
-
-When code coverage data is collected and processed, static code analysis is performed to improve reasoning about the covered code. This is an expensive operation, whose result can be cached. When the ``cacheDirectory`` attribute is set, static analysis results will be cached in the specified directory.
 
 The ``includeUncoveredFiles`` Attribute
 ---------------------------------------
