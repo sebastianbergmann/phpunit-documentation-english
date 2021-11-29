@@ -23,7 +23,6 @@ Contents:
    incomplete-and-skipped-tests
    test-doubles
    code-coverage-analysis
-   extending-phpunit
 
 .. toctree::
    :caption: Appendix
