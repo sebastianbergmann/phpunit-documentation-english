@@ -593,38 +593,6 @@ on the method's arguments than a simple match.
         }
     }
 
-The ``withConsecutive()`` method can take any number of
-arrays of arguments, depending on the calls you want to test against.
-Each array is a list of constraints corresponding to the arguments of the
-method being mocked, like in ``with()``.
-
-.. code-block:: php
-    :caption: Testing that a method gets called two times with specific arguments.
-    :name: test-doubles.mock-objects.examples.with-consecutive.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class FooTest extends TestCase
-    {
-        public function testFunctionCalledTwoTimesWithSpecificArguments(): void
-        {
-            $mock = $this->getMockBuilder(stdClass::class)
-                         ->addMethods(['set'])
-                         ->getMock();
-
-            $mock->expects($this->exactly(2))
-                 ->method('set')
-                 ->withConsecutive(
-                     [$this->equalTo('foo'), $this->greaterThan(0)],
-                     [$this->equalTo('bar'), $this->greaterThan(0)]
-                 );
-
-            $mock->set('foo', 21);
-            $mock->set('bar', 48);
-        }
-    }
-
 The ``callback()`` constraint can be used for more complex
 argument verification. This constraint takes a PHP callback as its only
 argument. The PHP callback will receive the argument to be verified as
