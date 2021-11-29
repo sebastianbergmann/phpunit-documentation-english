@@ -294,14 +294,14 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether PHPUnit should mark a test as risky when it is annotated with ``@todo``.
 
-.. _appendixes.configuration.phpunit.beStrictAboutCoversAnnotation:
+.. _appendixes.configuration.phpunit.beStrictAboutCoverageMetadata:
 
-The ``beStrictAboutCoversAnnotation`` Attribute
+The ``beStrictAboutCoverageMetadata`` Attribute
 -----------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether PHPUnit should mark a test as risky when it executes code that is not specified using ``@covers`` or ``@uses``.
+This attribute configures whether PHPUnit should mark a test as risky when it executes code that is not specified to be covered or used using an attribute in code or an annotation in a code comment.
 
 .. _appendixes.configuration.phpunit.enforceTimeLimit:
 
