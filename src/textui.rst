@@ -146,7 +146,6 @@ the following code:
       --fail-on-skipped           Treat skipped tests as failures
       --fail-on-warning           Treat tests with warnings as failures
       -v|--verbose                Output more verbose information
-      --debug                     Display debugging information
 
       --repeat <times>            Runs the test(s) repeatedly
       --teamcity                  Report test execution progress in TeamCity format
