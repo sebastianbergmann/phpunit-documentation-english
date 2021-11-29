@@ -267,15 +267,6 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether PHPUnit should mark a test as risky when the code under test (or the test code) prints output.
 
-.. _appendixes.configuration.phpunit.beStrictAboutResourceUsageDuringSmallTests:
-
-The ``beStrictAboutResourceUsageDuringSmallTests`` Attribute
-------------------------------------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether PHPUnit should mark a test that is annotated with ``@small`` as risky when it invokes a PHP built-in function or method that operates on ``resource`` variables.
-
 .. _appendixes.configuration.phpunit.beStrictAboutTestsThatDoNotTestAnything:
 
 The ``beStrictAboutTestsThatDoNotTestAnything`` Attribute
