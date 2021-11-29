@@ -80,96 +80,6 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-.. _appendixes.assertions.assertClassHasAttribute:
-
-assertClassHasAttribute()
-#########################
-
-``assertClassHasAttribute(string $attributeName, string $className[, string $message = ''])``
-
-Reports an error identified by ``$message`` if ``$className::attributeName`` does not exist.
-
-``assertClassNotHasAttribute()`` is the inverse of this assertion and takes the same arguments.
-
-.. code-block:: php
-    :caption: Usage of assertClassHasAttribute()
-    :name: appendixes.assertions.assertClassHasAttribute.example
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class ClassHasAttributeTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertClassHasAttribute('foo', stdClass::class);
-        }
-    }
-
-.. parsed-literal::
-
-    $ phpunit ClassHasAttributeTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) ClassHasAttributeTest::testFailure
-    Failed asserting that class "stdClass" has attribute "foo".
-
-    /home/sb/ClassHasAttributeTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
-.. _appendixes.assertions.assertClassHasStaticAttribute:
-
-assertClassHasStaticAttribute()
-###############################
-
-``assertClassHasStaticAttribute(string $attributeName, string $className[, string $message = ''])``
-
-Reports an error identified by ``$message`` if ``$className::attributeName`` does not exist.
-
-``assertClassNotHasStaticAttribute()`` is the inverse of this assertion and takes the same arguments.
-
-.. code-block:: php
-    :caption: Usage of assertClassHasStaticAttribute()
-    :name: appendixes.assertions.assertClassHasStaticAttribute.example
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class ClassHasStaticAttributeTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertClassHasStaticAttribute('foo', stdClass::class);
-        }
-    }
-
-.. parsed-literal::
-
-    $ phpunit ClassHasStaticAttributeTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) ClassHasStaticAttributeTest::testFailure
-    Failed asserting that class "stdClass" has static attribute "foo".
-
-    /home/sb/ClassHasStaticAttributeTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
 .. _appendixes.assertions.assertContains:
 
 assertContains()
@@ -2401,51 +2311,6 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-.. _appendixes.assertions.assertObjectHasAttribute:
-
-assertObjectHasAttribute()
-##########################
-
-``assertObjectHasAttribute(string $attributeName, object $object[, string $message = ''])``
-
-Reports an error identified by ``$message`` if ``$object->attributeName`` does not exist.
-
-``assertObjectNotHasAttribute()`` is the inverse of this assertion and takes the same arguments.
-
-.. code-block:: php
-    :caption: Usage of assertObjectHasAttribute()
-    :name: appendixes.assertions.assertObjectHasAttribute.example
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class ObjectHasAttributeTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertObjectHasAttribute('foo', new stdClass);
-        }
-    }
-
-.. parsed-literal::
-
-    $ phpunit ObjectHasAttributeTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) ObjectHasAttributeTest::testFailure
-    Failed asserting that object of class "stdClass" has attribute "foo".
-
-    /home/sb/ObjectHasAttributeTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
 .. _appendixes.assertions.assertMatchesRegularExpression:
 
 assertMatchesRegularExpression()
@@ -2973,12 +2838,6 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the value is greater than a given value.
     * - ``PHPUnit\Framework\Constraint\LogicalOr greaterThanOrEqual(mixed $value)``
       - Constraint that asserts that the value is greater than or equal to a given value.
-    * - ``PHPUnit\Framework\Constraint\ClassHasAttribute classHasAttribute(string $attributeName)``
-      - Constraint that asserts that the class has a given attribute.
-    * - ``PHPUnit\Framework\Constraint\ClassHasStaticAttribute classHasStaticAttribute(string $attributeName)``
-      - Constraint that asserts that the class has a given static attribute.
-    * - ``PHPUnit\Framework\Constraint\ObjectHasAttribute objectHasAttribute(string $attributeName)``
-      - Constraint that asserts that the object has a given attribute.
     * - ``PHPUnit\Framework\Constraint\IsIdentical identicalTo(mixed $value)``
       - Constraint that asserts that one value is identical to another.
     * - ``PHPUnit\Framework\Constraint\IsFalse isFalse()``
