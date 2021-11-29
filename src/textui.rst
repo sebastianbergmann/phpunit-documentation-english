@@ -162,7 +162,6 @@ the following code:
       --do-not-cache-result       Do not write test results to cache file
 
     Configuration Options:
-      --prepend <file>            A PHP script that is included as early as possible
       --bootstrap <file>          A PHP script that is included before the tests run
       -c|--configuration <file>   Read configuration from XML file
       --no-configuration          Ignore default configuration file (phpunit.xml)
