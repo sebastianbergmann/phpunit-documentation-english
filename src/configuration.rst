@@ -276,15 +276,6 @@ Possible values: ``true`` or ``false`` (default: ``true``)
 
 This attribute configures whether PHPUnit should mark a test as risky when no assertions are performed (expectations are also considered).
 
-.. _appendixes.configuration.phpunit.beStrictAboutTodoAnnotatedTests:
-
-The ``beStrictAboutTodoAnnotatedTests`` Attribute
--------------------------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether PHPUnit should mark a test as risky when it is annotated with ``@todo``.
-
 .. _appendixes.configuration.phpunit.beStrictAboutCoverageMetadata:
 
 The ``beStrictAboutCoverageMetadata`` Attribute

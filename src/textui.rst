@@ -366,10 +366,6 @@ the following code:
 
     Be strict about output during tests. See :ref:`risky-tests` for details.
 
-``--disallow-todo-tests``
-
-    Does not execute tests which have the ``@todo`` annotation in its docblock.
-
 ``--enforce-time-limit``
 
     Enforce time limit based on test size. See :ref:`risky-tests` for details.
