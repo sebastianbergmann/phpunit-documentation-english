@@ -116,14 +116,14 @@ Possible values: ``true`` or ``false`` (default: ``true``)
 
 This attribute configures whether ``E_WARNING`` and ``E_USER_WARNING`` events triggered by the code under test are converted to an exception (and mark the test as error).
 
-.. _appendixes.configuration.phpunit.forceCoversAnnotation:
+.. _appendixes.configuration.phpunit.requireCoverageMetadata:
 
-The ``forceCoversAnnotation`` Attribute
----------------------------------------
+The ``requireCoverageMetadata`` Attribute
+-----------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether a test will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does not have a :ref:`@covers <appendixes.annotations.covers>` annotation.
+This attribute configures whether a test will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does indicate the code it intends to cover using an attribute in code or an annotation in a code comment.
 
 .. _appendixes.configuration.phpunit.printerClass:
 
