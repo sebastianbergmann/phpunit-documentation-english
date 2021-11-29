@@ -447,11 +447,6 @@ the following code:
     Output more verbose information, for instance the names of tests
     that were incomplete or have been skipped.
 
-``--debug``
-
-    Output debug information such as the name of a test when its
-    execution starts.
-
 ``--repeat``
 
     Repeatedly runs the test(s) the specified number of times.
