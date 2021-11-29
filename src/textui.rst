@@ -154,7 +154,6 @@ the following code:
       --testdox-group             Only include tests from the specified group(s)
       --testdox-exclude-group     Exclude tests from the specified group(s)
       --no-interaction            Disable TestDox progress animation
-      --printer <printer>         TestListener implementation to use
 
       --order-by <order>          Run tests in order: default|defects|duration|no-depends|random|reverse|size
       --random-order-seed <N>     Use a specific random seed <N> for random order
@@ -454,12 +453,6 @@ the following code:
 ``--testdox``
 
     Reports the test progress in TestDox format (see :ref:`textui.testdox`).
-
-``--printer``
-
-    Specifies the result printer to use. The printer class must extend
-    ``PHPUnit\Util\Printer`` and implement the
-    ``PHPUnit\Framework\TestListener`` interface.
 
 ``--bootstrap``
 
