@@ -125,22 +125,6 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether a test will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does indicate the code it intends to cover using an attribute in code or an annotation in a code comment.
 
-.. _appendixes.configuration.phpunit.printerClass:
-
-The ``printerClass`` Attribute
-------------------------------
-
-Default: ``PHPUnit\TextUI\DefaultResultPrinter``
-
-This attribute configures the name of a class that implements the ``PHPUnit\TextUI\ResultPrinter`` interface. An object of this class is used to print progress and test results.
-
-.. _appendixes.configuration.phpunit.printerFile:
-
-The ``printerFile`` Attribute
------------------------------
-
-This attribute can be used to configure the path to the sourcecode file that declares the class configured with ``printerClass`` in case that class cannot be autoloaded.
-
 .. _appendixes.configuration.phpunit.processIsolation:
 
 The ``processIsolation`` Attribute
