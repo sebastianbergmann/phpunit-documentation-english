@@ -319,7 +319,9 @@ assertStringContainsStringIgnoringCase()
 
 Reports an error identified by ``$message`` if ``$needle`` is not a substring of ``$haystack``.
 
-Differences in casing are ignored when ``$needle`` is searched for in ``$haystack``.
+Differences in casing are ignored when ``$needle`` is searched for in ``$haystack``. This also works
+for Unicode characters with diacritics (accents, umlauts, circumflex, etc.) as long as both strings
+have the same `Normalization Form <https://www.php.net/manual/en/class.normalizer.php>`_.
 
 ``assertStringNotContainsStringIgnoringCase()`` is the inverse of this assertion and takes the same arguments.
 
