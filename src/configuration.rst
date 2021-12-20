@@ -96,7 +96,7 @@ If ``max`` is defined as value, the number of columns will be maximum of the cur
 The ``convertDeprecationsToExceptions`` Attribute
 -------------------------------------------------
 
-Possible values: ``true`` or ``false`` (default: ``true``)
+Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` events triggered by the code under test are converted to an exception (and mark the test as error).
 
