@@ -31,7 +31,7 @@ double for the specified original type (interface or class name). This test
 double object can be used in every context where an object of the original
 type is expected or required.
 
-The ``createStub($type)`` and ``createMock($type)`` method immediately return a test
+The ``createStub($type)`` and ``createMock($type)`` methods immediately return a test
 double object for the specified type (interface or class). The creation of
 this test double is performed using best practice defaults. The
 ``__construct()`` and ``__clone()`` methods of
