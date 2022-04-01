@@ -195,7 +195,8 @@ can generally ignore ``tearDown()``.
 However, if you create many objects in your ``setUp()``, you may want
 to ``unset()`` the variables holding those objects
 in your ``tearDown()`` so that they can be garbage collected sooner.
-Objects created within ``setUp()`` are only automatically garbage
+Objects created within ``setUp()`` (or test methods) that are stored in
+properties of the test object are only automatically garbage
 collected at the end of the PHP process that runs PHPUnit.
 
 .. _fixtures.variations:
