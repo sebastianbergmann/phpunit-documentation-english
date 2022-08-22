@@ -192,6 +192,34 @@ dependencies of your project:
 
     composer require --dev phpunit/phpunit ^\ |version|
 
+Installing PHPUnit with Composer on PHP 8.2
+===========================================
+
+PHPUnit 4.5 added a dependency on Prophecy, an alternative to PHPUnit's own test double functionality,
+and introduced out-of-the-box support for it. The latter is `deprecated <https://github.com/sebastianbergmann/phpunit/issues/4141>`_
+since PHPUnit 9.1 and will be removed in PHPUnit 10. PHPUnit 10 also no longer depends on Prophecy.
+
+At the time of writing (August 2022), `Prophecy does not yet support PHP 8.2 <https://github.com/phpspec/prophecy/issues/556>`_.
+This means that PHPUnit |version|, which does support PHP 8.2, cannot be installed using Composer without workarounds
+until there is a released version of Prophecy that supports PHP 8.2.
+
+One workaround is to use Composer's CLI option ``--ignore-platform-req=PHP`` to ignore the PHP version requirement. This will install ``phpspec/prophecy`` as well as its dependencies despite the fact that the ``composer.json`` file for ``phpspec/prophecy`` has a PHP version constraint that intends to prohibit the installation of Prophecy on PHP 8.2.
+
+Another workaround is to add this section to your project's ``composer.json`` file:
+
+.. parsed-literal::
+
+  "replace": { "phpspec/prophecy": "*" }
+
+The above will prevent the installation of ``phpspec/prophecy``.
+
+Both workarounds shown above will only allow you to install PHPUnit |version| on PHP 8.2.
+Tests that use Prophecy may or may not work using the first workaround, but cannot work with the second workaround as Prophecy will not be available.
+
+If you use PHPUnit from a PHP Archive (PHAR), see above, you are not affected by this issue.
+
+This issue is discussed in more detail `here <https://github.com/sebastianbergmann/phpunit/issues/5033#issuecomment-1221992857>`_.
+
 .. _installation.global:
 
 Global Installation
