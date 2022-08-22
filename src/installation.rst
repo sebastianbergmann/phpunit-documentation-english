@@ -95,7 +95,7 @@ To avoid problems that occur when the code under test shares dependencies with P
 
 With the exception of classes such as `PHPUnit\\Framework\\TestCase` that are part of PHPUnit's public API, all units of code bundled in PHPUnit's PHAR distribution, including all dependencies such as vendor directories, are moved to a new and distinct namespace.
 
-PHPUnit's PHAR distribution does not use dynamic autoloading to load the bundled units of code. Instead, all units of code bundled in the PHAR are loaded on startup.
+All units of code bundled in the PHAR are loaded on startup using a combination of static preloading and dynamic autoloading.
 
 .. _installation.phar.verification:
 
