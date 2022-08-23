@@ -793,7 +793,7 @@ framework. Though initially it was created to fulfil phpspec2 needs, it is
 flexible enough to be used inside any testing framework out there with
 minimal effort".
 
-PHPUnit has built-in support for using Prophecy to create test doubles. However,
+PHPUnit has out-of-the-box support for using Prophecy to create test doubles. However,
 as of PHPUnit 8.5.29 you have to add a dependency on ``phpspec/prophecy`` to your
 project's ``composer.json`` file if you install PHPUnit using Composer.
 
