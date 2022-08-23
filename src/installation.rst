@@ -32,6 +32,22 @@ Generating XML reports requires the
 `xmlwriter <http://php.net/manual/en/xmlwriter.installation.php>`_
 extension.
 
+Prophecy
+========
+
+PHPUnit has out-of-the-box support for using `Prophecy <https://github.com/phpspec/prophecy>`_
+to create test doubles. However, as of PHPUnit 9.5.23 you have to add a dependency on
+``phpspec/prophecy`` to your project's ``composer.json`` file if you install PHPUnit using
+Composer and want to use Prophecy through PHPUnit's ``TestCase::prophesize()`` method.
+
+Please note that PHPUnit's out-of-the-box support for Prophecy is deprecated as of
+PHPUnit 9.1.0 and will be removed in PHPUnit 10. Also note that Prophecy does not
+support PHP 8.2 as of August 2022.
+
+More details on why you have to add a dependency on ``phpspec/prophecy`` to your
+project's ``composer.json`` as well as PHP 8.2 support is available
+`here <https://github.com/sebastianbergmann/phpunit/issues/5033>`_.
+
 .. _installation.configuration:
 
 Recommended PHP configuration
