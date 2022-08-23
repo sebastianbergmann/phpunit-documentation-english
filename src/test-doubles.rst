@@ -795,7 +795,8 @@ minimal effort".
 
 PHPUnit has out-of-the-box support for using Prophecy to create test doubles. However,
 as of PHPUnit 8.5.29 you have to add a dependency on ``phpspec/prophecy`` to your
-project's ``composer.json`` file if you install PHPUnit using Composer.
+project's ``composer.json`` file if you install PHPUnit using Composer and want to
+use Prophecy through PHPUnit's ``TestCase::prophesize()`` method.
 
 Please note that PHPUnit's out-of-the-box support for Prophecy is deprecated as of
 PHPUnit 9.1.0 and will be removed in PHPUnit 10. Also note that Prophecy does not
