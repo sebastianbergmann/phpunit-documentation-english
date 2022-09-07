@@ -472,7 +472,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
             $this->current = fgetcsv($this->file);
 
             if (is_array($this->current)) {
-                $row = array_map('intval', $this->current);
+                $this->current = array_map('intval', $this->current);
             }
 
             $this->key++;
