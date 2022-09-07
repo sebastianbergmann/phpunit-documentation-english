@@ -449,7 +449,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
                 $this->current = array_map('intval', $this->current);
             }
 
-            $this->key     = 0;
+            $this->key = 0;
         }
 
         public function valid(): bool
