@@ -646,7 +646,7 @@ whether an exception is thrown by the code under test.
     {
         public function testException(): void
         {
-            $this->expectException(InvalidArgumentException::class);
+            $this->expectException(InvalidArgumentException::class);            
         }
     }
 
@@ -666,6 +666,8 @@ whether an exception is thrown by the code under test.
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
+
+The expectException() method must be called prior to raising the exception and with the class object for the raised exception as an argument. 
 
 In addition to the ``expectException()`` method the
 ``expectExceptionCode()``,
