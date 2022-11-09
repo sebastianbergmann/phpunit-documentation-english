@@ -265,11 +265,10 @@ provided by one or more data provider methods (``additionProvider()`` in
 The data provider method to be used is specified using the
 ``@dataProvider`` annotation.
 
-A data provider method must be ``public`` and either return
-an array of arrays or an object that implements the ``Iterator``
-interface and yields an array for each iteration step. For each array that
-is part of the collection the test method will be called with the contents
-of the array as its arguments.
+A data provider method must return an array of arrays or an object that
+implements the ``Iterator`` interface and yields an array for each
+iteration step. For each array that is part of the collection the test
+method will be called with the contents of the array as its arguments.
 
 .. code-block:: php
     :caption: Using a data provider that returns an array of arrays
@@ -288,7 +287,7 @@ of the array as its arguments.
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider(): array
+        private function additionProvider(): array
         {
             return [
                 [0, 0, 0],
@@ -338,7 +337,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider(): array
+        private function additionProvider(): array
         {
             return [
                 'adding zeros'  => [0, 0, 0],
@@ -391,7 +390,7 @@ Output will be more verbose as it'll contain that name of a dataset that breaks 
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider(): CsvFileIterator
+        private function additionProvider(): CsvFileIterator
         {
             return new CsvFileIterator('data.csv');
         }
@@ -495,11 +494,6 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
     final class DependencyAndDataProviderComboTest extends TestCase
     {
-        public function provider(): array
-        {
-            return [['provider1'], ['provider2']];
-        }
-
         public function testProducerFirst(): string
         {
             $this->assertTrue(true);
@@ -525,6 +519,11 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
                 ['provider1', 'first', 'second'],
                 func_get_args()
             );
+        }
+
+        private function provider(): array
+        {
+            return [['provider1'], ['provider2']];
         }
     }
 
@@ -573,7 +572,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionWithNonNegativeNumbersProvider(): array
+        private function additionWithNonNegativeNumbersProvider(): array
         {
             return [
                 [0, 1, 1],
@@ -582,7 +581,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
             ];
         }
 
-        public function additionWithNegativeNumbersProvider(): array
+        private function additionWithNegativeNumbersProvider(): array
         {
             return [
                 [-1, 1, 0],
