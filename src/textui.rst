@@ -12,7 +12,7 @@ tests with the PHPUnit command-line test runner:
 
 .. parsed-literal::
 
-    $ phpunit ArrayTest
+    $ phpunit ArrayTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ..
@@ -180,20 +180,7 @@ the following code:
       --atleast-version <min>     Checks that version is greater than min and exits
       --check-version             Check whether PHPUnit is the latest version
 
-``phpunit UnitTest``
-
-    Runs the tests that are provided by the class
-    ``UnitTest``. This class is expected to be declared
-    in the :file:`UnitTest.php` sourcefile.
-
-    ``UnitTest`` must be either a class that inherits
-    from ``PHPUnit\Framework\TestCase`` or a class that
-    provides a ``public static suite()`` method which
-    returns a ``PHPUnit\Framework\Test`` object, for
-    example an instance of the
-    ``PHPUnit\Framework\TestSuite`` class.
-
-``phpunit UnitTest UnitTest.php``
+``phpunit UnitTest.php``
 
     Runs the tests that are provided by the class
     ``UnitTest``. This class is expected to be declared
