@@ -2,9 +2,9 @@
 
 .. _installation:
 
-============
+************
 Installation
-============
+************
 
 PHP is a general-purpose programming language. While it originally only supported the paradigm of procedural programming,
 most PHP code that is written today leverages the language's capabilities for object-oriented programming. As it is
@@ -20,16 +20,16 @@ PHPUnit 10 requires PHP 8.1; using the latest version of PHP is highly recommend
 .. _installation.php-on-the-command-line:
 
 PHP on the Command-Line
-#######################
+=======================
 
 We start by installing PHP's command-line interpreter as well as the PHP extensions required to use PHPUnit.
 
 
 Installing the PHP Command-Line Interpreter
-===========================================
+-------------------------------------------
 
 Fedora
-------
+^^^^^^
 
 At the time of writing, Fedora 37 is the current version of this Linux distribution. It ships with PHP 8.1 by default.
 Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
@@ -46,7 +46,7 @@ Here is how you install PHP's command-line interpreter together with the extensi
 
 
 Debian
-------
+^^^^^^
 
 At the time of writing, Debian 11 is the current version of this Linux distribution. It ships with PHP 7.4 by default.
 
@@ -74,7 +74,7 @@ And here is how you install PHP's command-line interpreter together with the ext
 
 
 Ubuntu
-------
+^^^^^^
 
 At the time of writing, Ubuntu 22.10 is the current version of this Linux distribution. It ships with PHP 8.1 by default.
 Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
@@ -93,7 +93,7 @@ maintained by Ondřej Surý.
 
 
 macOS
------
+^^^^^
 
 The two most common ways to install PHP on macOS are using `Homebrew <https://brew.sh/>`_ and `MacPorts <https://www.macports.org/>`_.
 The instructions given below assume that you have Homebrew or MacPorts already set up.
@@ -117,10 +117,10 @@ extensions for code coverage analysis.
 
 
 Windows
--------
+^^^^^^^
 
 Native Binaries
-~~~~~~~~~~~~~~~
+"""""""""""""""
 
 The PHP Project provides native binaries for Windows at `windows.php.net <https://windows.php.net/>`_.
 Choose the appropriate binary package for your architecture (32-bit or 64-bit) and version of Windows and
@@ -131,7 +131,7 @@ by the PHP command-line interpreter.
 
 
 Windows Subsystem for Linux
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""""""""""""""""""""""""""
 
 The Windows Subsystem for Linux allows Linux binary executables (in ELF format) to be run on Windows 10 (or later).
 
@@ -142,7 +142,7 @@ Then follow the installation instructions in this chapter for the Linux distribu
 
 
 Using the PHP Command-Line Interpreter
-======================================
+--------------------------------------
 
 Now we have the PHP command-line interpreter set up, and it is time to learn how to use it.
 
@@ -150,7 +150,7 @@ With ``php --version`` we can verify that the PHP command-line interpreter, ``ph
 
 
 Configuring PHP for Development
-###############################
+===============================
 
 In this section we ensure that the PHP command-line interpreter is configured in such a way that we can properly use PHPUnit.
 
@@ -209,10 +209,10 @@ Do not worry if terms such as "code coverage" or "line coverage" do not mean any
 
 
 Installing PHPUnit
-##################
+==================
 
 PHP Archive (PHAR)
-------------------
+^^^^^^^^^^^^^^^^^^
 
 The recommended way to install and use PHPUnit is to download a distribution that is packaged as a PHP Archive (PHAR).
 Releases of PHPUnit packaged as PHP archives are available on ``https://phar.phpunit.de/``.
@@ -352,7 +352,7 @@ This is remedied by creating a symbolic link: ``ln -s phpunit tools/phpunit.phar
 
 
 Composer
---------
+^^^^^^^^
 
 Using a PHP Archive (PHAR) is the recommended way of installing PHPUnit, but it is not the only way.
 
@@ -405,7 +405,7 @@ This is the primary reason why I do not use Composer to install a tool but inste
 
 
 Global Installation
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 So far we have discussed how to install PHPUnit on a per-project basis using a PHP Archive (PHAR) -- manually as well as using Phive -- and Composer.
 
@@ -432,7 +432,7 @@ Consequently, the package manager of your operating system should not be used to
 
 
 Web Server
-----------
+^^^^^^^^^^
 
 PHPUnit is a framework for writing as well as a command-line tool for running tests.
 Writing and running tests is a development-time activity.

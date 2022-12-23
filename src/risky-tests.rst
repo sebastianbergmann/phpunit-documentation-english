@@ -2,9 +2,9 @@
 
 .. _risky-tests:
 
-===========
+***********
 Risky Tests
-===========
+***********
 
 PHPUnit can perform the additional checks documented below while it executes
 the tests.
@@ -12,7 +12,7 @@ the tests.
 .. _risky-tests.useless-tests:
 
 Useless Tests
-#############
+=============
 
 PHPUnit is by default strict about tests that do not test anything. This check
 can be disabled by using the ``--dont-report-useless-tests``
@@ -27,7 +27,7 @@ count as an assertion.
 .. _risky-tests.unintentionally-covered-code:
 
 Unintentionally Covered Code
-############################
+============================
 
 PHPUnit can be strict about unintentionally covered code. This check
 can be enabled by using the ``--strict-coverage`` option on
@@ -49,7 +49,7 @@ annotation.
 .. _risky-tests.output-during-test-execution:
 
 Output During Test Execution
-############################
+============================
 
 PHPUnit can be strict about output during tests. This check can be enabled
 by using the ``--disallow-test-output`` option on the
@@ -64,7 +64,7 @@ check is enabled.
 .. _risky-tests.test-execution-timeout:
 
 Test Execution Timeout
-######################
+======================
 
 A time limit can be enforced for the execution of a test if the
 `PHP_Invoker <https://packagist.org/packages/phpunit/php-invoker>`_ package
@@ -103,7 +103,7 @@ longer than 1 second to execute. This timeout is configurable via the
 .. _risky-tests.global-state-manipulation:
 
 Global State Manipulation
-#########################
+=========================
 
 PHPUnit can be strict about tests that manipulate global state. This check
 can be enabled by using the ``--strict-global-state``

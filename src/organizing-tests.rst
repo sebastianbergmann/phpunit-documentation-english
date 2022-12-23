@@ -2,9 +2,9 @@
 
 .. _organizing-tests:
 
-================
+****************
 Organizing Tests
-================
+****************
 
 One of the goals of PHPUnit is that tests
 should be composable: we want to be able to run any number or combination
@@ -18,7 +18,7 @@ a test suite. This chapter shows the most commonly used approaches.
 .. _organizing-tests.filesystem:
 
 Composing a Test Suite Using the Filesystem
-###########################################
+===========================================
 
 Probably the easiest way to compose a test suite is to keep all test case
 source files in a test directory. PHPUnit can automatically discover and
@@ -98,7 +98,7 @@ For more fine-grained control of which tests to run we can use the
 .. _organizing-tests.xml-configuration:
 
 Composing a Test Suite Using XML Configuration
-##############################################
+==============================================
 
 PHPUnit's XML configuration file (:ref:`appendixes.configuration`)
 can also be used to compose a test suite.

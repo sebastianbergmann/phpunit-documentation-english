@@ -2,16 +2,16 @@
 
 .. _appendixes.assertions:
 
-==========
+**********
 Assertions
-==========
+**********
 
 This appendix lists the various assertion methods that are available.
 
 .. _appendixes.assertions.static-vs-non-static-usage-of-assertion-methods:
 
 Static vs. Non-Static Usage of Assertion Methods
-################################################
+================================================
 
 PHPUnit's assertions are implemented in ``PHPUnit\Framework\Assert``.
 ``PHPUnit\Framework\TestCase`` inherits from ``PHPUnit\Framework\Assert``.
@@ -38,7 +38,7 @@ of ``$this->assertTrue()`` or ``self::assertTrue()``).
 .. _appendixes.assertions.assertArrayHasKey:
 
 assertArrayHasKey()
-###################
+===================
 
 ``assertArrayHasKey(mixed $key, array $array[, string $message = ''])``
 
@@ -83,7 +83,7 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
 .. _appendixes.assertions.assertContains:
 
 assertContains()
-################
+================
 
 ``assertContains(mixed $needle, iterable $haystack[, string $message = ''])``
 
@@ -126,7 +126,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertStringContainsString()
-############################
+============================
 
 ``assertStringContainsString(string $needle, string $haystack[, string $message = ''])``
 
@@ -169,7 +169,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not a substring of
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertStringContainsStringIgnoringCase()
-########################################
+========================================
 
 ``assertStringContainsStringIgnoringCase(string $needle, string $haystack[, string $message = ''])``
 
@@ -218,7 +218,7 @@ have the same `Normalization Form <https://www.php.net/manual/en/class.normalize
 .. _appendixes.assertions.assertContainsOnly:
 
 assertContainsOnly()
-####################
+====================
 
 ``assertContainsOnly(string $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
 
@@ -269,7 +269,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 .. _appendixes.assertions.assertContainsOnlyInstancesOf:
 
 assertContainsOnlyInstancesOf()
-###############################
+===============================
 
 ``assertContainsOnlyInstancesOf(string $classname, Traversable|array $haystack[, string $message = ''])``
 
@@ -315,7 +315,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 .. _appendixes.assertions.assertCount:
 
 assertCount()
-#############
+=============
 
 ``assertCount($expectedCount, $haystack[, string $message = ''])``
 
@@ -360,7 +360,7 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
 .. _appendixes.assertions.assertDirectoryExists:
 
 assertDirectoryExists()
-#######################
+=======================
 
 ``assertDirectoryExists(string $directory[, string $message = ''])``
 
@@ -405,7 +405,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 .. _appendixes.assertions.assertDirectoryIsReadable:
 
 assertDirectoryIsReadable()
-###########################
+===========================
 
 ``assertDirectoryIsReadable(string $directory[, string $message = ''])``
 
@@ -450,7 +450,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 .. _appendixes.assertions.assertDirectoryIsWritable:
 
 assertDirectoryIsWritable()
-###########################
+===========================
 
 ``assertDirectoryIsWritable(string $directory[, string $message = ''])``
 
@@ -495,7 +495,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 .. _appendixes.assertions.assertEmpty:
 
 assertEmpty()
-#############
+=============
 
 ``assertEmpty(mixed $actual[, string $message = ''])``
 
@@ -540,7 +540,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
 .. _appendixes.assertions.assertEquals:
 
 assertEquals()
-##############
+==============
 
 ``assertEquals(mixed $expected, mixed $actual[, string $message = ''])``
 
@@ -775,7 +775,7 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertEqualsCanonicalizing()
-############################
+============================
 
 ``assertEqualsCanonicalizing(mixed $expected, mixed $actual[, string $message = ''])``
 
@@ -832,7 +832,7 @@ The contents of ``$expected`` and ``$actual`` are canonicalized before they are 
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertEqualsIgnoringCase()
-##########################
+==========================
 
 ``assertEqualsIgnoringCase(mixed $expected, mixed $actual[, string $message = ''])``
 
@@ -882,7 +882,7 @@ Differences in casing are ignored for the comparison of ``$expected`` and ``$act
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertEqualsWithDelta()
-#######################
+=======================
 
 ``assertEqualsWithDelta(mixed $expected, mixed $actual, float $delta[, string $message = ''])``
 
@@ -929,7 +929,7 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
 .. _appendixes.assertions.assertObjectEquals:
 
 assertObjectEquals()
-####################
+====================
 
 ``assertObjectEquals(object $expected, object $actual, string $method = 'equals', string $message = ''])``
 
@@ -1027,7 +1027,7 @@ If any of the aforementioned assumptions is not fulfilled or if ``$actual->$meth
 .. _appendixes.assertions.assertFalse:
 
 assertFalse()
-#############
+=============
 
 ``assertFalse(bool $condition[, string $message = ''])``
 
@@ -1072,7 +1072,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
 .. _appendixes.assertions.assertFileEquals:
 
 assertFileEquals()
-##################
+==================
 
 ``assertFileEquals(string $expected, string $actual[, string $message = ''])``
 
@@ -1123,7 +1123,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 .. _appendixes.assertions.assertFileExists:
 
 assertFileExists()
-##################
+==================
 
 ``assertFileExists(string $filename[, string $message = ''])``
 
@@ -1168,7 +1168,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 .. _appendixes.assertions.assertFileIsReadable:
 
 assertFileIsReadable()
-######################
+======================
 
 ``assertFileIsReadable(string $filename[, string $message = ''])``
 
@@ -1213,7 +1213,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 .. _appendixes.assertions.assertFileIsWritable:
 
 assertFileIsWritable()
-######################
+======================
 
 ``assertFileIsWritable(string $filename[, string $message = ''])``
 
@@ -1258,7 +1258,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 .. _appendixes.assertions.assertGreaterThan:
 
 assertGreaterThan()
-###################
+===================
 
 ``assertGreaterThan(mixed $expected, mixed $actual[, string $message = ''])``
 
@@ -1301,7 +1301,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
 .. _appendixes.assertions.assertGreaterThanOrEqual:
 
 assertGreaterThanOrEqual()
-##########################
+==========================
 
 ``assertGreaterThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
 
@@ -1344,7 +1344,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
 .. _appendixes.assertions.assertInfinite:
 
 assertInfinite()
-################
+================
 
 ``assertInfinite(mixed $variable[, string $message = ''])``
 
@@ -1389,7 +1389,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
 .. _appendixes.assertions.assertInstanceOf:
 
 assertInstanceOf()
-##################
+==================
 
 ``assertInstanceOf($expected, $actual[, $message = ''])``
 
@@ -1432,7 +1432,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsArray()
-###############
+===============
 
 ``assertIsArray($actual[, $message = ''])``
 
@@ -1475,7 +1475,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``arra
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsBool()
-##############
+==============
 
 ``assertIsBool($actual[, $message = ''])``
 
@@ -1518,7 +1518,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``bool
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsCallable()
-##################
+==================
 
 ``assertIsCallable($actual[, $message = ''])``
 
@@ -1561,7 +1561,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``call
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsFloat()
-###############
+===============
 
 ``assertIsFloat($actual[, $message = ''])``
 
@@ -1604,7 +1604,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``floa
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsInt()
-#############
+=============
 
 ``assertIsInt($actual[, $message = ''])``
 
@@ -1647,7 +1647,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``int`
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsIterable()
-##################
+==================
 
 ``assertIsIterable($actual[, $message = ''])``
 
@@ -1690,7 +1690,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``iter
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsNumeric()
-#################
+=================
 
 ``assertIsNumeric($actual[, $message = ''])``
 
@@ -1733,7 +1733,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``nume
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsObject()
-################
+================
 
 ``assertIsObject($actual[, $message = ''])``
 
@@ -1776,7 +1776,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``obje
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsResource()
-##################
+==================
 
 ``assertIsResource($actual[, $message = ''])``
 
@@ -1819,7 +1819,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``reso
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsScalar()
-################
+================
 
 ``assertIsScalar($actual[, $message = ''])``
 
@@ -1862,7 +1862,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``scal
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertIsString()
-################
+================
 
 ``assertIsString($actual[, $message = ''])``
 
@@ -1907,7 +1907,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``stri
 .. _appendixes.assertions.assertIsReadable:
 
 assertIsReadable()
-##################
+==================
 
 ``assertIsReadable(string $filename[, string $message = ''])``
 
@@ -1952,7 +1952,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
 .. _appendixes.assertions.assertIsWritable:
 
 assertIsWritable()
-##################
+==================
 
 ``assertIsWritable(string $filename[, string $message = ''])``
 
@@ -1997,7 +1997,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
 .. _appendixes.assertions.assertJsonFileEqualsJsonFile:
 
 assertJsonFileEqualsJsonFile()
-##############################
+==============================
 
 ``assertJsonFileEqualsJsonFile(mixed $expectedFile, mixed $actualFile[, string $message = ''])``
 
@@ -2042,7 +2042,7 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
 .. _appendixes.assertions.assertJsonStringEqualsJsonFile:
 
 assertJsonStringEqualsJsonFile()
-################################
+================================
 
 ``assertJsonStringEqualsJsonFile(mixed $expectedFile, mixed $actualJson[, string $message = ''])``
 
@@ -2088,7 +2088,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
 .. _appendixes.assertions.assertJsonStringEqualsJsonString:
 
 assertJsonStringEqualsJsonString()
-##################################
+==================================
 
 ``assertJsonStringEqualsJsonString(mixed $expectedJson, mixed $actualJson[, string $message = ''])``
 
@@ -2142,7 +2142,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
 .. _appendixes.assertions.assertLessThan:
 
 assertLessThan()
-################
+================
 
 ``assertLessThan(mixed $expected, mixed $actual[, string $message = ''])``
 
@@ -2185,7 +2185,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
 .. _appendixes.assertions.assertLessThanOrEqual:
 
 assertLessThanOrEqual()
-#######################
+=======================
 
 ``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
 
@@ -2228,7 +2228,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
 .. _appendixes.assertions.assertNan:
 
 assertNan()
-###########
+===========
 
 ``assertNan(mixed $variable[, string $message = ''])``
 
@@ -2271,7 +2271,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
 .. _appendixes.assertions.assertNull:
 
 assertNull()
-############
+============
 
 ``assertNull(mixed $variable[, string $message = ''])``
 
@@ -2316,7 +2316,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
 .. _appendixes.assertions.assertMatchesRegularExpression:
 
 assertMatchesRegularExpression()
-################################
+================================
 
 ``assertMatchesRegularExpression(string $pattern, string $string[, string $message = ''])``
 
@@ -2361,7 +2361,7 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
 .. _appendixes.assertions.assertStringMatchesFormat:
 
 assertStringMatchesFormat()
-###########################
+===========================
 
 ``assertStringMatchesFormat(string $format, string $string[, string $message = ''])``
 
@@ -2456,7 +2456,7 @@ The format string may contain the following placeholders:
 .. _appendixes.assertions.assertStringMatchesFormatFile:
 
 assertStringMatchesFormatFile()
-###############################
+===============================
 
 ``assertStringMatchesFormatFile(string $formatFile, string $string[, string $message = ''])``
 
@@ -2502,7 +2502,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 .. _appendixes.assertions.assertSame:
 
 assertSame()
-############
+============
 
 ``assertSame(mixed $expected, mixed $actual[, string $message = ''])``
 
@@ -2583,7 +2583,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     Tests: 1, Assertions: 1, Failures: 1.
 
 assertSameSize()
-######################
+======================
 
 ``assertSameSize($expected, $actual, string $message = '')``
 
@@ -2628,7 +2628,7 @@ Reports an error identified by ``$message`` if the sizes of ``$actual`` and ``$e
 .. _appendixes.assertions.assertStringEndsWith:
 
 assertStringEndsWith()
-######################
+======================
 
 ``assertStringEndsWith(string $suffix, string $string[, string $message = ''])``
 
@@ -2673,7 +2673,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
 .. _appendixes.assertions.assertStringEqualsFile:
 
 assertStringEqualsFile()
-########################
+========================
 
 ``assertStringEqualsFile(string $expectedFile, string $actualString[, string $message = ''])``
 
@@ -2724,7 +2724,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 .. _appendixes.assertions.assertStringStartsWith:
 
 assertStringStartsWith()
-########################
+========================
 
 ``assertStringStartsWith(string $prefix, string $string[, string $message = ''])``
 
@@ -2769,7 +2769,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
 .. _appendixes.assertions.assertThat:
 
 assertThat()
-############
+============
 
 More complex assertions can be formulated using the
 ``PHPUnit\Framework\Constraint`` classes. They can be
@@ -2876,7 +2876,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
 .. _appendixes.assertions.assertTrue:
 
 assertTrue()
-############
+============
 
 ``assertTrue(bool $condition[, string $message = ''])``
 
@@ -2921,7 +2921,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
 .. _appendixes.assertions.assertXmlFileEqualsXmlFile:
 
 assertXmlFileEqualsXmlFile()
-############################
+============================
 
 ``assertXmlFileEqualsXmlFile(string $expectedFile, string $actualFile[, string $message = ''])``
 
@@ -2975,7 +2975,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
 .. _appendixes.assertions.assertXmlStringEqualsXmlFile:
 
 assertXmlStringEqualsXmlFile()
-##############################
+==============================
 
 ``assertXmlStringEqualsXmlFile(string $expectedFile, string $actualXml[, string $message = ''])``
 
@@ -3029,7 +3029,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
 .. _appendixes.assertions.assertXmlStringEqualsXmlString:
 
 assertXmlStringEqualsXmlString()
-################################
+================================
 
 ``assertXmlStringEqualsXmlString(string $expectedXml, string $actualXml[, string $message = ''])``
 

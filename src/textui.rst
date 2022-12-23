@@ -2,9 +2,9 @@
 
 .. _textui:
 
-============================
+****************************
 The Command-Line Test Runner
-============================
+****************************
 
 The PHPUnit command-line test runner can be invoked through the
 :file:`phpunit` command. The following code shows how to run
@@ -68,7 +68,7 @@ they are all fixed.
 .. _textui.clioptions:
 
 Command-Line Options
-####################
+====================
 
 Let's take a look at the command-line test runner's options in
 the following code:
@@ -478,7 +478,7 @@ the following code:
 .. _textui.testdox:
 
 TestDox
-#######
+=======
 
 PHPUnit's TestDox functionality looks at a test class and all the test
 method names and converts them from camel case (or snake_case) PHP names to sentences:

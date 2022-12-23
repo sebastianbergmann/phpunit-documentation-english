@@ -2,9 +2,9 @@
 
 .. _appendixes.annotations:
 
-===========
+***********
 Annotations
-===========
+***********
 
 An annotation is a special form of syntactic metadata that can be added to
 the source code of some programming languages. While PHP has no dedicated
@@ -27,7 +27,7 @@ This appendix shows all the varieties of annotations supported by PHPUnit.
 .. _appendixes.annotations.author:
 
 @author
-#######
+=======
 
 The ``@author`` annotation is an alias for the
 ``@group`` annotation (see :ref:`appendixes.annotations.group`) and allows to filter tests based
@@ -36,7 +36,7 @@ on their authors.
 .. _appendixes.annotations.after:
 
 @after
-######
+======
 
 The ``@after`` annotation can be used to specify methods
 that should be called after each test method in a test case class.
@@ -68,7 +68,7 @@ that should be called after each test method in a test case class.
 .. _appendixes.annotations.afterClass:
 
 @afterClass
-###########
+===========
 
 The ``@afterClass`` annotation can be used to specify
 static methods that should be called after all test methods in a test
@@ -101,7 +101,7 @@ class have been run to clean up shared fixtures.
 .. _appendixes.annotations.backupGlobals:
 
 @backupGlobals
-##############
+==============
 
 PHPUnit can optionally backup all global and super-global variables before each test and restore this backup after each test.
 
@@ -151,7 +151,7 @@ backup and restore operations:
 .. _appendixes.annotations.backupStaticAttributes:
 
 @backupStaticAttributes
-#######################
+=======================
 
 PHPUnit can optionally backup all static attributes in all declared classes before each test and restore this backup after each test.
 
@@ -208,7 +208,7 @@ backup and restore operations:
 .. _appendixes.annotations.before:
 
 @before
-#######
+=======
 
 The ``@before`` annotation can be used to specify methods
 that should be called before each test method in a test case class.
@@ -240,7 +240,7 @@ that should be called before each test method in a test case class.
 .. _appendixes.annotations.beforeClass:
 
 @beforeClass
-############
+============
 
 The ``@beforeClass`` annotation can be used to specify
 static methods that should be called before any test methods in a test
@@ -273,7 +273,7 @@ class are run to set up shared fixtures.
 .. _appendixes.annotations.codeCoverageIgnore:
 
 @codeCoverageIgnore*
-####################
+====================
 
 The ``@codeCoverageIgnore``,
 ``@codeCoverageIgnoreStart`` and
@@ -285,7 +285,7 @@ For usage see :ref:`code-coverage-analysis.ignoring-code-blocks`.
 .. _appendixes.annotations.covers:
 
 @covers
-#######
+=======
 
 The ``@covers`` annotation can be used in the test code to
 specify which parts of the code it is supposed to test:
@@ -356,7 +356,7 @@ backslash (even if this not required for the annotation to work correctly).
 .. _appendixes.annotations.coversDefaultClass:
 
 @coversDefaultClass
-###################
+===================
 
 The ``@coversDefaultClass`` annotation can be used to
 specify a default namespace or class name. That way long names don't need to be
@@ -392,7 +392,7 @@ backslash (even if this not required for the annotation to work correctly).
 .. _appendixes.annotations.coversNothing:
 
 @coversNothing
-##############
+==============
 
 The ``@coversNothing`` annotation can be used in the
 test code to specify that no code coverage information will be
@@ -408,7 +408,7 @@ will override any ``@covers`` tags.
 .. _appendixes.annotations.dataProvider:
 
 @dataProvider
-#############
+=============
 
 A test method can accept arbitrary arguments. These arguments are to be
 provided by one or more data provider methods (``provider()`` in
@@ -422,7 +422,7 @@ details.
 .. _appendixes.annotations.depends:
 
 @depends
-########
+========
 
 PHPUnit supports the declaration of explicit dependencies between test
 methods. Such dependencies do not define the order in which the test
@@ -438,14 +438,14 @@ details.
 .. _appendixes.annotations.doesNotPerformAssertions:
 
 @doesNotPerformAssertions
-#########################
+=========================
 
 Prevents a test that performs no assertions from being considered risky.
 
 .. _appendixes.annotations.group:
 
 @group
-######
+======
 
 A test can be tagged as belonging to one or more groups using the
 ``@group`` annotation like this
@@ -484,7 +484,7 @@ XML configuration file.
 .. _appendixes.annotations.large:
 
 @large
-######
+======
 
 The ``@large`` annotation is an alias for
 ``@group large``.
@@ -498,7 +498,7 @@ configuration file.
 .. _appendixes.annotations.medium:
 
 @medium
-#######
+=======
 
 The ``@medium`` annotation is an alias for
 ``@group medium``. A medium test must not depend on a test
@@ -513,7 +513,7 @@ configuration file.
 .. _appendixes.annotations.preserveGlobalState:
 
 @preserveGlobalState
-####################
+====================
 
 When a test is run in a separate process, PHPUnit will
 attempt to preserve the global state from the parent process by
@@ -543,7 +543,7 @@ PHPUnit from preserving global state with the
 .. _appendixes.annotations.requires:
 
 @requires
-#########
+=========
 
 The ``@requires`` annotation can be used to skip tests when common
 preconditions, like the PHP Version or installed extensions, are not met.
@@ -554,7 +554,7 @@ A complete list of possibilities and examples can be found at
 .. _appendixes.annotations.runTestsInSeparateProcesses:
 
 @runTestsInSeparateProcesses
-############################
+============================
 
 Indicates that all tests in a test class should be run in a separate
 PHP process.
@@ -582,7 +582,7 @@ on how to fix this.
 .. _appendixes.annotations.runInSeparateProcess:
 
 @runInSeparateProcess
-#####################
+=====================
 
 Indicates that a test should be run in a separate PHP process.
 
@@ -612,7 +612,7 @@ on how to fix this.
 .. _appendixes.annotations.small:
 
 @small
-######
+======
 
 The ``@small`` annotation is an alias for
 ``@group small``. A small test must not depend on a test
@@ -632,7 +632,7 @@ configuration file.
 .. _appendixes.annotations.test:
 
 @test
-#####
+=====
 
 As an alternative to prefixing your test method names with
 ``test``, you can use the ``@test``
@@ -651,7 +651,7 @@ annotation in a method's DocBlock to mark it as a test method.
 .. _appendixes.annotations.testdox:
 
 @testdox
-########
+========
 
 Specifies an alternative description used when generating the agile
 documentation sentences.
@@ -710,7 +710,7 @@ When using the ``@testdox`` annotation at method level with a ``@dataProvider`` 
 .. _appendixes.annotations.testWith:
 
 @testWith
-#########
+=========
 
 Instead of implementing a method for use with ``@dataProvider``,
 you can define a data set using the ``@testWith`` annotation.
@@ -748,7 +748,7 @@ An object representation in JSON will be converted into an associative array.
 .. _appendixes.annotations.ticket:
 
 @ticket
-#######
+=======
 
 The ``@ticket`` annotation is an alias for the
 ``@group`` annotation (see :ref:`appendixes.annotations.group`) and allows to filter tests based
@@ -757,7 +757,7 @@ on their ticket ID.
 .. _appendixes.annotations.uses:
 
 @uses
-#####
+=====
 
 The ``@uses`` annotation specifies code which will be
 executed by a test, but is not intended to be covered by the test. A good

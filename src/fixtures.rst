@@ -2,9 +2,9 @@
 
 .. _fixtures:
 
-========
+********
 Fixtures
-========
+********
 
 One of the most time-consuming parts of writing tests is writing the
 code to set the world up in a known state and then return it to its
@@ -183,7 +183,7 @@ case class.
 .. _fixtures.more-setup-than-teardown:
 
 More setUp() than tearDown()
-############################
+============================
 
 ``setUp()`` and ``tearDown()`` are nicely
 symmetrical in theory, but not in practice. In practice, you only need
@@ -202,7 +202,7 @@ collected at the end of the PHP process that runs PHPUnit.
 .. _fixtures.variations:
 
 Variations
-##########
+==========
 
 What happens when you have two tests with slightly different setups?
 There are two possibilities:
@@ -222,7 +222,7 @@ There are two possibilities:
 .. _fixtures.sharing-fixture:
 
 Sharing Fixture
-###############
+===============
 
 There are few good reasons to share fixtures between tests, but in most
 cases the need to share a fixture between tests stems from an unresolved
@@ -272,7 +272,7 @@ to improve your design.
 .. _fixtures.global-state:
 
 Global State
-############
+============
 
 `It is hard to test code that uses singletons. <http://googletesting.blogspot.com/2008/05/tott-using-dependancy-injection-to.html>`_
 The same is true for code that uses global variables. Typically, the code

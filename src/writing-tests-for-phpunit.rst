@@ -2,9 +2,9 @@
 
 .. _writing-tests-for-phpunit:
 
-=========================
+*************************
 Writing Tests for PHPUnit
-=========================
+*************************
 
 :numref:`writing-tests-for-phpunit.examples.StackTest.php` shows
 how we can write tests using PHPUnit that exercise PHP's array operations.
@@ -62,7 +62,7 @@ with PHPUnit:
 .. _writing-tests-for-phpunit.test-dependencies:
 
 Test Dependencies
-#################
+=================
 
     *Adrian Kuhn et. al.*:
 
@@ -257,7 +257,7 @@ See :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
 .. _writing-tests-for-phpunit.data-providers:
 
 Data Providers
-##############
+==============
 
 A test method can accept arbitrary arguments. These arguments are to be
 provided by one or more data provider methods (``additionProvider()`` in
@@ -629,7 +629,7 @@ See :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 .. _writing-tests-for-phpunit.exceptions:
 
 Testing Exceptions
-##################
+==================
 
 :numref:`writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php`
 shows how to use the ``expectException()`` method to test
@@ -682,7 +682,7 @@ expectations for exceptions raised by the code under test.
 .. _writing-tests-for-phpunit.errors:
 
 Testing PHP Errors, Warnings, and Notices
-#########################################
+=========================================
 
 By default, PHPUnit converts PHP errors, warnings, and notices that are
 triggered during the execution of a test to an exception. Among other benefits,
@@ -812,7 +812,7 @@ Without the error suppression the test would fail reporting
 .. _writing-tests-for-phpunit.output:
 
 Testing Output
-##############
+==============
 
 Sometimes you want to assert that the execution of a method, for
 instance, generates an expected output (via ``echo`` or
@@ -898,8 +898,8 @@ shows the methods provided for testing output
 
 .. _writing-tests-for-phpunit.error-output:
 
-Error output
-############
+Error Output
+============
 
 Whenever a test fails PHPUnit tries its best to provide you with as much
 context as possible that can help to identify the problem.
@@ -1011,7 +1011,7 @@ and provide a few lines of context around every difference.
 .. _writing-tests-for-phpunit.error-output.edge-cases:
 
 Edge Cases
-==========
+----------
 
 When a comparison fails PHPUnit creates textual representations of the
 input values and compares those. Due to that implementation a diff

@@ -2,14 +2,14 @@
 
 .. _incomplete-and-skipped-tests:
 
-============================
+****************************
 Incomplete and Skipped Tests
-============================
+****************************
 
 .. _incomplete-and-skipped-tests.incomplete-tests:
 
 Incomplete Tests
-################
+================
 
 When you are working on a new test case class, you might want to begin
 by writing empty test methods such as:
@@ -107,7 +107,7 @@ shows the API for marking tests as incomplete.
 .. _incomplete-and-skipped-tests.skipping-tests:
 
 Skipping Tests
-##############
+==============
 
 Not all tests can be run in every environment. Consider, for instance,
 a database abstraction layer that has several drivers for the different
@@ -185,7 +185,7 @@ shows the API for skipping tests.
 .. _incomplete-and-skipped-tests.skipping-tests-using-requires:
 
 Skipping Tests using @requires
-##############################
+==============================
 
 In addition to the above methods it is also possible to use the
 ``@requires`` annotation to express common preconditions for a test case.
@@ -211,11 +211,11 @@ need to be met for the test to run.
       - @requires PHPUnit 7.3.1
       - @requires PHPUnit < 8
     * - ``OS``
-      - A regexp matching `PHP_OS <https://www.php.net/manual/en/reserved.constants.php#constant.php-os>`_
+      - A regexp matching `PHP_OS <https://www.php.net/manual/en/reserved.constants.php=constant.php-os>`_
       - @requires OS Linux
       - @requires OS WIN32|WINNT
     * - ``OSFAMILY``
-      - Any `OS family <https://www.php.net/manual/en/reserved.constants.php#constant.php-os-family>`_
+      - Any `OS family <https://www.php.net/manual/en/reserved.constants.php=constant.php-os-family>`_
       - @requires OSFAMILY Solaris
       - @requires OSFAMILY Windows
     * - ``function``
