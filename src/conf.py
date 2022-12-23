@@ -32,7 +32,7 @@ def get_version():
     else:
         return 'unknown'
 
-highlight_language = 'php'
+highlight_language = 'none'
 
 # enable highlighting for PHP code not between ``<?php ... ?>`` by default
 lexers['php'] = PhpLexer(startinline=True)
