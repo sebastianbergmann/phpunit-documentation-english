@@ -49,12 +49,12 @@ indicate progress:
 ``S``
 
     Printed when the test has been skipped (see
-    :ref:`incomplete-and-skipped-tests`).
+    :ref:`writing-tests-for-phpunit.skipping-tests`).
 
 ``I``
 
     Printed when the test is marked as being incomplete or not yet
-    implemented (see :ref:`incomplete-and-skipped-tests`).
+    implemented (see :ref:`writing-tests-for-phpunit.incomplete-tests`).
 
 PHPUnit distinguishes between *failures* and
 *errors*. A failure is a violated PHPUnit

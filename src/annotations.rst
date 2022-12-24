@@ -549,7 +549,7 @@ The ``@requires`` annotation can be used to skip tests when common
 preconditions, like the PHP Version or installed extensions, are not met.
 
 A complete list of possibilities and examples can be found at
-:ref:`incomplete-and-skipped-tests.requires.tables.api`
+:ref:`writing-tests-for-phpunit.skipping-tests.skipping-tests-using-requires.tables.api`
 
 .. _appendixes.annotations.runTestsInSeparateProcesses:
 
