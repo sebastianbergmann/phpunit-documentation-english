@@ -22,6 +22,7 @@ Contents:
    risky-tests
    test-doubles
    code-coverage-analysis
+   event-system
 
 .. toctree::
    :caption: Appendix
