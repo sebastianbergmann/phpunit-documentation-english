@@ -22,9 +22,9 @@ tests with the PHPUnit command-line test runner:
     OK (2 tests, 2 assertions)
 
 When invoked as shown above, the PHPUnit command-line test runner will look
-for a :file:`ArrayTest.php` sourcefile in the current working
-directory, load it, and expect to find a ``ArrayTest`` test
-case class. It will then execute the tests of that class.
+for a :file:`ArrayTest.php` sourcecode file in the current working
+directory, load it, and expect to find an ``ArrayTest`` test
+case class. It will then execute the tests found in that class.
 
 For each test run, the PHPUnit command-line tool prints one character to
 indicate progress:
@@ -182,16 +182,16 @@ the following code:
 
     Runs the tests that are provided by the class
     ``UnitTest``. This class is expected to be declared
-    in the specified sourcefile.
+    in the specified sourcecode file.
 
 ``--coverage-clover``
 
-    Generates a logfile in XML format with the code coverage information
+    Generates a logfile in Clover XML format with the code coverage information
     for the tests run. See :ref:`code-coverage-analysis` for more details.
 
 ``--coverage-crap4j``
 
-    Generates a code coverage report in Crap4j format. See
+    Generates a code coverage report in Crap4j XML format. See
     :ref:`code-coverage-analysis` for more details.
 
 ``--coverage-html``
@@ -201,7 +201,7 @@ the following code:
 
 ``--coverage-php``
 
-    Generates a serialized PHP_CodeCoverage object with the
+    Generates a PHP sourcecode file that creates an object with the
     code coverage information.
 
 ``--coverage-text``
@@ -215,7 +215,7 @@ the following code:
 
 ``--testdox-html`` and ``--testdox-text``
 
-    Generates agile documentation in HTML or plain text format for the
+    Generates documentation in HTML or plain text format for the
     tests that are run (see :ref:`textui.testdox`).
 
 ``--filter``
@@ -490,7 +490,7 @@ differ in a suffix of one or more digits, such as
 "Balance cannot become negative" will appear only once, assuming that
 all of these tests succeed.
 
-Let us take a look at the agile documentation generated for a
+Let us take a look at the documentation generated for a
 ``BankAccount`` class:
 
 .. parsed-literal::
@@ -502,18 +502,7 @@ Let us take a look at the agile documentation generated for a
      ✔ Balance is initially zero
      ✔ Balance cannot become negative
 
-Alternatively, the agile documentation can be generated in HTML or plain
+Alternatively, the documentation can be generated in HTML or plain
 text format and written to a file using the ``--testdox-html``
 and ``--testdox-text`` arguments.
-
-Agile Documentation can be used to document the assumptions you make
-about the external packages that you use in your project. When you use
-an external package, you are exposed to the risks that the package will
-not behave as you expect, and that future versions of the package will
-change in subtle ways that will break your code, without you knowing it.
-You can address these risks by writing a test every time you make an
-assumption. If your test succeeds, your assumption is valid. If you
-document all your assumptions with tests, future releases of the
-external package will be no cause for concern: if the tests succeed,
-your system should continue working.
 
