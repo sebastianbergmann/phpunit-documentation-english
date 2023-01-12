@@ -20,9 +20,9 @@ Contents:
    fixtures
    organizing-tests
    risky-tests
-   incomplete-and-skipped-tests
    test-doubles
    code-coverage-analysis
+   event-system
 
 .. toctree::
    :caption: Appendix

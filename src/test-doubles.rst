@@ -2,9 +2,9 @@
 
 .. _test-doubles:
 
-============
+************
 Test Doubles
-============
+************
 
 Gerard Meszaros introduces the concept of Test Doubles in
 :ref:`Meszaros2007 <appendixes.bibliography>` like this:
@@ -59,7 +59,7 @@ return a value when called.
 .. _test-doubles.stubs:
 
 Stubs
-#####
+=====
 
 The practice of replacing an object with a test double that (optionally)
 returns configured return values is referred to as
@@ -415,7 +415,7 @@ system.
 .. _test-doubles.mock-objects:
 
 Mock Objects
-############
+============
 
 The practice of replacing an object with a test double that verifies
 expectations, for instance asserting that a method has been called, is
@@ -757,7 +757,7 @@ Here is a list of methods provided by the Mock Builder:
 .. _test-doubles.mocking-traits-and-abstract-classes:
 
 Mocking Traits and Abstract Classes
-###################################
+===================================
 
 The ``getMockForTrait()`` method returns a mock object
 that uses a specified trait. All abstract methods of the given trait
@@ -833,7 +833,7 @@ abstract class.
 .. _test-doubles.stubbing-and-mocking-web-services:
 
 Stubbing and Mocking Web Services
-#################################
+=================================
 
 When your application interacts with a web service you want to test it
 without actually interacting with the web service. To create stubs

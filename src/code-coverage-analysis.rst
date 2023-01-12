@@ -2,9 +2,9 @@
 
 .. _code-coverage-analysis:
 
-======================
+**********************
 Code Coverage Analysis
-======================
+**********************
 
     *Wikipedia*:
 
@@ -42,7 +42,7 @@ configuration settings.
 .. _code-coverage-analysis.metrics:
 
 Software Metrics for Code Coverage
-##################################
+==================================
 
 Various software metrics exist to measure code coverage:
 
@@ -92,7 +92,7 @@ Various software metrics exist to measure code coverage:
 .. _code-coverage-analysis.including-files:
 
 Including Files
-###############
+===============
 
 It is mandatory to configure a filter for telling
 PHPUnit which sourcecode files to include in the code coverage report.
@@ -109,7 +109,7 @@ The ``includeUncoveredFiles`` configuration setting is available to configure ho
 .. _code-coverage-analysis.ignoring-code-blocks:
 
 Ignoring Code Blocks
-####################
+====================
 
 Sometimes you have blocks of code that you cannot test and that you may
 want to ignore during code coverage analysis. PHPUnit lets you do this
@@ -160,7 +160,7 @@ highlighted.
 .. _code-coverage-analysis.specifying-covered-parts:
 
 Specifying Covered Code Parts
-#############################
+=============================
 
 The ``@covers`` annotation (see the
 :ref:`annotation documentation <appendixes.annotations.covers.tables.annotations>`)
@@ -320,7 +320,7 @@ generate code coverage with unit tests.
 .. _code-coverage-analysis.edge-cases:
 
 Edge Cases
-##########
+==========
 
 This section shows noteworthy edge cases that lead to confusing code
 coverage information.

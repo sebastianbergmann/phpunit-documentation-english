@@ -32,7 +32,7 @@ def get_version():
     else:
         return 'unknown'
 
-highlight_language = 'php'
+highlight_language = 'none'
 
 # enable highlighting for PHP code not between ``<?php ... ?>`` by default
 lexers['php'] = PhpLexer(startinline=True)
@@ -71,7 +71,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'PHPUnit'
-copyright = u'2021, Sebastian Bergmann'
+copyright = u'2023, Sebastian Bergmann'
 author = u'Sebastian Bergmann'
 epub_author = u'Sebastian Bergmann'
 

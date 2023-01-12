@@ -2,14 +2,14 @@
 
 .. _appendixes.configuration:
 
-==========================
+**************************
 The XML Configuration File
-==========================
+**************************
 
 .. _appendixes.configuration.phpunit:
 
 The ``<phpunit>`` Element
-#########################
+=========================
 
 .. _appendixes.configuration.phpunit.backupGlobals:
 
@@ -403,7 +403,7 @@ This attribute configures whether progress should be animated when TestDox forma
 .. _appendixes.configuration.testsuites:
 
 The ``<testsuites>`` Element
-############################
+============================
 
 Parent element: ``<phpunit>``
 
@@ -449,7 +449,7 @@ In the example above, the tests from the ``tests/unit`` directory are only added
 .. _appendixes.configuration.coverage:
 
 The ``<coverage>`` Element
-##########################
+==========================
 
 Parent element: ``<phpunit>``
 
@@ -752,7 +752,7 @@ The directory to which the PHPUnit XML report is written.
 .. _appendixes.configuration.logging:
 
 The ``<logging>`` Element
-#########################
+=========================
 
 Parent element: ``<phpunit>``
 
@@ -875,7 +875,7 @@ The file to which the test result logfile in text format is written.
 .. _appendixes.configuration.groups:
 
 The ``<groups>`` Element
-########################
+========================
 
 Parent element: ``<phpunit>``
 
@@ -897,7 +897,7 @@ The example shown above is equivalent to invoking the PHPUnit test runner with `
 .. _appendixes.configuration.testdoxGroups:
 
 The ``<testdoxGroups>`` Element
-###############################
+===============================
 
 Parent element: ``<phpunit>``
 
@@ -906,7 +906,7 @@ Parent element: ``<phpunit>``
 .. _appendixes.configuration.listeners:
 
 The ``<listeners>`` Element
-###########################
+===========================
 
 Parent element: ``<phpunit>``
 
@@ -961,7 +961,7 @@ The XML configuration above corresponds to attaching the
 .. _appendixes.configuration.extensions:
 
 The ``<extensions>`` Element
-############################
+============================
 
 Parent element: ``<phpunit>``
 
@@ -1031,7 +1031,7 @@ Available types:
 .. _appendixes.configuration.php:
 
 The ``<php>`` Element
-#####################
+=====================
 
 Parent element: ``<phpunit>``
 
