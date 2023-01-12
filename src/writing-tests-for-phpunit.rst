@@ -898,7 +898,7 @@ whether an exception is thrown by the code under test.
     {
         public function testException(): void
         {
-            $this->expectException(InvalidArgumentException::class);            
+            $this->expectException(InvalidArgumentException::class);
         }
     }
 
