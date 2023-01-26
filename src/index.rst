@@ -23,6 +23,7 @@ Contents:
    test-doubles
    code-coverage-analysis
    event-system
+   wrapping-the-test-runner
 
 .. toctree::
    :caption: Appendix
