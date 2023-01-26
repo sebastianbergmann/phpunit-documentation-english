@@ -44,6 +44,9 @@ Here is how you install PHP's command-line interpreter together with the extensi
                      php-pecl-pcov \
                      php-pecl-xdebug
 
+If you use an older version of Fedora then you should have a look at the `package repository <https://rpms.remirepo.net/>`_
+maintained by Remi Collet.
+
 
 Debian
 ^^^^^^
