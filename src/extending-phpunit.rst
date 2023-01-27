@@ -105,13 +105,13 @@ PHPUnit's Event System
 Events
 ^^^^^^
 
-``PHPUnit\Event\TestRunner\Started``
+``PHPUnit\Event\Application\Started``
 
-    The test runner was started
+    The PHPUnit CLI application was started
 
 ``PHPUnit\Event\TestRunner\Configured``
 
-    The test runner was configured.
+    The test runner was configured
 
 ``PHPUnit\Event\TestRunner\BootstrapFinished``
 
@@ -129,6 +129,10 @@ Events
 
     The test suite was loaded
 
+``PHPUnit\Event\TestRunner\EventFacadeSealed``
+
+    The event facade was sealed (new event subscribers can no longer be registered)
+
 ``PHPUnit\Event\TestSuite\Filtered``
 
     The test suite was filtered
@@ -136,10 +140,6 @@ Events
 ``PHPUnit\Event\TestSuite\Sorted``
 
     The test suite was sorted
-
-``PHPUnit\Event\TestRunner\EventFacadeSealed``
-
-    The test runner sealed the event facade
 
 ``PHPUnit\Event\TestRunner\ExecutionStarted``
 
@@ -341,9 +341,9 @@ Events
 
     The test runner finished executing tests
 
-``PHPUnit\Event\TestRunner\Finished``
+``PHPUnit\Event\Application\Finished``
 
-    The test runner has finished
+    The PHPUnit CLI application has finished
 
 .. _extending-phpunit.event-system.event-system.debugging-phpunit:
 
