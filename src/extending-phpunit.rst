@@ -360,26 +360,29 @@ to write event information to standard output:
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events
 
     phpunit --no-output --log-events-text php://stdout
-    Test Runner Started (PHPUnit 10.0.0 using PHP 8.2.0 (cli) on Linux)
+    PHPUnit Started (PHPUnit 10.0.0 using PHP 8.2.1 (cli) on Linux)
     Test Runner Configured
-    Test Suite Loaded (1 test)
-    Test Suite Sorted
+    Test Suite Loaded (2 tests)
     Event Facade Sealed
-    Test Runner Execution Started (1 test)
-    Test Suite Started (1 test)
-    Test Suite Started (default, 1 test)
-    Test Suite Started (ExampleTest, 1 test)
+    Test Runner Started
+    Test Suite Sorted
+    Test Runner Execution Started (2 tests)
+    Test Suite Started (ExampleTest, 2 tests)
     Test Preparation Started (ExampleTest::testOne)
     Test Prepared (ExampleTest::testOne)
-    Assertion Failed (Constraint: is true, Value: false)
-    Test Failed (ExampleTest::testOne)
-    Failed asserting that false is true.
+    Assertion Succeeded (Constraint: is true, Value: true)
+    Test Passed (ExampleTest::testOne)
     Test Finished (ExampleTest::testOne)
-    Test Suite Finished (ExampleTest, 1 test)
-    Test Suite Finished (default, 1 test)
-    Test Suite Finished (1 test)
+    Test Preparation Started (ExampleTest::testTwo)
+    Test Prepared (ExampleTest::testTwo)
+    Assertion Failed (Constraint: is identical to 'foo', Value: 'bar')
+    Test Failed (ExampleTest::testTwo)
+    Failed asserting that two strings are identical.
+    Test Finished (ExampleTest::testTwo)
+    Test Suite Finished (ExampleTest, 2 tests)
     Test Runner Execution Finished
     Test Runner Finished
+    PHPUnit Finished (Shell Exit Code: 1)
 
 Alternatively, the ``--log-events-verbose-text`` CLI option can be used to include information
 about resource consumption (time since the test runner was started, time since the previous event,
@@ -390,26 +393,29 @@ and memory usage):
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events-verbose
 
     phpunit --no-output --log-events-verbose-text php://stdout
-    [00:00:00.000035031 / 00:00:00.000004880] [4194304 bytes] Test Runner Started (PHPUnit 10.0.0 using PHP 8.2.0 (cli) on Linux)
-    [00:00:00.030921054 / 00:00:00.030886023] [6291456 bytes] Test Runner Configured
-    [00:00:00.038802684 / 00:00:00.007881630] [6291456 bytes] Test Suite Loaded (1 test)
-    [00:00:00.040860588 / 00:00:00.002057904] [6291456 bytes] Test Suite Sorted
-    [00:00:00.042708258 / 00:00:00.001847670] [6291456 bytes] Event Facade Sealed
-    [00:00:00.043031136 / 00:00:00.000322878] [6291456 bytes] Test Runner Execution Started (1 test)
-    [00:00:00.043277400 / 00:00:00.000246264] [6291456 bytes] Test Suite Started (1 test)
-    [00:00:00.043402904 / 00:00:00.000125504] [6291456 bytes] Test Suite Started (default, 1 test)
-    [00:00:00.044738027 / 00:00:00.001335123] [6291456 bytes] Test Suite Started (ExampleTest, 1 test)
-    [00:00:00.046169639 / 00:00:00.001431612] [6291456 bytes] Test Preparation Started (ExampleTest::testOne)
-    [00:00:00.046592057 / 00:00:00.000422418] [6291456 bytes] Test Prepared (ExampleTest::testOne)
-    [00:00:00.047769887 / 00:00:00.001177830] [6291456 bytes] Assertion Failed (Constraint: is true, Value: false)
-    [00:00:00.051970142 / 00:00:00.004200255] [6291456 bytes] Test Failed (ExampleTest::testOne)
-                                                              Failed asserting that false is true.
-    [00:00:00.053355327 / 00:00:00.001385185] [6291456 bytes] Test Finished (ExampleTest::testOne)
-    [00:00:00.053494019 / 00:00:00.000138692] [6291456 bytes] Test Suite Finished (ExampleTest, 1 test)
-    [00:00:00.053557577 / 00:00:00.000063558] [6291456 bytes] Test Suite Finished (default, 1 test)
-    [00:00:00.053604485 / 00:00:00.000046908] [6291456 bytes] Test Suite Finished (1 test)
-    [00:00:00.053998986 / 00:00:00.000394501] [6291456 bytes] Test Runner Execution Finished
-    [00:00:00.054820440 / 00:00:00.000821454] [6291456 bytes] Test Runner Finished
+    [00:00:00.000046482 / 00:00:00.000006987] [4194304 bytes] PHPUnit Started (PHPUnit 10.0.0 using PHP 8.2.1 (cli) on Linux)
+    [00:00:00.048195557 / 00:00:00.048149075] [4194304 bytes] Test Runner Configured
+    [00:00:00.067646038 / 00:00:00.019450481] [6291456 bytes] Test Suite Loaded (2 tests)
+    [00:00:00.075942220 / 00:00:00.008296182] [6291456 bytes] Event Facade Sealed
+    [00:00:00.076452360 / 00:00:00.000510140] [6291456 bytes] Test Runner Started
+    [00:00:00.084421682 / 00:00:00.007969322] [6291456 bytes] Test Suite Sorted
+    [00:00:00.084664485 / 00:00:00.000242803] [6291456 bytes] Test Runner Execution Started (2 tests)
+    [00:00:00.085240320 / 00:00:00.000575835] [6291456 bytes] Test Suite Started (ExampleTest, 2 tests)
+    [00:00:00.086992385 / 00:00:00.001752065] [6291456 bytes] Test Preparation Started (ExampleTest::testOne)
+    [00:00:00.087443560 / 00:00:00.000451175] [6291456 bytes] Test Prepared (ExampleTest::testOne)
+    [00:00:00.088237489 / 00:00:00.000793929] [6291456 bytes] Assertion Succeeded (Constraint: is true, Value: true)
+    [00:00:00.089076305 / 00:00:00.000838816] [6291456 bytes] Test Passed (ExampleTest::testOne)
+    [00:00:00.091027624 / 00:00:00.001951319] [6291456 bytes] Test Finished (ExampleTest::testOne)
+    [00:00:00.091110095 / 00:00:00.000082471] [6291456 bytes] Test Preparation Started (ExampleTest::testTwo)
+    [00:00:00.091158739 / 00:00:00.000048644] [6291456 bytes] Test Prepared (ExampleTest::testTwo)
+    [00:00:00.091991799 / 00:00:00.000833060] [6291456 bytes] Assertion Failed (Constraint: is identical to 'foo', Value: 'bar')
+    [00:00:00.099242925 / 00:00:00.007251126] [8388608 bytes] Test Failed (ExampleTest::testTwo)
+                                                              Failed asserting that two strings are identical.
+    [00:00:00.099386498 / 00:00:00.000143573] [8388608 bytes] Test Finished (ExampleTest::testTwo)
+    [00:00:00.099437634 / 00:00:00.000051136] [8388608 bytes] Test Suite Finished (ExampleTest, 2 tests)
+    [00:00:00.103014760 / 00:00:00.003577126] [8388608 bytes] Test Runner Execution Finished
+    [00:00:00.103207309 / 00:00:00.000192549] [8388608 bytes] Test Runner Finished
+    [00:00:00.105879902 / 00:00:00.002672593] [8388608 bytes] PHPUnit Finished (Shell Exit Code: 1)
 
 .. _extending-phpunit.wrapping-the-test-runner:
 
