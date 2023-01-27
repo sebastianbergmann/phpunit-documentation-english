@@ -44,8 +44,8 @@ Here is how you install PHP's command-line interpreter together with the extensi
                      php-pecl-pcov \
                      php-pecl-xdebug
 
-If you use an older version of Fedora then you should have a look at the `package repository <https://rpms.remirepo.net/>`_
-maintained by Remi Collet.
+If you use an older version of Fedora then you should have a look at the `package repository maintained by
+Remi Collet <https://rpms.remirepo.net/>`_.
 
 
 Debian
@@ -53,7 +53,7 @@ Debian
 
 At the time of writing, Debian 11 is the current version of this Linux distribution. It ships with PHP 7.4 by default.
 
-The `package repository <https://deb.sury.org/>`_ maintained by Ondřej Surý is commonly used for installing newer PHP
+The `package repository maintained by Ondřej Surý <https://deb.sury.org/>`_ is commonly used for installing newer PHP
 versions on Debian. Here is how you can add this repository to your package manager configuration:
 
 .. code::
