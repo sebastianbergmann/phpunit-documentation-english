@@ -31,30 +31,39 @@ indicate progress:
 
 ``.``
 
-    Printed when the test succeeds.
+    Printed when a successful test has no issues
 
 ``F``
 
-    Printed when an assertion fails while running the test method.
+    Printed when an assertion fails while running the test method
 
 ``E``
 
-    Printed when an error occurs while running the test method.
+    Printed when an error occurs while running the test method
+
+``W``
+
+    Printed when the test triggered a warning
 
 ``R``
 
-    Printed when the test has been marked as risky (see
-    :ref:`risky-tests`).
+    Printed when the test has been considered risky (see :ref:`risky-tests`)
 
-``S``
+``D``
 
-    Printed when the test has been skipped (see
-    :ref:`writing-tests-for-phpunit.skipping-tests`).
+    Printed when the test triggered a deprecation
+
+``N``
+
+    Printed when the test triggered a notice
 
 ``I``
 
-    Printed when the test is marked as being incomplete or not yet
-    implemented (see :ref:`writing-tests-for-phpunit.incomplete-tests`).
+    Printed when the test is marked as incomplete (see :ref:`writing-tests-for-phpunit.incomplete-tests`)
+
+``S``
+
+    Printed when the test was skipped (see :ref:`writing-tests-for-phpunit.skipping-tests`)
 
 PHPUnit distinguishes between *failures* and
 *errors*. A failure is a violated PHPUnit
