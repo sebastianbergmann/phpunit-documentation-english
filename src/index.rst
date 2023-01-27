@@ -22,8 +22,7 @@ Contents:
    risky-tests
    test-doubles
    code-coverage-analysis
-   event-system
-   wrapping-the-test-runner
+   extending-phpunit
 
 .. toctree::
    :caption: Appendix

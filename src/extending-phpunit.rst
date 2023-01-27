@@ -1,17 +1,109 @@
 
 
-.. _event-system:
+.. _extending-phpunit:
 
-************
-Event System
-************
+*****************
+Extending PHPUnit
+*****************
+
+.. _extending-phpunit.extending-the-test-runner:
+
+Extending the Test Runner
+=========================
 
 ...
 
-.. _event-system.events:
+.. code-block:: php
+    :caption: todo
+    :name: event-system.subscribing-to-events.examples.Extension.php
+
+    <?php declare(strict_types=1);
+    namespace Vendor\ExampleExtensionForPhpunit;
+
+    use PHPUnit\Runner\Extension\Extension as PhpunitExtension;
+    use PHPUnit\Runner\Extension\Facade as EventFacade;
+    use PHPUnit\Runner\Extension\ParameterCollection;
+    use PHPUnit\TextUI\Configuration\Configuration;
+
+    final class Extension implements PhpunitExtension
+    {
+        public function bootstrap(Configuration $configuration, EventFacade $facade, ParameterCollection $parameters): void
+        {
+            $message = 'the-default-message';
+
+            if ($parameters->has('message')) {
+                $message = $parameters->get('message');
+            }
+
+            $facade->registerSubscriber(
+                new ExecutionFinishedSubscriber(
+                    $message
+                )
+            );
+        }
+    }
+
+...
+
+.. code-block:: php
+    :caption: todo
+    :name: extending-phpunit.event-system.extending-the-test-runner.examples.ExecutionFinishedSubscriber.php
+
+    <?php declare(strict_types=1);
+    namespace Vendor\ExampleExtensionForPhpunit;
+
+    use const PHP_EOL;
+    use PHPUnit\Event\TestRunner\ExecutionFinished;
+    use PHPUnit\Event\TestRunner\ExecutionFinishedSubscriber as ExecutionFinishedSubscriberInterface;
+
+    final class ExecutionFinishedSubscriber implements ExecutionFinishedSubscriberInterface
+    {
+        private readonly string $message;
+
+        public function __construct(string $message)
+        {
+            $this->message = $message;
+        }
+
+        public function notify(ExecutionFinished $event): void
+        {
+            print __METHOD__ . PHP_EOL . $this->message . PHP_EOL;
+        }
+    }
+
+...
+
+.. code-block:: xml
+    :caption: todo
+    :name: extending-phpunit.event-system.extending-the-test-runner.examples.phpunit.xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd">
+        <!-- ... -->
+
+        <extensions>
+            <bootstrap class="Vendor\ExampleExtensionForPhpunit\Extension">
+                <parameter name="message" value="the-message"/>
+            </bootstrap>
+        </extensions>
+
+        <!-- ... -->
+    </phpunit>
+
+...
+
+.. _extending-phpunit.event-system.event-system:
+
+PHPUnit's Event System
+----------------------
+
+...
+
+.. _extending-phpunit.event-system.event-system.events:
 
 Events
-======
+^^^^^^
 
 ``PHPUnit\Event\TestRunner\Started``
 
@@ -253,10 +345,10 @@ Events
 
     The test runner has finished
 
-.. _event-system.debugging-phpunit:
+.. _extending-phpunit.event-system.event-system.debugging-phpunit:
 
 Debugging PHPUnit
-=================
+^^^^^^^^^^^^^^^^^
 
 The test runner's ``--log-events-text`` CLI option can be used to write a plain text representation
 for each event to a stream. In the example shown below, we use ``--no-output`` to disable both the
@@ -265,7 +357,7 @@ to write event information to standard output:
 
 .. code-block::
     :caption: todo
-    :name: event-system.debugging-phpunit.examples.logging-events
+    :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events
 
     phpunit --no-output --log-events-text php://stdout
     Test Runner Started (PHPUnit 10.0.0 using PHP 8.2.0 (cli) on Linux)
@@ -295,7 +387,7 @@ and memory usage):
 
 .. code-block::
     :caption: todo
-    :name: event-system.debugging-phpunit.examples.logging-events-verbose
+    :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events-verbose
 
     phpunit --no-output --log-events-verbose-text php://stdout
     [00:00:00.000035031 / 00:00:00.000004880] [4194304 bytes] Test Runner Started (PHPUnit 10.0.0 using PHP 8.2.0 (cli) on Linux)
@@ -319,87 +411,26 @@ and memory usage):
     [00:00:00.053998986 / 00:00:00.000394501] [6291456 bytes] Test Runner Execution Finished
     [00:00:00.054820440 / 00:00:00.000821454] [6291456 bytes] Test Runner Finished
 
-.. _event-system.subscribing-to-events:
+.. _extending-phpunit.wrapping-the-test-runner:
 
-Subscribing to Events
-=====================
+Wrapping the Test Runner
+========================
 
-.. code-block:: php
-    :caption: todo
-    :name: event-system.subscribing-to-events.examples.Extension.php
+The ``PHPUnit\TextUI\Application`` class is the entry point for PHPUnit's own CLI test runner.
+It is not meant to be (re)used by developers who want to wrap PHPUnit to build something such
+as ParaTest.
 
-    <?php declare(strict_types=1);
-    namespace Vendor\ExampleExtensionForPhpunit;
+For the actual running of tests, ``PHPUnit\TextUI\Application`` uses ``PHPUnit\TextUI\TestRunner::run()``.
 
-    use PHPUnit\Runner\Extension\Extension as PhpunitExtension;
-    use PHPUnit\Runner\Extension\Facade as EventFacade;
-    use PHPUnit\Runner\Extension\ParameterCollection;
-    use PHPUnit\TextUI\Configuration\Configuration;
+``PHPUnit\TextUI\TestRunner::run()`` requires a ``PHPUnit\TextUI\Configuration\Configuration``,
+a ``PHPUnit\Runner\ResultCache\ResultCache``, and a ``PHPUnit\Framework\TestSuite``.
 
-    final class Extension implements PhpunitExtension
-    {
-        public function bootstrap(Configuration $configuration, EventFacade $facade, ParameterCollection $parameters): void
-        {
-            $message = 'the-default-message';
+A ``PHPUnit\TextUI\Configuration\Configuration`` can be built using ``PHPUnit\TextUI\Configuration\Builder::build()``.
+You need to pass ``$_SERVER['argv']`` to this method. The method then parses CLI arguments/options and loads an XML
+configuration file, if one can be loaded.
 
-            if ($parameters->has('message')) {
-                $message = $parameters->get('message');
-            }
+A ``PHPUnit\Framework\TestSuite`` can be built from a ``PHPUnit\TextUI\Configuration\Configuration`` using
+``PHPUnit\TextUI\Configuration\TestSuiteBuilder::build()``.
 
-            $facade->registerSubscriber(
-                new ExecutionFinishedSubscriber(
-                    $message
-                )
-            );
-        }
-    }
-
-...
-
-.. code-block:: php
-    :caption: todo
-    :name: event-system.subscribing-to-events.examples.ExecutionFinishedSubscriber.php
-
-    <?php declare(strict_types=1);
-    namespace Vendor\ExampleExtensionForPhpunit;
-
-    use const PHP_EOL;
-    use PHPUnit\Event\TestRunner\ExecutionFinished;
-    use PHPUnit\Event\TestRunner\ExecutionFinishedSubscriber as ExecutionFinishedSubscriberInterface;
-
-    final class ExecutionFinishedSubscriber implements ExecutionFinishedSubscriberInterface
-    {
-        private readonly string $message;
-
-        public function __construct(string $message)
-        {
-            $this->message = $message;
-        }
-
-        public function notify(ExecutionFinished $event): void
-        {
-            print __METHOD__ . PHP_EOL . $this->message . PHP_EOL;
-        }
-    }
-
-...
-
-.. code-block:: xml
-    :caption: todo
-    :name: event-system.subscribing-to-events.examples.phpunit.xml
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd">
-        <!-- ... -->
-
-        <extensions>
-            <bootstrap class="Vendor\ExampleExtensionForPhpunit\Extension">
-                <parameter name="message" value="the-message"/>
-            </bootstrap>
-        </extensions>
-
-        <!-- ... -->
-    </phpunit>
-
-...
+While it is marked ``@internal``, ``PHPUnit\TextUI\TestRunner`` is meant to be (re)used by developers who
+want to wrap PHPUnit's test runner.
