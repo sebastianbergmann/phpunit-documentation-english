@@ -548,8 +548,43 @@ PHPUnit from preserving global state with the
 The ``@requires`` annotation can be used to skip tests when common
 preconditions, like the PHP Version or installed extensions, are not met.
 
-A complete list of possibilities and examples can be found at
-:ref:`writing-tests-for-phpunit.skipping-tests.skipping-tests-using-requires.tables.api`
+.. rst-class:: table
+.. list-table:: Possible @requires usages
+    :name: writing-tests-for-phpunit.skipping-tests.skipping-tests-using-requires.tables.api
+    :header-rows: 1
+
+    * - Type
+      - Possible Values
+      - Examples
+      - Another example
+    * - ``PHP``
+      - Any PHP version identifier along with an optional operator
+      - @requires PHP 7.1.20
+      - @requires PHP >= 7.2
+    * - ``PHPUnit``
+      - Any PHPUnit version identifier along with an optional operator
+      - @requires PHPUnit 7.3.1
+      - @requires PHPUnit < 8
+    * - ``OS``
+      - A regexp matching `PHP_OS <https://www.php.net/manual/en/reserved.constants.php=constant.php-os>`_
+      - @requires OS Linux
+      - @requires OS WIN32|WINNT
+    * - ``OSFAMILY``
+      - Any `OS family <https://www.php.net/manual/en/reserved.constants.php=constant.php-os-family>`_
+      - @requires OSFAMILY Solaris
+      - @requires OSFAMILY Windows
+    * - ``function``
+      - Any valid parameter to `function_exists <https://www.php.net/function_exists>`_
+      - @requires function imap_open
+      - @requires function ReflectionMethod::setAccessible
+    * - ``extension``
+      - Any extension name along with an optional version identifier and optional operator
+      - @requires extension mysqli
+      - @requires extension redis >= 2.2.0
+
+The following operators are supported for PHP, PHPUnit, and extension version constraints: ``<``, ``<=``, ``>``, ``>=``, ``=``, ``==``, ``!=``, ``<>``.
+
+Versions are compared using PHP's `version_compare <https://www.php.net/version_compare>`_ function. Among other things, this means that the ``=`` and ``==`` operator can only be used with complete ``X.Y.Z`` version numbers and that just ``X.Y`` will not work.
 
 .. _appendixes.annotations.runTestsInSeparateProcesses:
 

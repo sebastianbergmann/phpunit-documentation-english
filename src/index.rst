@@ -31,6 +31,7 @@ Contents:
 
    assertions
    annotations
+   attributes
    configuration
    bibliography
    copyright
