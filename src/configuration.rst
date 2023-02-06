@@ -80,42 +80,6 @@ This attribute configures the number of columns to use for progress output.
 
 If ``max`` is defined as value, the number of columns will be maximum of the current terminal.
 
-.. _appendixes.configuration.phpunit.convertDeprecationsToExceptions:
-
-The ``convertDeprecationsToExceptions`` Attribute
--------------------------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` events triggered by the code under test are converted to an exception (and mark the test as error).
-
-.. _appendixes.configuration.phpunit.convertErrorsToExceptions:
-
-The ``convertErrorsToExceptions`` Attribute
--------------------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``true``)
-
-This attribute configures whether ``E_ERROR`` and ``E_USER_ERROR`` events triggered by the code under test are converted to an exception (and mark the test as error).
-
-.. _appendixes.configuration.phpunit.convertNoticesToExceptions:
-
-The ``convertNoticesToExceptions`` Attribute
---------------------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``true``)
-
-This attribute configures whether ``E_STRICT``, ``E_NOTICE``, and ``E_USER_NOTICE`` events triggered by the code under test are converted to an exception (and mark the test as error).
-
-.. _appendixes.configuration.phpunit.convertWarningsToExceptions:
-
-The ``convertWarningsToExceptions`` Attribute
----------------------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``true``)
-
-This attribute configures whether ``E_WARNING`` and ``E_USER_WARNING`` events triggered by the code under test are converted to an exception (and mark the test as error).
-
 .. _appendixes.configuration.phpunit.requireCoverageMetadata:
 
 The ``requireCoverageMetadata`` Attribute
@@ -321,15 +285,6 @@ The ``defaultTestSuite`` Attribute
 
 This attribute configures the name of the default test suite.
 
-.. _appendixes.configuration.phpunit.verbose:
-
-The ``verbose`` Attribute
--------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether more verbose output should be printed.
-
 .. _appendixes.configuration.phpunit.stderr:
 
 The ``stderr`` Attribute
@@ -392,13 +347,6 @@ The ``testdox`` Attribute
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the output should be printed in TestDox format.
-
-The ``noInteraction`` Attribute
--------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether progress should be animated when TestDox format is used, for instance.
 
 .. _appendixes.configuration.testsuites:
 
@@ -765,8 +713,6 @@ The ``<logging>`` element and its children can be used to configure the logging 
         <teamcity outputFile="teamcity.txt"/>
         <testdoxHtml outputFile="testdox.html"/>
         <testdoxText outputFile="testdox.txt"/>
-        <testdoxXml outputFile="testdox.xml"/>
-        <text outputFile="logfile.txt"/>
     </logging>
 
 
@@ -838,40 +784,6 @@ Possible values: string
 The file to which the test result logfile in TestDox text format is written.
 
 
-.. _appendixes.configuration.logging.testdoxXml:
-
-The ``<testdoxXml>`` Element
-----------------------------
-
-Parent element: ``<logging>``
-
-Configures a test result logfile in TestDox XML format.
-
-The ``outputFile`` Attribute
-****************************
-
-Possible values: string
-
-The file to which the test result logfile in TestDox XML format is written.
-
-
-.. _appendixes.configuration.logging.text:
-
-The ``<text>`` Element
-----------------------
-
-Parent element: ``<logging>``
-
-Configures a test result logfile in text format.
-
-The ``outputFile`` Attribute
-****************************
-
-Possible values: string
-
-The file to which the test result logfile in text format is written.
-
-
 .. _appendixes.configuration.groups:
 
 The ``<groups>`` Element
@@ -894,82 +806,16 @@ The ``<groups>`` element and its ``<include>``, ``<exclude>``, and ``<group>`` c
 
 The example shown above is equivalent to invoking the PHPUnit test runner with ``--group name --exclude-group name``.
 
-.. _appendixes.configuration.testdoxGroups:
-
-The ``<testdoxGroups>`` Element
-===============================
-
-Parent element: ``<phpunit>``
-
-... TBD ...
-
-.. _appendixes.configuration.listeners:
-
-The ``<listeners>`` Element
-===========================
-
-Parent element: ``<phpunit>``
-
-The ``<listeners>`` element and its ``<listener>`` children can be used to attach additional test listeners to the test execution.
-
-.. _appendixes.configuration.listeners.listener:
-
-The ``<listener>`` Element
---------------------------
-
-Parent element: ``<listeners>``
-
-.. code-block:: xml
-
-    <listeners>
-      <listener class="MyListener" file="/optional/path/to/MyListener.php">
-        <arguments>
-          <array>
-            <element key="0">
-              <string>Sebastian</string>
-            </element>
-          </array>
-          <integer>22</integer>
-          <string>April</string>
-          <double>19.78</double>
-          <null/>
-          <object class="stdClass"/>
-        </arguments>
-      </listener>
-    </listeners>
-
-The XML configuration above corresponds to attaching the
-``$listener`` object (see below) to the test execution:
-
-.. code-block:: php
-
-    $listener = new MyListener(
-        ['Sebastian'],
-        22,
-        'April',
-        19.78,
-        null,
-        new stdClass
-    );
-
-.. admonition:: Note
-
-    Please note that the ``PHPUnit\Framework\TestListener`` interface is
-    deprecated and will be removed in the future. TestRunner extensions
-    should be used instead of test listeners.
-
-.. _appendixes.configuration.extensions:
-
 The ``<extensions>`` Element
 ============================
 
 Parent element: ``<phpunit>``
 
-The ``<extensions>`` element and its ``<extension>`` children can be used to register test runner extensions.
+The ``<extensions>`` element and its ``<bootstrap>`` children can be used to register test runner extensions.
 
-.. _appendixes.configuration.extensions.extension:
+.. _appendixes.configuration.extensions.bootstrap:
 
-The ``<extension>`` Element
+The ``<bootstrap>`` Element
 ---------------------------
 
 Parent element: ``<extensions>``
@@ -977,56 +823,26 @@ Parent element: ``<extensions>``
 .. code-block:: xml
 
     <extensions>
-        <extension class="Vendor\MyExtension"/>
+        <bootstrap class="Vendor\ExampleExtensionForPhpunit\Extension"/>
     </extensions>
 
 .. _appendixes.configuration.extensions.extension.arguments:
 
-The ``<arguments>`` Element
+The ``<parameter>`` Element
 ***************************
 
-Parent element: ``<extension>``
+Parent element: ``<bootstrap>``
 
-The ``<arguments>`` element can be used to configure a single ``<extension>``.
-
-Accepts a list of elements of types, which are then used to configure individual
-extensions. The arguments are passed to the extension class' ``__constructor``
-method in the order they are defined in the configuration.
-
-Available types:
-
-- ``<boolean>``
-- ``<integer>``
-- ``<string>``
-- ``<double>`` (float)
-- ``<array>``
-- ``<object>``
+The ``<parameter>`` element can be used to configure parameters that are passed
+to the extension for bootstrapping.
 
 .. code-block:: xml
 
-    <extension class="Vendor\MyExtension">
-        <arguments>
-            <integer>1</integer>
-            <integer>2</integer>
-            <integer>3</integer>
-            <string>hello world</string>
-            <boolean>true</boolean>
-            <double>1.23</double>
-            <array>
-                <element index="0">
-                    <string>value1</string>
-                </element>
-                <element index="1">
-                    <string>value2</string>
-                </element>
-            </array>
-            <object class="Vendor\MyPhpClass">
-                <string>constructor arg 1</string>
-                <string>constructor arg 2</string>
-            </object>
-        </arguments>
-    </extension>
-
+    <extensions>
+        <bootstrap class="Vendor\ExampleExtensionForPhpunit\Extension">
+            <parameter name="message" value="the-message"/>
+        </bootstrap>
+    </extensions>
 
 .. _appendixes.configuration.php:
 
