@@ -144,8 +144,6 @@ the following code:
       --fail-on-skipped                Treat skipped tests as failures
       --fail-on-warning                Treat tests with warnings as failures
 
-      --repeat <times>                 Runs the test(s) repeatedly
-
       --cache-result                   Write test results to cache file
       --do-not-cache-result            Do not write test results to cache file
 
@@ -457,10 +455,6 @@ the following code:
 
     Output more verbose information, for instance the names of tests
     that were incomplete or have been skipped.
-
-``--repeat``
-
-    Repeatedly runs the test(s) the specified number of times.
 
 ``--testdox``
 
