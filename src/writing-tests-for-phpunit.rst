@@ -6,6 +6,11 @@
 Writing Tests for PHPUnit
 *************************
 
+.. _writing-tests-for-phpunit.return-values:
+
+Asserting Return Values
+=======================
+
 :numref:`writing-tests-for-phpunit.examples.StackTest.php` shows
 how we can write tests using PHPUnit that exercise PHP's array operations.
 The example introduces the basic conventions and steps for writing tests
@@ -58,6 +63,276 @@ with PHPUnit:
     Whenever you are tempted to type something into a
     ``print`` statement or a debugger expression, write it
     as a test instead.
+
+.. _writing-tests-for-phpunit.exceptions:
+
+Expecting Exceptions
+====================
+
+:numref:`writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php`
+shows how to use the ``expectException()`` method to test
+whether an exception is thrown by the code under test.
+
+.. code-block:: php
+    :caption: Using the expectException() method
+    :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class ExceptionTest extends TestCase
+    {
+        public function testException(): void
+        {
+            $this->expectException(InvalidArgumentException::class);
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit ExceptionTest.php
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 00:00.066, Memory: 8.00 MB
+
+    There was 1 failure:
+
+    1) ExceptionTest::testException
+    Failed asserting that exception of type "InvalidArgumentException" is thrown.
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+In addition to the ``expectException()`` method the
+``expectExceptionCode()``,
+``expectExceptionMessage()``, and
+``expectExceptionMessageMatches()`` methods exist to set up
+expectations for exceptions raised by the code under test.
+
+.. admonition:: Note
+
+   Note that ``expectExceptionMessage()`` asserts that the ``$actual``
+   message contains the ``$expected`` message and does not perform
+   an exact string comparison.
+
+Asserting return values and expecting exceptions are two of the three most commonly performed
+operations in a test method. The third is verifying side effects. The verification of side
+effects in object collaboration is discussed in the chapter on :ref:`test-doubles`.
+
+.. _writing-tests-for-phpunit.data-providers:
+
+Data Providers
+==============
+
+A test method can accept arbitrary arguments. These arguments are to be
+provided by one or more data provider methods (``additionProvider()`` in
+:numref:`writing-tests-for-phpunit.data-providers.examples.DataTest.php`).
+The data provider method to be used is specified using the
+``PHPUnit\Framework\Attributes\DataProvider`` attribute.
+
+A data provider method must be ``public`` and ``static``. It must either return
+an array of arrays or an object that implements the ``Iterator``
+interface. In each iteration step, it must yield an array. For each of these arrays,
+the test method will be called with the contents of the array as its arguments.
+
+.. code-block:: php
+    :caption: Using a data provider that returns an array of arrays
+    :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\DataProvider;
+    use PHPUnit\Framework\TestCase;
+
+    final class DataTest extends TestCase
+    {
+        #[DataProvider('additionProvider')]
+        public function testAdd(int $a, int $b, int $expected): void
+        {
+            $this->assertSame($expected, $a + $b);
+        }
+
+        public static function additionProvider(): array
+        {
+            return [
+                [0, 0, 0],
+                [0, 1, 1],
+                [1, 0, 1],
+                [1, 1, 3]
+            ];
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit DataTest.php
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    ...F                                                                4 / 4 (100%)
+
+    Time: 00:00.058, Memory: 8.00 MB
+
+    There was 1 failure:
+
+    1) DataTest::testAdd with data set #3
+    Failed asserting that 2 is identical to 3.
+
+    /home/sb/DataTest.php:10
+
+    FAILURES!
+    Tests: 4, Assertions: 4, Failures: 1.
+
+When using a large number of data sets it is useful to name each one with a string key.
+Output will be more verbose as it will contain that name of a dataset that breaks a test.
+
+.. code-block:: php
+    :caption: Using a data provider with named datasets
+    :name: writing-tests-for-phpunit.data-providers.examples.DataTest1.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\DataProvider;
+    use PHPUnit\Framework\TestCase;
+
+    final class DataTest extends TestCase
+    {
+        #[DataProvider('additionProvider')]
+        public function testAdd(int $a, int $b, int $expected): void
+        {
+            $this->assertSame($expected, $a + $b);
+        }
+
+        public static function additionProvider(): array
+        {
+            return [
+                'adding zeros'  => [0, 0, 0],
+                'zero plus one' => [0, 1, 1],
+                'one plus zero' => [1, 0, 1],
+                'one plus one'  => [1, 1, 3]
+            ];
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit DataTest.php
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    ...F                                                                4 / 4 (100%)
+
+    Time: 00:00.066, Memory: 8.00 MB
+
+    There was 1 failure:
+
+    1) DataTest::testAdd with data set "one plus one"
+    Failed asserting that 2 is identical to 3.
+
+    /home/sb/DataTest.php:10
+
+    FAILURES!
+    Tests: 4, Assertions: 4, Failures: 1.
+
+.. admonition:: Note
+
+    You can make the test output more verbose by defining a sentence and using the test's parameter names as placeholders
+    (``$a``, ``$b`` and ``$expected`` in the example above) with the :ref:`appendixes.annotations.testdox` annotation.
+    You can also refer to the name of a named data set with ``$_dataName``.
+
+When a test receives input from both a data provider
+method and from one or more tests it depends on, the
+arguments from the data provider will come before the ones from
+depended-upon tests. The arguments from depended-upon tests will be the
+same for each data set.
+
+ When a test depends on a test that uses data providers, the depending
+ test will be executed when the test it depends upon is successful for at
+ least one data set. The result of a test that uses data providers cannot
+ be injected into a depending test.
+
+All data providers are executed before both the call to the ``setUpBeforeClass()``
+static method and the first call to the ``setUp()`` method.
+Because of that you can't access any variables you create there from
+within a data provider. This is required in order for PHPUnit to be able
+to compute the total number of tests.
+
+.. _writing-tests-for-phpunit.output:
+
+Testing Output
+==============
+
+Sometimes you want to assert that the execution of a method, for
+instance, generates an expected output (via ``echo`` or
+``print``, for example). The
+``PHPUnit\Framework\TestCase`` class uses PHP's
+`Output
+Buffering <http://www.php.net/manual/en/ref.outcontrol.php>`_ feature to provide the functionality that is
+necessary for this.
+
+:numref:`writing-tests-for-phpunit.output.examples.OutputTest.php`
+shows how to use the ``expectOutputString()`` method to
+set the expected output. If this expected output is not generated, the
+test will be counted as a failure.
+
+.. code-block:: php
+    :caption: Testing the output of a function or method
+    :name: writing-tests-for-phpunit.output.examples.OutputTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class OutputTest extends TestCase
+    {
+        public function testExpectFooActualFoo(): void
+        {
+            $this->expectOutputString('foo');
+
+            print 'foo';
+        }
+
+        public function testExpectBarActualBaz(): void
+        {
+            $this->expectOutputString('bar');
+
+            print 'baz';
+        }
+    }
+
+.. parsed-literal::
+
+    $ phpunit OutputTest.php
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    .F
+
+    Time: 00:00.066, Memory: 8.00 MB
+
+    There was 1 failure:
+
+    1) OutputTest::testExpectBarActualBaz
+    Failed asserting that two strings are equal.
+    --- Expected
+    +++ Actual
+    @@ @@
+    -'bar'
+    +'baz'
+
+    FAILURES!
+    Tests: 2, Assertions: 2, Failures: 1.
+
+:numref:`writing-tests-for-phpunit.output.tables.api`
+shows the methods provided for testing output
+
+.. rst-class:: table
+.. list-table:: Methods for testing output
+    :name: writing-tests-for-phpunit.output.tables.api
+    :header-rows: 1
+
+    * - Method
+      - Meaning
+    * - ``void expectOutputRegex(string $regularExpression)``
+      - Set up the expectation that the output matches a ``$regularExpression``.
+    * - ``void expectOutputString(string $expectedString)``
+      - Set up the expectation that the output is equal to an ``$expectedString``.
 
 .. _writing-tests-for-phpunit.incomplete-tests:
 
@@ -391,273 +666,7 @@ A test that has more than one test dependency attribute will get a fixture
 from the first producer as the first argument, a fixture from the second
 producer as the second argument, and so on.
 
-.. _writing-tests-for-phpunit.data-providers:
-
-Data Providers
-==============
-
-A test method can accept arbitrary arguments. These arguments are to be
-provided by one or more data provider methods (``additionProvider()`` in
-:numref:`writing-tests-for-phpunit.data-providers.examples.DataTest.php`).
-The data provider method to be used is specified using the
-``PHPUnit\Framework\Attributes\DataProvider`` attribute.
-
-A data provider method must be ``public`` and ``static``. It must either return
-an array of arrays or an object that implements the ``Iterator``
-interface. In each iteration step, it must yield an array. For each of these arrays,
-the test method will be called with the contents of the array as its arguments.
-
-.. code-block:: php
-    :caption: Using a data provider that returns an array of arrays
-    :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\Attributes\DataProvider;
-    use PHPUnit\Framework\TestCase;
-
-    final class DataTest extends TestCase
-    {
-        #[DataProvider('additionProvider')]
-        public function testAdd(int $a, int $b, int $expected): void
-        {
-            $this->assertSame($expected, $a + $b);
-        }
-
-        public static function additionProvider(): array
-        {
-            return [
-                [0, 0, 0],
-                [0, 1, 1],
-                [1, 0, 1],
-                [1, 1, 3]
-            ];
-        }
-    }
-
-.. parsed-literal::
-
-    $ phpunit DataTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    ...F                                                                4 / 4 (100%)
-
-    Time: 00:00.058, Memory: 8.00 MB
-
-    There was 1 failure:
-
-    1) DataTest::testAdd with data set #3
-    Failed asserting that 2 is identical to 3.
-
-    /home/sb/DataTest.php:10
-
-    FAILURES!
-    Tests: 4, Assertions: 4, Failures: 1.
-
-When using a large number of data sets it is useful to name each one with a string key.
-Output will be more verbose as it will contain that name of a dataset that breaks a test.
-
-.. code-block:: php
-    :caption: Using a data provider with named datasets
-    :name: writing-tests-for-phpunit.data-providers.examples.DataTest1.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\Attributes\DataProvider;
-    use PHPUnit\Framework\TestCase;
-
-    final class DataTest extends TestCase
-    {
-        #[DataProvider('additionProvider')]
-        public function testAdd(int $a, int $b, int $expected): void
-        {
-            $this->assertSame($expected, $a + $b);
-        }
-
-        public static function additionProvider(): array
-        {
-            return [
-                'adding zeros'  => [0, 0, 0],
-                'zero plus one' => [0, 1, 1],
-                'one plus zero' => [1, 0, 1],
-                'one plus one'  => [1, 1, 3]
-            ];
-        }
-    }
-
-.. parsed-literal::
-
-    $ phpunit DataTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    ...F                                                                4 / 4 (100%)
-
-    Time: 00:00.066, Memory: 8.00 MB
-
-    There was 1 failure:
-
-    1) DataTest::testAdd with data set "one plus one"
-    Failed asserting that 2 is identical to 3.
-
-    /home/sb/DataTest.php:10
-
-    FAILURES!
-    Tests: 4, Assertions: 4, Failures: 1.
-
-.. admonition:: Note
-
-    You can make the test output more verbose by defining a sentence and using the test's parameter names as placeholders
-    (``$a``, ``$b`` and ``$expected`` in the example above) with the :ref:`appendixes.annotations.testdox` annotation.
-    You can also refer to the name of a named data set with ``$_dataName``.
-
-When a test receives input from both a data provider
-method and from one or more tests it depends on, the
-arguments from the data provider will come before the ones from
-depended-upon tests. The arguments from depended-upon tests will be the
-same for each data set.
-
- When a test depends on a test that uses data providers, the depending
- test will be executed when the test it depends upon is successful for at
- least one data set. The result of a test that uses data providers cannot
- be injected into a depending test.
-
-All data providers are executed before both the call to the ``setUpBeforeClass()``
-static method and the first call to the ``setUp()`` method.
-Because of that you can't access any variables you create there from
-within a data provider. This is required in order for PHPUnit to be able
-to compute the total number of tests.
-
-.. _writing-tests-for-phpunit.exceptions:
-
-Testing Exceptions
-==================
-
-:numref:`writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php`
-shows how to use the ``expectException()`` method to test
-whether an exception is thrown by the code under test.
-
-.. code-block:: php
-    :caption: Using the expectException() method
-    :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class ExceptionTest extends TestCase
-    {
-        public function testException(): void
-        {
-            $this->expectException(InvalidArgumentException::class);
-        }
-    }
-
-.. parsed-literal::
-
-    $ phpunit ExceptionTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 00:00.066, Memory: 8.00 MB
-
-    There was 1 failure:
-
-    1) ExceptionTest::testException
-    Failed asserting that exception of type "InvalidArgumentException" is thrown.
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
-In addition to the ``expectException()`` method the
-``expectExceptionCode()``,
-``expectExceptionMessage()``, and
-``expectExceptionMessageMatches()`` methods exist to set up
-expectations for exceptions raised by the code under test.
-
-.. admonition:: Note
-
-   Note that ``expectExceptionMessage()`` asserts that the ``$actual``
-   message contains the ``$expected`` message and does not perform
-   an exact string comparison.
-
-.. _writing-tests-for-phpunit.output:
-
-Testing Output
-==============
-
-Sometimes you want to assert that the execution of a method, for
-instance, generates an expected output (via ``echo`` or
-``print``, for example). The
-``PHPUnit\Framework\TestCase`` class uses PHP's
-`Output
-Buffering <http://www.php.net/manual/en/ref.outcontrol.php>`_ feature to provide the functionality that is
-necessary for this.
-
-:numref:`writing-tests-for-phpunit.output.examples.OutputTest.php`
-shows how to use the ``expectOutputString()`` method to
-set the expected output. If this expected output is not generated, the
-test will be counted as a failure.
-
-.. code-block:: php
-    :caption: Testing the output of a function or method
-    :name: writing-tests-for-phpunit.output.examples.OutputTest.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class OutputTest extends TestCase
-    {
-        public function testExpectFooActualFoo(): void
-        {
-            $this->expectOutputString('foo');
-
-            print 'foo';
-        }
-
-        public function testExpectBarActualBaz(): void
-        {
-            $this->expectOutputString('bar');
-
-            print 'baz';
-        }
-    }
-
-.. parsed-literal::
-
-    $ phpunit OutputTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    .F
-
-    Time: 00:00.066, Memory: 8.00 MB
-
-    There was 1 failure:
-
-    1) OutputTest::testExpectBarActualBaz
-    Failed asserting that two strings are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-    -'bar'
-    +'baz'
-
-    FAILURES!
-    Tests: 2, Assertions: 2, Failures: 1.
-
-:numref:`writing-tests-for-phpunit.output.tables.api`
-shows the methods provided for testing output
-
-.. rst-class:: table
-.. list-table:: Methods for testing output
-    :name: writing-tests-for-phpunit.output.tables.api
-    :header-rows: 1
-
-    * - Method
-      - Meaning
-    * - ``void expectOutputRegex(string $regularExpression)``
-      - Set up the expectation that the output matches a ``$regularExpression``.
-    * - ``void expectOutputString(string $expectedString)``
-      - Set up the expectation that the output is equal to an ``$expectedString``.
-
-.. _writing-tests-for-phpunit.error-output:
+.. _writing-tests-for-phpunit.failure-output:
 
 Failure Output
 ==============
