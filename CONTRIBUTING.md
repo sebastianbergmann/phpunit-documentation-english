@@ -23,17 +23,3 @@ stupid in the commit history of a project.
 Due to time constraints, we are not always able to respond as quickly as we 
 would like. Please do not take delays personal and feel free to remind us if 
 you feel that we forgot to respond.
-
-## Reporting issues
-
-Please use the issue tracker of the affected language to create new tickets.
-General issues should always be reported in the issue tracker of the English
-documentation. 
-
-* [English Documentation](https://github.com/sebastianbergmann/phpunit-documentation-english/issues)
-* [Spanish Documentation](https://github.com/sebastianbergmann/phpunit-documentation-spanish/issues)
-* [French Documentation](https://github.com/sebastianbergmann/phpunit-documentation-french/issues)
-* [Brazilian Portuguese Documentation](https://github.com/sebastianbergmann/phpunit-documentation-brazilian-portuguese/issues)
-* [Japanese Documentation](https://github.com/sebastianbergmann/phpunit-documentation-japanese/issues)
-* [Simplified Chinese Documentation](https://github.com/sebastianbergmann/phpunit-documentation-chinese/issues)
-* [Russian Documentation](https://github.com/sebastianbergmann/phpunit-documentation-russian/issues)
