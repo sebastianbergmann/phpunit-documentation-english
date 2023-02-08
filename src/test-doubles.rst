@@ -750,6 +750,9 @@ Here is a list of methods provided by the Mock Builder:
 -
 
   ``disableOriginalConstructor()`` can be used to disable the call to the original class' constructor.
+-
+
+  ``enableOriginalConstructor()`` can be used to enable the call to the original class' constructor.
 
 -
 
@@ -757,7 +760,51 @@ Here is a list of methods provided by the Mock Builder:
 
 -
 
+  ``enableOriginalClone()`` can be used to enable the call to the original class' clone constructor.
+
+-
+
   ``disableAutoload()`` can be used to disable ``__autoload()`` during the generation of the test double class.
+
+-
+
+  ``enableAutoload()`` can be used to enable ``__autoload()`` during the generation of the test double class.
+
+-
+
+  ``disableArgumentCloning()`` can be used to disable the cloning of arguments passed to mocked methods.
+
+-
+
+  ``enableArgumentCloning()`` can be used to enable the cloning of arguments passed to mocked methods.
+
+-
+
+  ``enableProxyingToOriginalMethods()`` can be used to enable the invocation of the original methods.
+
+-
+
+  ``disableProxyingToOriginalMethods()`` can be used to disable the invocation of the original methods.
+
+-
+
+  ``setProxyTarget()`` can be used to set the proxy target for the invocation of the original methods.
+
+-
+
+  ``allowMockingUnknownTypes()`` can be used to allow the doubling of unknown types.
+
+-
+
+  ``disallowMockingUnknownTypes()`` can be used to disallow the doubling of unknown types.
+
+-
+
+  ``enableAutoReturnValueGeneration()`` can be used to enable the automatic generation of return values when no return value is configured.
+
+-
+
+  ``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
 
 .. _test-doubles.mocking-traits-and-abstract-classes:
 
