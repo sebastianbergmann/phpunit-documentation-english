@@ -48,13 +48,22 @@ return a value when called.
 
 .. admonition:: Limitation: final, private, and static methods
 
-   Please note that ``final``, ``private``,
-   and ``static`` methods cannot
-   be stubbed or mocked. They are ignored by PHPUnit's test double
-   functionality and retain their original behavior except for ``static``
-   methods that will be replaced by a method throwing a
-   ``\PHPUnit\Framework\MockObject\BadMethodCallException`` exception.
+   Please note that ``final``, ``private``, and ``static`` methods cannot
+   be doubled. They are ignored by PHPUnit's test double functionality and
+   retain their original behavior except for ``static`` methods which will
+   be replaced by a method throwing an exception.
 
+.. admonition:: Limitation: Enumerations and readonly classes
+
+   Enumerations (``enum``) are ``final`` classes and therefore cannot be
+   doubled. ``readonly`` classes cannot be extended by classes that are
+   not ``readonly`` and therefore cannot be doubled.
+
+.. admonition:: Favour doubling interfaces over doubling classes
+
+   Not only because of the limitations mentioned above, but also to improve
+   your software design, favour the doubling of interfaces over the doubling
+   of classes.
 
 .. _test-doubles.stubs:
 
