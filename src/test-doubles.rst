@@ -447,7 +447,6 @@ classes that are part of the System under Test (SUT).
     :name: test-doubles.mock-objects.examples.SUT.php
 
     <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
 
     class Subject
     {
