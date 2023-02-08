@@ -714,16 +714,6 @@ invocations.
       - Returns a matcher that matches when the method it is evaluated for is executed exactly once.
     * - ``PHPUnit\Framework\MockObject\Matcher\InvokedCount exactly(int $count)``
       - Returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times.
-    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedAtIndex at(int $index)``
-      - Returns a matcher that matches when the method it is evaluated for is invoked at the given ``$index``.
-
-.. admonition:: Note
-
-   The ``$index`` parameter for the ``at()``
-   matcher refers to the index, starting at zero, in *all method
-   invocations* for a given mock object. Exercise caution when
-   using this matcher as it can lead to brittle tests which are too
-   closely tied to specific implementation details.
 
 As mentioned in the beginning, when the defaults used by the
 ``createStub()`` and ``createMock()`` methods to generate the test double do not
