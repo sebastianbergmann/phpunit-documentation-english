@@ -741,10 +741,6 @@ Here is a list of methods provided by the Mock Builder:
 
 -
 
-  ``setMethodsExcept(array $methods)`` can be called on the Mock Builder object to specify the methods that will not be replaced with a configurable test double while replacing all other public methods. This works inverse to ``onlyMethods()``.
-
--
-
   ``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
 
 -
