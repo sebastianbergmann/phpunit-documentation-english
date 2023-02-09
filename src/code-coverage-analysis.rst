@@ -34,7 +34,7 @@ extensions for PHP.
    have to active Xdebug's `coverage <https://xdebug.org/docs/code_coverage#mode>`_
    mode.
 
-PHPUnit can generate an HTML-based code coverage report as well as
+PHPUnit can generate a code coverage report in HTML format as well as
 XML-based logfiles with code coverage information in various formats
 (Clover, Cobertura, Crap4J, PHPUnit). Code coverage information can also be reported
 as text (and printed to STDOUT) and exported as PHP code for further
