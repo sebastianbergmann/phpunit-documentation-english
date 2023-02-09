@@ -95,6 +95,11 @@ Various software metrics exist to measure code coverage:
     by writing tests and by refactoring the code to lower its
     complexity.
 
+The php-code-coverage library used by PHPUnit supports all code coverage
+software metrics listed above. To report branch coverage and path coverage,
+code coverage data has to be collected using Xdebug as PCOV only supports
+line coverage.
+
 .. _code-coverage-analysis.including-files:
 
 Including Files
