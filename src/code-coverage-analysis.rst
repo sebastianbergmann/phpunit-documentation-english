@@ -20,7 +20,7 @@ code are executed when the tests are run. It makes use of the
 `php-code-coverage <https://github.com/sebastianbergmann/php-code-coverage>`_
 library, which in turn leverages the code coverage functionality provided
 by the `Xdebug <https://xdebug.org/>`_ or `PCOV <https://github.com/krakjoe/pcov>`_
-extensions for PHP or by `PHPDBG <https://www.php.net/manual/en/book.phpdbg.php>`_.
+extensions for PHP.
 
 .. admonition:: Note
 
