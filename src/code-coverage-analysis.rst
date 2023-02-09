@@ -28,6 +28,12 @@ extensions for PHP.
    available, it means that you are using the PHP CLI binary (``php``) and do not
    have Xdebug or PCOV loaded.
 
+.. admonition:: Note
+
+   When you want to use Xdebug for the collection of code coverage data then you
+   have to active Xdebug's `coverage <https://xdebug.org/docs/code_coverage#mode>`_
+   mode.
+
 PHPUnit can generate an HTML-based code coverage report as well as
 XML-based logfiles with code coverage information in various formats
 (Clover, Cobertura, Crap4J, PHPUnit). Code coverage information can also be reported
