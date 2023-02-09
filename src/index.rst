@@ -17,11 +17,11 @@ Contents:
    installation
    writing-tests-for-phpunit
    textui
-   fixtures
    organizing-tests
-   risky-tests
+   fixtures
    test-doubles
    code-coverage-analysis
+   risky-tests
    extending-phpunit
 
 .. toctree::
@@ -30,8 +30,8 @@ Contents:
    :numbered: 1
 
    assertions
-   annotations
    attributes
+   annotations
    configuration
    bibliography
    copyright
