@@ -95,10 +95,9 @@ Various software metrics exist to measure code coverage:
     by writing tests and by refactoring the code to lower its
     complexity.
 
-The php-code-coverage library used by PHPUnit supports all code coverage
-software metrics listed above. To report branch coverage and path coverage,
-code coverage data has to be collected using Xdebug as PCOV only supports
-line coverage.
+The library used by PHPUnit supports all code coverage software metrics listed above.
+To report branch coverage and path coverage, code coverage data has to be collected
+using Xdebug as PCOV only supports line coverage.
 
 .. _code-coverage-analysis.including-files:
 
@@ -122,23 +121,24 @@ The ``includeUncoveredFiles`` configuration setting is available to configure ho
 Ignoring Code Blocks
 ====================
 
-Sometimes you have blocks of code that you cannot test and that you may
+Sometimes you have units of code that you cannot test and that you may
 want to ignore during code coverage analysis. PHPUnit lets you do this
-using the ``@codeCoverageIgnore``,
-``@codeCoverageIgnoreStart`` and
-``@codeCoverageIgnoreEnd`` annotations as shown in
-:numref:`code-coverage-analysis.ignoring-code-blocks.examples.Sample.php`.
+using the ``PHPUnit\Framework\Attributes\CodeCoverageIgnore`` attribute
+on the class level as well as on the method level.
+
+The ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
+can be used inside the body of a method, for instance, to ignore individual
+lines of code.
 
 .. code-block:: php
-    :caption: Using the ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
-    :name: code-coverage-analysis.ignoring-code-blocks.examples.Sample.php
+    :caption: Using the ``CodeCoverageIgnore`` attribute and the ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
+    :name: code-coverage-analysis.ignoring-code-blocks.examples.example.php
 
     <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
     use PHPUnit\Framework\TestCase;
 
-    /**
-     * @codeCoverageIgnore
-     */
+    #[CodeCoverageIgnore]
     final class Foo
     {
         public function bar(): void
@@ -148,9 +148,7 @@ using the ``@codeCoverageIgnore``,
 
     final class Bar
     {
-        /**
-         * @codeCoverageIgnore
-         */
+        #[CodeCoverageIgnore]
         public function foo(): void
         {
         }
@@ -164,196 +162,61 @@ using the ``@codeCoverageIgnore``,
 
     exit; // @codeCoverageIgnore
 
-The ignored lines of code (marked as ignored using the annotations)
-are counted as executed (if they are executable) and will not be
-highlighted.
-
 .. _code-coverage-analysis.specifying-covered-parts:
 
 Specifying Covered Code Parts
 =============================
 
-The ``@covers`` annotation (see the
-:ref:`annotation documentation <appendixes.annotations.covers.tables.annotations>`)
-can be used in the test code to specify which code parts a test class
-(or test method) wants to test. If provided, this effectively filters the
-code coverage report to include executed code from the referenced code parts only.
+The ``PHPUnit\Framework\Attributes\CoversClass`` and ``PHPUnit\Framework\Attributes\CoversFunction``
+attributes can be used in the test code to specify which units of code a test class intends to cover.
+
+When these attributes are used on a test case class, code coverage information is only collected for
+the listed units of code when the test methods of this test case class are executed.
+
 :numref:`code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php`
 shows an example.
-
-
-.. admonition:: Note
-
-    If a method is specified with the ``@covers`` annotation, only the
-    referenced method will be considered as covered, but not methods called
-    by this method.
-    Hence, when a covered method is refactored using the *extract method*
-    refactoring, corresponding ``@covers`` annotations need to be added.
-    This is the reason it is recommended to use this annotation with class scope,
-    not with method scope.
 
 .. code-block:: php
     :caption: Test class that specifies which class it wants to cover
     :name: code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php
 
     <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\CoversClass;
+    use PHPUnit\Framework\Attributes\UsesClass;
     use PHPUnit\Framework\TestCase;
 
-    /**
-     * @covers \Invoice
-     * @uses \Money
-     */
+    #[CoversClass Invoice::class]
+    #[UsesClass Money::class]
     final class InvoiceTest extends TestCase
     {
-        private $invoice;
-
-        protected function setUp(): void
-        {
-            $this->invoice = new Invoice;
-        }
-
         public function testAmountInitiallyIsEmpty(): void
         {
-            $this->assertEquals(new Money, $this->invoice->getAmount());
+            $this->assertEquals(new Money, (new Invoice)->amount());
         }
     }
 
-.. code-block:: php
-    :caption: Tests that specify which method they want to cover
-    :name: code-coverage-analysis.specifying-covered-parts.examples.BankAccountTest.php
+The ``PHPUnit\Framework\Attributes\UsesClass`` and ``PHPUnit\Framework\Attributes\UsesFunction``
+attributes can be used to specify units of code that should be ignored for code coverage, but which
+are allowed to be used by the code that is covered. This is explained in the section on
+:ref:`unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class BankAccountTest extends TestCase
-    {
-        private $ba;
-
-        protected function setUp(): void
-        {
-            $this->ba = new BankAccount;
-        }
-
-        /**
-         * @covers \BankAccount::getBalance
-         */
-        public function testBalanceIsInitiallyZero(): void
-        {
-            $this->assertSame(0, $this->ba->getBalance());
-        }
-
-        /**
-         * @covers \BankAccount::withdrawMoney
-         */
-        public function testBalanceCannotBecomeNegative(): void
-        {
-            try {
-                $this->ba->withdrawMoney(1);
-            }
-
-            catch (BankAccountException $e) {
-                $this->assertSame(0, $this->ba->getBalance());
-
-                return;
-            }
-
-            $this->fail();
-        }
-
-        /**
-         * @covers \BankAccount::depositMoney
-         */
-        public function testBalanceCannotBecomeNegative2(): void
-        {
-            try {
-                $this->ba->depositMoney(-1);
-            }
-
-            catch (BankAccountException $e) {
-                $this->assertSame(0, $this->ba->getBalance());
-
-                return;
-            }
-
-            $this->fail();
-        }
-
-        /**
-         * @covers \BankAccount::getBalance
-         * @covers \BankAccount::depositMoney
-         * @covers \BankAccount::withdrawMoney
-         */
-        public function testDepositWithdrawMoney(): void
-        {
-            $this->assertSame(0, $this->ba->getBalance());
-            $this->ba->depositMoney(1);
-            $this->assertSame(1, $this->ba->getBalance());
-            $this->ba->withdrawMoney(1);
-            $this->assertSame(0, $this->ba->getBalance());
-        }
-    }
-
-It is also possible to specify that a test should not cover
-*any* method by using the
-``@coversNothing`` annotation (see
-:ref:`appendixes.annotations.coversNothing`). This can be
-helpful when writing integration tests to make sure you only
-generate code coverage with unit tests.
+The ``PHPUnit\Framework\Attributes\CoversNothing`` attribute can be used to specify that tests
+should not contribute to code coverage at all. This can be helpful when writing integration tests
+and to make sure you only generate code coverage with unit tests.
 
 .. code-block:: php
-    :caption: A test that specifies that no method should be covered
+    :caption: A test that specifies that it does not want to contribute to code coverage
     :name: code-coverage-analysis.specifying-covered-parts.examples.GuestbookIntegrationTest.php
 
     <?php declare(strict_types=1);
-    use PHPUnit\DbUnit\TestCase
-
-    final class GuestbookIntegrationTest extends TestCase
-    {
-        /**
-         * @coversNothing
-         */
-        public function testAddEntry(): void
-        {
-            $guestbook = new Guestbook();
-            $guestbook->addEntry("suzy", "Hello world!");
-
-            $queryTable = $this->getConnection()->createQueryTable(
-                'guestbook', 'SELECT * FROM guestbook'
-            );
-
-            $expectedTable = $this->createFlatXmlDataSet("expectedBook.xml")
-                                  ->getTable("guestbook");
-
-            $this->assertTablesEqual($expectedTable, $queryTable);
-        }
-    }
-
-.. _code-coverage-analysis.edge-cases:
-
-Edge Cases
-==========
-
-This section shows noteworthy edge cases that lead to confusing code
-coverage information.
-
-.. code-block:: php
-    :name: code-coverage-analysis.edge-cases.examples.Sample.php
-
-    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\CoversNothing;
     use PHPUnit\Framework\TestCase;
 
-    // Because it is "line based" and not statement base coverage
-    // one line will always have one coverage status
-    if (false) this_function_call_shows_up_as_covered();
-
-    // Due to how code coverage works internally these two lines are special.
-    // This line will show up as non executable
-    if (false)
-        // This line will show up as covered because it is actually the
-        // coverage of the if statement in the line above that gets shown here!
-        will_also_show_up_as_covered();
-
-    // To avoid this it is necessary that braces are used
-    if (false) {
-        this_call_will_never_show_up_as_covered();
+    #[CoversNothing]
+    final class IntegrationTest extends TestCase
+    {
+        public function testRegisteredUserCanLogIn(): void
+        {
+            // ...
+        }
     }
