@@ -398,6 +398,9 @@ With this configuration, Composer will always install the latest version of PHPU
 
 This ensures you "stay fresh" as long as PHPUnit 10 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 10.1. And when the time comes and PHPUnit 11 is released then Composer will not automatically and unexpectedly install it.
 
+PHAR or Composer?
+^^^^^^^^^^^^^^^^^
+
 According to its own documentation, Composer "[e]nables you to declare the libraries you depend on" and "[f]inds out which versions of which packages can and need to be installed, and installs them (meaning it downloads them into your project)". This is exactly what you need -- and want -- for dealing with your project's dependencies that are required at runtime. It is, however, not what you want for your project's development-time dependencies, for instance tools for static analysis.
 
 While Composer allows for the separate declaration of dependencies that are only required during development and dependencies that are actually required to run the software, the implementation of this separation is merely cosmetic: the entirety of both development-time dependencies and runtime dependencies is resolved to one installable set. This set of dependencies is then installed into the same ``vendor`` directory. What happens, for instance, when a tool that you install using Composer requires a version of a library that is not compatible with the version of that library that is required by another tool -- or even by your own software? Such a conflict cannot be resolved and Composer will abort the installation process.
