@@ -101,23 +101,66 @@ macOS
 The two most common ways to install PHP on macOS are using `Homebrew <https://brew.sh/>`_ and `MacPorts <https://www.macports.org/>`_.
 The instructions given below assume that you have Homebrew or MacPorts already set up.
 
-If you use Homebrew, then this command should install PHP 8.1:
+Homebrew
+""""""""
+
+If you use Homebrew, then the following command will install PHP 8.1:
 
 .. code::
 
     brew install php@81
 
-If you use MacPorts, then this command should install PHP 8.1:
+If you install PHP 8.1 with Homebrew, the following extensions required by PHPUnit are already installed and enabled by default:
+
+- ``dom``
+- ``json``
+- ``libxml``
+- ``mbstring``
+- ``xml``
+- ``xmlwriter``
+
+If you want to collect code coverage information, you need to additionally install and enable one of the following extensions:
+
+- ``pcov``
+- ``xdebug``
+
+If you use Homebrew, then the following command will install and enable the ``pcov`` extension:
+
+.. code::
+
+  pecl install pcov
+
+If you use Homebrew, then the following command will install and enable the ``xdebug`` extension:
+
+.. code::
+
+  pecl install xdebug
+
+MacPorts
+""""""""
+
+If you use MacPorts, then the following command will install PHP 8.1:
 
 .. code::
 
     sudo port install php81
 
-I do not have access to a computer that can run macOS. Therefore, I was not able to try the commands shown above.
-I also do not know which PHP extensions they install by default. Please make sure you have the ``dom``, ``json``,
-``libxml``, ``mbstring``, ``xml``, and ``xmlwriter`` extensions. You will need the ``pcov`` or ``xdebug``
-extensions for code coverage analysis.
+If you install PHP 8.1 with MacPorts, the following extensions required by PHPUnit are already installed and enabled by default:
 
+- ``dom``
+- ``json``
+- ``libxml``
+- ``xml``
+- ``xmlwriter``
+
+You need to additionally install and enable the following extension:
+
+- ``mbstring``
+
+If you want to collect code coverage information, you need to additionally install and enable one of the following extensions:
+
+- ``pcov``
+- ``xdebug``
 
 Windows
 ^^^^^^^
