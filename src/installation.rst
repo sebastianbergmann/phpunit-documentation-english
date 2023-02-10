@@ -105,7 +105,7 @@ If you use Homebrew, then this command should install PHP 8.1:
 
 .. code::
 
-    sudo brew install php81
+    brew install php@81
 
 If you use MacPorts, then this command should install PHP 8.1:
 
