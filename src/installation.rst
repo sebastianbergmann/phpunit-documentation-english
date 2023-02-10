@@ -153,7 +153,7 @@ With ``php --version`` we can verify that the PHP command-line interpreter, ``ph
 
 
 Configuring PHP for Development
-===============================
+-------------------------------
 
 In this section we ensure that the PHP command-line interpreter is configured in such a way that we can properly use PHPUnit.
 
@@ -215,7 +215,7 @@ Installing PHPUnit
 ==================
 
 PHP Archive (PHAR)
-^^^^^^^^^^^^^^^^^^
+------------------
 
 The recommended way to install and use PHPUnit is to download a distribution that is packaged as a PHP Archive (PHAR).
 Releases of PHPUnit packaged as PHP archives are available on ``https://phar.phpunit.de/``.
@@ -355,7 +355,7 @@ This is remedied by creating a symbolic link: ``ln -s phpunit tools/phpunit.phar
 
 
 Composer
-^^^^^^^^
+--------
 
 Using a PHP Archive (PHAR) is the recommended way of installing PHPUnit, but it is not the only way.
 
@@ -408,7 +408,7 @@ This is the primary reason why I do not use Composer to install a tool but inste
 
 
 Global Installation
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 So far we have discussed how to install PHPUnit on a per-project basis using a PHP Archive (PHAR) -- manually as well as using Phive -- and Composer.
 
@@ -435,7 +435,7 @@ Consequently, the package manager of your operating system should not be used to
 
 
 Web Server
-^^^^^^^^^^
+----------
 
 PHPUnit is a framework for writing as well as a command-line tool for running tests.
 Writing and running tests is a development-time activity.
