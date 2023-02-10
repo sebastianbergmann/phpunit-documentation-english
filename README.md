@@ -33,6 +33,6 @@ official repository.
 
 To build the complete documentation run:
 
-```
-$ make html
+```sh
+make html
 ```
