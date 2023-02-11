@@ -93,7 +93,9 @@ whether an exception is thrown by the code under test.
     $ phpunit ExceptionTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    F
+    Runtime:       PHP 8.2.2
+
+    F                                                                   1 / 1 (100%)
 
     Time: 00:00.066, Memory: 8.00 MB
 
@@ -169,6 +171,8 @@ the test method will be called with the contents of the array as its arguments.
     $ phpunit DataTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
+    Runtime:       PHP 8.2.2
+
     ...F                                                                4 / 4 (100%)
 
     Time: 00:00.058, Memory: 8.00 MB
@@ -217,6 +221,8 @@ Output will be more verbose as it will contain that name of a dataset that break
 
     $ phpunit DataTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.2
 
     ...F                                                                4 / 4 (100%)
 
@@ -302,7 +308,9 @@ test will be counted as a failure.
     $ phpunit OutputTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    .F
+    Runtime:       PHP 8.2.2
+
+    .F                                                                  2 / 2 (100%)
 
     Time: 00:00.066, Memory: 8.00 MB
 
@@ -404,6 +412,8 @@ example:
     $ phpunit --display-incomplete SampleTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
+    Runtime:       PHP 8.2.2
+
     I                                                                   1 / 1 (100%)
 
     Time: 00:00.092, Memory: 8.00 MB
@@ -467,6 +477,8 @@ following example:
 
     $ phpunit --display-skipped SampleTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.2
 
     S                                                                   1 / 1 (100%)
 
@@ -635,6 +647,8 @@ exploiting the dependencies between tests as shown in
     $ phpunit --display-skipped DependencyFailureTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
+    Runtime:       PHP 8.2.2
+
     FS                                                                  2 / 2 (100%)
 
     Time: 00:00.065, Memory: 8.00 MB
@@ -697,7 +711,9 @@ context as possible that can help to identify the problem.
     $ phpunit ArrayDiffTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    F
+    Runtime:       PHP 8.2.2
+
+    F                                                                   1 / 1 (100%)
 
     Time: 00:00.066, Memory: 8.00 MB
 
@@ -752,7 +768,9 @@ and provide a few lines of context around every difference.
     $ phpunit LongArrayDiffTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    F
+    Runtime:       PHP 8.2.2
+
+    F                                                                   1 / 1 (100%)
 
     Time: 00:00.066, Memory: 8.00 MB
 
@@ -813,7 +831,9 @@ functions on arrays or objects.
     $ phpunit ArrayWeakComparisonTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    F
+    Runtime:       PHP 8.2.2
+
+    F                                                                   1 / 1 (100%)
 
     Time: 00:00.066, Memory: 8.00 MB
 
