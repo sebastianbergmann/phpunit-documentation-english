@@ -740,6 +740,7 @@ Here is a list of methods provided by the Mock Builder:
 -
 
   ``disableOriginalConstructor()`` can be used to disable the call to the original class' constructor.
+
 -
 
   ``enableOriginalConstructor()`` can be used to enable the call to the original class' constructor.
