@@ -25,75 +25,117 @@ source files in a test directory. PHPUnit can automatically discover and
 run the tests by recursively traversing the test directory.
 
 Lets take a look at the test suite of the
-`sebastianbergmann/money <http://github.com/sebastianbergmann/money/>`_
-library. Looking at this project's directory structure, we see that the
-test case classes in the :file:`tests` directory mirror the
+`sebastianbergmann/raytracer <https://github.com/sebastianbergmann/raytracer>`_
+project.
+
+Looking at this project's directory structure, we see that the
+test case classes in the :file:`tests/unit` directory mirror the
 package and class structure of the System Under Test (SUT) in the
 :file:`src` directory:
 
 .. code-block:: none
 
-    src                                 tests
-    `-- Currency.php                    `-- CurrencyTest.php
-    `-- IntlFormatter.php               `-- IntlFormatterTest.php
-    `-- Money.php                       `-- MoneyTest.php
-    `-- autoload.php
+    src                                          tests/unit
+    ├── autoload.php                             ├── CameraTest.php
+    ├── Camera.php                               ├── canvas
+    ├── canvas                                   │   ├── AnsiMapperTest.php
+    │   ├── AnsiMapper.php                       │   ├── CanvasTest.php
+    │   ├── CanvasIterator.php                   │   └── PortablePixmapMapperTest.php
+    │   ├── Canvas.php                           ├── ColorTest.php
+    │   ├── PortablePixmapMapper.php             ├── intersection
+    │   └── WebpMapper.php                       │   ├── IntersectionCollectionTest.php
+    ├── Color.php                                │   └── IntersectionTest.php
+    ├── exceptions                               ├── material
+    │   ├── Exception.php                        │   ├── CheckersPatternTest.php
+    │   ├── IntersectionHasNoHitException.php    │   ├── GradientPatternTest.php
+    │   ├── InvalidArgumentException.php         │   ├── MaterialTest.php
+    │   ├── OutOfBoundsException.php             │   ├── PatternTest.php
+    │   ├── RuntimeException.php                 │   ├── RingPatternTest.php
+    │   └── WorldHasNoLightException.php         │   └── StripePatternTest.php
+    ├── intersection                             ├── math
+    │   ├── IntersectionCollectionIterator.php   │   ├── MatrixTest.php
+    │   ├── IntersectionCollection.php           │   ├── RayTest.php
+    │   ├── Intersection.php                     │   ├── TransformationsTest.php
+    │   └── PreparedComputation.php              │   └── TupleTest.php
+    ├── material                                 ├── PointLightTest.php
+    │   ├── CheckersPattern.php                  ├── shapes
+    │   ├── GradientPattern.php                  │   ├── PlaneTest.php
+    │   ├── Material.php                         │   ├── ShapeCollectionTest.php
+    │   ├── Pattern.php                          │   ├── ShapeTest.php
+    │   ├── RingPattern.php                      │   └── SphereTest.php
+    │   └── StripePattern.php                    └── WorldTest.php
+    ├── math
+    │   ├── Matrix.php                           tests/integration
+    │   ├── Ray.php                              └── PuttingItTogetherTest.php
+    │   ├── Transformations.php
+    │   └── Tuple.php
+    ├── PointLight.php
+    ├── shapes
+    │   ├── Plane.php
+    │   ├── ShapeCollectionIterator.php
+    │   ├── ShapeCollection.php
+    │   ├── Shape.php
+    │   └── Sphere.php
+    └── World.php
 
-To run all tests for the library we need to point the PHPUnit
+The :file:`tests/integration` directory contains integration test cases that are
+kept separate from the :file:`tests/unit` directory's unit tests.
+
+To run all tests for this project can need to point the PHPUnit
 command-line test runner to the test directory:
 
 .. parsed-literal::
 
-    $ phpunit --bootstrap src/autoload.php tests
+    $ ./tools/phpunit --bootstrap tests/bootstrap.php tests
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    .................................
+    Runtime:       PHP 8.2.2
 
-    Time: 636 ms, Memory: 3.50Mb
+    ...............................................................  63 / 177 ( 35%)
+    ............................................................... 126 / 177 ( 71%)
+    ...................................................             177 / 177 (100%)
 
-    OK (33 tests, 52 assertions)
+    Time: 00:17.100, Memory: 28.27 MB
+
+    OK (177 tests, 657 assertions)
 
 .. admonition:: Note
 
    If you point the PHPUnit command-line test runner to a directory it will
    look for :file:`*Test.php` files.
 
-To run only the tests that are declared in the ``CurrencyTest``
-test case class in :file:`tests/CurrencyTest.php` we can use
+To run only the tests that are declared in the ``WorldTest``
+test case class in :file:`tests/unit/WorldTest.php` we can use
 the following command:
 
 .. parsed-literal::
 
-    $ phpunit --bootstrap src/autoload.php tests/CurrencyTest.php
+    $ ./tools/phpunit --bootstrap src/autoload.php tests/unit/WorldTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    ........
+    Runtime:       PHP 8.2.2
 
-    Time: 280 ms, Memory: 2.75Mb
+    .............                                                     13 / 13 (100%)
 
-    OK (8 tests, 8 assertions)
+    Time: 00:00.095, Memory: 8.00 MB
+
+    OK (13 tests, 30 assertions)
 
 For more fine-grained control of which tests to run we can use the
 ``--filter`` option:
 
 .. parsed-literal::
 
-    $ phpunit --bootstrap src/autoload.php --filter testObjectCanBeConstructedForValidConstructorArgument tests
+    $ ./tools/phpunit --bootstrap src/autoload.php tests/unit --filter test_creating_a_world
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    ..
+    Runtime:       PHP 8.2.2
 
-    Time: 167 ms, Memory: 3.00Mb
+    .                                                                   1 / 1 (100%)
 
-    OK (2 test, 2 assertions)
+    Time: 00:00.077, Memory: 10.00 MB
 
-.. admonition:: Note
-
-   A drawback of this approach is that we have no control over the order in
-   which the tests are run. This can lead to problems with regard to test
-   dependencies, see :ref:`writing-tests-for-phpunit.test-dependencies`.
-   In the next section you will see how you can make the test execution
-   order explicit by using the XML configuration file.
+    OK (1 test, 2 assertions)
 
 .. _organizing-tests.xml-configuration:
 
@@ -112,47 +154,68 @@ directory is recursively traversed.
     :caption: Composing a Test Suite Using XML Configuration
     :name: organizing-tests.xml-configuration.examples.phpunit.xml
 
-    <phpunit bootstrap="src/autoload.php">
-      <testsuites>
-        <testsuite name="money">
-          <directory>tests</directory>
-        </testsuite>
-      </testsuites>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/|version|/phpunit.xsd"
+             bootstrap="tests/bootstrap.php">
+        <testsuites>
+            <testsuite name="unit">
+                <directory>tests/unit</directory>
+            </testsuite>
+
+            <testsuite name="integration">
+                <directory>tests/integration</directory>
+            </testsuite>
+        </testsuites>
     </phpunit>
 
-To run the test suite, use the the ``--testsuite`` option:
+Now that we have an XML configuration file, we can invoke the PHPUnit test runner without
+arguments (``tests``, for instance) or options (``--bootstrap``, for instance) to run
+our tests:
 
 .. parsed-literal::
 
-    $ phpunit --bootstrap src/autoload.php --testsuite money
+    $ ./tools/phpunit
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    ..
+    Runtime:       PHP 8.2.2
+    Configuration: /path/to/raytracer/phpunit.xml
 
-    Time: 167 ms, Memory: 3.00Mb
+    ...............................................................  63 / 177 ( 35%)
+    ............................................................... 126 / 177 ( 71%)
+    ...................................................             177 / 177 (100%)
 
-    OK (2 test, 2 assertions)
+    Time: 00:17.100, Memory: 28.27 MB
 
-If :file:`phpunit.xml` or
-:file:`phpunit.xml.dist` (in that order) exist in the
-current working directory and ``--configuration`` is
-*not* used, the configuration will be automatically
-read from that file.
+    OK (177 tests, 657 assertions)
 
-The order in which tests are executed can be made explicit:
+The PHPUnit test runner's ``--list-suites`` option can be used to print a list of all test suites
+defined in PHPUnit's XML configuration file:
 
-.. code-block:: xml
-    :caption: Composing a Test Suite Using XML Configuration
-    :name: organizing-tests.xml-configuration.examples.phpunit.xml2
+.. parsed-literal::
 
-    <phpunit bootstrap="src/autoload.php">
-      <testsuites>
-        <testsuite name="money">
-          <file>tests/IntlFormatterTest.php</file>
-          <file>tests/MoneyTest.php</file>
-          <file>tests/CurrencyTest.php</file>
-        </testsuite>
-      </testsuites>
-    </phpunit>
+    $ ./tools/phpunit --list-suites
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
+    Available test suite(s):
+     - unit
+     - integration
 
+We can use the PHPUnit test runner's ``--testsuite`` option to limit the tests that are run
+to the tests of a specific test suite that is declared in the XML configuration file:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --testsuite unit
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.2
+    Configuration: /path/to/raytracer/phpunit.xml
+
+    ...............................................................  63 / 172 ( 36%)
+    ............................................................... 126 / 172 ( 73%)
+    ..............................................                  172 / 172 (100%)
+
+    Time: 00:00.213, Memory: 24.27 MB
+
+    OK (172 tests, 637 assertions)
