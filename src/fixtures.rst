@@ -6,218 +6,125 @@
 Fixtures
 ********
 
-One of the most time-consuming parts of writing tests is writing the
-code to set the world up in a known state and then return it to its
-original state when the test is complete. This known state is called
-the *fixture* of the test.
+A test usually follows the "Arrange, Act, Assert" structure: **arranging** all necessary
+preconditions and inputs (the so-called *test fixture*), **acting** on the object under
+test, and **asserting** that the expected results have occurred.
 
-In :ref:`writing-tests-for-phpunit.examples.StackTest.php`, the
-fixture was the array that is stored in the ``$stack`` variable.
-Most of the time, though, the fixture will be more complex
-than a simple array, and the amount of code needed to set it up will
-grow accordingly. The actual content of the test gets lost in the noise
-of setting up the fixture. This problem gets even worse when you write
-several tests with similar fixtures. Without some help from the testing
-framework, we would have to duplicate the code that sets up the fixture
-for each test we write.
+.. admonition:: Arrange, Expect, Act
 
-PHPUnit supports sharing the setup code. Before a test method is run, a
-template method called ``setUp()`` is invoked.
-``setUp()`` is where you create the objects against which
-you will test. Once the test method has finished running, whether it
-succeeded or failed, another template method called
-``tearDown()`` is invoked. ``tearDown()``
-is where you clean up the objects against which you tested.
+   When you expect an action to raise an exception or when you verify the communication
+   between collaborating objects using mock objects then the test usually follows the
+   "Arrange, Expect, Act" structure.
 
-In :ref:`writing-tests-for-phpunit.examples.StackTest2.php` we
-used the producer-consumer relationship between tests to share a fixture. This
-is not always desired or even possible. :numref:`fixtures.examples.StackTest.php`
-shows how we can write the tests of the ``StackTest`` in such
-a way that not the fixture itself is reused but the code that creates it.
-First we declare the instance variable, ``$stack``, that we
-are going to use instead of a method-local variable. Then we put the
-creation of the ``array`` fixture into the
-``setUp()`` method. Finally, we remove the redundant code
-from the test methods and use the newly introduced instance variable,
-``$this->stack``, instead of the method-local variable
-``$stack`` with the ``assertSame()``
-assertion method.
+Sometimes the *test fixture* is made up of a single object, sometimes it is a more complex
+object graph, for instance. The amount of code needed to set it up will grow accordingly.
+The actual content of the test gets lost in the noise of setting up the test fixture. This
+problem gets even worse when you write several tests with similar test fixtures.
+
+PHPUnit supports the reuse of setup code between tests. Before a test method is run, a
+template method called ``setUp()`` is invoked: this is where you can create your test
+fixture. Once the test method has finished running, whether it succeeded or failed,
+another template method called ``tearDown()`` is invoked: this is where you can clean
+up the objects against which you tested.
 
 .. code-block:: php
-    :caption: Using setUp() to create the stack fixture
-    :name: fixtures.examples.StackTest.php
+    :caption: Example of a test class that uses setUp() and tearDown()
+    :name: fixtures.examples.ExampleTest.php
 
     <?php declare(strict_types=1);
+    namespace example;
+
     use PHPUnit\Framework\TestCase;
 
-    final class StackTest extends TestCase
+    final class ExampleTest extends TestCase
     {
-        private $stack;
+        private ?Example $example;
 
-        protected function setUp(): void
+        public function testSomething(): void
         {
-            $this->stack = [];
-        }
-
-        public function testEmpty(): void
-        {
-            $this->assertTrue(empty($this->stack));
-        }
-
-        public function testPush(): void
-        {
-            array_push($this->stack, 'foo');
-
-            $this->assertSame('foo', $this->stack[count($this->stack)-1]);
-            $this->assertFalse(empty($this->stack));
-        }
-
-        public function testPop(): void
-        {
-            array_push($this->stack, 'foo');
-
-            $this->assertSame('foo', array_pop($this->stack));
-            $this->assertTrue(empty($this->stack));
-        }
-    }
-
-The ``setUp()`` and ``tearDown()`` template
-methods are run once for each test method (and on fresh instances) of the
-test case class.
-
-In addition, the ``setUpBeforeClass()`` and
-``tearDownAfterClass()`` template methods are called before
-the first test of the test case class is run and after the last test of the
-test case class is run, respectively.
-
-The example below shows all template methods that are available in a test
-case class.
-
-.. code-block:: php
-    :caption: Example showing all template methods available
-    :name: fixtures.examples.TemplateMethodsTest.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class TemplateMethodsTest extends TestCase
-    {
-        public static function setUpBeforeClass(): void
-        {
-            fwrite(STDOUT, __METHOD__ . "\n");
+            $this->assertSame(
+                'the-result',
+                $this->example->doSomething()
+            );
         }
 
         protected function setUp(): void
         {
-            fwrite(STDOUT, __METHOD__ . "\n");
-        }
-
-        protected function assertPreConditions(): void
-        {
-            fwrite(STDOUT, __METHOD__ . "\n");
-        }
-
-        public function testOne(): void
-        {
-            fwrite(STDOUT, __METHOD__ . "\n");
-            $this->assertTrue(true);
-        }
-
-        public function testTwo(): void
-        {
-            fwrite(STDOUT, __METHOD__ . "\n");
-            $this->assertTrue(false);
-        }
-
-        protected function assertPostConditions(): void
-        {
-            fwrite(STDOUT, __METHOD__ . "\n");
+            $this->example = new Example(
+                $this->createStub(Collaborator::class)
+            );
         }
 
         protected function tearDown(): void
         {
-            fwrite(STDOUT, __METHOD__ . "\n");
-        }
-
-        public static function tearDownAfterClass(): void
-        {
-            fwrite(STDOUT, __METHOD__ . "\n");
-        }
-
-        protected function onNotSuccessfulTest(Throwable $t): void
-        {
-            fwrite(STDOUT, __METHOD__ . "\n");
-            throw $t;
+            $this->example = null;
         }
     }
 
-.. parsed-literal::
+The ``setUp()`` and ``tearDown()`` template methods are run once for each test method
+(and on fresh instances) of the test case class.
 
-    $ phpunit TemplateMethodsTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+One problem with the ``setUp()`` and ``tearDown()`` template methods is that they are called
+even for tests that do not use the test fixture managed by these methods, in the example shown
+above the ``$this->example`` property.
 
-    TemplateMethodsTest::setUpBeforeClass
-    TemplateMethodsTest::setUp
-    TemplateMethodsTest::assertPreConditions
-    TemplateMethodsTest::testOne
-    TemplateMethodsTest::assertPostConditions
-    TemplateMethodsTest::tearDown
-    .TemplateMethodsTest::setUp
-    TemplateMethodsTest::assertPreConditions
-    TemplateMethodsTest::testTwo
-    TemplateMethodsTest::tearDown
-    TemplateMethodsTest::onNotSuccessfulTest
-    FTemplateMethodsTest::tearDownAfterClass
+Another problem can occur when inheritance comes into play:
 
-    Time: 0 seconds, Memory: 5.25Mb
+.. code-block:: php
+    :caption: Example of an abstract test case class with a setUp() method
+    :name: fixtures.examples.MyTestCase.php
 
-    There was 1 failure:
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
 
-    1) TemplateMethodsTest::testTwo
-    Failed asserting that <boolean:false> is true.
-    /home/sb/TemplateMethodsTest.php:30
+    abstract class MyTestCase extends TestCase
+    {
+        protected function setUp(): void
+        {
+            // ...
+        }
+    }
 
-    FAILURES!
-    Tests: 2, Assertions: 2, Failures: 1.
+.. code-block:: php
+    :caption: Example of a concrete test case class that extends an abstract test case class with a setUp() method
+    :name: fixtures.examples.ExampleTest2.php
+
+    <?php declare(strict_types=1);
+    namespace example;
+
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends MyTestCase
+    {
+        protected function setUp(): void
+        {
+            // ...
+        }
+    }
+
+If we forget to call ``parent::setUp()`` when implementing ``ExampleTest::setUp()``, the functionality provided
+by ``MyTestCase`` will not work. To reduce this risk, the attributes ``PHPUnit\Framework\Attributes\Before`` and
+``PHPUnit\Framework\Attributes\After`` are available. With these, multiple methods can be configured to be called
+before and after a test, respectively.
 
 .. _fixtures.more-setup-than-teardown:
 
 More setUp() than tearDown()
 ============================
 
-``setUp()`` and ``tearDown()`` are nicely
-symmetrical in theory, but not in practice. In practice, you only need
-to implement ``tearDown()`` if you have allocated
-external resources such as files or sockets in ``setUp()``.
-If your ``setUp()`` just creates plain PHP objects, you
-can generally ignore ``tearDown()``.
+``setUp()`` and ``tearDown()`` are nicely symmetrical in theory, but not in practice.
+In practice, you only need to implement ``tearDown()`` if you have allocated external
+resources such as files or sockets in ``setUp()``. Unless you create large object graphs
+in your ``setUp()`` and store them in properties of the test object, you can generally
+ignore ``tearDown()``.
 
-However, if you create many objects in your ``setUp()``, you may want
-to ``unset()`` the variables holding those objects
-in your ``tearDown()`` so that they can be garbage collected sooner.
-Objects created within ``setUp()`` (or test methods) that are stored in
-properties of the test object are only automatically garbage
-collected at the end of the PHP process that runs PHPUnit.
+However, if you create large object graphs in your ``setUp()`` and store them in properties
+of the test object, you may want to ``unset()`` the variables holding those objects in your
+``tearDown()`` so that they can be garbage collected sooner.
 
-.. _fixtures.variations:
-
-Variations
-==========
-
-What happens when you have two tests with slightly different setups?
-There are two possibilities:
-
--
-
-  If the ``setUp()`` code differs only slightly, move
-  the code that differs from the ``setUp()`` code to
-  the test method.
-
--
-
-  If you really have a different ``setUp()``, you need
-  a different test case class. Name the class after the difference in
-  the setup.
+Objects created within ``setUp()`` (or test methods) that are stored in properties of the
+test object are only automatically garbage collected at the end of the PHP process that
+runs PHPUnit.
 
 .. _fixtures.sharing-fixture:
 
@@ -232,6 +139,10 @@ A good example of a fixture that makes sense to share across several
 tests is a database connection: you log into the database once and reuse
 the database connection instead of creating a new connection for each
 test. This makes your tests run faster.
+
+The ``setUpBeforeClass()`` and ``tearDownAfterClass()`` template methods are called before
+the first test of the test case class is run and after the last test of the test case class
+is run, respectively.
 
 :numref:`fixtures.sharing-fixture.examples.DatabaseTest.php`
 uses the ``setUpBeforeClass()`` and
@@ -301,100 +212,49 @@ In PHP, global variables work like this:
 Besides global variables, static attributes of classes are also part of
 the global state.
 
-Prior to version 6, by default, PHPUnit ran your tests in a way where
-changes to global and super-global variables (``$GLOBALS``,
-``$_ENV``, ``$_POST``,
-``$_GET``, ``$_COOKIE``,
-``$_SERVER``, ``$_FILES``,
-``$_REQUEST``) do not affect other tests.
+PHPUnit can optionally run your tests in a way where changes to global and super-global variables
+(``$GLOBALS``, ``$_ENV``, ``$_POST``, ``$_GET``, ``$_COOKIE``, ``$_SERVER``, ``$_FILES``,
+``$_REQUEST``) do not affect other tests. You can activate this behaviour by using the
+``--globals-backup`` option or by setting ``backupGlobals="true"`` in the XML configuration file.
 
-As of version 6, PHPUnit does not perform this backup and restore
-operation for global and super-global variables by default anymore.
-It can be activated by using the ``--globals-backup``
-option or setting ``backupGlobals="true"`` in the
-XML configuration file.
-
-By using the ``--static-backup`` option or setting
-``backupStaticAttributes="true"`` in the
-XML configuration file, this isolation can be extended to static
-attributes of classes.
+By using the ``--static-backup`` option or setting ``backupStaticAttributes="true"`` in the
+XML configuration file, this isolation can be extended to static properties of classes.
 
 .. admonition:: Note
 
-   The backup and restore operations for global variables and static
-   class attributes use ``serialize()`` and
-   ``unserialize()``.
+   The backup and restore operations for global variables and static class attributes use
+   ``serialize()`` and ``unserialize()``.
 
-   Objects of some classes (e.g., ``PDO``) cannot be
-   serialized and the backup operation will break when such an object is
-   stored e.g. in the ``$GLOBALS`` array.
+   Objects of some classes (e.g., ``PDO``) cannot be serialized and the backup operation
+   will break when such an object is stored e.g. in the ``$GLOBALS`` array.
 
-The ``@backupGlobals`` annotation that is discussed in
-:ref:`appendixes.annotations.backupGlobals` can be used to
-control the backup and restore operations for global variables.
-Alternatively, you can provide a list of global variables that are to
-be excluded from the backup and restore operations like this
+The ``PHPUnit\Framework\Attributes\BackupGlobals`` attribute can be used to control the
+backup and restore operations for global variables.
 
-.. code-block:: php
+The ``PHPUnit\Framework\Attributes\ExcludeGlobalVariableFromBackup`` attribute can be used
+to exclude specific global variables from the backup and restore operations for global variables.
 
-    final class MyTest extends TestCase
-    {
-        protected $backupGlobalsExcludeList = ['globalVariable'];
+The ``PHPUnit\Framework\Attributes\BackupStaticProperties`` attribute can be used to control
+the backup and restore operations for static properties of classes. This affects all static
+properties in all declared classes before each test and restore them afterwards. All classes
+that are declared at the time a test starts are processed, not only the test class itself. It
+only applies to static class properties, not static variables within functions.
 
-        // ...
-    }
+The ``PHPUnit\Framework\Attributes\ExcludeStaticPropertyFromBackup`` attribute can be used
+to exclude specific static properties from the backup and restore operations for static properties.
 
 .. admonition:: Note
 
-   Setting the ``$backupGlobalsExcludeList`` property inside
-   e.g. the ``setUp()`` method has no effect.
+   The the backup operation for static properties of classes is performed before a test method,
+   but only if it is enabled. If a static value was changed by a previously executed test that
+   did not have ``BackupStaticProperties(true)``, then that value will be backed up and restored —
+   not the originally declared default value.
 
-The ``@backupStaticAttributes`` annotation discussed in
-:ref:`appendixes.annotations.backupStaticAttributes`
-can be used to back up all static property values in all declared classes
-before each test and restore them afterwards.
+   The same applies to static properties of classes that were newly loaded/declared within a test.
+   They cannot be reset to their originally declared default value after the test, since that value
+   is unknown. Whichever value is set will leak into subsequent tests.
 
-It processes all classes that are declared at the time a test starts, not
-only the test class itself. It only applies to static class properties,
-not static variables within functions.
-
-.. admonition:: Note
-
-   The ``@backupStaticAttributes`` operation is executed
-   before a test method, but only if it is enabled. If a static value was
-   changed by a previously executed test that did not have
-   ``@backupStaticAttributes`` enabled, then that value will
-   be backed up and restored — not the originally declared default value.
-   PHP does not record the originally declared default value of any static
-   variable.
-
-   The same applies to static properties of classes that were newly
-   loaded/declared within a test. They cannot be reset to their originally
-   declared default value after the test, since that value is unknown.
-   Whichever value is set will leak into subsequent tests.
-
-   For unit tests, it is recommended to explicitly reset the values of
-   static properties under test in your ``setUp()`` code
-   instead (and ideally also ``tearDown()``, so as to not
-   affect subsequently executed tests).
-
-You can provide a list of static attributes that are to be excluded
-from the backup and restore operations:
-
-.. code-block:: php
-
-    final class MyTest extends TestCase
-    {
-        protected $backupStaticAttributesExcludeList = [
-            'className' => ['attributeName']
-        ];
-
-        // ...
-    }
-
-.. admonition:: Note
-
-   Setting the ``$backupStaticAttributesExcludeList`` property
-   inside e.g. the ``setUp()`` method has no effect.
-
+For unit tests, it is recommended to explicitly reset the values of static properties under test
+in your ``setUp()`` code instead (and ideally also ``tearDown()``, so as to not affect subsequently
+executed tests).
 
