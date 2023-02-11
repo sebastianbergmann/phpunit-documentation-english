@@ -33,18 +33,20 @@ type is expected or required.
 
 The ``createStub($type)`` and ``createMock($type)`` methods immediately return a test
 double object for the specified type (interface or class). The creation of
-this test double is performed using best practice defaults. The
-``__construct()`` and ``__clone()`` methods of
-the original class are not executed and the arguments passed to a method of
-the test double will not be cloned. If these defaults are not what you need
-then you can use the ``getMockBuilder($type)`` method to
-customize the test double generation using a fluent interface.
+this test double is performed using best practice defaults: the ``__construct()`` and
+``__clone()`` methods of the original class are not executed and the arguments passed
+to a method of the test double will not be cloned.
 
-By default, all methods of the original class are replaced with a dummy
-implementation that returns ``null`` (without calling
-the original method). Using the ``will($this->returnValue())``
-method, for instance, you can configure these dummy implementations to
-return a value when called.
+If these defaults are not what you need then you can use the ``getMockBuilder($type)``
+method to customize the test double generation using a fluent interface.
+
+By default, all methods of the original class are replaced with an implementation that
+returns an automatically generated value that satisfies the method's return type
+declaration (without calling the original method).
+
+Using the ``willReturn()`` method, for instance, you can configure these implementations
+to return a specified value when called. This configured value must be compatible with
+the method's return type declaration.
 
 .. admonition:: Limitation: final, private, and static methods
 
@@ -70,24 +72,22 @@ return a value when called.
 Stubs
 =====
 
-The practice of replacing an object with a test double that (optionally)
-returns configured return values is referred to as
-*stubbing*. You can use a *stub* to
-"replace a real component on which the SUT depends so that the test has a
-control point for the indirect inputs of the SUT. This allows the test to
-force the SUT down paths it might not otherwise execute".
+The practice of replacing an object with a test double that (optionally) returns
+configured return values is referred to as *stubbing*. You can use a *stub* to
+"replace a real component on which the SUT depends so that the test has a control
+point for the indirect inputs of the SUT. This allows the test to force the SUT
+down paths it might not otherwise execute".
 
-:numref:`test-doubles.stubs.examples.StubTest.php` shows how
-to stub method calls and set up return values. We first use the
-``createStub()`` method that is provided by the
-``PHPUnit\Framework\TestCase`` class to set up a stub
-object that looks like an object of ``SomeClass``
-(:numref:`test-doubles.stubs.examples.SomeClass.php`). We then
-use the `Fluent Interface <http://martinfowler.com/bliki/FluentInterface.html>`_
-that PHPUnit provides to specify the behavior for the stub. In essence,
-this means that you do not need to create several temporary objects and
-wire them together afterwards. Instead, you chain method calls as shown in
-the example. This leads to more readable and "fluent" code.
+:numref:`test-doubles.stubs.examples.StubTest.php` shows how to stub method calls
+and set up return values. We first use the ``createStub()`` method that is provided
+by the ``PHPUnit\Framework\TestCase`` class to create a stub object that looks like
+an instance of ``SomeClass`` (:numref:`test-doubles.stubs.examples.SomeClass.php`).
+
+We then use the `Fluent Interface <http://martinfowler.com/bliki/FluentInterface.html>`_
+that PHPUnit provides to specify the behavior for the stub. In essence, this means that
+you do not need to create several temporary objects and wire them together afterwards.
+Instead, you chain method calls as shown in the example. This leads to more readable
+and "fluent" code.
 
 .. code-block:: php
     :caption: The class we want to stub
@@ -131,13 +131,15 @@ the example. This leads to more readable and "fluent" code.
    The example shown above only works when the original class does not
    declare a method named "method".
 
-   If the original class does declare a method named "method" then ``$stub->expects($this->any())->method('doSomething')->willReturn('foo');`` has to be used.
+   If the original class does declare a method named "method" then
+   ``$stub->expects($this->any())->method('doSomething')->willReturn('foo');``
+   has to be used.
 
-"Behind the scenes", PHPUnit automatically generates a new PHP class that
-implements the desired behavior when the ``createStub()``
-method is used.
+"Behind the scenes", PHPUnit automatically generates a new PHP class that implements
+the desired behavior when the ``createStub()`` method is used.
 
-Please note that ``createStub()`` will automatically and recursively stub return values based on a method's return type. Consider the example shown below:
+Please note that ``createStub()`` will automatically and recursively stub return values
+based on a method's return type. Consider the example shown below:
 
 .. code-block:: php
     :caption: A method with a return type declaration
@@ -152,14 +154,20 @@ Please note that ``createStub()`` will automatically and recursively stub return
         }
     }
 
-In the example shown above, the ``C::m()`` method has a return type declaration indicating that this method returns an object of type ``D``. When a test double for ``C`` is created and no return value is configured for ``m()`` using ``willReturn()`` (see above), for instance, then when ``m()`` is invoked PHPUnit will automatically create a test double for ``D`` to be returned.
+In the example shown above, the ``C::m()`` method has a return type declaration
+indicating that this method returns an object of type ``D``. When a test double
+for ``C`` is created and no return value is configured for ``m()`` using
+``willReturn()`` (see above), for instance, then when ``m()`` is invoked PHPUnit
+will automatically create a test double for ``D`` to be returned.
 
-Similarily, if ``m`` had a return type declaration for a scalar type then a return value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``) would be generated.
+Similarly, if ``m`` had a return type declaration for a scalar type then a return
+value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``)
+would be generated.
 
-:numref:`test-doubles.stubs.examples.StubTest2.php` shows an
-example of how to use the Mock Builder's fluent interface to configure the
-creation of the test double. The configuration of this test double uses
-the same best practice defaults used by ``createStub()``.
+:numref:`test-doubles.stubs.examples.StubTest2.php` shows an example of how to use the
+Mock Builder's fluent interface to configure the creation of the test double. The
+configuration of this test double uses the same best practice defaults used by
+``createStub()``.
 
 .. code-block:: php
     :caption: Using the Mock Builder API can be used to configure the generated test double class
@@ -190,12 +198,12 @@ the same best practice defaults used by ``createStub()``.
         }
     }
 
-In the examples so far we have been returning simple values using
-``willReturn($value)`` – a short syntax for convenience. :numref:`test-doubles.stubs.shorthands` shows the
-available stubbing short hands alongside their longer counterparts.
+In the examples so far we have been returning simple values using ``willReturn($value)``.
+This is a shorthand syntax provided for convenience. :numref:`test-doubles.stubs.shorthands`
+shows the available stubbing shorthands alongside their longer counterparts.
 
 .. rst-class:: table
-.. list-table:: Stubbing short hands
+.. list-table:: Stubbing shorthands
     :name: test-doubles.stubs.shorthands
     :header-rows: 1
 
@@ -218,11 +226,9 @@ available stubbing short hands alongside their longer counterparts.
 
 We can use variations on this longer syntax to achieve more complex stubbing behaviour.
 
-Sometimes you want to return one of the arguments of a method call
-(unchanged) as the result of a stubbed method call.
-:numref:`test-doubles.stubs.examples.StubTest3.php` shows how you
-can achieve this using ``returnArgument()`` instead of
-``returnValue()``.
+Sometimes you want to return one of the arguments of a method call (unchanged) as the
+result of a stubbed method call. :numref:`test-doubles.stubs.examples.StubTest3.php`
+shows how you can achieve this using ``returnArgument()`` instead of ``returnValue()``.
 
 .. code-block:: php
     :caption: Stubbing a method call to return one of the arguments
@@ -250,10 +256,9 @@ can achieve this using ``returnArgument()`` instead of
         }
     }
 
-When testing a fluent interface, it is sometimes useful to have a stubbed
-method return a reference to the stubbed object.
-:numref:`test-doubles.stubs.examples.StubTest4.php` shows how you
-can use ``returnSelf()`` to achieve this.
+When testing a fluent interface, it is sometimes useful to have a stubbed method return
+a reference to the stubbed object. :numref:`test-doubles.stubs.examples.StubTest4.php`
+shows how you can use ``returnSelf()`` to achieve this.
 
 .. code-block:: php
     :caption: Stubbing a method call to return a reference to the stub object
@@ -278,12 +283,10 @@ can use ``returnSelf()`` to achieve this.
         }
     }
 
-Sometimes a stubbed method should return different values depending on
-a predefined list of arguments.  You can use
-``returnValueMap()`` to create a map that associates
-arguments with corresponding return values. See
-:numref:`test-doubles.stubs.examples.StubTest5.php` for
-an example.
+Sometimes a stubbed method should return different values depending on a predefined list
+of arguments.  You can use ``returnValueMap()`` to create a map that associates arguments
+with corresponding return values. See :numref:`test-doubles.stubs.examples.StubTest5.php`
+for an example.
 
 .. code-block:: php
     :caption: Stubbing a method call to return the value from a map
@@ -316,12 +319,10 @@ an example.
         }
     }
 
-When the stubbed method call should return a calculated value instead of
-a fixed one (see ``returnValue()``) or an (unchanged)
-argument (see ``returnArgument()``), you can use
-``returnCallback()`` to have the stubbed method return the
-result of a callback function or method. See
-:numref:`test-doubles.stubs.examples.StubTest6.php` for an example.
+When the stubbed method call should return a calculated value instead of a fixed one
+(see ``returnValue()``) or an (unchanged) argument (see ``returnArgument()``), you
+can use ``returnCallback()`` to have the stubbed method return the result of a callback
+function or method. See :numref:`test-doubles.stubs.examples.StubTest6.php` for an example.
 
 .. code-block:: php
     :caption: Stubbing a method call to return a value from a callback
@@ -346,11 +347,9 @@ result of a callback function or method. See
         }
     }
 
-A simpler alternative to setting up a callback method may be to
-specify a list of desired return values. You can do this with
-the ``onConsecutiveCalls()`` method. See
-:numref:`test-doubles.stubs.examples.StubTest7.php` for
-an example.
+A simpler alternative to setting up a callback method may be to specify a list of desired
+return values. You can do this with the ``onConsecutiveCalls()`` method. See
+:numref:`test-doubles.stubs.examples.StubTest7.php` for an example.
 
 .. code-block:: php
     :caption: Stubbing a method call to return a list of values in the specified order
@@ -377,9 +376,9 @@ an example.
         }
     }
 
-Instead of returning a value, a stubbed method can also raise an
-exception. :numref:`test-doubles.stubs.examples.StubTest8.php`
-shows how to use ``throwException()`` to do this.
+Instead of returning a value, a stubbed method can also raise an exception.
+:numref:`test-doubles.stubs.examples.StubTest8.php` shows how to use
+``throwException()`` to do this.
 
 .. code-block:: php
     :caption: Stubbing a method call to throw an exception
@@ -405,7 +404,7 @@ shows how to use ``throwException()`` to do this.
     }
 
 Alternatively, you can write the stub yourself and improve your design
-along the way. Widely used resources are accessed through a single façade,
+along the way. Widely used resources are accessed through a single facade,
 so you can replace the resource with the stub. For example,
 instead of having direct database calls scattered throughout the code,
 you have a single ``Database`` object, an implementor of
@@ -430,48 +429,31 @@ The practice of replacing an object with a test double that verifies
 expectations, for instance asserting that a method has been called, is
 referred to as *mocking*.
 
-You can use a *mock object* "as an observation point
-that is used to verify the indirect outputs of the SUT as it is exercised.
-Typically, the mock object also includes the functionality of a test stub
-in that it must return values to the SUT if it hasn't already failed the
-tests but the emphasis is on the verification of the indirect outputs.
-Therefore, a mock object is a lot more than just a test stub plus
-assertions; it is used in a fundamentally different way" (Gerard Meszaros).
+You can use a *mock object* "as an observation point that is used to verify
+the indirect outputs of the SUT as it is exercised. Typically, the mock object
+also includes the functionality of a test stub in that it must return values to
+the SUT if it hasn't already failed the tests but the emphasis is on the
+verification of the indirect outputs. Therefore, a mock object is a lot more than
+just a test stub plus assertions; it is used in a fundamentally different way"
+(Gerard Meszaros).
 
-.. admonition:: Limitation: Automatic verification of expectations
+Here is an example: suppose we want to test that the correct method, ``update()``
+in our example, is called on an object that observes another object.
 
-   Only mock objects generated within the scope of a test will be verified
-   automatically by PHPUnit. Mock objects generated in data providers, for
-   instance, or injected into the test using the ``@depends``
-   annotation will not be verified automatically by PHPUnit.
-
-Here is an example: suppose we want to test that the correct method,
-``update()`` in our example, is called on an object that
-observes another object. :numref:`test-doubles.mock-objects.examples.SUT.php`
-shows the code for the ``Subject`` and ``Observer``
-classes that are part of the System under Test (SUT).
+:numref:`test-doubles.mock-objects.examples.SUT.php` shows the code for the
+``Subject`` class and the ``Observer`` interface that are part of the System
+under Test (SUT).
 
 .. code-block:: php
-    :caption: The Subject and Observer classes that are part of the System under Test (SUT)
+    :caption: Subject class and Observer interface that are part of the System under Test (SUT)
     :name: test-doubles.mock-objects.examples.SUT.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class Subject
+    final class Subject
     {
-        protected $observers = [];
-        protected $name;
-
-        public function __construct($name)
-        {
-            $this->name = $name;
-        }
-
-        public function getName()
-        {
-            return $this->name;
-        }
+        private array $observers = [];
 
         public function attach(Observer $observer)
         {
@@ -480,52 +462,32 @@ classes that are part of the System under Test (SUT).
 
         public function doSomething()
         {
-            // Do something.
             // ...
 
-            // Notify observers that we did something.
             $this->notify('something');
         }
 
-        public function doSomethingBad()
-        {
-            foreach ($this->observers as $observer) {
-                $observer->reportError(42, 'Something bad happened', $this);
-            }
-        }
-
-        protected function notify($argument)
+        private function notify(string $argument): void
         {
             foreach ($this->observers as $observer) {
                 $observer->update($argument);
             }
         }
 
-        // Other methods.
+        // ...
     }
 
-    class Observer
+    interface Observer
     {
-        public function update($argument)
-        {
-            // Do something.
-        }
-
-        public function reportError($errorCode, $errorMessage, Subject $subject)
-        {
-            // Do something
-        }
-
-        // Other methods.
+        public function update(string $argument): void;
     }
 
 :numref:`test-doubles.mock-objects.examples.SubjectTest.php`
 shows how to use a mock object to test the interaction between
 ``Subject`` and ``Observer`` objects.
 
-We first use the ``createMock()`` method that is provided by
-the ``PHPUnit\Framework\TestCase`` class to set up a mock
-object for the ``Observer``.
+We first use the ``createMock()`` method that is provided by the ``PHPUnit\Framework\TestCase``
+class to create a mock object for the ``Observer``.
 
 Because we are interested in verifying that a method is called, and which
 arguments it is called with, we introduce the ``expects()`` and
@@ -542,184 +504,53 @@ arguments it is called with, we introduce the ``expects()`` and
     {
         public function testObserversAreUpdated(): void
         {
-            // Create a mock for the Observer class,
-            // only mock the update() method.
             $observer = $this->createMock(Observer::class);
 
-            // Set up the expectation for the update() method
-            // to be called only once and with the string 'something'
-            // as its parameter.
             $observer->expects($this->once())
                      ->method('update')
-                     ->with($this->equalTo('something'));
+                     ->with($this->identicalTo('something'));
 
-            // Create a Subject object and attach the mocked
-            // Observer object to it.
-            $subject = new Subject('My subject');
+            $subject = new Subject;
+
             $subject->attach($observer);
 
-            // Call the doSomething() method on the $subject object
-            // which we expect to call the mocked Observer object's
-            // update() method with the string 'something'.
             $subject->doSomething();
         }
     }
 
-The ``with()`` method can take any number of
-arguments, corresponding to the number of arguments to the
-method being mocked. You can specify more advanced constraints
-on the method's arguments than a simple match.
+The ``with()`` method can take any number of arguments, corresponding to the number of arguments
+to the method being mocked. You can specify more advanced constraints on the method's arguments
+than a simple match.
 
-.. code-block:: php
-    :caption: Testing that a method gets called with a number of arguments constrained in different ways
-    :name: test-doubles.mock-objects.examples.SubjectTest2.php
+:ref:`appendixes.assertions.assertThat.tables.constraints` shows the constraints that can be
+applied to method arguments and here is a list of the matchers that are available to specify
+the number of invocations:
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+-
 
-    final class SubjectTest extends TestCase
-    {
-        public function testErrorReported(): void
-        {
-            // Create a mock for the Observer class, mocking the
-            // reportError() method
-            $observer = $this->createMock(Observer::class);
+  ``any()`` returns a matcher that matches when the method it is evaluated for is executed zero or more times
 
-            $observer->expects($this->once())
-                     ->method('reportError')
-                     ->with(
-                           $this->greaterThan(0),
-                           $this->stringContains('Something'),
-                           $this->anything()
-                       );
+-
 
-            $subject = new Subject('My subject');
-            $subject->attach($observer);
+  ``never()`` returns a matcher that matches when the method it is evaluated for is never executed
 
-            // The doSomethingBad() method should report an error to the observer
-            // via the reportError() method
-            $subject->doSomethingBad();
-        }
-    }
+-
 
-The ``callback()`` constraint can be used for more complex
-argument verification. This constraint takes a PHP callback as its only
-argument. The PHP callback will receive the argument to be verified as
-its only argument and should return ``true`` if the
-argument passes verification and ``false`` otherwise.
+  ``atLeastOnce()`` returns a matcher that matches when the method it is evaluated for is executed at least once
 
-.. code-block:: php
-    :caption: More complex argument verification
-    :name: test-doubles.mock-objects.examples.SubjectTest3.php
+-
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+  ``once()`` returns a matcher that matches when the method it is evaluated for is executed exactly once
 
-    final class SubjectTest extends TestCase
-    {
-        public function testErrorReported(): void
-        {
-            // Create a mock for the Observer class, mocking the
-            // reportError() method
-            $observer = $this->createMock(Observer::class);
+-
 
-            $observer->expects($this->once())
-                     ->method('reportError')
-                     ->with(
-                         $this->greaterThan(0),
-                         $this->stringContains('Something'),
-                         $this->callback(function($subject)
-                         {
-                             return is_callable([$subject, 'getName']) &&
-                                    $subject->getName() == 'My subject';
-                         }
-                     ));
+  ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
 
-            $subject = new Subject('My subject');
-            $subject->attach($observer);
 
-            // The doSomethingBad() method should report an error to the observer
-            // via the reportError() method
-            $subject->doSomethingBad();
-        }
-    }
-
-.. code-block:: php
-    :caption: Testing that a method gets called once and with the identical object as was passed
-    :name: test-doubles.mock-objects.examples.clone-object-parameters-usecase.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class FooTest extends TestCase
-    {
-        public function testIdenticalObjectPassed(): void
-        {
-            $expectedObject = new stdClass;
-
-            $mock = $this->getMockBuilder(stdClass::class)
-                         ->addMethods(['foo'])
-                         ->getMock();
-
-            $mock->expects($this->once())
-                 ->method('foo')
-                 ->with($this->identicalTo($expectedObject));
-
-            $mock->foo($expectedObject);
-        }
-    }
-
-.. code-block:: php
-    :caption: Create a mock object with cloning parameters enabled
-    :name: test-doubles.mock-objects.examples.enable-clone-object-parameters.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class FooTest extends TestCase
-    {
-        public function testIdenticalObjectPassed(): void
-        {
-            $cloneArguments = true;
-
-            $mock = $this->getMockBuilder(stdClass::class)
-                         ->enableArgumentCloning()
-                         ->getMock();
-
-            // now your mock clones parameters so the identicalTo constraint
-            // will fail.
-        }
-    }
-
-:ref:`appendixes.assertions.assertThat.tables.constraints`
-shows the constraints that can be applied to method arguments and
-:numref:`test-doubles.mock-objects.tables.matchers`
-shows the matchers that are available to specify the number of
-invocations.
-
-.. rst-class:: table
-.. list-table:: Matchers
-    :name: test-doubles.mock-objects.tables.matchers
-    :header-rows: 1
-
-    * - Matcher
-      - Meaning
-    * - ``PHPUnit\Framework\MockObject\Matcher\AnyInvokedCount any()``
-      - Returns a matcher that matches when the method it is evaluated for is executed zero or more times.
-    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedCount never()``
-      - Returns a matcher that matches when the method it is evaluated for is never executed.
-    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedAtLeastOnce atLeastOnce()``
-      - Returns a matcher that matches when the method it is evaluated for is executed at least once.
-    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedCount once()``
-      - Returns a matcher that matches when the method it is evaluated for is executed exactly once.
-    * - ``PHPUnit\Framework\MockObject\Matcher\InvokedCount exactly(int $count)``
-      - Returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times.
-
-As mentioned in the beginning, when the defaults used by the
-``createStub()`` and ``createMock()`` methods to generate the test double do not
-match your needs then you can use the ``getMockBuilder($type)``
-method to customize the test double generation using a fluent interface.
-Here is a list of methods provided by the Mock Builder:
+As mentioned before, when the defaults used by the ``createStub()`` and ``createMock()`` methods
+to generate the test double do not match your needs then you can use the ``getMockBuilder($type)``
+method to customize the test double generation using a fluent interface. Here is a list of methods
+provided by the Mock Builder:
 
 -
 
