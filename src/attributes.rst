@@ -368,7 +368,7 @@ Test Groups
 | Test Code  | yes         | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+This is an alias for ``Group``.
 
 
 Template Methods
