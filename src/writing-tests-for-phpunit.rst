@@ -184,7 +184,7 @@ the test method will be called with the contents of the array as its arguments.
     1) DataTest::testAdd with data set #3
     Failed asserting that 2 is identical to 3.
 
-    /home/sb/DataTest.php:10
+    /path/to/DataTest.php:10
 
     FAILURES!
     Tests: 4, Assertions: 4, Failures: 1.
@@ -235,7 +235,7 @@ Output will be more verbose as it will contain that name of a dataset that break
     1) DataTest::testAdd with data set "one plus one"
     Failed asserting that 2 is identical to 3.
 
-    /home/sb/DataTest.php:10
+    /path/to/DataTest.php:10
 
     FAILURES!
     Tests: 4, Assertions: 4, Failures: 1.
@@ -425,7 +425,7 @@ example:
     1) SampleTest::testSomething
     This test has not been implemented yet.
 
-    /home/sb/SampleTest.php:12
+    /path/to/SampleTest.php:12
 
     OK, but some tests have issues!
     Tests: 1, Assertions: 1, Incomplete: 1.
@@ -491,7 +491,7 @@ following example:
     1) DatabaseTest::testConnection
     This test has not been implemented yet.
 
-    /home/sb/DatabaseTest.php:9
+    /path/to/DatabaseTest.php:9
 
     OK, but some tests have issues!
     Tests: 1, Assertions: 1, Incomplete: 1.
@@ -660,7 +660,7 @@ exploiting the dependencies between tests as shown in
     1) DependencyFailureTest::testOne
     Failed asserting that false is true.
 
-    /home/sb/DependencyFailureTest.php:9
+    /path/to/DependencyFailureTest.php:9
 
     --
 
@@ -736,7 +736,7 @@ context as possible that can help to identify the problem.
          5 => 6
      )
 
-    /home/sb/ArrayDiffTest.php:7
+    /path/to/ArrayDiffTest.php:7
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -793,7 +793,7 @@ and provide a few lines of context around every difference.
          17 => 6
      )
 
-    /home/sb/LongArrayDiffTest.php:7
+    /path/to/LongArrayDiffTest.php:7
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -857,7 +857,7 @@ functions on arrays or objects.
          5 => 6
      )
 
-    /home/sb/ArrayWeakComparisonTest.php:7
+    /path/to/ArrayWeakComparisonTest.php:7
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.

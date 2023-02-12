@@ -75,7 +75,7 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
     1) ArrayHasKeyTest::testFailure
     Failed asserting that an array has the key 'foo'.
 
-    /home/sb/ArrayHasKeyTest.php:6
+    /path/to/ArrayHasKeyTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -120,7 +120,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
     1) ContainsTest::testFailure
     Failed asserting that an array contains 4.
 
-    /home/sb/ContainsTest.php:6
+    /path/to/ContainsTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -163,7 +163,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not a substring of
     1) StringContainsStringTest::testFailure
     Failed asserting that 'bar' contains "foo".
 
-    /home/sb/StringContainsStringTest.php:8
+    /path/to/StringContainsStringTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -210,7 +210,7 @@ have the same `Normalization Form <https://www.php.net/manual/en/class.normalize
     1) StringContainsStringTest::testFailure
     Failed asserting that 'bar' contains "foo".
 
-    /home/sb/StringContainsStringIgnoringCaseTest.php:8
+    /path/to/StringContainsStringIgnoringCaseTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -261,7 +261,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
         2 => 3
     ) contains only values of type "string".
 
-    /home/sb/ContainsOnlyTest.php:6
+    /path/to/ContainsOnlyTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -307,7 +307,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
     1) ContainsOnlyInstancesOfTest::testFailure
     Failed asserting that Array ([0]=> Bar Object(...)) is an instance of class "Foo".
 
-    /home/sb/ContainsOnlyInstancesOfTest.php:6
+    /path/to/ContainsOnlyInstancesOfTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -352,7 +352,7 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
     1) CountTest::testFailure
     Failed asserting that actual size 1 matches expected size 0.
 
-    /home/sb/CountTest.php:6
+    /path/to/CountTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -397,7 +397,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     1) DirectoryExistsTest::testFailure
     Failed asserting that directory "/path/to/directory" exists.
 
-    /home/sb/DirectoryExistsTest.php:6
+    /path/to/DirectoryExistsTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -442,7 +442,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     1) DirectoryIsReadableTest::testFailure
     Failed asserting that "/path/to/directory" is readable.
 
-    /home/sb/DirectoryIsReadableTest.php:6
+    /path/to/DirectoryIsReadableTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -487,7 +487,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
     1) DirectoryIsWritableTest::testFailure
     Failed asserting that "/path/to/directory" is writable.
 
-    /home/sb/DirectoryIsWritableTest.php:6
+    /path/to/DirectoryIsWritableTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -532,7 +532,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
     1) EmptyTest::testFailure
     Failed asserting that an array is empty.
 
-    /home/sb/EmptyTest.php:6
+    /path/to/EmptyTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -587,7 +587,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     1) EqualsTest::testFailure
     Failed asserting that 0 matches expected 1.
 
-    /home/sb/EqualsTest.php:6
+    /path/to/EqualsTest.php:6
 
     2) EqualsTest::testFailure2
     Failed asserting that two strings are equal.
@@ -597,7 +597,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     -'bar'
     +'baz'
 
-    /home/sb/EqualsTest.php:11
+    /path/to/EqualsTest.php:11
 
     3) EqualsTest::testFailure3
     Failed asserting that two strings are equal.
@@ -610,7 +610,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
      baz
      '
 
-    /home/sb/EqualsTest.php:16
+    /path/to/EqualsTest.php:16
 
     FAILURES!
     Tests: 3, Assertions: 3, Failures: 3.
@@ -666,7 +666,7 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
     +  <foo/>
     +</bar>
 
-    /home/sb/EqualsTest.php:12
+    /path/to/EqualsTest.php:12
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -721,7 +721,7 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
     +    'baz' => 'bar'
      )
 
-    /home/sb/EqualsTest.php:14
+    /path/to/EqualsTest.php:14
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -769,7 +769,7 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
     +    2 => 'd'
      )
 
-    /home/sb/EqualsTest.php:6
+    /path/to/EqualsTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -826,7 +826,7 @@ The contents of ``$expected`` and ``$actual`` are canonicalized before they are 
     +    3 => 3
      )
 
-    /home/sb/EqualsCanonicalizingTest.php:8
+    /path/to/EqualsCanonicalizingTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -876,7 +876,7 @@ Differences in casing are ignored for the comparison of ``$expected`` and ``$act
     -'foo'
     +'BAR'
 
-    /home/sb/EqualsIgnoringCaseTest.php:8
+    /path/to/EqualsIgnoringCaseTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -921,7 +921,7 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
     1) EqualsWithDeltaTest::testFailure
     Failed asserting that 1.5 matches expected 1.0.
 
-    /home/sb/EqualsWithDeltaTest.php:8
+    /path/to/EqualsWithDeltaTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1009,7 +1009,7 @@ The most common use case for custom comparators are Value Objects. These objects
     Failed asserting that two objects are equal.
     The objects are not equal according to Email::equals().
 
-    /home/sb/SomethingThatUsesEmailTest.php:16
+    /path/to/SomethingThatUsesEmailTest.php:16
 
     FAILURES!
     Tests: 1, Assertions: 2, Failures: 1.
@@ -1064,7 +1064,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
     1) FalseTest::testFailure
     Failed asserting that true is false.
 
-    /home/sb/FalseTest.php:6
+    /path/to/FalseTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1091,7 +1091,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     {
         public function testFailure(): void
         {
-            $this->assertFileEquals('/home/sb/expected', '/home/sb/actual');
+            $this->assertFileEquals('/path/to/expected', '/path/to/actual');
         }
     }
 
@@ -1115,7 +1115,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     +'actual
      '
 
-    /home/sb/FileEqualsTest.php:6
+    /path/to/FileEqualsTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 3, Failures: 1.
@@ -1160,7 +1160,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     1) FileExistsTest::testFailure
     Failed asserting that file "/path/to/file" exists.
 
-    /home/sb/FileExistsTest.php:6
+    /path/to/FileExistsTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1205,7 +1205,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     1) FileIsReadableTest::testFailure
     Failed asserting that "/path/to/file" is readable.
 
-    /home/sb/FileIsReadableTest.php:6
+    /path/to/FileIsReadableTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1250,7 +1250,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
     1) FileIsWritableTest::testFailure
     Failed asserting that "/path/to/file" is writable.
 
-    /home/sb/FileIsWritableTest.php:6
+    /path/to/FileIsWritableTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1293,7 +1293,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     1) GreaterThanTest::testFailure
     Failed asserting that 1 is greater than 2.
 
-    /home/sb/GreaterThanTest.php:6
+    /path/to/GreaterThanTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1336,7 +1336,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
     1) GreatThanOrEqualTest::testFailure
     Failed asserting that 1 is equal to 2 or is greater than 2.
 
-    /home/sb/GreaterThanOrEqualTest.php:6
+    /path/to/GreaterThanOrEqualTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 2, Failures: 1.
@@ -1381,7 +1381,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
     1) InfiniteTest::testFailure
     Failed asserting that 1 is infinite.
 
-    /home/sb/InfiniteTest.php:6
+    /path/to/InfiniteTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1426,7 +1426,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
     1) InstanceOfTest::testFailure
     Failed asserting that Exception Object (...) is an instance of class "RuntimeException".
 
-    /home/sb/InstanceOfTest.php:6
+    /path/to/InstanceOfTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1469,7 +1469,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``arra
     1) ArrayTest::testFailure
     Failed asserting that null is of type "array".
 
-    /home/sb/ArrayTest.php:8
+    /path/to/ArrayTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1512,7 +1512,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``bool
     1) BoolTest::testFailure
     Failed asserting that null is of type "bool".
 
-    /home/sb/BoolTest.php:8
+    /path/to/BoolTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1555,7 +1555,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``call
     1) CallableTest::testFailure
     Failed asserting that null is of type "callable".
 
-    /home/sb/CallableTest.php:8
+    /path/to/CallableTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1598,7 +1598,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``floa
     1) FloatTest::testFailure
     Failed asserting that null is of type "float".
 
-    /home/sb/FloatTest.php:8
+    /path/to/FloatTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1641,7 +1641,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``int`
     1) IntTest::testFailure
     Failed asserting that null is of type "int".
 
-    /home/sb/IntTest.php:8
+    /path/to/IntTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1684,7 +1684,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``iter
     1) IterableTest::testFailure
     Failed asserting that null is of type "iterable".
 
-    /home/sb/IterableTest.php:8
+    /path/to/IterableTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1727,7 +1727,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``nume
     1) NumericTest::testFailure
     Failed asserting that null is of type "numeric".
 
-    /home/sb/NumericTest.php:8
+    /path/to/NumericTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1770,7 +1770,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``obje
     1) ObjectTest::testFailure
     Failed asserting that null is of type "object".
 
-    /home/sb/ObjectTest.php:8
+    /path/to/ObjectTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1813,7 +1813,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``reso
     1) ResourceTest::testFailure
     Failed asserting that null is of type "resource".
 
-    /home/sb/ResourceTest.php:8
+    /path/to/ResourceTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1856,7 +1856,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``scal
     1) ScalarTest::testFailure
     Failed asserting that null is of type "scalar".
 
-    /home/sb/ScalarTest.php:8
+    /path/to/ScalarTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1899,7 +1899,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``stri
     1) StringTest::testFailure
     Failed asserting that null is of type "string".
 
-    /home/sb/StringTest.php:8
+    /path/to/StringTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1944,7 +1944,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
     1) IsReadableTest::testFailure
     Failed asserting that "/path/to/unreadable" is readable.
 
-    /home/sb/IsReadableTest.php:6
+    /path/to/IsReadableTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1989,7 +1989,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
     1) IsWritableTest::testFailure
     Failed asserting that "/path/to/unwritable" is writable.
 
-    /home/sb/IsWritableTest.php:6
+    /path/to/IsWritableTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2034,7 +2034,7 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
     1) JsonFileEqualsJsonFile::testFailure
     Failed asserting that '{"Mascot":"Tux"}' matches JSON string "["Mascott", "Tux", "OS", "Linux"]".
 
-    /home/sb/JsonFileEqualsJsonFileTest.php:5
+    /path/to/JsonFileEqualsJsonFileTest.php:5
 
     FAILURES!
     Tests: 1, Assertions: 3, Failures: 1.
@@ -2080,7 +2080,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
     1) JsonStringEqualsJsonFile::testFailure
     Failed asserting that '{"Mascot":"ux"}' matches JSON string "{"Mascott":"Tux"}".
 
-    /home/sb/JsonStringEqualsJsonFileTest.php:5
+    /path/to/JsonStringEqualsJsonFileTest.php:5
 
     FAILURES!
     Tests: 1, Assertions: 3, Failures: 1.
@@ -2134,7 +2134,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
      +    'Mascot' => 'ux'
     )
 
-    /home/sb/JsonStringEqualsJsonStringTest.php:5
+    /path/to/JsonStringEqualsJsonStringTest.php:5
 
     FAILURES!
     Tests: 1, Assertions: 3, Failures: 1.
@@ -2177,7 +2177,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     1) LessThanTest::testFailure
     Failed asserting that 2 is less than 1.
 
-    /home/sb/LessThanTest.php:6
+    /path/to/LessThanTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2220,7 +2220,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
     1) LessThanOrEqualTest::testFailure
     Failed asserting that 2 is equal to 1 or is less than 1.
 
-    /home/sb/LessThanOrEqualTest.php:6
+    /path/to/LessThanOrEqualTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 2, Failures: 1.
@@ -2263,7 +2263,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
     1) NanTest::testFailure
     Failed asserting that 1 is nan.
 
-    /home/sb/NanTest.php:6
+    /path/to/NanTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2308,7 +2308,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
     1) NullTest::testFailure
     Failed asserting that 'foo' is null.
 
-    /home/sb/NotNullTest.php:6
+    /path/to/NotNullTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2353,7 +2353,7 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
     1) RegExpTest::testFailure
     Failed asserting that 'bar' matches PCRE pattern "/foo/".
 
-    /home/sb/RegExpTest.php:6
+    /path/to/RegExpTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2398,7 +2398,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     1) StringMatchesFormatTest::testFailure
     Failed asserting that 'foo' matches PCRE pattern "/^[+-]?\d+$/s".
 
-    /home/sb/StringMatchesFormatTest.php:6
+    /path/to/StringMatchesFormatTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2494,7 +2494,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     Failed asserting that 'foo' matches PCRE pattern "/^[+-]?\d+
     $/s".
 
-    /home/sb/StringMatchesFormatFileTest.php:6
+    /path/to/StringMatchesFormatFileTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 2, Failures: 1.
@@ -2539,7 +2539,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     1) SameTest::testFailure
     Failed asserting that 2204 is identical to '2204'.
 
-    /home/sb/SameTest.php:6
+    /path/to/SameTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2577,7 +2577,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
     1) SameTest::testFailure
     Failed asserting that two variables reference the same object.
 
-    /home/sb/SameTest.php:6
+    /path/to/SameTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2620,7 +2620,7 @@ Reports an error identified by ``$message`` if the sizes of ``$actual`` and ``$e
     1) SameSizeTest::testFailure
     Failed asserting that actual size 1 matches expected size 2.
 
-    /home/sb/SameSizeTest.php:8
+    /path/to/SameSizeTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2665,7 +2665,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
     1) StringEndsWithTest::testFailure
     Failed asserting that 'foo' ends with "suffix".
 
-    /home/sb/StringEndsWithTest.php:6
+    /path/to/StringEndsWithTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2692,7 +2692,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     {
         public function testFailure(): void
         {
-            $this->assertStringEqualsFile('/home/sb/expected', 'actual');
+            $this->assertStringEqualsFile('/path/to/expected', 'actual');
         }
     }
 
@@ -2716,7 +2716,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
     -'
     +'actual'
 
-    /home/sb/StringEqualsFileTest.php:6
+    /path/to/StringEqualsFileTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 2, Failures: 1.
@@ -2761,7 +2761,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
     1) StringStartsWithTest::testFailure
     Failed asserting that 'foo' starts with "prefix".
 
-    /home/sb/StringStartsWithTest.php:6
+    /path/to/StringStartsWithTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2913,7 +2913,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
     1) TrueTest::testFailure
     Failed asserting that false is true.
 
-    /home/sb/TrueTest.php:6
+    /path/to/TrueTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -2941,7 +2941,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
         public function testFailure(): void
         {
             $this->assertXmlFileEqualsXmlFile(
-              '/home/sb/expected.xml', '/home/sb/actual.xml');
+              '/path/to/expected.xml', '/path/to/actual.xml');
         }
     }
 
@@ -2967,7 +2967,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
     +  <baz/>
      </foo>
 
-    /home/sb/XmlFileEqualsXmlFileTest.php:7
+    /path/to/XmlFileEqualsXmlFileTest.php:7
 
     FAILURES!
     Tests: 1, Assertions: 3, Failures: 1.
@@ -2995,7 +2995,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
         public function testFailure(): void
         {
             $this->assertXmlStringEqualsXmlFile(
-              '/home/sb/expected.xml', '<foo><baz/></foo>');
+              '/path/to/expected.xml', '<foo><baz/></foo>');
         }
     }
 
@@ -3021,7 +3021,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     +  <baz/>
      </foo>
 
-    /home/sb/XmlStringEqualsXmlFileTest.php:7
+    /path/to/XmlStringEqualsXmlFileTest.php:7
 
     FAILURES!
     Tests: 1, Assertions: 2, Failures: 1.
@@ -3075,7 +3075,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
     +  <baz/>
      </foo>
 
-    /home/sb/XmlStringEqualsXmlStringTest.php:7
+    /path/to/XmlStringEqualsXmlStringTest.php:7
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
