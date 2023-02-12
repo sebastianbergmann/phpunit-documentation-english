@@ -28,7 +28,9 @@ with PHPUnit:
 
    The tests are public methods that are named ``test*``.
 
-   Alternatively, you can use the ``PHPUnit\Framework\Attributes\Test`` attribute on a method to mark it as a test method.
+   Alternatively, you can use the ``PHPUnit\Framework\Attributes\Test`` attribute
+   on a method to mark it as a test method. See the section on the
+   :ref:`Test <appendixes.attributes.test>` attribute for details.
 
 #.
 

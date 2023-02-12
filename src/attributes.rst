@@ -21,6 +21,8 @@ When metadata is found in attributes, metadata in comments is ignored.
 The attributes supported by PHPUnit are all declared in the ``PHPUnit\Framework\Attributes``
 namespace. They are documented in this appendix.
 
+.. _appendixes.attributes.test:
+
 ``Test``
 ========
 
@@ -30,7 +32,8 @@ namespace. They are documented in this appendix.
 | Test Code  | no          | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+As an alternative to prefixing your test method names with ``test``,
+you can use the ``Test`` attribute to mark it as a test method.
 
 .. code-block:: php
     :caption: Using the `#[Test]` attribute
