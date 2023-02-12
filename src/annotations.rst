@@ -328,7 +328,7 @@ When the ``forceCoversAnnotation`` configuration option in the
 every test method needs to have an associated ``@covers`` annotation
 (either on the test class or the individual test method).
 
-:numref:`appendixes.annotations.covers.tables.annotations` shows
+:numref:`appendixes.annotations.covers` shows
 the syntax of the ``@covers`` annotation.
 The section :ref:`code-coverage-analysis.specifying-covered-parts`
 provides longer examples for using the annotation.
