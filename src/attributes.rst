@@ -36,7 +36,7 @@ As an alternative to prefixing your test method names with ``test``,
 you can use the ``Test`` attribute to mark it as a test method.
 
 .. code-block:: php
-    :caption: Using the `#[Test]` attribute
+    :caption: Using the ``Test`` attribute
     :name: appendixes.attributes.test.examples.ExampleTest.php
 
     <?php declare(strict_types=1);
