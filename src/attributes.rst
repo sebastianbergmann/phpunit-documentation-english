@@ -62,7 +62,103 @@ you can use the ``Test`` attribute to mark it as a test method.
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``TestDox`` attribute can be used to customize the text that is printed for
+a test when TestDox output is enabled.
+
+.. code-block:: php
+    :caption: Using the ``TestDox`` attribute
+    :name: appendixes.attributes.testdox.examples.ExampleTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\TestDox;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        #[TestDox('It does something')]
+        public function testOne(): void
+        {
+            // ...
+        }
+    }
+
+Running the test shown above with TestDox output enabled yields the output shown below:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --no-progress --testdox tests/ExampleTest.php
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.2
+
+    Time: 00:00.057, Memory: 6.00 MB
+
+    Example
+     ✔ It does something
+
+    OK (1 test, 1 assertion)
+
+When you use the ``TestDox`` attribute for a test method that uses a
+:ref:`data provider <writing-tests-for-phpunit.data-providers>` then you
+may use the method parameters as placeholders in your alternative description.
+
+.. code-block:: php
+    :caption: Using the ``TestDox`` attribute together with data providers
+    :name: appendixes.attributes.testdox.examples.ExampleTest2.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\DataProvider;
+    use PHPUnit\Framework\Attributes\TestDox;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        #[DataProvider('additionProvider')]
+        #[TestDox('Adding $a to $b results in $expected')]
+        public function testAdd(int $expected, int $a, int $b)
+        {
+            $this->assertSame($expected, $a + $b);
+        }
+
+        public static function additionProvider()
+        {
+            return [
+                'data set 1' => [0, 0, 0],
+                'data set 2' => [0, 1, 1],
+                'data set 3' => [1, 0, 1],
+                'data set 4' => [1, 1, 3]
+            ];
+        }
+    }
+
+Running the test shown above with TestDox output enabled yields the output shown below:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --no-progress --testdox tests/ExampleTest.php
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.2
+
+    Time: 00:00.116, Memory: 8.00 MB
+
+    Example
+     ✔ Adding 0 to 0 results in 0
+     ✔ Adding 1 to 0 results in 1
+     ✔ Adding 0 to 1 results in 1
+     ✘ Adding 1 to 1 results in 3
+       │
+       │ Failed asserting that 2 is identical to 3.
+       │
+       │ /path/to/ExampleTest.php:12
+       │
+
+    FAILURES!
+    Tests: 4, Assertions: 4, Failures: 1.
+
+Additionally, ``$_dataName`` is available and holds the name of the current data.
+That would be ``data set 1`` through ``data set 4`` in the example shown above.
+
 
 ``DoesNotPerformAssertions``
 ============================
