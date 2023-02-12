@@ -721,7 +721,7 @@ When using the ``@testdox`` annotation at method level with a ``@dataProvider`` 
         $this->assertSame($expected, $a + $b);
     }
 
-    public function additionProvider()
+    public static function additionProvider()
     {
         return [
             'data set 1' => [0, 0, 0],
