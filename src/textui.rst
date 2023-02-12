@@ -15,16 +15,32 @@ tests with the PHPUnit command-line test runner:
     $ phpunit ArrayTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    ..
+    Runtime:       PHP 8.2.2
 
-    Time: 0 seconds
+    ..                                                                  2 / 2 (100%)
+
+    Time: 00:00.077, Memory: 10.00 MB
 
     OK (2 tests, 2 assertions)
 
-When invoked as shown above, the PHPUnit command-line test runner will look
-for a :file:`ArrayTest.php` sourcecode file in the current working
-directory, load it, and expect to find an ``ArrayTest`` test
-case class. It will then execute the tests found in that class.
+When invoked as shown above, the PHPUnit command-line test runner will look for a
+:file:`ArrayTest.php` sourcecode file in the current working directory, load it,
+and expect to find an ``ArrayTest`` test case class. It will then run the tests
+found in that class.
+
+Outcome and Issues
+==================
+
+PHPUnit separates the *outcome* (errored, failed, incomplete, skipped, or passed) of a test
+from the *issues* (considered risky, triggered a warning, ...) of a test.
+
+With regard to outcome, PHPUnit distinguishes between *failures* and *errors*. A test fails
+when an assertion failed. This is different from an unexpected exception or a PHP error that
+occur while a test is running. When this happens, the test errors.
+
+Errors tend to be easier to fix than failures. If you have a big list of problems, it is
+best to tackle the errors first and see if you have any failures left when they are all
+fixed.
 
 For each test run, the PHPUnit command-line tool prints one character to
 indicate progress:
@@ -65,466 +81,437 @@ indicate progress:
 
     Printed when the test was skipped (see :ref:`writing-tests-for-phpunit.skipping-tests`)
 
-PHPUnit distinguishes between *failures* and
-*errors*. A failure is a violated PHPUnit
-assertion such as a failing ``assertSame()`` call.
-An error is an unexpected exception or a PHP error. Sometimes
-this distinction proves useful since errors tend to be easier to fix
-than failures. If you have a big list of problems, it is best to
-tackle the errors first and see if you have any failures left when
-they are all fixed.
-
-.. _textui.clioptions:
+.. _textui.command-line-options:
 
 Command-Line Options
 ====================
 
-Let's take a look at the command-line test runner's options in
-the following code:
-
-.. parsed-literal::
-
-    $ phpunit --help
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    Usage:
-      phpunit [options] UnitTest.php
-      phpunit [options] <directory>
-
-    Configuration:
-
-      --bootstrap <file>               A PHP script that is included before the tests run
-      -c|--configuration <file>        Read configuration from XML file
-      --no-configuration               Ignore default configuration file (phpunit.xml)
-      --no-extensions                  Do not load PHPUnit extensions
-      --include-path <path(s)>         Prepend PHP's include_path with given path(s)
-      -d <key[=value]>                 Sets a php.ini value
-      --cache-directory <dir>          Specify cache directory
-      --generate-configuration         Generate configuration file with suggested settings
-      --migrate-configuration          Migrate configuration file to current format
-
-    Selection:
-
-      --list-suites                    List available test suites
-      --testsuite <name>               Only run tests from the specified test suite(s)
-      --exclude-testsuite <name>       Exclude tests from the specified test suite(s)
-      --list-groups                    List available test groups
-      --group <name>                   Only run tests from the specified group(s)
-      --exclude-group <name>           Exclude tests from the specified group(s)
-      --covers <name>                  Only run tests annotated with "@covers <name>"
-      --uses <name>                    Only run tests annotated with "@uses <name>"
-      --list-tests                     List available tests
-      --list-tests-xml <file>          List available tests in XML format
-      --filter <pattern>               Filter which tests to run
-      --test-suffix <suffixes>         Only search for test in files with specified suffix(es). Default: Test.php,.phpt
-
-    Execution:
-
-      --process-isolation              Run each test in a separate PHP process
-      --globals-backup                 Backup and restore $GLOBALS for each test
-      --static-backup                  Backup and restore static properties for each test
-
-      --strict-coverage                Be strict about code coverage attributes and annotations
-      --strict-global-state            Be strict about changes to global state
-      --disallow-test-output           Be strict about output during tests
-      --enforce-time-limit             Enforce time limit based on test size
-      --default-time-limit <sec>       Timeout in seconds for tests that have no declared size
-      --dont-report-useless-tests      Do not report tests that do not test anything
-
-      --stop-on-defect                 Stop execution upon first not-passed test
-      --stop-on-error                  Stop execution upon first error
-      --stop-on-failure                Stop execution upon first error or failure
-      --stop-on-warning                Stop execution upon first warning
-      --stop-on-risky                  Stop execution upon first risky test
-      --stop-on-skipped                Stop execution upon first skipped test
-      --stop-on-incomplete             Stop execution upon first incomplete test
-
-      --fail-on-incomplete             Treat incomplete tests as failures
-      --fail-on-risky                  Treat risky tests as failures
-      --fail-on-skipped                Treat skipped tests as failures
-      --fail-on-warning                Treat tests with warnings as failures
+Configuration
+-------------
 
-      --cache-result                   Write test results to cache file
-      --do-not-cache-result            Do not write test results to cache file
+``--bootstrap <file>``
 
-      --order-by <order>               Run tests in order: default|defects|duration|no-depends|random|reverse|size
-      --random-order-seed <N>          Use a specific random seed <N> for random order
+    Configures a PHP script that is included before the tests run. For common use cases, this script
+    should not do more than register an autoloader so that PHP can find the tested units of code.
 
-    Reporting:
+``-c|--configuration <file>``
 
-      --colors <flag>                  Use colors in output ("never", "auto" or "always")
-      --columns <n>                    Number of columns to use for progress output
-      --columns max                    Use maximum number of columns for progress output
-      --stderr                         Write to STDERR instead of STDOUT
+    Configure PHPUnit's test runner using an XML configuration file. This is not required when the
+    configuration file that is to be used is located in the current working directory and is named
+    :file:`phpunit.xml`, :file:`phpunit.dist.xml`, or :file:`phpunit.xml.dist`.
 
-      --no-progress                    Disable output of test execution progress
-      --no-results                     Disable output of test results
-      --no-output                      Disable all output
+``--no-configuration``
 
-      --display-incomplete             Display details for incomplete tests
-      --display-skipped                Display details for skipped tests
-      --display-deprecations           Display details for deprecations triggered by tests
-      --display-errors                 Display details for errors triggered by tests
-      --display-notices                Display details for notices triggered by tests
-      --display-warnings               Display details for warnings triggered by tests
-      --reverse-list                   Print defects in reverse order
+    Do not use an XML configuration named :file:`phpunit.xml`, :file:`phpunit.dist.xml`, or
+    :file:`phpunit.xml.dist` that is located in the current working directory.
 
-      --teamcity                       Report test execution progress in TeamCity format
-      --testdox                        Report test results in TestDox format
+``--no-extensions``
 
-    Logging:
+    Do not load PHPUnit test runner extensions from PHP archives (PHARs) from a directory that is
+    configured in the XML configuration file. Do not bootstrap PHPUnit test runner extensions that
+    are configured in the XML configuration file.
 
-      --log-junit <file>               Log test execution in JUnit XML format to file
-      --log-teamcity <file>            Log test execution in TeamCity format to file
-      --testdox-html <file>            Write documentation in HTML format to file
-      --testdox-text <file>            Write documentation in Text format to file
-      --log-events-text <file>         Stream events as plain text to file
-      --log-events-verbose-text <file> Stream events as plain text to file (with telemetry information)
-      --no-logging                     Ignore logging configuration
+``--include-path <path(s)>``
 
-    Code Coverage:
+    Prepend PHP's ``include_path`` with given path(s).
 
-      --coverage-clover <file>         Generate code coverage report in Clover XML format
-      --coverage-cobertura <file>      Generate code coverage report in Cobertura XML format
-      --coverage-crap4j <file>         Generate code coverage report in Crap4J XML format
-      --coverage-html <dir>            Generate code coverage report in HTML format
-      --coverage-php <file>            Export PHP_CodeCoverage object to file
-      --coverage-text=<file>           Generate code coverage report in text format [default: standard output]
-      --coverage-xml <dir>             Generate code coverage report in PHPUnit XML format
-      --warm-coverage-cache            Warm static analysis cache
-      --coverage-filter <dir>          Include <dir> in code coverage analysis
-      --path-coverage                  Perform path coverage analysis
-      --disable-coverage-ignore        Disable attributes and annotations for ignoring code coverage
-      --no-coverage                    Ignore code coverage configuration
+``-d <key[=value]>``
 
-    Miscellaneous:
+    Set a PHP configuration setting (php.ini).
 
-      -h|--help                        Prints this usage information
-      --version                        Prints the version and exits
-      --atleast-version <min>          Checks that version is greater than min and exits
-      --check-version                  Check whether PHPUnit is the latest version
+``--cache-directory <dir>``
 
-``phpunit UnitTest.php``
+    Configure a directory where the PHPUnit test runner can cache data such as test results
+    (required for reordering tests based on previous failures, for instance) or information
+    about tested code as well as test code generated using static analysis (significantly
+    improves performance of code coverage analysis, for instance).
 
-    Runs the tests that are provided by the class
-    ``UnitTest``. This class is expected to be declared
-    in the specified sourcecode file.
+``--generate-configuration``
 
-``--coverage-clover``
+    Generate an XML configuration file with best practice defaults.
 
-    Generates a logfile in Clover XML format with the code coverage information
-    for the tests run. See :ref:`code-coverage-analysis` for more details.
+``--migrate-configuration``
 
-``--coverage-crap4j``
+    Migrate an XML configuration file from a previous version's format to the current format.
 
-    Generates a code coverage report in Crap4j XML format. See
-    :ref:`code-coverage-analysis` for more details.
+Selection
+---------
 
-``--coverage-html``
+``--list-suites``
 
-    Generates a code coverage report in HTML format. See
-    :ref:`code-coverage-analysis` for more details.
+    List available test suites as defined in the XML configuration file. See
+    :ref:`organizing-tests.xml-configuration` for an example.
 
-``--coverage-php``
+``--testsuite <name>``
 
-    Generates a PHP sourcecode file that creates an object with the
-    code coverage information.
+    Only run tests from the specified list of comma-separated test suites that are
+    defined in the XML configuration file. See :ref:`organizing-tests.xml-configuration`
+    for an example.
 
-``--coverage-text``
+``--exclude-testsuite <name>``
 
-    Generates a logfile or command-line output in human readable format
-    with the code coverage information for the tests run.
-
-``--log-junit``
-
-    Generates a logfile in JUnit XML format for the tests run.
-
-``--testdox-html`` and ``--testdox-text``
-
-    Generates documentation in HTML or plain text format for the
-    tests that are run (see :ref:`textui.testdox`).
-
-``--filter``
-
-    Only runs tests whose name matches the given regular expression
-    pattern. If the pattern is not enclosed in delimiters, PHPUnit
-    will enclose the pattern in ``/`` delimiters.
-
-    The test names to match will be in one of the following formats:
-
-    ``TestNamespace\TestCaseClass::testMethod``
-
-        The default test name format is the equivalent of using
-        the ``__METHOD__`` magic constant inside
-        the test method.
-
-    ``TestNamespace\TestCaseClass::testMethod with data set #0``
-
-        When a test has a data provider, each iteration of the
-        data gets the current index appended to the end of the
-        default test name.
-
-    ``TestNamespace\TestCaseClass::testMethod with data set "my named data"``
-
-        When a test has a data provider that uses named sets, each
-        iteration of the data gets the current name appended to the
-        end of the default test name. See
-        :numref:`textui.examples.TestCaseClass.php` for an
-        example of named data sets.
-
-        .. code-block:: php
-            :caption: Named data sets
-            :name: textui.examples.TestCaseClass.php
-
-            <?php
-            namespace TestNamespace;
-
-            use PHPUnit\Framework\TestCase;
-
-            class TestCaseClass extends TestCase
-            {
-                /**
-                 * @dataProvider provider
-                 */
-                public function testMethod($data)
-                {
-                    $this->assertTrue($data);
-                }
-
-                public function provider()
-                {
-                    return [
-                        'my named data' => [true],
-                        'my data'       => [true]
-                    ];
-                }
-            }
-
-    ``/path/to/my/test.phpt``
-
-        The test name for a PHPT test is the filesystem path.
-
-    See :numref:`textui.examples.filter-patterns` for examples
-    of valid filter patterns.
-
-    .. code-block:: shell
-        :caption: Filter pattern examples
-        :name: textui.examples.filter-patterns
-
-        --filter 'TestNamespace\\TestCaseClass::testMethod'
-        --filter 'TestNamespace\\TestCaseClass'
-        --filter TestNamespace
-        --filter TestCaseClass
-        --filter testMethod
-        --filter '/::testMethod .*"my named data"/'
-        --filter '/::testMethod .*#5$/'
-        --filter '/::testMethod .*#(5|6|7)$/'
-
-    See :numref:`textui.examples.filter-shortcuts` for some
-    additional shortcuts that are available for matching data
-    providers.
-
-    .. code-block:: shell
-        :caption: Filter shortcuts
-        :name: textui.examples.filter-shortcuts
-
-        --filter 'testMethod#2'
-        --filter 'testMethod#2-4'
-        --filter '#2'
-        --filter '#2-4'
-        --filter 'testMethod@my named data'
-        --filter 'testMethod@my.*data'
-        --filter '@my named data'
-        --filter '@my.*data'
-
-``--testsuite``
-
-    Only runs the test suite whose name matches the given pattern.
-
-``--group``
-
-    Only runs tests from the specified group(s). A test can be tagged as
-    belonging to a group using the ``@group`` annotation.
-
-    The ``@author`` and ``@ticket`` annotations are aliases for
-    ``@group`` allowing to filter tests based on their
-    authors or their ticket identifiers, respectively.
-
-``--exclude-group``
-
-    Exclude tests from the specified group(s). A test can be tagged as
-    belonging to a group using the ``@group`` annotation.
+    Run all tests except for those from the specified list of comma-separated test suites
+    that are defined in the XML configuration file.
 
 ``--list-groups``
 
-    List available test groups.
+    List available test groups. Tests can be put into multiple test groups using the attributes
+    ``PHPUnit\Framework\Attributes\Group``, ``PHPUnit\Framework\Attributes\Small``,
+    ``PHPUnit\Framework\Attributes\Medium``, ``PHPUnit\Framework\Attributes\Large``, and
+    ``PHPUnit\Framework\Attributes\Ticket``.
 
-``--test-suffix``
+``--group <name>``
 
-    Only search for test files with specified suffix(es).
+    Only run tests from the specified list of comma-separated test groups.
 
-``--dont-report-useless-tests``
+``--exclude-group <name>``
 
-    Do not report tests that do not test anything. See :ref:`risky-tests` for details.
+    Run all tests except for those from the specified list of comma-separated test groups.
 
-``--strict-coverage``
+``--covers <name>``
 
-    Be strict about unintentionally covered code. See :ref:`risky-tests` for details.
+    Only run tests that cover ``<name>`` and use code coverage metadata such as
+    ``PHPUnit\Framework\Attributes\CoversClass`` to document this.
 
-``--strict-global-state``
+``--uses <name>``
 
-    Be strict about global state manipulation. See :ref:`risky-tests` for details.
+    Only run tests that use ``<name>`` and use code coverage metadata such as
+    ``PHPUnit\Framework\Attributes\UsesClass`` to document this.
 
-``--disallow-test-output``
+``--list-tests``
 
-    Be strict about output during tests. See :ref:`risky-tests` for details.
+    Print a list of tests.
 
-``--enforce-time-limit``
+``--list-tests-xml <file>``
 
-    Enforce time limit based on test size. See :ref:`risky-tests` for details.
+    Write a list of tests in XML format to a file.
+
+``--filter <pattern>``
+
+    Filter which tests to run using pattern matching on the test name.
+
+``--test-suffix <suffixes>``
+
+    Only search for tests in files with specified suffix(es). Default: ``Test.php``, ``.phpt``.
+
+
+Execution
+---------
+
+Isolation
+^^^^^^^^^
 
 ``--process-isolation``
 
     Run each test in a separate PHP process.
 
-``--no-globals-backup``
+``--globals-backup``
 
-    Do not backup and restore $GLOBALS. See :ref:`fixtures.global-state`
-    for more details.
+    Backup global and super-global variables before each test, restore them after each test.
 
 ``--static-backup``
 
-    Backup and restore static attributes of user-defined classes.
-    See :ref:`fixtures.global-state` for more details.
+    Backup static properties of classes before each test, restore them after each test.
 
-``--colors``
 
-    Use colors in output.
-    On Windows, use `ANSICON <https://github.com/adoxa/ansicon>`_ or `ConEmu <https://github.com/Maximus5/ConEmu>`_.
+Risky Tests
+^^^^^^^^^^^
 
-    There are three possible values for this option:
+``--strict-coverage``
 
-    -
+    Be strict about code coverage metadata. See :ref:`risky-tests.unintentionally-covered-code`
+    for more details.
 
-      ``never``: never displays colors in the output. This is the default value when ``--colors`` option is not used.
+``--strict-global-state``
 
-    -
+    Be strict about changes to global state. See :ref:`risky-tests.global-state-manipulation`
+    for more details.
 
-      ``auto``: displays colors in the output unless the current terminal doesn't supports colors,
-      or if the output is piped to a command or redirected to a file.
+``--disallow-test-output``
 
-    -
+    Be strict about output during tests. See :ref:`risky-tests.output-during-test-execution`
+    for more details.
 
-      ``always``: always displays colors in the output even when the current terminal doesn't supports colors,
-      or when the output is piped to a command or redirected to a file.
+``--enforce-time-limit``
 
-    When ``--colors`` is used without any value, ``auto`` is the chosen value.
+    Enforce time limit based on test size. See :ref:`risky-tests.test-execution-timeout`
+    for more details.
 
-``--columns``
+``--default-time-limit <sec>``
 
-    Defines the number of columns to use for progress output.
-    If ``max`` is defined as value, the number of columns will be maximum of the current terminal.
+    Timeout in seconds for tests that have no declared size. See :ref:`risky-tests.test-execution-timeout`
+    for more details.
 
-``--stderr``
+``--dont-report-useless-tests``
 
-    Optionally print to ``STDERR`` instead of
-    ``STDOUT``.
+    Do not report tests that do not test anything. See :ref:`risky-tests.useless-tests`
+    for more details on the default behaviour.
+
+
+Automatically stop when ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``--stop-on-defect``
+
+    Stop execution upon first that errored, failed, that triggered a warning, or that
+    was considered risky.
 
 ``--stop-on-error``
 
-    Stop execution upon first error.
+    Stop execution upon first that errored.
 
 ``--stop-on-failure``
 
-    Stop execution upon first error or failure.
+    Stop execution upon first that failed.
+
+``--stop-on-warning``
+
+    Stop execution upon first that triggered a warning.
 
 ``--stop-on-risky``
 
-    Stop execution upon first risky test.
+    Stop execution upon first that was considered risky.
 
 ``--stop-on-skipped``
 
-    Stop execution upon first skipped test.
+    Stop execution upon first that was skipped.
 
 ``--stop-on-incomplete``
 
-    Stop execution upon first incomplete test.
+    Stop execution upon first that was marked as incomplete.
 
-``--verbose``
 
-    Output more verbose information, for instance the names of tests
-    that were incomplete or have been skipped.
+Exit with error code when ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``--fail-on-incomplete``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one test was marked as incomplete.
+
+``--fail-on-risky``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one test was considered risky.
+
+``--fail-on-skipped``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one test was skipped.
+
+``--fail-on-warning``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one test triggered a warning.
+
+
+Test Result Cache
+^^^^^^^^^^^^^^^^^
+
+``--cache-result``
+
+    Write test results to cache file. This is required for reordering tests based on
+    previous failures, for instance.
+
+``--do-not-cache-result``
+
+    Do not write test results to cache file.
+
+
+Test Order
+^^^^^^^^^^
+
+``--order-by <order>``
+
+    Reorder tests using ``<order>`` strategy before running them. ``<order>`` can be a
+    comma-separated list of ``default``, ``defects``, ``depends``, ``duration``,
+    ``no-depends``, ``random``, ``reverse``, and ``size``.
+
+``--random-order-seed <N>``
+
+    Use the specified random seed when running tests in random order.
+
+
+Reporting
+---------
+
+Console
+^^^^^^^
+
+``--colors <flag>``
+
+    Use colors in output (``never``, ``auto``, or ``always``)
+
+``--columns <n>``
+
+    Number of columns to use for progress output.
+
+``--columns max``
+
+    Use maximum number of columns for progress output.
+
+``--stderr``
+
+    Write to `php://stderr` instead of `php://stdout`.
+
+
+Progress and Result Printing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``--no-progress``
+
+    Disable output of test execution progress.
+
+``--no-results``
+
+    Disable output of test results.
+
+``--no-output``
+
+    Disable all output.
+
+Details about Issues
+^^^^^^^^^^^^^^^^^^^^
+
+``--display-incomplete``
+
+    Display details for incomplete tests.
+
+``--display-skipped``
+
+    Display details for skipped tests.
+
+``--display-deprecations``
+
+    Display details for deprecations triggered by tests.
+
+``--display-errors``
+
+    Display details for errors triggered by tests.
+
+``--display-notices``
+
+    Display details for notices triggered by tests.
+
+``--display-warnings``
+
+    Display details for warnings triggered by tests.
+
+``--reverse-list``
+
+    Print defects in reverse order.
+
+Alternative Output
+^^^^^^^^^^^^^^^^^^
+
+``--teamcity``
+
+    Replace default progress and result output with TeamCity format.
 
 ``--testdox``
 
-    Reports the test progress in TestDox format (see :ref:`textui.testdox`).
+    Replace default result output with TestDox format.
 
-``--bootstrap``
+Logging
+-------
 
-    A "bootstrap" PHP file that is run before the tests.
+``--log-junit <file>``
 
-``--configuration``, ``-c``
+    Write test results in JUnit XML format to file.
 
-    Read configuration from XML file.
-    See :ref:`appendixes.configuration` for more details.
+``--log-teamcity <file>``
 
-    If :file:`phpunit.xml` or
-    :file:`phpunit.xml.dist` (in that order) exist in the
-    current working directory and ``--configuration`` is
-    *not* used, the configuration will be automatically
-    read from that file.
+    Write test results in TeamCity format to file.
 
-    If a directory is specified and if
-    :file:`phpunit.xml` or :file:`phpunit.xml.dist` (in that order)
-    exists in this directory, the configuration will be
-    automatically read from that file.
+``--testdox-html <file>``
 
-``--no-configuration``
+    Write test results in TestDox format (HTML) to file.
 
-    Ignore :file:`phpunit.xml` and
-    :file:`phpunit.xml.dist` from the current working
-    directory.
+``--testdox-text <file>``
 
-``--include-path``
+    Write test results in TestDox format (plain text) to file.
 
-    Prepend PHP's ``include_path`` with given path(s).
+``--log-events-text <file>``
 
-``-d``
+    Stream events as plain text to file.
 
-    Sets the value of the given PHP configuration option.
+``--log-events-verbose-text <file>``
 
-.. admonition:: Note
+    Stream events as plain text (with telemetry information) to file.
 
-   Please note that options can be put after the argument(s).
+``--no-logging``
 
-.. _textui.testdox:
+    Ignore logging configured in the XML configuration file.
 
-TestDox
-=======
 
-PHPUnit's TestDox functionality looks at a test class and all the test
-method names and converts them from camel case (or snake_case) PHP names to sentences:
-``testBalanceIsInitiallyZero()`` (or ``test_balance_is_initially_zero()`` becomes "Balance is
-initially zero". If there are several test methods whose names only
-differ in a suffix of one or more digits, such as
-``testBalanceCannotBecomeNegative()`` and
-``testBalanceCannotBecomeNegative2()``, the sentence
-"Balance cannot become negative" will appear only once, assuming that
-all of these tests succeed.
+Code Coverage
+^^^^^^^^^^^^^
 
-Let us take a look at the documentation generated for a
-``BankAccount`` class:
+``--coverage-clover <file>``
 
-.. parsed-literal::
+    Write code coverage report in Clover XML format to file.
 
-    $ phpunit --testdox BankAccountTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+``--coverage-cobertura <file>``
 
-    BankAccount
-     ✔ Balance is initially zero
-     ✔ Balance cannot become negative
+    Write code coverage report in Cobertura XML format to file.
 
-Alternatively, the documentation can be generated in HTML or plain
-text format and written to a file using the ``--testdox-html``
-and ``--testdox-text`` arguments.
+``--coverage-crap4j <file>``
+
+    Write code coverage report in Crap4J XML format to file.
+
+``--coverage-html <dir>``
+
+    Write code coverage report in HTML format to directory.
+
+``--coverage-php <file>``
+
+    Write serialized code coverage data to file.
+
+``--coverage-text=<file>``
+
+    Write code coverage report in text format to file (default: ``php://stdout``).
+
+``--coverage-xml <dir>``
+
+    Write code coverage report in XML format to directory.
+
+``--warm-coverage-cache``
+
+    Warm cache for static analysis that is needed for code coverage reporting.
+
+``--coverage-filter <dir>``
+
+    Include ``<dir>`` in code coverage reporting.
+
+``--path-coverage``
+
+    Report path coverage in addition to line coverage.
+
+``--disable-coverage-ignore``
+
+    Disable metadata for ignoring code coverage.
+
+``--no-coverage``
+
+    Ignore code coverage reporting configured in the XML configuration file.
+
+
+Miscellaneous
+^^^^^^^^^^^^^
+
+``-h|--help``
+
+    Prints usage information.
+
+``--version``
+
+    Prints the version and exits.
+
+``--atleast-version <min>``
+
+    Checks that version is greater than ``<min>`` and exits.
+
+``--check-version``
+
+    Check whether PHPUnit is the latest version and exits.
 
