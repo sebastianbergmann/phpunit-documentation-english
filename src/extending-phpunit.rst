@@ -145,6 +145,10 @@ Events
 
     The test runner started executing tests
 
+``PHPUnit\Event\TestSuite\Skipped``
+
+    The execution of a test suite was skipped
+
 ``PHPUnit\Event\TestSuite\Started``
 
     The execution of a test suite was started
