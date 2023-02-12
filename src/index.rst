@@ -20,7 +20,7 @@ Contents:
    organizing-tests
    fixtures
    test-doubles
-   code-coverage-analysis
+   code-coverage
    risky-tests
    extending-phpunit
 

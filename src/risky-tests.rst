@@ -9,7 +9,7 @@ Risky Tests
 PHPUnit can help you identify risky tests, for instance lying tests that give you
 a false sense of security.
 
-Tests that are considered risky do not contribute to :ref:`code coverage <code-coverage-analysis>`.
+Tests that are considered risky do not contribute to :ref:`code coverage <code-coverage>`.
 
 
 .. _risky-tests.useless-tests:

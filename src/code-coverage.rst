@@ -1,10 +1,10 @@
 
 
-.. _code-coverage-analysis:
+.. _code-coverage:
 
-**********************
-Code Coverage Analysis
-**********************
+*************
+Code Coverage
+*************
 
     *Wikipedia*:
 
@@ -45,7 +45,7 @@ that control code coverage functionality as well as
 :ref:`appendixes.configuration.logging` for the relevant
 configuration settings.
 
-.. _code-coverage-analysis.metrics:
+.. _code-coverage.metrics:
 
 Software Metrics for Code Coverage
 ==================================
@@ -99,7 +99,7 @@ The library used by PHPUnit supports all code coverage software metrics listed a
 To report branch coverage and path coverage, code coverage data has to be collected
 using Xdebug as PCOV only supports line coverage.
 
-.. _code-coverage-analysis.including-files:
+.. _code-coverage.including-files:
 
 Including Files
 ===============
@@ -116,7 +116,7 @@ The ``includeUncoveredFiles`` configuration setting is available to configure ho
 
 - ``includeUncoveredFiles="true"`` (default) means that all files are included in the code coverage report even if not a single line of code of such a file is executed
 
-.. _code-coverage-analysis.ignoring-code-blocks:
+.. _code-coverage.ignoring-code-blocks:
 
 Ignoring Code Blocks
 ====================
@@ -132,7 +132,7 @@ lines of code.
 
 .. code-block:: php
     :caption: Using the ``CodeCoverageIgnore`` attribute and the ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
-    :name: code-coverage-analysis.ignoring-code-blocks.examples.example.php
+    :name: code-coverage.ignoring-code-blocks.examples.example.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
@@ -162,7 +162,7 @@ lines of code.
 
     exit; // @codeCoverageIgnore
 
-.. _code-coverage-analysis.specifying-covered-parts:
+.. _code-coverage.specifying-covered-parts:
 
 Specifying Covered Code Parts
 =============================
@@ -173,12 +173,12 @@ attributes can be used in the test code to specify which units of code a test cl
 When these attributes are used on a test case class, code coverage information is only collected for
 the listed units of code when the test methods of this test case class are executed.
 
-:numref:`code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php`
+:numref:`code-coverage.specifying-covered-parts.examples.InvoiceTest.php`
 shows an example.
 
 .. code-block:: php
     :caption: Test class that specifies which class it wants to cover
-    :name: code-coverage-analysis.specifying-covered-parts.examples.InvoiceTest.php
+    :name: code-coverage.specifying-covered-parts.examples.InvoiceTest.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\Attributes\CoversClass;
@@ -206,7 +206,7 @@ and to make sure you only generate code coverage with unit tests.
 
 .. code-block:: php
     :caption: A test that specifies that it does not want to contribute to code coverage
-    :name: code-coverage-analysis.specifying-covered-parts.examples.GuestbookIntegrationTest.php
+    :name: code-coverage.specifying-covered-parts.examples.GuestbookIntegrationTest.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\Attributes\CoversNothing;
