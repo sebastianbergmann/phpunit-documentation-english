@@ -7,14 +7,13 @@ Annotations
 ***********
 
 An annotation is a special form of syntactic metadata that can be added to
-the source code of some programming languages. While PHP has no dedicated
-language feature for annotating source code, the usage of tags such as
-``@annotation arguments`` in a documentation block has been
-established in the PHP community to annotate source code. In PHP
-documentation blocks are reflective: they can be accessed through the
-Reflection API's ``getDocComment()`` method on the function,
-class, method, and attribute level. Applications such as PHPUnit use this
-information at runtime to configure their behaviour.
+the source code of some programming languages. Until PHP 8, PHP had no dedicated
+language feature for attaching metadata to units of code. The usage of tags such as
+``@annotation arguments`` in a documentation block has been established in the PHP
+community to annotate source code since the time of PHP 4. Documentation blocks can
+be accessed through the Reflection API's ``getDocComment()`` method on the function,
+class, method, and attribute level. Applications such as PHPUnit can use this
+information at runtime to access annotations in documentation blocks.
 
 .. admonition:: Note
 
@@ -22,7 +21,20 @@ information at runtime to configure their behaviour.
    ``*/``. Annotations in any other style of comment will be
    ignored.
 
-This appendix shows all the varieties of annotations supported by PHPUnit.
+Prior to PHPUnit 10, annotations in special PHP comments, so-called "DocBlocks" or "doc-comments",
+were the only means of attaching metadata to code units. These annotations are documented in this
+appendix.
+
+PHPUnit will first look for metadata in :ref:`attributes <appendixes.attributes>` before it looks
+for annotations in comments. When metadata is found in attributes, metadata in comments is ignored.
+Support for metadata in comments is closed for further development: bugs will be fixed, but no new
+functionality will be implemented based on annotations.
+
+.. admonition:: Note
+
+   Do not use annotations in comments in new tests that you write.
+   Use :ref:`attributes <appendixes.attributes>` instead.
+
 
 .. _appendixes.annotations.author:
 
@@ -325,33 +337,17 @@ Please note that this annotation requires a fully-qualified class name (FQCN).
 To make this more obvious to the reader, it is recommended to use a leading
 backslash (even if this not required for the annotation to work correctly).
 
-.. rst-class:: table
-.. list-table:: Annotations for specifying which methods are covered by a test
-    :name: appendixes.annotations.covers.tables.annotations
-    :header-rows: 1
+``@covers ClassName`` (recommended)
 
-    * - Annotation
-      - Description
-    * - ``@covers ClassName::methodName`` (not recommended)
-      - Specifies that the annotated test method covers the specified method.
-    * - ``@covers ClassName`` (recommended)
-      - Specifies that the annotated test method covers all methods of a given class.
-    * - ``@covers ClassName<extended>`` (not recommended)
-      - Specifies that the annotated test method covers all methods of a given class and its parent class(es).
-    * - ``@covers ClassName::<public>`` (not recommended)
-      - Specifies that the annotated test method covers all public methods of a given class.
-    * - ``@covers ClassName::<protected>`` (not recommended)
-      - Specifies that the annotated test method covers all protected methods of a given class.
-    * - ``@covers ClassName::<private>`` (not recommended)
-      - Specifies that the annotated test method covers all private methods of a given class.
-    * - ``@covers ClassName::<!public>`` (not recommended)
-      - Specifies that the annotated test method covers all methods of a given class that are not public.
-    * - ``@covers ClassName::<!protected>`` (not recommended)
-      - Specifies that the annotated test method covers all methods of a given class that are not protected.
-    * - ``@covers ClassName::<!private>`` (not recommended)
-      - Specifies that the annotated test method covers all methods of a given class that are not private.
-    * - ``@covers ::functionName`` (recommended)
-      - Specifies that the annotated test method covers the specified global function.
+    Specifies that the annotated test class covers all methods of a given class.
+
+``@covers ClassName::methodName`` (not recommended)
+
+    Specifies that the annotated test class covers the specified method.
+
+``@covers ::functionName`` (recommended)
+
+    Specifies that the annotated test class covers the specified global function.
 
 .. _appendixes.annotations.coversDefaultClass:
 
@@ -636,13 +632,6 @@ Indicates that a test should be run in a separate PHP process.
             // ...
         }
     }
-
-*Note:* By default, PHPUnit will
-attempt to preserve the global state from the parent process by
-serializing all globals in the parent process and unserializing them
-in the child process. This can cause problems if the parent process
-contains globals that are not serializable. See :ref:`appendixes.annotations.preserveGlobalState` for information
-on how to fix this.
 
 .. _appendixes.annotations.small:
 
