@@ -32,6 +32,24 @@ namespace. They are documented in this appendix.
 
 ...
 
+.. code-block:: php
+    :caption: Using the `#[Test]` attribute
+    :name: appendixes.attributes.test.examples.ExampleTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Test;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        #[Test]
+        public function it_does_something(): void
+        {
+            // ...
+        }
+    }
+
+
 ``TestDox``
 ===========
 
