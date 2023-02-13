@@ -62,7 +62,7 @@ you can use the ``Test`` attribute to mark it as a test method.
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-The ``TestDox`` attribute can be used to customize the text that is printed for
+The ``TestDox(string $text)`` attribute can be used to customize the text that is printed for
 a test when TestDox output is enabled.
 
 .. code-block:: php
