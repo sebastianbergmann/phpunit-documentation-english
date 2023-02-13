@@ -168,6 +168,8 @@ the test method will be called with the contents of the array as its arguments.
         }
     }
 
+Running the test shown above yields the output shown below:
+
 .. parsed-literal::
 
     $ phpunit DataTest.php
