@@ -269,7 +269,9 @@ Data Provider
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DataProvider(string $methodName)`` attribute can be used on a test method
+to specify a static method that is declared in the same class as the test method
+as a :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
 
 
 ``DataProviderExternal``
@@ -281,7 +283,9 @@ Data Provider
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DataProviderExternal(string $className, string $methodName)`` attribute can be used
+on a test method to specify a static method that is declared in another class as a
+:ref:`data provider <writing-tests-for-phpunit.data-providers>`.
 
 
 ``TestWith``
@@ -293,7 +297,52 @@ Data Provider
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``TestWith(array $data)`` attribute can be used to define a
+:ref:`data provider <writing-tests-for-phpunit.data-providers>` for a
+test method without having to implement a static data provider method.
+
+.. code-block:: php
+    :caption: Using the ``TestWith`` attribute
+    :name: appendixes.attributes.testwith.examples.ExampleTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\TestWith;
+    use PHPUnit\Framework\TestCase;
+
+    final class DataTest extends TestCase
+    {
+        #[TestWith([0, 0, 0])]
+        #[TestWith([0, 1, 1])]
+        #[TestWith([1, 0, 1])]
+        #[TestWith([1, 1, 3])]
+        public function testAdd(int $a, int $b, int $expected): void
+        {
+            $this->assertSame($expected, $a + $b);
+        }
+    }
+
+Running the test shown above yields the output shown below:
+
+.. parsed-literal::
+
+    $ phpunit DataTest.php
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.2
+
+    ...F                                                                4 / 4 (100%)
+
+    Time: 00:00.058, Memory: 8.00 MB
+
+    There was 1 failure:
+
+    1) DataTest::testAdd with data set #3
+    Failed asserting that 2 is identical to 3.
+
+    /path/to/DataTest.php:10
+
+    FAILURES!
+    Tests: 4, Assertions: 4, Failures: 1.
 
 
 ``TestWithJson``
@@ -305,7 +354,52 @@ Data Provider
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``TestWithJson(string $json)`` attribute can be used to define a
+:ref:`data provider <writing-tests-for-phpunit.data-providers>` for a
+test method without having to implement a static data provider method.
+
+.. code-block:: php
+    :caption: Using the ``TestWithJson`` attribute
+    :name: appendixes.attributes.testwithjson.examples.ExampleTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\TestWithJson;
+    use PHPUnit\Framework\TestCase;
+
+    final class DataTest extends TestCase
+    {
+        #[TestWithJson('[0, 0, 0]')]
+        #[TestWithJson('[0, 1, 1]')]
+        #[TestWithJson('[1, 0, 1]')]
+        #[TestWithJson('[1, 1, 3]')]
+        public function testAdd(int $a, int $b, int $expected): void
+        {
+            $this->assertSame($expected, $a + $b);
+        }
+    }
+
+Running the test shown above yields the output shown below:
+
+.. parsed-literal::
+
+    $ phpunit DataTest.php
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.2
+
+    ...F                                                                4 / 4 (100%)
+
+    Time: 00:00.058, Memory: 8.00 MB
+
+    There was 1 failure:
+
+    1) DataTest::testAdd with data set #3
+    Failed asserting that 2 is identical to 3.
+
+    /path/to/DataTest.php:10
+
+    FAILURES!
+    Tests: 4, Assertions: 4, Failures: 1.
 
 
 Test Dependencies
