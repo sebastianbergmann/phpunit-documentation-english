@@ -186,7 +186,8 @@ Code Coverage
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``CoversClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+that a test intends to cover the given class.
 
 
 ``CoversFunction``
@@ -198,7 +199,8 @@ Code Coverage
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``CoversFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+that a test intends to cover the given global function.
 
 
 ``CoversNothing``
@@ -210,7 +212,8 @@ Code Coverage
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``CoversNothing()`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+that a test does not intend contribute to code coverage.
 
 
 ``UsesClass``
@@ -222,7 +225,9 @@ Code Coverage
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``UsesClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+that a test allows the execution of code in the given class, but does not intend to cover it. This is relevant
+in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
 
 ``UsesFunction``
@@ -234,7 +239,9 @@ Code Coverage
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``UsesFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+that a test allows the execution of code in the given global function, but does not intend to cover it. This is relevant
+in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
 
 ``CodeCoverageIgnore``
@@ -246,7 +253,8 @@ Code Coverage
 | Production Code | yes         | yes          | no         |
 +-----------------+-------------+--------------+------------+
 
-...
+The ``CodeCoverageIgnore`` attribute can be used to to :ref:`ignore <code-coverage.ignoring-code-blocks>`
+a class or method for code coverage.
 
 
 Data Provider
