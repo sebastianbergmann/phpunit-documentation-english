@@ -169,7 +169,10 @@ That would be ``data set 1`` through ``data set 4`` in the example shown above.
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+By default, PHPUnit considers a test that does not perform assertions and does not configure
+expectations on mock objects as :ref:`risky <risky-tests.useless-tests>`. The
+``DoesNotPerformAssertions`` attribute can be used to prevent this.
+
 
 Code Coverage
 =============
