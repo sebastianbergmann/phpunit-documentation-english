@@ -536,7 +536,7 @@ Test Groups
 | Test Code  | yes         | no           | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``Small`` attribute is an alias for ``Group('small')``.
 
 
 ``Medium``
@@ -548,7 +548,7 @@ Test Groups
 | Test Code  | yes         | no           | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``Medium`` attribute is an alias for ``Group('medium')``.
 
 
 ``Large``
@@ -560,7 +560,7 @@ Test Groups
 | Test Code  | yes         | no           | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``Large`` attribute is an alias for ``Group('large')``.
 
 
 ``Ticket``
@@ -572,7 +572,7 @@ Test Groups
 | Test Code  | yes         | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-This is an alias for ``Group``.
+The ``Ticket(string $text)`` attribute is an alias for ``Group(string $text)``.
 
 
 Template Methods
