@@ -442,7 +442,7 @@ With this configuration, Composer will always install the latest version of PHPU
 This ensures you "stay fresh" as long as PHPUnit 10 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 10.1. And when the time comes and PHPUnit 11 is released then Composer will not automatically and unexpectedly install it.
 
 PHAR or Composer?
-^^^^^^^^^^^^^^^^^
+-----------------
 
 According to its own documentation, Composer "[e]nables you to declare the libraries you depend on" and "[f]inds out which versions of which packages can and need to be installed, and installs them (meaning it downloads them into your project)". This is exactly what you need -- and want -- for dealing with your project's dependencies that are required at runtime. It is, however, not what you want for your project's development-time dependencies, for instance tools for static analysis.
 
