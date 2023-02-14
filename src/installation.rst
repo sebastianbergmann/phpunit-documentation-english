@@ -412,8 +412,115 @@ After executing the command shown above the project's directory will look like t
     └── tools
         └── phpunit
 
-Unfortunately, PhpStorm only recognizes a file as a PHP archive when it has the ``.phar`` suffix.
-This is remedied by creating a symbolic link: ``ln -s phpunit tools/phpunit.phar``.
+.. admonition:: Note
+
+    Unfortunately, PhpStorm only recognizes a file as a PHP archive when it has the ``.phar`` suffix.
+    This is remedied by creating a symbolic link: ``ln -s phpunit tools/phpunit.phar``.
+
+Updating PHPUnit with Phive
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can use the ``phive outdated`` commands to see a list of the PHARs that Phive manages for your
+project and check whether an update is available:
+
+.. code::
+
+    phive outdated
+    Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
+    Found 1 outdated PHARs in phive.xml:
+
+    Name       Version Constraint    Installed    Available
+
+    phpunit    ^10.0                 10.0.0       10.0.7
+
+Updating to a new minor version of PHPUnit using Phive is straightforward:
+
+.. code::
+
+    phive update
+    Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
+    Copying phpunit-10.0.7.phar to /tmp/test/tools/phpunit
+
+.. code::
+
+    ./tools/phpunit --version
+    PHPUnit 10.0.7 by Sebastian Bergmann and contributors.
+
+If you use semantic version constraints in your ``.phive/phars.xml`` file
+(`and you should! <https://thephp.cc/articles/the-death-star-version-constraint>`_)
+then you will have to manually update PHPUnit's version constraint when you want to update to
+a new major version.
+
+Consider the following situation:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <phive xmlns="https://phar.io/phive">
+      <phar name="phpunit"
+            version="^9.6" installed="9.6.3"
+            location="./tools/phpunit" copy="true"/>
+    </phive>
+
+Using the ``phive status`` command we can see that we have the PHAR for PHPUnit 9.6.3 in our project:
+
+.. code::
+
+    phive status
+    Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
+    PHARs configured in project:
+
+    Alias/URL    Version Constraint    Installed    Location                   Key Ids
+
+    phpunit      9.6                   9.6.3        /tmp/test/tools/phpunit    4AA394086372C20A
+
+Running ``phive outdated`` does not offer us the update to PHPUnit 10:
+
+.. code::
+
+    phive outdated
+    Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
+    Congrats, no outdated phars found
+
+This is because PHPUnit 10 is a new major version and updates to a new major version should be
+an explicit operation following a conscious decision.
+
+Here is what you should do: edit your project's ``.phive/phars.xml`` file and change ``^9.6``
+to ``^10.0``:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <phive xmlns="https://phar.io/phive">
+      <phar name="phpunit"
+            version="^10.0" installed="9.6.3"
+            location="./tools/phpunit" copy="true"/>
+    </phive>
+
+See how the output of ``phive outdated`` changes:
+
+.. code::
+
+    phive outdated
+    Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
+    Found 1 outdated PHARs in phive.xml:
+
+    Name       Version Constraint    Installed    Available
+
+    phpunit    ^10.0                 9.6.3        10.0.7
+
+Now we can use ``phive update`` to perform the update:
+
+.. code::
+
+    phive update
+    Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
+    Copying phpunit-10.0.7.phar to /tmp/test/tools/phpunit
+
+.. code::
+
+    ./tools/phpunit --version
+    PHPUnit 10.0.7 by Sebastian Bergmann and contributors.
 
 
 Composer
@@ -457,11 +564,59 @@ The project-local installation of PHPUnit can be invoked like this:
     ./vendor/bin/phpunit --version
     PHPUnit 10.0.0 by Sebastian Bergmann and contributors.
 
+
+Updating PHPUnit with Composer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ``composer require --dev phpunit/phpunit`` adds a development-time dependency on PHPUnit with a version constraint that uses the caret operator (``^``) for semantic versioning: ``"phpunit/phpunit": "^10.0"``.
 
 With this configuration, Composer will always install the latest version of PHPUnit that is compatible with PHPUnit 10.0.
 
 This ensures you "stay fresh" as long as PHPUnit 10 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 10.1. And when the time comes and PHPUnit 11 is released then Composer will not automatically and unexpectedly install it.
+
+Consider the following situation:
+
+.. code-block:: json
+
+    {
+        "require-dev": {
+            "phpunit/phpunit": "^9.6"
+        }
+    }
+
+Using the ``composer outdated`` command we can see that we have PHPUnit 9.6.3 in our project and that a new major version is available:
+
+.. code::
+
+    composer outdated
+    Legend:
+    ! patch or minor release available - update recommended
+    ~ major release available - update possible
+
+    Direct dependencies required in composer.json:
+    phpunit/phpunit                    9.6.3  ~ 10.0.7 The PHP Unit Testing framework.
+
+Because PHPUnit 10 is a new major version, ``composer update`` does not automatically update from PHPUnit 9.6.3 to PHPUnit 10.0.7.
+Updates to a new major version should be an explicit operation following a conscious decision.
+
+Here is what you should do: edit your project's ``composer.json`` file and change ``^9.6``
+to ``^10.0``:
+
+.. code-block:: json
+
+    {
+        "require-dev": {
+            "phpunit/phpunit": "^10.0"
+        }
+    }
+
+Now we can run ``composer update`` and get the new major version:
+
+.. code::
+
+    ./vendor/bin/phpunit --version
+    PHPUnit 10.0.7 by Sebastian Bergmann and contributors.
+
 
 PHAR or Composer?
 -----------------
