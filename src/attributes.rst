@@ -21,7 +21,7 @@ When metadata is found in attributes, metadata in comments is ignored.
 The attributes supported by PHPUnit are all declared in the ``PHPUnit\Framework\Attributes``
 namespace. They are documented in this appendix.
 
-.. _appendixes.attributes.test:
+.. _appendixes.attributes.Test:
 
 ``Test``
 ========
@@ -52,6 +52,8 @@ you can use the ``Test`` attribute to mark it as a test method.
         }
     }
 
+
+.. _appendixes.attributes.TestDox:
 
 ``TestDox``
 ===========
@@ -160,6 +162,8 @@ Additionally, ``$_dataName`` is available and holds the name of the current data
 That would be ``data set 1`` through ``data set 4`` in the example shown above.
 
 
+.. _appendixes.attributes.DoesNotPerformAssertions:
+
 ``DoesNotPerformAssertions``
 ============================
 
@@ -177,6 +181,8 @@ expectations on mock objects as :ref:`risky <risky-tests.useless-tests>`. The
 Code Coverage
 =============
 
+.. _appendixes.attributes.CoversClass:
+
 ``CoversClass``
 ---------------
 
@@ -189,6 +195,8 @@ Code Coverage
 The ``CoversClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
 that a test intends to cover the given class.
 
+
+.. _appendixes.attributes.CoversFunction:
 
 ``CoversFunction``
 ------------------
@@ -203,6 +211,8 @@ The ``CoversFunction(string $functionName)`` attribute can be used to :ref:`spec
 that a test intends to cover the given global function.
 
 
+.. _appendixes.attributes.CoversNothing:
+
 ``CoversNothing``
 -----------------
 
@@ -215,6 +225,8 @@ that a test intends to cover the given global function.
 The ``CoversNothing()`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
 that a test does not intend contribute to code coverage.
 
+
+.. _appendixes.attributes.UsesClass:
 
 ``UsesClass``
 -------------
@@ -230,6 +242,8 @@ that a test allows the execution of code in the given class, but does not intend
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
 
+.. _appendixes.attributes.UsesFunction:
+
 ``UsesFunction``
 ----------------
 
@@ -243,6 +257,8 @@ The ``UsesFunction(string $functionName)`` attribute can be used to :ref:`specif
 that a test allows the execution of code in the given global function, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
+
+.. _appendixes.attributes.CodeCoverageIgnore:
 
 ``CodeCoverageIgnore``
 ----------------------
@@ -260,6 +276,8 @@ a class or method for code coverage.
 Data Provider
 =============
 
+.. _appendixes.attributes.DataProvider:
+
 ``DataProvider``
 ----------------
 
@@ -274,6 +292,8 @@ to specify a static method that is declared in the same class as the test method
 as a :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
 
 
+.. _appendixes.attributes.DataProviderExternal:
+
 ``DataProviderExternal``
 ------------------------
 
@@ -287,6 +307,8 @@ The ``DataProviderExternal(string $className, string $methodName)`` attribute ca
 on a test method to specify a static method that is declared in another class as a
 :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
 
+
+.. _appendixes.attributes.TestWith:
 
 ``TestWith``
 ------------
@@ -344,6 +366,8 @@ Running the test shown above yields the output shown below:
     FAILURES!
     Tests: 4, Assertions: 4, Failures: 1.
 
+
+.. _appendixes.attributes.TestWithJson:
 
 ``TestWithJson``
 ----------------
@@ -405,6 +429,8 @@ Running the test shown above yields the output shown below:
 Test Dependencies
 =================
 
+.. _appendixes.attributes.Depends:
+
 ``Depends``
 -----------
 
@@ -416,6 +442,8 @@ Test Dependencies
 
 ...
 
+
+.. _appendixes.attributes.DependsUsingDeepClone:
 
 ``DependsUsingDeepClone``
 -------------------------
@@ -429,6 +457,8 @@ Test Dependencies
 ...
 
 
+.. _appendixes.attributes.DependsUsingShallowClone:
+
 ``DependsUsingShallowClone``
 ----------------------------
 
@@ -439,6 +469,9 @@ Test Dependencies
 +------------+-------------+--------------+------------+
 
 ...
+
+
+.. _appendixes.attributes.DependsExternal:
 
 ``DependsExternal``
 -------------------
@@ -452,6 +485,8 @@ Test Dependencies
 ...
 
 
+.. _appendixes.attributes.DependsExternalUsingDeepClone:
+
 ``DependsExternalUsingDeepClone``
 ---------------------------------
 
@@ -463,6 +498,8 @@ Test Dependencies
 
 ...
 
+
+.. _appendixes.attributes.DependsExternalUsingShallowClone:
 
 ``DependsExternalUsingShallowClone``
 ------------------------------------
@@ -476,6 +513,8 @@ Test Dependencies
 ...
 
 
+.. _appendixes.attributes.DependsOnClass:
+
 ``DependsOnClass``
 ------------------
 
@@ -488,6 +527,8 @@ Test Dependencies
 ...
 
 
+.. _appendixes.attributes.DependsOnClassUsingDeepClone:
+
 ``DependsOnClassUsingDeepClone``
 --------------------------------
 
@@ -499,6 +540,8 @@ Test Dependencies
 
 ...
 
+
+.. _appendixes.attributes.DependsOnClassUsingShallowClone:
 
 ``DependsOnClassUsingShallowClone``
 -----------------------------------
@@ -515,6 +558,8 @@ Test Dependencies
 Test Groups
 ===========
 
+.. _appendixes.attributes.Group:
+
 ``Group``
 ---------
 
@@ -526,6 +571,8 @@ Test Groups
 
 ...
 
+
+.. _appendixes.attributes.Small:
 
 ``Small``
 ---------
@@ -539,6 +586,8 @@ Test Groups
 The ``Small`` attribute is an alias for ``Group('small')``.
 
 
+.. _appendixes.attributes.Medium:
+
 ``Medium``
 ----------
 
@@ -551,6 +600,8 @@ The ``Small`` attribute is an alias for ``Group('small')``.
 The ``Medium`` attribute is an alias for ``Group('medium')``.
 
 
+.. _appendixes.attributes.Large:
+
 ``Large``
 ---------
 
@@ -562,6 +613,8 @@ The ``Medium`` attribute is an alias for ``Group('medium')``.
 
 The ``Large`` attribute is an alias for ``Group('large')``.
 
+
+.. _appendixes.attributes.Ticket:
 
 ``Ticket``
 ----------
@@ -578,6 +631,8 @@ The ``Ticket(string $text)`` attribute is an alias for ``Group(string $text)``.
 Template Methods
 ================
 
+.. _appendixes.attributes.BeforeClass:
+
 ``BeforeClass``
 ---------------
 
@@ -589,6 +644,8 @@ Template Methods
 
 ...
 
+
+.. _appendixes.attributes.Before:
 
 ``Before``
 ----------
@@ -602,6 +659,8 @@ Template Methods
 ...
 
 
+.. _appendixes.attributes.PreCondition:
+
 ``PreCondition``
 ----------------
 
@@ -613,6 +672,8 @@ Template Methods
 
 ...
 
+
+.. _appendixes.attributes.PostCondition:
 
 ``PostCondition``
 -----------------
@@ -626,6 +687,8 @@ Template Methods
 ...
 
 
+.. _appendixes.attributes.After:
+
 ``After``
 ---------
 
@@ -637,6 +700,8 @@ Template Methods
 
 ...
 
+
+.. _appendixes.attributes.AfterClass:
 
 ``AfterClass``
 --------------
@@ -653,6 +718,8 @@ Template Methods
 Test Isolation
 ==============
 
+.. _appendixes.attributes.BackupGlobals:
+
 ``BackupGlobals``
 -----------------
 
@@ -664,6 +731,8 @@ Test Isolation
 
 ...
 
+
+.. _appendixes.attributes.ExcludeGlobalVariableFromBackup:
 
 ``ExcludeGlobalVariableFromBackup``
 -----------------------------------
@@ -677,6 +746,8 @@ Test Isolation
 ...
 
 
+.. _appendixes.attributes.BackupStaticProperties:
+
 ``BackupStaticProperties``
 --------------------------
 
@@ -688,6 +759,8 @@ Test Isolation
 
 ...
 
+
+.. _appendixes.attributes.ExcludeStaticPropertyFromBackup:
 
 ``ExcludeStaticPropertyFromBackup``
 -----------------------------------
@@ -701,6 +774,8 @@ Test Isolation
 ...
 
 
+.. _appendixes.attributes.RunInSeparateProcess:
+
 ``RunInSeparateProcess``
 ------------------------
 
@@ -712,6 +787,8 @@ Test Isolation
 
 ...
 
+
+.. _appendixes.attributes.RunTestsInSeparateProcesses:
 
 ``RunTestsInSeparateProcesses``
 -------------------------------
@@ -725,6 +802,8 @@ Test Isolation
 ...
 
 
+.. _appendixes.attributes.RunClassInSeparateProcess:
+
 ``RunClassInSeparateProcess``
 -----------------------------
 
@@ -736,6 +815,8 @@ Test Isolation
 
 ...
 
+
+.. _appendixes.attributes.PreserveGlobalState:
 
 ``PreserveGlobalState``
 -----------------------
@@ -752,6 +833,8 @@ Test Isolation
 Skipping Tests
 ==============
 
+.. _appendixes.attributes.RequiresPhp:
+
 ``RequiresPhp``
 ---------------
 
@@ -763,6 +846,8 @@ Skipping Tests
 
 ...
 
+
+.. _appendixes.attributes.RequiresPhpExtension:
 
 ``RequiresPhpExtension``
 ------------------------
@@ -776,6 +861,8 @@ Skipping Tests
 ...
 
 
+.. _appendixes.attributes.RequiresSetting:
+
 ``RequiresSetting``
 -------------------
 
@@ -787,6 +874,8 @@ Skipping Tests
 
 ...
 
+
+.. _appendixes.attributes.RequiresPhpunit:
 
 ``RequiresPhpunit``
 -------------------
@@ -800,6 +889,8 @@ Skipping Tests
 ...
 
 
+.. _appendixes.attributes.RequiresFunction:
+
 ``RequiresFunction``
 --------------------
 
@@ -811,6 +902,8 @@ Skipping Tests
 
 ...
 
+
+.. _appendixes.attributes.RequiresMethod:
 
 ``RequiresMethod``
 ------------------
@@ -824,6 +917,8 @@ Skipping Tests
 ...
 
 
+.. _appendixes.attributes.RequiresOperatingSystem:
+
 ``RequiresOperatingSystem``
 ---------------------------
 
@@ -835,6 +930,8 @@ Skipping Tests
 
 ...
 
+
+.. _appendixes.attributes.RequiresOperatingSystemFamily:
 
 ``RequiresOperatingSystemFamily``
 ---------------------------------
