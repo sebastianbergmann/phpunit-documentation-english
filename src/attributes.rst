@@ -844,8 +844,20 @@ Skipping Tests
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``RequiresPhp(string $versionRequirement)`` attribute can be used to
+:ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
+when the PHP version used to run PHPUnit does not match the specified version requirement.
 
+``$versionRequirement`` can either be a `version number string <https://www.php.net/manual/en/function.version-compare.php>`_
+that is optionally preceded by an operator supported by PHP's ``version_compare()``
+function or a `version constraint <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_
+in the syntax that is supported by Composer.
+
+Here are some examples:
+
+* ``#[RequiresPhp('8.3.0')]``
+* ``#[RequiresPhp('>= 8.3.0')]``
+* ``#[RequiresPhp('^8.3')]``
 
 .. _appendixes.attributes.RequiresPhpExtension:
 
@@ -858,7 +870,17 @@ Skipping Tests
 | Test Code  | yes         | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``RequiresPhpExtension(string $extension[, string $versionRequirement])`` attribute can be used to
+:ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
+when the specified PHP extension is not available. The optional ``$versionRequirement`` argument can be used
+to specify a version requirement for this PHP extension and follows the same format that is described
+:ref:`here <appendixes.attributes.RequiresPhp>`.
+
+Here are some examples:
+
+* ``#[RequiresPhpExtension('mysqli')]``
+* ``#[RequiresPhpExtension('mysqli', '>= 8.3.0')]``
+* ``#[RequiresPhpExtension('mysqli', '^8.3')]``
 
 
 .. _appendixes.attributes.RequiresSetting:
@@ -872,7 +894,9 @@ Skipping Tests
 | Test Code  | yes         | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``RequiresSetting(string $setting, string $value)`` attribute can be used to
+:ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
+when the specified PHP configuration setting is not set to the expected value.
 
 
 .. _appendixes.attributes.RequiresPhpunit:
@@ -886,7 +910,20 @@ Skipping Tests
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``RequiresPhpunit(string $versionRequirement)`` attribute can be used to
+:ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
+when the PHPUnit version does not match the specified version requirement.
+
+``$versionRequirement`` can either be a `version number string <https://www.php.net/manual/en/function.version-compare.php>`_
+that is optionally preceded by an operator supported by PHP's ``version_compare()``
+function or a `version constraint <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_
+in the syntax that is supported by Composer.
+
+Here are some examples:
+
+* ``#[RequiresPhpunit('10.1.0')]``
+* ``#[RequiresPhp('>= 10.1.0')]``
+* ``#[RequiresPhp('^10.1')]``
 
 
 .. _appendixes.attributes.RequiresFunction:
@@ -900,7 +937,9 @@ Skipping Tests
 | Test Code  | yes         | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``RequiresFunction(string $functionName)`` attribute can be used to
+:ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
+when the specified global function is not declared.
 
 
 .. _appendixes.attributes.RequiresMethod:
@@ -914,7 +953,9 @@ Skipping Tests
 | Test Code  | yes         | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``RequiresMethod(string $className, string $methodName)`` attribute can be used to
+:ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
+when the specified method is not declared.
 
 
 .. _appendixes.attributes.RequiresOperatingSystem:
@@ -928,7 +969,9 @@ Skipping Tests
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``RequiresOperatingSystem(string $regularExpression)`` attribute can be used to
+:ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
+when the specified regular expression does not match the value of the ``PHP_OS`` constant provided by PHP.
 
 
 .. _appendixes.attributes.RequiresOperatingSystemFamily:
@@ -942,4 +985,6 @@ Skipping Tests
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``RequiresOperatingSystemFamily(string $operatingSystemFamily)`` attribute can be used to
+:ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
+when the specified string is not identical to the value of the ``PHP_OS_FAMILY`` constant provided by PHP.
