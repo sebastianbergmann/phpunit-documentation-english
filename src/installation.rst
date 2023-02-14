@@ -269,6 +269,9 @@ At ``https://phar.phpunit.de/phpunit-snapshot.phar`` you will always find the la
 
 Such a PHP archive has all required (as well as some optional) dependencies of PHPUnit bundled in a single file. The PHAR (``ext/phar``) extension is required if you want to use PHPUnit from a PHP archive.
 
+Manual Download of PHAR
+^^^^^^^^^^^^^^^^^^^^^^^
+
 You can simply download a release of PHPUnit packaged as a PHP archive and immediately use it:
 
 .. code::
@@ -328,7 +331,10 @@ You can download PHPUnit's PHP archive to that ``tools`` directory manually, of 
     chmod +x phpunit.phar
     mv phpunit.phar tools
 
-Alternatively, you can use `Phive <https://phar.io/>`_, the *PHAR Installation and Verification Environment*,
+Installing PHPUnit with Phive
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can use `Phive <https://phar.io/>`_, the *PHAR Installation and Verification Environment*,
 to manage the PHAR-based tools of your PHP project.
 
 This is how you install Phive:
@@ -403,6 +409,9 @@ Composer
 Using a PHP Archive (PHAR) is the recommended way of installing PHPUnit, but it is not the only way.
 
 You can add PHPUnit as a development-time dependency to your project using `Composer <https://getcomposer.org/>`_.
+
+Installing PHPUnit with Composer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The command shown below assumes that you have previously installed Composer and that its ``composer`` executable is on your ``$PATH``.
 The installation of Composer is explained on the tool's website.
