@@ -375,8 +375,21 @@ You can now invoke the project-local installation of PHPUnit by running ``./tool
     ./tools/phpunit --version
     PHPUnit 10.0.0 by Sebastian Bergmann and contributors.
 
-The ``.phive/phars.xml`` file that was generated in your project's root directory contains metadata about your project's tool dependencies.
-This file should be put under version control.
+The ``.phive/phars.xml`` file that was generated in your project's root directory contains metadata about your project's tool dependencies:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <phive xmlns="https://phar.io/phive">
+      <phar name="phpunit"
+            version="^10.0" installed="10.0.0"
+            location="./tools/phpunit" copy="true"/>
+    </phive>
+
+``.phive/phars.xml`` should be put under version control.
+
+The ``^10.0`` is a semantic version constraint: Phive will always install the latest version of PHPUnit
+that is compatible with PHPUnit 10.0.
 
 Phive does not only provide a convenient way for installing, managing, and updating tools that are distributed as a PHP archive.
 Phive also keeps you safe by automatically verifying the PGP signatures while downloading the PHAR files.
