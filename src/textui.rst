@@ -12,7 +12,7 @@ tests with the PHPUnit command-line test runner:
 
 .. parsed-literal::
 
-    $ phpunit ArrayTest.php
+    ./tools/phpunit tests/ArrayTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2

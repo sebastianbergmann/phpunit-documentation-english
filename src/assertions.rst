@@ -63,7 +63,7 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
 
 .. parsed-literal::
 
-    $ phpunit ArrayHasKeyTest
+    ./tools/phpunit tests/ArrayHasKeyTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -108,7 +108,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
 
 .. parsed-literal::
 
-    $ phpunit ContainsTest
+    ./tools/phpunit tests/ContainsTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -151,7 +151,7 @@ Reports an error identified by ``$message`` if ``$needle`` is not a substring of
 
 .. parsed-literal::
 
-    $ phpunit StringContainsStringTest
+    ./tools/phpunit tests/StringContainsStringTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F                                                                   1 / 1 (100%)
@@ -198,7 +198,7 @@ have the same `Normalization Form <https://www.php.net/manual/en/class.normalize
 
 .. parsed-literal::
 
-    $ phpunit StringContainsStringIgnoringCaseTest
+    ./tools/phpunit tests/StringContainsStringIgnoringCaseTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F                                                                   1 / 1 (100%)
@@ -245,7 +245,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 
 .. parsed-literal::
 
-    $ phpunit ContainsOnlyTest
+    ./tools/phpunit tests/ContainsOnlyTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -295,7 +295,7 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 
 .. parsed-literal::
 
-    $ phpunit ContainsOnlyInstancesOfTest
+    ./tools/phpunit tests/ContainsOnlyInstancesOfTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -340,7 +340,7 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
 
 .. parsed-literal::
 
-    $ phpunit CountTest
+    ./tools/phpunit tests/CountTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -385,7 +385,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 
 .. parsed-literal::
 
-    $ phpunit DirectoryExistsTest
+    ./tools/phpunit tests/DirectoryExistsTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -430,7 +430,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 
 .. parsed-literal::
 
-    $ phpunit DirectoryIsReadableTest
+    ./tools/phpunit tests/DirectoryIsReadableTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -475,7 +475,7 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 
 .. parsed-literal::
 
-    $ phpunit DirectoryIsWritableTest
+    ./tools/phpunit tests/DirectoryIsWritableTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -520,7 +520,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
 
 .. parsed-literal::
 
-    $ phpunit EmptyTest
+    ./tools/phpunit tests/EmptyTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -575,7 +575,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 
 .. parsed-literal::
 
-    $ phpunit EqualsTest
+    ./tools/phpunit tests/EqualsTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     FFF
@@ -644,7 +644,7 @@ Reports an error identified by ``$message`` if the uncommented canonical form of
 
 .. parsed-literal::
 
-    $ phpunit EqualsTest
+    ./tools/phpunit tests/EqualsTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -700,7 +700,7 @@ Reports an error identified by ``$message`` if the two objects ``$expected`` and
 
 .. parsed-literal::
 
-    $ phpunit EqualsTest
+    ./tools/phpunit tests/EqualsTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -747,7 +747,7 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
 
 .. parsed-literal::
 
-    $ phpunit EqualsTest
+    ./tools/phpunit tests/EqualsTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -802,7 +802,7 @@ The contents of ``$expected`` and ``$actual`` are canonicalized before they are 
 
 .. parsed-literal::
 
-    $ phpunit EqualsCanonicalizingTest
+    ./tools/phpunit tests/EqualsCanonicalizingTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F                                                                   1 / 1 (100%)
@@ -859,7 +859,7 @@ Differences in casing are ignored for the comparison of ``$expected`` and ``$act
 
 .. parsed-literal::
 
-    $ phpunit EqualsIgnoringCaseTest
+    ./tools/phpunit tests/EqualsIgnoringCaseTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F                                                                   1 / 1 (100%)
@@ -909,7 +909,7 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
 
 .. parsed-literal::
 
-    $ phpunit EqualsWithDeltaTest
+    ./tools/phpunit tests/EqualsWithDeltaTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F                                                                   1 / 1 (100%)
@@ -996,7 +996,7 @@ The most common use case for custom comparators are Value Objects. These objects
 
 .. parsed-literal::
 
-    $ phpunit EqualsTest
+    ./tools/phpunit tests/EqualsTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F                                                                   1 / 1 (100%)
@@ -1052,7 +1052,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
 
 .. parsed-literal::
 
-    $ phpunit FalseTest
+    ./tools/phpunit tests/FalseTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1097,7 +1097,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 
 .. parsed-literal::
 
-    $ phpunit FileEqualsTest
+    ./tools/phpunit tests/FileEqualsTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1148,7 +1148,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 
 .. parsed-literal::
 
-    $ phpunit FileExistsTest
+    ./tools/phpunit tests/FileExistsTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1193,7 +1193,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 
 .. parsed-literal::
 
-    $ phpunit FileIsReadableTest
+    ./tools/phpunit tests/FileIsReadableTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1238,7 +1238,7 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 
 .. parsed-literal::
 
-    $ phpunit FileIsWritableTest
+    ./tools/phpunit tests/FileIsWritableTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1281,7 +1281,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
 
 .. parsed-literal::
 
-    $ phpunit GreaterThanTest
+    ./tools/phpunit tests/GreaterThanTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1324,7 +1324,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not g
 
 .. parsed-literal::
 
-    $ phpunit GreaterThanOrEqualTest
+    ./tools/phpunit tests/GreaterThanOrEqualTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1369,7 +1369,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
 
 .. parsed-literal::
 
-    $ phpunit InfiniteTest
+    ./tools/phpunit tests/InfiniteTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1414,7 +1414,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
 
 .. parsed-literal::
 
-    $ phpunit InstanceOfTest
+    ./tools/phpunit tests/InstanceOfTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1457,7 +1457,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``arra
 
 .. code-block:: bash
 
-    $ phpunit ArrayTest
+    ./tools/phpunit tests/ArrayTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1500,7 +1500,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``bool
 
 .. code-block:: bash
 
-    $ phpunit BoolTest
+    ./tools/phpunit tests/BoolTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1543,7 +1543,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``call
 
 .. code-block:: bash
 
-    $ phpunit CallableTest
+    ./tools/phpunit tests/CallableTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1586,7 +1586,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``floa
 
 .. code-block:: bash
 
-    $ phpunit FloatTest
+    ./tools/phpunit tests/FloatTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1629,7 +1629,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``int`
 
 .. code-block:: bash
 
-    $ phpunit IntTest
+    ./tools/phpunit tests/IntTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1672,7 +1672,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``iter
 
 .. code-block:: bash
 
-    $ phpunit IterableTest
+    ./tools/phpunit tests/IterableTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1715,7 +1715,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``nume
 
 .. code-block:: bash
 
-    $ phpunit NumericTest
+    ./tools/phpunit tests/NumericTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1758,7 +1758,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``obje
 
 .. code-block:: bash
 
-    $ phpunit ObjectTest
+    ./tools/phpunit tests/ObjectTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1801,7 +1801,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``reso
 
 .. code-block:: bash
 
-    $ phpunit ResourceTest
+    ./tools/phpunit tests/ResourceTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1844,7 +1844,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``scal
 
 .. code-block:: bash
 
-    $ phpunit ScalarTest
+    ./tools/phpunit tests/ScalarTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1887,7 +1887,7 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``stri
 
 .. parsed-literal::
 
-    $ phpunit StringTest
+    ./tools/phpunit tests/StringTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1932,7 +1932,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
 
 .. parsed-literal::
 
-    $ phpunit IsReadableTest
+    ./tools/phpunit tests/IsReadableTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -1977,7 +1977,7 @@ Reports an error identified by ``$message`` if the file or directory specified b
 
 .. parsed-literal::
 
-    $ phpunit IsWritableTest
+    ./tools/phpunit tests/IsWritableTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2022,7 +2022,7 @@ Reports an error identified by ``$message`` if the value of ``$actualFile`` does
 
 .. parsed-literal::
 
-    $ phpunit JsonFileEqualsJsonFileTest
+    ./tools/phpunit tests/JsonFileEqualsJsonFileTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2068,7 +2068,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
 
 .. parsed-literal::
 
-    $ phpunit JsonStringEqualsJsonFileTest
+    ./tools/phpunit tests/JsonStringEqualsJsonFileTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2115,7 +2115,7 @@ Reports an error identified by ``$message`` if the value of ``$actualJson`` does
 
 .. parsed-literal::
 
-    $ phpunit JsonStringEqualsJsonStringTest
+    ./tools/phpunit tests/JsonStringEqualsJsonStringTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2165,7 +2165,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
 
 .. parsed-literal::
 
-    $ phpunit LessThanTest
+    ./tools/phpunit tests/LessThanTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2208,7 +2208,7 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not l
 
 .. parsed-literal::
 
-    $ phpunit LessThanOrEqualTest
+    ./tools/phpunit tests/LessThanOrEqualTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2251,7 +2251,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
 
 .. parsed-literal::
 
-    $ phpunit NanTest
+    ./tools/phpunit tests/NanTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2296,7 +2296,7 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
 
 .. parsed-literal::
 
-    $ phpunit NotNullTest
+    ./tools/phpunit tests/NotNullTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2341,7 +2341,7 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
 
 .. parsed-literal::
 
-    $ phpunit RegExpTest
+    ./tools/phpunit tests/RegExpTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2386,7 +2386,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 
 .. parsed-literal::
 
-    $ phpunit StringMatchesFormatTest
+    ./tools/phpunit tests/StringMatchesFormatTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2481,7 +2481,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 
 .. parsed-literal::
 
-    $ phpunit StringMatchesFormatFileTest
+    ./tools/phpunit tests/StringMatchesFormatFileTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2527,7 +2527,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 
 .. parsed-literal::
 
-    $ phpunit SameTest
+    ./tools/phpunit tests/SameTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2565,7 +2565,7 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 
 .. parsed-literal::
 
-    $ phpunit SameTest
+    ./tools/phpunit tests/SameTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2608,7 +2608,7 @@ Reports an error identified by ``$message`` if the sizes of ``$actual`` and ``$e
 
 .. parsed-literal::
 
-    $ phpunit StringEndsWithTest
+    ./tools/phpunit tests/StringEndsWithTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2653,7 +2653,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
 
 .. parsed-literal::
 
-    $ phpunit StringEndsWithTest
+    ./tools/phpunit tests/StringEndsWithTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2698,7 +2698,7 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 
 .. parsed-literal::
 
-    $ phpunit StringEqualsFileTest
+    ./tools/phpunit tests/StringEqualsFileTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2749,7 +2749,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
 
 .. parsed-literal::
 
-    $ phpunit StringStartsWithTest
+    ./tools/phpunit tests/StringStartsWithTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2901,7 +2901,7 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
 
 .. parsed-literal::
 
-    $ phpunit TrueTest
+    ./tools/phpunit tests/TrueTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2947,7 +2947,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
 
 .. parsed-literal::
 
-    $ phpunit XmlFileEqualsXmlFileTest
+    ./tools/phpunit tests/XmlFileEqualsXmlFileTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -3001,7 +3001,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
 
 .. parsed-literal::
 
-    $ phpunit XmlStringEqualsXmlFileTest
+    ./tools/phpunit tests/XmlStringEqualsXmlFileTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -3055,7 +3055,7 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
 
 .. parsed-literal::
 
-    $ phpunit XmlStringEqualsXmlStringTest
+    ./tools/phpunit tests/XmlStringEqualsXmlStringTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F

@@ -91,7 +91,7 @@ whether an exception is thrown by the code under test.
 
 .. parsed-literal::
 
-    $ phpunit ExceptionTest.php
+    ./tools/phpunit tests/ExceptionTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -171,7 +171,7 @@ Running the test shown above yields the output shown below:
 
 .. parsed-literal::
 
-    $ phpunit DataTest.php
+    ./tools/phpunit tests/DataTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -222,7 +222,7 @@ Output will be more verbose as it will contain that name of a dataset that break
 
 .. parsed-literal::
 
-    $ phpunit DataTest.php
+    ./tools/phpunit tests/DataTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -308,7 +308,7 @@ test will be counted as a failure.
 
 .. parsed-literal::
 
-    $ phpunit OutputTest.php
+    ./tools/phpunit tests/OutputTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -412,7 +412,7 @@ example:
 
 .. parsed-literal::
 
-    $ phpunit --display-incomplete SampleTest.php
+    ./tools/phpunit --display-incomplete tests/SampleTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -478,7 +478,7 @@ following example:
 
 .. parsed-literal::
 
-    $ phpunit --display-skipped SampleTest.php
+    ./tools/phpunit --display-skipped tests/SampleTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -647,7 +647,7 @@ exploiting the dependencies between tests as shown in
 
 .. parsed-literal::
 
-    $ phpunit --display-skipped DependencyFailureTest.php
+    ./tools/phpunit --display-skipped tests/DependencyFailureTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -711,7 +711,7 @@ context as possible that can help to identify the problem.
 
 .. parsed-literal::
 
-    $ phpunit ArrayDiffTest
+    ./tools/phpunit tests/ArrayDiffTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -768,7 +768,7 @@ and provide a few lines of context around every difference.
 
 .. parsed-literal::
 
-    $ phpunit LongArrayDiffTest.php
+    ./tools/phpunit tests/LongArrayDiffTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -831,7 +831,7 @@ functions on arrays or objects.
 
 .. parsed-literal::
 
-    $ phpunit ArrayWeakComparisonTest.php
+    ./tools/phpunit tests/ArrayWeakComparisonTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2

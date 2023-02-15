@@ -347,7 +347,7 @@ Running the test shown above yields the output shown below:
 
 .. parsed-literal::
 
-    $ phpunit DataTest.php
+    ./tools/phpunit tests/DataTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
@@ -406,7 +406,7 @@ Running the test shown above yields the output shown below:
 
 .. parsed-literal::
 
-    $ phpunit DataTest.php
+    ./tools/phpunit tests/DataTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.2
