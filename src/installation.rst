@@ -420,10 +420,19 @@ After executing the command shown above the project's directory will look like t
 Updating PHPUnit with Phive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+``phive install phpunit`` adds a dependency on PHPUnit with a version constraint that uses the caret operator (``^``) for semantic versioning: ``version="^10.0"``.
+
+With this configuration, Phive will always install the latest version of PHPUnit that is compatible with PHPUnit 10.0.
+
+This ensures you "stay fresh" as long as PHPUnit 10 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 10.1. And when the time comes and PHPUnit 11 is released then Phive will not automatically and unexpectedly install it.
+
+
 Updating to a new minor or patch version
 """"""""""""""""""""""""""""""""""""""""
 
-Consider the following situation:
+Consider the following situation: you use the semantic version constraint ``^9.6`` for PHPUnit in your
+``.phive/phars.xml`` file and have PHPUnit 9.6.0 installed. Here is what your ``.phive/phars.xml`` file
+currently looks like:
 
 .. code-block:: xml
 
@@ -434,8 +443,9 @@ Consider the following situation:
             location="./tools/phpunit" copy="true"/>
     </phive>
 
-You can use the ``phive outdated`` command to check whether an update is available for any of
-your project's PHP archives that are managed by Phive:
+Since you used ``phive update`` last, PHPUnit 9.6.3 became available. You can use the ``phive outdated``
+command to check whether an update is available for any of your project's PHP archives that are managed
+by Phive:
 
 .. code::
 
@@ -447,7 +457,8 @@ your project's PHP archives that are managed by Phive:
 
     phpunit    ^9.6                  9.6.0        9.6.3
 
-Because PHPUnit 9.6.3 is a new patch version, ``phive update`` will update from PHPUnit 9.6.0 to PHPUnit 9.6.3.
+Because PHPUnit 9.6.3 is a new patch version (and not a new major version), ``phive update``
+will update from PHPUnit 9.6.0 to PHPUnit 9.6.3.
 
 
 Updating to a new major version
@@ -464,7 +475,8 @@ Consider the following situation:
             location="./tools/phpunit" copy="true"/>
     </phive>
 
-Running ``phive outdated`` does not offer us the update to PHPUnit 10:
+Now PHPUnit 10, a new major version, became available. However, running ``phive outdated`` does
+not offer us the update to PHPUnit 10:
 
 .. code::
 
