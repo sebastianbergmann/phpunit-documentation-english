@@ -134,6 +134,8 @@ Configuration
 
     Migrate an XML configuration file from a previous version's format to the current format.
 
+.. _textui.command-line-options.selection:
+
 Selection
 ---------
 

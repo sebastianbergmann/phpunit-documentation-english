@@ -569,7 +569,10 @@ Test Groups
 | Test Code  | yes         | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``Group(string $name)`` attribute can be used to assign tests to test groups.
+
+Groups can be used, for instance, to :ref:`select <textui.command-line-options.selection>`
+which tests should be run.
 
 
 .. _appendixes.attributes.Small:
@@ -585,6 +588,13 @@ Test Groups
 
 The ``Small`` attribute is an alias for ``Group('small')``.
 
+The group named ``small`` has special semantics that is relevant in the context of
+:ref:`test execution timeouts <risky-tests.test-execution-timeout>`, for instance.
+
+Tests that are marked as small cause the lines of code that they cover to be highlighted
+by a darker shade of green in the HTML :ref:`code coverage <code-coverage>` report compared
+to tests that are marked :ref:`medium <appendixes.attributes.Medium>` or
+:ref:`large <appendixes.attributes.Large>`.
 
 .. _appendixes.attributes.Medium:
 
@@ -599,6 +609,14 @@ The ``Small`` attribute is an alias for ``Group('small')``.
 
 The ``Medium`` attribute is an alias for ``Group('medium')``.
 
+The group named ``medium`` has special semantics that is relevant in the context of
+:ref:`test execution timeouts <risky-tests.test-execution-timeout>`, for instance.
+
+Tests that are marked as medium cause the lines of code that they cover to be highlighted
+by a darker shade of green in the HTML :ref:`code coverage <code-coverage>` report compared
+to tests that are marked :ref:`large <appendixes.attributes.Large>` and by a lighter shade
+of green compared to test that are marked small :ref:`small <appendixes.attributes.Small>`.
+
 
 .. _appendixes.attributes.Large:
 
@@ -612,6 +630,14 @@ The ``Medium`` attribute is an alias for ``Group('medium')``.
 +------------+-------------+--------------+------------+
 
 The ``Large`` attribute is an alias for ``Group('large')``.
+
+The group named ``large`` has special semantics that is relevant in the context of
+:ref:`test execution timeouts <risky-tests.test-execution-timeout>`, for instance.
+
+Tests that are marked as large cause the lines of code that they cover to be highlighted
+by a lighter shade of green in the HTML :ref:`code coverage <code-coverage>` report compared
+to tests that are marked :ref:`medium <appendixes.attributes.Medium>` or
+:ref:`small <appendixes.attributes.Small>`.
 
 
 .. _appendixes.attributes.Ticket:
