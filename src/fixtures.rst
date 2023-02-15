@@ -103,9 +103,9 @@ Another problem can occur when inheritance comes into play:
     }
 
 If we forget to call ``parent::setUp()`` when implementing ``ExampleTest::setUp()``, the functionality provided
-by ``MyTestCase`` will not work. To reduce this risk, the attributes ``PHPUnit\Framework\Attributes\Before`` and
-``PHPUnit\Framework\Attributes\After`` are available. With these, multiple methods can be configured to be called
-before and after a test, respectively.
+by ``MyTestCase`` will not work. To reduce this risk, the :ref:`attributes <appendixes.attributes>`
+``PHPUnit\Framework\Attributes\Before`` and ``PHPUnit\Framework\Attributes\After`` are available. With these,
+multiple methods can be configured to be called before and after a test, respectively.
 
 .. _fixtures.more-setup-than-teardown:
 

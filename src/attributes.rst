@@ -642,8 +642,12 @@ Template Methods
 | Test Code  | no          | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``BeforeClass`` attribute can be used to specify that a public static method should
+be invoked before the first test method of a test case class is run. This is equivalent
+to naming the method ``setUpBeforeClass()``.
 
+The topic of template methods such as ``setUpBeforeClass()`` is discussed in the chapter
+on :ref:`fixtures <fixtures>`.
 
 .. _appendixes.attributes.Before:
 
@@ -656,7 +660,12 @@ Template Methods
 | Test Code  | no          | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``Before`` attribute can be used to specify that a protected non-static method should
+be invoked before each test method of a test case class is run. This is equivalent
+to naming the method ``setUp()``.
+
+The topic of template methods such as ``setUp()`` is discussed in the chapter
+on :ref:`fixtures <fixtures>`.
 
 
 .. _appendixes.attributes.PreCondition:
@@ -670,7 +679,9 @@ Template Methods
 | Test Code  | no          | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``PreCondition`` attribute can be used to specify that a protected non-static method should
+be invoked before each test method (but after any ``setUp()`` methods) of a test case class is run.
+This is equivalent to naming the method ``assertPreConditions()``.
 
 
 .. _appendixes.attributes.PostCondition:
@@ -684,7 +695,9 @@ Template Methods
 | Test Code  | no          | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``PostCondition`` attribute can be used to specify that a protected non-static method should
+be invoked before each test method (but before any ``tearDown()`` methods) of a test case class is run.
+This is equivalent to naming the method ``assertPostConditions()``.
 
 
 .. _appendixes.attributes.After:
@@ -698,7 +711,12 @@ Template Methods
 | Test Code  | no          | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``After`` attribute can be used to specify that a protected non-static method should
+be invoked after each test method of a test case class is run. This is equivalent
+to naming the method ``tearDown()``.
+
+The topic of template methods such as ``tearDown()`` is discussed in the chapter
+on :ref:`fixtures <fixtures>`.
 
 
 .. _appendixes.attributes.AfterClass:
@@ -712,7 +730,12 @@ Template Methods
 | Test Code  | no          | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``AfterClass`` attribute can be used to specify that a public static method should
+be invoked after the last test method of a test case class is run. This is equivalent
+to naming the method ``tearDownAfterClass()``.
+
+The topic of template methods such as ``tearDownAfterClass()`` is discussed in the chapter
+on :ref:`fixtures <fixtures>`.
 
 
 Test Isolation
