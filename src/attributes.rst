@@ -778,7 +778,8 @@ Test Isolation
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``BackupGlobals`` attribute can be used to specify that global and super-global variables
+should be backed up before a test and then restored after the test has been run.
 
 
 .. _appendixes.attributes.ExcludeGlobalVariableFromBackup:
@@ -792,7 +793,9 @@ Test Isolation
 | Test Code  | yes         | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``ExcludeGlobalVariableFromBackup($globalVariableName)`` attribute can be used to exclude
+the specified global variable from the backup and restore operations for global and super-global
+variables.
 
 
 .. _appendixes.attributes.BackupStaticProperties:
@@ -806,7 +809,8 @@ Test Isolation
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``BackupStaticProperties`` attribute can be used to specify that static properties of classes
+should be backed up before a test and then restored after the test has been run.
 
 
 .. _appendixes.attributes.ExcludeStaticPropertyFromBackup:
@@ -820,7 +824,9 @@ Test Isolation
 | Test Code  | yes         | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``ExcludeStaticPropertyFromBackup(string $className, string $propertyName)`` attribute can be
+used to exclude the specified static property from the backup and restore operations for static
+properties of classes.
 
 
 .. _appendixes.attributes.RunInSeparateProcess:
@@ -834,7 +840,8 @@ Test Isolation
 | Test Code  | no          | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``RunInSeparateProcess`` attribute can be used to specify that a test should
+be run in a separate process.
 
 
 .. _appendixes.attributes.RunTestsInSeparateProcesses:
@@ -848,7 +855,8 @@ Test Isolation
 | Test Code  | yes         | no           | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``RunTestsInSeparateProcesses`` attribute can be used to specify that all tests
+of a test case class should be run in separate processes (one separate process per test).
 
 
 .. _appendixes.attributes.RunClassInSeparateProcess:
@@ -862,7 +870,8 @@ Test Isolation
 | Test Code  | yes         | no           | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``RunClassInSeparateProcess`` attribute can be used to specify that all tests
+of a test case class should be run in a (single) separate process.
 
 
 .. _appendixes.attributes.PreserveGlobalState:
@@ -876,7 +885,9 @@ Test Isolation
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-...
+The ``PreserveGlobalState(bool $enabled)`` attribute can be used to specify whether
+the global state of the main PHPUnit test runner process should be made available in
+the child process when a test is run in a separate process.
 
 
 Skipping Tests
