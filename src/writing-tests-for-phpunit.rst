@@ -538,7 +538,7 @@ All attributes listed above are declared in the ``PHPUnit\Framework\Attributes``
 Test Dependencies
 =================
 
-    *Adrian Kuhn et. al.*:
+Adrian Kuhn et. al. `wrote <https://doi.org/10.1007/978-3-540-68255-4_8>`_:
 
     Unit Tests are primarily written as a good practice to help developers
     identify and fix bugs, to refactor code and to serve as documentation
