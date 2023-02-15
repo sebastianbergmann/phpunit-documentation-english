@@ -440,8 +440,12 @@ Test Dependencies
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``Depends(string $methodName)`` attribute can be used to specify that a test
+:ref:`depends <writing-tests-for-phpunit.test-dependencies>`
+on another test that is declared in the same test case class.
 
+Any value that is passed from a producer (a depended-upon test) to a consumer
+(the depending test) is passed without cloning it.
 
 .. _appendixes.attributes.DependsUsingDeepClone:
 
@@ -454,7 +458,12 @@ Test Dependencies
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DependsUsingDeepClone(string $methodName)`` attribute can be used to specify that a test
+:ref:`depends <writing-tests-for-phpunit.test-dependencies>`
+on another test that is declared in the same test case class.
+
+Any value that is passed from a producer (a depended-upon test) to a consumer
+(the depending test) is passed after deep-cloning it.
 
 
 .. _appendixes.attributes.DependsUsingShallowClone:
@@ -468,7 +477,12 @@ Test Dependencies
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DependsUsingShallowClone(string $methodName)`` attribute can be used to specify that a test
+:ref:`depends <writing-tests-for-phpunit.test-dependencies>`
+on another test that is declared in the same test case class.
+
+Any value that is passed from a producer (a depended-upon test) to a consumer
+(the depending test) is passed after shallow-cloning it.
 
 
 .. _appendixes.attributes.DependsExternal:
@@ -482,7 +496,12 @@ Test Dependencies
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DependsExternal(string $className, string $methodName)`` attribute can be used
+to specify that a test :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
+on another test that is declared in another test case class.
+
+Any value that is passed from a producer (a depended-upon test) to a consumer
+(the depending test) is passed without cloning it.
 
 
 .. _appendixes.attributes.DependsExternalUsingDeepClone:
@@ -496,7 +515,12 @@ Test Dependencies
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DependsExternalUsingDeepClone(string $className, string $methodName)`` attribute can be used
+to specify that a test :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
+on another test that is declared in another test case class.
+
+Any value that is passed from a producer (a depended-upon test) to a consumer
+(the depending test) is passed after deep-cloning it.
 
 
 .. _appendixes.attributes.DependsExternalUsingShallowClone:
@@ -510,7 +534,12 @@ Test Dependencies
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DependsExternalUsingShallowClone(string $className, string $methodName)`` attribute can be used
+to specify that a test :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
+on another test that is declared in another test case class.
+
+Any value that is passed from a producer (a depended-upon test) to a consumer
+(the depending test) is passed after shallow-cloning it.
 
 
 .. _appendixes.attributes.DependsOnClass:
@@ -524,7 +553,12 @@ Test Dependencies
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DependsOnClass(string $className)`` attribute can be used to specify that a test
+:ref:`depends <writing-tests-for-phpunit.test-dependencies>`
+on all tests of another test case class.
+
+Any value that is passed from a producer (a depended-upon test) to a consumer
+(the depending test) is passed without cloning it.
 
 
 .. _appendixes.attributes.DependsOnClassUsingDeepClone:
@@ -538,7 +572,12 @@ Test Dependencies
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DependsOnClassUsingDeepClone(string $className)`` attribute can be used to specify that a test
+:ref:`depends <writing-tests-for-phpunit.test-dependencies>`
+on all tests of another test case class.
+
+Any value that is passed from a producer (a depended-upon test) to a consumer
+(the depending test) is passed after deep-cloning it.
 
 
 .. _appendixes.attributes.DependsOnClassUsingShallowClone:
@@ -552,7 +591,12 @@ Test Dependencies
 | Test Code  | no          | yes          | yes        |
 +------------+-------------+--------------+------------+
 
-...
+The ``DependsOnClassUsingShallowClone(string $className)`` attribute can be used to specify that a test
+:ref:`depends <writing-tests-for-phpunit.test-dependencies>`
+on all tests of another test case class.
+
+Any value that is passed from a producer (a depended-upon test) to a consumer
+(the depending test) is passed after shallow-cloning it.
 
 
 Test Groups
