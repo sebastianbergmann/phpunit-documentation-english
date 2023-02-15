@@ -33,7 +33,6 @@ Contents:
    attributes
    annotations
    configuration
-   bibliography
    copyright
 
 

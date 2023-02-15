@@ -7,9 +7,7 @@ Test Doubles
 ************
 
 Gerard Meszaros introduces the concept of Test Doubles in
-:ref:`Meszaros2007 <appendixes.bibliography>` like this:
-
-    *Gerard Meszaros*:
+his "xUnit Test Patterns" book like so:
 
     Sometimes it is just plain hard to test the system under test (SUT)
     because it depends on other components that cannot be used in the test
