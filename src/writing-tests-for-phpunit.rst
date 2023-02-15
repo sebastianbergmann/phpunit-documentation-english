@@ -59,8 +59,7 @@ with PHPUnit:
         }
     }
 
-|
-    *Martin Fowler*:
+Martin Fowler once said:
 
     Whenever you are tempted to type something into a
     ``print`` statement or a debugger expression, write it
