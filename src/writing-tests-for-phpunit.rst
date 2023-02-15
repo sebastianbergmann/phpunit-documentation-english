@@ -253,10 +253,10 @@ arguments from the data provider will come before the ones from
 depended-upon tests. The arguments from depended-upon tests will be the
 same for each data set.
 
- When a test depends on a test that uses data providers, the depending
- test will be executed when the test it depends upon is successful for at
- least one data set. The result of a test that uses data providers cannot
- be injected into a depending test.
+When a test depends on a test that uses data providers, the depending
+test will be executed when the test it depends upon is successful for at
+least one data set. The result of a test that uses data providers cannot
+be injected into a depending test.
 
 All data providers are executed before both the call to the ``setUpBeforeClass()``
 static method and the first call to the ``setUp()`` method.
