@@ -172,12 +172,12 @@ Selection
 
 ``--covers <name>``
 
-    Only run tests that cover ``<name>`` and use code coverage metadata such as
+    Only run tests that intend to cover ``<name>`` and use code coverage metadata such as
     ``PHPUnit\Framework\Attributes\CoversClass`` to document this.
 
 ``--uses <name>``
 
-    Only run tests that use ``<name>`` and use code coverage metadata such as
+    Only run tests that intend to use ``<name>`` and use code coverage metadata such as
     ``PHPUnit\Framework\Attributes\UsesClass`` to document this.
 
 ``--list-tests``
