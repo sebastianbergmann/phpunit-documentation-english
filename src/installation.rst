@@ -25,12 +25,8 @@ PHP on the Command-Line
 We start by installing PHP's command-line interpreter as well as the PHP extensions required to use PHPUnit.
 
 
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter:
-
 Installing the PHP Command-Line Interpreter
 -------------------------------------------
-
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter.fedora:
 
 Fedora
 ^^^^^^
@@ -51,8 +47,6 @@ Here is how you install PHP's command-line interpreter together with the extensi
 If you use an older version of Fedora then you should have a look at the `package repository maintained by
 Remi Collet <https://rpms.remirepo.net/>`_.
 
-
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter.debian:
 
 Debian
 ^^^^^^
@@ -82,8 +76,6 @@ And here is how you install PHP's command-line interpreter together with the ext
                      php-xdebug
 
 
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter.ubuntu:
-
 Ubuntu
 ^^^^^^
 
@@ -103,15 +95,11 @@ If you use an older version of Ubuntu then you should have a look at the `packag
 maintained by Ondřej Surý.
 
 
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter.macos:
-
 macOS
 ^^^^^
 
 The two most common ways to install PHP on macOS are using `Homebrew <https://brew.sh/>`_ and `MacPorts <https://www.macports.org/>`_.
 The instructions given below assume that you have Homebrew or MacPorts already set up.
-
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter.macos.homebrew:
 
 Homebrew
 """"""""
@@ -148,8 +136,6 @@ If you use Homebrew, then the following command will install and enable the ``xd
 
   pecl install xdebug
 
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter.macos.macports:
-
 MacPorts
 """"""""
 
@@ -176,12 +162,8 @@ If you want to collect code coverage information, you need to additionally insta
 - ``pcov``
 - ``xdebug``
 
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter.windows:
-
 Windows
 ^^^^^^^
-
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter.windows.native-binaries:
 
 Native Binaries
 """""""""""""""
@@ -194,8 +176,6 @@ Enable the ``mbstring`` extension by adding ``extension=mbstring`` to the ``php.
 by the PHP command-line interpreter.
 
 
-.. _installation.php-on-the-command-line.installing-the-php-command-line-interpreter.windows.wsl:
-
 Windows Subsystem for Linux
 """""""""""""""""""""""""""
 
@@ -207,8 +187,6 @@ Linux distribution of your choice from the Microsoft Store.
 Then follow the installation instructions in this chapter for the Linux distribution you chose.
 
 
-.. _installation.php-on-the-command-line.using-the-php-command-line-interpreter:
-
 Using the PHP Command-Line Interpreter
 --------------------------------------
 
@@ -216,8 +194,6 @@ Now we have the PHP command-line interpreter set up, and it is time to learn how
 
 With ``php --version`` we can verify that the PHP command-line interpreter, ``php``, is on the path, works, and check which version it is.
 
-
-.. _installation.php-on-the-command-line.configuring-php-for-development:
 
 Configuring PHP for Development
 -------------------------------
@@ -278,12 +254,8 @@ When it comes to collecting code coverage data and when you are interested only 
 Do not worry if terms such as "code coverage" or "line coverage" do not mean anything to you just yet. We will cover them in great detail later.
 
 
-.. _installation.installing-phpunit:
-
 Installing PHPUnit
 ==================
-
-.. _installation.installing-phpunit.phar:
 
 PHP Archive (PHAR)
 ------------------
@@ -296,8 +268,6 @@ At ``https://phar.phpunit.de/phpunit-10.0.0.phar``, for instance, you will alway
 At ``https://phar.phpunit.de/phpunit-snapshot.phar`` you will always find the latest development snapshot of PHPUnit.
 
 Such a PHP archive has all required (as well as some optional) dependencies of PHPUnit bundled in a single file. The PHAR (``ext/phar``) extension is required if you want to use PHPUnit from a PHP archive.
-
-.. _installation.installing-phpunit.phar.manual-download:
 
 Manual Download of PHAR
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -360,8 +330,6 @@ You can download PHPUnit's PHP archive to that ``tools`` directory manually, of 
     wget -O phpunit.phar https://phar.phpunit.de/phpunit-10.phar
     chmod +x phpunit.phar
     mv phpunit.phar tools
-
-.. _installation.installing-phpunit.phar.phive:
 
 Installing PHPUnit with Phive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -449,8 +417,6 @@ After executing the command shown above the project's directory will look like t
     Unfortunately, PhpStorm only recognizes a file as a PHP archive when it has the ``.phar`` suffix.
     This is remedied by creating a symbolic link: ``ln -s phpunit tools/phpunit.phar``.
 
-.. _installation.installing-phpunit.phar.phive.updating:
-
 Updating PHPUnit with Phive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -460,8 +426,6 @@ With this configuration, Phive will always install the latest version of PHPUnit
 
 This ensures you "stay fresh" as long as PHPUnit 10 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 10.1. And when the time comes and PHPUnit 11 is released then Phive will not automatically and unexpectedly install it.
 
-
-.. _installation.installing-phpunit.phar.phive.updating.minor-or-patch:
 
 Updating to a new minor or patch version
 """"""""""""""""""""""""""""""""""""""""
@@ -496,8 +460,6 @@ by Phive:
 Because PHPUnit 9.6.3 is a new patch version (and not a new major version), ``phive update``
 will update from PHPUnit 9.6.0 to PHPUnit 9.6.3.
 
-
-.. _installation.installing-phpunit.phar.phive.updating.major:
 
 Updating to a new major version
 """""""""""""""""""""""""""""""
@@ -562,16 +524,12 @@ See how the output of ``phive outdated`` changes:
 Now we can run ``phive update`` and the new major version will be installed.
 
 
-.. _installation.installing-phpunit.composer:
-
 Composer
 --------
 
 Using a PHP Archive (PHAR) is the recommended way of installing PHPUnit, but it is not the only way.
 
 You can add PHPUnit as a development-time dependency to your project using `Composer <https://getcomposer.org/>`_.
-
-.. _installation.installing-phpunit.composer.installing:
 
 Installing PHPUnit with Composer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -608,8 +566,6 @@ The project-local installation of PHPUnit can be invoked like this:
     PHPUnit 10.0.0 by Sebastian Bergmann and contributors.
 
 
-.. _installation.installing-phpunit.composer.updating:
-
 Updating PHPUnit with Composer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -618,9 +574,6 @@ Updating PHPUnit with Composer
 With this configuration, Composer will always install the latest version of PHPUnit that is compatible with PHPUnit 10.0.
 
 This ensures you "stay fresh" as long as PHPUnit 10 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 10.1. And when the time comes and PHPUnit 11 is released then Composer will not automatically and unexpectedly install it.
-
-
-.. _installation.installing-phpunit.composer.updating.minor-or-patch:
 
 Updating to a new minor or patch version
 """"""""""""""""""""""""""""""""""""""""
@@ -649,8 +602,6 @@ Using the ``composer outdated`` command we can see that we have PHPUnit 9.6.0 in
 
 Because PHPUnit 9.6.3 is a new patch version, ``composer update`` will update from PHPUnit 9.6.0 to PHPUnit 9.6.3.
 
-
-.. _installation.installing-phpunit.composer.updating.major:
 
 Updating to a new major version
 """""""""""""""""""""""""""""""
@@ -699,8 +650,6 @@ to ``^10.0``:
 Now we can run ``composer update`` and the new major version will be installed.
 
 
-.. _installation.installing-phpunit.phar-or-composer:
-
 PHAR or Composer?
 -----------------
 
@@ -712,8 +661,6 @@ The really frustrating thing about this situation is the fact that such a confli
 
 This is the primary reason why I do not use Composer to install a tool but instead use a PHP Archive (PHAR). The self-contained PHAR of a tool ensures that its dependencies cannot conflict with the actual software's dependencies.
 
-
-.. _installation.installing-phpunit.global-installation:
 
 Global Installation
 -------------------
@@ -741,8 +688,6 @@ It is therefore best to use a project-local installation of the version of PHPUn
 
 Consequently, the package manager of your operating system should not be used to install PHPUnit as this would result in a global installation of PHPUnit.
 
-
-.. _installation.installing-phpunit.web-server:
 
 Web Server
 ----------
