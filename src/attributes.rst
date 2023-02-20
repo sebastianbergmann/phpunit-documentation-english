@@ -1026,8 +1026,8 @@ in the syntax that is supported by Composer.
 Here are some examples:
 
 * ``#[RequiresPhpunit('10.1.0')]``
-* ``#[RequiresPhp('>= 10.1.0')]``
-* ``#[RequiresPhp('^10.1')]``
+* ``#[RequiresPhpunit('>= 10.1.0')]``
+* ``#[RequiresPhpunit('^10.1')]``
 
 
 .. _appendixes.attributes.RequiresFunction:
