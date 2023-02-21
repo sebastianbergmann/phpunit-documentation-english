@@ -369,7 +369,7 @@ exploiting the dependencies between tests as shown in
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/StackTest.php.out
+.. literalinclude:: examples/DependencyFailureTest.php.out
 
 A test may have more than one test dependency attribute.
 
