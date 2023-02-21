@@ -408,7 +408,7 @@ will override any ``@covers`` tags.
 
 A test method can accept arbitrary arguments. These arguments are to be
 provided by one or more data provider methods (``provider()`` in
-:ref:`writing-tests-for-phpunit.data-providers.examples.DataTest.php`).
+:ref:`writing-tests-for-phpunit.data-providers.examples.NumericDataSetsTest.php`).
 The data provider method to be used is specified using the
 ``@dataProvider`` annotation.
 
@@ -424,7 +424,7 @@ PHPUnit supports the declaration of explicit dependencies between test
 methods. Such dependencies do not define the order in which the test
 methods are to be executed but they allow the returning of an instance of
 the test fixture by a producer and passing it to the dependent consumers.
-:ref:`writing-tests-for-phpunit.examples.StackTest2.php` shows
+:ref:`writing-tests-for-phpunit.examples.StackTest.php` shows
 how to use the ``@depends`` annotation to express
 dependencies between test methods.
 

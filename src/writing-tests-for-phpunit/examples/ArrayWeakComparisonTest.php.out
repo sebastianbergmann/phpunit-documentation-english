@@ -1,0 +1,31 @@
+./tools/phpunit tests/ArrayWeakComparisonTest.php
+PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.3
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00.002, Memory: 14.29 MB
+
+There was 1 failure:
+
+1) ArrayWeakComparisonTest::testEquality
+Failed asserting that two arrays are equal.
+--- Expected
++++ Actual
+@@ @@
+ Array (
+-    0 => 1
++    0 => '1'
+     1 => 2
+-    2 => 3
++    2 => 33
+     3 => 4
+     4 => 5
+     5 => 6
+ )
+
+/path/to/tests/ArrayWeakComparisonTest.php:8
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.

@@ -1,0 +1,18 @@
+./tools/phpunit --display-incomplete tests/WorkInProgressTest.php
+PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.3
+
+I                                                                   1 / 1 (100%)
+
+Time: 00:00.001, Memory: 14.29 MB
+
+There was 1 incomplete test:
+
+1) WorkInProgressTest::testSomething
+This test has not been implemented yet.
+
+/path/to/tests/WorkInProgressTest.php:12
+
+OK, but some tests have issues!
+Tests: 1, Assertions: 1, Incomplete: 1.

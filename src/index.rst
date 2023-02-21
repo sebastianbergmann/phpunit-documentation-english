@@ -15,7 +15,7 @@ Contents:
    :numbered: 1
 
    installation
-   writing-tests-for-phpunit
+   writing-tests-for-phpunit/chapter
    textui
    organizing-tests
    fixtures

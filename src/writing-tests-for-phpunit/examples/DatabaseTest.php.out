@@ -1,0 +1,16 @@
+./tools/phpunit --display-skipped tests/DatabaseTest.php
+PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.3
+
+S                                                                   1 / 1 (100%)
+
+Time: 00:00.001, Memory: 14.29 MB
+
+There was 1 skipped test:
+
+1) DatabaseTest::testConnection
+The PostgreSQL extension is not available
+
+OK, but some tests were skipped!
+Tests: 1, Assertions: 0, Skipped: 1.
