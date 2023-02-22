@@ -1,0 +1,22 @@
+./tools/phpunit tests/ContainsOnlyTest.php
+PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.3
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00.001, Memory: 14.29 MB
+
+There was 1 failure:
+
+1) ContainsOnlyTest::testFailure
+Failed asserting that Array &0 (
+    0 => '1'
+    1 => '2'
+    2 => 3
+) contains only values of type "string".
+
+/path/to/tests/ContainsOnlyTest.php:8
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.

@@ -1,0 +1,41 @@
+./tools/phpunit tests/EqualsTest.php
+PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.3
+
+FFF                                                                 3 / 3 (100%)
+
+Time: 00:00.003, Memory: 14.29 MB
+
+There were 3 failures:
+
+1) EqualsTest::testFailure
+Failed asserting that 0 matches expected 1.
+
+/path/to/tests/EqualsTest.php:8
+
+2) EqualsTest::testFailure2
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+-'bar'
++'baz'
+
+/path/to/tests/EqualsTest.php:13
+
+3) EqualsTest::testFailure3
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+ 'foo\n
+-bar\n
++bah\n
+ baz\n
+ '
+
+/path/to/tests/EqualsTest.php:18
+
+FAILURES!
+Tests: 3, Assertions: 3, Failures: 3.

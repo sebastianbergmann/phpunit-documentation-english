@@ -1,0 +1,26 @@
+./tools/phpunit tests/XmlFileEqualsXmlFileTest.php
+PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.3
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00.002, Memory: 14.29 MB
+
+There was 1 failure:
+
+1) XmlFileEqualsXmlFileTest::testFailure
+Failed asserting that two DOM documents are equal.
+--- Expected
++++ Actual
+@@ @@
+ <?xml version="1.0"?>
+ <foo>
+-  <bar/>
++  <baz/>
+ </foo>
+
+/path/to/tests/XmlFileEqualsXmlFileTest.php:8
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.

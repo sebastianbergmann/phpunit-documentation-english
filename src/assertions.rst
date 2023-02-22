@@ -46,39 +46,13 @@ Reports an error identified by ``$message`` if ``$array`` does not have the ``$k
 
 ``assertArrayNotHasKey()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertArrayHasKey()
-    :name: appendixes.assertions.assertArrayHasKey.example
+.. literalinclude:: examples/assertions/ArrayHasKeyTest.php
+   :caption: Usage of assertArrayHasKey()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class ArrayHasKeyTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertArrayHasKey('foo', ['bar' => 'baz']);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/ArrayHasKeyTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ArrayHasKeyTest::testFailure
-    Failed asserting that an array has the key 'foo'.
-
-    /path/to/ArrayHasKeyTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/ArrayHasKeyTest.php.out
 
 .. _appendixes.assertions.assertContains:
 
@@ -91,39 +65,13 @@ Reports an error identified by ``$message`` if ``$needle`` is not an element of 
 
 ``assertNotContains()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertContains()
-    :name: appendixes.assertions.assertContains.example
+.. literalinclude:: examples/assertions/ContainsTest.php
+   :caption: Usage of assertContains()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class ContainsTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertContains(4, [1, 2, 3]);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/ContainsTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ContainsTest::testFailure
-    Failed asserting that an array contains 4.
-
-    /path/to/ContainsTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/ContainsTest.php.out
 
 assertStringContainsString()
 ============================
@@ -134,39 +82,13 @@ Reports an error identified by ``$message`` if ``$needle`` is not a substring of
 
 ``assertStringNotContainsString()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertStringContainsString()
-    :name: appendixes.assertions.assertStringContainsString.example
+.. literalinclude:: examples/assertions/StringContainsStringTest.php
+   :caption: Usage of assertStringContainsString()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class StringContainsStringTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertStringContainsString('foo', 'bar');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/StringContainsStringTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F                                                                   1 / 1 (100%)
-
-    Time: 37 ms, Memory: 6.00 MB
-
-    There was 1 failure:
-
-    1) StringContainsStringTest::testFailure
-    Failed asserting that 'bar' contains "foo".
-
-    /path/to/StringContainsStringTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/StringContainsStringTest.php.out
 
 assertStringContainsStringIgnoringCase()
 ========================================
@@ -181,39 +103,13 @@ have the same `Normalization Form <https://www.php.net/manual/en/class.normalize
 
 ``assertStringNotContainsStringIgnoringCase()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertStringContainsStringIgnoringCase()
-    :name: appendixes.assertions.assertStringContainsStringIgnoringCase.example
+.. literalinclude:: examples/assertions/StringContainsStringIgnoringCaseTest.php
+   :caption: Usage of assertStringContainsStringIgnoringCase()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class StringContainsStringIgnoringCaseTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertStringContainsStringIgnoringCase('foo', 'bar');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/StringContainsStringIgnoringCaseTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F                                                                   1 / 1 (100%)
-
-    Time: 40 ms, Memory: 6.00 MB
-
-    There was 1 failure:
-
-    1) StringContainsStringTest::testFailure
-    Failed asserting that 'bar' contains "foo".
-
-    /path/to/StringContainsStringIgnoringCaseTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/StringContainsStringIgnoringCaseTest.php.out
 
 .. _appendixes.assertions.assertContainsOnly:
 
@@ -228,43 +124,13 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 
 ``assertNotContainsOnly()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertContainsOnly()
-    :name: appendixes.assertions.assertContainsOnly.example
+.. literalinclude:: examples/assertions/ContainsOnlyTest.php
+   :caption: Usage of assertContainsOnly()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class ContainsOnlyTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertContainsOnly('string', ['1', '2', 3]);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/ContainsOnlyTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ContainsOnlyTest::testFailure
-    Failed asserting that Array (
-        0 => '1'
-        1 => '2'
-        2 => 3
-    ) contains only values of type "string".
-
-    /path/to/ContainsOnlyTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/ContainsOnlyTest.php.out
 
 .. _appendixes.assertions.assertContainsOnlyInstancesOf:
 
@@ -275,42 +141,13 @@ assertContainsOnlyInstancesOf()
 
 Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class ``$classname``.
 
-.. code-block:: php
-    :caption: Usage of assertContainsOnlyInstancesOf()
-    :name: appendixes.assertions.assertContainsOnlyInstancesOf.example
+.. literalinclude:: examples/assertions/ContainsOnlyInstancesOfTest.php
+   :caption: Usage of assertContainsOnlyInstancesOf()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class ContainsOnlyInstancesOfTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertContainsOnlyInstancesOf(
-                Foo::class,
-                [new Foo, new Bar, new Foo]
-            );
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/ContainsOnlyInstancesOfTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ContainsOnlyInstancesOfTest::testFailure
-    Failed asserting that Array ([0]=> Bar Object(...)) is an instance of class "Foo".
-
-    /path/to/ContainsOnlyInstancesOfTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/ContainsOnlyInstancesOfTest.php.out
 
 .. _appendixes.assertions.assertCount:
 
@@ -323,39 +160,13 @@ Reports an error identified by ``$message`` if the number of elements in ``$hays
 
 ``assertNotCount()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertCount()
-    :name: appendixes.assertions.assertCount.example
+.. literalinclude:: examples/assertions/CountTest.php
+   :caption: Usage of assertCount()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class CountTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertCount(0, ['foo']);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/CountTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) CountTest::testFailure
-    Failed asserting that actual size 1 matches expected size 0.
-
-    /path/to/CountTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/CountTest.php.out
 
 .. _appendixes.assertions.assertDirectoryExists:
 
@@ -368,39 +179,13 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 
 ``assertDirectoryDoesNotExist()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertDirectoryExists()
-    :name: appendixes.assertions.assertDirectoryExists.example
+.. literalinclude:: examples/assertions/DirectoryExistsTest.php
+   :caption: Usage of assertDirectoryExists()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class DirectoryExistsTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertDirectoryExists('/path/to/directory');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/DirectoryExistsTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) DirectoryExistsTest::testFailure
-    Failed asserting that directory "/path/to/directory" exists.
-
-    /path/to/DirectoryExistsTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/DirectoryExistsTest.php.out
 
 .. _appendixes.assertions.assertDirectoryIsReadable:
 
@@ -413,29 +198,22 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 
 ``assertDirectoryIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertDirectoryIsReadable()
-    :name: appendixes.assertions.assertDirectoryIsReadable.example
+.. literalinclude:: examples/assertions/DirectoryIsReadableTest.php
+   :caption: Usage of assertDirectoryIsReadable()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class DirectoryIsReadableTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertDirectoryIsReadable('/path/to/directory');
-        }
-    }
+Running the test shown above yields the output shown below:
 
 .. parsed-literal::
 
     ./tools/phpunit tests/DirectoryIsReadableTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
 
     F
 
-    Time: 0 seconds, Memory: 4.75Mb
+    Time: 00:00, Memory: 14.29 MB
 
     There was 1 failure:
 
@@ -458,29 +236,22 @@ Reports an error identified by ``$message`` if the directory specified by ``$dir
 
 ``assertDirectoryIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertDirectoryIsWritable()
-    :name: appendixes.assertions.assertDirectoryIsWritable.example
+.. literalinclude:: examples/assertions/DirectoryIsReadableTest.php
+   :caption: Usage of assertDirectoryIsWritable()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class DirectoryIsWritableTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertDirectoryIsWritable('/path/to/directory');
-        }
-    }
+Running the test shown above yields the output shown below:
 
 .. parsed-literal::
 
     ./tools/phpunit tests/DirectoryIsWritableTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
 
     F
 
-    Time: 0 seconds, Memory: 4.75Mb
+    Time: 00:00, Memory: 14.29 MB
 
     There was 1 failure:
 
@@ -503,39 +274,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
 
 ``assertNotEmpty()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertEmpty()
-    :name: appendixes.assertions.assertEmpty.example
+.. literalinclude:: examples/assertions/EmptyTest.php
+   :caption: Usage of assertEmpty()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class EmptyTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertEmpty(['foo']);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/EmptyTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) EmptyTest::testFailure
-    Failed asserting that an array is empty.
-
-    /path/to/EmptyTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/EmptyTest.php.out
 
 .. _appendixes.assertions.assertEquals:
 
@@ -548,72 +293,13 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 
 ``assertNotEquals()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertEquals()
-    :name: appendixes.assertions.assertEquals.example
+.. literalinclude:: examples/assertions/EqualsTest.php
+   :caption: Usage of assertEquals()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class EqualsTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertEquals(1, 0);
-        }
-
-        public function testFailure2(): void
-        {
-            $this->assertEquals('bar', 'baz');
-        }
-
-        public function testFailure3(): void
-        {
-            $this->assertEquals("foo\nbar\nbaz\n", "foo\nbah\nbaz\n");
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/EqualsTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    FFF
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    There were 3 failures:
-
-    1) EqualsTest::testFailure
-    Failed asserting that 0 matches expected 1.
-
-    /path/to/EqualsTest.php:6
-
-    2) EqualsTest::testFailure2
-    Failed asserting that two strings are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-    -'bar'
-    +'baz'
-
-    /path/to/EqualsTest.php:11
-
-    3) EqualsTest::testFailure3
-    Failed asserting that two strings are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-     'foo
-    -bar
-    +bah
-     baz
-     '
-
-    /path/to/EqualsTest.php:16
-
-    FAILURES!
-    Tests: 3, Assertions: 3, Failures: 3.
+.. literalinclude:: examples/assertions/EqualsTest.php.out
 
 More specialized comparisons are used for specific argument types for ``$expected`` and ``$actual``, see below.
 
@@ -621,158 +307,37 @@ More specialized comparisons are used for specific argument types for ``$expecte
 
 Reports an error identified by ``$message`` if the uncommented canonical form of the XML documents represented by the two DOMDocument objects ``$expected`` and ``$actual`` are not equal.
 
-.. code-block:: php
-    :caption: Usage of assertEquals() with DOMDocument objects
-    :name: appendixes.assertions.assertEquals.example3
+.. literalinclude:: examples/assertions/EqualsWithDomDocumentTest.php
+   :caption: Usage of assertEquals() with DOMDocument objects
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class EqualsTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $expected = new DOMDocument;
-            $expected->loadXML('<foo><bar/></foo>');
-
-            $actual = new DOMDocument;
-            $actual->loadXML('<bar><foo/></bar>');
-
-            $this->assertEquals($expected, $actual);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/EqualsTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) EqualsTest::testFailure
-    Failed asserting that two DOM documents are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-     <?xml version="1.0"?>
-    -<foo>
-    -  <bar/>
-    -</foo>
-    +<bar>
-    +  <foo/>
-    +</bar>
-
-    /path/to/EqualsTest.php:12
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/EqualsWithDomDocumentTest.php.out
 
 ``assertEquals(object $expected, object $actual[, string $message = ''])``
 
 Reports an error identified by ``$message`` if the two objects ``$expected`` and ``$actual`` do not have equal attribute values.
 
-.. code-block:: php
-    :caption: Usage of assertEquals() with objects
-    :name: appendixes.assertions.assertEquals.example4
+.. literalinclude:: examples/assertions/EqualsWithObjectsTest.php
+   :caption: Usage of assertEquals() with objects
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class EqualsTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $expected = new stdClass;
-            $expected->foo = 'foo';
-            $expected->bar = 'bar';
-
-            $actual = new stdClass;
-            $actual->foo = 'bar';
-            $actual->baz = 'bar';
-
-            $this->assertEquals($expected, $actual);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/EqualsTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    There was 1 failure:
-
-    1) EqualsTest::testFailure
-    Failed asserting that two objects are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-     stdClass Object (
-    -    'foo' => 'foo'
-    -    'bar' => 'bar'
-    +    'foo' => 'bar'
-    +    'baz' => 'bar'
-     )
-
-    /path/to/EqualsTest.php:14
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/EqualsWithObjectsTest.php.out
 
 ``assertEquals(array $expected, array $actual[, string $message = ''])``
 
 Reports an error identified by ``$message`` if the two arrays ``$expected`` and ``$actual`` are not equal.
 
-.. code-block:: php
-    :caption: Usage of assertEquals() with arrays
-    :name: appendixes.assertions.assertEquals.example5
+.. literalinclude:: examples/assertions/EqualsWithArraysTest.php
+   :caption: Usage of assertEquals() with arrays
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class EqualsTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertEquals(['a', 'b', 'c'], ['a', 'c', 'd']);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/EqualsTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    There was 1 failure:
-
-    1) EqualsTest::testFailure
-    Failed asserting that two arrays are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-     Array (
-         0 => 'a'
-    -    1 => 'b'
-    -    2 => 'c'
-    +    1 => 'c'
-    +    2 => 'd'
-     )
-
-    /path/to/EqualsTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/EqualsWithArraysTest.php.out
 
 assertEqualsCanonicalizing()
 ============================
@@ -785,51 +350,13 @@ The contents of ``$expected`` and ``$actual`` are canonicalized before they are 
 
 ``assertNotEqualsCanonicalizing()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertEqualsCanonicalizing()
-    :name: appendixes.assertions.assertEqualsCanonicalizing.example
+.. literalinclude:: examples/assertions/EqualsWithArraysCanonicalizingTest.php
+   :caption: Usage of assertEqualsCanonicalizing()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class EqualsCanonicalizingTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertEqualsCanonicalizing([3, 2, 1], [2, 3, 0, 1]);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/EqualsCanonicalizingTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F                                                                   1 / 1 (100%)
-
-    Time: 42 ms, Memory: 6.00 MB
-
-    There was 1 failure:
-
-    1) EqualsCanonicalizingTest::testFailure
-    Failed asserting that two arrays are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-     Array (
-    -    0 => 1
-    -    1 => 2
-    -    2 => 3
-    +    0 => 0
-    +    1 => 1
-    +    2 => 2
-    +    3 => 3
-     )
-
-    /path/to/EqualsCanonicalizingTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/EqualsWithArraysCanonicalizingTest.php.out
 
 assertEqualsIgnoringCase()
 ==========================
@@ -842,44 +369,13 @@ Differences in casing are ignored for the comparison of ``$expected`` and ``$act
 
 ``assertNotEqualsIgnoringCase()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertEqualsIgnoringCase()
-    :name: appendixes.assertions.assertEqualsIgnoringCase.example
+.. literalinclude:: examples/assertions/EqualsWithStringsIgnoringCaseTest.php
+   :caption: Usage of assertEqualsIgnoringCase()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class EqualsIgnoringCaseTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertEqualsIgnoringCase('foo', 'BAR');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/EqualsIgnoringCaseTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F                                                                   1 / 1 (100%)
-
-    Time: 51 ms, Memory: 6.00 MB
-
-    There was 1 failure:
-
-    1) EqualsIgnoringCaseTest::testFailure
-    Failed asserting that two strings are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-    -'foo'
-    +'BAR'
-
-    /path/to/EqualsIgnoringCaseTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/EqualsWithStringsIgnoringCaseTest.php.out
 
 assertEqualsWithDelta()
 =======================
@@ -892,39 +388,13 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
 
 ``assertNotEqualsWithDelta()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertEqualsWithDelta()
-    :name: appendixes.assertions.assertEqualsWithDelta.example
+.. literalinclude:: examples/assertions/EqualsWithFloatsAndDeltaTest.php
+   :caption: Usage of assertEqualsWithDelta()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class EqualsWithDeltaTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertEqualsWithDelta(1.0, 1.5, 0.1);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/EqualsWithDeltaTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F                                                                   1 / 1 (100%)
-
-    Time: 41 ms, Memory: 6.00 MB
-
-    There was 1 failure:
-
-    1) EqualsWithDeltaTest::testFailure
-    Failed asserting that 1.5 matches expected 1.0.
-
-    /path/to/EqualsWithDeltaTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/EqualsWithFloatsAndDeltaTest.php.out
 
 .. _appendixes.assertions.assertObjectEquals:
 
@@ -939,80 +409,17 @@ It is a bad practice to use ``assertEquals()`` (and its inverse, ``assertNotEqua
 
 The most common use case for custom comparators are Value Objects. These objects usually have an ``equals(self $other): bool`` method (or a method just like that but with a different name) for comparing two instances of the Value Object's type. ``assertObjectEquals()`` makes custom comparison of objects convenient for this common use case:
 
-.. code-block:: php
-    :caption: Usage of assertObjectEquals()
-    :name: appendixes.assertions.assertObjectEquals.example
+.. literalinclude:: examples/assertions/ObjectEqualsTest.php
+   :caption: Usage of assertObjectEquals()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class SomethingThatUsesEmailTest extends TestCase
-    {
-        public function testSomething(): void
-        {
-            $a = new Email('user@example.org');
-            $b = new Email('user@example.org');
-            $c = new Email('user@example.com');
+.. literalinclude:: examples/assertions/ObjectEqualsTest.php.out
 
-            // This passes
-            $this->assertObjectEquals($a, $b);
-
-            // This fails
-            $this->assertObjectEquals($a, $c);
-        }
-    }
-
-.. code-block:: php
-    :caption: Email value object with equals() method
-    :name: appendixes.assertions.Email.example
-
-    <?php declare(strict_types=1);
-    final class Email
-    {
-        private string $email;
-
-        public function __construct(string $email)
-        {
-            $this->ensureIsValidEmail($email);
-
-            $this->email = $email;
-        }
-
-        public function asString(): string
-        {
-            return $this->email;
-        }
-
-        public function equals(self $other): bool
-        {
-            return $this->asString() === $other->asString();
-        }
-
-        private function ensureIsValidEmail(string $email): void
-        {
-            // ...
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/EqualsTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F                                                                   1 / 1 (100%)
-
-    Time: 00:00.017, Memory: 4.00 MB
-
-    There was 1 failure:
-
-    1) SomethingThatUsesEmailTest::testSomething
-    Failed asserting that two objects are equal.
-    The objects are not equal according to Email::equals().
-
-    /path/to/SomethingThatUsesEmailTest.php:16
-
-    FAILURES!
-    Tests: 1, Assertions: 2, Failures: 1.
+.. literalinclude:: examples/assertions/src/Email.php
+   :caption: Email value object with equals() method
+   :language: php
 
 Please note:
 
@@ -1035,39 +442,13 @@ Reports an error identified by ``$message`` if ``$condition`` is ``true``.
 
 ``assertNotFalse()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertFalse()
-    :name: appendixes.assertions.assertFalse.example
+.. literalinclude:: examples/assertions/FalseTest.php
+   :caption: Usage of assertFalse()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class FalseTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertFalse(true);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/FalseTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) FalseTest::testFailure
-    Failed asserting that true is false.
-
-    /path/to/FalseTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/FalseTest.php.out
 
 .. _appendixes.assertions.assertFileEquals:
 
@@ -1080,45 +461,13 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 
 ``assertFileNotEquals()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertFileEquals()
-    :name: appendixes.assertions.assertFileEquals.example
+.. literalinclude:: examples/assertions/FileEqualsTest.php
+   :caption: Usage of assertFileEquals()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class FileEqualsTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertFileEquals('/path/to/expected', '/path/to/actual');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/FileEqualsTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    There was 1 failure:
-
-    1) FileEqualsTest::testFailure
-    Failed asserting that two strings are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-    -'expected
-    +'actual
-     '
-
-    /path/to/FileEqualsTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 3, Failures: 1.
+.. literalinclude:: examples/assertions/FileEqualsTest.php.out
 
 .. _appendixes.assertions.assertFileExists:
 
@@ -1131,39 +480,13 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 
 ``assertFileDoesNotExist()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertFileExists()
-    :name: appendixes.assertions.assertFileExists.example
+.. literalinclude:: examples/assertions/FileExistsTest.php
+   :caption: Usage of assertFileExists()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class FileExistsTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertFileExists('/path/to/file');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/FileExistsTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) FileExistsTest::testFailure
-    Failed asserting that file "/path/to/file" exists.
-
-    /path/to/FileExistsTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/FileExistsTest.php.out
 
 .. _appendixes.assertions.assertFileIsReadable:
 
@@ -1176,29 +499,22 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 
 ``assertFileIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertFileIsReadable()
-    :name: appendixes.assertions.assertFileIsReadable.example
+.. literalinclude:: examples/assertions/FileIsReadableTest.php
+   :caption: Usage of assertFileIsReadable()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class FileIsReadableTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertFileIsReadable('/path/to/file');
-        }
-    }
+Running the test shown above yields the output shown below:
 
 .. parsed-literal::
 
     ./tools/phpunit tests/FileIsReadableTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
 
     F
 
-    Time: 0 seconds, Memory: 4.75Mb
+    Time: 00:00, Memory: 14.29 MB
 
     There was 1 failure:
 
@@ -1221,29 +537,22 @@ Reports an error identified by ``$message`` if the file specified by ``$filename
 
 ``assertFileIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertFileIsWritable()
-    :name: appendixes.assertions.assertFileIsWritable.example
+.. literalinclude:: examples/assertions/FileIsWritableTest.php
+   :caption: Usage of assertFileIsWritable()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class FileIsWritableTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertFileIsWritable('/path/to/file');
-        }
-    }
+Running the test shown above yields the output shown below:
 
 .. parsed-literal::
 
     ./tools/phpunit tests/FileIsWritableTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
 
     F
 
-    Time: 0 seconds, Memory: 4.75Mb
+    Time: 00:00, Memory: 14.29 MB
 
     There was 1 failure:
 
@@ -1264,39 +573,13 @@ assertGreaterThan()
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than the value of ``$expected``.
 
-.. code-block:: php
-    :caption: Usage of assertGreaterThan()
-    :name: appendixes.assertions.assertGreaterThan.example
+.. literalinclude:: examples/assertions/GreaterThanTest.php
+   :caption: Usage of assertGreaterThan()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class GreaterThanTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertGreaterThan(2, 1);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/GreaterThanTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) GreaterThanTest::testFailure
-    Failed asserting that 1 is greater than 2.
-
-    /path/to/GreaterThanTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/GreaterThanTest.php.out
 
 .. _appendixes.assertions.assertGreaterThanOrEqual:
 
@@ -1307,39 +590,13 @@ assertGreaterThanOrEqual()
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than or equal to the value of ``$expected``.
 
-.. code-block:: php
-    :caption: Usage of assertGreaterThanOrEqual()
-    :name: appendixes.assertions.assertGreaterThanOrEqual.example
+.. literalinclude:: examples/assertions/GreaterThanOrEqualTest.php
+   :caption: Usage of assertGreaterThanOrEqual()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class GreatThanOrEqualTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertGreaterThanOrEqual(2, 1);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/GreaterThanOrEqualTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    There was 1 failure:
-
-    1) GreatThanOrEqualTest::testFailure
-    Failed asserting that 1 is equal to 2 or is greater than 2.
-
-    /path/to/GreaterThanOrEqualTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 2, Failures: 1.
+.. literalinclude:: examples/assertions/GreaterThanOrEqualTest.php.out
 
 .. _appendixes.assertions.assertInfinite:
 
@@ -1352,39 +609,13 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
 
 ``assertFinite()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertInfinite()
-    :name: appendixes.assertions.assertInfinite.example
+.. literalinclude:: examples/assertions/InfiniteTest.php
+   :caption: Usage of assertInfinite()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class InfiniteTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertInfinite(1);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/InfiniteTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) InfiniteTest::testFailure
-    Failed asserting that 1 is infinite.
-
-    /path/to/InfiniteTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/InfiniteTest.php.out
 
 .. _appendixes.assertions.assertInstanceOf:
 
@@ -1397,39 +628,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not an instance of
 
 ``assertNotInstanceOf()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertInstanceOf()
-    :name: appendixes.assertions.assertInstanceOf.example
+.. literalinclude:: examples/assertions/InstanceOfTest.php
+   :caption: Usage of assertInstanceOf()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class InstanceOfTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertInstanceOf(RuntimeException::class, new Exception);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/InstanceOfTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) InstanceOfTest::testFailure
-    Failed asserting that Exception Object (...) is an instance of class "RuntimeException".
-
-    /path/to/InstanceOfTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/InstanceOfTest.php.out
 
 assertIsArray()
 ===============
@@ -1440,39 +645,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``arra
 
 ``assertIsNotArray()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsArray()
-    :name: appendixes.assertions.assertIsArray.example
+.. literalinclude:: examples/assertions/IsArrayTest.php
+   :caption: Usage of assertIsArray()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class ArrayTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsArray(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/ArrayTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ArrayTest::testFailure
-    Failed asserting that null is of type "array".
-
-    /path/to/ArrayTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsArrayTest.php.out
 
 assertIsBool()
 ==============
@@ -1483,39 +662,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``bool
 
 ``assertIsNotBool()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsBool()
-    :name: appendixes.assertions.assertIsBool.example
+.. literalinclude:: examples/assertions/IsBoolTest.php
+   :caption: Usage of assertIsBool()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class BoolTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertIsBool(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/BoolTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) BoolTest::testFailure
-    Failed asserting that null is of type "bool".
-
-    /path/to/BoolTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsBoolTest.php.out
 
 assertIsCallable()
 ==================
@@ -1526,39 +679,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``call
 
 ``assertIsNotCallable()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsCallable()
-    :name: appendixes.assertions.assertIsCallable.example
+.. literalinclude:: examples/assertions/IsCallableTest.php
+   :caption: Usage of assertIsCallable()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class CallableTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsCallable(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/CallableTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) CallableTest::testFailure
-    Failed asserting that null is of type "callable".
-
-    /path/to/CallableTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsCallableTest.php.out
 
 assertIsFloat()
 ===============
@@ -1569,39 +696,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``floa
 
 ``assertIsNotFloat()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsFloat()
-    :name: appendixes.assertions.assertIsFloat.example
+.. literalinclude:: examples/assertions/IsFloatTest.php
+   :caption: Usage of assertIsFloat()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class FloatTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsFloat(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/FloatTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) FloatTest::testFailure
-    Failed asserting that null is of type "float".
-
-    /path/to/FloatTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsFloatTest.php.out
 
 assertIsInt()
 =============
@@ -1612,39 +713,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``int`
 
 ``assertIsNotInt()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsInt()
-    :name: appendixes.assertions.assertIsInt.example
+.. literalinclude:: examples/assertions/IsIntTest.php
+   :caption: Usage of assertIsInt()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class IntTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsInt(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/IntTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) IntTest::testFailure
-    Failed asserting that null is of type "int".
-
-    /path/to/IntTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsIntTest.php.out
 
 assertIsIterable()
 ==================
@@ -1655,39 +730,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``iter
 
 ``assertIsNotIterable()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsIterable()
-    :name: appendixes.assertions.assertIsIterable.example
+.. literalinclude:: examples/assertions/IsIterableTest.php
+   :caption: Usage of assertIsIterable()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class IterableTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsIterable(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/IterableTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) IterableTest::testFailure
-    Failed asserting that null is of type "iterable".
-
-    /path/to/IterableTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsIterableTest.php.out
 
 assertIsNumeric()
 =================
@@ -1698,39 +747,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``nume
 
 ``assertIsNotNumeric()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsNumeric()
-    :name: appendixes.assertions.assertIsNumeric.example
+.. literalinclude:: examples/assertions/IsNumericTest.php
+   :caption: Usage of assertIsNumeric()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class NumericTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsNumeric(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/NumericTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) NumericTest::testFailure
-    Failed asserting that null is of type "numeric".
-
-    /path/to/NumericTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsNumericTest.php.out
 
 assertIsObject()
 ================
@@ -1741,39 +764,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``obje
 
 ``assertIsNotObject()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsObject()
-    :name: appendixes.assertions.assertIsObject.example
+.. literalinclude:: examples/assertions/IsObjectTest.php
+   :caption: Usage of assertIsObject()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class ObjectTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsObject(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/ObjectTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ObjectTest::testFailure
-    Failed asserting that null is of type "object".
-
-    /path/to/ObjectTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsObjectTest.php.out
 
 assertIsResource()
 ==================
@@ -1784,39 +781,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``reso
 
 ``assertIsNotResource()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsResource()
-    :name: appendixes.assertions.assertIsResource.example
+.. literalinclude:: examples/assertions/IsResourceTest.php
+   :caption: Usage of assertIsResource()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class ResourceTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsResource(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/ResourceTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ResourceTest::testFailure
-    Failed asserting that null is of type "resource".
-
-    /path/to/ResourceTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsResourceTest.php.out
 
 assertIsScalar()
 ================
@@ -1827,39 +798,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``scal
 
 ``assertIsNotScalar()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsScalar()
-    :name: appendixes.assertions.assertIsScalar.example
+.. literalinclude:: examples/assertions/IsScalarTest.php
+   :caption: Usage of assertIsScalar()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class ScalarTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsScalar(null);
-        }
-    }
-
-.. code-block:: bash
-
-    ./tools/phpunit tests/ScalarTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) ScalarTest::testFailure
-    Failed asserting that null is of type "scalar".
-
-    /path/to/ScalarTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsScalarTest.php.out
 
 assertIsString()
 ================
@@ -1870,39 +815,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``stri
 
 ``assertIsNotString()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsString()
-    :name: appendixes.assertions.assertIsString.example
+.. literalinclude:: examples/assertions/IsStringTest.php
+   :caption: Usage of assertIsString()
+   :language: php
 
-    <?php
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    class StringTest extends TestCase
-    {
-        public function testFailure()
-        {
-            $this->assertIsString(null);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/StringTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) StringTest::testFailure
-    Failed asserting that null is of type "string".
-
-    /path/to/StringTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/IsStringTest.php.out
 
 .. _appendixes.assertions.assertIsReadable:
 
@@ -1915,29 +834,22 @@ Reports an error identified by ``$message`` if the file or directory specified b
 
 ``assertIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsReadable()
-    :name: appendixes.assertions.assertIsReadable.example
+.. literalinclude:: examples/assertions/IsReadableTest.php
+   :caption: Usage of assertIsReadable()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class IsReadableTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertIsReadable('/path/to/unreadable');
-        }
-    }
+Running the test shown above yields the output shown below:
 
 .. parsed-literal::
 
     ./tools/phpunit tests/IsReadableTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
 
     F
 
-    Time: 0 seconds, Memory: 4.75Mb
+    Time: 00:00, Memory: 14.29 MB
 
     There was 1 failure:
 
@@ -1960,29 +872,22 @@ Reports an error identified by ``$message`` if the file or directory specified b
 
 ``assertIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertIsWritable()
-    :name: appendixes.assertions.assertIsWritable.example
+.. literalinclude:: examples/assertions/IsWritableTest.php
+   :caption: Usage of assertIsWritable()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class IsWritableTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertIsWritable('/path/to/unwritable');
-        }
-    }
+Running the test shown above yields the output shown below:
 
 .. parsed-literal::
 
     ./tools/phpunit tests/IsWritableTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
 
     F
 
-    Time: 0 seconds, Memory: 4.75Mb
+    Time: 00:00, Memory: 14.29 MB
 
     There was 1 failure:
 
@@ -2004,40 +909,13 @@ assertJsonFileEqualsJsonFile()
 Reports an error identified by ``$message`` if the value of ``$actualFile`` does not match the value of
 ``$expectedFile``.
 
-.. code-block:: php
-    :caption: Usage of assertJsonFileEqualsJsonFile()
-    :name: appendixes.assertions.assertJsonFileEqualsJsonFile.example
+.. literalinclude:: examples/assertions/JsonFileEqualsJsonFileTest.php
+   :caption: Usage of assertJsonFileEqualsJsonFile()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class JsonFileEqualsJsonFileTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertJsonFileEqualsJsonFile(
-              'path/to/fixture/file', 'path/to/actual/file');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/JsonFileEqualsJsonFileTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) JsonFileEqualsJsonFile::testFailure
-    Failed asserting that '{"Mascot":"Tux"}' matches JSON string "["Mascott", "Tux", "OS", "Linux"]".
-
-    /path/to/JsonFileEqualsJsonFileTest.php:5
-
-    FAILURES!
-    Tests: 1, Assertions: 3, Failures: 1.
+.. literalinclude:: examples/assertions/JsonFileEqualsJsonFileTest.php.out
 
 .. _appendixes.assertions.assertJsonStringEqualsJsonFile:
 
@@ -2049,41 +927,13 @@ assertJsonStringEqualsJsonFile()
 Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
 ``$expectedFile``.
 
-.. code-block:: php
-    :caption: Usage of assertJsonStringEqualsJsonFile()
-    :name: appendixes.assertions.assertJsonStringEqualsJsonFile.example
+.. literalinclude:: examples/assertions/JsonStringEqualsJsonFileTest.php
+   :caption: Usage of assertJsonStringEqualsJsonFile()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class JsonStringEqualsJsonFileTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertJsonStringEqualsJsonFile(
-                'path/to/fixture/file', json_encode(['Mascot' => 'ux'])
-            );
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/JsonStringEqualsJsonFileTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) JsonStringEqualsJsonFile::testFailure
-    Failed asserting that '{"Mascot":"ux"}' matches JSON string "{"Mascott":"Tux"}".
-
-    /path/to/JsonStringEqualsJsonFileTest.php:5
-
-    FAILURES!
-    Tests: 1, Assertions: 3, Failures: 1.
+.. literalinclude:: examples/assertions/JsonStringEqualsJsonFileTest.php.out
 
 .. _appendixes.assertions.assertJsonStringEqualsJsonString:
 
@@ -2095,49 +945,13 @@ assertJsonStringEqualsJsonString()
 Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
 ``$expectedJson``.
 
-.. code-block:: php
-    :caption: Usage of assertJsonStringEqualsJsonString()
-    :name: appendixes.assertions.assertJsonStringEqualsJsonString.example
+.. literalinclude:: examples/assertions/JsonStringEqualsJsonStringTest.php
+   :caption: Usage of assertJsonStringEqualsJsonString()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class JsonStringEqualsJsonStringTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertJsonStringEqualsJsonString(
-                json_encode(['Mascot' => 'Tux']),
-                json_encode(['Mascot' => 'ux'])
-            );
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/JsonStringEqualsJsonStringTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) JsonStringEqualsJsonStringTest::testFailure
-    Failed asserting that two objects are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-     stdClass Object (
-     -    'Mascot' => 'Tux'
-     +    'Mascot' => 'ux'
-    )
-
-    /path/to/JsonStringEqualsJsonStringTest.php:5
-
-    FAILURES!
-    Tests: 1, Assertions: 3, Failures: 1.
+.. literalinclude:: examples/assertions/JsonStringEqualsJsonStringTest.php.out
 
 .. _appendixes.assertions.assertLessThan:
 
@@ -2148,39 +962,13 @@ assertLessThan()
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not less than the value of ``$expected``.
 
-.. code-block:: php
-    :caption: Usage of assertLessThan()
-    :name: appendixes.assertions.assertLessThan.example
+.. literalinclude:: examples/assertions/LessThanTest.php
+   :caption: Usage of assertLessThan()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class LessThanTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertLessThan(1, 2);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/LessThanTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) LessThanTest::testFailure
-    Failed asserting that 2 is less than 1.
-
-    /path/to/LessThanTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/LessThanTest.php.out
 
 .. _appendixes.assertions.assertLessThanOrEqual:
 
@@ -2191,39 +979,13 @@ assertLessThanOrEqual()
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not less than or equal to the value of ``$expected``.
 
-.. code-block:: php
-    :caption: Usage of assertLessThanOrEqual()
-    :name: appendixes.assertions.assertLessThanOrEqual.example
+.. literalinclude:: examples/assertions/LessThanOrEqualTest.php
+   :caption: Usage of assertLessThanOrEqual()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class LessThanOrEqualTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertLessThanOrEqual(1, 2);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/LessThanOrEqualTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    There was 1 failure:
-
-    1) LessThanOrEqualTest::testFailure
-    Failed asserting that 2 is equal to 1 or is less than 1.
-
-    /path/to/LessThanOrEqualTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 2, Failures: 1.
+.. literalinclude:: examples/assertions/LessThanOrEqualTest.php.out
 
 .. _appendixes.assertions.assertNan:
 
@@ -2234,39 +996,13 @@ assertNan()
 
 Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
 
-.. code-block:: php
-    :caption: Usage of assertNan()
-    :name: appendixes.assertions.assertNan.example
+.. literalinclude:: examples/assertions/NanTest.php
+   :caption: Usage of assertNan()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class NanTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertNan(1);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/NanTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) NanTest::testFailure
-    Failed asserting that 1 is nan.
-
-    /path/to/NanTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/NanTest.php.out
 
 .. _appendixes.assertions.assertNull:
 
@@ -2279,39 +1015,13 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
 
 ``assertNotNull()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertNull()
-    :name: appendixes.assertions.assertNull.example
+.. literalinclude:: examples/assertions/NullTest.php
+   :caption: Usage of assertNull()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class NullTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertNull('foo');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/NotNullTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) NullTest::testFailure
-    Failed asserting that 'foo' is null.
-
-    /path/to/NotNullTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/NullTest.php.out
 
 .. _appendixes.assertions.assertMatchesRegularExpression:
 
@@ -2324,39 +1034,13 @@ Reports an error identified by ``$message`` if ``$string`` does not match the re
 
 ``assertDoesNotMatchRegularExpression()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertMatchesRegularExpression()
-    :name: appendixes.assertions.assertMatchesRegularExpression.example
+.. literalinclude:: examples/assertions/MatchesRegularExpressionTest.php
+   :caption: Usage of assertMatchesRegularExpression()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class RegExpTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertMatchesRegularExpression('/foo/', 'bar');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/RegExpTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) RegExpTest::testFailure
-    Failed asserting that 'bar' matches PCRE pattern "/foo/".
-
-    /path/to/RegExpTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/MatchesRegularExpressionTest.php.out
 
 .. _appendixes.assertions.assertStringMatchesFormat:
 
@@ -2369,39 +1053,13 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 
 ``assertStringNotMatchesFormat()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertStringMatchesFormat()
-    :name: appendixes.assertions.assertStringMatchesFormat.example
+.. literalinclude:: examples/assertions/StringMatchesFormatTest.php
+   :caption: Usage of assertStringMatchesFormat()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class StringMatchesFormatTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertStringMatchesFormat('%i', 'foo');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/StringMatchesFormatTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) StringMatchesFormatTest::testFailure
-    Failed asserting that 'foo' matches PCRE pattern "/^[+-]?\d+$/s".
-
-    /path/to/StringMatchesFormatTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/StringMatchesFormatTest.php.out
 
 The format string may contain the following placeholders:
 
@@ -2464,40 +1122,13 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 
 ``assertStringNotMatchesFormatFile()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertStringMatchesFormatFile()
-    :name: appendixes.assertions.assertStringMatchesFormatFile.example
+.. literalinclude:: examples/assertions/StringMatchesFormatFileTest.php
+   :caption: Usage of assertStringMatchesFormatFile()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class StringMatchesFormatFileTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertStringMatchesFormatFile('/path/to/expected.txt', 'foo');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/StringMatchesFormatFileTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) StringMatchesFormatFileTest::testFailure
-    Failed asserting that 'foo' matches PCRE pattern "/^[+-]?\d+
-    $/s".
-
-    /path/to/StringMatchesFormatFileTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 2, Failures: 1.
+.. literalinclude:: examples/assertions/StringMatchesFormatFileTest.php.out
 
 .. _appendixes.assertions.assertSame:
 
@@ -2510,80 +1141,28 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 
 ``assertNotSame()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertSame()
-    :name: appendixes.assertions.assertSame.example
+.. literalinclude:: examples/assertions/SameWithMixedTest.php
+   :caption: Usage of assertSame()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class SameTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertSame('2204', 2204);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/SameTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) SameTest::testFailure
-    Failed asserting that 2204 is identical to '2204'.
-
-    /path/to/SameTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/SameWithMixedTest.php.out
 
 ``assertSame(object $expected, object $actual[, string $message = ''])``
 
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` do not reference the same object.
 
-.. code-block:: php
-    :caption: Usage of assertSame() with objects
-    :name: appendixes.assertions.assertSame.example2
+.. literalinclude:: examples/assertions/SameWithObjectsTest.php
+   :caption: Usage of assertSame() with objects
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class SameTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertSame(new stdClass, new stdClass);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/SameTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) SameTest::testFailure
-    Failed asserting that two variables reference the same object.
-
-    /path/to/SameTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/SameWithObjectsTest.php.out
 
 assertSameSize()
-======================
+================
 
 ``assertSameSize($expected, $actual, string $message = '')``
 
@@ -2591,39 +1170,13 @@ Reports an error identified by ``$message`` if the sizes of ``$actual`` and ``$e
 
 ``assertNotSameSize()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertSameSize()
-    :name: appendixes.assertions.assertSameSize.example
+.. literalinclude:: examples/assertions/SameSizeTest.php
+   :caption: Usage of assertSameSize()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class SameSizeTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertSameSize([1, 2], [1]);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/StringEndsWithTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 second, Memory: 4.00Mb
-
-    There was 1 failure:
-
-    1) SameSizeTest::testFailure
-    Failed asserting that actual size 1 matches expected size 2.
-
-    /path/to/SameSizeTest.php:8
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/SameSizeTest.php.out
 
 .. _appendixes.assertions.assertStringEndsWith:
 
@@ -2636,39 +1189,13 @@ Reports an error identified by ``$message`` if the ``$string`` does not end with
 
 ``assertStringEndsNotWith()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertStringEndsWith()
-    :name: appendixes.assertions.assertStringEndsWith.example
+.. literalinclude:: examples/assertions/StringEndsWithTest.php
+   :caption: Usage of assertStringEndsWith()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class StringEndsWithTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertStringEndsWith('suffix', 'foo');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/StringEndsWithTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 1 second, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) StringEndsWithTest::testFailure
-    Failed asserting that 'foo' ends with "suffix".
-
-    /path/to/StringEndsWithTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/StringEndsWithTest.php.out
 
 .. _appendixes.assertions.assertStringEqualsFile:
 
@@ -2681,45 +1208,13 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 
 ``assertStringNotEqualsFile()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertStringEqualsFile()
-    :name: appendixes.assertions.assertStringEqualsFile.example
+.. literalinclude:: examples/assertions/StringEqualsFileTest.php
+   :caption: Usage of assertStringEqualsFile()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class StringEqualsFileTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertStringEqualsFile('/path/to/expected', 'actual');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/StringEqualsFileTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    There was 1 failure:
-
-    1) StringEqualsFileTest::testFailure
-    Failed asserting that two strings are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-    -'expected
-    -'
-    +'actual'
-
-    /path/to/StringEqualsFileTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 2, Failures: 1.
+.. literalinclude:: examples/assertions/StringEqualsFileTest.php.out
 
 .. _appendixes.assertions.assertStringStartsWith:
 
@@ -2732,79 +1227,37 @@ Reports an error identified by ``$message`` if the ``$string`` does not start wi
 
 ``assertStringStartsNotWith()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertStringStartsWith()
-    :name: appendixes.assertions.assertStringStartsWith.example
+.. literalinclude:: examples/assertions/StringStartsWithTest.php
+   :caption: Usage of assertStringStartsWith()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class StringStartsWithTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertStringStartsWith('prefix', 'foo');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/StringStartsWithTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) StringStartsWithTest::testFailure
-    Failed asserting that 'foo' starts with "prefix".
-
-    /path/to/StringStartsWithTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/StringStartsWithTest.php.out
 
 .. _appendixes.assertions.assertThat:
 
 assertThat()
 ============
 
-More complex assertions can be formulated using the
-``PHPUnit\Framework\Constraint`` classes. They can be
-evaluated using the ``assertThat()`` method.
-:numref:`appendixes.assertions.assertThat.example` shows how the
-``logicalNot()`` and ``equalTo()``
-constraints can be used to express the same assertion as
-``assertNotEquals()``.
-
 ``assertThat(mixed $value, PHPUnit\Framework\Constraint $constraint[, $message = ''])``
 
 Reports an error identified by ``$message`` if the ``$value`` does not match the ``$constraint``.
 
-.. code-block:: php
-    :caption: Usage of assertThat()
-    :name: appendixes.assertions.assertThat.example
+More complex assertions can be formulated using the
+``PHPUnit\Framework\Constraint`` classes. They can be
+evaluated using the ``assertThat()`` method.
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+This example shows how the ``logicalNot()`` and ``equalTo()`` constraints can be used,
+for instance, to express the same assertion as ``assertNotEquals()``:
 
-    final class BiscuitTest extends TestCase
-    {
-        public function testEquals(): void
-        {
-            $theBiscuit = new Biscuit('Ginger');
-            $myBiscuit  = new Biscuit('Ginger');
+.. literalinclude:: examples/assertions/BiscuitTest.php
+   :caption: Usage of assertThat()
+   :language: php
 
-            $this->assertThat(
-              $theBiscuit,
-              $this->logicalNot(
-                $this->equalTo($myBiscuit)
-              )
-            );
-        }
-    }
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/BiscuitTest.php.out
 
 :numref:`appendixes.assertions.assertThat.tables.constraints` shows the
 available ``PHPUnit\Framework\Constraint`` classes.
@@ -2884,39 +1337,13 @@ Reports an error identified by ``$message`` if ``$condition`` is ``false``.
 
 ``assertNotTrue()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertTrue()
-    :name: appendixes.assertions.assertTrue.example
+.. literalinclude:: examples/assertions/TrueTest.php
+   :caption: Usage of assertTrue()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class TrueTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertTrue(false);
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/TrueTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) TrueTest::testFailure
-    Failed asserting that false is true.
-
-    /path/to/TrueTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/TrueTest.php.out
 
 .. _appendixes.assertions.assertXmlFileEqualsXmlFile:
 
@@ -2929,48 +1356,13 @@ Reports an error identified by ``$message`` if the XML document in ``$actualFile
 
 ``assertXmlFileNotEqualsXmlFile()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertXmlFileEqualsXmlFile()
-    :name: appendixes.assertions.assertXmlFileEqualsXmlFile.example
+.. literalinclude:: examples/assertions/XmlFileEqualsXmlFileTest.php
+   :caption: Usage of assertXmlFileEqualsXmlFile()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class XmlFileEqualsXmlFileTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertXmlFileEqualsXmlFile(
-              '/path/to/expected.xml', '/path/to/actual.xml');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/XmlFileEqualsXmlFileTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    There was 1 failure:
-
-    1) XmlFileEqualsXmlFileTest::testFailure
-    Failed asserting that two DOM documents are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-     <?xml version="1.0"?>
-     <foo>
-    -  <bar/>
-    +  <baz/>
-     </foo>
-
-    /path/to/XmlFileEqualsXmlFileTest.php:7
-
-    FAILURES!
-    Tests: 1, Assertions: 3, Failures: 1.
+.. literalinclude:: examples/assertions/XmlFileEqualsXmlFileTest.php.out
 
 .. _appendixes.assertions.assertXmlStringEqualsXmlFile:
 
@@ -2983,48 +1375,13 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
 
 ``assertXmlStringNotEqualsXmlFile()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertXmlStringEqualsXmlFile()
-    :name: appendixes.assertions.assertXmlStringEqualsXmlFile.example
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlFileTest.php
+   :caption: Usage of assertXmlStringEqualsXmlFile()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class XmlStringEqualsXmlFileTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertXmlStringEqualsXmlFile(
-              '/path/to/expected.xml', '<foo><baz/></foo>');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/XmlStringEqualsXmlFileTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    There was 1 failure:
-
-    1) XmlStringEqualsXmlFileTest::testFailure
-    Failed asserting that two DOM documents are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-     <?xml version="1.0"?>
-     <foo>
-    -  <bar/>
-    +  <baz/>
-     </foo>
-
-    /path/to/XmlStringEqualsXmlFileTest.php:7
-
-    FAILURES!
-    Tests: 1, Assertions: 2, Failures: 1.
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlFileTest.php.out
 
 .. _appendixes.assertions.assertXmlStringEqualsXmlString:
 
@@ -3037,47 +1394,12 @@ Reports an error identified by ``$message`` if the XML document in ``$actualXml`
 
 ``assertXmlStringNotEqualsXmlString()`` is the inverse of this assertion and takes the same arguments.
 
-.. code-block:: php
-    :caption: Usage of assertXmlStringEqualsXmlString()
-    :name: appendixes.assertions.assertXmlStringEqualsXmlString.example
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlStringTest.php
+   :caption: Usage of assertXmlStringEqualsXmlString()
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+Running the test shown above yields the output shown below:
 
-    final class XmlStringEqualsXmlStringTest extends TestCase
-    {
-        public function testFailure(): void
-        {
-            $this->assertXmlStringEqualsXmlString(
-              '<foo><bar/></foo>', '<foo><baz/></foo>');
-        }
-    }
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/XmlStringEqualsXmlStringTest.php
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 5.00Mb
-
-    There was 1 failure:
-
-    1) XmlStringEqualsXmlStringTest::testFailure
-    Failed asserting that two DOM documents are equal.
-    --- Expected
-    +++ Actual
-    @@ @@
-     <?xml version="1.0"?>
-     <foo>
-    -  <bar/>
-    +  <baz/>
-     </foo>
-
-    /path/to/XmlStringEqualsXmlStringTest.php:7
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlStringTest.php.out
 
 
