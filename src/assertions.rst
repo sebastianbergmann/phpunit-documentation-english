@@ -655,6 +655,21 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsArrayTest.php.out
 
+assertIsList()
+==============
+
+``assertIsList($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if the keys of ``$actual`` are not consecutive numbers from 0 to ``count($actual) - 1``.
+
+.. literalinclude:: examples/assertions/IsListTest.php
+   :caption: Usage of assertIsList()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/IsListTest.php.out
+
 assertIsBool()
 ==============
 
