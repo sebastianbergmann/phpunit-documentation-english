@@ -77,6 +77,8 @@ Whether ``$needle`` is an element of ``$haystack`` is checked using the ``===`` 
 You can use ``assertContainsEquals()`` (and ``assertNotContainsEquals()``) if you need the
 comparison logic implemented by the ``==`` operator.
 
+.. _appendixes.assertions.assertStringContainsString:
+
 assertStringContainsString()
 ============================
 
@@ -345,12 +347,16 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/EqualsWithArraysTest.php.out
 
+.. _appendixes.assertions.assertStringEqualsStringIgnoringLineEndings:
+
 assertStringEqualsStringIgnoringLineEndings
 ===========================================
 
 ``assertStringEqualsStringIgnoringLineEndings(string $expected, string $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the two strings ``$expected`` and ``$actual`` are not equal while ignoring line endings.
+
+.. _appendixes.assertions.assertEqualsCanonicalizing:
 
 assertEqualsCanonicalizing()
 ============================
@@ -371,6 +377,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/EqualsWithArraysCanonicalizingTest.php.out
 
+.. _appendixes.assertions.assertEqualsIgnoringCase:
+
 assertEqualsIgnoringCase()
 ==========================
 
@@ -389,6 +397,8 @@ Differences in casing are ignored for the comparison of ``$expected`` and ``$act
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/EqualsWithStringsIgnoringCaseTest.php.out
+
+.. _appendixes.assertions.assertEqualsWithDelta:
 
 assertEqualsWithDelta()
 =======================
@@ -651,6 +661,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/InstanceOfTest.php.out
 
+.. _appendixes.assertions.assertIsArray:
+
 assertIsArray()
 ===============
 
@@ -668,6 +680,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsArrayTest.php.out
 
+.. _appendixes.assertions.assertIsList:
+
 assertIsList()
 ==============
 
@@ -682,6 +696,8 @@ Reports an error identified by ``$message`` if the keys of ``$actual`` are not c
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsListTest.php.out
+
+.. _appendixes.assertions.assertIsBool:
 
 assertIsBool()
 ==============
@@ -700,6 +716,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsBoolTest.php.out
 
+.. _appendixes.assertions.assertIsCallable:
+
 assertIsCallable()
 ==================
 
@@ -716,6 +734,8 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``call
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsCallableTest.php.out
+
+.. _appendixes.assertions.assertIsFloat:
 
 assertIsFloat()
 ===============
@@ -734,6 +754,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsFloatTest.php.out
 
+.. _appendixes.assertions.assertIsInt:
+
 assertIsInt()
 =============
 
@@ -750,6 +772,8 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``int`
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsIntTest.php.out
+
+.. _appendixes.assertions.assertIsIterable:
 
 assertIsIterable()
 ==================
@@ -768,6 +792,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsIterableTest.php.out
 
+.. _appendixes.assertions.assertIsNumeric:
+
 assertIsNumeric()
 =================
 
@@ -785,6 +811,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsNumericTest.php.out
 
+.. _appendixes.assertions.assertIsObject:
+
 assertIsObject()
 ================
 
@@ -801,6 +829,8 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``obje
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsObjectTest.php.out
+
+.. _appendixes.assertions.assertIsResource:
 
 assertIsResource()
 ==================
@@ -821,6 +851,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsResourceTest.php.out
 
+.. _appendixes.assertions.assertIsScalar:
+
 assertIsScalar()
 ================
 
@@ -837,6 +869,8 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``scal
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsScalarTest.php.out
+
+.. _appendixes.assertions.assertIsString:
 
 assertIsString()
 ================
@@ -931,7 +965,7 @@ Running the test shown above yields the output shown below:
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-.. _appendixes.assertions.assertJsonFileEqualsJsonFile:
+.. _appendixes.assertions.assertJson:
 
 assertJson()
 ============
@@ -947,6 +981,8 @@ Reports an error identified by ``$message`` if the value of ``$actual`` is not v
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/JsonTest.php.out
+
+.. _appendixes.assertions.assertJsonFileEqualsJsonFile:
 
 assertJsonFileEqualsJsonFile()
 ==============================
@@ -1207,6 +1243,8 @@ Reports an error identified by ``$message`` if the two variables ``$expected`` a
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/SameWithObjectsTest.php.out
+
+.. _appendixes.assertions.assertSameSize:
 
 assertSameSize()
 ================
