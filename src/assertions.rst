@@ -924,6 +924,21 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertJsonFileEqualsJsonFile:
 
+assertJson()
+============
+
+``assertJson(string $actual[, string $message])``
+
+Reports an error identified by ``$message`` if the value of ``$actual`` is not valid JSON.
+
+.. literalinclude:: examples/assertions/JsonTest.php
+   :caption: Usage of assertJson()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/JsonTest.php.out
+
 assertJsonFileEqualsJsonFile()
 ==============================
 
