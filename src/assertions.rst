@@ -73,6 +73,10 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/ContainsTest.php.out
 
+Whether ``$needle`` is an element of ``$haystack`` is checked using the ``===`` operator.
+You can use ``assertContainsEquals()`` (and ``assertNotContainsEquals()``) if you need the
+comparison logic implemented by the ``==`` operator.
+
 assertStringContainsString()
 ============================
 
