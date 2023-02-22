@@ -1,12 +1,28 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
+$exclude = [
+    'assertions/DirectoryIsReadableTest.php',
+    'assertions/DirectoryIsWritableTest.php',
+    'assertions/FileIsReadableTest.php',
+    'assertions/FileIsWritableTest.php',
+    'assertions/IsReadableTest.php',
+    'assertions/IsWritableTest.php',
+];
+
 $phpunit       = $command = __DIR__ . '/../tools/phpunit';
 $version       = hash('sha256', trim(PHP_VERSION . shell_exec($phpunit . ' --version')));
 $processed     = processed_read();
 $rootDirectory = realpath(__DIR__ . '/../src/examples') . '/';
 
 foreach (new GlobIterator(__DIR__ . '/../src/examples/**/*Test.php') as $test) {
-    $currentFile     = str_replace($rootDirectory, '', $test->getRealPath());
+    $currentFile = str_replace($rootDirectory, '', $test->getRealPath());
+
+    if (in_array($currentFile, $exclude, true)) {
+        print '[excluded ] ' . $currentFile . PHP_EOL;
+
+        continue;
+    }
+
     $currentFileHash = $version . hash_file('sha256', $test->getRealPath());
 
     if (isset($processed[$currentFile]) && $processed[$currentFile] === $currentFileHash) {
