@@ -323,7 +323,7 @@ This annotation can be added to the docblock of the test class or the individual
 test methods. The recommended way is to add the annotation to the docblock
 of the test class, not to the docblock of the test methods.
 
-When the ``forceCoversAnnotation`` configuration option in the
+When the ``requireCoverageMetadata`` configuration option in the
 :ref:`configuration file <appendixes.configuration>` is set to ``true``,
 every test method needs to have an associated ``@covers`` annotation
 (either on the test class or the individual test method).
