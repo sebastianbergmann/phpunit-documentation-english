@@ -35,265 +35,95 @@ them outside the scope of a test object. Lastly, the global function
 wrappers allow developers to type less characters (``assertTrue()`` instead
 of ``$this->assertTrue()`` or ``self::assertTrue()``).
 
-.. _appendixes.assertions.assertArrayHasKey:
 
-assertArrayHasKey()
-===================
+.. _appendixes.assertions.boolean:
 
-``assertArrayHasKey(int|string $key, array|ArrayAccess $array[, string $message])``
+Boolean
+=======
 
-Reports an error identified by ``$message`` if ``$array`` does not have the ``$key``.
+.. _appendixes.assertions.assertTrue:
 
-``assertArrayNotHasKey()`` is the inverse of this assertion and takes the same arguments.
+assertTrue()
+------------
 
-.. literalinclude:: examples/assertions/ArrayHasKeyTest.php
-   :caption: Usage of assertArrayHasKey()
+``assertTrue(bool $condition[, string $message])``
+
+Reports an error identified by ``$message`` if ``$condition`` is ``false``.
+
+``assertNotTrue()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/TrueTest.php
+   :caption: Usage of assertTrue()
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/assertions/ArrayHasKeyTest.php.out
+.. literalinclude:: examples/assertions/TrueTest.php.out
 
-.. _appendixes.assertions.assertContains:
+.. _appendixes.assertions.assertFalse:
 
-assertContains()
-================
+assertFalse()
+-------------
 
-``assertContains(mixed $needle, iterable $haystack[, string $message])``
+``assertFalse(bool $condition[, string $message])``
 
-Reports an error identified by ``$message`` if ``$needle`` is not an element of ``$haystack``.
+Reports an error identified by ``$message`` if ``$condition`` is ``true``.
 
-``assertNotContains()`` is the inverse of this assertion and takes the same arguments.
+``assertNotFalse()`` is the inverse of this assertion and takes the same arguments.
 
-.. literalinclude:: examples/assertions/ContainsTest.php
-   :caption: Usage of assertContains()
+.. literalinclude:: examples/assertions/FalseTest.php
+   :caption: Usage of assertFalse()
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/assertions/ContainsTest.php.out
+.. literalinclude:: examples/assertions/FalseTest.php.out
 
-Whether ``$needle`` is an element of ``$haystack`` is checked using the ``===`` operator.
-You can use ``assertContainsEquals()`` (and ``assertNotContainsEquals()``) if you need the
-comparison logic implemented by the ``==`` operator.
+.. _appendixes.assertions.identity:
 
-.. _appendixes.assertions.assertStringContainsString:
+Identity
+========
 
-assertStringContainsString()
-============================
+.. _appendixes.assertions.assertSame:
 
-``assertStringContainsString(string $needle, string $haystack[, string $message])``
+assertSame()
+------------
 
-Reports an error identified by ``$message`` if ``$needle`` is not a substring of ``$haystack``.
+``assertSame(mixed $expected, mixed $actual[, string $message])``
 
-``assertStringNotContainsString()`` is the inverse of this assertion and takes the same arguments.
+Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` do not have the same type and value.
 
-``assertStringContainsStringIgnoringLineEndings()`` takes the same arguments and can be used if line endings should be ignored.
+``assertNotSame()`` is the inverse of this assertion and takes the same arguments.
 
-.. literalinclude:: examples/assertions/StringContainsStringTest.php
-   :caption: Usage of assertStringContainsString()
+.. literalinclude:: examples/assertions/SameWithMixedTest.php
+   :caption: Usage of assertSame()
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/assertions/StringContainsStringTest.php.out
+.. literalinclude:: examples/assertions/SameWithMixedTest.php.out
 
-assertStringContainsStringIgnoringCase()
-========================================
+``assertSame(object $expected, object $actual[, string $message])``
 
-``assertStringContainsStringIgnoringCase(string $needle, string $haystack[, string $message])``
+Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` do not reference the same object.
 
-Reports an error identified by ``$message`` if ``$needle`` is not a substring of ``$haystack``.
-
-Differences in casing are ignored when ``$needle`` is searched for in ``$haystack``. This also works
-for Unicode characters with diacritics (accents, umlauts, circumflex, etc.) as long as both strings
-have the same `Normalization Form <https://www.php.net/manual/en/class.normalizer.php>`_.
-
-``assertStringNotContainsStringIgnoringCase()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/StringContainsStringIgnoringCaseTest.php
-   :caption: Usage of assertStringContainsStringIgnoringCase()
+.. literalinclude:: examples/assertions/SameWithObjectsTest.php
+   :caption: Usage of assertSame() with objects
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/assertions/StringContainsStringIgnoringCaseTest.php.out
+.. literalinclude:: examples/assertions/SameWithObjectsTest.php.out
 
-.. _appendixes.assertions.assertContainsOnly:
+.. _appendixes.assertions.equality:
 
-assertContainsOnly()
-====================
-
-``assertContainsOnly(string $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
-
-Reports an error identified by ``$message`` if ``$haystack`` does not contain only variables of type ``$type``.
-
-``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type or not.
-
-``assertNotContainsOnly()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/ContainsOnlyTest.php
-   :caption: Usage of assertContainsOnly()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/ContainsOnlyTest.php.out
-
-.. _appendixes.assertions.assertContainsOnlyInstancesOf:
-
-assertContainsOnlyInstancesOf()
-===============================
-
-``assertContainsOnlyInstancesOf(string $classname, iterable $haystack[, string $message])``
-
-Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class ``$classname``.
-
-.. literalinclude:: examples/assertions/ContainsOnlyInstancesOfTest.php
-   :caption: Usage of assertContainsOnlyInstancesOf()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/ContainsOnlyInstancesOfTest.php.out
-
-.. _appendixes.assertions.assertCount:
-
-assertCount()
-=============
-
-``assertCount(int $expectedCount, Countable|iterable $haystack[, string $message])``
-
-Reports an error identified by ``$message`` if the number of elements in ``$haystack`` is not ``$expectedCount``.
-
-``assertNotCount()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/CountTest.php
-   :caption: Usage of assertCount()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/CountTest.php.out
-
-.. _appendixes.assertions.assertDirectoryExists:
-
-assertDirectoryExists()
-=======================
-
-``assertDirectoryExists(string $directory[, string $message])``
-
-Reports an error identified by ``$message`` if the directory specified by ``$directory`` does not exist.
-
-``assertDirectoryDoesNotExist()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/DirectoryExistsTest.php
-   :caption: Usage of assertDirectoryExists()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/DirectoryExistsTest.php.out
-
-.. _appendixes.assertions.assertDirectoryIsReadable:
-
-assertDirectoryIsReadable()
-===========================
-
-``assertDirectoryIsReadable(string $directory[, string $message])``
-
-Reports an error identified by ``$message`` if the directory specified by ``$directory`` is not a directory or is not readable.
-
-``assertDirectoryIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/DirectoryIsReadableTest.php
-   :caption: Usage of assertDirectoryIsReadable()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/DirectoryIsReadableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
-
-    Runtime:       PHP 8.2.3
-
-    F
-
-    Time: 00:00, Memory: 14.29 MB
-
-    There was 1 failure:
-
-    1) DirectoryIsReadableTest::testFailure
-    Failed asserting that "/path/to/directory" is readable.
-
-    /path/to/DirectoryIsReadableTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
-.. _appendixes.assertions.assertDirectoryIsWritable:
-
-assertDirectoryIsWritable()
-===========================
-
-``assertDirectoryIsWritable(string $directory[, string $message])``
-
-Reports an error identified by ``$message`` if the directory specified by ``$directory`` is not a directory or is not writable.
-
-``assertDirectoryIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/DirectoryIsReadableTest.php
-   :caption: Usage of assertDirectoryIsWritable()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/DirectoryIsWritableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
-
-    Runtime:       PHP 8.2.3
-
-    F
-
-    Time: 00:00, Memory: 14.29 MB
-
-    There was 1 failure:
-
-    1) DirectoryIsWritableTest::testFailure
-    Failed asserting that "/path/to/directory" is writable.
-
-    /path/to/DirectoryIsWritableTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
-.. _appendixes.assertions.assertEmpty:
-
-assertEmpty()
-=============
-
-``assertEmpty(mixed $actual[, string $message])``
-
-Reports an error identified by ``$message`` if ``$actual`` is not empty.
-
-``assertNotEmpty()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/EmptyTest.php
-   :caption: Usage of assertEmpty()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/EmptyTest.php.out
+Equality
+========
 
 .. _appendixes.assertions.assertEquals:
 
 assertEquals()
-==============
+--------------
 
 ``assertEquals(mixed $expected, mixed $actual[, string $message])``
 
@@ -347,19 +177,10 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/EqualsWithArraysTest.php.out
 
-.. _appendixes.assertions.assertStringEqualsStringIgnoringLineEndings:
-
-assertStringEqualsStringIgnoringLineEndings
-===========================================
-
-``assertStringEqualsStringIgnoringLineEndings(string $expected, string $actual[, string $message])``
-
-Reports an error identified by ``$message`` if the two strings ``$expected`` and ``$actual`` are not equal while ignoring line endings.
-
 .. _appendixes.assertions.assertEqualsCanonicalizing:
 
 assertEqualsCanonicalizing()
-============================
+----------------------------
 
 ``assertEqualsCanonicalizing(mixed $expected, mixed $actual[, string $message])``
 
@@ -380,7 +201,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertEqualsIgnoringCase:
 
 assertEqualsIgnoringCase()
-==========================
+--------------------------
 
 ``assertEqualsIgnoringCase(mixed $expected, mixed $actual[, string $message])``
 
@@ -401,7 +222,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertEqualsWithDelta:
 
 assertEqualsWithDelta()
-=======================
+-----------------------
 
 ``assertEqualsWithDelta(mixed $expected, mixed $actual, float $delta[, string $message])``
 
@@ -422,7 +243,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertObjectEquals:
 
 assertObjectEquals()
-====================
+--------------------
 
 ``assertObjectEquals(object $expected, object $actual, string $method = 'equals'[, string $message])``
 
@@ -454,29 +275,10 @@ Please note:
 
 If any of the aforementioned assumptions is not fulfilled or if ``$actual->$method($expected)`` returns ``false`` then the assertion fails.
 
-.. _appendixes.assertions.assertFalse:
-
-assertFalse()
-=============
-
-``assertFalse(bool $condition[, string $message])``
-
-Reports an error identified by ``$message`` if ``$condition`` is ``true``.
-
-``assertNotFalse()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/FalseTest.php
-   :caption: Usage of assertFalse()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/FalseTest.php.out
-
 .. _appendixes.assertions.assertFileEquals:
 
 assertFileEquals()
-==================
+------------------
 
 ``assertFileEquals(string $expected, string $actual[, string $message])``
 
@@ -494,105 +296,157 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/FileEqualsTest.php.out
 
-.. _appendixes.assertions.assertFileExists:
+.. _appendixes.assertions.iterable:
 
-assertFileExists()
-==================
+Iterable
+========
 
-``assertFileExists(string $filename[, string $message])``
+.. _appendixes.assertions.assertArrayHasKey:
 
-Reports an error identified by ``$message`` if the file specified by ``$filename`` does not exist.
+assertArrayHasKey()
+-------------------
 
-``assertFileDoesNotExist()`` is the inverse of this assertion and takes the same arguments.
+``assertArrayHasKey(int|string $key, array|ArrayAccess $array[, string $message])``
 
-.. literalinclude:: examples/assertions/FileExistsTest.php
-   :caption: Usage of assertFileExists()
+Reports an error identified by ``$message`` if ``$array`` does not have the ``$key``.
+
+``assertArrayNotHasKey()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ArrayHasKeyTest.php
+   :caption: Usage of assertArrayHasKey()
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/assertions/FileExistsTest.php.out
+.. literalinclude:: examples/assertions/ArrayHasKeyTest.php.out
 
-.. _appendixes.assertions.assertFileIsReadable:
+.. _appendixes.assertions.assertContains:
 
-assertFileIsReadable()
-======================
+assertContains()
+----------------
 
-``assertFileIsReadable(string $filename[, string $message])``
+``assertContains(mixed $needle, iterable $haystack[, string $message])``
 
-Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not readable.
+Reports an error identified by ``$message`` if ``$needle`` is not an element of ``$haystack``.
 
-``assertFileIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
+``assertNotContains()`` is the inverse of this assertion and takes the same arguments.
 
-.. literalinclude:: examples/assertions/FileIsReadableTest.php
-   :caption: Usage of assertFileIsReadable()
+.. literalinclude:: examples/assertions/ContainsTest.php
+   :caption: Usage of assertContains()
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. parsed-literal::
+.. literalinclude:: examples/assertions/ContainsTest.php.out
 
-    ./tools/phpunit tests/FileIsReadableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+Whether ``$needle`` is an element of ``$haystack`` is checked using the ``===`` operator.
+You can use ``assertContainsEquals()`` (and ``assertNotContainsEquals()``) if you need the
+comparison logic implemented by the ``==`` operator.
 
-    Runtime:       PHP 8.2.3
+.. _appendixes.assertions.assertContainsOnly:
 
-    F
+assertContainsOnly()
+--------------------
 
-    Time: 00:00, Memory: 14.29 MB
+``assertContainsOnly(string $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
 
-    There was 1 failure:
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only variables of type ``$type``.
 
-    1) FileIsReadableTest::testFailure
-    Failed asserting that "/path/to/file" is readable.
+``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type or not.
 
-    /path/to/FileIsReadableTest.php:6
+``assertNotContainsOnly()`` is the inverse of this assertion and takes the same arguments.
 
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
-.. _appendixes.assertions.assertFileIsWritable:
-
-assertFileIsWritable()
-======================
-
-``assertFileIsWritable(string $filename[, string $message])``
-
-Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not writable.
-
-``assertFileIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/FileIsWritableTest.php
-   :caption: Usage of assertFileIsWritable()
+.. literalinclude:: examples/assertions/ContainsOnlyTest.php
+   :caption: Usage of assertContainsOnly()
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. parsed-literal::
+.. literalinclude:: examples/assertions/ContainsOnlyTest.php.out
 
-    ./tools/phpunit tests/FileIsWritableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+.. _appendixes.assertions.assertContainsOnlyInstancesOf:
 
-    Runtime:       PHP 8.2.3
+assertContainsOnlyInstancesOf()
+-------------------------------
 
-    F
+``assertContainsOnlyInstancesOf(string $classname, iterable $haystack[, string $message])``
 
-    Time: 00:00, Memory: 14.29 MB
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class ``$classname``.
 
-    There was 1 failure:
+.. literalinclude:: examples/assertions/ContainsOnlyInstancesOfTest.php
+   :caption: Usage of assertContainsOnlyInstancesOf()
+   :language: php
 
-    1) FileIsWritableTest::testFailure
-    Failed asserting that "/path/to/file" is writable.
+Running the test shown above yields the output shown below:
 
-    /path/to/FileIsWritableTest.php:6
+.. literalinclude:: examples/assertions/ContainsOnlyInstancesOfTest.php.out
 
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
+.. _appendixes.assertions.cardinality:
+
+Cardinality
+===========
+
+.. _appendixes.assertions.assertCount:
+
+assertCount()
+-------------
+
+``assertCount(int $expectedCount, Countable|iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if the number of elements in ``$haystack`` is not ``$expectedCount``.
+
+``assertNotCount()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/CountTest.php
+   :caption: Usage of assertCount()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/CountTest.php.out
+
+.. _appendixes.assertions.assertSameSize:
+
+assertSameSize()
+----------------
+
+``assertSameSize(Countable|iterable $expected, Countable|iterable $actual[, string $message])``
+
+Reports an error identified by ``$message`` if the sizes of ``$actual`` and ``$expected`` are not the same.
+
+``assertNotSameSize()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/SameSizeTest.php
+   :caption: Usage of assertSameSize()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/SameSizeTest.php.out
+
+.. _appendixes.assertions.assertEmpty:
+
+assertEmpty()
+-------------
+
+``assertEmpty(mixed $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not empty.
+
+``assertNotEmpty()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/EmptyTest.php
+   :caption: Usage of assertEmpty()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/EmptyTest.php.out
 
 .. _appendixes.assertions.assertGreaterThan:
 
 assertGreaterThan()
-===================
+-------------------
 
 ``assertGreaterThan(mixed $expected, mixed $actual[, string $message])``
 
@@ -609,7 +463,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertGreaterThanOrEqual:
 
 assertGreaterThanOrEqual()
-==========================
+--------------------------
 
 ``assertGreaterThanOrEqual(mixed $expected, mixed $actual[, string $message])``
 
@@ -623,29 +477,49 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/GreaterThanOrEqualTest.php.out
 
-.. _appendixes.assertions.assertInfinite:
+.. _appendixes.assertions.assertLessThan:
 
-assertInfinite()
-================
+assertLessThan()
+----------------
 
-``assertInfinite(mixed $actual[, string $message])``
+``assertLessThan(mixed $expected, mixed $actual[, string $message])``
 
-Reports an error identified by ``$message`` if ``$actual`` is not ``INF``.
+Reports an error identified by ``$message`` if the value of ``$actual`` is not less than the value of ``$expected``.
 
-``assertFinite()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/InfiniteTest.php
-   :caption: Usage of assertInfinite()
+.. literalinclude:: examples/assertions/LessThanTest.php
+   :caption: Usage of assertLessThan()
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/assertions/InfiniteTest.php.out
+.. literalinclude:: examples/assertions/LessThanTest.php.out
+
+.. _appendixes.assertions.assertLessThanOrEqual:
+
+assertLessThanOrEqual()
+-----------------------
+
+``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message])``
+
+Reports an error identified by ``$message`` if the value of ``$actual`` is not less than or equal to the value of ``$expected``.
+
+.. literalinclude:: examples/assertions/LessThanOrEqualTest.php
+   :caption: Usage of assertLessThanOrEqual()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/LessThanOrEqualTest.php.out
+
+.. _appendixes.assertions.types:
+
+Types
+=====
 
 .. _appendixes.assertions.assertInstanceOf:
 
 assertInstanceOf()
-==================
+------------------
 
 ``assertInstanceOf(string $expected, mixed $actual[, string $message])``
 
@@ -664,7 +538,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsArray:
 
 assertIsArray()
-===============
+---------------
 
 ``assertIsArray(mixed $actual[, string $message])``
 
@@ -683,7 +557,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsList:
 
 assertIsList()
-==============
+--------------
 
 ``assertIsList(array $actual[, string $message])``
 
@@ -700,7 +574,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsBool:
 
 assertIsBool()
-==============
+--------------
 
 ``assertIsBool(mixed $actual[, string $message])``
 
@@ -719,7 +593,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsCallable:
 
 assertIsCallable()
-==================
+------------------
 
 ``assertIsCallable(mixed $actual[, string $message])``
 
@@ -738,7 +612,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsFloat:
 
 assertIsFloat()
-===============
+---------------
 
 ``assertIsFloat(mixed $actual[, string $message])``
 
@@ -757,7 +631,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsInt:
 
 assertIsInt()
-=============
+-------------
 
 ``assertIsInt(mixed $actual[, string $message])``
 
@@ -776,7 +650,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsIterable:
 
 assertIsIterable()
-==================
+------------------
 
 ``assertIsIterable(mixed $actual[, string $message])``
 
@@ -795,7 +669,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsNumeric:
 
 assertIsNumeric()
-=================
+-----------------
 
 ``assertIsNumeric(mixed $actual[, string $message])``
 
@@ -814,7 +688,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsObject:
 
 assertIsObject()
-================
+----------------
 
 ``assertIsObject(mixed $actual[, string $message])``
 
@@ -833,7 +707,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsResource:
 
 assertIsResource()
-==================
+------------------
 
 ``assertIsResource(mixed $actual[, string $message])``
 
@@ -854,7 +728,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsScalar:
 
 assertIsScalar()
-================
+----------------
 
 ``assertIsScalar(mixed $actual[, string $message])``
 
@@ -873,7 +747,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertIsString:
 
 assertIsString()
-================
+----------------
 
 ``assertIsString(mixed $actual[, string $message])``
 
@@ -889,208 +763,10 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/IsStringTest.php.out
 
-.. _appendixes.assertions.assertIsReadable:
-
-assertIsReadable()
-==================
-
-``assertIsReadable(string $filename[, string $message])``
-
-Reports an error identified by ``$message`` if the file or directory specified by ``$filename`` is not readable.
-
-``assertIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/IsReadableTest.php
-   :caption: Usage of assertIsReadable()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/IsReadableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
-
-    Runtime:       PHP 8.2.3
-
-    F
-
-    Time: 00:00, Memory: 14.29 MB
-
-    There was 1 failure:
-
-    1) IsReadableTest::testFailure
-    Failed asserting that "/path/to/unreadable" is readable.
-
-    /path/to/IsReadableTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
-.. _appendixes.assertions.assertIsWritable:
-
-assertIsWritable()
-==================
-
-``assertIsWritable(string $filename[, string $message])``
-
-Reports an error identified by ``$message`` if the file or directory specified by ``$filename`` is not writable.
-
-``assertIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/IsWritableTest.php
-   :caption: Usage of assertIsWritable()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. parsed-literal::
-
-    ./tools/phpunit tests/IsWritableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
-
-    Runtime:       PHP 8.2.3
-
-    F
-
-    Time: 00:00, Memory: 14.29 MB
-
-    There was 1 failure:
-
-    1) IsWritableTest::testFailure
-    Failed asserting that "/path/to/unwritable" is writable.
-
-    /path/to/IsWritableTest.php:6
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
-.. _appendixes.assertions.assertJson:
-
-assertJson()
-============
-
-``assertJson(string $actual[, string $message])``
-
-Reports an error identified by ``$message`` if the value of ``$actual`` is not valid JSON.
-
-.. literalinclude:: examples/assertions/JsonTest.php
-   :caption: Usage of assertJson()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/JsonTest.php.out
-
-.. _appendixes.assertions.assertJsonFileEqualsJsonFile:
-
-assertJsonFileEqualsJsonFile()
-==============================
-
-``assertJsonFileEqualsJsonFile(string $expectedFile, string $actualFile[, string $message])``
-
-Reports an error identified by ``$message`` if the value of ``$actualFile`` does not match the value of
-``$expectedFile``.
-
-.. literalinclude:: examples/assertions/JsonFileEqualsJsonFileTest.php
-   :caption: Usage of assertJsonFileEqualsJsonFile()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/JsonFileEqualsJsonFileTest.php.out
-
-.. _appendixes.assertions.assertJsonStringEqualsJsonFile:
-
-assertJsonStringEqualsJsonFile()
-================================
-
-``assertJsonStringEqualsJsonFile(string $expectedFile, string $actualJson[, string $message])``
-
-Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
-``$expectedFile``.
-
-.. literalinclude:: examples/assertions/JsonStringEqualsJsonFileTest.php
-   :caption: Usage of assertJsonStringEqualsJsonFile()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/JsonStringEqualsJsonFileTest.php.out
-
-.. _appendixes.assertions.assertJsonStringEqualsJsonString:
-
-assertJsonStringEqualsJsonString()
-==================================
-
-``assertJsonStringEqualsJsonString(string $expectedJson, string $actualJson[, string $message])``
-
-Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
-``$expectedJson``.
-
-.. literalinclude:: examples/assertions/JsonStringEqualsJsonStringTest.php
-   :caption: Usage of assertJsonStringEqualsJsonString()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/JsonStringEqualsJsonStringTest.php.out
-
-.. _appendixes.assertions.assertLessThan:
-
-assertLessThan()
-================
-
-``assertLessThan(mixed $expected, mixed $actual[, string $message])``
-
-Reports an error identified by ``$message`` if the value of ``$actual`` is not less than the value of ``$expected``.
-
-.. literalinclude:: examples/assertions/LessThanTest.php
-   :caption: Usage of assertLessThan()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/LessThanTest.php.out
-
-.. _appendixes.assertions.assertLessThanOrEqual:
-
-assertLessThanOrEqual()
-=======================
-
-``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message])``
-
-Reports an error identified by ``$message`` if the value of ``$actual`` is not less than or equal to the value of ``$expected``.
-
-.. literalinclude:: examples/assertions/LessThanOrEqualTest.php
-   :caption: Usage of assertLessThanOrEqual()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/LessThanOrEqualTest.php.out
-
-.. _appendixes.assertions.assertNan:
-
-assertNan()
-===========
-
-``assertNan(mixed $actual[, string $message])``
-
-Reports an error identified by ``$message`` if ``$actual`` is not ``NAN``.
-
-.. literalinclude:: examples/assertions/NanTest.php
-   :caption: Usage of assertNan()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/NanTest.php.out
-
 .. _appendixes.assertions.assertNull:
 
 assertNull()
-============
+------------
 
 ``assertNull(mixed $actual[, string $message])``
 
@@ -1106,10 +782,104 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/NullTest.php.out
 
+.. _appendixes.assertions.strings:
+
+Strings
+=======
+
+.. _appendixes.assertions.assertStringStartsWith:
+
+assertStringStartsWith()
+------------------------
+
+``assertStringStartsWith(string $prefix, string $string[, string $message])``
+
+Reports an error identified by ``$message`` if the ``$string`` does not start with ``$prefix``.
+
+``assertStringStartsNotWith()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/StringStartsWithTest.php
+   :caption: Usage of assertStringStartsWith()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/StringStartsWithTest.php.out
+
+.. _appendixes.assertions.assertStringEndsWith:
+
+assertStringEndsWith()
+----------------------
+
+``assertStringEndsWith(string $suffix, string $string[, string $message])``
+
+Reports an error identified by ``$message`` if the ``$string`` does not end with ``$suffix``.
+
+``assertStringEndsNotWith()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/StringEndsWithTest.php
+   :caption: Usage of assertStringEndsWith()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/StringEndsWithTest.php.out
+
+.. _appendixes.assertions.assertStringContainsString:
+
+assertStringContainsString()
+----------------------------
+
+``assertStringContainsString(string $needle, string $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$needle`` is not a substring of ``$haystack``.
+
+``assertStringNotContainsString()`` is the inverse of this assertion and takes the same arguments.
+
+``assertStringContainsStringIgnoringLineEndings()`` takes the same arguments and can be used if line endings should be ignored.
+
+.. literalinclude:: examples/assertions/StringContainsStringTest.php
+   :caption: Usage of assertStringContainsString()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/StringContainsStringTest.php.out
+
+assertStringContainsStringIgnoringCase()
+----------------------------------------
+
+``assertStringContainsStringIgnoringCase(string $needle, string $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$needle`` is not a substring of ``$haystack``.
+
+Differences in casing are ignored when ``$needle`` is searched for in ``$haystack``. This also works
+for Unicode characters with diacritics (accents, umlauts, circumflex, etc.) as long as both strings
+have the same `Normalization Form <https://www.php.net/manual/en/class.normalizer.php>`_.
+
+``assertStringNotContainsStringIgnoringCase()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/StringContainsStringIgnoringCaseTest.php
+   :caption: Usage of assertStringContainsStringIgnoringCase()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/StringContainsStringIgnoringCaseTest.php.out
+
+.. _appendixes.assertions.assertStringEqualsStringIgnoringLineEndings:
+
+assertStringEqualsStringIgnoringLineEndings
+-------------------------------------------
+
+``assertStringEqualsStringIgnoringLineEndings(string $expected, string $actual[, string $message])``
+
+Reports an error identified by ``$message`` if the two strings ``$expected`` and ``$actual`` are not equal while ignoring line endings.
+
 .. _appendixes.assertions.assertMatchesRegularExpression:
 
 assertMatchesRegularExpression()
-================================
+--------------------------------
 
 ``assertMatchesRegularExpression(string $pattern, string $string[, string $message])``
 
@@ -1128,7 +898,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertStringMatchesFormat:
 
 assertStringMatchesFormat()
-===========================
+---------------------------
 
 ``assertStringMatchesFormat(string $format, string $string[, string $message])``
 
@@ -1197,7 +967,7 @@ The format string may contain the following placeholders:
 .. _appendixes.assertions.assertStringMatchesFormatFile:
 
 assertStringMatchesFormatFile()
-===============================
+-------------------------------
 
 ``assertStringMatchesFormatFile(string $formatFile, string $string[, string $message])``
 
@@ -1213,79 +983,10 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/StringMatchesFormatFileTest.php.out
 
-.. _appendixes.assertions.assertSame:
-
-assertSame()
-============
-
-``assertSame(mixed $expected, mixed $actual[, string $message])``
-
-Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` do not have the same type and value.
-
-``assertNotSame()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/SameWithMixedTest.php
-   :caption: Usage of assertSame()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/SameWithMixedTest.php.out
-
-``assertSame(object $expected, object $actual[, string $message])``
-
-Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` do not reference the same object.
-
-.. literalinclude:: examples/assertions/SameWithObjectsTest.php
-   :caption: Usage of assertSame() with objects
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/SameWithObjectsTest.php.out
-
-.. _appendixes.assertions.assertSameSize:
-
-assertSameSize()
-================
-
-``assertSameSize(Countable|iterable $expected, Countable|iterable $actual[, string $message])``
-
-Reports an error identified by ``$message`` if the sizes of ``$actual`` and ``$expected`` are not the same.
-
-``assertNotSameSize()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/SameSizeTest.php
-   :caption: Usage of assertSameSize()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/SameSizeTest.php.out
-
-.. _appendixes.assertions.assertStringEndsWith:
-
-assertStringEndsWith()
-======================
-
-``assertStringEndsWith(string $suffix, string $string[, string $message])``
-
-Reports an error identified by ``$message`` if the ``$string`` does not end with ``$suffix``.
-
-``assertStringEndsNotWith()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/StringEndsWithTest.php
-   :caption: Usage of assertStringEndsWith()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/StringEndsWithTest.php.out
-
 .. _appendixes.assertions.assertStringEqualsFile:
 
 assertStringEqualsFile()
-========================
+------------------------
 
 ``assertStringEqualsFile(string $expectedFile, string $actualString[, string $message])``
 
@@ -1304,29 +1005,465 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/StringEqualsFileTest.php.out
 
-.. _appendixes.assertions.assertStringStartsWith:
+.. _appendixes.assertions.json:
 
-assertStringStartsWith()
-========================
+JSON
+====
 
-``assertStringStartsWith(string $prefix, string $string[, string $message])``
+.. _appendixes.assertions.assertJson:
 
-Reports an error identified by ``$message`` if the ``$string`` does not start with ``$prefix``.
+assertJson()
+------------
 
-``assertStringStartsNotWith()`` is the inverse of this assertion and takes the same arguments.
+``assertJson(string $actual[, string $message])``
 
-.. literalinclude:: examples/assertions/StringStartsWithTest.php
-   :caption: Usage of assertStringStartsWith()
+Reports an error identified by ``$message`` if the value of ``$actual`` is not valid JSON.
+
+.. literalinclude:: examples/assertions/JsonTest.php
+   :caption: Usage of assertJson()
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/assertions/StringStartsWithTest.php.out
+.. literalinclude:: examples/assertions/JsonTest.php.out
+
+.. _appendixes.assertions.assertJsonFileEqualsJsonFile:
+
+assertJsonFileEqualsJsonFile()
+------------------------------
+
+``assertJsonFileEqualsJsonFile(string $expectedFile, string $actualFile[, string $message])``
+
+Reports an error identified by ``$message`` if the value of ``$actualFile`` does not match the value of
+``$expectedFile``.
+
+.. literalinclude:: examples/assertions/JsonFileEqualsJsonFileTest.php
+   :caption: Usage of assertJsonFileEqualsJsonFile()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/JsonFileEqualsJsonFileTest.php.out
+
+.. _appendixes.assertions.assertJsonStringEqualsJsonFile:
+
+assertJsonStringEqualsJsonFile()
+--------------------------------
+
+``assertJsonStringEqualsJsonFile(string $expectedFile, string $actualJson[, string $message])``
+
+Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
+``$expectedFile``.
+
+.. literalinclude:: examples/assertions/JsonStringEqualsJsonFileTest.php
+   :caption: Usage of assertJsonStringEqualsJsonFile()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/JsonStringEqualsJsonFileTest.php.out
+
+.. _appendixes.assertions.assertJsonStringEqualsJsonString:
+
+assertJsonStringEqualsJsonString()
+----------------------------------
+
+``assertJsonStringEqualsJsonString(string $expectedJson, string $actualJson[, string $message])``
+
+Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
+``$expectedJson``.
+
+.. literalinclude:: examples/assertions/JsonStringEqualsJsonStringTest.php
+   :caption: Usage of assertJsonStringEqualsJsonString()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/JsonStringEqualsJsonStringTest.php.out
+
+.. _appendixes.assertions.xml:
+
+XML
+===
+
+.. _appendixes.assertions.assertXmlFileEqualsXmlFile:
+
+assertXmlFileEqualsXmlFile()
+----------------------------
+
+``assertXmlFileEqualsXmlFile(string $expectedFile, string $actualFile[, string $message])``
+
+Reports an error identified by ``$message`` if the XML document in ``$actualFile`` is not equal to the XML document in ``$expectedFile``.
+
+``assertXmlFileNotEqualsXmlFile()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/XmlFileEqualsXmlFileTest.php
+   :caption: Usage of assertXmlFileEqualsXmlFile()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/XmlFileEqualsXmlFileTest.php.out
+
+.. _appendixes.assertions.assertXmlStringEqualsXmlFile:
+
+assertXmlStringEqualsXmlFile()
+------------------------------
+
+``assertXmlStringEqualsXmlFile(string $expectedFile, string $actualXml[, string $message])``
+
+Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedFile``.
+
+``assertXmlStringNotEqualsXmlFile()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlFileTest.php
+   :caption: Usage of assertXmlStringEqualsXmlFile()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlFileTest.php.out
+
+.. _appendixes.assertions.assertXmlStringEqualsXmlString:
+
+assertXmlStringEqualsXmlString()
+--------------------------------
+
+``assertXmlStringEqualsXmlString(string $expectedXml, string $actualXml[, string $message])``
+
+Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedXml``.
+
+``assertXmlStringNotEqualsXmlString()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlStringTest.php
+   :caption: Usage of assertXmlStringEqualsXmlString()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlStringTest.php.out
+
+.. _appendixes.assertions.filesystem:
+
+Filesystem
+==========
+
+.. _appendixes.assertions.assertDirectoryExists:
+
+assertDirectoryExists()
+-----------------------
+
+``assertDirectoryExists(string $directory[, string $message])``
+
+Reports an error identified by ``$message`` if the directory specified by ``$directory`` does not exist.
+
+``assertDirectoryDoesNotExist()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/DirectoryExistsTest.php
+   :caption: Usage of assertDirectoryExists()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/DirectoryExistsTest.php.out
+
+.. _appendixes.assertions.assertDirectoryIsReadable:
+
+assertDirectoryIsReadable()
+---------------------------
+
+``assertDirectoryIsReadable(string $directory[, string $message])``
+
+Reports an error identified by ``$message`` if the directory specified by ``$directory`` is not a directory or is not readable.
+
+``assertDirectoryIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/DirectoryIsReadableTest.php
+   :caption: Usage of assertDirectoryIsReadable()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. parsed-literal::
+
+    ./tools/phpunit tests/DirectoryIsReadableTest.php
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
+
+    F
+
+    Time: 00:00, Memory: 14.29 MB
+
+    There was 1 failure:
+
+    1) DirectoryIsReadableTest::testFailure
+    Failed asserting that "/path/to/directory" is readable.
+
+    /path/to/DirectoryIsReadableTest.php:6
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+.. _appendixes.assertions.assertDirectoryIsWritable:
+
+assertDirectoryIsWritable()
+---------------------------
+
+``assertDirectoryIsWritable(string $directory[, string $message])``
+
+Reports an error identified by ``$message`` if the directory specified by ``$directory`` is not a directory or is not writable.
+
+``assertDirectoryIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/DirectoryIsReadableTest.php
+   :caption: Usage of assertDirectoryIsWritable()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. parsed-literal::
+
+    ./tools/phpunit tests/DirectoryIsWritableTest.php
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
+
+    F
+
+    Time: 00:00, Memory: 14.29 MB
+
+    There was 1 failure:
+
+    1) DirectoryIsWritableTest::testFailure
+    Failed asserting that "/path/to/directory" is writable.
+
+    /path/to/DirectoryIsWritableTest.php:6
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+.. _appendixes.assertions.assertFileExists:
+
+assertFileExists()
+------------------
+
+``assertFileExists(string $filename[, string $message])``
+
+Reports an error identified by ``$message`` if the file specified by ``$filename`` does not exist.
+
+``assertFileDoesNotExist()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/FileExistsTest.php
+   :caption: Usage of assertFileExists()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/FileExistsTest.php.out
+
+.. _appendixes.assertions.assertFileIsReadable:
+
+assertFileIsReadable()
+----------------------
+
+``assertFileIsReadable(string $filename[, string $message])``
+
+Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not readable.
+
+``assertFileIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/FileIsReadableTest.php
+   :caption: Usage of assertFileIsReadable()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. parsed-literal::
+
+    ./tools/phpunit tests/FileIsReadableTest.php
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
+
+    F
+
+    Time: 00:00, Memory: 14.29 MB
+
+    There was 1 failure:
+
+    1) FileIsReadableTest::testFailure
+    Failed asserting that "/path/to/file" is readable.
+
+    /path/to/FileIsReadableTest.php:6
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+.. _appendixes.assertions.assertFileIsWritable:
+
+assertFileIsWritable()
+----------------------
+
+``assertFileIsWritable(string $filename[, string $message])``
+
+Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not writable.
+
+``assertFileIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/FileIsWritableTest.php
+   :caption: Usage of assertFileIsWritable()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. parsed-literal::
+
+    ./tools/phpunit tests/FileIsWritableTest.php
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
+
+    F
+
+    Time: 00:00, Memory: 14.29 MB
+
+    There was 1 failure:
+
+    1) FileIsWritableTest::testFailure
+    Failed asserting that "/path/to/file" is writable.
+
+    /path/to/FileIsWritableTest.php:6
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+.. _appendixes.assertions.assertIsReadable:
+
+assertIsReadable()
+------------------
+
+``assertIsReadable(string $filename[, string $message])``
+
+Reports an error identified by ``$message`` if the file or directory specified by ``$filename`` is not readable.
+
+``assertIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/IsReadableTest.php
+   :caption: Usage of assertIsReadable()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. parsed-literal::
+
+    ./tools/phpunit tests/IsReadableTest.php
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
+
+    F
+
+    Time: 00:00, Memory: 14.29 MB
+
+    There was 1 failure:
+
+    1) IsReadableTest::testFailure
+    Failed asserting that "/path/to/unreadable" is readable.
+
+    /path/to/IsReadableTest.php:6
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+.. _appendixes.assertions.assertIsWritable:
+
+assertIsWritable()
+------------------
+
+``assertIsWritable(string $filename[, string $message])``
+
+Reports an error identified by ``$message`` if the file or directory specified by ``$filename`` is not writable.
+
+``assertIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/IsWritableTest.php
+   :caption: Usage of assertIsWritable()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. parsed-literal::
+
+    ./tools/phpunit tests/IsWritableTest.php
+    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.3
+
+    F
+
+    Time: 00:00, Memory: 14.29 MB
+
+    There was 1 failure:
+
+    1) IsWritableTest::testFailure
+    Failed asserting that "/path/to/unwritable" is writable.
+
+    /path/to/IsWritableTest.php:6
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+.. _appendixes.assertions.math:
+
+Math
+====
+
+.. _appendixes.assertions.assertInfinite:
+
+assertInfinite()
+----------------
+
+``assertInfinite(mixed $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not ``INF``.
+
+``assertFinite()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/InfiniteTest.php
+   :caption: Usage of assertInfinite()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/InfiniteTest.php.out
+
+.. _appendixes.assertions.assertNan:
+
+assertNan()
+-----------
+
+``assertNan(mixed $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not ``NAN``.
+
+.. literalinclude:: examples/assertions/NanTest.php
+   :caption: Usage of assertNan()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/NanTest.php.out
+
+.. _appendixes.assertions.constraints:
+
+Constraints
+===========
 
 .. _appendixes.assertions.assertThat:
 
 assertThat()
-============
+------------
 
 ``assertThat(mixed $value, PHPUnit\Framework\Constraint $constraint[, string $message])``
 
@@ -1413,81 +1550,5 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the string ends with a given suffix.
     * - ``PHPUnit\Framework\Constraint\StringStartsWith stringStartsWith(string $prefix)``
       - Constraint that asserts that the string starts with a given prefix.
-
-.. _appendixes.assertions.assertTrue:
-
-assertTrue()
-============
-
-``assertTrue(bool $condition[, string $message])``
-
-Reports an error identified by ``$message`` if ``$condition`` is ``false``.
-
-``assertNotTrue()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/TrueTest.php
-   :caption: Usage of assertTrue()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/TrueTest.php.out
-
-.. _appendixes.assertions.assertXmlFileEqualsXmlFile:
-
-assertXmlFileEqualsXmlFile()
-============================
-
-``assertXmlFileEqualsXmlFile(string $expectedFile, string $actualFile[, string $message])``
-
-Reports an error identified by ``$message`` if the XML document in ``$actualFile`` is not equal to the XML document in ``$expectedFile``.
-
-``assertXmlFileNotEqualsXmlFile()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/XmlFileEqualsXmlFileTest.php
-   :caption: Usage of assertXmlFileEqualsXmlFile()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/XmlFileEqualsXmlFileTest.php.out
-
-.. _appendixes.assertions.assertXmlStringEqualsXmlFile:
-
-assertXmlStringEqualsXmlFile()
-==============================
-
-``assertXmlStringEqualsXmlFile(string $expectedFile, string $actualXml[, string $message])``
-
-Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedFile``.
-
-``assertXmlStringNotEqualsXmlFile()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/XmlStringEqualsXmlFileTest.php
-   :caption: Usage of assertXmlStringEqualsXmlFile()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/XmlStringEqualsXmlFileTest.php.out
-
-.. _appendixes.assertions.assertXmlStringEqualsXmlString:
-
-assertXmlStringEqualsXmlString()
-================================
-
-``assertXmlStringEqualsXmlString(string $expectedXml, string $actualXml[, string $message])``
-
-Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedXml``.
-
-``assertXmlStringNotEqualsXmlString()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/XmlStringEqualsXmlStringTest.php
-   :caption: Usage of assertXmlStringEqualsXmlString()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/XmlStringEqualsXmlStringTest.php.out
 
 
