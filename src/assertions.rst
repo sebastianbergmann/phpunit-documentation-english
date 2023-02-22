@@ -461,6 +461,8 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 
 ``assertFileNotEquals()`` is the inverse of this assertion and takes the same arguments.
 
+``assertFileEqualsCanonicalizing()`` (and ``assertFileNotEqualsCanonicalizing()``) as well as ``assertFileEqualsIgnoringCase()`` (and ``assertFileNotEqualsIgnoringCase()``) do for files what ``assertEqualsCanonicalizing()`` (and ``assertNotEqualsCanonicalizing()``) as well as ``assertEqualsIgnoringCase()`` (and ``assertNotEqualsIgnoringCase()``) do for strings.
+
 .. literalinclude:: examples/assertions/FileEqualsTest.php
    :caption: Usage of assertFileEquals()
    :language: php
