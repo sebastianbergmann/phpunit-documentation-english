@@ -75,6 +75,8 @@ foreach (new GlobIterator(__DIR__ . '/../src/examples/**/*Test.php') as $test) {
     print '[processed] ' . $currentFile . PHP_EOL;
 }
 
+ksort($processed);
+
 file_put_contents(PROCESSED_JSON_FILE, json_encode($processed, JSON_PRETTY_PRINT));
 
 function processed_read(): array
