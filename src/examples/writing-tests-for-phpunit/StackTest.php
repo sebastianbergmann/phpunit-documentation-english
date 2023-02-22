@@ -15,8 +15,8 @@ final class StackTest extends TestCase
     #[Depends('testEmpty')]
     public function testPush(array $stack): array
     {
-        array_push($stack, 'foo');
-        $this->assertSame('foo', $stack[count($stack)-1]);
+        $stack[] = 'foo';
+        $this->assertSame('foo', $stack[count($stack) - 1]);
         $this->assertNotEmpty($stack);
 
         return $stack;
