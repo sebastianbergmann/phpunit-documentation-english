@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
-foreach (new GlobIterator(__DIR__ . '/../src/**/examples/*Test.php') as $test) {
+foreach (new GlobIterator(__DIR__ . '/../src/examples/**/*Test.php') as $test) {
     print $test->getRealPath() . PHP_EOL;
 
     $bootstrap     = dirname($test->getRealPath()) . '/src/autoload.php';
