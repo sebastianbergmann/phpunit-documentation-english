@@ -783,6 +783,8 @@ Reports an error identified by ``$message`` if ``$actual`` is not of type ``reso
 
 ``assertIsNotResource()`` is the inverse of this assertion and takes the same arguments.
 
+``assertIsClosedResource()`` (and ``assertIsNotClosedResource()``) are provided to explicitly check for closed resources.
+
 .. literalinclude:: examples/assertions/IsResourceTest.php
    :caption: Usage of assertIsResource()
    :language: php
