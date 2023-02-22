@@ -40,7 +40,7 @@ of ``$this->assertTrue()`` or ``self::assertTrue()``).
 assertArrayHasKey()
 ===================
 
-``assertArrayHasKey(mixed $key, array $array[, string $message = ''])``
+``assertArrayHasKey(int|string $key, array|ArrayAccess $array[, string $message])``
 
 Reports an error identified by ``$message`` if ``$array`` does not have the ``$key``.
 
@@ -59,7 +59,7 @@ Running the test shown above yields the output shown below:
 assertContains()
 ================
 
-``assertContains(mixed $needle, iterable $haystack[, string $message = ''])``
+``assertContains(mixed $needle, iterable $haystack[, string $message])``
 
 Reports an error identified by ``$message`` if ``$needle`` is not an element of ``$haystack``.
 
@@ -76,7 +76,7 @@ Running the test shown above yields the output shown below:
 assertStringContainsString()
 ============================
 
-``assertStringContainsString(string $needle, string $haystack[, string $message = ''])``
+``assertStringContainsString(string $needle, string $haystack[, string $message])``
 
 Reports an error identified by ``$message`` if ``$needle`` is not a substring of ``$haystack``.
 
@@ -93,7 +93,7 @@ Running the test shown above yields the output shown below:
 assertStringContainsStringIgnoringCase()
 ========================================
 
-``assertStringContainsStringIgnoringCase(string $needle, string $haystack[, string $message = ''])``
+``assertStringContainsStringIgnoringCase(string $needle, string $haystack[, string $message])``
 
 Reports an error identified by ``$message`` if ``$needle`` is not a substring of ``$haystack``.
 
@@ -137,7 +137,7 @@ Running the test shown above yields the output shown below:
 assertContainsOnlyInstancesOf()
 ===============================
 
-``assertContainsOnlyInstancesOf(string $classname, Traversable|array $haystack[, string $message = ''])``
+``assertContainsOnlyInstancesOf(string $classname, iterable $haystack[, string $message])``
 
 Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class ``$classname``.
 
@@ -154,7 +154,7 @@ Running the test shown above yields the output shown below:
 assertCount()
 =============
 
-``assertCount($expectedCount, $haystack[, string $message = ''])``
+``assertCount(int $expectedCount, Countable|iterable $haystack[, string $message])``
 
 Reports an error identified by ``$message`` if the number of elements in ``$haystack`` is not ``$expectedCount``.
 
@@ -173,7 +173,7 @@ Running the test shown above yields the output shown below:
 assertDirectoryExists()
 =======================
 
-``assertDirectoryExists(string $directory[, string $message = ''])``
+``assertDirectoryExists(string $directory[, string $message])``
 
 Reports an error identified by ``$message`` if the directory specified by ``$directory`` does not exist.
 
@@ -192,7 +192,7 @@ Running the test shown above yields the output shown below:
 assertDirectoryIsReadable()
 ===========================
 
-``assertDirectoryIsReadable(string $directory[, string $message = ''])``
+``assertDirectoryIsReadable(string $directory[, string $message])``
 
 Reports an error identified by ``$message`` if the directory specified by ``$directory`` is not a directory or is not readable.
 
@@ -230,7 +230,7 @@ Running the test shown above yields the output shown below:
 assertDirectoryIsWritable()
 ===========================
 
-``assertDirectoryIsWritable(string $directory[, string $message = ''])``
+``assertDirectoryIsWritable(string $directory[, string $message])``
 
 Reports an error identified by ``$message`` if the directory specified by ``$directory`` is not a directory or is not writable.
 
@@ -268,7 +268,7 @@ Running the test shown above yields the output shown below:
 assertEmpty()
 =============
 
-``assertEmpty(mixed $actual[, string $message = ''])``
+``assertEmpty(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not empty.
 
@@ -287,7 +287,7 @@ Running the test shown above yields the output shown below:
 assertEquals()
 ==============
 
-``assertEquals(mixed $expected, mixed $actual[, string $message = ''])``
+``assertEquals(mixed $expected, mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` are not equal.
 
@@ -303,7 +303,7 @@ Running the test shown above yields the output shown below:
 
 More specialized comparisons are used for specific argument types for ``$expected`` and ``$actual``, see below.
 
-``assertEquals(DOMDocument $expected, DOMDocument $actual[, string $message = ''])``
+``assertEquals(DOMDocument $expected, DOMDocument $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the uncommented canonical form of the XML documents represented by the two DOMDocument objects ``$expected`` and ``$actual`` are not equal.
 
@@ -315,7 +315,7 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/EqualsWithDomDocumentTest.php.out
 
-``assertEquals(object $expected, object $actual[, string $message = ''])``
+``assertEquals(object $expected, object $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the two objects ``$expected`` and ``$actual`` do not have equal attribute values.
 
@@ -327,7 +327,7 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/EqualsWithObjectsTest.php.out
 
-``assertEquals(array $expected, array $actual[, string $message = ''])``
+``assertEquals(array $expected, array $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the two arrays ``$expected`` and ``$actual`` are not equal.
 
@@ -342,7 +342,7 @@ Running the test shown above yields the output shown below:
 assertEqualsCanonicalizing()
 ============================
 
-``assertEqualsCanonicalizing(mixed $expected, mixed $actual[, string $message = ''])``
+``assertEqualsCanonicalizing(mixed $expected, mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` are not equal.
 
@@ -361,7 +361,7 @@ Running the test shown above yields the output shown below:
 assertEqualsIgnoringCase()
 ==========================
 
-``assertEqualsIgnoringCase(mixed $expected, mixed $actual[, string $message = ''])``
+``assertEqualsIgnoringCase(mixed $expected, mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` are not equal.
 
@@ -380,7 +380,7 @@ Running the test shown above yields the output shown below:
 assertEqualsWithDelta()
 =======================
 
-``assertEqualsWithDelta(mixed $expected, mixed $actual, float $delta[, string $message = ''])``
+``assertEqualsWithDelta(mixed $expected, mixed $actual, float $delta[, string $message])``
 
 Reports an error identified by ``$message`` if the absolute difference between ``$expected`` and ``$actual`` is greater than ``$delta``.
 
@@ -401,7 +401,7 @@ Running the test shown above yields the output shown below:
 assertObjectEquals()
 ====================
 
-``assertObjectEquals(object $expected, object $actual, string $method = 'equals', string $message = ''])``
+``assertObjectEquals(object $expected, object $actual, string $method = 'equals'[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not equal to ``$expected`` according to ``$actual->$method($expected)``.
 
@@ -436,7 +436,7 @@ If any of the aforementioned assumptions is not fulfilled or if ``$actual->$meth
 assertFalse()
 =============
 
-``assertFalse(bool $condition[, string $message = ''])``
+``assertFalse(bool $condition[, string $message])``
 
 Reports an error identified by ``$message`` if ``$condition`` is ``true``.
 
@@ -455,7 +455,7 @@ Running the test shown above yields the output shown below:
 assertFileEquals()
 ==================
 
-``assertFileEquals(string $expected, string $actual[, string $message = ''])``
+``assertFileEquals(string $expected, string $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the file specified by ``$expected`` does not have the same contents as the file specified by ``$actual``.
 
@@ -476,7 +476,7 @@ Running the test shown above yields the output shown below:
 assertFileExists()
 ==================
 
-``assertFileExists(string $filename[, string $message = ''])``
+``assertFileExists(string $filename[, string $message])``
 
 Reports an error identified by ``$message`` if the file specified by ``$filename`` does not exist.
 
@@ -495,7 +495,7 @@ Running the test shown above yields the output shown below:
 assertFileIsReadable()
 ======================
 
-``assertFileIsReadable(string $filename[, string $message = ''])``
+``assertFileIsReadable(string $filename[, string $message])``
 
 Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not readable.
 
@@ -533,7 +533,7 @@ Running the test shown above yields the output shown below:
 assertFileIsWritable()
 ======================
 
-``assertFileIsWritable(string $filename[, string $message = ''])``
+``assertFileIsWritable(string $filename[, string $message])``
 
 Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not writable.
 
@@ -571,7 +571,7 @@ Running the test shown above yields the output shown below:
 assertGreaterThan()
 ===================
 
-``assertGreaterThan(mixed $expected, mixed $actual[, string $message = ''])``
+``assertGreaterThan(mixed $expected, mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than the value of ``$expected``.
 
@@ -588,7 +588,7 @@ Running the test shown above yields the output shown below:
 assertGreaterThanOrEqual()
 ==========================
 
-``assertGreaterThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
+``assertGreaterThanOrEqual(mixed $expected, mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than or equal to the value of ``$expected``.
 
@@ -605,9 +605,9 @@ Running the test shown above yields the output shown below:
 assertInfinite()
 ================
 
-``assertInfinite(mixed $variable[, string $message = ''])``
+``assertInfinite(mixed $actual[, string $message])``
 
-Reports an error identified by ``$message`` if ``$variable`` is not ``INF``.
+Reports an error identified by ``$message`` if ``$actual`` is not ``INF``.
 
 ``assertFinite()`` is the inverse of this assertion and takes the same arguments.
 
@@ -624,7 +624,7 @@ Running the test shown above yields the output shown below:
 assertInstanceOf()
 ==================
 
-``assertInstanceOf($expected, $actual[, $message = ''])``
+``assertInstanceOf(string $expected, mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not an instance of ``$expected``.
 
@@ -641,7 +641,7 @@ Running the test shown above yields the output shown below:
 assertIsArray()
 ===============
 
-``assertIsArray($actual[, $message = ''])``
+``assertIsArray(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``array``.
 
@@ -658,7 +658,7 @@ Running the test shown above yields the output shown below:
 assertIsList()
 ==============
 
-``assertIsList($actual[, $message = ''])``
+``assertIsList(array $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the keys of ``$actual`` are not consecutive numbers from 0 to ``count($actual) - 1``.
 
@@ -673,7 +673,7 @@ Running the test shown above yields the output shown below:
 assertIsBool()
 ==============
 
-``assertIsBool($actual[, $message = ''])``
+``assertIsBool(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``bool``.
 
@@ -690,7 +690,7 @@ Running the test shown above yields the output shown below:
 assertIsCallable()
 ==================
 
-``assertIsCallable($actual[, $message = ''])``
+``assertIsCallable(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``callable``.
 
@@ -707,7 +707,7 @@ Running the test shown above yields the output shown below:
 assertIsFloat()
 ===============
 
-``assertIsFloat($actual[, $message = ''])``
+``assertIsFloat(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``float``.
 
@@ -724,7 +724,7 @@ Running the test shown above yields the output shown below:
 assertIsInt()
 =============
 
-``assertIsInt($actual[, $message = ''])``
+``assertIsInt(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``int``.
 
@@ -741,7 +741,7 @@ Running the test shown above yields the output shown below:
 assertIsIterable()
 ==================
 
-``assertIsIterable($actual[, $message = ''])``
+``assertIsIterable(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``iterable``.
 
@@ -758,7 +758,7 @@ Running the test shown above yields the output shown below:
 assertIsNumeric()
 =================
 
-``assertIsNumeric($actual[, $message = ''])``
+``assertIsNumeric(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``numeric``.
 
@@ -775,7 +775,7 @@ Running the test shown above yields the output shown below:
 assertIsObject()
 ================
 
-``assertIsObject($actual[, $message = ''])``
+``assertIsObject(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``object``.
 
@@ -792,7 +792,7 @@ Running the test shown above yields the output shown below:
 assertIsResource()
 ==================
 
-``assertIsResource($actual[, $message = ''])``
+``assertIsResource(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``resource``.
 
@@ -811,7 +811,7 @@ Running the test shown above yields the output shown below:
 assertIsScalar()
 ================
 
-``assertIsScalar($actual[, $message = ''])``
+``assertIsScalar(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``scalar``.
 
@@ -828,7 +828,7 @@ Running the test shown above yields the output shown below:
 assertIsString()
 ================
 
-``assertIsString($actual[, $message = ''])``
+``assertIsString(mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if ``$actual`` is not of type ``string``.
 
@@ -847,7 +847,7 @@ Running the test shown above yields the output shown below:
 assertIsReadable()
 ==================
 
-``assertIsReadable(string $filename[, string $message = ''])``
+``assertIsReadable(string $filename[, string $message])``
 
 Reports an error identified by ``$message`` if the file or directory specified by ``$filename`` is not readable.
 
@@ -885,7 +885,7 @@ Running the test shown above yields the output shown below:
 assertIsWritable()
 ==================
 
-``assertIsWritable(string $filename[, string $message = ''])``
+``assertIsWritable(string $filename[, string $message])``
 
 Reports an error identified by ``$message`` if the file or directory specified by ``$filename`` is not writable.
 
@@ -923,7 +923,7 @@ Running the test shown above yields the output shown below:
 assertJsonFileEqualsJsonFile()
 ==============================
 
-``assertJsonFileEqualsJsonFile(mixed $expectedFile, mixed $actualFile[, string $message = ''])``
+``assertJsonFileEqualsJsonFile(string $expectedFile, string $actualFile[, string $message])``
 
 Reports an error identified by ``$message`` if the value of ``$actualFile`` does not match the value of
 ``$expectedFile``.
@@ -941,7 +941,7 @@ Running the test shown above yields the output shown below:
 assertJsonStringEqualsJsonFile()
 ================================
 
-``assertJsonStringEqualsJsonFile(mixed $expectedFile, mixed $actualJson[, string $message = ''])``
+``assertJsonStringEqualsJsonFile(string $expectedFile, string $actualJson[, string $message])``
 
 Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
 ``$expectedFile``.
@@ -959,7 +959,7 @@ Running the test shown above yields the output shown below:
 assertJsonStringEqualsJsonString()
 ==================================
 
-``assertJsonStringEqualsJsonString(mixed $expectedJson, mixed $actualJson[, string $message = ''])``
+``assertJsonStringEqualsJsonString(string $expectedJson, string $actualJson[, string $message])``
 
 Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
 ``$expectedJson``.
@@ -977,7 +977,7 @@ Running the test shown above yields the output shown below:
 assertLessThan()
 ================
 
-``assertLessThan(mixed $expected, mixed $actual[, string $message = ''])``
+``assertLessThan(mixed $expected, mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not less than the value of ``$expected``.
 
@@ -994,7 +994,7 @@ Running the test shown above yields the output shown below:
 assertLessThanOrEqual()
 =======================
 
-``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
+``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the value of ``$actual`` is not less than or equal to the value of ``$expected``.
 
@@ -1011,9 +1011,9 @@ Running the test shown above yields the output shown below:
 assertNan()
 ===========
 
-``assertNan(mixed $variable[, string $message = ''])``
+``assertNan(mixed $actual[, string $message])``
 
-Reports an error identified by ``$message`` if ``$variable`` is not ``NAN``.
+Reports an error identified by ``$message`` if ``$actual`` is not ``NAN``.
 
 .. literalinclude:: examples/assertions/NanTest.php
    :caption: Usage of assertNan()
@@ -1028,9 +1028,9 @@ Running the test shown above yields the output shown below:
 assertNull()
 ============
 
-``assertNull(mixed $variable[, string $message = ''])``
+``assertNull(mixed $actual[, string $message])``
 
-Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
+Reports an error identified by ``$message`` if ``$actual`` is not ``null``.
 
 ``assertNotNull()`` is the inverse of this assertion and takes the same arguments.
 
@@ -1047,7 +1047,7 @@ Running the test shown above yields the output shown below:
 assertMatchesRegularExpression()
 ================================
 
-``assertMatchesRegularExpression(string $pattern, string $string[, string $message = ''])``
+``assertMatchesRegularExpression(string $pattern, string $string[, string $message])``
 
 Reports an error identified by ``$message`` if ``$string`` does not match the regular expression ``$pattern``.
 
@@ -1066,7 +1066,7 @@ Running the test shown above yields the output shown below:
 assertStringMatchesFormat()
 ===========================
 
-``assertStringMatchesFormat(string $format, string $string[, string $message = ''])``
+``assertStringMatchesFormat(string $format, string $string[, string $message])``
 
 Reports an error identified by ``$message`` if the ``$string`` does not match the ``$format`` string.
 
@@ -1135,7 +1135,7 @@ The format string may contain the following placeholders:
 assertStringMatchesFormatFile()
 ===============================
 
-``assertStringMatchesFormatFile(string $formatFile, string $string[, string $message = ''])``
+``assertStringMatchesFormatFile(string $formatFile, string $string[, string $message])``
 
 Reports an error identified by ``$message`` if the ``$string`` does not match the contents of the ``$formatFile``.
 
@@ -1154,7 +1154,7 @@ Running the test shown above yields the output shown below:
 assertSame()
 ============
 
-``assertSame(mixed $expected, mixed $actual[, string $message = ''])``
+``assertSame(mixed $expected, mixed $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` do not have the same type and value.
 
@@ -1168,7 +1168,7 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/SameWithMixedTest.php.out
 
-``assertSame(object $expected, object $actual[, string $message = ''])``
+``assertSame(object $expected, object $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` do not reference the same object.
 
@@ -1183,7 +1183,7 @@ Running the test shown above yields the output shown below:
 assertSameSize()
 ================
 
-``assertSameSize($expected, $actual, string $message = '')``
+``assertSameSize(Countable|iterable $expected, Countable|iterable $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the sizes of ``$actual`` and ``$expected`` are not the same.
 
@@ -1202,7 +1202,7 @@ Running the test shown above yields the output shown below:
 assertStringEndsWith()
 ======================
 
-``assertStringEndsWith(string $suffix, string $string[, string $message = ''])``
+``assertStringEndsWith(string $suffix, string $string[, string $message])``
 
 Reports an error identified by ``$message`` if the ``$string`` does not end with ``$suffix``.
 
@@ -1221,7 +1221,7 @@ Running the test shown above yields the output shown below:
 assertStringEqualsFile()
 ========================
 
-``assertStringEqualsFile(string $expectedFile, string $actualString[, string $message = ''])``
+``assertStringEqualsFile(string $expectedFile, string $actualString[, string $message])``
 
 Reports an error identified by ``$message`` if the file specified by ``$expectedFile`` does not have ``$actualString`` as its contents.
 
@@ -1243,7 +1243,7 @@ Running the test shown above yields the output shown below:
 assertStringStartsWith()
 ========================
 
-``assertStringStartsWith(string $prefix, string $string[, string $message = ''])``
+``assertStringStartsWith(string $prefix, string $string[, string $message])``
 
 Reports an error identified by ``$message`` if the ``$string`` does not start with ``$prefix``.
 
@@ -1262,7 +1262,7 @@ Running the test shown above yields the output shown below:
 assertThat()
 ============
 
-``assertThat(mixed $value, PHPUnit\Framework\Constraint $constraint[, $message = ''])``
+``assertThat(mixed $value, PHPUnit\Framework\Constraint $constraint[, string $message])``
 
 Reports an error identified by ``$message`` if the ``$value`` does not match the ``$constraint``.
 
@@ -1353,7 +1353,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
 assertTrue()
 ============
 
-``assertTrue(bool $condition[, string $message = ''])``
+``assertTrue(bool $condition[, string $message])``
 
 Reports an error identified by ``$message`` if ``$condition`` is ``false``.
 
@@ -1372,7 +1372,7 @@ Running the test shown above yields the output shown below:
 assertXmlFileEqualsXmlFile()
 ============================
 
-``assertXmlFileEqualsXmlFile(string $expectedFile, string $actualFile[, string $message = ''])``
+``assertXmlFileEqualsXmlFile(string $expectedFile, string $actualFile[, string $message])``
 
 Reports an error identified by ``$message`` if the XML document in ``$actualFile`` is not equal to the XML document in ``$expectedFile``.
 
@@ -1391,7 +1391,7 @@ Running the test shown above yields the output shown below:
 assertXmlStringEqualsXmlFile()
 ==============================
 
-``assertXmlStringEqualsXmlFile(string $expectedFile, string $actualXml[, string $message = ''])``
+``assertXmlStringEqualsXmlFile(string $expectedFile, string $actualXml[, string $message])``
 
 Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedFile``.
 
@@ -1410,7 +1410,7 @@ Running the test shown above yields the output shown below:
 assertXmlStringEqualsXmlString()
 ================================
 
-``assertXmlStringEqualsXmlString(string $expectedXml, string $actualXml[, string $message = ''])``
+``assertXmlStringEqualsXmlString(string $expectedXml, string $actualXml[, string $message])``
 
 Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedXml``.
 
