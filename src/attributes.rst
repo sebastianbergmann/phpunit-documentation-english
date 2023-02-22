@@ -223,7 +223,7 @@ that a test intends to cover the given global function.
 +------------+-------------+--------------+------------+
 
 The ``CoversNothing()`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
-that a test does not intend contribute to code coverage.
+that a test does not intend to contribute to code coverage.
 
 
 .. _appendixes.attributes.UsesClass:
