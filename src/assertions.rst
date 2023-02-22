@@ -1212,6 +1212,9 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 
 ``assertStringNotEqualsFile()`` is the inverse of this assertion and takes the same arguments.
 
+``assertStringEqualsFileCanonicalizing()`` (and ``assertStringNotEqualsFileCanonicalizing()``) as well as ``assertStringEqualsFileIgnoringCase()`` (and ``assertStringNotEqualsFileIgnoringCase()``) do for files what ``assertEqualsCanonicalizing()`` (and ``assertNotEqualsCanonicalizing()``) as well as ``assertEqualsIgnoringCase()`` (and ``assertNotEqualsIgnoringCase()``) do for strings.
+
+
 .. literalinclude:: examples/assertions/StringEqualsFileTest.php
    :caption: Usage of assertStringEqualsFile()
    :language: php
