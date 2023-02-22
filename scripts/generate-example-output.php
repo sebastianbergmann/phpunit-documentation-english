@@ -75,12 +75,7 @@ foreach (new GlobIterator(__DIR__ . '/../src/examples/**/*Test.php') as $test) {
     print '[processed] ' . $currentFile . PHP_EOL;
 }
 
-processed_write($processed);
-
-function processed_write(array $processed): void
-{
-    file_put_contents(PROCESSED_JSON_FILE, json_encode($processed, JSON_PRETTY_PRINT));
-}
+file_put_contents(PROCESSED_JSON_FILE, json_encode($processed, JSON_PRETTY_PRINT));
 
 function processed_read(): array
 {
