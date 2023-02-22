@@ -65,10 +65,10 @@ the method's return type declaration.
    your software design, favour the doubling of interfaces over the doubling
    of classes.
 
-.. _test-doubles.stubs:
+.. _test-doubles.test-stubs:
 
-Stubs
-=====
+Test Stubs
+==========
 
 The practice of replacing an object with a test double that (optionally) returns
 configured return values is referred to as *stubbing*. You can use a *stub* to
@@ -76,10 +76,10 @@ configured return values is referred to as *stubbing*. You can use a *stub* to
 point for the indirect inputs of the SUT. This allows the test to force the SUT
 down paths it might not otherwise execute".
 
-:numref:`test-doubles.stubs.examples.StubTest.php` shows how to stub method calls
+:numref:`test-doubles.test-stubs.examples.SomeClassTest.php` shows how to stub method calls
 and set up return values. We first use the ``createStub()`` method that is provided
 by the ``PHPUnit\Framework\TestCase`` class to create a stub object that looks like
-an instance of ``SomeClass`` (:numref:`test-doubles.stubs.examples.SomeClass.php`).
+an instance of ``Dependency`` (:numref:`test-doubles.test-stubs.examples.Dependency.php`).
 
 We then use the `Fluent Interface <http://martinfowler.com/bliki/FluentInterface.html>`_
 that PHPUnit provides to specify the behavior for the stub. In essence, this means that
@@ -88,48 +88,65 @@ Instead, you chain method calls as shown in the example. This leads to more read
 and "fluent" code.
 
 .. code-block:: php
-    :caption: The class we want to stub
-    :name: test-doubles.stubs.examples.SomeClass.php
+    :caption: The class we want to test
+    :name: test-doubles.test-stubs.examples.SomeClass.php
 
     <?php declare(strict_types=1);
-    class SomeClass
+    final class SomeClass
     {
-        public function doSomething()
+        public function doSomething(Dependency $dependency): string
         {
-            // Do something.
+            $result = '';
+
+            // ...
+
+            return $result . $dependency->doSomething();
         }
+    }
+
+
+.. code-block:: php
+    :caption: The dependency we want to stub
+    :name: test-doubles.test-stubs.examples.Dependency.php
+
+    <?php declare(strict_types=1);
+    interface Dependency
+    {
+        public function doSomething(): string;
     }
 
 .. code-block:: php
     :caption: Stubbing a method call to return a fixed value
-    :name: test-doubles.stubs.examples.StubTest.php
+    :name: test-doubles.test-stubs.examples.SomeClassTest.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    final class StubTest extends TestCase
+    final class SomeClassTest extends TestCase
     {
-        public function testStub(): void
+        public function testDoesSomething(): void
         {
-            // Create a stub for the SomeClass class.
-            $stub = $this->createStub(SomeClass::class);
+            $sut = new SomeClass;
 
-            // Configure the stub.
-            $stub->method('doSomething')
-                 ->willReturn('foo');
+            // Create a test stub for the Dependency interface
+            $dependency = $this->createStub(Dependency::class);
 
-            // Calling $stub->doSomething() will now return
-            // 'foo'.
-            $this->assertSame('foo', $stub->doSomething());
+            // Configure the test stub
+            $dependency->method('doSomething')
+                       ->willReturn('foo');
+
+            $result = $sut->doSomething($dependency);
+
+            $this->assertStringEndsWith('foo', $result);
         }
     }
 
 .. admonition:: Limitation: Methods named "method"
 
-   The example shown above only works when the original class does not
+   The example shown above only works when the original interface or class does not
    declare a method named "method".
 
-   If the original class does declare a method named "method" then
+   If the original interface or class does declare a method named "method" then
    ``$stub->expects($this->any())->method('doSomething')->willReturn('foo');``
    has to be used.
 
@@ -141,7 +158,7 @@ based on a method's return type. Consider the example shown below:
 
 .. code-block:: php
     :caption: A method with a return type declaration
-    :name: test-doubles.stubs.examples.returnTypeDeclaration.php
+    :name: test-doubles.test-stubs.examples.returnTypeDeclaration.php
 
     <?php declare(strict_types=1);
     class C
@@ -162,14 +179,14 @@ Similarly, if ``m`` had a return type declaration for a scalar type then a retur
 value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``)
 would be generated.
 
-:numref:`test-doubles.stubs.examples.StubTest2.php` shows an example of how to use the
+:numref:`test-doubles.test-stubs.examples.StubTest2.php` shows an example of how to use the
 Mock Builder's fluent interface to configure the creation of the test double. The
 configuration of this test double uses the same best practice defaults used by
 ``createStub()``.
 
 .. code-block:: php
-    :caption: Using the Mock Builder API can be used to configure the generated test double class
-    :name: test-doubles.stubs.examples.StubTest2.php
+    :caption: Using the Mock Builder API to configure how the test double class is generated
+    :name: test-doubles.test-stubs.examples.StubTest2.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
@@ -197,12 +214,12 @@ configuration of this test double uses the same best practice defaults used by
     }
 
 In the examples so far we have been returning simple values using ``willReturn($value)``.
-This is a shorthand syntax provided for convenience. :numref:`test-doubles.stubs.shorthands`
+This is a shorthand syntax provided for convenience. :numref:`test-doubles.test-stubs.shorthands`
 shows the available stubbing shorthands alongside their longer counterparts.
 
 .. rst-class:: table
 .. list-table:: Stubbing shorthands
-    :name: test-doubles.stubs.shorthands
+    :name: test-doubles.test-stubs.shorthands
     :header-rows: 1
 
     * - short hand
@@ -225,12 +242,12 @@ shows the available stubbing shorthands alongside their longer counterparts.
 We can use variations on this longer syntax to achieve more complex stubbing behaviour.
 
 Sometimes you want to return one of the arguments of a method call (unchanged) as the
-result of a stubbed method call. :numref:`test-doubles.stubs.examples.StubTest3.php`
+result of a stubbed method call. :numref:`test-doubles.test-stubs.examples.StubTest3.php`
 shows how you can achieve this using ``returnArgument()`` instead of ``returnValue()``.
 
 .. code-block:: php
     :caption: Stubbing a method call to return one of the arguments
-    :name: test-doubles.stubs.examples.StubTest3.php
+    :name: test-doubles.test-stubs.examples.StubTest3.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
@@ -255,12 +272,12 @@ shows how you can achieve this using ``returnArgument()`` instead of ``returnVal
     }
 
 When testing a fluent interface, it is sometimes useful to have a stubbed method return
-a reference to the stubbed object. :numref:`test-doubles.stubs.examples.StubTest4.php`
+a reference to the stubbed object. :numref:`test-doubles.test-stubs.examples.StubTest4.php`
 shows how you can use ``returnSelf()`` to achieve this.
 
 .. code-block:: php
     :caption: Stubbing a method call to return a reference to the stub object
-    :name: test-doubles.stubs.examples.StubTest4.php
+    :name: test-doubles.test-stubs.examples.StubTest4.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
@@ -283,12 +300,12 @@ shows how you can use ``returnSelf()`` to achieve this.
 
 Sometimes a stubbed method should return different values depending on a predefined list
 of arguments.  You can use ``returnValueMap()`` to create a map that associates arguments
-with corresponding return values. See :numref:`test-doubles.stubs.examples.StubTest5.php`
+with corresponding return values. See :numref:`test-doubles.test-stubs.examples.StubTest5.php`
 for an example.
 
 .. code-block:: php
     :caption: Stubbing a method call to return the value from a map
-    :name: test-doubles.stubs.examples.StubTest5.php
+    :name: test-doubles.test-stubs.examples.StubTest5.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
@@ -320,11 +337,11 @@ for an example.
 When the stubbed method call should return a calculated value instead of a fixed one
 (see ``returnValue()``) or an (unchanged) argument (see ``returnArgument()``), you
 can use ``returnCallback()`` to have the stubbed method return the result of a callback
-function or method. See :numref:`test-doubles.stubs.examples.StubTest6.php` for an example.
+function or method. See :numref:`test-doubles.test-stubs.examples.StubTest6.php` for an example.
 
 .. code-block:: php
     :caption: Stubbing a method call to return a value from a callback
-    :name: test-doubles.stubs.examples.StubTest6.php
+    :name: test-doubles.test-stubs.examples.StubTest6.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
@@ -347,11 +364,11 @@ function or method. See :numref:`test-doubles.stubs.examples.StubTest6.php` for 
 
 A simpler alternative to setting up a callback method may be to specify a list of desired
 return values. You can do this with the ``onConsecutiveCalls()`` method. See
-:numref:`test-doubles.stubs.examples.StubTest7.php` for an example.
+:numref:`test-doubles.test-stubs.examples.StubTest7.php` for an example.
 
 .. code-block:: php
     :caption: Stubbing a method call to return a list of values in the specified order
-    :name: test-doubles.stubs.examples.StubTest7.php
+    :name: test-doubles.test-stubs.examples.StubTest7.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
@@ -375,12 +392,12 @@ return values. You can do this with the ``onConsecutiveCalls()`` method. See
     }
 
 Instead of returning a value, a stubbed method can also raise an exception.
-:numref:`test-doubles.stubs.examples.StubTest8.php` shows how to use
+:numref:`test-doubles.test-stubs.examples.StubTest8.php` shows how to use
 ``throwException()`` to do this.
 
 .. code-block:: php
     :caption: Stubbing a method call to throw an exception
-    :name: test-doubles.stubs.examples.StubTest8.php
+    :name: test-doubles.test-stubs.examples.StubTest8.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
