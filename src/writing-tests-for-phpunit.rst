@@ -36,14 +36,14 @@ with PHPUnit:
 
    Inside the test methods, assertion methods such as ``assertSame()`` (see :ref:`appendixes.assertions`) are used to assert that an actual value matches an expected value, for instance.
 
-.. literalinclude:: examples/GreeterTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/GreeterTest.php
    :caption: Testing a return value
    :name: writing-tests-for-phpunit.examples.GreeterTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/GreeterTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/GreeterTest.php.out
 
 Martin Fowler once said:
 
@@ -60,14 +60,14 @@ Expecting Exceptions
 shows how to use the ``expectException()`` method to test
 whether an exception is thrown by the code under test.
 
-.. literalinclude:: examples/ExceptionTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/ExceptionTest.php
    :caption: Using the expectException() method
    :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/ExceptionTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/ExceptionTest.php.out
 
 In addition to the ``expectException()`` method the
 ``expectExceptionCode()``,
@@ -100,26 +100,26 @@ an array of arrays or an object that implements the ``Iterator``
 interface. In each iteration step, it must yield an array. For each of these arrays,
 the test method will be called with the contents of the array as its arguments.
 
-.. literalinclude:: examples/NumericDataSetsTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/NumericDataSetsTest.php
    :caption: Using a data provider that returns an array of arrays
    :name: writing-tests-for-phpunit.data-providers.examples.NumericDataSetsTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/NumericDataSetsTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/NumericDataSetsTest.php.out
 
 When using a large number of data sets it is useful to name each one with a string key.
 Output will be more verbose as it will contain that name of a dataset that breaks a test.
 
-.. literalinclude:: examples/NamedDataSetsTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/NamedDataSetsTest.php
    :caption: Using a data provider with named data sets
    :name: writing-tests-for-phpunit.data-providers.examples.NamedDataSetsTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/NamedDataSetsTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/NamedDataSetsTest.php.out
 
 .. admonition:: Note
 
@@ -162,14 +162,14 @@ shows how to use the ``expectOutputString()`` method to
 set the expected output. If this expected output is not generated, the
 test will be counted as a failure.
 
-.. literalinclude:: examples/OutputTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/OutputTest.php
    :caption: Testing the output of a function or method
    :name: writing-tests-for-phpunit.output.examples.OutputTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/OutputTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/OutputTest.php.out
 
 :numref:`writing-tests-for-phpunit.output.tables.api`
 shows the methods provided for testing output
@@ -224,7 +224,7 @@ as being incomplete or not yet implemented.
 By calling the method ``markTestIncomplete()`` in a test method, we can mark the test
 as incomplete:
 
-.. literalinclude:: examples/WorkInProgressTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/WorkInProgressTest.php
    :caption: Marking a test as incomplete
    :name: writing-tests-for-phpunit.incomplete-tests.examples.WorkInProgressTest.php
    :language: php
@@ -233,7 +233,7 @@ An incomplete test is denoted by an ``I`` in the output
 of the PHPUnit command-line test runner, as shown in the following
 example:
 
-.. literalinclude:: examples/WorkInProgressTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/WorkInProgressTest.php.out
 
 .. _writing-tests-for-phpunit.skipping-tests:
 
@@ -252,7 +252,7 @@ method, ``testConnection()``. In the test case class'
 extension is available and use the ``markTestSkipped()``
 method to skip the test if it is not.
 
-.. literalinclude:: examples/DatabaseTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/DatabaseTest.php
    :caption: Skipping a test
    :name: writing-tests-for-phpunit.skipping-tests.examples.DatabaseTest.php
    :language: php
@@ -261,7 +261,7 @@ A test that has been skipped is denoted by an ``S`` in
 the output of the PHPUnit command-line test runner, as shown in the
 following example:
 
-.. literalinclude:: examples/DatabaseTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/DatabaseTest.php.out
 
 .. _writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes:
 
@@ -331,14 +331,14 @@ the test fixture by a producer and passing it to the dependent consumers.
 This example shows how to use the ``PHPUnit\Framework\Attributes\Depends`` attribute to express
 dependencies between test methods:
 
-.. literalinclude:: examples/StackTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/StackTest.php
    :caption: Using the ``Depends`` attribute to express dependencies
    :name: writing-tests-for-phpunit.examples.StackTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/StackTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/StackTest.php.out
 
 In the example above, the first test, ``testEmpty()``,
 creates a new array and asserts that it is empty. The test then returns
@@ -362,14 +362,14 @@ when a depended-upon test has failed. This improves defect localization by
 exploiting the dependencies between tests as shown in
 :numref:`writing-tests-for-phpunit.examples.DependencyFailureTest.php`.
 
-.. literalinclude:: examples/DependencyFailureTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/DependencyFailureTest.php
    :caption: Leveraging the dependencies between tests
    :name: writing-tests-for-phpunit.examples.DependencyFailureTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/DependencyFailureTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/DependencyFailureTest.php.out
 
 A test may have more than one test dependency attribute.
 
@@ -389,14 +389,14 @@ Failure Output
 Whenever a test fails, PHPUnit tries its best to provide you with as much
 context as possible that can help to identify the problem.
 
-.. literalinclude:: examples/ArrayDiffTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/ArrayDiffTest.php
    :caption: Output generated when an array comparison fails
    :name: writing-tests-for-phpunit.failure-output.examples.ArrayDiffTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/ArrayDiffTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/ArrayDiffTest.php.out
 
 In this example only one of the array values differs and the other values
 are shown to provide context on where the error occurred.
@@ -404,14 +404,14 @@ are shown to provide context on where the error occurred.
 When the generated output would be long to read PHPUnit will split it up
 and provide a few lines of context around every difference.
 
-.. literalinclude:: examples/LongArrayDiffTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/LongArrayDiffTest.php
    :caption: Output when an array comparison of a long array fails
    :name: writing-tests-for-phpunit.failure-output.examples.LongArrayDiffTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/LongArrayDiffTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/LongArrayDiffTest.php.out
 
 .. _writing-tests-for-phpunit.failure-output.edge-cases:
 
@@ -425,14 +425,14 @@ might show more problems than actually exist.
 This only happens when using ``assertEquals()`` or other "weak" comparison
 functions on arrays or objects.
 
-.. literalinclude:: examples/ArrayWeakComparisonTest.php
+.. literalinclude:: examples/writing-tests-for-phpunit/ArrayWeakComparisonTest.php
    :caption: Edge case in the diff generation when using weak comparison
    :name: writing-tests-for-phpunit.failure-output.edge-cases.examples.ArrayWeakComparisonTest.php
    :language: php
 
 Running the test shown above yields the output shown below:
 
-.. literalinclude:: examples/ArrayWeakComparisonTest.php.out
+.. literalinclude:: examples/writing-tests-for-phpunit/ArrayWeakComparisonTest.php.out
 
 In this example the difference in the first index between
 ``1`` and ``'1'`` is
