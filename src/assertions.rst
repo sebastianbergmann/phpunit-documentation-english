@@ -86,6 +86,8 @@ Reports an error identified by ``$message`` if ``$needle`` is not a substring of
 
 ``assertStringNotContainsString()`` is the inverse of this assertion and takes the same arguments.
 
+``assertStringContainsStringIgnoringLineEndings()`` takes the same arguments and can be used if line endings should be ignored.
+
 .. literalinclude:: examples/assertions/StringContainsStringTest.php
    :caption: Usage of assertStringContainsString()
    :language: php
@@ -342,6 +344,13 @@ Reports an error identified by ``$message`` if the two arrays ``$expected`` and 
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/EqualsWithArraysTest.php.out
+
+assertStringEqualsStringIgnoringLineEndings
+===========================================
+
+``assertStringEqualsStringIgnoringLineEndings(string $expected, string $actual[, string $message])``
+
+Reports an error identified by ``$message`` if the two strings ``$expected`` and ``$actual`` are not equal while ignoring line endings.
 
 assertEqualsCanonicalizing()
 ============================
