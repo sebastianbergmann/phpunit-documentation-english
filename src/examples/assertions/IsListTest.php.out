@@ -10,7 +10,7 @@ Time: 00:00.001, Memory: 14.29 MB
 There was 1 failure:
 
 1) IsListTest::testFailure
-Failed asserting that an array is list.
+Failed asserting that an array is a list.
 
 /path/to/tests/IsListTest.php:8
 

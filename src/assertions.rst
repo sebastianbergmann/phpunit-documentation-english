@@ -559,9 +559,9 @@ Running the test shown above yields the output shown below:
 assertIsList()
 --------------
 
-``assertIsList(array $actual[, string $message])``
+``assertIsList(mixed $actual[, string $message])``
 
-Reports an error identified by ``$message`` if the keys of ``$actual`` are not consecutive numbers from 0 to ``count($actual) - 1``.
+Reports an error identified by ``$message`` if ``$actual`` is not an array where the keys are consecutive numbers from 0 to ``count($actual) - 1``.
 
 .. literalinclude:: examples/assertions/IsListTest.php
    :caption: Usage of assertIsList()
