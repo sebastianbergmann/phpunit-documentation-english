@@ -145,7 +145,7 @@ Please note that ``createStub()`` will automatically and recursively stub return
 
 In the example shown above, the ``C::m()`` method has a return type declaration indicating that this method returns an object of type ``D``. When a test double for ``C`` is created and no return value is configured for ``m()`` using ``willReturn()`` (see above), for instance, then when ``m()`` is invoked PHPUnit will automatically create a test double for ``D`` to be returned.
 
-Similarily, if ``m`` had a return type declaration for a scalar type then a return value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``) would be generated.
+Similarly, if ``m`` had a return type declaration for a scalar type then a return value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``) would be generated.
 
 :numref:`test-doubles.stubs.examples.StubTest2.php` shows an
 example of how to use the Mock Builder's fluent interface to configure the
