@@ -257,6 +257,44 @@ The ``UsesFunction(string $functionName)`` attribute can be used to :ref:`specif
 that a test allows the execution of code in the given global function, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
+.. _appendixes.attributes.IgnoreClassForCodeCoverage:
+
+``IgnoreClassForCodeCoverage``
+------------------------------
+
++-----------+-------------+--------------+------------+
+| Context   | Class Level | Method Level | Repeatable |
++===========+=============+==============+============+
+| Test Code | yes         | no           | yes        |
++-----------+-------------+--------------+------------+
+
+The ``IgnoreClassForCodeCoverage(string $className)`` attribute can be used to ... todo ...
+
+.. _appendixes.attributes.IgnoreMethodForCodeCoverage:
+
+``IgnoreMethodForCodeCoverage``
+-------------------------------
+
++-----------+-------------+--------------+------------+
+| Context   | Class Level | Method Level | Repeatable |
++===========+=============+==============+============+
+| Test Code | yes         | no           | yes        |
++-----------+-------------+--------------+------------+
+
+The ``IgnoreMethodForCodeCoverage(string $className, string $methodName)`` attribute can be used to ... todo ...
+
+.. _appendixes.attributes.IgnoreFunctionForCodeCoverage:
+
+``IgnoreFunctionForCodeCoverage``
+---------------------------------
+
++-----------+-------------+--------------+------------+
+| Context   | Class Level | Method Level | Repeatable |
++===========+=============+==============+============+
+| Test Code | yes         | no           | yes        |
++-----------+-------------+--------------+------------+
+
+The ``IgnoreFunctionForCodeCoverage(string $functionName)`` attribute can be used to ... todo ...
 
 .. _appendixes.attributes.CodeCoverageIgnore:
 
@@ -277,6 +315,10 @@ The ``CodeCoverageIgnore`` attribute can be used in production code to to
    Using this attribute in production code may lead to problems when the code production
    code uses the Reflection API to instantiate attributes it is not responsible for, for
    instance PHPUnit's.
+
+As of PHPUnit 10.1, the ``CodeCoverageIgnore`` attribute (as well as the ``@codeCoverageIgnore``
+annotations) is deprecated. Use the ``IgnoreClassForCodeCoverage``, ``IgnoreMethodForCodeCoverage``,
+and ``IgnoreFunctionForCodeCoverage`` attributes on test classes instead.
 
 Data Provider
 =============
