@@ -144,6 +144,18 @@ Running the test shown above yields the output shown below:
 Equality is checked using the ``==`` operator, but more specialized comparisons are used for specific
 argument types for ``$expected`` and ``$actual``, see below.
 
+``assertEquals(DateTimeInterface $expected, DateTimeInterface $actual[, string $message])``
+
+Reports an error identified by ``$message`` if the two points in time represented by the two ``DateTimeInterface`` objects ``$expected`` and ``$actual`` are not equal.
+
+.. literalinclude:: examples/assertions/EqualsWithDateTimeImmutableTest.php
+   :caption: Usage of assertEquals() with DateTimeImmutable objects
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/EqualsWithDateTimeImmutableTest.php.out
+
 ``assertEquals(DOMDocument $expected, DOMDocument $actual[, string $message])``
 
 Reports an error identified by ``$message`` if the uncommented canonical form of the XML documents represented by the two ``DOMDocument`` objects ``$expected`` and ``$actual`` are not equal.
