@@ -269,9 +269,14 @@ in the context of :ref:`preventing unintentionally covered code <risky-tests.uni
 | Production Code | yes         | yes          | no         |
 +-----------------+-------------+--------------+------------+
 
-The ``CodeCoverageIgnore`` attribute can be used to to :ref:`ignore <code-coverage.ignoring-code-blocks>`
-a class or method for code coverage.
+The ``CodeCoverageIgnore`` attribute can be used in production code to to
+:ref:`ignore <code-coverage.ignoring-code-blocks>` a class or method for code coverage.
 
+.. admonition:: Warning
+
+   Using this attribute in production code may lead to problems when the code production
+   code uses the Reflection API to instantiate attributes it is not responsible for, for
+   instance PHPUnit's.
 
 Data Provider
 =============
