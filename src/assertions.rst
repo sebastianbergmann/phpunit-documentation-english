@@ -115,6 +115,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/SameWithObjectsTest.php.out
 
+Identity is checked using the ``===`` operator.
+
 .. _appendixes.assertions.equality:
 
 Equality
@@ -139,7 +141,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/EqualsTest.php.out
 
-More specialized comparisons are used for specific argument types for ``$expected`` and ``$actual``, see below.
+Equality is checked using the ``==`` operator, but more specialized comparisons are used for specific
+argument types for ``$expected`` and ``$actual``, see below.
 
 ``assertEquals(DOMDocument $expected, DOMDocument $actual[, string $message])``
 
