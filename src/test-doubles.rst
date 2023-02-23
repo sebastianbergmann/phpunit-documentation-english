@@ -79,7 +79,7 @@ down paths it might not otherwise execute".
 :numref:`test-doubles.test-stubs.examples.SomeClassTest.php` shows how to stub method calls
 and set up return values. We first use the ``createStub()`` method that is provided
 by the ``PHPUnit\Framework\TestCase`` class to create a stub object that looks like
-an instance of ``Dependency`` (:numref:`test-doubles.test-stubs.examples.Dependency.php`).
+an instance of ``Dependency``.
 
 We then use the `Fluent Interface <http://martinfowler.com/bliki/FluentInterface.html>`_
 that PHPUnit provides to specify the behavior for the stub. In essence, this means that
@@ -87,59 +87,18 @@ you do not need to create several temporary objects and wire them together after
 Instead, you chain method calls as shown in the example. This leads to more readable
 and "fluent" code.
 
-.. code-block:: php
-    :caption: The class we want to test
-    :name: test-doubles.test-stubs.examples.SomeClass.php
+.. literalinclude:: examples/test-doubles/src/SomeClass.php
+   :caption: The class we want to test
+   :language: php
 
-    <?php declare(strict_types=1);
-    final class SomeClass
-    {
-        public function doSomething(Dependency $dependency): string
-        {
-            $result = '';
+.. literalinclude:: examples/test-doubles/src/Dependency.php
+   :caption: The dependency we want to stub
+   :language: php
 
-            // ...
-
-            return $result . $dependency->doSomething();
-        }
-    }
-
-
-.. code-block:: php
-    :caption: The dependency we want to stub
-    :name: test-doubles.test-stubs.examples.Dependency.php
-
-    <?php declare(strict_types=1);
-    interface Dependency
-    {
-        public function doSomething(): string;
-    }
-
-.. code-block:: php
-    :caption: Stubbing a method call to return a fixed value
-    :name: test-doubles.test-stubs.examples.SomeClassTest.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class SomeClassTest extends TestCase
-    {
-        public function testDoesSomething(): void
-        {
-            $sut = new SomeClass;
-
-            // Create a test stub for the Dependency interface
-            $dependency = $this->createStub(Dependency::class);
-
-            // Configure the test stub
-            $dependency->method('doSomething')
-                       ->willReturn('foo');
-
-            $result = $sut->doSomething($dependency);
-
-            $this->assertStringEndsWith('foo', $result);
-        }
-    }
+.. literalinclude:: examples/test-doubles/SomeClassTest.php
+   :caption: Stubbing a method call to return a fixed value
+   :name: test-doubles.test-stubs.examples.SomeClassTest.php
+   :language: php
 
 .. admonition:: Limitation: Methods named "method"
 
@@ -156,18 +115,9 @@ the desired behavior when the ``createStub()`` method is used.
 Please note that ``createStub()`` will automatically and recursively stub return values
 based on a method's return type. Consider the example shown below:
 
-.. code-block:: php
-    :caption: A method with a return type declaration
-    :name: test-doubles.test-stubs.examples.returnTypeDeclaration.php
-
-    <?php declare(strict_types=1);
-    class C
-    {
-        public function m(): D
-        {
-            // Do something.
-        }
-    }
+.. literalinclude:: examples/test-doubles/src/C.php
+   :caption: A method with a return type declaration
+   :language: php
 
 In the example shown above, the ``C::m()`` method has a return type declaration
 indicating that this method returns an object of type ``D``. When a test double
@@ -179,39 +129,13 @@ Similarly, if ``m`` had a return type declaration for a scalar type then a retur
 value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``)
 would be generated.
 
-:numref:`test-doubles.test-stubs.examples.StubTest2.php` shows an example of how to use the
-Mock Builder's fluent interface to configure the creation of the test double. The
-configuration of this test double uses the same best practice defaults used by
-``createStub()``.
+Here is an example that shows how to use the Mock Builder's fluent interface to configure
+the creation of the test double. The configuration of this test double uses the same best
+practice defaults used by ``createStub()``:
 
-.. code-block:: php
-    :caption: Using the Mock Builder API to configure how the test double class is generated
-    :name: test-doubles.test-stubs.examples.StubTest2.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class StubTest extends TestCase
-    {
-        public function testStub(): void
-        {
-            // Create a stub for the SomeClass class.
-            $stub = $this->getMockBuilder(SomeClass::class)
-                         ->disableOriginalConstructor()
-                         ->disableOriginalClone()
-                         ->disableArgumentCloning()
-                         ->disallowMockingUnknownTypes()
-                         ->getMock();
-
-            // Configure the stub.
-            $stub->method('doSomething')
-                 ->willReturn('foo');
-
-            // Calling $stub->doSomething() will now return
-            // 'foo'.
-            $this->assertSame('foo', $stub->doSomething());
-        }
-    }
+.. literalinclude:: examples/test-doubles/MockBuilderExampleTest.php
+   :caption: Using the Mock Builder API to configure how the test double class is generated
+   :language: php
 
 In the examples so far we have been returning simple values using ``willReturn($value)``.
 This is a shorthand syntax provided for convenience. :numref:`test-doubles.test-stubs.shorthands`
@@ -242,181 +166,51 @@ shows the available stubbing shorthands alongside their longer counterparts.
 We can use variations on this longer syntax to achieve more complex stubbing behaviour.
 
 Sometimes you want to return one of the arguments of a method call (unchanged) as the
-result of a stubbed method call. :numref:`test-doubles.test-stubs.examples.StubTest3.php`
-shows how you can achieve this using ``returnArgument()`` instead of ``returnValue()``.
+result of a stubbed method call. Here is an example that shows how you can achieve this
+using ``returnArgument()`` instead of ``returnValue()``:
 
-.. code-block:: php
-    :caption: Stubbing a method call to return one of the arguments
-    :name: test-doubles.test-stubs.examples.StubTest3.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class StubTest extends TestCase
-    {
-        public function testReturnArgumentStub(): void
-        {
-            // Create a stub for the SomeClass class.
-            $stub = $this->createStub(SomeClass::class);
-
-            // Configure the stub.
-            $stub->method('doSomething')
-                 ->will($this->returnArgument(0));
-
-            // $stub->doSomething('foo') returns 'foo'
-            $this->assertSame('foo', $stub->doSomething('foo'));
-
-            // $stub->doSomething('bar') returns 'bar'
-            $this->assertSame('bar', $stub->doSomething('bar'));
-        }
-    }
+.. literalinclude:: examples/test-doubles/ReturnArgumentExampleTest.php
+   :caption: Using returnArgument() to stub a method call to return one of the arguments
+   :language: php
 
 When testing a fluent interface, it is sometimes useful to have a stubbed method return
-a reference to the stubbed object. :numref:`test-doubles.test-stubs.examples.StubTest4.php`
-shows how you can use ``returnSelf()`` to achieve this.
+a reference to the stubbed object. Here is an example that shows how you can use
+``returnSelf()`` to achieve this:
 
-.. code-block:: php
-    :caption: Stubbing a method call to return a reference to the stub object
-    :name: test-doubles.test-stubs.examples.StubTest4.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class StubTest extends TestCase
-    {
-        public function testReturnSelf(): void
-        {
-            // Create a stub for the SomeClass class.
-            $stub = $this->createStub(SomeClass::class);
-
-            // Configure the stub.
-            $stub->method('doSomething')
-                 ->will($this->returnSelf());
-
-            // $stub->doSomething() returns $stub
-            $this->assertSame($stub, $stub->doSomething());
-        }
-    }
+.. literalinclude:: examples/test-doubles/ReturnSelfExampleTest.php
+   :caption: Using returnSelf() to stub a method call to return a reference to the stub object
+   :language: php
 
 Sometimes a stubbed method should return different values depending on a predefined list
-of arguments.  You can use ``returnValueMap()`` to create a map that associates arguments
-with corresponding return values. See :numref:`test-doubles.test-stubs.examples.StubTest5.php`
-for an example.
+of arguments. Here is an example that shows how to use ``returnValueMap()`` to create a map
+that associates arguments with corresponding return values:
 
-.. code-block:: php
-    :caption: Stubbing a method call to return the value from a map
-    :name: test-doubles.test-stubs.examples.StubTest5.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class StubTest extends TestCase
-    {
-        public function testReturnValueMapStub(): void
-        {
-            // Create a stub for the SomeClass class.
-            $stub = $this->createStub(SomeClass::class);
-
-            // Create a map of arguments to return values.
-            $map = [
-                ['a', 'b', 'c', 'd'],
-                ['e', 'f', 'g', 'h']
-            ];
-
-            // Configure the stub.
-            $stub->method('doSomething')
-                 ->will($this->returnValueMap($map));
-
-            // $stub->doSomething() returns different values depending on
-            // the provided arguments.
-            $this->assertSame('d', $stub->doSomething('a', 'b', 'c'));
-            $this->assertSame('h', $stub->doSomething('e', 'f', 'g'));
-        }
-    }
+.. literalinclude:: examples/test-doubles/ReturnValueMapExampleTest.php
+   :caption: Using returnValueMap() to stub a method call to return the value from a map
+   :language: php
 
 When the stubbed method call should return a calculated value instead of a fixed one
 (see ``returnValue()``) or an (unchanged) argument (see ``returnArgument()``), you
 can use ``returnCallback()`` to have the stubbed method return the result of a callback
-function or method. See :numref:`test-doubles.test-stubs.examples.StubTest6.php` for an example.
+function or method. Here is an example:
 
-.. code-block:: php
-    :caption: Stubbing a method call to return a value from a callback
-    :name: test-doubles.test-stubs.examples.StubTest6.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class StubTest extends TestCase
-    {
-        public function testReturnCallbackStub(): void
-        {
-            // Create a stub for the SomeClass class.
-            $stub = $this->createStub(SomeClass::class);
-
-            // Configure the stub.
-            $stub->method('doSomething')
-                 ->will($this->returnCallback('str_rot13'));
-
-            // $stub->doSomething($argument) returns str_rot13($argument)
-            $this->assertSame('fbzrguvat', $stub->doSomething('something'));
-        }
-    }
+.. literalinclude:: examples/test-doubles/ReturnCallbackExampleTest.php
+   :caption: Using returnCallback() to stub a method call to return a value from a callback
+   :language: php
 
 A simpler alternative to setting up a callback method may be to specify a list of desired
-return values. You can do this with the ``onConsecutiveCalls()`` method. See
-:numref:`test-doubles.test-stubs.examples.StubTest7.php` for an example.
+return values. You can do this with the ``onConsecutiveCalls()`` method. Here is an example:
 
-.. code-block:: php
-    :caption: Stubbing a method call to return a list of values in the specified order
-    :name: test-doubles.test-stubs.examples.StubTest7.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class StubTest extends TestCase
-    {
-        public function testOnConsecutiveCallsStub(): void
-        {
-            // Create a stub for the SomeClass class.
-            $stub = $this->createStub(SomeClass::class);
-
-            // Configure the stub.
-            $stub->method('doSomething')
-                 ->will($this->onConsecutiveCalls(2, 3, 5, 7));
-
-            // $stub->doSomething() returns a different value each time
-            $this->assertSame(2, $stub->doSomething());
-            $this->assertSame(3, $stub->doSomething());
-            $this->assertSame(5, $stub->doSomething());
-        }
-    }
+.. literalinclude:: examples/test-doubles/OnConsecutiveCallsExampleTest.php
+   :caption: Using onConsecutiveCalls() to stub a method call to return a list of values in the specified order
+   :language: php
 
 Instead of returning a value, a stubbed method can also raise an exception.
-:numref:`test-doubles.test-stubs.examples.StubTest8.php` shows how to use
-``throwException()`` to do this.
+Here is an example that shows how to use ``throwException()`` to do this:
 
-.. code-block:: php
-    :caption: Stubbing a method call to throw an exception
-    :name: test-doubles.test-stubs.examples.StubTest8.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class StubTest extends TestCase
-    {
-        public function testThrowExceptionStub(): void
-        {
-            // Create a stub for the SomeClass class.
-            $stub = $this->createStub(SomeClass::class);
-
-            // Configure the stub.
-            $stub->method('doSomething')
-                 ->will($this->throwException(new Exception));
-
-            // $stub->doSomething() throws Exception
-            $stub->doSomething();
-        }
-    }
+.. literalinclude:: examples/test-doubles/ThrowExceptionExampleTest.php
+   :caption: Using throwException() to stub a method call to throw an exception
+   :language: php
 
 Alternatively, you can write the stub yourself and improve your design
 along the way. Widely used resources are accessed through a single facade,
@@ -455,51 +249,23 @@ just a test stub plus assertions; it is used in a fundamentally different way"
 Here is an example: suppose we want to test that the correct method, ``update()``
 in our example, is called on an object that observes another object.
 
-:numref:`test-doubles.mock-objects.examples.SUT.php` shows the code for the
-``Subject`` class and the ``Observer`` interface that are part of the System
-under Test (SUT).
+Here is the code for the ``Subject`` class and the ``Observer`` interface that are part
+of the System under Test (SUT):
 
-.. code-block:: php
-    :caption: Subject class and Observer interface that are part of the System under Test (SUT)
-    :name: test-doubles.mock-objects.examples.SUT.php
+.. literalinclude:: examples/test-doubles/src/Subject.php
+   :caption: Subject class that is part of the System under Test (SUT)
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
+.. literalinclude:: examples/test-doubles/src/Observer.php
+   :caption: Observer interface that is part of the System under Test (SUT)
+   :language: php
 
-    final class Subject
-    {
-        private array $observers = [];
+Here is an example that shows how to use a mock object to test the interaction between
+``Subject`` and ``Observer`` objects:
 
-        public function attach(Observer $observer)
-        {
-            $this->observers[] = $observer;
-        }
-
-        public function doSomething()
-        {
-            // ...
-
-            $this->notify('something');
-        }
-
-        private function notify(string $argument): void
-        {
-            foreach ($this->observers as $observer) {
-                $observer->update($argument);
-            }
-        }
-
-        // ...
-    }
-
-    interface Observer
-    {
-        public function update(string $argument): void;
-    }
-
-:numref:`test-doubles.mock-objects.examples.SubjectTest.php`
-shows how to use a mock object to test the interaction between
-``Subject`` and ``Observer`` objects.
+.. literalinclude:: examples/test-doubles/SubjectTest.php
+   :caption: Testing that a method gets called once and with a specified argument
+   :language: php
 
 We first use the ``createMock()`` method that is provided by the ``PHPUnit\Framework\TestCase``
 class to create a mock object for the ``Observer``.
@@ -507,31 +273,6 @@ class to create a mock object for the ``Observer``.
 Because we are interested in verifying that a method is called, and which
 arguments it is called with, we introduce the ``expects()`` and
 ``with()`` methods to specify how this interaction should look.
-
-.. code-block:: php
-    :caption: Testing that a method gets called once and with a specified argument
-    :name: test-doubles.mock-objects.examples.SubjectTest.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class SubjectTest extends TestCase
-    {
-        public function testObserversAreUpdated(): void
-        {
-            $observer = $this->createMock(Observer::class);
-
-            $observer->expects($this->once())
-                     ->method('update')
-                     ->with($this->identicalTo('something'));
-
-            $subject = new Subject;
-
-            $subject->attach($observer);
-
-            $subject->doSomething();
-        }
-    }
 
 The ``with()`` method can take any number of arguments, corresponding to the number of arguments
 to the method being mocked. You can specify more advanced constraints on the method's arguments
@@ -652,72 +393,26 @@ The ``getMockForTrait()`` method returns a mock object
 that uses a specified trait. All abstract methods of the given trait
 are mocked. This allows for testing the concrete methods of a trait.
 
-.. code-block:: php
-    :caption: Testing the concrete methods of a trait
-    :name: test-doubles.mock-objects.examples.TraitClassTest.php
+.. literalinclude:: examples/test-doubles/src/AbstractTrait.php
+   :caption: A trait with an abstract method
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    trait AbstractTrait
-    {
-        public function concreteMethod()
-        {
-            return $this->abstractMethod();
-        }
-
-        public abstract function abstractMethod();
-    }
-
-    final class TraitClassTest extends TestCase
-    {
-        public function testConcreteMethod(): void
-        {
-            $mock = $this->getMockForTrait(AbstractTrait::class);
-
-            $mock->expects($this->any())
-                 ->method('abstractMethod')
-                 ->will($this->returnValue(true));
-
-            $this->assertTrue($mock->concreteMethod());
-        }
-    }
+.. literalinclude:: examples/test-doubles/AbstractTraitTest.php
+   :caption: A test for a concrete method of a trait
+   :language: php
 
 The ``getMockForAbstractClass()`` method returns a mock
 object for an abstract class. All abstract methods of the given abstract
 class are mocked. This allows for testing the concrete methods of an
 abstract class.
 
-.. code-block:: php
-    :caption: Testing the concrete methods of an abstract class
-    :name: test-doubles.mock-objects.examples.AbstractClassTest.php
+.. literalinclude:: examples/test-doubles/src/AbstractClass.php
+   :caption: An abstract class with a concrete method
+   :language: php
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    abstract class AbstractClass
-    {
-        public function concreteMethod()
-        {
-            return $this->abstractMethod();
-        }
-
-        public abstract function abstractMethod();
-    }
-
-    final class AbstractClassTest extends TestCase
-    {
-        public function testConcreteMethod(): void
-        {
-            $stub = $this->getMockForAbstractClass(AbstractClass::class);
-
-            $stub->expects($this->any())
-                 ->method('abstractMethod')
-                 ->will($this->returnValue(true));
-
-            $this->assertTrue($stub->concreteMethod());
-        }
-    }
+.. literalinclude:: examples/test-doubles/AbstractClassTest.php
+   :caption: A test for a concrete method of an abstract class
+   :language: php
 
 .. _test-doubles.stubbing-and-mocking-web-services:
 
@@ -726,81 +421,13 @@ Stubbing and Mocking Web Services
 
 When your application interacts with a web service you want to test it
 without actually interacting with the web service. To create stubs
-and mocks of web services, the ``getMockFromWsdl()``
-can be used like ``getMock()`` (see above). The only
-difference is that ``getMockFromWsdl()`` returns a stub or
-mock based on a web service description in WSDL and ``getMock()``
-returns a stub or mock based on a PHP class or interface.
+and mocks of web services, the ``getMockFromWsdl()`` method can be used.
 
-:numref:`test-doubles.stubbing-and-mocking-web-services.examples.GoogleTest.php`
-shows how ``getMockFromWsdl()`` can be used to stub, for
-example, the web service described in :file:`GoogleSearch.wsdl`.
+This method returns a test stub based on a web service description in WSDL whereas
+``createStub()``, for instance, returns a test stub based on an interface or on a class.
 
-.. code-block:: php
-    :caption: Stubbing a web service
-    :name: test-doubles.stubbing-and-mocking-web-services.examples.GoogleTest.php
+Here is an example that shows how to stub the web service described in :file:`HelloService.wsdl`:
 
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
-
-    final class GoogleTest extends TestCase
-    {
-        public function testSearch(): void
-        {
-            $googleSearch = $this->getMockFromWsdl(
-              'GoogleSearch.wsdl', 'GoogleSearch'
-            );
-
-            $directoryCategory = new stdClass;
-            $directoryCategory->fullViewableName = '';
-            $directoryCategory->specialEncoding = '';
-
-            $element = new stdClass;
-            $element->summary = '';
-            $element->URL = 'https://phpunit.de/';
-            $element->snippet = '...';
-            $element->title = '<b>PHPUnit</b>';
-            $element->cachedSize = '11k';
-            $element->relatedInformationPresent = true;
-            $element->hostName = 'phpunit.de';
-            $element->directoryCategory = $directoryCategory;
-            $element->directoryTitle = '';
-
-            $result = new stdClass;
-            $result->documentFiltering = false;
-            $result->searchComments = '';
-            $result->estimatedTotalResultsCount = 3.9000;
-            $result->estimateIsExact = false;
-            $result->resultElements = [$element];
-            $result->searchQuery = 'PHPUnit';
-            $result->startIndex = 1;
-            $result->endIndex = 1;
-            $result->searchTips = '';
-            $result->directoryCategories = [];
-            $result->searchTime = 0.248822;
-
-            $googleSearch->expects($this->any())
-                         ->method('doGoogleSearch')
-                         ->will($this->returnValue($result));
-
-            /**
-             * $googleSearch->doGoogleSearch() will now return a stubbed result and
-             * the web service's doGoogleSearch() method will not be invoked.
-             */
-            $this->assertEquals(
-              $result,
-              $googleSearch->doGoogleSearch(
-                '00000000000000000000000000000000',
-                'PHPUnit',
-                0,
-                1,
-                false,
-                '',
-                false,
-                '',
-                '',
-                ''
-              )
-            );
-        }
-    }
+.. literalinclude:: examples/test-doubles/WsdlStubExampleTest.php
+   :caption: Stubbing a web service
+   :language: php

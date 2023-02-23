@@ -1,0 +1,18 @@
+./tools/phpunit tests/MockBuilderExampleTest.php
+PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.3
+
+E                                                                   1 / 1 (100%)
+
+Time: 00:00.001, Memory: 14.29 MB
+
+There was 1 error:
+
+1) MockBuilderExampleTest::testStub
+PHPUnit\Framework\MockObject\ClassIsFinalException: Class "SomeClass" is declared "final" and cannot be doubled
+
+/path/to/tests/MockBuilderExampleTest.php:14
+
+ERRORS!
+Tests: 1, Assertions: 0, Errors: 1.
