@@ -146,7 +146,7 @@ argument types for ``$expected`` and ``$actual``, see below.
 
 ``assertEquals(DOMDocument $expected, DOMDocument $actual[, string $message])``
 
-Reports an error identified by ``$message`` if the uncommented canonical form of the XML documents represented by the two DOMDocument objects ``$expected`` and ``$actual`` are not equal.
+Reports an error identified by ``$message`` if the uncommented canonical form of the XML documents represented by the two ``DOMDocument`` objects ``$expected`` and ``$actual`` are not equal.
 
 .. literalinclude:: examples/assertions/EqualsWithDomDocumentTest.php
    :caption: Usage of assertEquals() with DOMDocument objects
