@@ -158,7 +158,7 @@ Running the test shown above yields the output shown below:
 
 ``assertEquals(object $expected, object $actual[, string $message])``
 
-Reports an error identified by ``$message`` if the two objects ``$expected`` and ``$actual`` do not have equal attribute values.
+Reports an error identified by ``$message`` if the two objects ``$expected`` and ``$actual`` do not have equal property values.
 
 .. literalinclude:: examples/assertions/EqualsWithObjectsTest.php
    :caption: Usage of assertEquals() with objects
@@ -189,7 +189,7 @@ assertEqualsCanonicalizing()
 
 Reports an error identified by ``$message`` if the two variables ``$expected`` and ``$actual`` are not equal.
 
-The contents of ``$expected`` and ``$actual`` are canonicalized before they are compared. For instance, when the two variables ``$expected`` and ``$actual`` are arrays, then these arrays are sorted before they are compared. When ``$expected`` and ``$actual`` are objects, each object is converted to an array containing all private, protected and public attributes.
+The contents of ``$expected`` and ``$actual`` are canonicalized before they are compared. For instance, when the two variables ``$expected`` and ``$actual`` are arrays, then these arrays are sorted before they are compared. When ``$expected`` and ``$actual`` are objects, each object is converted to an array containing all private, protected and public properties.
 
 ``assertNotEqualsCanonicalizing()`` is the inverse of this assertion and takes the same arguments.
 
