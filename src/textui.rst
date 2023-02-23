@@ -191,6 +191,8 @@ Selection
 ``--filter <pattern>``
 
     Filter which tests to run using pattern matching on the test name.
+    ``--filter <pattern>`` may be used multiple times and then combines the individual
+    filters into a single filter using a *logical and*.
 
 ``--test-suffix <suffixes>``
 
