@@ -201,7 +201,7 @@ shows an example.
 
 .. admonition:: Note
 
-    If a method is specificed with the ``@covers`` annotation, only the
+    If a method is specified with the ``@covers`` annotation, only the
     referenced method will be considered as covered, but not methods called
     by this method.
     Hence, when a covered method is refactored using the *extract method*
