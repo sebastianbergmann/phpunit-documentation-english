@@ -69,6 +69,10 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/writing-tests-for-phpunit/ExceptionTest.php.out
 
+The ``expectException()`` method has to be used **before** the exception you expect to be
+thrown is thrown. Ideally, ``expectException()`` is called immediately before the code is
+called that is expected to throw the exception.
+
 In addition to the ``expectException()`` method the
 ``expectExceptionCode()``,
 ``expectExceptionMessage()``, and
