@@ -27,22 +27,6 @@ in a test to automatically generate an object that can act as a test double for 
 specified original type (interface or class name). This test double object can be used
 in every context where an object of the original type is expected or required.
 
-These methods return a test double object for the specified type. The creation of this
-test double is performed using best practice defaults: the ``__construct()`` and
-``__clone()`` methods of the original class are not executed and the arguments passed
-to a method of the test double will not be cloned.
-
-If these defaults are not what you need then you can use the ``getMockBuilder(string $type)``
-method to customize the test double generation using a fluent interface.
-
-By default, all methods of the original class are replaced with an implementation that
-returns an automatically generated value that satisfies the method's return type
-declaration (without calling the original method).
-
-Using the ``willReturn()`` method, for instance, you can configure these implementations
-to return a specified value when called. This configured value must be compatible with
-the method's return type declaration.
-
 .. admonition:: Limitation: final, private, and static methods
 
    Please note that ``final``, ``private``, and ``static`` methods cannot
@@ -68,21 +52,35 @@ Test Stubs
 ==========
 
 The practice of replacing an object with a test double that (optionally) returns
-configured return values is referred to as *stubbing*. You can use a *stub* to
+configured return values is referred to as *stubbing*. You can use a *test stub* to
 "replace a real component on which the SUT depends so that the test has a control
 point for the indirect inputs of the SUT. This allows the test to force the SUT
-down paths it might not otherwise execute".
+down paths it might not otherwise execute" (Gerard Meszaros).
 
-:numref:`test-doubles.test-stubs.examples.SomeClassTest.php` shows how to stub method calls
-and set up return values. We first use the ``createStub()`` method that is provided
-by the ``PHPUnit\Framework\TestCase`` class to create a stub object that looks like
-an instance of ``Dependency``.
+createStub()
+------------
 
-We then use the `Fluent Interface <http://martinfowler.com/bliki/FluentInterface.html>`_
-that PHPUnit provides to specify the behavior for the stub. In essence, this means that
-you do not need to create several temporary objects and wire them together afterwards.
-Instead, you chain method calls as shown in the example. This leads to more readable
-and "fluent" code.
+``createStub(string $type)`` returns a test stub for the specified type. The creation of this
+test stub is performed using best practice defaults: the ``__construct()`` and
+``__clone()`` methods of the original class are not executed and the arguments passed
+to a method of the test double will not be cloned.
+
+If these defaults are not what you need then you can use the ``getMockBuilder(string $type)``
+method to customize the test double generation using a fluent interface.
+
+By default, all methods of the original class are replaced with an implementation that
+returns an automatically generated value that satisfies the method's return type
+declaration (without calling the original method).
+
+willReturn()
+------------
+
+Using the ``willReturn()`` method, for instance, you can configure these implementations
+to return a specified value when called. This configured value must be compatible with
+the method's return type declaration.
+
+Consider that we have a class that we want to test, ``SomeClass``, which depends
+on ``Dependency``:
 
 .. literalinclude:: examples/test-doubles/src/SomeClass.php
    :caption: The class we want to test
@@ -91,6 +89,10 @@ and "fluent" code.
 .. literalinclude:: examples/test-doubles/src/Dependency.php
    :caption: The dependency we want to stub
    :language: php
+
+Here is a first example of how to use the ``createStub(string $type)`` method to
+create a test stub for ``Dependency`` so that we can test ``SomeClass`` without
+using a real implementation of ``Dependency``:
 
 .. literalinclude:: examples/test-doubles/SomeClassTest.php
    :caption: Stubbing a method call to return a fixed value
@@ -105,6 +107,12 @@ and "fluent" code.
    If the original interface or class does declare a method named "method" then
    ``$stub->expects($this->any())->method('doSomething')->willReturn('foo');``
    has to be used.
+
+In the example shown above, we first use the ``createStub()`` method to create a test stub,
+an object that looks like an instance of ``Dependency``.
+
+We then use the `Fluent Interface <http://martinfowler.com/bliki/FluentInterface.html>`_
+that PHPUnit provides to specify the behavior for the test stub.
 
 "Behind the scenes", PHPUnit automatically generates a new PHP class that implements
 the desired behavior when the ``createStub()`` method is used.
@@ -126,15 +134,7 @@ Similarly, if ``m`` had a return type declaration for a scalar type then a retur
 value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``)
 would be generated.
 
-Here is an example that shows how to use the Mock Builder's fluent interface to configure
-the creation of the test double. The configuration of this test double uses the same best
-practice defaults used by ``createStub()``:
-
-.. literalinclude:: examples/test-doubles/MockBuilderExampleTest.php
-   :caption: Using the Mock Builder API to configure how the test double class is generated
-   :language: php
-
-In the examples so far we have been returning simple values using ``willReturn($value)``.
+So far, we have configured simple return values using ``willReturn($value)``.
 This is a shorthand syntax provided for convenience. :numref:`test-doubles.test-stubs.shorthands`
 shows the available stubbing shorthands alongside their longer counterparts.
 
@@ -162,6 +162,9 @@ shows the available stubbing shorthands alongside their longer counterparts.
 
 We can use variations on this longer syntax to achieve more complex stubbing behaviour.
 
+returnArgument()
+----------------
+
 Sometimes you want to return one of the arguments of a method call (unchanged) as the
 result of a stubbed method call. Here is an example that shows how you can achieve this
 using ``returnArgument()`` instead of ``returnValue()``:
@@ -169,6 +172,9 @@ using ``returnArgument()`` instead of ``returnValue()``:
 .. literalinclude:: examples/test-doubles/ReturnArgumentExampleTest.php
    :caption: Using returnArgument() to stub a method call to return one of the arguments
    :language: php
+
+returnSelf()
+------------
 
 When testing a fluent interface, it is sometimes useful to have a stubbed method return
 a reference to the stubbed object. Here is an example that shows how you can use
@@ -178,6 +184,9 @@ a reference to the stubbed object. Here is an example that shows how you can use
    :caption: Using returnSelf() to stub a method call to return a reference to the stub object
    :language: php
 
+returnValueMap()
+----------------
+
 Sometimes a stubbed method should return different values depending on a predefined list
 of arguments. Here is an example that shows how to use ``returnValueMap()`` to create a map
 that associates arguments with corresponding return values:
@@ -185,6 +194,9 @@ that associates arguments with corresponding return values:
 .. literalinclude:: examples/test-doubles/ReturnValueMapExampleTest.php
    :caption: Using returnValueMap() to stub a method call to return the value from a map
    :language: php
+
+returnCallback()
+----------------
 
 When the stubbed method call should return a calculated value instead of a fixed one
 (see ``returnValue()``) or an (unchanged) argument (see ``returnArgument()``), you
@@ -195,6 +207,9 @@ function or method. Here is an example:
    :caption: Using returnCallback() to stub a method call to return a value from a callback
    :language: php
 
+onConsecutiveCalls()
+--------------------
+
 A simpler alternative to setting up a callback method may be to specify a list of desired
 return values. You can do this with the ``onConsecutiveCalls()`` method. Here is an example:
 
@@ -202,29 +217,15 @@ return values. You can do this with the ``onConsecutiveCalls()`` method. Here is
    :caption: Using onConsecutiveCalls() to stub a method call to return a list of values in the specified order
    :language: php
 
+throwException()
+----------------
+
 Instead of returning a value, a stubbed method can also raise an exception.
 Here is an example that shows how to use ``throwException()`` to do this:
 
 .. literalinclude:: examples/test-doubles/ThrowExceptionExampleTest.php
    :caption: Using throwException() to stub a method call to throw an exception
    :language: php
-
-Alternatively, you can write the stub yourself and improve your design
-along the way. Widely used resources are accessed through a single facade,
-so you can replace the resource with the stub. For example,
-instead of having direct database calls scattered throughout the code,
-you have a single ``Database`` object, an implementor of
-the ``IDatabase`` interface. Then, you can create a stub
-implementation of ``IDatabase`` and use it for your
-tests. You can even create an option for running the tests with the
-stub database or the real database, so you can use your tests for both
-local testing during development and integration testing with the real
-database.
-
-Functionality that needs to be stubbed out tends to cluster in the same
-object, improving cohesion. By presenting the functionality with a
-single, coherent interface you reduce the coupling with the rest of the
-system.
 
 .. _test-doubles.mock-objects:
 
@@ -242,6 +243,23 @@ the SUT if it hasn't already failed the tests but the emphasis is on the
 verification of the indirect outputs. Therefore, a mock object is a lot more than
 just a test stub plus assertions; it is used in a fundamentally different way"
 (Gerard Meszaros).
+
+createMock()
+------------
+
+``createMock(string $type)`` returns a mock object for the specified type. The creation of this
+mock object is performed using best practice defaults: the ``__construct()`` and
+``__clone()`` methods of the original class are not executed and the arguments passed
+to a method of the test double will not be cloned.
+
+If these defaults are not what you need then you can use the ``getMockBuilder(string $type)``
+method to customize the test double generation using a fluent interface.
+
+By default, all methods of the original class are replaced with an implementation that
+returns an automatically generated value that satisfies the method's return type
+declaration (without calling the original method). Furthermore, expectations for invocations
+of these methods ("method must be called with specified arguments", "method must not be called", ...)
+can be configured.
 
 Here is an example: suppose we want to test that the correct method, ``update()``
 in our example, is called on an object that observes another object.
@@ -264,12 +282,11 @@ Here is an example that shows how to use a mock object to test the interaction b
    :caption: Testing that a method gets called once and with a specified argument
    :language: php
 
-We first use the ``createMock()`` method that is provided by the ``PHPUnit\Framework\TestCase``
-class to create a mock object for the ``Observer``.
+We first use the ``createMock()`` method to create a mock object for the ``Observer``.
 
-Because we are interested in verifying that a method is called, and which
-arguments it is called with, we introduce the ``expects()`` and
-``with()`` methods to specify how this interaction should look.
+Because we are interested in verifying the communication between two objects (that a method is called
+and which arguments it is called with), we use the ``expects()`` and ``with()`` methods to specify
+what this communication should look like.
 
 The ``with()`` method can take any number of arguments, corresponding to the number of arguments
 to the method being mocked. You can specify more advanced constraints on the method's arguments
@@ -299,6 +316,62 @@ the number of invocations:
 
   ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
 
+.. _test-doubles.mocking-traits-and-abstract-classes:
+
+Abstract Classes and Traits
+===========================
+
+getMockForAbstractClass()
+-------------------------
+
+The ``getMockForAbstractClass()`` method returns a mock
+object for an abstract class. All abstract methods of the given abstract
+class are mocked. This allows for testing the concrete methods of an
+abstract class.
+
+.. literalinclude:: examples/test-doubles/src/AbstractClass.php
+   :caption: An abstract class with a concrete method
+   :language: php
+
+.. literalinclude:: examples/test-doubles/AbstractClassTest.php
+   :caption: A test for a concrete method of an abstract class
+   :language: php
+
+getMockForTrait()
+-----------------
+
+The ``getMockForTrait()`` method returns a mock object
+that uses a specified trait. All abstract methods of the given trait
+are mocked. This allows for testing the concrete methods of a trait.
+
+.. literalinclude:: examples/test-doubles/src/AbstractTrait.php
+   :caption: A trait with an abstract method
+   :language: php
+
+.. literalinclude:: examples/test-doubles/AbstractTraitTest.php
+   :caption: A test for a concrete method of a trait
+   :language: php
+
+.. _test-doubles.stubbing-and-mocking-web-services:
+
+Web Services
+============
+
+When your application interacts with a web service you want to test it
+without actually interacting with the web service. To create stubs
+and mocks of web services, the ``getMockFromWsdl()`` method can be used.
+
+This method returns a test stub based on a web service description in WSDL whereas
+``createStub()``, for instance, returns a test stub based on an interface or on a class.
+
+Here is an example that shows how to stub the web service described in :file:`HelloService.wsdl`:
+
+.. literalinclude:: examples/test-doubles/WsdlStubExampleTest.php
+   :caption: Stubbing a web service
+   :language: php
+
+MockBuilder API
+===============
 
 As mentioned before, when the defaults used by the ``createStub()`` and ``createMock()`` methods
 to generate the test double do not match your needs then you can use the ``getMockBuilder($type)``
@@ -381,50 +454,10 @@ provided by the Mock Builder:
 
   ``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
 
-.. _test-doubles.mocking-traits-and-abstract-classes:
+Here is an example that shows how to use the Mock Builder's fluent interface to configure
+the creation of a test stub. The configuration of this test double uses the same best
+practice defaults used by ``createStub()`` and ``createMock()``:
 
-Mocking Traits and Abstract Classes
-===================================
-
-The ``getMockForTrait()`` method returns a mock object
-that uses a specified trait. All abstract methods of the given trait
-are mocked. This allows for testing the concrete methods of a trait.
-
-.. literalinclude:: examples/test-doubles/src/AbstractTrait.php
-   :caption: A trait with an abstract method
-   :language: php
-
-.. literalinclude:: examples/test-doubles/AbstractTraitTest.php
-   :caption: A test for a concrete method of a trait
-   :language: php
-
-The ``getMockForAbstractClass()`` method returns a mock
-object for an abstract class. All abstract methods of the given abstract
-class are mocked. This allows for testing the concrete methods of an
-abstract class.
-
-.. literalinclude:: examples/test-doubles/src/AbstractClass.php
-   :caption: An abstract class with a concrete method
-   :language: php
-
-.. literalinclude:: examples/test-doubles/AbstractClassTest.php
-   :caption: A test for a concrete method of an abstract class
-   :language: php
-
-.. _test-doubles.stubbing-and-mocking-web-services:
-
-Stubbing and Mocking Web Services
-=================================
-
-When your application interacts with a web service you want to test it
-without actually interacting with the web service. To create stubs
-and mocks of web services, the ``getMockFromWsdl()`` method can be used.
-
-This method returns a test stub based on a web service description in WSDL whereas
-``createStub()``, for instance, returns a test stub based on an interface or on a class.
-
-Here is an example that shows how to stub the web service described in :file:`HelloService.wsdl`:
-
-.. literalinclude:: examples/test-doubles/WsdlStubExampleTest.php
-   :caption: Stubbing a web service
+.. literalinclude:: examples/test-doubles/MockBuilderExampleTest.php
+   :caption: Using the Mock Builder API to configure how the test double class is generated
    :language: php
