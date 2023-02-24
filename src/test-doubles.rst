@@ -407,6 +407,15 @@ are mocked. This allows for testing the concrete methods of a trait.
    :caption: A test for a concrete method of a trait
    :language: php
 
+.. admonition:: Deprecation: ``getMockForTrait()`` is deprecated
+
+   As of PHPUnit 10.1, the ``getMockForTrait()`` is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``getMockForTrait()`` method
+   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
+
 The ``getMockForAbstractClass()`` method returns a mock
 object for an abstract class. All abstract methods of the given abstract
 class are mocked. This allows for testing the concrete methods of an
