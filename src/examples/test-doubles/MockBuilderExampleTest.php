@@ -7,15 +7,15 @@ final class MockBuilderExampleTest extends TestCase
     {
         // Create a stub for the SomeClass class.
         $stub = $this->getMockBuilder(SomeClass::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->disableArgumentCloning()
-            ->disallowMockingUnknownTypes()
-            ->getMock();
+                     ->disableOriginalConstructor()
+                     ->disableOriginalClone()
+                     ->disableArgumentCloning()
+                     ->disallowMockingUnknownTypes()
+                     ->getMock();
 
         // Configure the stub.
         $stub->method('doSomething')
-            ->willReturn('foo');
+             ->willReturn('foo');
 
         // Calling $stub->doSomething() will now return
         // 'foo'.
