@@ -35,6 +35,15 @@ to a method of the test double will not be cloned.
 If these defaults are not what you need then you can use the ``getMockBuilder(string $type)``
 method to customize the test double generation using a fluent interface.
 
+.. admonition:: Deprecation: ``getMockBuilder()`` is deprecated
+
+   As of PHPUnit 10.1, the ``getMockBuilder()`` is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``getMockBuilder()`` method
+   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
+
 By default, all methods of the original class are replaced with an implementation that
 returns an automatically generated value that satisfies the method's return type
 declaration (without calling the original method).
