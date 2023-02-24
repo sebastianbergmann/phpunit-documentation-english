@@ -429,6 +429,15 @@ abstract class.
    :caption: A test for a concrete method of an abstract class
    :language: php
 
+.. admonition:: Deprecation: ``getMockForAbstractClass()`` is deprecated
+
+   As of PHPUnit 10.1, the ``getMockForAbstractClass()`` is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``getMockForAbstractClass()`` method
+   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
+
 .. _test-doubles.stubbing-and-mocking-web-services:
 
 Stubbing and Mocking Web Services
