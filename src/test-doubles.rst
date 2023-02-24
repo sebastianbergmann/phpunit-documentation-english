@@ -22,20 +22,17 @@ his "xUnit Test Patterns" book like so:
     has to provide the same API as the real one so that the SUT thinks it is
     the real one!
 
-The ``createStub($type)``, ``createMock($type)``, and
-``getMockBuilder($type)`` methods provided by PHPUnit can be
-used in a test to automatically generate an object that can act as a test
-double for the specified original type (interface or class name). This test
-double object can be used in every context where an object of the original
-type is expected or required.
+The ``createStub(string $type)`` and ``createMock(string $type)`` methods can be used
+in a test to automatically generate an object that can act as a test double for the
+specified original type (interface or class name). This test double object can be used
+in every context where an object of the original type is expected or required.
 
-The ``createStub($type)`` and ``createMock($type)`` methods immediately return a test
-double object for the specified type (interface or class). The creation of
-this test double is performed using best practice defaults: the ``__construct()`` and
+These methods return a test double object for the specified type. The creation of this
+test double is performed using best practice defaults: the ``__construct()`` and
 ``__clone()`` methods of the original class are not executed and the arguments passed
 to a method of the test double will not be cloned.
 
-If these defaults are not what you need then you can use the ``getMockBuilder($type)``
+If these defaults are not what you need then you can use the ``getMockBuilder(string $type)``
 method to customize the test double generation using a fluent interface.
 
 By default, all methods of the original class are replaced with an implementation that
