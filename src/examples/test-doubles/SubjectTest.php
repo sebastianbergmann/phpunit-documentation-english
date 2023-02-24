@@ -8,8 +8,8 @@ final class SubjectTest extends TestCase
         $observer = $this->createMock(Observer::class);
 
         $observer->expects($this->once())
-            ->method('update')
-            ->with($this->identicalTo('something'));
+                 ->method('update')
+                 ->with($this->identicalTo('something'));
 
         $subject = new Subject;
 

@@ -10,7 +10,7 @@ final class ReturnSelfExampleTest extends TestCase
 
         // Configure the stub.
         $stub->method('doSomething')
-            ->will($this->returnSelf());
+             ->will($this->returnSelf());
 
         // $stub->doSomething() returns $stub
         $this->assertSame($stub, $stub->doSomething());

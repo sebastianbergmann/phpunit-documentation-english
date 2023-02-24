@@ -12,7 +12,7 @@ final class SomeClassTest extends TestCase
 
         // Configure the test stub
         $dependency->method('doSomething')
-            ->willReturn('foo');
+                   ->willReturn('foo');
 
         $result = $sut->doSomething($dependency);
 
