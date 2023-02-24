@@ -316,6 +316,16 @@ the number of invocations:
 
   ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
 
+createConfiguredMock()
+----------------------
+
+The ``createConfiguredMock()`` method is a convenience wrapper around ``createMock()`` that allows configuring
+return values using an associative array (``['methodName' => <return value>]``):
+
+.. literalinclude:: examples/test-doubles/CreateConfiguredMockExampleTest.php
+   :caption: Using createConfiguredMock() to create a mock object and configure return values
+   :language: php
+
 .. _test-doubles.mocking-traits-and-abstract-classes:
 
 Abstract Classes and Traits
