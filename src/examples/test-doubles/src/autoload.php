@@ -6,4 +6,5 @@ require __DIR__ . '/D.php';
 require __DIR__ . '/Dependency.php';
 require __DIR__ . '/Observer.php';
 require __DIR__ . '/SomeClass.php';
+require __DIR__ . '/SomeInterface.php';
 require __DIR__ . '/Subject.php';
