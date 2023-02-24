@@ -1,0 +1,18 @@
+./tools/phpunit tests/CreateConfiguredStubExampleTest.php
+PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.3
+
+E                                                                   1 / 1 (100%)
+
+Time: 00:00.001, Memory: 14.29 MB
+
+There was 1 error:
+
+1) CreateConfiguredStubExampleTest::testCreateConfiguredStub
+Error: Call to undefined method CreateConfiguredStubExampleTest::createConfiguredStub()
+
+/path/to/tests/CreateConfiguredStubExampleTest.php:8
+
+ERRORS!
+Tests: 1, Assertions: 0, Errors: 1.

@@ -162,6 +162,16 @@ shows the available stubbing shorthands alongside their longer counterparts.
 
 We can use variations on this longer syntax to achieve more complex stubbing behaviour.
 
+createConfiguredStub()
+----------------------
+
+The ``createConfiguredStub()`` method is a convenience wrapper around ``createStub()`` that allows configuring
+return values using an associative array (``['methodName' => <return value>]``):
+
+.. literalinclude:: examples/test-doubles/CreateConfiguredStubExampleTest.php
+   :caption: Using createConfiguredStub() to create a test stub and configure return values
+   :language: php
+
 returnArgument()
 ----------------
 
