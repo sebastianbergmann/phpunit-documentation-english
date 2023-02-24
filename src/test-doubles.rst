@@ -172,6 +172,36 @@ return values using an associative array (``['methodName' => <return value>]``):
    :caption: Using createConfiguredStub() to create a test stub and configure return values
    :language: php
 
+createStubForIntersectionOfInterfaces()
+---------------------------------------
+
+The ``createStubForIntersectionOfInterfaces(array $interface)`` method can be used to
+create a test stub for an intersection of interfaces based on a list of interface names.
+
+Consider you have the following interfaces ``X`` and ``Y``:
+
+.. literalinclude:: examples/test-doubles/src/X.php
+   :caption: An interface named X
+   :language: php
+
+.. literalinclude:: examples/test-doubles/src/Y.php
+   :caption: An interface named Y
+   :language: php
+
+And you have a class that you want to test named ``Z``:
+
+.. literalinclude:: examples/test-doubles/src/Z.php
+   :caption: A class named Z
+   :language: php
+
+To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
+use the ``createStubForIntersectionOfInterfaces(array $interface)`` method to create
+a test stub that satisfies ``X&Y`` like so:
+
+.. literalinclude:: examples/test-doubles/StubForIntersectionExampleTest.php
+   :caption: Using createStubForIntersectionOfInterfaces() to create a test stub for an intersection type
+   :language: php
+
 returnArgument()
 ----------------
 
@@ -325,6 +355,36 @@ the number of invocations:
 -
 
   ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
+
+createMockForIntersectionOfInterfaces()
+---------------------------------------
+
+The ``createMockForIntersectionOfInterfaces(array $interface)`` method can be used to
+create a mock object for an intersection of interfaces based on a list of interface names.
+
+Consider you have the following interfaces ``X`` and ``Y``:
+
+.. literalinclude:: examples/test-doubles/src/X.php
+   :caption: An interface named X
+   :language: php
+
+.. literalinclude:: examples/test-doubles/src/Y.php
+   :caption: An interface named Y
+   :language: php
+
+And you have a class that you want to test named ``Z``:
+
+.. literalinclude:: examples/test-doubles/src/Z.php
+   :caption: A class named Z
+   :language: php
+
+To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
+use the ``createMockForIntersectionOfInterfaces(array $interface)`` method to create
+a test stub that satisfies ``X&Y`` like so:
+
+.. literalinclude:: examples/test-doubles/MockForIntersectionExampleTest.php
+   :caption: Using createMockForIntersectionOfInterfaces() to create a mock object for an intersection type
+   :language: php
 
 createConfiguredMock()
 ----------------------
