@@ -455,3 +455,12 @@ Here is an example that shows how to stub the web service described in :file:`He
 .. literalinclude:: examples/test-doubles/WsdlStubExampleTest.php
    :caption: Stubbing a web service
    :language: php
+
+.. admonition:: Deprecation: ``getMockFromWsdl()`` is deprecated
+
+   As of PHPUnit 10.1, the ``getMockFromWsdl()`` is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``getMockFromWsdl()`` method
+   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
