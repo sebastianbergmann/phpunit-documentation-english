@@ -8,3 +8,6 @@ require __DIR__ . '/Observer.php';
 require __DIR__ . '/SomeClass.php';
 require __DIR__ . '/SomeInterface.php';
 require __DIR__ . '/Subject.php';
+require __DIR__ . '/X.php';
+require __DIR__ . '/Y.php';
+require __DIR__ . '/Z.php';
