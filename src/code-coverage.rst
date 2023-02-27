@@ -116,52 +116,6 @@ The ``includeUncoveredFiles`` configuration setting is available to configure ho
 
 - ``includeUncoveredFiles="true"`` (default) means that all files are included in the code coverage report even if not a single line of code of such a file is executed
 
-.. _code-coverage.ignoring-code-blocks:
-
-Ignoring Code Blocks
-====================
-
-Sometimes you have units of code that you cannot test and that you may
-want to ignore during code coverage analysis. PHPUnit lets you do this
-using the ``PHPUnit\Framework\Attributes\CodeCoverageIgnore`` attribute
-on the class level as well as on the method level.
-
-The ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
-can be used inside the body of a method, for instance, to ignore individual
-lines of code.
-
-.. code-block:: php
-    :caption: Using the ``CodeCoverageIgnore`` attribute and the ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
-    :name: code-coverage.ignoring-code-blocks.examples.example.php
-
-    <?php declare(strict_types=1);
-    use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
-    use PHPUnit\Framework\TestCase;
-
-    #[CodeCoverageIgnore]
-    final class Foo
-    {
-        public function bar(): void
-        {
-        }
-    }
-
-    final class Bar
-    {
-        #[CodeCoverageIgnore]
-        public function foo(): void
-        {
-        }
-    }
-
-    if (false) {
-        // @codeCoverageIgnoreStart
-        print '*';
-        // @codeCoverageIgnoreEnd
-    }
-
-    exit; // @codeCoverageIgnore
-
 .. _code-coverage.specifying-covered-parts:
 
 Specifying Covered Code Parts
@@ -220,3 +174,49 @@ and to make sure you only generate code coverage with unit tests.
             // ...
         }
     }
+
+.. _code-coverage.ignoring-code-blocks:
+
+Ignoring Code Blocks
+====================
+
+Sometimes you have units of code that you cannot test and that you may
+want to ignore during code coverage analysis. PHPUnit lets you do this
+using the ``PHPUnit\Framework\Attributes\CodeCoverageIgnore`` attribute
+on the class level as well as on the method level.
+
+The ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
+can be used inside the body of a method, for instance, to ignore individual
+lines of code.
+
+.. code-block:: php
+    :caption: Using the ``CodeCoverageIgnore`` attribute and the ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
+    :name: code-coverage.ignoring-code-blocks.examples.example.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
+    use PHPUnit\Framework\TestCase;
+
+    #[CodeCoverageIgnore]
+    final class Foo
+    {
+        public function bar(): void
+        {
+        }
+    }
+
+    final class Bar
+    {
+        #[CodeCoverageIgnore]
+        public function foo(): void
+        {
+        }
+    }
+
+    if (false) {
+        // @codeCoverageIgnoreStart
+        print '*';
+        // @codeCoverageIgnoreEnd
+    }
+
+    exit; // @codeCoverageIgnore
