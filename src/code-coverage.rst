@@ -42,8 +42,8 @@ processing.
 
 Please refer to :ref:`textui` for a list of command-line options
 that control code coverage functionality as well as
-:ref:`appendixes.configuration.logging` for the relevant
-configuration settings.
+:ref:`appendixes.configuration.coverage` for the relevant
+configuration settings for reporting code coverage.
 
 .. _code-coverage.metrics:
 
