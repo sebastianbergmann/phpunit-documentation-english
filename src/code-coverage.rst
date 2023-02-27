@@ -40,7 +40,7 @@ XML-based logfiles with code coverage information in various formats
 as text (and printed to STDOUT) and exported as PHP code for further
 processing.
 
-Please refer to :ref:`textui` for a list of command line switches
+Please refer to :ref:`textui` for a list of command-line options
 that control code coverage functionality as well as
 :ref:`appendixes.configuration.logging` for the relevant
 configuration settings.
@@ -107,7 +107,7 @@ Including Files
 It is mandatory to configure a filter for telling
 PHPUnit which sourcecode files to include in the code coverage report.
 This can either be done using the ``--coverage-filter``
-:ref:`command line <textui.command-line-options>` option or via the
+:ref:`command-line <textui.command-line-options>` option or via the
 configuration file (see :ref:`appendixes.configuration.coverage.include`).
 
 The ``includeUncoveredFiles`` configuration setting is available to configure how the filter is used:
