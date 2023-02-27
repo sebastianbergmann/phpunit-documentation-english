@@ -19,7 +19,7 @@ functionality that provides an insight into what parts of the production
 code are executed when the tests are run. It makes use of the
 `php-code-coverage <https://github.com/sebastianbergmann/php-code-coverage>`_
 library, which in turn leverages the code coverage functionality provided
-by the `Xdebug <https://xdebug.org/>`_ or `PCOV <https://github.com/krakjoe/pcov>`_
+by the `PCOV <https://github.com/krakjoe/pcov>`_ or `Xdebug <https://xdebug.org/>`_
 extensions for PHP.
 
 .. admonition:: Note
@@ -40,10 +40,10 @@ XML-based logfiles with code coverage information in various formats
 as text (and printed to STDOUT) and exported as PHP code for further
 processing.
 
-Please refer to :ref:`textui` for a list of command line switches
+Please refer to :ref:`textui` for a list of command-line options
 that control code coverage functionality as well as
-:ref:`appendixes.configuration.logging` for the relevant
-configuration settings.
+:ref:`appendixes.configuration.coverage` for the relevant
+configuration settings for reporting code coverage.
 
 .. _code-coverage.metrics:
 
@@ -107,7 +107,7 @@ Including Files
 It is mandatory to configure a filter for telling
 PHPUnit which sourcecode files to include in the code coverage report.
 This can either be done using the ``--coverage-filter``
-:ref:`command line <textui.command-line-options>` option or via the
+:ref:`command-line <textui.command-line-options>` option or via the
 configuration file (see :ref:`appendixes.configuration.coverage.include`).
 
 The ``includeUncoveredFiles`` configuration setting is available to configure how the filter is used:

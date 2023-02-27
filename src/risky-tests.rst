@@ -21,7 +21,7 @@ By default, PHPUnit is strict about tests that do not test anything: tests that 
 perform assertions and do not configure expectations on mock objects.
 
 This check can be disabled by using the ``--dont-report-useless-tests``
-option on the :ref:`command line <textui.command-line-options>` or by setting
+option on the :ref:`command-line <textui.command-line-options>` or by setting
 ``beStrictAboutTestsThatDoNotTestAnything="false"`` in
 PHPUnit's :ref:`XML configuration file <appendixes.configuration>`.
 
@@ -33,7 +33,7 @@ Unintentionally Covered Code
 
 PHPUnit can be strict about unintentionally covered code. This check
 can be enabled by using the ``--strict-coverage`` option on
-the :ref:`command line <textui.command-line-options>` or by setting
+the :ref:`command-line <textui.command-line-options>` or by setting
 ``beStrictAboutCoverageMetadata="true"`` in PHPUnit's
 :ref:`XML configuration file <appendixes.configuration>`.
 
@@ -60,7 +60,7 @@ Output During Test Execution
 
 PHPUnit can be strict about output during tests. This check can be enabled
 by using the ``--disallow-test-output`` option on the
-:ref:`command line <textui.command-line-options>` or by setting
+:ref:`command-line <textui.command-line-options>` or by setting
 ``beStrictAboutOutputDuringTests="true"`` in PHPUnit's
 :ref:`XML configuration file <appendixes.configuration>`.
 
@@ -76,7 +76,7 @@ Test Execution Timeout
 
 PHPUnit can enforce a time limit for the execution of a test when the ``pcntl`` extension
 is available. The enforcing of this time limit can be enabled by using the
-``--enforce-time-limit`` option on the :ref:`command line <textui.command-line-options>`
+``--enforce-time-limit`` option on the :ref:`command-line <textui.command-line-options>`
 or by setting ``enforceTimeLimit="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.configuration>`.
 
 A test that is attributed with ``PHPUnit\Framework\Attributes\Large``
@@ -105,7 +105,7 @@ Global State Manipulation
 
 PHPUnit can be strict about tests that manipulate global state. This check
 can be enabled by using the ``--strict-global-state``
-option on the :ref:`command line <textui.command-line-options>` or by setting
+option on the :ref:`command-line <textui.command-line-options>` or by setting
 ``beStrictAboutChangesToGlobalState="true"`` in PHPUnit's
 :ref:`XML configuration file <appendixes.configuration>`.
 
