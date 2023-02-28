@@ -22,16 +22,16 @@ PHPUnit can optionally backup all global and super-global variables before each 
 
 This attribute configures this operation for all tests. This configuration can be overridden using the ``@backupGlobals`` annotation on the test case class and test method level.
 
-.. _appendixes.configuration.phpunit.backupStaticAttributes:
+.. _appendixes.configuration.phpunit.backupStaticProperties:
 
-The ``backupStaticAttributes`` Attribute
+The ``backupStaticProperties`` Attribute
 ----------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-PHPUnit can optionally backup all static attributes in all declared classes before each test and restore this backup after each test.
+PHPUnit can optionally backup all static properties in all declared classes before each test and restore this backup after each test.
 
-This attribute configures this operation for all tests. This configuration can be overridden using the ``@backupStaticAttributes`` annotation on the test case class and test method level.
+This attribute configures this operation for all tests. This configuration can be overridden using the ``BackupStaticProperties`` attribute on the test case class and test method level.
 
 .. _appendixes.configuration.phpunit.bootstrap:
 
@@ -39,6 +39,14 @@ The ``bootstrap`` Attribute
 ---------------------------
 
 This attribute configures the bootstrap script that is loaded before the tests are executed. This script usually only registers the autoloader callback that is used to load the code under test.
+
+.. _appendixes.configuration.phpunit.cacheDirectory:
+
+The ``cacheDirectory`` Attribute
+--------------------------------
+
+This attribute configures the directory in which PHPUnit caches information such as test results (see below)
+or the result of static code analysis that is performed for code coverage reporting.
 
 .. _appendixes.configuration.phpunit.cacheResult:
 
@@ -48,13 +56,6 @@ The ``cacheResult`` Attribute
 Possible values: ``true`` or ``false`` (default: ``true``)
 
 This attribute configures the caching of test results. This caching is required for certain other features to work.
-
-.. _appendixes.configuration.phpunit.cacheDirectory:
-
-The ``cacheDirectory`` Attribute
---------------------------------
-
-This attribute configures the directory in which PHPUnit caches information such as test results (see above), for instance.
 
 .. _appendixes.configuration.phpunit.colors:
 
@@ -160,6 +161,15 @@ The ``stopOnDefect`` Attribute
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the test suite execution should be stopped after the first test finished with a status "error", "failure", "risky" or "warning".
+
+.. _appendixes.configuration.phpunit.failOnEmptyTestSuite:
+
+The ``failOnEmptyTestSuite`` Attribute
+--------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when the configured test suite is empty.
 
 .. _appendixes.configuration.phpunit.failOnIncomplete:
 
@@ -348,6 +358,60 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the output should be printed in TestDox format.
 
+.. _appendixes.configuration.phpunit.displayDetailsOnIncompleteTests:
+
+The ``displayDetailsOnIncompleteTests`` Attribute
+-------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether details on incomplete tests should be printed.
+
+.. _appendixes.configuration.phpunit.displayDetailsOnSkippedTests:
+
+The ``displayDetailsOnSkippedTests`` Attribute
+----------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether details on skipped tests should be printed.
+
+.. _appendixes.configuration.phpunit.displayDetailsOnTestsThatTriggerDeprecations:
+
+The ``displayDetailsOnTestsThatTriggerDeprecations`` Attribute
+--------------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether details on tests that triggered deprecations should be printed.
+
+.. _appendixes.configuration.phpunit.displayDetailsOnTestsThatTriggerErrors:
+
+The ``displayDetailsOnTestsThatTriggerErrors`` Attribute
+--------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether details on tests that triggered errors should be printed.
+
+.. _appendixes.configuration.phpunit.displayDetailsOnTestsThatTriggerNotices:
+
+The ``displayDetailsOnTestsThatTriggerNotices`` Attribute
+---------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether details on tests that triggered notices should be printed.
+
+.. _appendixes.configuration.phpunit.displayDetailsOnTestsThatTriggerWarnings:
+
+The ``displayDetailsOnTestsThatTriggerWarnings`` Attribute
+----------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether details on tests that triggered warnings should be printed.
+
 .. _appendixes.configuration.testsuites:
 
 The ``<testsuites>`` Element
@@ -440,7 +504,7 @@ The ``disableCodeCoverageIgnore`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether the ``@codeCoverageIgnore*`` annotations should be ignored.
+This attribute configures whether metadata to ignore code should be ignored.
 
 .. _appendixes.configuration.coverage.include:
 
