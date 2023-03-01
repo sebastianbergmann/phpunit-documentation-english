@@ -26,7 +26,7 @@ Contents:
 
 .. toctree::
    :caption: Appendix
-   :maxdepth: 2
+   :maxdepth: 3
    :numbered: 1
 
    assertions
