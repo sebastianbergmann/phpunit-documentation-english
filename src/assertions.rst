@@ -43,8 +43,8 @@ Boolean
 
 .. _appendixes.assertions.assertTrue:
 
-assertTrue()
-------------
+``assertTrue()``
+----------------
 
 ``assertTrue(bool $condition[, string $message])``
 
@@ -62,8 +62,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertFalse:
 
-assertFalse()
--------------
+``assertFalse()``
+-----------------
 
 ``assertFalse(bool $condition[, string $message])``
 
@@ -86,8 +86,8 @@ Identity
 
 .. _appendixes.assertions.assertSame:
 
-assertSame()
-------------
+``assertSame()``
+----------------
 
 ``assertSame(mixed $expected, mixed $actual[, string $message])``
 
@@ -124,8 +124,8 @@ Equality
 
 .. _appendixes.assertions.assertEquals:
 
-assertEquals()
---------------
+``assertEquals()``
+------------------
 
 ``assertEquals(mixed $expected, mixed $actual[, string $message])``
 
@@ -194,8 +194,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertEqualsCanonicalizing:
 
-assertEqualsCanonicalizing()
-----------------------------
+``assertEqualsCanonicalizing()``
+--------------------------------
 
 ``assertEqualsCanonicalizing(mixed $expected, mixed $actual[, string $message])``
 
@@ -215,8 +215,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertEqualsIgnoringCase:
 
-assertEqualsIgnoringCase()
---------------------------
+``assertEqualsIgnoringCase()``
+------------------------------
 
 ``assertEqualsIgnoringCase(mixed $expected, mixed $actual[, string $message])``
 
@@ -236,8 +236,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertEqualsWithDelta:
 
-assertEqualsWithDelta()
------------------------
+``assertEqualsWithDelta()``
+---------------------------
 
 ``assertEqualsWithDelta(mixed $expected, mixed $actual, float $delta[, string $message])``
 
@@ -257,8 +257,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertObjectEquals:
 
-assertObjectEquals()
---------------------
+``assertObjectEquals()``
+------------------------
 
 ``assertObjectEquals(object $expected, object $actual, string $method = 'equals'[, string $message])``
 
@@ -292,8 +292,8 @@ If any of the aforementioned assumptions is not fulfilled or if ``$actual->$meth
 
 .. _appendixes.assertions.assertFileEquals:
 
-assertFileEquals()
-------------------
+``assertFileEquals()``
+----------------------
 
 ``assertFileEquals(string $expected, string $actual[, string $message])``
 
@@ -318,8 +318,8 @@ Iterable
 
 .. _appendixes.assertions.assertArrayHasKey:
 
-assertArrayHasKey()
--------------------
+``assertArrayHasKey()``
+-----------------------
 
 ``assertArrayHasKey(int|string $key, array|ArrayAccess $array[, string $message])``
 
@@ -337,8 +337,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertContains:
 
-assertContains()
-----------------
+``assertContains()``
+--------------------
 
 ``assertContains(mixed $needle, iterable $haystack[, string $message])``
 
@@ -360,8 +360,8 @@ comparison logic implemented by the ``==`` operator.
 
 .. _appendixes.assertions.assertContainsOnly:
 
-assertContainsOnly()
---------------------
+``assertContainsOnly()``
+------------------------
 
 ``assertContainsOnly(string $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
 
@@ -381,8 +381,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertContainsOnlyInstancesOf:
 
-assertContainsOnlyInstancesOf()
--------------------------------
+``assertContainsOnlyInstancesOf()``
+-----------------------------------
 
 ``assertContainsOnlyInstancesOf(string $classname, iterable $haystack[, string $message])``
 
@@ -403,8 +403,8 @@ Cardinality
 
 .. _appendixes.assertions.assertCount:
 
-assertCount()
--------------
+``assertCount()``
+-----------------
 
 ``assertCount(int $expectedCount, Countable|iterable $haystack[, string $message])``
 
@@ -422,8 +422,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertSameSize:
 
-assertSameSize()
-----------------
+``assertSameSize()``
+--------------------
 
 ``assertSameSize(Countable|iterable $expected, Countable|iterable $actual[, string $message])``
 
@@ -441,8 +441,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertEmpty:
 
-assertEmpty()
--------------
+``assertEmpty()``
+-----------------
 
 ``assertEmpty(mixed $actual[, string $message])``
 
@@ -460,8 +460,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertGreaterThan:
 
-assertGreaterThan()
--------------------
+``assertGreaterThan()``
+-----------------------
 
 ``assertGreaterThan(mixed $expected, mixed $actual[, string $message])``
 
@@ -477,8 +477,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertGreaterThanOrEqual:
 
-assertGreaterThanOrEqual()
---------------------------
+``assertGreaterThanOrEqual()``
+------------------------------
 
 ``assertGreaterThanOrEqual(mixed $expected, mixed $actual[, string $message])``
 
@@ -494,8 +494,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertLessThan:
 
-assertLessThan()
-----------------
+``assertLessThan()``
+--------------------
 
 ``assertLessThan(mixed $expected, mixed $actual[, string $message])``
 
@@ -511,8 +511,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertLessThanOrEqual:
 
-assertLessThanOrEqual()
------------------------
+``assertLessThanOrEqual()``
+---------------------------
 
 ``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message])``
 
@@ -533,8 +533,8 @@ Types
 
 .. _appendixes.assertions.assertInstanceOf:
 
-assertInstanceOf()
-------------------
+``assertInstanceOf()``
+----------------------
 
 ``assertInstanceOf(string $expected, mixed $actual[, string $message])``
 
@@ -552,8 +552,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsArray:
 
-assertIsArray()
----------------
+``assertIsArray()``
+-------------------
 
 ``assertIsArray(mixed $actual[, string $message])``
 
@@ -571,8 +571,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsList:
 
-assertIsList()
---------------
+``assertIsList()``
+------------------
 
 ``assertIsList(mixed $actual[, string $message])``
 
@@ -588,8 +588,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsBool:
 
-assertIsBool()
---------------
+``assertIsBool()``
+------------------
 
 ``assertIsBool(mixed $actual[, string $message])``
 
@@ -607,8 +607,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsCallable:
 
-assertIsCallable()
-------------------
+``assertIsCallable()``
+----------------------
 
 ``assertIsCallable(mixed $actual[, string $message])``
 
@@ -626,8 +626,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsFloat:
 
-assertIsFloat()
----------------
+``assertIsFloat()``
+-------------------
 
 ``assertIsFloat(mixed $actual[, string $message])``
 
@@ -645,8 +645,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsInt:
 
-assertIsInt()
--------------
+``assertIsInt()``
+-----------------
 
 ``assertIsInt(mixed $actual[, string $message])``
 
@@ -664,8 +664,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsIterable:
 
-assertIsIterable()
-------------------
+``assertIsIterable()``
+----------------------
 
 ``assertIsIterable(mixed $actual[, string $message])``
 
@@ -683,8 +683,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsNumeric:
 
-assertIsNumeric()
------------------
+``assertIsNumeric()``
+---------------------
 
 ``assertIsNumeric(mixed $actual[, string $message])``
 
@@ -702,8 +702,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsObject:
 
-assertIsObject()
-----------------
+``assertIsObject()``
+--------------------
 
 ``assertIsObject(mixed $actual[, string $message])``
 
@@ -721,8 +721,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsResource:
 
-assertIsResource()
-------------------
+``assertIsResource()``
+----------------------
 
 ``assertIsResource(mixed $actual[, string $message])``
 
@@ -742,8 +742,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsScalar:
 
-assertIsScalar()
-----------------
+``assertIsScalar()``
+--------------------
 
 ``assertIsScalar(mixed $actual[, string $message])``
 
@@ -761,8 +761,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsString:
 
-assertIsString()
-----------------
+``assertIsString()``
+--------------------
 
 ``assertIsString(mixed $actual[, string $message])``
 
@@ -780,8 +780,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertNull:
 
-assertNull()
-------------
+``assertNull()``
+----------------
 
 ``assertNull(mixed $actual[, string $message])``
 
@@ -804,8 +804,8 @@ Strings
 
 .. _appendixes.assertions.assertStringStartsWith:
 
-assertStringStartsWith()
-------------------------
+``assertStringStartsWith()``
+----------------------------
 
 ``assertStringStartsWith(string $prefix, string $string[, string $message])``
 
@@ -823,8 +823,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertStringEndsWith:
 
-assertStringEndsWith()
-----------------------
+``assertStringEndsWith()``
+--------------------------
 
 ``assertStringEndsWith(string $suffix, string $string[, string $message])``
 
@@ -842,8 +842,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertStringContainsString:
 
-assertStringContainsString()
-----------------------------
+``assertStringContainsString()``
+--------------------------------
 
 ``assertStringContainsString(string $needle, string $haystack[, string $message])``
 
@@ -861,8 +861,8 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/StringContainsStringTest.php.out
 
-assertStringContainsStringIgnoringCase()
-----------------------------------------
+``assertStringContainsStringIgnoringCase()``
+--------------------------------------------
 
 ``assertStringContainsStringIgnoringCase(string $needle, string $haystack[, string $message])``
 
@@ -884,8 +884,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertStringEqualsStringIgnoringLineEndings:
 
-assertStringEqualsStringIgnoringLineEndings
--------------------------------------------
+``assertStringEqualsStringIgnoringLineEndings``
+-----------------------------------------------
 
 ``assertStringEqualsStringIgnoringLineEndings(string $expected, string $actual[, string $message])``
 
@@ -893,8 +893,8 @@ Reports an error identified by ``$message`` if the two strings ``$expected`` and
 
 .. _appendixes.assertions.assertMatchesRegularExpression:
 
-assertMatchesRegularExpression()
---------------------------------
+``assertMatchesRegularExpression()``
+------------------------------------
 
 ``assertMatchesRegularExpression(string $pattern, string $string[, string $message])``
 
@@ -912,8 +912,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertStringMatchesFormat:
 
-assertStringMatchesFormat()
----------------------------
+``assertStringMatchesFormat()``
+-------------------------------
 
 ``assertStringMatchesFormat(string $format, string $string[, string $message])``
 
@@ -981,8 +981,8 @@ The format string may contain the following placeholders:
 
 .. _appendixes.assertions.assertStringMatchesFormatFile:
 
-assertStringMatchesFormatFile()
--------------------------------
+``assertStringMatchesFormatFile()``
+-----------------------------------
 
 ``assertStringMatchesFormatFile(string $formatFile, string $string[, string $message])``
 
@@ -1000,8 +1000,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertStringEqualsFile:
 
-assertStringEqualsFile()
-------------------------
+``assertStringEqualsFile()``
+----------------------------
 
 ``assertStringEqualsFile(string $expectedFile, string $actualString[, string $message])``
 
@@ -1027,8 +1027,8 @@ JSON
 
 .. _appendixes.assertions.assertJson:
 
-assertJson()
-------------
+``assertJson()``
+----------------
 
 ``assertJson(string $actual[, string $message])``
 
@@ -1044,8 +1044,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertJsonFileEqualsJsonFile:
 
-assertJsonFileEqualsJsonFile()
-------------------------------
+``assertJsonFileEqualsJsonFile()``
+----------------------------------
 
 ``assertJsonFileEqualsJsonFile(string $expectedFile, string $actualFile[, string $message])``
 
@@ -1062,8 +1062,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertJsonStringEqualsJsonFile:
 
-assertJsonStringEqualsJsonFile()
---------------------------------
+``assertJsonStringEqualsJsonFile()``
+------------------------------------
 
 ``assertJsonStringEqualsJsonFile(string $expectedFile, string $actualJson[, string $message])``
 
@@ -1080,8 +1080,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertJsonStringEqualsJsonString:
 
-assertJsonStringEqualsJsonString()
-----------------------------------
+``assertJsonStringEqualsJsonString()``
+--------------------------------------
 
 ``assertJsonStringEqualsJsonString(string $expectedJson, string $actualJson[, string $message])``
 
@@ -1103,8 +1103,8 @@ XML
 
 .. _appendixes.assertions.assertXmlFileEqualsXmlFile:
 
-assertXmlFileEqualsXmlFile()
-----------------------------
+``assertXmlFileEqualsXmlFile()``
+--------------------------------
 
 ``assertXmlFileEqualsXmlFile(string $expectedFile, string $actualFile[, string $message])``
 
@@ -1122,8 +1122,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertXmlStringEqualsXmlFile:
 
-assertXmlStringEqualsXmlFile()
-------------------------------
+``assertXmlStringEqualsXmlFile()``
+----------------------------------
 
 ``assertXmlStringEqualsXmlFile(string $expectedFile, string $actualXml[, string $message])``
 
@@ -1141,8 +1141,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertXmlStringEqualsXmlString:
 
-assertXmlStringEqualsXmlString()
---------------------------------
+``assertXmlStringEqualsXmlString()``
+------------------------------------
 
 ``assertXmlStringEqualsXmlString(string $expectedXml, string $actualXml[, string $message])``
 
@@ -1165,8 +1165,8 @@ Filesystem
 
 .. _appendixes.assertions.assertDirectoryExists:
 
-assertDirectoryExists()
------------------------
+``assertDirectoryExists()``
+---------------------------
 
 ``assertDirectoryExists(string $directory[, string $message])``
 
@@ -1184,8 +1184,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertDirectoryIsReadable:
 
-assertDirectoryIsReadable()
----------------------------
+``assertDirectoryIsReadable()``
+-------------------------------
 
 ``assertDirectoryIsReadable(string $directory[, string $message])``
 
@@ -1222,8 +1222,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertDirectoryIsWritable:
 
-assertDirectoryIsWritable()
----------------------------
+``assertDirectoryIsWritable()``
+-------------------------------
 
 ``assertDirectoryIsWritable(string $directory[, string $message])``
 
@@ -1260,8 +1260,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertFileExists:
 
-assertFileExists()
-------------------
+``assertFileExists()``
+----------------------
 
 ``assertFileExists(string $filename[, string $message])``
 
@@ -1279,8 +1279,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertFileIsReadable:
 
-assertFileIsReadable()
-----------------------
+``assertFileIsReadable()``
+--------------------------
 
 ``assertFileIsReadable(string $filename[, string $message])``
 
@@ -1317,8 +1317,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertFileIsWritable:
 
-assertFileIsWritable()
-----------------------
+``assertFileIsWritable()``
+--------------------------
 
 ``assertFileIsWritable(string $filename[, string $message])``
 
@@ -1355,8 +1355,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsReadable:
 
-assertIsReadable()
-------------------
+``assertIsReadable()``
+----------------------
 
 ``assertIsReadable(string $filename[, string $message])``
 
@@ -1393,8 +1393,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertIsWritable:
 
-assertIsWritable()
-------------------
+``assertIsWritable()``
+----------------------
 
 ``assertIsWritable(string $filename[, string $message])``
 
@@ -1436,8 +1436,8 @@ Math
 
 .. _appendixes.assertions.assertInfinite:
 
-assertInfinite()
-----------------
+``assertInfinite()``
+--------------------
 
 ``assertInfinite(mixed $actual[, string $message])``
 
@@ -1455,8 +1455,8 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertNan:
 
-assertNan()
------------
+``assertNan()``
+---------------
 
 ``assertNan(mixed $actual[, string $message])``
 
@@ -1477,8 +1477,8 @@ Constraints
 
 .. _appendixes.assertions.assertThat:
 
-assertThat()
-------------
+``assertThat()``
+----------------
 
 ``assertThat(mixed $value, PHPUnit\Framework\Constraint $constraint[, string $message])``
 
