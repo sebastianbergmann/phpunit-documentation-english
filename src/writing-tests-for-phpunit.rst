@@ -128,7 +128,8 @@ Running the test shown above yields the output shown below:
 .. admonition:: Note
 
     You can make the test output more verbose by defining a sentence and using the test's parameter names as placeholders
-    (``$a``, ``$b`` and ``$expected`` in the example above) with the :ref:`appendixes.annotations.testdox` annotation.
+    (``$a``, ``$b`` and ``$expected`` in the example above) with the :ref:`TestDox <appendixes.attributes.TestDox>` attribute
+    (or the :ref:`@testdox <appendixes.annotations.testdox>` annotation).
     You can also refer to the name of a named data set with ``$_dataName``.
 
 When a test receives input from both a data provider
