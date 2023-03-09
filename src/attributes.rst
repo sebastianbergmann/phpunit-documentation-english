@@ -269,7 +269,7 @@ in the context of :ref:`preventing unintentionally covered code <risky-tests.uni
 | Production Code | yes         | yes          | no         |
 +-----------------+-------------+--------------+------------+
 
-The ``CodeCoverageIgnore`` attribute can be used in production code to to
+The ``CodeCoverageIgnore`` attribute can be used in production code to
 :ref:`ignore <code-coverage.ignoring-code-blocks>` a class or method for code coverage.
 
 .. admonition:: Warning
