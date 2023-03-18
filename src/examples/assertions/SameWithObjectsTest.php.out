@@ -1,11 +1,11 @@
 ./tools/phpunit tests/SameWithObjectsTest.php
-PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+PHPUnit 10.0.16 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.3
+Runtime:       PHP 8.2.4
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00.001, Memory: 14.29 MB
+Time: 00:00, Memory: 14.31 MB
 
 There was 1 failure:
 
