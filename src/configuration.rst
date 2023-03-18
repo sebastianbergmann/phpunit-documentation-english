@@ -481,7 +481,7 @@ The ``includeUncoveredFiles`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
-When set to ``true``, all sourcecode files that are configured to be considered for code coverage analysis will be included in the code coverage report(s). This includes sourcecode files that are not executed while the tests are running.
+When set to ``true``, all source code files that are configured to be considered for code coverage analysis will be included in the code coverage report(s). This includes source code files that are not executed while the tests are running.
 
 The ``ignoreDeprecatedCodeUnits`` Attribute
 -------------------------------------------
@@ -521,7 +521,7 @@ Configures a set of files to be included in code coverage report(s).
         <directory suffix=".php">src</directory>
     </include>
 
-The example shown above instructs PHPUnit to include all sourcecode files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report(s).
+The example shown above instructs PHPUnit to include all source code files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report(s).
 
 
 .. _appendixes.configuration.coverage.exclude:
@@ -544,7 +544,7 @@ Configures a set of files to be excluded from code coverage report(s).
         <file>src/autoload.php</file>
     </exclude>
 
-The example shown above instructs PHPUnit to include all sourcecode files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report but exclude all files with ``.php`` suffix in the ``src/generated`` directory and its sub-directories as well as the ``src/autoload.php`` file from the code coverage report(s).
+The example shown above instructs PHPUnit to include all source code files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report but exclude all files with ``.php`` suffix in the ``src/generated`` directory and its sub-directories as well as the ``src/autoload.php`` file from the code coverage report(s).
 
 
 .. _appendixes.configuration.coverage.directory:
