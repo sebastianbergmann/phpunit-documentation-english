@@ -6,15 +6,15 @@
 Installation
 ************
 
-PHP is a general-purpose programming language. While it originally only supported the paradigm of procedural programming,
-most PHP code that is written today leverages the language's capabilities for object-oriented programming. As it is
+PHP is a general-purpose programming language. While PHP originally only supported the paradigm of procedural programming,
+most PHP code that developers write today leverages the language's capabilities for object-oriented programming. As PHP is
 especially suited for web development, you probably made your first contact with PHP in an environment where PHP code
 is executed on a web server.
 
-PHPUnit provides a framework for writing tests as well as a command-line tool for running these tests. Before we discuss
+PHPUnit provides a framework for writing tests and a command-line tool for running these tests. Before we discuss
 obtaining and using PHPUnit, let us have a look at installing and configuring the PHP command-line interpreter.
 
-PHPUnit 10 requires PHP 8.1; using the latest version of PHP is highly recommended.
+PHPUnit 10 requires PHP 8.1; we highly recommend using the latest version of PHP.
 
 
 .. _installation.php-on-the-command-line:
@@ -22,7 +22,7 @@ PHPUnit 10 requires PHP 8.1; using the latest version of PHP is highly recommend
 PHP on the Command-Line
 =======================
 
-We start by installing PHP's command-line interpreter as well as the PHP extensions required to use PHPUnit.
+You start by installing PHP's command-line interpreter and the extensions required to use PHPUnit.
 
 
 Installing the PHP Command-Line Interpreter
@@ -31,8 +31,9 @@ Installing the PHP Command-Line Interpreter
 Fedora
 ^^^^^^
 
-At the time of writing, Fedora 37 is the current version of this Linux distribution. It ships with PHP 8.1 by default.
-Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
+At the time of writing, Fedora 37 is the current version of this Linux distribution and ships with PHP 8.1 by default.
+
+Here is the command for installing PHP's command-line interpreter and the extensions required for PHPUnit on Fedora:
 
 .. code::
 
@@ -44,17 +45,19 @@ Here is how you install PHP's command-line interpreter together with the extensi
                      php-pecl-pcov \
                      php-pecl-xdebug
 
-If you use an older version of Fedora then you should have a look at the `package repository maintained by
+If you use an older version of Fedora, then take a look at the `package repository maintained by
 Remi Collet <https://rpms.remirepo.net/>`_.
 
 
 Debian
 ^^^^^^
 
-At the time of writing, Debian 11 is the current version of this Linux distribution. It ships with PHP 7.4 by default.
+At the time of writing, Debian 11 is the current version of this Linux distribution and ships with PHP 7.4 by default.
 
-The `package repository maintained by Ondřej Surý <https://deb.sury.org/>`_ is commonly used for installing newer PHP
-versions on Debian. Here is how you can add this repository to your package manager configuration:
+The `package repository maintained by Ondřej Surý <https://deb.sury.org/>`_ allows installing newer
+versions of PHP on Debian.
+
+Here is the command for adding this repository to your package manager configuration om Debian:
 
 .. code::
 
@@ -64,7 +67,7 @@ versions on Debian. Here is how you can add this repository to your package mana
 
     sudo apt update
 
-And here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
+Here is the command for installing PHP's command-line interpreter and the extensions required for PHPUnit on Debian:
 
 .. code::
 
@@ -79,8 +82,9 @@ And here is how you install PHP's command-line interpreter together with the ext
 Ubuntu
 ^^^^^^
 
-At the time of writing, Ubuntu 22.10 is the current version of this Linux distribution. It ships with PHP 8.1 by default.
-Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
+At the time of writing, Ubuntu 22.10 is the current version of this Linux distribution and ships with PHP 8.1 by default.
+
+Here is the command for installing PHP's command-line interpreter and the extensions required for PHPUnit on Ubuntu:
 
 .. code::
 
@@ -91,26 +95,27 @@ Here is how you install PHP's command-line interpreter together with the extensi
                      php-pcov \
                      php-xdebug
 
-If you use an older version of Ubuntu then you should have a look at the `package repository <https://deb.sury.org/>`_
+If you use an older version of Ubuntu take a look at the `package repository <https://deb.sury.org/>`_
 maintained by Ondřej Surý.
 
 
 macOS
 ^^^^^
 
-The two most common ways to install PHP on macOS are using `Homebrew <https://brew.sh/>`_ and `MacPorts <https://www.macports.org/>`_.
-The instructions given below assume that you have Homebrew or MacPorts already set up.
+You can install macOS with `Homebrew <https://brew.sh/>`_ and `MacPorts <https://www.macports.org/>`_.
+
+The instructions below assume that you have already set up Homebrew or MacPorts.
 
 Homebrew
 """"""""
 
-If you use Homebrew, then the following command will install PHP 8.1:
+The following command will install PHP 8.1 with Homebrew:
 
 .. code::
 
     brew install php@81
 
-If you install PHP 8.1 with Homebrew, the following extensions required by PHPUnit are already installed and enabled by default:
+When you have installed PHP 8.1 with Homebrew, the following extensions required by PHPUnit are installed and enabled by default:
 
 - ``dom``
 - ``json``
@@ -119,18 +124,18 @@ If you install PHP 8.1 with Homebrew, the following extensions required by PHPUn
 - ``xml``
 - ``xmlwriter``
 
-If you want to collect code coverage information, you need to additionally install and enable one of the following extensions:
+If you want to collect code coverage information, you need to install and enable one of the following extensions:
 
 - ``pcov``
 - ``xdebug``
 
-If you use Homebrew, then the following command will install and enable the ``pcov`` extension:
+The following command will install and enable the ``pcov`` extension:
 
 .. code::
 
   pecl install pcov
 
-If you use Homebrew, then the following command will install and enable the ``xdebug`` extension:
+The following command will install and enable the ``xdebug`` extension:
 
 .. code::
 
@@ -139,7 +144,7 @@ If you use Homebrew, then the following command will install and enable the ``xd
 MacPorts
 """"""""
 
-If you use MacPorts, then the following command will install PHP 8.1:
+The following command will install PHP 8.1 with MacPorts:
 
 .. code::
 
@@ -190,20 +195,20 @@ Then follow the installation instructions in this chapter for the Linux distribu
 Using the PHP Command-Line Interpreter
 --------------------------------------
 
-Now we have the PHP command-line interpreter set up, and it is time to learn how to use it.
+Now that you have the PHP command-line interpreter set up, it is time to learn how to use it.
 
-With ``php --version`` we can verify that the PHP command-line interpreter, ``php``, is on the path, works, and check which version it is.
+With ``php --version`` you can verify that the PHP command-line interpreter, ``php``, is on the path, works, and check which version it is.
 
 
 Configuring PHP for Development
 -------------------------------
 
-In this section we ensure that the PHP command-line interpreter is configured in such a way that we can properly use PHPUnit.
+In this section we ensure that the PHP command-line interpreter has a configuration that allows to properly use PHPUnit.
 
-The configuration directives shown below should be added to your PHP configuration file. Using ``php --ini`` we can ask the PHP
-command-line interpreter for the configuration file, or files, that is (are) being used.
+Add the configuration directives below to your PHP configuration file. Using ``php --ini`` you can ask the PHP
+command-line interpreter for the configuration file, or files, that it uses.
 
-We want to see all PHP errors, warnings, notices, etc. when we run our tests. The value used with ``error_reporting``
+You want to see all PHP errors, warnings, notices, etc. when you run your tests. The value for the ``error_reporting`` configuration
 is a bitmask that can be used to toggle the reporting of the various types of errors supported by PHP. Setting this to ``-1``
 ensures that we always see all errors:
 
@@ -272,7 +277,7 @@ Such a PHP archive has all required (as well as some optional) dependencies of P
 Manual Download of PHAR
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-You can simply download a release of PHPUnit packaged as a PHP archive and immediately use it:
+You can download a release of PHPUnit packaged as a PHP archive and immediately use it:
 
 .. code::
 
@@ -308,7 +313,7 @@ Here is an example of how you can manually verify a PHP archive of a PHPUnit rel
     gpg --keyserver pgp.uni-mainz.de --recv-keys 0x4AA394086372C20A
     gpg phpunit.phar.asc
 
-It is a common practice to use different versions of PHPUnit on a per-project basis. This is achieved by putting a PHP archive of PHPUnit into your project directory. A typical directory structure for a PHP project looks like this:
+It is a common practice to use different versions of PHPUnit on a per-project basis. You can achieve this by putting a PHP archive of PHPUnit into your project directory. A typical directory structure for a PHP project looks like this:
 
 .. code::
 
@@ -319,7 +324,9 @@ It is a common practice to use different versions of PHPUnit on a per-project ba
 
 The ``public`` directory contains the application's static assets (CSS, JavaScript, images, ...); it is the webserver's document root.
 
-The ``src`` directory contains the application's PHP sourcecode. The ``tests`` directory contains the application's test suite.
+The ``src`` directory contains the application's PHP source code.
+
+The ``tests`` directory contains the application's test suite.
 
 The ``tools`` directory contains tools such as PHPUnit packaged as PHP archives.
 
