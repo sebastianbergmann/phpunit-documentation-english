@@ -26,7 +26,7 @@ extensions for PHP.
 
    If you see a warning while running tests that no code coverage driver is
    available, it means that you are using the PHP CLI binary (``php``) and do not
-   have Xdebug or PCOV loaded.
+   have PCOV or Xdebug loaded.
 
 .. admonition:: Note
 
