@@ -1,18 +1,18 @@
 ./tools/phpunit tests/NumericDataSetsTest.php
-PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+PHPUnit 10.0.16 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.3
+Runtime:       PHP 8.2.4
 
 ...F                                                                4 / 4 (100%)
 
-Time: 00:00.004, Memory: 14.29 MB
+Time: 00:00.001, Memory: 14.31 MB
 
 There was 1 failure:
 
 1) NumericDataSetsTest::testAdd with data set #3
 Failed asserting that 2 is identical to 3.
 
-/path/to/tests/NumericDataSetsTest.php:10
+/path/to/tests/NumericDataSetsTest.php:20
 
 FAILURES!
 Tests: 4, Assertions: 4, Failures: 1.
