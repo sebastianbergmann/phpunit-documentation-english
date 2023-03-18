@@ -26,7 +26,7 @@ extensions for PHP.
 
    If you see a warning while running tests that no code coverage driver is
    available, it means that you are using the PHP CLI binary (``php``) and do not
-   have Xdebug or PCOV loaded.
+   have PCOV or Xdebug loaded.
 
 .. admonition:: Note
 
@@ -105,7 +105,7 @@ Including Files
 ===============
 
 It is mandatory to configure a filter for telling
-PHPUnit which sourcecode files to include in the code coverage report.
+PHPUnit which source code files to include in the code coverage report.
 This can either be done using the ``--coverage-filter``
 :ref:`command-line <textui.command-line-options>` option or via the
 configuration file (see :ref:`appendixes.configuration.coverage.include`).

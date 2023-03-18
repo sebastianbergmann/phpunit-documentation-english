@@ -24,7 +24,7 @@ tests with the PHPUnit command-line test runner:
     OK (2 tests, 2 assertions)
 
 When invoked as shown above, the PHPUnit command-line test runner will look for a
-:file:`ArrayTest.php` sourcecode file in the current working directory, load it,
+:file:`ArrayTest.php` source code file in the current working directory, load it,
 and expect to find an ``ArrayTest`` test case class. It will then run the tests
 found in that class.
 

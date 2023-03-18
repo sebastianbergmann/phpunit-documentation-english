@@ -319,7 +319,7 @@ It is a common practice to use different versions of PHPUnit on a per-project ba
 
 The ``public`` directory contains the application's static assets (CSS, JavaScript, images, ...); it is the webserver's document root.
 
-The ``src`` directory contains the application's PHP sourcecode. The ``tests`` directory contains the application's test suite.
+The ``src`` directory contains the application's PHP source code. The ``tests`` directory contains the application's test suite.
 
 The ``tools`` directory contains tools such as PHPUnit packaged as PHP archives.
 
