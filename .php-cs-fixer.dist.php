@@ -2,6 +2,7 @@
 $finder = PhpCsFixer\Finder::create()
     ->files()
     ->in(__DIR__ . '/src/examples')
+    ->notName('Z.php')
 ;
 
 $config = new PhpCsFixer\Config;
