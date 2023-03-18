@@ -398,6 +398,29 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.cardinality:
 
+Objects
+========
+
+.. _appendixes.assertions.assertObjectHasProperty:
+
+``assertObjectHasProperty()``
+-----------------------------
+
+``assertObjectHasProperty(string $propertyName, object $object, string $message = '')``
+
+Reports an error identified by ``$message`` if ``$object`` does not have a property with the name ``$propertyName``.
+
+``assertObjectNotHasProperty()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ObjectHasPropertyTest.php
+   :caption: Usage of assertObjectHasProperty()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ObjectHasPropertyTest.php.out
+
+
 Cardinality
 ===========
 
