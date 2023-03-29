@@ -139,8 +139,8 @@ shows an example.
     use PHPUnit\Framework\Attributes\UsesClass;
     use PHPUnit\Framework\TestCase;
 
-    #[CoversClass Invoice::class]
-    #[UsesClass Money::class]
+    #[CoversClass(Invoice::class)]
+    #[UsesClass(Money::class)]
     final class InvoiceTest extends TestCase
     {
         public function testAmountInitiallyIsEmpty(): void
