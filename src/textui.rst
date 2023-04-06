@@ -276,6 +276,16 @@ Automatically stop when ...
 
     Stop execution upon first that was considered risky.
 
+``--stop-on-deprecation``
+
+    Stop execution upon first that triggered a deprecation
+    (``E_DEPRECATED``, ``E_USER_DEPRECATED``, or PHPUnit deprecation).
+
+``--stop-on-notice``
+
+    Stop execution upon first that triggered a notice (``E_STRICT``,
+    ``E_NOTICE``, or ``E_USER_NOTICE``).
+
 ``--stop-on-skipped``
 
     Stop execution upon first that was skipped.
@@ -288,25 +298,37 @@ Automatically stop when ...
 Exit with error code when ...
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``--fail-on-incomplete``
+``--fail-on-warning``
 
     Exit with a shell exit code that signals failure even when all tests passed
-    but at least one test was marked as incomplete.
+    but at least one test triggered a warning.
 
 ``--fail-on-risky``
 
     Exit with a shell exit code that signals failure even when all tests passed
     but at least one test was considered risky.
 
+``--fail-on-deprecation``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one test triggered a deprecation (``E_DEPRECATED``, ``E_USER_DEPRECATED``,
+    or PHPUnit deprecation).
+
+``--fail-on-notice``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one test triggered a notice (``E_STRICT``, ``E_NOTICE``, or
+    ``E_USER_NOTICE``).
+
+``--fail-on-incomplete``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one test was marked as incomplete.
+
 ``--fail-on-skipped``
 
     Exit with a shell exit code that signals failure even when all tests passed
     but at least one test was skipped.
-
-``--fail-on-warning``
-
-    Exit with a shell exit code that signals failure even when all tests passed
-    but at least one test triggered a warning.
 
 
 Test Result Cache

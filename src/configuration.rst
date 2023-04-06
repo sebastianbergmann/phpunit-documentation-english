@@ -99,6 +99,15 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether each test should be run in a separate PHP process for increased isolation.
 
+.. _appendixes.configuration.phpunit.stopOnDefect:
+
+The ``stopOnDefect`` Attribute
+------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the test suite execution should be stopped after the first error, failure, warning, or risky test.
+
 .. _appendixes.configuration.phpunit.stopOnError:
 
 The ``stopOnError`` Attribute
@@ -106,7 +115,7 @@ The ``stopOnError`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether the test suite execution should be stopped after the first test finished with status "error".
+This attribute configures whether the test suite execution should be stopped after the first error.
 
 .. _appendixes.configuration.phpunit.stopOnFailure:
 
@@ -115,34 +124,7 @@ The ``stopOnFailure`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether the test suite execution should be stopped after the first test finished with status "failure".
-
-.. _appendixes.configuration.phpunit.stopOnIncomplete:
-
-The ``stopOnIncomplete`` Attribute
-----------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether the test suite execution should be stopped after the first test finished with status "incomplete".
-
-.. _appendixes.configuration.phpunit.stopOnRisky:
-
-The ``stopOnRisky`` Attribute
------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether the test suite execution should be stopped after the first test finished with status "risky".
-
-.. _appendixes.configuration.phpunit.stopOnSkipped:
-
-The ``stopOnSkipped`` Attribute
--------------------------------
-
-Possible values: ``true`` or ``false`` (default: ``false``)
-
-This attribute configures whether the test suite execution should be stopped after the first test finished with status "skipped".
+This attribute configures whether the test suite execution should be stopped after the first failure.
 
 .. _appendixes.configuration.phpunit.stopOnWarning:
 
@@ -151,16 +133,54 @@ The ``stopOnWarning`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether the test suite execution should be stopped after the first test finished with status "warning".
+This attribute configures whether the test suite execution should be stopped after the first test warning.
 
-.. _appendixes.configuration.phpunit.stopOnDefect:
+.. _appendixes.configuration.phpunit.stopOnRisky:
 
-The ``stopOnDefect`` Attribute
+The ``stopOnRisky`` Attribute
+-----------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the test suite execution should be stopped after the first risky test.
+
+.. _appendixes.configuration.phpunit.stopOnDeprecation:
+
+The ``stopOnDeprecation`` Attribute
+-----------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the test suite execution should be stopped after first test
+that triggered a deprecation (``E_DEPRECATED``, ``E_USER_DEPRECATED``, or PHPUnit deprecation).
+
+.. _appendixes.configuration.phpunit.stopOnNotice:
+
+The ``stopOnNotice`` Attribute
 ------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether the test suite execution should be stopped after the first test finished with a status "error", "failure", "risky" or "warning".
+This attribute configures whether the test suite execution should be stopped after first test
+that triggered a notice (``E_STRICT``, ``E_NOTICE``, or ``E_USER_NOTICE``).
+
+.. _appendixes.configuration.phpunit.stopOnSkipped:
+
+The ``stopOnSkipped`` Attribute
+-------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the test suite execution should be stopped after first skipped test.
+
+.. _appendixes.configuration.phpunit.stopOnIncomplete:
+
+The ``stopOnIncomplete`` Attribute
+----------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the test suite execution should be stopped after first incomplete test.
 
 .. _appendixes.configuration.phpunit.failOnEmptyTestSuite:
 
@@ -171,14 +191,14 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when the configured test suite is empty.
 
-.. _appendixes.configuration.phpunit.failOnIncomplete:
+.. _appendixes.configuration.phpunit.failOnWarning:
 
-The ``failOnIncomplete`` Attribute
-----------------------------------
+The ``failOnWarning`` Attribute
+-------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that were marked as incomplete.
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that had warnings.
 
 .. _appendixes.configuration.phpunit.failOnRisky:
 
@@ -189,6 +209,24 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that were marked as risky.
 
+.. _appendixes.configuration.phpunit.failOnDeprecation:
+
+The ``failOnDeprecation`` Attribute
+-----------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that triggered a deprecation (``E_DEPRECATED``, ``E_USER_DEPRECATED``, or PHPUnit deprecation).
+
+.. _appendixes.configuration.phpunit.failOnNotice:
+
+The ``failOnNotice`` Attribute
+------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that triggered a notice (``E_STRICT``, ``E_NOTICE``, or ``E_USER_NOTICE``).
+
 .. _appendixes.configuration.phpunit.failOnSkipped:
 
 The ``failOnSkipped`` Attribute
@@ -198,14 +236,14 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that were marked as skipped.
 
-.. _appendixes.configuration.phpunit.failOnWarning:
+.. _appendixes.configuration.phpunit.failOnIncomplete:
 
-The ``failOnWarning`` Attribute
--------------------------------
+The ``failOnIncomplete`` Attribute
+----------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that had warnings.
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that were marked as incomplete.
 
 .. _appendixes.configuration.phpunit.beStrictAboutChangesToGlobalState:
 
