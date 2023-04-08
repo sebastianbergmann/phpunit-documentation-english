@@ -450,6 +450,60 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether details on tests that triggered warnings should be printed.
 
+.. _appendixes.configuration.phpunit.errorHandlerIgnoreSuppressedPhpDeprecations:
+
+The ``errorHandlerIgnoreSuppressedPhpDeprecations`` Attribute
+-------------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+This attribute configures whether php deprecations (E_DEPRECATED) could be suppressed or not.
+
+.. _appendixes.configuration.phpunit.errorHandlerIgnoreSuppressedPhpNotices:
+
+The ``errorHandlerIgnoreSuppressedPhpNotices`` Attribute
+--------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+This attribute configures whether php notices (E_NOTICE,E_STRICT) could be suppressed or not.
+
+.. _appendixes.configuration.phpunit.errorHandlerIgnoreSuppressedPhpWarnings:
+
+The ``errorHandlerIgnoreSuppressedPhpWarnings`` Attribute
+---------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+This attribute configures whether php warnings (E_WARNING) could be suppressed or not.
+
+.. _appendixes.configuration.phpunit.errorHandlerIgnoreSuppressedUserDeprecations:
+
+The ``errorHandlerIgnoreSuppressedUserDeprecations`` Attribute
+--------------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether user deprecations (E_USER_DEPRECATED) could be suppressed or not.
+
+.. _appendixes.configuration.phpunit.errorHandlerIgnoreSuppressedUserNotices:
+
+The ``errorHandlerIgnoreSuppressedUserNotices`` Attribute
+---------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether user notices (E_USER_NOTICE) could be suppressed or not.
+
+.. _appendixes.configuration.phpunit.errorHandlerIgnoreSuppressedUserWarnings:
+
+The ``errorHandlerIgnoreSuppressedUserWarnings`` Attribute
+----------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether user warnings (E_USER_WARNING) could be suppressed or not.
+
 .. _appendixes.configuration.testsuites:
 
 The ``<testsuites>`` Element
