@@ -582,10 +582,10 @@ Parent elements: ``<include>``, ``<exclude>``
 Configures a file for inclusion in or exclusion from the list of the project's source code files.
 
 
-.. _appendixes.configuration.source.filterDeprecations:
+.. _appendixes.configuration.source.restrictDeprecations:
 
-The ``<filterDeprecations>`` Attribute
---------------------------------------
+The ``<restrictDeprecations>`` Attribute
+----------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -594,10 +594,10 @@ Restricts the reporting of ``E_DEPRECATED`` and ``E_USER_DEPRECATED``
 list of the project's source code files.
 
 
-.. _appendixes.configuration.source.filterNotices:
+.. _appendixes.configuration.source.restrictNotices:
 
-The ``<filterNotices>`` Attribute
----------------------------------
+The ``<restrictNotices>`` Attribute
+-----------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -606,10 +606,10 @@ Restricts the reporting of ``E_STRICT``, ``E_NOTICE``, and ``E_USER_NOTICE``
 list of the project's source code files.
 
 
-.. _appendixes.configuration.source.filterWarnings:
+.. _appendixes.configuration.source.restrictWarnings:
 
-The ``<filterWarnings>`` Attribute
-----------------------------------
+The ``<restrictWarnings>`` Attribute
+------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
