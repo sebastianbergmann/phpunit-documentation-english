@@ -582,6 +582,42 @@ Parent elements: ``<include>``, ``<exclude>``
 Configures a file for inclusion in or exclusion from the list of the project's source code files.
 
 
+.. _appendixes.configuration.source.filterDeprecations:
+
+The ``<filterDeprecations>`` Attribute
+--------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Restricts the reporting of ``E_DEPRECATED`` and ``E_USER_DEPRECATED``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_ to the
+list of the project's source code files.
+
+
+.. _appendixes.configuration.source.filterNotices:
+
+The ``<filterNotices>`` Attribute
+---------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Restricts the reporting of ``E_STRICT``, ``E_NOTICE``, and ``E_USER_NOTICE``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_ to the
+list of the project's source code files.
+
+
+.. _appendixes.configuration.source.filterWarnings:
+
+The ``<filterWarnings>`` Attribute
+----------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Restricts the reporting of ``E_WARNING`` and ``E_USER_WARNING``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_ to the
+list of the project's source code files.
+
+
 .. _appendixes.configuration.coverage:
 
 The ``<coverage>`` Element
