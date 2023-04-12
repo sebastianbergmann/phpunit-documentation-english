@@ -496,6 +496,92 @@ Using the ``phpVersion`` and ``phpVersionOperator`` attributes, a required PHP v
 
 In the example above, the tests from the ``tests/unit`` directory are only added to the test suite if the PHP version is at least 8.0.0. The ``phpVersionOperator`` attribute is optional and defaults to ``>=``.
 
+
+.. _appendixes.configuration.source:
+
+The ``<source>`` Element
+========================
+
+Parent element: ``<phpunit>``
+
+Configures the project's source code files. This is used to restrict code coverage analysis and reporting of deprecations, notices, and warnings to your own code, for instance, while excluding code from third-party dependencies.
+
+
+.. _appendixes.configuration.source.include:
+
+The ``<include>`` Element
+-------------------------
+
+Parent element: ``<source>``
+
+Configures a set of files to be included in the list of the project's source code files.
+
+.. code-block:: xml
+
+    <include>
+        <directory suffix=".php">src</directory>
+    </include>
+
+The example shown above instructs PHPUnit to include all source code files with ``.php`` suffix in the ``src`` directory and its sub-directories.
+
+
+.. _appendixes.configuration.source.exclude:
+
+The ``<exclude>`` Element
+-------------------------
+
+Parent element: ``<source>``
+
+Configures a set of files to be excluded from the list of the project's source code files.
+
+.. code-block:: xml
+
+    <include>
+        <directory suffix=".php">src</directory>
+    </include>
+
+    <exclude>
+        <directory suffix=".php">src/generated</directory>
+        <file>src/autoload.php</file>
+    </exclude>
+
+The example shown above instructs PHPUnit to include all source code files with ``.php`` suffix in the ``src`` directory and its sub-directories, but to exclude all files with ``.php`` suffix in the ``src/generated`` directory and its sub-directories as well as the ``src/autoload.php`` file.
+
+
+.. _appendixes.configuration.source.directory:
+
+The ``<directory>`` Element
+---------------------------
+
+Parent elements: ``<include>``, ``<exclude>``
+
+Configures a directory and its sub-directories for inclusion in or exclusion from the list of the project's source code files.
+
+The ``prefix`` Attribute
+************************
+
+Possible values: string
+
+Configures a prefix-based filter that is applied to the names of files in the directory and its sub-directories.
+
+The ``suffix`` Attribute
+************************
+
+Possible values: string (default: ``'.php'``)
+
+Configures a suffix-based filter that is applied to the names of files in the directory and its sub-directories.
+
+
+.. _appendixes.configuration.source.file:
+
+The ``<file>`` Element
+----------------------
+
+Parent elements: ``<include>``, ``<exclude>``
+
+Configures a file for inclusion in or exclusion from the list of the project's source code files.
+
+
 .. _appendixes.configuration.coverage:
 
 The ``<coverage>`` Element
@@ -543,95 +629,6 @@ The ``disableCodeCoverageIgnore`` Attribute
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether metadata to ignore code should be ignored.
-
-.. _appendixes.configuration.coverage.include:
-
-The ``<include>`` Element
--------------------------
-
-Parent element: ``<coverage>``
-
-Configures a set of files to be included in code coverage report(s).
-
-.. code-block:: xml
-
-    <include>
-        <directory suffix=".php">src</directory>
-    </include>
-
-The example shown above instructs PHPUnit to include all source code files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report(s).
-
-
-.. _appendixes.configuration.coverage.exclude:
-
-The ``<exclude>`` Element
--------------------------
-
-Parent element: ``<coverage>``
-
-Configures a set of files to be excluded from code coverage report(s).
-
-.. code-block:: xml
-
-    <include>
-        <directory suffix=".php">src</directory>
-    </include>
-
-    <exclude>
-        <directory suffix=".php">src/generated</directory>
-        <file>src/autoload.php</file>
-    </exclude>
-
-The example shown above instructs PHPUnit to include all source code files with ``.php`` suffix in the ``src`` directory and its sub-directories in the code coverage report but exclude all files with ``.php`` suffix in the ``src/generated`` directory and its sub-directories as well as the ``src/autoload.php`` file from the code coverage report(s).
-
-
-.. _appendixes.configuration.coverage.directory:
-
-The ``<directory>`` Element
----------------------------
-
-Parent elements: ``<include>``, ``<exclude>``
-
-Configures a directory and its sub-directories for inclusion in or exclusion from code coverage report(s).
-
-The ``prefix`` Attribute
-************************
-
-Possible values: string
-
-Configures a prefix-based filter that is applied to the names of files in the directory and its sub-directories.
-
-The ``suffix`` Attribute
-************************
-
-Possible values: string (default: ``'.php'``)
-
-Configures a suffix-based filter that is applied to the names of files in the directory and its sub-directories.
-
-The ``phpVersion`` Attribute
-****************************
-
-Possible values: string
-
-Configures a filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
-
-The ``phpVersionOperator`` Attribute
-************************************
-
-Possible values: ``'<'``, ``'lt'``, ``'<='``, ``'le'``, ``'>'``, ``'gt'``, ``'>='``, ``'ge'``, ``'=='``, ``'='``, ``'eq'``, ``'!='``, ``'<>'``, ``'ne'`` (default: ``'>='``)
-
-Configures the comparison operator to be used with ``version_compare()`` for the filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
-
-
-.. _appendixes.configuration.coverage.file:
-
-The ``<file>`` Element
-----------------------
-
-Parent elements: ``<include>``, ``<exclude>``
-
-Configures a file for inclusion in or exclusion from code coverage report(s).
-
 
 .. _appendixes.configuration.coverage.report:
 

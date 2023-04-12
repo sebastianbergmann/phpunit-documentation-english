@@ -108,7 +108,7 @@ It is mandatory to configure a filter for telling
 PHPUnit which source code files to include in the code coverage report.
 This can either be done using the ``--coverage-filter``
 :ref:`command-line <textui.command-line-options>` option or via the
-configuration file (see :ref:`appendixes.configuration.coverage.include`).
+configuration file (see :ref:`appendixes.configuration.source.include`).
 
 The ``includeUncoveredFiles`` configuration setting is available to configure how the filter is used:
 
