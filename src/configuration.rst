@@ -570,20 +570,6 @@ Possible values: string (default: ``'.php'``)
 
 Configures a suffix-based filter that is applied to the names of files in the directory and its sub-directories.
 
-The ``phpVersion`` Attribute
-****************************
-
-Possible values: string
-
-Configures a filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
-
-The ``phpVersionOperator`` Attribute
-************************************
-
-Possible values: ``'<'``, ``'lt'``, ``'<='``, ``'le'``, ``'>'``, ``'gt'``, ``'>='``, ``'ge'``, ``'=='``, ``'='``, ``'eq'``, ``'!='``, ``'<>'``, ``'ne'`` (default: ``'>='``)
-
-Configures the comparison operator to be used with ``version_compare()`` for the filter based on the version of the PHP runtime that is used to run the current PHPUnit process.
-
 
 .. _appendixes.configuration.coverage.file:
 
