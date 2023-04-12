@@ -9,6 +9,7 @@ $exclude = [
     'assertions/FileIsWritableTest.php',
     'assertions/IsReadableTest.php',
     'assertions/IsWritableTest.php',
+    'writing-tests-for-phpunit/NumericDataSetsTestUsingExternalDataProvider.php',
 ];
 
 $phpunit       = $command = __DIR__ . '/../tools/phpunit';

@@ -97,7 +97,7 @@ Data Providers
 A test method can accept arbitrary arguments. These arguments are to be provided by one or
 more data provider methods (``additionProvider()`` in the example shown below). The data
 provider method to be used is specified using the ``PHPUnit\Framework\Attributes\DataProvider``
-attribute.
+or the ``PHPUnit\Framework\Attributes\DataProviderExternal`` attribute.
 
 A data provider method must be ``public`` and ``static``. It must either return
 an array of arrays or an object that implements the ``Iterator``
@@ -108,6 +108,11 @@ the test method will be called with the contents of the array as its arguments.
    :caption: Using a data provider that returns an array of arrays
    :name: writing-tests-for-phpunit.data-providers.examples.NumericDataSetsTest.php
    :language: php
+   
+.. literalinclude:: examples/writing-tests-for-phpunit/NumericDataSetsTestUsingExternalDataProvider.php
+   :caption: Using an external data provider that returns an array of arrays
+   :name: writing-tests-for-phpunit.data-providers.examples.NumericDataSetsTestUsingExternalDataProvider.php
+   :language: php   
 
 Running the test shown above yields the output shown below:
 
