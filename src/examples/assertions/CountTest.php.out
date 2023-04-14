@@ -1,11 +1,11 @@
 ./tools/phpunit tests/CountTest.php
-PHPUnit 10.0.16 by Sebastian Bergmann and contributors.
+PHPUnit 10.1.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.4
+Runtime:       PHP 8.2.5
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 14.31 MB
+Time: 00:00.001, Memory: 22.39 MB
 
 There was 1 failure:
 

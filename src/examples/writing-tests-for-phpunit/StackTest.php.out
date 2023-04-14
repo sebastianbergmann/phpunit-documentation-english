@@ -1,10 +1,10 @@
 ./tools/phpunit tests/StackTest.php
-PHPUnit 10.0.16 by Sebastian Bergmann and contributors.
+PHPUnit 10.1.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.4
+Runtime:       PHP 8.2.5
 
 ...                                                                 3 / 3 (100%)
 
-Time: 00:00, Memory: 14.31 MB
+Time: 00:00.002, Memory: 22.39 MB
 
 OK (3 tests, 5 assertions)
