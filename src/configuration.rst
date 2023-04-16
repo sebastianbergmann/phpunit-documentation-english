@@ -618,6 +618,83 @@ Restricts the reporting of ``E_WARNING`` and ``E_USER_WARNING``
 list of the project's source code files.
 
 
+.. _appendixes.configuration.source.ignoreSuppressionOfDeprecations:
+
+The ``<ignoreSuppressionOfDeprecations>`` Attribute
+---------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Ignore the suppression (using the ``@`` operator) of ``E_USER_DEPRECATED``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_.
+
+
+.. _appendixes.configuration.source.ignoreSuppressionOfPhpDeprecations:
+
+The ``<ignoreSuppressionOfPhpDeprecations>`` Attribute
+------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Ignore the suppression (using the ``@`` operator) of ``E_DEPRECATED``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_.
+
+
+.. _appendixes.configuration.source.ignoreSuppressionOfErrors:
+
+The ``<ignoreSuppressionOfErrors>`` Attribute
+---------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Ignore the suppression (using the ``@`` operator) of ``E_USER_ERROR``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_.
+
+
+.. _appendixes.configuration.source.ignoreSuppressionOfNotices:
+
+The ``<ignoreSuppressionOfNotices>`` Attribute
+----------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Ignore the suppression (using the ``@`` operator) of ``E_USER_NOTICE``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_.
+
+
+.. _appendixes.configuration.source.ignoreSuppressionOfPhpNotices:
+
+The ``<ignoreSuppressionOfPhpNotices>`` Attribute
+-------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Ignore the suppression (using the ``@`` operator) of ``E_STRICT`` and ``E_NOTICE``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_.
+
+
+.. _appendixes.configuration.source.ignoreSuppressionOfWarnings:
+
+The ``<ignoreSuppressionOfWarnings>`` Attribute
+-----------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Ignore the suppression (using the ``@`` operator) of ``E_USER_WARNING``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_.
+
+
+.. _appendixes.configuration.source.ignoreSuppressionOfPhpWarnings:
+
+The ``<ignoreSuppressionOfPhpWarnings>`` Attribute
+--------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Ignore the suppression (using the ``@`` operator) of ``E_WARNING``
+`errors <https://www.php.net/manual/en/errorfunc.constants.php>`_.
+
+
 .. _appendixes.configuration.coverage:
 
 The ``<coverage>`` Element
