@@ -31,7 +31,7 @@ Installing the PHP Command-Line Interpreter
 Fedora
 ^^^^^^
 
-At the time of writing, Fedora 37 is the current version of this Linux distribution. It ships with PHP 8.1 by default.
+At the time of writing, Fedora 38 is the current version of this Linux distribution. It ships with PHP 8.2 by default.
 Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
 
 .. code::
