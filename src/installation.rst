@@ -79,7 +79,7 @@ And here is how you install PHP's command-line interpreter together with the ext
 Ubuntu
 ^^^^^^
 
-At the time of writing, Ubuntu 22.10 is the current version of this Linux distribution. It ships with PHP 8.1 by default.
+At the time of writing, Ubuntu 23.04 is the current version of this Linux distribution. It ships with PHP 8.1 by default.
 Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
 
 .. code::
