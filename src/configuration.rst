@@ -47,7 +47,7 @@ The ``cacheResult`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
-This attribute configures the caching of test results. This caching is required for certain other features to work.
+This attribute configures the caching of test results. This caching is required for ordering tests by defects or duration with the ``executionOrder`` attribute (see :ref:`appendixes.configuration.phpunit.executionOrder`).
 
 .. _appendixes.configuration.phpunit.cacheResultFile:
 
