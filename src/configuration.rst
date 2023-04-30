@@ -334,11 +334,29 @@ When ``phpunit.phar`` is used then this attribute may be used to configure a dir
 The ``executionOrder`` Attribute
 --------------------------------
 
-Possible values: ``default``, ``defects``, ``depends``, ``no-depends``, ``duration``, ``random``, ``reverse``, ``size``
+Possible values: ``default``, ``defects``, ``depends``, ``no-depends``, ``duration``, ``random``, ``reverse``, ``size`` (default: ``default``)
 
 Using multiple values is possible. These need to be separated by ``,``.
 
 This attribute configures the order in which tests are executed.
+
+- ``default``: ordered as PHPUnit found the tests
+- ``defects``: ordered by defect (errored, failed, warning, incomplete, risky, skipped, unknown, passed), requires enabled :ref:`result cache<appendixes.configuration.phpunit.cacheResult>`
+- ``depends``: ordered by dependency (tests without dependencies first, dependent tests last)
+- ``depends,defects``: ordered by dependency first, then ordered by defects
+- ``depends,duration``: ordered by dependency first, then ordered by duration
+- ``depends,random``: ordered by dependency first, then ordered randomly
+- ``depends,reverse``: ordered by dependency first, then ordered in reverse
+- ``duration``: ordered by duration (fastest test first, slowest test last), requires enabled :ref:`result cache<appendixes.configuration.phpunit.cacheResult>`
+- ``no-depends``: not ordered by dependency
+- ``no-depends,defects``: not ordered by dependency, then ordered by defects
+- ``no-depends,duration``: not ordered by dependency, then ordered by duration
+- ``no-depends,random``: not ordered by dependency, then ordered randomly
+- ``no-depends,reverse``: not ordered by dependency, then ordered in reverse
+- ``no-depends,size``: not ordered by dependency, then ordered by size
+- ``random``: ordered randomly
+- ``reverse``: ordered as PHPUnit found the tests, then ordered in reverse
+- ``size``: ordered by size (small, medium, large, unknown), also see (see :ref:`appendixes.annotations.small`, :ref:`appendixes.annotations.medium`, and :ref:`appendixes.annotations.large`)
 
 .. _appendixes.configuration.phpunit.resolveDependencies:
 
