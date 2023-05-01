@@ -865,6 +865,47 @@ Possible values: integer (default: ``90``)
 
 The lower bound of what should be considered "high coverage".
 
+The ``colorSuccessHigh`` Attribute
+++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#99cb84``)
+
+The color used to indicate that a line of code is covered by small (and larger) tests, for instance.
+
+The ``colorSuccessMedium`` Attribute
+++++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#c3e3b5``)
+
+The color used to indicate that a line of code is covered by medium (and large) tests, for instance.
+
+The ``colorSuccessLow`` Attribute
++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#dff0d8``)
+
+The color used to indicate that a line of code is covered by large tests, for instance.
+
+The ``colorWarning`` Attribute
+++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#fcf8e3``)
+
+The color used to indicate that a line of code cannot be covered, for instance.
+
+The ``colorDanger`` Attribute
+++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#f2dede``)
+
+The color used to indicate that a line of code can be covered but is not covered, for instance.
+
+The ``customCssFile`` Attribute
++++++++++++++++++++++++++++++++
+
+Possible values: string
+
+The path to a custom CSS file.
 
 .. _appendixes.configuration.coverage.report.php:
 
