@@ -183,7 +183,7 @@ Registering an extension from a PHAR
 
 When you install PHPUnit as a PHAR, it is best to load extensions from a PHAR.
 
-You can use the :ref:`extensionsDirectory <appendixes.configuration.phpunit.extensionsDirectory>` attribute of the :ref:`extensionsDirectory <appendixes.configuration.phpunit>` element to configure the directory from which PHPUnit should load extensions as a PHAR.
+You can use the :ref:`extensionsDirectory <appendixes.configuration.phpunit.extensionsDirectory>` attribute of the :ref:`phpunit <appendixes.configuration.phpunit>` element to configure the directory from which PHPUnit should load extensions as a PHAR.
 
 .. literalinclude:: examples/extending-phpunit/phpunit-phar.xml
    :caption: An XML configuration registering an ExampleExtension with parameters, loaded from an extensions directory
