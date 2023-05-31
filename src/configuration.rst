@@ -1077,6 +1077,8 @@ The ``<groups>`` element and its ``<include>``, ``<exclude>``, and ``<group>`` c
 
 The example shown above is equivalent to invoking the PHPUnit test runner with ``--group name --exclude-group name``.
 
+.. _appendixes.configuration.extensions:
+
 The ``<extensions>`` Element
 ============================
 
