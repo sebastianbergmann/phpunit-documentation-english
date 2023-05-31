@@ -6,353 +6,204 @@
 Extending PHPUnit
 *****************
 
+.. _extending-phpunit.enhancing-concrete-test-cases:
+
+Enhancing concrete test cases
+=============================
+
+You can extend PHPUnit by enhancing concrete test cases with methods that add functionality.
+
+For example, you may use an assertion in a concrete test case to assert that a value created by the system under test matches a regular expression.
+
+.. literalinclude:: examples/extending-phpunit/OrderIdGeneratorTest.php
+   :caption: A concrete test case using a default assertion
+   :language: php
+
+You can enhance this concrete test case by extracting a domain-specific assertion.
+
+.. literalinclude:: examples/extending-phpunit/OrderIdGeneratorWithDomainSpecificAssertionTest.php
+   :caption: A concrete test case using a domain-specific assertion
+   :language: php
+
+.. _extending-phpunit.extracting-abstract-test-cases:
+
+Extracting abstract test cases
+==============================
+
+You can extend PHPUnit by extracting abstract test cases to share functionality with other concrete test cases via vertical inheritance.
+
+For example, you may want to pull the domain-specific assertion from above into an abstract test case.
+
+.. literalinclude:: examples/extending-phpunit/AbstractTestCase.php
+   :caption: An abstract test case with a domain-specific assertion
+   :language: php
+
+You can then enhance a concrete test case by extending the abstract test case.
+
+.. literalinclude:: examples/extending-phpunit/OrderIdGeneratorExtendingAbstractTestCaseTest.php
+   :caption: A concrete test case extending an abstract test case with a domain-specific assertion
+   :language: php
+
+.. _extending-phpunit.extracting-traits:
+
+Extracting traits
+=================
+
+You can extend PHPUnit by extracting traits to share functionality with concrete test cases via horizontal inheritance.
+
+For example, you may want to pull the domain-specific assertion from above into a trait.
+
+.. literalinclude:: examples/extending-phpunit/AssertionTrait.php
+   :caption: A trait with a domain-specific assertion
+   :language: php
+
+You can then enhance a concrete test case by using the trait.
+
+.. literalinclude:: examples/extending-phpunit/OrderIdGeneratorUsingAssertionTraitTest.php
+   :caption: A concrete test case using a trait with a domain-specific assertion
+   :language: php
+
 .. _extending-phpunit.extending-the-test-runner:
 
 Extending the Test Runner
 =========================
 
-...
+You can extend PHPUnit by implementing and registering an extension.
 
-.. code-block:: php
-    :caption: todo
-    :name: event-system.subscribing-to-events.examples.Extension.php
+Implementing an extension
+-------------------------
 
-    <?php declare(strict_types=1);
-    namespace Vendor\ExampleExtensionForPhpunit;
+A PHPUnit extension is a class that implements the ``PHPUnit\Runner\Extension\Extension`` interface.
 
-    use PHPUnit\Runner\Extension\Extension as PhpunitExtension;
-    use PHPUnit\Runner\Extension\Facade as EventFacade;
-    use PHPUnit\Runner\Extension\ParameterCollection;
-    use PHPUnit\TextUI\Configuration\Configuration;
+The extension interface declares a ``bootstrap()`` method that accepts the PHPUnit configuration, the extension facade, and the extension parameter collection.
 
-    final class Extension implements PhpunitExtension
-    {
-        public function bootstrap(Configuration $configuration, EventFacade $facade, ParameterCollection $parameters): void
-        {
-            $message = 'the-default-message';
+.. literalinclude:: examples/extending-phpunit/ExampleExtension.php
+   :caption: An example extension registering an ExampleSubscriber and an ExampleTracer
+   :language: php
 
-            if ($parameters->has('message')) {
-                $message = $parameters->get('message');
-            }
+The PHPUnit configuration is an instance of ``PHPUnit\TextUI\Configuration\Configuration`` and gives you access to the configuration of PHPUnit after merging configuration options from defaults, the XML configuration file, and command-line options.
 
-            $facade->registerSubscriber(
-                new ExecutionFinishedSubscriber(
-                    $message
-                )
-            );
-        }
-    }
+You can inspect the configuration object to adjust the behavior of your extension. For example, you may want to extend PHPUnit with an extension that renders output on the console. If that is the case, you may be interested to know whether a user of PHPUnit wants to use colors or prefers a monochrome output.
 
-...
+The extension facade is an instance of ``PHPUnit\Runner\Extension\Facade`` and allows you to register event subscribers and event tracers.
 
-.. code-block:: php
-    :caption: todo
-    :name: extending-phpunit.event-system.extending-the-test-runner.examples.ExecutionFinishedSubscriber.php
+The parameter collection is an instance of ``PHPUnit\Runner\Extension\ParameterCollection`` and gives you access to extension parameters a user has provided via PHPUnit's XML configuration file.
 
-    <?php declare(strict_types=1);
-    namespace Vendor\ExampleExtensionForPhpunit;
+You can use the parameter collection to allow users of the extension to configure the behavior of your extension.
 
-    use const PHP_EOL;
-    use PHPUnit\Event\TestRunner\ExecutionFinished;
-    use PHPUnit\Event\TestRunner\ExecutionFinishedSubscriber as ExecutionFinishedSubscriberInterface;
+.. Note::
 
-    final class ExecutionFinishedSubscriber implements ExecutionFinishedSubscriberInterface
-    {
-        private readonly string $message;
+  You must verify and process the values from the parameter collection yourself. PHPUnit has no functionality for verifying or casting the values from the parameter collection to other types.
 
-        public function __construct(string $message)
-        {
-            $this->message = $message;
-        }
+Implementing an event subscriber
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-        public function notify(ExecutionFinished $event): void
-        {
-            print __METHOD__ . PHP_EOL . $this->message . PHP_EOL;
-        }
-    }
+An event subscriber is a class that implements an event subscriber interface.
 
-...
+An event subscriber interface declares a single ``notify()`` method that accepts an instance of the corresponding event class.
 
-.. code-block:: xml
-    :caption: todo
-    :name: extending-phpunit.event-system.extending-the-test-runner.examples.phpunit.xml
+.. literalinclude:: examples/extending-phpunit/ExampleSubscriber.php
+   :caption: An ExampleSubscriber printing a message when PHPUnit emits the ExecutionFinished event
+   :language: php
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd">
-        <!-- ... -->
+After registering an event subscriber with the extension facade, PHPUnit will notify the event subscriber when emitting an event of the corresponding event class.
 
-        <extensions>
-            <bootstrap class="Vendor\ExampleExtensionForPhpunit\Extension">
-                <parameter name="message" value="the-message"/>
-            </bootstrap>
-        </extensions>
+.. Note::
 
-        <!-- ... -->
-    </phpunit>
+  You can not create an event subscriber that implements more than one event subscriber interface at a time.
 
-...
+  If you want to subscribe to more than one event, you need to implement at least one event subscriber for each event you are interested in.
 
-.. _extending-phpunit.event-system.event-system:
+Implementing an event tracer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-PHPUnit's Event System
-----------------------
+An event tracer is a class that implements the ``PHPUnit\Event\Tracer\Tracer`` interface.
 
-...
+The tracer interface declares a single ``trace()`` method that accepts an event.
 
-.. _extending-phpunit.event-system.event-system.events:
+.. literalinclude:: examples/extending-phpunit/ExampleTracer.php
+   :caption: An ExampleTracer receiving all events
+   :language: php
 
-Events
-^^^^^^
+After registering an event tracer with the extension facade, PHPUnit will notify the tracer of every event.
 
-``PHPUnit\Event\Application\Started``
+.. Hint::
 
-    The PHPUnit CLI application was started
+  Are you unsure whether you should implement an event tracer or multiple event subscribers?
 
-``PHPUnit\Event\TestRunner\Configured``
+  If you are interested in every event that PHPUnit emits during the execution of the CLI application, you probably want to implement and register an event tracer.
 
-    The test runner was configured
+  If you are interested in selected events that PHPUnit emits during the execution of the CLI application, you probably want to implement and register one or more event subscribers.
 
-``PHPUnit\Event\TestRunner\BootstrapFinished``
+Understanding events
+^^^^^^^^^^^^^^^^^^^^
 
-    The test runner finished executing the configured bootstrap script
+An event is a class that implements the ``PHPUnit\Event\Event`` interface.
 
-``PHPUnit\Event\TestRunner\ExtensionLoadedFromPhar``
+The ``PHPUnit\Event\Event`` interface declares a ``telemetryInfo()`` method that gives you access to telemetry information and an ``asString()`` method that returns a string representation of the event.
 
-    The test runner loaded an extension from a PHP Archive (PHAR)
+Each event may implement additional methods that provide access to information available when PHPUnit registers and emits the event.
 
-``PHPUnit\Event\TestRunner\ExtensionBootstrapped``
+You can consume, inspect, and process these events in event subscribers or tracers.
 
-    The test runner bootstrapped an extension
+You can find a list of all events PHPUnit currently emits in the :ref:`appendix <appendixes.events>`.
 
-``PHPUnit\Event\TestSuite\Loaded``
+.. Note::
 
-    The test suite was loaded
+  PHPUnit currently does not support registering custom events.
 
-``PHPUnit\Event\TestRunner\EventFacadeSealed``
+Sharing an extension
+--------------------
 
-    The event facade was sealed (new event subscribers can no longer be registered)
+You can share a PHPUnit extension as a PHAR or a Composer package.
 
-``PHPUnit\Event\TestSuite\Filtered``
+Sharing an extension as a PHAR
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    The test suite was filtered
+When users of your extension prefer to install PHPUnit as a PHAR, it is best to make your extension also available as a PHAR.
 
-``PHPUnit\Event\TestSuite\Sorted``
+To make your extension loadable as a PHAR, you need to include a `PHAR Manifest <https://github.com/phar-io/manifest>`.
 
-    The test suite was sorted
+.. literalinclude:: examples/extending-phpunit/manifest.xml
+   :caption: An example manifest.xml
+   :language: xml
 
-``PHPUnit\Event\TestRunner\ExecutionStarted``
+Sharing an extension as a Composer package
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    The test runner started executing tests
+When users of your extension prefer to install PHPUnit as a Composer package, it is best to make your extension available as a Composer package.
 
-``PHPUnit\Event\TestSuite\Skipped``
+Registering an extension
+------------------------
 
-    The execution of a test suite was skipped
+You can register one or more PHPUnit extensions from PHARs or from Composer package using the :ref:`extensions <appendixes.configuration.extensions>`, :ref:`bootstrap <appendixes.configuration.extensions.bootstrap>`, and :ref:`parameters <appendixes.configuration.extensions.extension.arguments>` elements of the :ref:`PHPUnit XML configuration file <appendixes.configuration>`.
 
-``PHPUnit\Event\TestSuite\Started``
+Registering an extension from a PHAR
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    The execution of a test suite was started
+When you install PHPUnit as a PHAR, it is best to load extensions from a PHAR.
 
-``PHPUnit\Event\Test\PreparationStarted``
+You can use the :ref:`extensionsDirectory <appendixes.configuration.phpunit.extensionsDirectory>` attribute of the :ref:`extensionsDirectory <appendixes.configuration.phpunit>` element to configure the directory from which PHPUnit should load extensions as a PHAR.
 
-    The preparation of a test for execution was started
+.. literalinclude:: examples/extending-phpunit/phpunit-phar.xml
+   :caption: An XML configuration registering an ExampleExtension with parameters, loaded from an extensions directory
+   :language: xml
 
-``PHPUnit\Event\Test\BeforeFirstTestMethodCalled``
+Registering an extension from a Composer package
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    A "before first test" method was called for a test case class
+When you install PHPUnit as a Composer package, it is best to load extensions from Composer packages.
 
-``PHPUnit\Event\Test\BeforeFirstTestMethodErrored``
+You do not need to configure the :ref:`extensionsDirectory <appendixes.configuration.phpunit.extensionsDirectory>` attribute, as extensions from Composer packages will be available through the autoloading mechanism of Composer.
 
-    A "before first test" method errored for a test case class
-
-``PHPUnit\Event\Test\BeforeFirstTestMethodFinished``
-
-    All "before first test" methods were called for a test case class
-
-``PHPUnit\Event\Test\BeforeTestMethodCalled``
-
-    A "before test" method was called for a test method
-
-``PHPUnit\Event\Test\BeforeTestMethodFinished``
-
-    All "before test" methods were called for a test method
-
-``PHPUnit\Event\Test\PreConditionCalled``
-
-    A "precondition" method was called for a test method
-
-``PHPUnit\Event\Test\PreConditionFinished``
-
-    All "precondition" methods were called for a test method
-
-``PHPUnit\Event\Test\TestPrepared``
-
-    A test was prepared for execution
-
-``PHPUnit\Event\Test\ComparatorRegistered``
-
-    A test registered a custom ``Comparator`` for ``assertEquals()``
-
-``PHPUnit\Event\Test\AssertionSucceeded``
-
-    A test successfully asserted something
-
-``PHPUnit\Event\Test\AssertionFailed``
-
-    A test failed to assert something
-
-``PHPUnit\Event\Test\MockObjectCreated``
-
-    A test created a mock object
-
-``PHPUnit\Event\Test\MockObjectForIntersectionOfInterfacesCreated``
-
-    A test created a mock object for an intersection of interfaces
-
-``PHPUnit\Event\Test\MockObjectForTraitCreated``
-
-    A test created a mock object for a trait
-
-``PHPUnit\Event\Test\MockObjectForAbstractClassCreated``
-
-    A test created a mock object for an abstract class
-
-``PHPUnit\Event\Test\MockObjectFromWsdlCreated``
-
-    A test created a mock object from a WSDL file
-
-``PHPUnit\Event\Test\PartialMockObjectCreated``
-
-    A test created a partial mock object
-
-``PHPUnit\Event\Test\TestProxyCreated``
-
-    A test created a test proxy
-
-``PHPUnit\Event\Test\TestStubCreated``
-
-    A test created a test stub
-
-``PHPUnit\Event\Test\TestStubForIntersectionOfInterfacesCreated``
-
-    A test created a test stub for an intersection of interfaces
-
-``PHPUnit\Event\Test\Errored``
-
-    A test errored
-
-``PHPUnit\Event\Test\Failed``
-
-    A test failed
-
-``PHPUnit\Event\Test\Passed``
-
-    A test passed
-
-``PHPUnit\Event\Test\ConsideredRisky``
-
-    A test was considered risky
-
-``PHPUnit\Event\Test\MarkedIncomplete``
-
-    A test was marked incomplete
-
-``PHPUnit\Event\Test\Skipped``
-
-    A test was skipped
-
-``PHPUnit\Event\Test\PhpunitDeprecationTriggered``
-
-    A test triggered a PHPUnit deprecation
-
-``PHPUnit\Event\Test\PhpDeprecationTriggered``
-
-    A test triggered a PHP deprecation
-
-``PHPUnit\Event\Test\DeprecationTriggered``
-
-    A test triggered a deprecation (neither a PHPUnit nor a PHP deprecation)
-
-``PHPUnit\Event\Test\PhpunitErrorTriggered``
-
-    A test triggered a PHPUnit error
-
-``PHPUnit\Event\Test\ErrorTriggered``
-
-    A test triggered an error (not a PHPUnit error)
-
-``PHPUnit\Event\Test\PhpNoticeTriggered``
-
-    A test triggered a PHP notice
-
-``PHPUnit\Event\Test\NoticeTriggered``
-
-    A test triggered a notice (not a PHP notice)
-
-``PHPUnit\Event\Test\PhpunitWarningTriggered``
-
-    A test triggered a PHPUnit warning
-
-``PHPUnit\Event\Test\PhpWarningTriggered``
-
-    A test triggered a PHP warning
-
-``PHPUnit\Event\Test\WarningTriggered``
-
-    A test triggered a warning (neither a PHPUnit nor a PHP warning)
-
-``PHPUnit\Event\Test\Finished``
-
-    The execution of a test method finished
-
-``PHPUnit\Event\Test\PostConditionCalled``
-
-    A "postcondition" method was called for a test method
-
-``PHPUnit\Event\Test\PostConditionFinished``
-
-    All "postcondition" methods were called for a test method
-
-``PHPUnit\Event\Test\AfterTestMethodCalled``
-
-    An "after test" method was called for a test method
-
-``PHPUnit\Event\Test\AfterTestMethodFinished``
-
-    All "after test" methods were called for a test method
-
-``PHPUnit\Event\Test\AfterLastTestMethodCalled``
-
-    An "after last test" method was called for a test case class
-
-``PHPUnit\Event\Test\AfterLastTestMethodFinished``
-
-    All "after last test" methods were called for a test case class
-
-``PHPUnit\Event\TestSuite\Finished``
-
-    The execution of a test suite has finished
-
-``PHPUnit\Event\TestRunner\DeprecationTriggered``
-
-    A deprecation in the test runner was triggered
-
-``PHPUnit\Event\TestRunner\WarningTriggered``
-
-    A warning in the test runner was triggered
-
-``PHPUnit\Event\TestRunner\ExecutionFinished``
-
-    The test runner finished executing tests
-
-``PHPUnit\Event\Application\Finished``
-
-    The PHPUnit CLI application has finished
+.. literalinclude:: examples/extending-phpunit/phpunit-composer.xml
+   :caption: An XML configuration registering an ExampleExtension with parameters
+   :language: xml
 
 .. _extending-phpunit.event-system.event-system.debugging-phpunit:
 
 Debugging PHPUnit
-^^^^^^^^^^^^^^^^^
+-----------------
 
 The test runner's ``--log-events-text`` CLI option can be used to write a plain text representation
 for each event to a stream. In the example shown below, we use ``--no-output`` to disable both the
