@@ -10,6 +10,10 @@ $exclude = [
     'assertions/IsReadableTest.php',
     'assertions/IsWritableTest.php',
     'writing-tests-for-phpunit/NumericDataSetsTestUsingExternalDataProvider.php',
+    'extending-phpunit/OrderIdGeneratorExtendingAbstractTestCaseTest.php',
+    'extending-phpunit/OrderIdGeneratorTest.php',
+    'extending-phpunit/OrderIdGeneratorUsingAssertionTraitTest.php',
+    'extending-phpunit/OrderIdGeneratorWithDomainSpecificAssertionTest.php',
 ];
 
 $phpunit       = $command = __DIR__ . '/../tools/phpunit';
