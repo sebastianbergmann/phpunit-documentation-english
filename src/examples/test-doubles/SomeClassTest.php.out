@@ -1,10 +1,10 @@
 ./tools/phpunit tests/SomeClassTest.php
-PHPUnit 10.1.0 by Sebastian Bergmann and contributors.
+PHPUnit 10.2.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.5
+Runtime:       PHP 8.2.6
 
 .                                                                   1 / 1 (100%)
 
-Time: 00:00.001, Memory: 22.39 MB
+Time: 00:00.001, Memory: 14.41 MB
 
 OK (1 test, 1 assertion)
