@@ -51,20 +51,8 @@ Remi Collet <https://rpms.remirepo.net/>`_.
 Debian
 ^^^^^^
 
-At the time of writing, Debian 11 is the current version of this Linux distribution. It ships with PHP 7.4 by default.
-
-The `package repository maintained by Ondřej Surý <https://deb.sury.org/>`_ is commonly used for installing newer PHP
-versions on Debian. Here is how you can add this repository to your package manager configuration:
-
-.. code::
-
-    curl -sSL https://packages.sury.org/php/README.txt | sudo bash -x
-
-.. code::
-
-    sudo apt update
-
-And here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
+At the time of writing, Debian 12 is the current version of this Linux distribution. It ships with PHP 8.2 by default.
+Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
 
 .. code::
 
@@ -74,6 +62,9 @@ And here is how you install PHP's command-line interpreter together with the ext
                      php-xml \
                      php-pcov \
                      php-xdebug
+
+If you use an older version of Debian then you should have a look at the `package repository <https://deb.sury.org/>`_
+maintained by Ondřej Surý.
 
 
 Ubuntu
