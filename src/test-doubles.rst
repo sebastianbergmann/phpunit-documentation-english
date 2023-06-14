@@ -625,6 +625,8 @@ method being mocked, like in ``with()``.
         }
     }
 
+Please note that the ``withConsecutive()`` method is deprecated in PHPUnit 9.6 and has been removed in PHPUnit 10.
+
 The ``callback()`` constraint can be used for more complex
 argument verification. This constraint takes a PHP callback as its only
 argument. The PHP callback will receive the argument to be verified as
