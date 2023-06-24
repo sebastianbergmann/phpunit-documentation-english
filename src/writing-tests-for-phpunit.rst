@@ -99,8 +99,9 @@ more data provider methods (``additionProvider()`` in the example shown below). 
 provider method to be used is specified using the ``PHPUnit\Framework\Attributes\DataProvider``
 or the ``PHPUnit\Framework\Attributes\DataProviderExternal`` attribute.
 
-A data provider method must be ``public`` and ``static``. It must either return
-an array of arrays or an object that implements the ``Iterator``
+A data provider method must be ``public`` and ``static``.
+It must return `iterable <https://www.php.net/manual/en/language.types.iterable.php>`_,
+either an array of arrays or an object that implements the ``Traversable``
 interface. In each iteration step, it must yield an array. For each of these arrays,
 the test method will be called with the contents of the array as its arguments.
 
