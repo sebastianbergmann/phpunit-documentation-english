@@ -1,7 +1,7 @@
 ./tools/phpunit tests/SameWithMixedTest.php
 PHPUnit 10.0.19 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.6
+Runtime:       PHP 8.2.7
 
 F                                                                   1 / 1 (100%)
 

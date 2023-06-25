@@ -9,7 +9,7 @@ final class AbstractTraitTest extends TestCase
 
         $mock->expects($this->any())
              ->method('abstractMethod')
-             ->will($this->returnValue(true));
+             ->willReturn(true);
 
         $this->assertTrue($mock->concreteMethod());
     }

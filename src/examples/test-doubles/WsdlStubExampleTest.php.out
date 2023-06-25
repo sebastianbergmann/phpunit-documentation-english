@@ -1,10 +1,10 @@
 ./tools/phpunit tests/WsdlStubExampleTest.php
 PHPUnit 10.0.19 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.6
+Runtime:       PHP 8.2.7
 
 .                                                                   1 / 1 (100%)
 
-Time: 00:00.005, Memory: 14.31 MB
+Time: 00:00.004, Memory: 14.31 MB
 
 OK (1 test, 1 assertion)
