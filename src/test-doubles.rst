@@ -134,34 +134,6 @@ Similarly, if ``m`` had a return type declaration for a scalar type then a retur
 value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``)
 would be generated.
 
-So far, we have configured simple return values using ``willReturn($value)``.
-This is a shorthand syntax provided for convenience. :numref:`test-doubles.test-stubs.shorthands`
-shows the available stubbing shorthands alongside their longer counterparts.
-
-.. rst-class:: table
-.. list-table:: Stubbing shorthands
-    :name: test-doubles.test-stubs.shorthands
-    :header-rows: 1
-
-    * - short hand
-      - longer syntax
-    * - ``willReturn($value)``
-      - ``will($this->returnValue($value))``
-    * - ``willReturnArgument($argumentIndex)``
-      - ``will($this->returnArgument($argumentIndex))``
-    * - ``willReturnCallback($callback)``
-      - ``will($this->returnCallback($callback))``
-    * - ``willReturnMap($valueMap)``
-      - ``will($this->returnValueMap($valueMap))``
-    * - ``willReturnOnConsecutiveCalls($value1, $value2)``
-      - ``will($this->onConsecutiveCalls($value1, $value2))``
-    * - ``willReturnSelf()``
-      - ``will($this->returnSelf())``
-    * - ``willThrowException($exception)``
-      - ``will($this->throwException($exception))``
-
-We can use variations on this longer syntax to achieve more complex stubbing behaviour.
-
 createStubForIntersectionOfInterfaces()
 ---------------------------------------
 
