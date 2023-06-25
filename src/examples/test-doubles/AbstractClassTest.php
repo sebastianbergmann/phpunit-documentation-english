@@ -9,7 +9,7 @@ final class AbstractClassTest extends TestCase
 
         $stub->expects($this->any())
              ->method('abstractMethod')
-             ->will($this->returnValue(true));
+             ->willReturn(true);
 
         $this->assertTrue($stub->concreteMethod());
     }

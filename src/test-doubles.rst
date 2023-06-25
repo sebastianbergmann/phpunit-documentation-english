@@ -134,33 +134,11 @@ Similarly, if ``m`` had a return type declaration for a scalar type then a retur
 value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``)
 would be generated.
 
-So far, we have configured simple return values using ``willReturn($value)``.
-This is a shorthand syntax provided for convenience. :numref:`test-doubles.test-stubs.shorthands`
-shows the available stubbing shorthands alongside their longer counterparts.
+A list of desired return values can also be specified. Here is an example:
 
-.. rst-class:: table
-.. list-table:: Stubbing shorthands
-    :name: test-doubles.test-stubs.shorthands
-    :header-rows: 1
-
-    * - short hand
-      - longer syntax
-    * - ``willReturn($value)``
-      - ``will($this->returnValue($value))``
-    * - ``willReturnArgument($argumentIndex)``
-      - ``will($this->returnArgument($argumentIndex))``
-    * - ``willReturnCallback($callback)``
-      - ``will($this->returnCallback($callback))``
-    * - ``willReturnMap($valueMap)``
-      - ``will($this->returnValueMap($valueMap))``
-    * - ``willReturnOnConsecutiveCalls($value1, $value2)``
-      - ``will($this->onConsecutiveCalls($value1, $value2))``
-    * - ``willReturnSelf()``
-      - ``will($this->returnSelf())``
-    * - ``willThrowException($exception)``
-      - ``will($this->throwException($exception))``
-
-We can use variations on this longer syntax to achieve more complex stubbing behaviour.
+.. literalinclude:: examples/test-doubles/OnConsecutiveCallsExampleTest.php
+   :caption: Using willReturn() to stub a method call to return a list of values in the specified order
+   :language: php
 
 createConfiguredStub()
 ----------------------
@@ -202,69 +180,59 @@ a test stub that satisfies ``X&Y`` like so:
    :caption: Using createStubForIntersectionOfInterfaces() to create a test stub for an intersection type
    :language: php
 
-returnArgument()
-----------------
+willReturnArgument()
+--------------------
 
 Sometimes you want to return one of the arguments of a method call (unchanged) as the
 result of a stubbed method call. Here is an example that shows how you can achieve this
-using ``returnArgument()`` instead of ``returnValue()``:
+using ``willReturnArgument()``:
 
 .. literalinclude:: examples/test-doubles/ReturnArgumentExampleTest.php
-   :caption: Using returnArgument() to stub a method call to return one of the arguments
+   :caption: Using willReturnArgument() to stub a method call to return one of the arguments
    :language: php
 
-returnSelf()
-------------
+willReturnSelf()
+----------------
 
 When testing a fluent interface, it is sometimes useful to have a stubbed method return
 a reference to the stubbed object. Here is an example that shows how you can use
-``returnSelf()`` to achieve this:
+``willReturnSelf()`` to achieve this:
 
 .. literalinclude:: examples/test-doubles/ReturnSelfExampleTest.php
-   :caption: Using returnSelf() to stub a method call to return a reference to the stub object
+   :caption: Using willReturnSelf() to stub a method call to return a reference to the stub object
    :language: php
 
-returnValueMap()
-----------------
+willReturnValueMap()
+--------------------
 
 Sometimes a stubbed method should return different values depending on a predefined list
-of arguments. Here is an example that shows how to use ``returnValueMap()`` to create a map
+of arguments. Here is an example that shows how to use ``willReturnValueMap()`` to create a map
 that associates arguments with corresponding return values:
 
 .. literalinclude:: examples/test-doubles/ReturnValueMapExampleTest.php
-   :caption: Using returnValueMap() to stub a method call to return the value from a map
+   :caption: Using willReturnValueMap() to stub a method call to return the value from a map
    :language: php
 
-returnCallback()
-----------------
+willReturnCallback()
+--------------------
 
 When the stubbed method call should return a calculated value instead of a fixed one
-(see ``returnValue()``) or an (unchanged) argument (see ``returnArgument()``), you
-can use ``returnCallback()`` to have the stubbed method return the result of a callback
+(see ``willReturn()``) or an (unchanged) argument (see ``willReturnArgument()``), you
+can use ``willReturnCallback()`` to have the stubbed method return the result of a callback
 function or method. Here is an example:
 
 .. literalinclude:: examples/test-doubles/ReturnCallbackExampleTest.php
-   :caption: Using returnCallback() to stub a method call to return a value from a callback
+   :caption: Using willReturnCallback() to stub a method call to return a value from a callback
    :language: php
 
-onConsecutiveCalls()
+willThrowException()
 --------------------
 
-A simpler alternative to setting up a callback method may be to specify a list of desired
-return values. You can do this with the ``onConsecutiveCalls()`` method. Here is an example:
-
-.. literalinclude:: examples/test-doubles/OnConsecutiveCallsExampleTest.php
-   :caption: Using onConsecutiveCalls() to stub a method call to return a list of values in the specified order
-   :language: php
-
-throwException()
-----------------
-
 Instead of returning a value, a stubbed method can also raise an exception.
-Here is an example that shows how to use ``throwException()`` to do this:
+Here is an example that shows how to use ``willThrowException()()`` to do this:
 
 .. literalinclude:: examples/test-doubles/ThrowExceptionExampleTest.php
-   :caption: Using throwException() to stub a method call to throw an exception
+   :caption: Using willThrowException()() to stub a method call to throw an exception
    :language: php
 
 .. _test-doubles.mock-objects:
@@ -351,6 +319,10 @@ the number of invocations:
 -
 
   ``once()`` returns a matcher that matches when the method it is evaluated for is executed exactly once
+
+-
+
+  ``atMost(int $count)`` returns a matcher that matches when the method it is evaluated for is executed at most ``$count`` times
 
 -
 

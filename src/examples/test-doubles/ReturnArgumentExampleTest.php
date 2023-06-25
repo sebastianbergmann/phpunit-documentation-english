@@ -10,7 +10,7 @@ final class ReturnArgumentExampleTest extends TestCase
 
         // Configure the stub.
         $stub->method('doSomething')
-             ->will($this->returnArgument(0));
+             ->willReturnArgument(0);
 
         // $stub->doSomething('foo') returns 'foo'
         $this->assertSame('foo', $stub->doSomething('foo'));
