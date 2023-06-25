@@ -134,6 +134,12 @@ Similarly, if ``m`` had a return type declaration for a scalar type then a retur
 value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``)
 would be generated.
 
+A list of desired return values can also be specified. Here is an example:
+
+.. literalinclude:: examples/test-doubles/OnConsecutiveCallsExampleTest.php
+   :caption: Using willReturn() to stub a method call to return a list of values in the specified order
+   :language: php
+
 createStubForIntersectionOfInterfaces()
 ---------------------------------------
 
