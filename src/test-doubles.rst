@@ -312,6 +312,10 @@ the number of invocations:
 
 -
 
+  ``atMost(int $count)`` returns a matcher that matches when the method it is evaluated for is executed at most ``$count`` times
+
+-
+
   ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
 
 createMockForIntersectionOfInterfaces()
