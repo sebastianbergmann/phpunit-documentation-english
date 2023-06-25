@@ -16,7 +16,7 @@ final class ReturnValueMapExampleTest extends TestCase
 
         // Configure the stub.
         $stub->method('doSomething')
-             ->will($this->returnValueMap($map));
+             ->willReturnValueMap($map);
 
         // $stub->doSomething() returns different values depending on
         // the provided arguments.
