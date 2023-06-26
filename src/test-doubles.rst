@@ -140,16 +140,6 @@ A list of desired return values can also be specified. Here is an example:
    :caption: Using willReturn() to stub a method call to return a list of values in the specified order
    :language: php
 
-createConfiguredStub()
-----------------------
-
-The ``createConfiguredStub()`` method is a convenience wrapper around ``createStub()`` that allows configuring
-return values using an associative array (``['methodName' => <return value>]``):
-
-.. literalinclude:: examples/test-doubles/CreateConfiguredStubExampleTest.php
-   :caption: Using createConfiguredStub() to create a test stub and configure return values
-   :language: php
-
 createStubForIntersectionOfInterfaces()
 ---------------------------------------
 
@@ -178,6 +168,16 @@ a test stub that satisfies ``X&Y`` like so:
 
 .. literalinclude:: examples/test-doubles/StubForIntersectionExampleTest.php
    :caption: Using createStubForIntersectionOfInterfaces() to create a test stub for an intersection type
+   :language: php
+
+createConfiguredStub()
+----------------------
+
+The ``createConfiguredStub()`` method is a convenience wrapper around ``createStub()`` that allows configuring
+return values using an associative array (``['methodName' => <return value>]``):
+
+.. literalinclude:: examples/test-doubles/CreateConfiguredStubExampleTest.php
+   :caption: Using createConfiguredStub() to create a test stub and configure return values
    :language: php
 
 willReturnArgument()
