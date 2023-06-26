@@ -454,84 +454,92 @@ MockBuilder API
 
 As mentioned before, when the defaults used by the ``createStub()`` and ``createMock()`` methods
 to generate the test double do not match your needs then you can use the ``getMockBuilder($type)``
-method to customize the test double generation using a fluent interface. Here is a list of methods
-provided by the Mock Builder:
+method to customize the test double generation using a fluent interface. The methods provided by
+the Mock Builder are documented below.
 
--
+setMockClassName()
+------------------
 
-  ``onlyMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. Each method must exist in the given mock class.
+``setMockClassName($name)`` can be used to specify a class name for the generated test double class.
 
--
+setConstructorArgs()
+--------------------
 
-  ``addMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that don't exist (yet) in the given mock class. The behavior of the other methods remains the same.
+``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
 
--
+disableOriginalConstructor()
+----------------------------
 
-  ``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
+``disableOriginalConstructor()`` can be used to disable the call to the constructor of the original class.
 
--
+``enableOriginalConstructor()`` can be used to make it explicit that the constructor of the original class should be called (which is the default behaviour).
 
-  ``setMockClassName($name)`` can be used to specify a class name for the generated test double class.
+disableOriginalClone()
+----------------------
 
--
+``disableOriginalClone()`` can be used to disable the call to the clone constructor of the original class.
 
-  ``disableOriginalConstructor()`` can be used to disable the call to the original class' constructor.
+``enableOriginalClone()`` can be used to make it explicit that the clone constructor of the original class should be called (which is the default behaviour).
 
--
+enableArgumentCloning()
+-----------------------
 
-  ``enableOriginalConstructor()`` can be used to enable the call to the original class' constructor.
+``enableArgumentCloning()`` can be used to enable the cloning of arguments passed to doubled methods.
 
--
+``disableArgumentCloning()`` can be used to make it explicit that arguments passed to doubled methods are not cloned (which is the default behaviour).
 
-  ``disableOriginalClone()`` can be used to disable the call to the original class' clone constructor.
+disableAutoReturnValueGeneration()
+----------------------------------
 
--
+``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
 
-  ``enableOriginalClone()`` can be used to enable the call to the original class' clone constructor.
+``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
 
--
+disallowMockingUnknownTypes()
+-----------------------------
 
-  ``disableAutoload()`` can be used to disable ``__autoload()`` during the generation of the test double class.
+``disallowMockingUnknownTypes()`` can be used to disallow the doubling of unknown types.
 
--
+``allowMockingUnknownTypes()`` can be used to make it explicit that the doubling of unknown types is allowed (which is the default).
 
-  ``enableAutoload()`` can be used to enable ``__autoload()`` during the generation of the test double class.
+disableAutoload()
+-----------------
 
--
+``disableAutoload()`` can be used to disable PHP's autoloading functionality during the generation of the test double class.
 
-  ``disableArgumentCloning()`` can be used to disable the cloning of arguments passed to mocked methods.
+``enableAutoload()`` can be used to make it explicit that PHP's autoloading functionality should be enabled (which is the default behaviour).
 
--
+enableProxyingToOriginalMethods()
+---------------------------------
 
-  ``enableArgumentCloning()`` can be used to enable the cloning of arguments passed to mocked methods.
+``enableProxyingToOriginalMethods()`` can be used to enable the invocation of the original methods. The object to be used for invoking the original methods must be configured using ``setProxyTarget()``.
 
--
+``disableProxyingToOriginalMethods()`` can be used to make it explicit that the original methods are not invoked (which is the default behaviour).
 
-  ``enableProxyingToOriginalMethods()`` can be used to enable the invocation of the original methods.
+onlyMethods()
+-------------
 
--
+``onlyMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. The specified methods must exist in the class that is mocked.
 
-  ``disableProxyingToOriginalMethods()`` can be used to disable the invocation of the original methods.
+addMethods()
+------------
 
--
+``addMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that do not exist in the interface or class that is mocked. Methods that do exist in the interface or class remain unchanged.
 
-  ``setProxyTarget()`` can be used to set the proxy target for the invocation of the original methods.
+getMock()
+---------
 
--
+``getMock()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMock()`` must be the last in the method chain.
 
-  ``allowMockingUnknownTypes()`` can be used to allow the doubling of unknown types.
+getMockForAbstractClass()
+-------------------------
 
--
+``getMockForAbstractClass()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMockForAbstractClass()`` must be the last in the method chain.
 
-  ``disallowMockingUnknownTypes()`` can be used to disallow the doubling of unknown types.
+getMockForTrait
+---------------
 
--
-
-  ``enableAutoReturnValueGeneration()`` can be used to enable the automatic generation of return values when no return value is configured.
-
--
-
-  ``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
+``getMockForTrait()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMockForTrait()`` must be the last in the method chain.
 
 Here is an example that shows how to use the Mock Builder's fluent interface to configure
 the creation of a test stub. The configuration of this test double uses the same best
