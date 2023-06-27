@@ -178,6 +178,30 @@ expectations on mock objects as :ref:`risky <risky-tests.useless-tests>`. The
 ``DoesNotPerformAssertions`` attribute can be used to prevent this.
 
 
+.. _appendixes.attributes.WithoutErrorHandler:
+
+``WithoutErrorHandler``
+=======================
+
++------------+-------------+--------------+------------+
+| Context    | Class Level | Method Level | Repeatable |
++============+=============+==============+============+
+| Test Code  | no          | yes          | no         |
++------------+-------------+--------------+------------+
+
+The ``WithoutErrorHandler`` can be used to disable PHPUnit's error handler for
+a test method.
+
+.. admonition:: Warning
+
+   Features of PHPUnit that rely on PHPUnit's error handler to be active while a test method
+   is executed will not work when PHPUnit's error handler is disabled. No ``E_(USER_)*`` errors
+   triggered by PHP will be processed by PHPUnit when its error handler is disabled.
+
+   You should only disable PHPUnit's error handler when it interferes with the code you are testing,
+   for instance when it uses ``error_get_last()`` to react to ``E_(USER_)*`` errors triggered by PHP.
+
+
 Code Coverage
 =============
 
