@@ -46,6 +46,7 @@ in every context where an object of the original type is expected or required.
    your software design, favour the doubling of interfaces over the doubling
    of classes.
 
+
 .. _test-doubles.test-stubs:
 
 Test Stubs
@@ -56,6 +57,7 @@ configured return values is referred to as *stubbing*. You can use a *test stub*
 "replace a real component on which the SUT depends so that the test has a control
 point for the indirect inputs of the SUT. This allows the test to force the SUT
 down paths it might not otherwise execute" (Gerard Meszaros).
+
 
 ``createStub()``
 ----------------
@@ -71,6 +73,7 @@ method to customize the test double generation using a fluent interface.
 By default, all methods of the original class are replaced with an implementation that
 returns an automatically generated value that satisfies the method's return type
 declaration (without calling the original method).
+
 
 ``willReturn()``
 ----------------
@@ -140,6 +143,7 @@ A list of desired return values can also be specified. Here is an example:
    :caption: Using willReturn() to stub a method call to return a list of values in the specified order
    :language: php
 
+
 ``createStubForIntersectionOfInterfaces()``
 -------------------------------------------
 
@@ -170,6 +174,7 @@ a test stub that satisfies ``X&Y`` like so:
    :caption: Using createStubForIntersectionOfInterfaces() to create a test stub for an intersection type
    :language: php
 
+
 ``willReturnArgument()``
 ------------------------
 
@@ -180,6 +185,7 @@ using ``willReturnArgument()``:
 .. literalinclude:: examples/test-doubles/ReturnArgumentExampleTest.php
    :caption: Using willReturnArgument() to stub a method call to return one of the arguments
    :language: php
+
 
 ``willReturnSelf()``
 --------------------
@@ -192,6 +198,7 @@ a reference to the stubbed object. Here is an example that shows how you can use
    :caption: Using willReturnSelf() to stub a method call to return a reference to the stub object
    :language: php
 
+
 ``willReturnValueMap()``
 ------------------------
 
@@ -202,6 +209,7 @@ that associates arguments with corresponding return values:
 .. literalinclude:: examples/test-doubles/ReturnValueMapExampleTest.php
    :caption: Using willReturnValueMap() to stub a method call to return the value from a map
    :language: php
+
 
 ``willReturnCallback()``
 ------------------------
@@ -215,6 +223,7 @@ function or method. Here is an example:
    :caption: Using willReturnCallback() to stub a method call to return a value from a callback
    :language: php
 
+
 ``willThrowException()``
 ------------------------
 
@@ -224,6 +233,7 @@ Here is an example that shows how to use ``willThrowException()()`` to do this:
 .. literalinclude:: examples/test-doubles/ThrowExceptionExampleTest.php
    :caption: Using willThrowException()() to stub a method call to throw an exception
    :language: php
+
 
 .. _test-doubles.mock-objects:
 
@@ -241,6 +251,7 @@ the SUT if it hasn't already failed the tests but the emphasis is on the
 verification of the indirect outputs. Therefore, a mock object is a lot more than
 just a test stub plus assertions; it is used in a fundamentally different way"
 (Gerard Meszaros).
+
 
 ``createMock()``
 ----------------
@@ -318,6 +329,7 @@ the number of invocations:
 
   ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
 
+
 ``createMockForIntersectionOfInterfaces()``
 -------------------------------------------
 
@@ -348,6 +360,7 @@ a test stub that satisfies ``X&Y`` like so:
    :caption: Using createMockForIntersectionOfInterfaces() to create a mock object for an intersection type
    :language: php
 
+
 ``createConfiguredMock()``
 --------------------------
 
@@ -357,6 +370,7 @@ return values using an associative array (``['methodName' => <return value>]``):
 .. literalinclude:: examples/test-doubles/CreateConfiguredMockExampleTest.php
    :caption: Using createConfiguredMock() to create a mock object and configure return values
    :language: php
+
 
 .. _test-doubles.mocking-traits-and-abstract-classes:
 
@@ -379,6 +393,7 @@ abstract class.
    :caption: A test for a concrete method of an abstract class
    :language: php
 
+
 ``getMockForTrait()``
 ---------------------
 
@@ -396,6 +411,7 @@ are mocked. This allows for testing the concrete methods of a trait.
 
 .. _test-doubles.stubbing-and-mocking-web-services:
 
+
 Web Services
 ============
 
@@ -412,6 +428,7 @@ Here is an example that shows how to stub the web service described in :file:`He
    :caption: Stubbing a web service
    :language: php
 
+
 MockBuilder API
 ===============
 
@@ -420,15 +437,18 @@ to generate the test double do not match your needs then you can use the ``getMo
 method to customize the test double generation using a fluent interface. The methods provided by
 the Mock Builder are documented below.
 
+
 ``setMockClassName()``
 ----------------------
 
 ``setMockClassName($name)`` can be used to specify a class name for the generated test double class.
 
+
 ``setConstructorArgs()``
 ------------------------
 
 ``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
+
 
 ``disableOriginalConstructor()``
 --------------------------------
@@ -437,12 +457,14 @@ the Mock Builder are documented below.
 
 ``enableOriginalConstructor()`` can be used to make it explicit that the constructor of the original class should be called (which is the default behaviour).
 
+
 ``disableOriginalClone()``
 --------------------------
 
 ``disableOriginalClone()`` can be used to disable the call to the clone constructor of the original class.
 
 ``enableOriginalClone()`` can be used to make it explicit that the clone constructor of the original class should be called (which is the default behaviour).
+
 
 ``enableArgumentCloning()``
 ---------------------------
@@ -451,12 +473,14 @@ the Mock Builder are documented below.
 
 ``disableArgumentCloning()`` can be used to make it explicit that arguments passed to doubled methods are not cloned (which is the default behaviour).
 
+
 ``disableAutoReturnValueGeneration()``
 --------------------------------------
 
 ``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
 
 ``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
+
 
 ``disallowMockingUnknownTypes()``
 ---------------------------------
@@ -465,12 +489,14 @@ the Mock Builder are documented below.
 
 ``allowMockingUnknownTypes()`` can be used to make it explicit that the doubling of unknown types is allowed (which is the default).
 
+
 ``disableAutoload()``
 ---------------------
 
 ``disableAutoload()`` can be used to disable PHP's autoloading functionality during the generation of the test double class.
 
 ``enableAutoload()`` can be used to make it explicit that PHP's autoloading functionality should be enabled (which is the default behaviour).
+
 
 ``enableProxyingToOriginalMethods()``
 -------------------------------------
@@ -479,25 +505,30 @@ the Mock Builder are documented below.
 
 ``disableProxyingToOriginalMethods()`` can be used to make it explicit that the original methods are not invoked (which is the default behaviour).
 
+
 ``onlyMethods()``
 -----------------
 
 ``onlyMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. The specified methods must exist in the class that is mocked.
+
 
 ``addMethods()``
 ----------------
 
 ``addMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that do not exist in the interface or class that is mocked. Methods that do exist in the interface or class remain unchanged.
 
+
 ``getMock()``
 -------------
 
 ``getMock()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMock()`` must be the last in the method chain.
 
+
 ``getMockForAbstractClass()``
 -----------------------------
 
 ``getMockForAbstractClass()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMockForAbstractClass()`` must be the last in the method chain.
+
 
 ``getMockForTrait``
 -------------------
