@@ -24,7 +24,7 @@ his "xUnit Test Patterns" book like so:
 
 The ``createStub(string $type)`` and ``createMock(string $type)`` methods can be used
 in a test to automatically generate an object that can act as a test double for the
-specified original type (interface or class name). This test double object can be used
+specified original type (interface or extendable class). This test double object can be used
 in every context where an object of the original type is expected or required.
 
 .. admonition:: Limitation: final, private, and static methods
@@ -67,7 +67,7 @@ Creating Test Stubs
 
 ``createStub(string $type)`` returns a test stub for the specified interface or extendable class.
 
-All methods of the original class are replaced with an implementation that returns an automatically
+All methods of the original type are replaced with an implementation that returns an automatically
 generated value that satisfies the method's return type declaration without calling the original method.
 These methods are referred to as "doubled methods".
 
@@ -78,7 +78,7 @@ The behaviour of doubled methods can be configured using methods such as ``willR
 ``createStubForIntersectionOfInterfaces()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``createStubForIntersectionOfInterfaces(array $interface)`` method can be used to
+The ``createStubForIntersectionOfInterfaces(array $interfaces)`` method can be used to
 create a test stub for an intersection of interfaces based on a list of interface names.
 
 Consider you have the following interfaces ``X`` and ``Y``:
@@ -98,7 +98,7 @@ And you have a class that you want to test named ``Z``:
    :language: php
 
 To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
-use the ``createStubForIntersectionOfInterfaces(array $interface)`` method to create
+use the ``createStubForIntersectionOfInterfaces(array $interfaces)`` method to create
 a test stub that satisfies ``X&Y`` like so:
 
 .. literalinclude:: examples/test-doubles/StubForIntersectionExampleTest.php
@@ -264,7 +264,7 @@ Creating Mock Objects
 
 ``createMock(string $type)`` returns a mock object for the specified interface or extendable class.
 
-All methods of the original class are replaced with an implementation that returns an automatically
+All methods of the original type are replaced with an implementation that returns an automatically
 generated value that satisfies the method's return type declaration without calling the original method.
 These methods are referred to as "doubled methods".
 
@@ -278,7 +278,7 @@ Expectations for invocations of doubled methods ("method must be called with spe
 ``createMockForIntersectionOfInterfaces()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``createMockForIntersectionOfInterfaces(array $interface)`` method can be used to
+The ``createMockForIntersectionOfInterfaces(array $interfaces)`` method can be used to
 create a mock object for an intersection of interfaces based on a list of interface names.
 
 Consider you have the following interfaces ``X`` and ``Y``:
@@ -298,7 +298,7 @@ And you have a class that you want to test named ``Z``:
    :language: php
 
 To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
-use the ``createMockForIntersectionOfInterfaces(array $interface)`` method to create
+use the ``createMockForIntersectionOfInterfaces(array $interfaces)`` method to create
 a test stub that satisfies ``X&Y`` like so:
 
 .. literalinclude:: examples/test-doubles/MockForIntersectionExampleTest.php
