@@ -62,25 +62,22 @@ down paths it might not otherwise execute" (Gerard Meszaros).
 ``createStub()``
 ----------------
 
-``createStub(string $type)`` returns a test stub for the specified type. The creation of this
-test stub is performed using best practice defaults: the ``__construct()`` and
-``__clone()`` methods of the original class are not executed and the arguments passed
-to a method of the test double will not be cloned.
+``createStub(string $type)`` returns a test stub for the specified interface or extendable class.
 
-If these defaults are not what you need then you can use the ``getMockBuilder(string $type)``
-method to customize the test double generation using a fluent interface.
+All methods of the original class are replaced with an implementation that returns an automatically
+generated value that satisfies the method's return type declaration without calling the original method.
+These methods are referred to as "doubled methods".
 
-By default, all methods of the original class are replaced with an implementation that
-returns an automatically generated value that satisfies the method's return type
-declaration (without calling the original method).
+The behaviour of doubled methods can be configured using methods such as ``willReturn()`` or
+``willThrowException()``. These methods are explained later.
 
 
 ``willReturn()``
 ----------------
 
-Using the ``willReturn()`` method, for instance, you can configure these implementations
-to return a specified value when called. This configured value must be compatible with
-the method's return type declaration.
+Using the ``willReturn()`` method, for instance, you can configure a doubled method to return a
+specified value when it is called. This configured value must be compatible with the method's
+return type declaration.
 
 Consider that we have a class that we want to test, ``SomeClass``, which depends
 on ``Dependency``:
@@ -256,19 +253,17 @@ just a test stub plus assertions; it is used in a fundamentally different way"
 ``createMock()``
 ----------------
 
-``createMock(string $type)`` returns a mock object for the specified type. The creation of this
-mock object is performed using best practice defaults: the ``__construct()`` and
-``__clone()`` methods of the original class are not executed and the arguments passed
-to a method of the test double will not be cloned.
+``createMock(string $type)`` returns a mock object for the specified interface or extendable class.
 
-If these defaults are not what you need then you can use the ``getMockBuilder(string $type)``
-method to customize the test double generation using a fluent interface.
+All methods of the original class are replaced with an implementation that returns an automatically
+generated value that satisfies the method's return type declaration without calling the original method.
+These methods are referred to as "doubled methods".
 
-By default, all methods of the original class are replaced with an implementation that
-returns an automatically generated value that satisfies the method's return type
-declaration (without calling the original method). Furthermore, expectations for invocations
-of these methods ("method must be called with specified arguments", "method must not be called", ...)
-can be configured.
+The behaviour of doubled methods can be configured using methods such as ``willReturn()`` or
+``willThrowException()``. These methods are explained in the section on Test Stubs above.
+
+Expectations for invocations of doubled methods ("method must be called with specified arguments",
+"method must not be called", etc.) can be configured using the mock object's ``expects()`` method.
 
 Here is an example: suppose we want to test that the correct method, ``update()``
 in our example, is called on an object that observes another object.
