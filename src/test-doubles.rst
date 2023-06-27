@@ -156,6 +156,16 @@ using a real implementation of ``Dependency``:
    ``$stub->expects($this->any())->method('doSomething')->willReturn('foo');``
    has to be used.
 
+.. admonition:: Deprecation: Doubling interfaces (or classes) that have a method named "method"
+
+   As of PHPUnit 10.3, the support for doubling interfaces (or classes) that have
+   a method named "method" is soft-deprecated, meaning the deprecation is in documentation
+   only.
+
+   Starting with PHPUnit 11, doubling interfaces (or classes) that have a method named "method"
+   will trigger a deprecation warning. Support for doubling interfaces (or classes) that have a
+   method named "method" will be removed in PHPUnit 12.
+
 In the example shown above, we first use the ``createStub()`` method to create a test stub,
 an object that looks like an instance of ``Dependency``.
 
