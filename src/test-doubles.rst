@@ -59,8 +59,11 @@ point for the indirect inputs of the SUT. This allows the test to force the SUT
 down paths it might not otherwise execute" (Gerard Meszaros).
 
 
+Creating Test Stubs
+-------------------
+
 ``createStub()``
-----------------
+^^^^^^^^^^^^^^^^
 
 ``createStub(string $type)`` returns a test stub for the specified interface or extendable class.
 
@@ -72,8 +75,42 @@ The behaviour of doubled methods can be configured using methods such as ``willR
 ``willThrowException()``. These methods are explained later.
 
 
+``createStubForIntersectionOfInterfaces()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``createStubForIntersectionOfInterfaces(array $interface)`` method can be used to
+create a test stub for an intersection of interfaces based on a list of interface names.
+
+Consider you have the following interfaces ``X`` and ``Y``:
+
+.. literalinclude:: examples/test-doubles/src/X.php
+   :caption: An interface named X
+   :language: php
+
+.. literalinclude:: examples/test-doubles/src/Y.php
+   :caption: An interface named Y
+   :language: php
+
+And you have a class that you want to test named ``Z``:
+
+.. literalinclude:: examples/test-doubles/src/Z.php
+   :caption: A class named Z
+   :language: php
+
+To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
+use the ``createStubForIntersectionOfInterfaces(array $interface)`` method to create
+a test stub that satisfies ``X&Y`` like so:
+
+.. literalinclude:: examples/test-doubles/StubForIntersectionExampleTest.php
+   :caption: Using createStubForIntersectionOfInterfaces() to create a test stub for an intersection type
+   :language: php
+
+
+Configuring Test Stubs
+----------------------
+
 ``willReturn()``
-----------------
+^^^^^^^^^^^^^^^^
 
 Using the ``willReturn()`` method, for instance, you can configure a doubled method to return a
 specified value when it is called. This configured value must be compatible with the method's
@@ -141,39 +178,19 @@ A list of desired return values can also be specified. Here is an example:
    :language: php
 
 
-``createStubForIntersectionOfInterfaces()``
--------------------------------------------
+``willThrowException()``
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``createStubForIntersectionOfInterfaces(array $interface)`` method can be used to
-create a test stub for an intersection of interfaces based on a list of interface names.
+Instead of returning a value, a stubbed method can also raise an exception.
+Here is an example that shows how to use ``willThrowException()`` to do this:
 
-Consider you have the following interfaces ``X`` and ``Y``:
-
-.. literalinclude:: examples/test-doubles/src/X.php
-   :caption: An interface named X
-   :language: php
-
-.. literalinclude:: examples/test-doubles/src/Y.php
-   :caption: An interface named Y
-   :language: php
-
-And you have a class that you want to test named ``Z``:
-
-.. literalinclude:: examples/test-doubles/src/Z.php
-   :caption: A class named Z
-   :language: php
-
-To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
-use the ``createStubForIntersectionOfInterfaces(array $interface)`` method to create
-a test stub that satisfies ``X&Y`` like so:
-
-.. literalinclude:: examples/test-doubles/StubForIntersectionExampleTest.php
-   :caption: Using createStubForIntersectionOfInterfaces() to create a test stub for an intersection type
+.. literalinclude:: examples/test-doubles/ThrowExceptionExampleTest.php
+   :caption: Using willThrowException() to stub a method call to throw an exception
    :language: php
 
 
 ``willReturnArgument()``
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sometimes you want to return one of the arguments of a method call (unchanged) as the
 result of a stubbed method call. Here is an example that shows how you can achieve this
@@ -184,32 +201,8 @@ using ``willReturnArgument()``:
    :language: php
 
 
-``willReturnSelf()``
---------------------
-
-When testing a fluent interface, it is sometimes useful to have a stubbed method return
-a reference to the stubbed object. Here is an example that shows how you can use
-``willReturnSelf()`` to achieve this:
-
-.. literalinclude:: examples/test-doubles/ReturnSelfExampleTest.php
-   :caption: Using willReturnSelf() to stub a method call to return a reference to the stub object
-   :language: php
-
-
-``willReturnValueMap()``
-------------------------
-
-Sometimes a stubbed method should return different values depending on a predefined list
-of arguments. Here is an example that shows how to use ``willReturnValueMap()`` to create a map
-that associates arguments with corresponding return values:
-
-.. literalinclude:: examples/test-doubles/ReturnValueMapExampleTest.php
-   :caption: Using willReturnValueMap() to stub a method call to return the value from a map
-   :language: php
-
-
 ``willReturnCallback()``
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 When the stubbed method call should return a calculated value instead of a fixed one
 (see ``willReturn()``) or an (unchanged) argument (see ``willReturnArgument()``), you
@@ -221,14 +214,27 @@ function or method. Here is an example:
    :language: php
 
 
-``willThrowException()``
-------------------------
+``willReturnSelf()``
+^^^^^^^^^^^^^^^^^^^^
 
-Instead of returning a value, a stubbed method can also raise an exception.
-Here is an example that shows how to use ``willThrowException()()`` to do this:
+When testing a fluent interface, it is sometimes useful to have a stubbed method return
+a reference to the stubbed object. Here is an example that shows how you can use
+``willReturnSelf()`` to achieve this:
 
-.. literalinclude:: examples/test-doubles/ThrowExceptionExampleTest.php
-   :caption: Using willThrowException()() to stub a method call to throw an exception
+.. literalinclude:: examples/test-doubles/ReturnSelfExampleTest.php
+   :caption: Using willReturnSelf() to stub a method call to return a reference to the stub object
+   :language: php
+
+
+``willReturnValueMap()``
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sometimes a stubbed method should return different values depending on a predefined list
+of arguments. Here is an example that shows how to use ``willReturnValueMap()`` to create a map
+that associates arguments with corresponding return values:
+
+.. literalinclude:: examples/test-doubles/ReturnValueMapExampleTest.php
+   :caption: Using willReturnValueMap() to stub a method call to return the value from a map
    :language: php
 
 
@@ -250,8 +256,11 @@ just a test stub plus assertions; it is used in a fundamentally different way"
 (Gerard Meszaros).
 
 
+Creating Mock Objects
+---------------------
+
 ``createMock()``
-----------------
+^^^^^^^^^^^^^^^^
 
 ``createMock(string $type)`` returns a mock object for the specified interface or extendable class.
 
@@ -264,6 +273,102 @@ The behaviour of doubled methods can be configured using methods such as ``willR
 
 Expectations for invocations of doubled methods ("method must be called with specified arguments",
 "method must not be called", etc.) can be configured using the mock object's ``expects()`` method.
+
+
+``createMockForIntersectionOfInterfaces()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``createMockForIntersectionOfInterfaces(array $interface)`` method can be used to
+create a mock object for an intersection of interfaces based on a list of interface names.
+
+Consider you have the following interfaces ``X`` and ``Y``:
+
+.. literalinclude:: examples/test-doubles/src/X.php
+   :caption: An interface named X
+   :language: php
+
+.. literalinclude:: examples/test-doubles/src/Y.php
+   :caption: An interface named Y
+   :language: php
+
+And you have a class that you want to test named ``Z``:
+
+.. literalinclude:: examples/test-doubles/src/Z.php
+   :caption: A class named Z
+   :language: php
+
+To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
+use the ``createMockForIntersectionOfInterfaces(array $interface)`` method to create
+a test stub that satisfies ``X&Y`` like so:
+
+.. literalinclude:: examples/test-doubles/MockForIntersectionExampleTest.php
+   :caption: Using createMockForIntersectionOfInterfaces() to create a mock object for an intersection type
+   :language: php
+
+
+``createConfiguredMock()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``createConfiguredMock()`` method is a convenience wrapper around ``createMock()`` that allows configuring
+return values using an associative array (``['methodName' => <return value>]``):
+
+.. literalinclude:: examples/test-doubles/CreateConfiguredMockExampleTest.php
+   :caption: Using createConfiguredMock() to create a mock object and configure return values
+   :language: php
+
+
+``getMockForAbstractClass()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``getMockForAbstractClass()`` method returns a mock
+object for an abstract class. All abstract methods of the given abstract
+class are mocked. This allows for testing the concrete methods of an
+abstract class.
+
+.. literalinclude:: examples/test-doubles/src/AbstractClass.php
+   :caption: An abstract class with a concrete method
+   :language: php
+
+.. literalinclude:: examples/test-doubles/AbstractClassTest.php
+   :caption: A test for a concrete method of an abstract class
+   :language: php
+
+
+``getMockForTrait()``
+^^^^^^^^^^^^^^^^^^^^^
+
+The ``getMockForTrait()`` method returns a mock object
+that uses a specified trait. All abstract methods of the given trait
+are mocked. This allows for testing the concrete methods of a trait.
+
+.. literalinclude:: examples/test-doubles/src/AbstractTrait.php
+   :caption: A trait with an abstract method
+   :language: php
+
+.. literalinclude:: examples/test-doubles/AbstractTraitTest.php
+   :caption: A test for a concrete method of a trait
+   :language: php
+
+
+``getMockFromWsdl()``
+^^^^^^^^^^^^^^^^^^^^^
+
+When your application interacts with a web service you want to test it
+without actually interacting with the web service. To create stubs
+and mocks of web services, the ``getMockFromWsdl()`` method can be used.
+
+This method returns a mock object based on a web service description in WSDL whereas
+``createMock()`` returns a test stub based on an interface or on a class.
+
+Here is an example that shows how to stub the web service described in :file:`HelloService.wsdl`:
+
+.. literalinclude:: examples/test-doubles/WsdlStubExampleTest.php
+   :caption: Stubbing a web service
+   :language: php
+
+
+Configuring Mock Objects
+------------------------
 
 Here is an example: suppose we want to test that the correct method, ``update()``
 in our example, is called on an object that observes another object.
@@ -323,105 +428,6 @@ the number of invocations:
 -
 
   ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
-
-
-``createMockForIntersectionOfInterfaces()``
--------------------------------------------
-
-The ``createMockForIntersectionOfInterfaces(array $interface)`` method can be used to
-create a mock object for an intersection of interfaces based on a list of interface names.
-
-Consider you have the following interfaces ``X`` and ``Y``:
-
-.. literalinclude:: examples/test-doubles/src/X.php
-   :caption: An interface named X
-   :language: php
-
-.. literalinclude:: examples/test-doubles/src/Y.php
-   :caption: An interface named Y
-   :language: php
-
-And you have a class that you want to test named ``Z``:
-
-.. literalinclude:: examples/test-doubles/src/Z.php
-   :caption: A class named Z
-   :language: php
-
-To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
-use the ``createMockForIntersectionOfInterfaces(array $interface)`` method to create
-a test stub that satisfies ``X&Y`` like so:
-
-.. literalinclude:: examples/test-doubles/MockForIntersectionExampleTest.php
-   :caption: Using createMockForIntersectionOfInterfaces() to create a mock object for an intersection type
-   :language: php
-
-
-``createConfiguredMock()``
---------------------------
-
-The ``createConfiguredMock()`` method is a convenience wrapper around ``createMock()`` that allows configuring
-return values using an associative array (``['methodName' => <return value>]``):
-
-.. literalinclude:: examples/test-doubles/CreateConfiguredMockExampleTest.php
-   :caption: Using createConfiguredMock() to create a mock object and configure return values
-   :language: php
-
-
-.. _test-doubles.mocking-traits-and-abstract-classes:
-
-Abstract Classes and Traits
-===========================
-
-``getMockForAbstractClass()``
------------------------------
-
-The ``getMockForAbstractClass()`` method returns a mock
-object for an abstract class. All abstract methods of the given abstract
-class are mocked. This allows for testing the concrete methods of an
-abstract class.
-
-.. literalinclude:: examples/test-doubles/src/AbstractClass.php
-   :caption: An abstract class with a concrete method
-   :language: php
-
-.. literalinclude:: examples/test-doubles/AbstractClassTest.php
-   :caption: A test for a concrete method of an abstract class
-   :language: php
-
-
-``getMockForTrait()``
----------------------
-
-The ``getMockForTrait()`` method returns a mock object
-that uses a specified trait. All abstract methods of the given trait
-are mocked. This allows for testing the concrete methods of a trait.
-
-.. literalinclude:: examples/test-doubles/src/AbstractTrait.php
-   :caption: A trait with an abstract method
-   :language: php
-
-.. literalinclude:: examples/test-doubles/AbstractTraitTest.php
-   :caption: A test for a concrete method of a trait
-   :language: php
-
-.. _test-doubles.stubbing-and-mocking-web-services:
-
-
-Web Services
-============
-
-When your application interacts with a web service you want to test it
-without actually interacting with the web service. To create stubs
-and mocks of web services, the ``getMockFromWsdl()`` method can be used.
-
-This method returns a test stub based on a web service description in WSDL whereas
-``createStub()``, for instance, returns a test stub based on an interface or on a class.
-
-Here is an example that shows how to stub the web service described in :file:`HelloService.wsdl`:
-
-.. literalinclude:: examples/test-doubles/WsdlStubExampleTest.php
-   :caption: Stubbing a web service
-   :language: php
 
 
 MockBuilder API
