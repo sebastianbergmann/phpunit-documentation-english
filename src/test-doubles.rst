@@ -65,7 +65,7 @@ Creating Test Stubs
 ``createStub()``
 ^^^^^^^^^^^^^^^^
 
-``createStub(string $type)`` returns a test stub for the specified interface or extendable class.
+The ``createStub(string $type)`` method returns a test stub for the specified interface or extendable class.
 
 All methods of the original type are replaced with an implementation that returns an automatically
 generated value that satisfies the method's return type declaration without calling the original method.
@@ -273,7 +273,7 @@ Creating Mock Objects
 ``createMock()``
 ^^^^^^^^^^^^^^^^
 
-``createMock(string $type)`` returns a mock object for the specified interface or extendable class.
+The ``createMock(string $type)`` method returns a mock object for the specified interface or extendable class.
 
 All methods of the original type are replaced with an implementation that returns an automatically
 generated value that satisfies the method's return type declaration without calling the original method.
