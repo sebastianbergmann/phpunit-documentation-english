@@ -11,18 +11,16 @@ Writing Tests for PHPUnit
 Asserting Return Values
 =======================
 
-:numref:`writing-tests-for-phpunit.examples.GreeterTest.php` shows
-how we can write tests using PHPUnit that exercise PHP's array operations.
-The example introduces the basic conventions and steps for writing tests
+This first example introduces the basic conventions and steps for writing tests
 with PHPUnit:
 
 #.
 
-   The tests for a class ``Class`` go into a class ``ClassTest``.
+   The tests for a class ``Greeter`` go into a class ``GreeterTest``.
 
 #.
 
-   ``ClassTest`` inherits (most of the time) from ``PHPUnit\Framework\TestCase``.
+   ``GreeterTest`` inherits from ``PHPUnit\Framework\TestCase``.
 
 #.
 
@@ -36,8 +34,13 @@ with PHPUnit:
 
    Inside the test methods, assertion methods such as ``assertSame()`` (see :ref:`appendixes.assertions`) are used to assert that an actual value matches an expected value, for instance.
 
+.. literalinclude:: examples/writing-tests-for-phpunit/src/Greeter.php
+   :caption: A class named ``Greeter`` (declared in ``src/Greeter.php``)
+   :name: writing-tests-for-phpunit.examples.Greeter.php
+   :language: php
+
 .. literalinclude:: examples/writing-tests-for-phpunit/GreeterTest.php
-   :caption: Testing a return value
+   :caption: A test class named ``GreeterTest`` (declared in ``tests/GreeterTest.php``)
    :name: writing-tests-for-phpunit.examples.GreeterTest.php
    :language: php
 
@@ -109,11 +112,11 @@ the test method will be called with the contents of the array as its arguments.
    :caption: Using a data provider that returns an array of arrays
    :name: writing-tests-for-phpunit.data-providers.examples.NumericDataSetsTest.php
    :language: php
-   
+
 .. literalinclude:: examples/writing-tests-for-phpunit/NumericDataSetsTestUsingExternalDataProvider.php
    :caption: Using an external data provider that returns an array of arrays
    :name: writing-tests-for-phpunit.data-providers.examples.NumericDataSetsTestUsingExternalDataProvider.php
-   :language: php   
+   :language: php
 
 Running the test shown above yields the output shown below:
 
