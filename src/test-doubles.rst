@@ -492,6 +492,15 @@ the Mock Builder are documented below.
 
 ``setMockClassName($name)`` can be used to specify a class name for the generated test double class.
 
+.. admonition:: Deprecation: ``setMockClassName()`` is deprecated
+
+   As of PHPUnit 10.3, the ``setMockClassName()`` method is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``setMockClassName()`` method will trigger a deprecation warning.
+   The method will be removed in PHPUnit 12.
+
 
 ``setConstructorArgs()``
 ------------------------
