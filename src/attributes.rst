@@ -813,7 +813,7 @@ This is equivalent to naming the method ``assertPreConditions()``.
 +------------+-------------+--------------+------------+
 
 The ``PostCondition`` attribute can be used to specify that a protected non-static method should
-be invoked before each test method (but before any ``tearDown()`` methods) of a test case class is run.
+be invoked after each test method (but before any ``tearDown()`` methods) of a test case class is run.
 This is equivalent to naming the method ``assertPostConditions()``.
 
 
