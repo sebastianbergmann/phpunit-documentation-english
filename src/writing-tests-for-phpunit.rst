@@ -152,9 +152,11 @@ test will be executed when the test it depends upon is successful for at
 least one data set. The result of a test that uses data providers cannot
 be injected into a depending test.
 
-All data providers are executed before both the call to the ``setUpBeforeClass()``
-static method and the first call to the ``setUp()`` method. You cannot access any
-variables to create in ``setUpBeforeClass()`` or ``setUp()`` within a data provider.
+All data providers, including those for test methods that will not be run due to
+``--filter`` or ``--exclude-group``, for instance, are executed before both the
+call to the ``setUpBeforeClass()`` static method and the first call to the ``setUp()``
+method. You cannot access any variables to create in ``setUpBeforeClass()`` or ``setUp()``
+within a data provider.
 
 .. _writing-tests-for-phpunit.output:
 
