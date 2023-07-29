@@ -103,10 +103,10 @@ provider method to be used is specified using the ``PHPUnit\Framework\Attributes
 or the ``PHPUnit\Framework\Attributes\DataProviderExternal`` attribute.
 
 A data provider method must be ``public`` and ``static``.
-It must return `iterable <https://www.php.net/manual/en/language.types.iterable.php>`_,
-either an array of arrays or an object that implements the ``Traversable``
-interface. In each iteration step, it must yield an array. For each of these arrays,
-the test method will be called with the contents of the array as its arguments.
+It must return a value that is `iterable <https://www.php.net/manual/en/language.types.iterable.php>`_,
+either an array or an object that implements the ``Traversable`` interface. In each iteration step,
+it must yield an array. For each of these arrays, the test method will be called with the contents
+of the array as its arguments.
 
 .. literalinclude:: examples/writing-tests-for-phpunit/NumericDataSetsTest.php
    :caption: Using a data provider that returns an array of arrays
@@ -122,7 +122,7 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/writing-tests-for-phpunit/NumericDataSetsTest.php.out
 
-When using a large number of data sets it is useful to name each one with a string key.
+It is useful to name each one with a string key.
 Output will be more verbose as it will contain that name of a dataset that breaks a test.
 
 .. literalinclude:: examples/writing-tests-for-phpunit/NamedDataSetsTest.php
@@ -152,11 +152,17 @@ test will be executed when the test it depends upon is successful for at
 least one data set. The result of a test that uses data providers cannot
 be injected into a depending test.
 
-All data providers, including those for test methods that will not be run due to
-``--filter`` or ``--exclude-group``, for instance, are executed before both the
-call to the ``setUpBeforeClass()`` static method and the first call to the ``setUp()``
-method. You cannot access any variables to create in ``setUpBeforeClass()`` or ``setUp()``
-within a data provider.
+.. admonition:: Note
+
+    All data providers, including those for test methods that will not be run due to
+    ``--filter`` or ``--exclude-group``, for example, are executed before both the
+    call to the ``setUpBeforeClass()`` static method and the first call to the ``setUp()``
+    method. You cannot access any properties of the actual test case object in
+    methods such as ``setUpBeforeClass()`` or ``setUp()`` within a data provider.
+
+.. admonition:: Note
+
+    No code coverage data is collected while data provider methods are executed.
 
 .. _writing-tests-for-phpunit.output:
 
