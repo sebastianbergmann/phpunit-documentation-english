@@ -8,8 +8,8 @@ final class AbstractClassTest extends TestCase
         $stub = $this->getMockForAbstractClass(AbstractClass::class);
 
         $stub->expects($this->any())
-             ->method('abstractMethod')
-             ->willReturn(true);
+            ->method('abstractMethod')
+            ->willReturn(true);
 
         $this->assertTrue($stub->concreteMethod());
     }

@@ -1,7 +1,7 @@
 ./tools/phpunit tests/OnConsecutiveCallsExampleTest.php
 PHPUnit 10.1.3 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.7
+Runtime:       PHP 8.2.9
 
 E                                                                   1 / 1 (100%)
 

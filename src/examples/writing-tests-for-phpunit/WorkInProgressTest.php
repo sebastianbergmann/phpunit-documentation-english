@@ -10,7 +10,7 @@ final class WorkInProgressTest extends TestCase
 
         // Stop here and mark this test as incomplete.
         $this->markTestIncomplete(
-            'This test has not been implemented yet.'
+            'This test has not been implemented yet.',
         );
     }
 }

@@ -7,7 +7,7 @@ final class JsonStringEqualsJsonFileTest extends TestCase
     {
         $this->assertJsonStringEqualsJsonFile(
             __DIR__ . '/expected.json',
-            json_encode(['mascot' => 'elephant'])
+            json_encode(['mascot' => 'elephant']),
         );
     }
 }

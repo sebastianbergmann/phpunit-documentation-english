@@ -10,7 +10,7 @@ final class OnConsecutiveCallsExampleTest extends TestCase
 
         // Configure the stub.
         $stub->method('doSomething')
-             ->willReturn(1, 2, 3);
+            ->willReturn(1, 2, 3);
 
         // $stub->doSomething() returns a different value each time
         $this->assertSame(1, $stub->doSomething());

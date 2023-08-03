@@ -8,8 +8,8 @@ final class AbstractTraitTest extends TestCase
         $mock = $this->getMockForTrait(AbstractTrait::class);
 
         $mock->expects($this->any())
-             ->method('abstractMethod')
-             ->willReturn(true);
+            ->method('abstractMethod')
+            ->willReturn(true);
 
         $this->assertTrue($mock->concreteMethod());
     }

@@ -8,7 +8,7 @@ final class WsdlStubExampleTest extends TestCase
         $service = $this->getMockFromWsdl(__DIR__ . '/HelloService.wsdl');
 
         $service->method('sayHello')
-                ->willReturn('Hello');
+            ->willReturn('Hello');
 
         $this->assertSame('Hello', $service->sayHello('message'));
     }

@@ -11,8 +11,8 @@ final class BiscuitTest extends TestCase
         $this->assertThat(
             $theBiscuit,
             $this->logicalNot(
-                $this->equalTo($myBiscuit)
-            )
+                $this->equalTo($myBiscuit),
+            ),
         );
     }
 }

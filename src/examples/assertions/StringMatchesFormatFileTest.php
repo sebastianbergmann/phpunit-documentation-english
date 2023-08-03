@@ -7,7 +7,7 @@ final class StringMatchesFormatFileTest extends TestCase
     {
         $this->assertStringMatchesFormatFile(
             __DIR__ . '/expected-format.txt',
-            'foo'
+            'foo',
         );
     }
 }

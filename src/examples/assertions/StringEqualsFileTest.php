@@ -7,7 +7,7 @@ final class StringEqualsFileTest extends TestCase
     {
         $this->assertStringEqualsFile(
             __DIR__ . '/expected.txt',
-            'actual'
+            'actual',
         );
     }
 }
