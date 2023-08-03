@@ -577,6 +577,10 @@ preconditions, like the PHP Version or installed extensions, are not met.
       - Any extension name along with an optional version identifier and optional operator
       - @requires extension mysqli
       - @requires extension redis >= 2.2.0
+    * - ``setting``
+      - Name and value for a ``php.ini`` configuration setting
+      - @requires setting date.timezone Europe/Berlin
+      -
 
 The following operators are supported for PHP, PHPUnit, and extension version constraints: ``<``, ``<=``, ``>``, ``>=``, ``=``, ``==``, ``!=``, ``<>``.
 
