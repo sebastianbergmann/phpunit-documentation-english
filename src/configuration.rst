@@ -81,6 +81,37 @@ This attribute configures the number of columns to use for progress output.
 
 If ``max`` is defined as value, the number of columns will be maximum of the current terminal.
 
+.. _appendixes.configuration.phpunit.controlGarbageCollector:
+
+The ``controlGarbageCollector`` Attribute
+-----------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+When the PHP runtime automatically performs `garbage collection <https://www.php.net/manual/en/features.gc.php>`_
+then this may happen in the middle of the preparation (fixture setup) of a test or in the middle of the execution of a test.
+This can have a negative impact on test execution performance.
+
+Configuring ``controlGarbageCollector="true"`` has the following effects:
+
+* Deactivate automatic garbage collection using ``gc_disable()`` before the first test is run
+* Trigger garbage collection using ``gc_collect_cycles()`` before the first test is run
+* Trigger garbage collection using ``gc_collect_cycles()`` after each n-th test
+* Trigger garbage collection after using ``gc_collect_cycles()`` after the last test was run
+* Activate automatic garbage collection using ``gc_enable()`` after the last test was run
+
+The number of tests to execute before garbage collection is triggered is controlled by
+``numberOfTestsBeforeGarbageCollection`` (see below).
+
+.. _appendixes.configuration.phpunit.numberOfTestsBeforeGarbageCollection:
+
+The ``numberOfTestsBeforeGarbageCollection`` Attribute
+------------------------------------------------------
+
+Possible values: integer (default: ``100``)
+
+Configures the number of tests to execute before garbage collection is triggered (see above).
+
 .. _appendixes.configuration.phpunit.requireCoverageMetadata:
 
 The ``requireCoverageMetadata`` Attribute
