@@ -1,11 +1,12 @@
 <?php declare(strict_types=1);
 namespace Vendor\ExampleExtensionForPhpunit;
 
+use PHPUnit\Runner\Extension\Extension;
 use PHPUnit\Runner\Extension\Facade;
 use PHPUnit\Runner\Extension\ParameterCollection;
 use PHPUnit\TextUI\Configuration\Configuration;
 
-final class ExampleExtension implements Runner\Extension\Extension
+final class ExampleExtension implements Extension
 {
     public function bootstrap(
         Configuration $configuration,
