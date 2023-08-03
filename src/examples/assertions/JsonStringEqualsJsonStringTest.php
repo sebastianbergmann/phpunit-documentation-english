@@ -7,7 +7,7 @@ final class JsonStringEqualsJsonStringTest extends TestCase
     {
         $this->assertJsonStringEqualsJsonString(
             json_encode(['mascot' => 'elePHPant']),
-            json_encode(['mascot' => 'elephant'])
+            json_encode(['mascot' => 'elephant']),
         );
     }
 }
