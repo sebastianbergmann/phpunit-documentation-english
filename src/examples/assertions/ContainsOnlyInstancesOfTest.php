@@ -7,7 +7,7 @@ final class ContainsOnlyInstancesOfTest extends TestCase
     {
         $this->assertContainsOnlyInstancesOf(
             Foo::class,
-            [new Foo, new Bar, new Foo]
+            [new Foo, new Bar, new Foo],
         );
     }
 }

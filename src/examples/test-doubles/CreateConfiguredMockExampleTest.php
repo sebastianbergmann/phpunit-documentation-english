@@ -10,7 +10,7 @@ final class CreateConfiguredMockExampleTest extends TestCase
             [
                 'doSomething'     => 'foo',
                 'doSomethingElse' => 'bar',
-            ]
+            ],
         );
 
         // $o->doSomething() now returns 'foo'

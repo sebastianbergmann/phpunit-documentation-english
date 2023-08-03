@@ -10,7 +10,7 @@ trait AssertionTrait
             sprintf(
                 'Failed asserting that "%s" is a valid order ID.',
                 $value,
-            )
+            ),
         );
     }
 }

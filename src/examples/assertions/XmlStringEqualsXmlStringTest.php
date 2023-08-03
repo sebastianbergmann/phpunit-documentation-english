@@ -7,7 +7,7 @@ final class XmlStringEqualsXmlStringTest extends TestCase
     {
         $this->assertXmlStringEqualsXmlString(
             '<foo><bar/></foo>',
-            '<foo><baz/></foo>'
+            '<foo><baz/></foo>',
         );
     }
 }
