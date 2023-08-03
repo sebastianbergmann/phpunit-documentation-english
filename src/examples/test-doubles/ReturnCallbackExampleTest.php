@@ -10,7 +10,7 @@ final class ReturnCallbackExampleTest extends TestCase
 
         // Configure the stub.
         $stub->method('doSomething')
-             ->willReturnCallback('str_rot13');
+            ->willReturnCallback('str_rot13');
 
         // $stub->doSomething($argument) returns str_rot13($argument)
         $this->assertSame('fbzrguvat', $stub->doSomething('something'));

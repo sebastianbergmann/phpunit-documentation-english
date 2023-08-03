@@ -10,7 +10,7 @@ final class ThrowExceptionExampleTest extends TestCase
 
         // Configure the stub.
         $stub->method('doSomething')
-             ->willThrowException(new Exception);
+            ->willThrowException(new Exception);
 
         // $stub->doSomething() throws Exception
         $stub->doSomething();

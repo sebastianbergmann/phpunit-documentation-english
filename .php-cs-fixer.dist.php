@@ -17,6 +17,10 @@ $config->setFinder($finder)
         'binary_operator_spaces' => [
             'operators' => [
                 '=' => 'align_single_space_minimal',
+                '+=' => 'align_single_space_minimal',
+                '-=' => 'align_single_space_minimal',
+                '*=' => 'align_single_space_minimal',
+                '/=' => 'align_single_space_minimal',
                 '=>' => 'align_single_space_minimal',
             ],
         ],
@@ -44,13 +48,10 @@ $config->setFinder($finder)
                 'yield_from',
             ],
         ],
-        'braces' => [
-            'position_after_anonymous_constructs' => 'next',
-        ],
         'cast_spaces' => true,
         'class_attributes_separation' => [
             'elements' => [
-                'const' => 'one',
+                'const' => 'none',
                 'method' => 'one',
                 'property' => 'only_if_meta'
             ]
@@ -63,7 +64,14 @@ $config->setFinder($finder)
         'compact_nullable_typehint' => true,
         'concat_space' => ['spacing' => 'one'],
         'constant_case' => true,
+        'control_structure_braces' => true,
+        'control_structure_continuation_position' => true,
+        'curly_braces_position' => [
+            'anonymous_functions_opening_brace' => 'next_line_unless_newline_at_signature_end',
+            'anonymous_classes_opening_brace' => 'next_line_unless_newline_at_signature_end',
+        ],
         'declare_equal_normalize' => ['space' => 'none'],
+        'declare_parentheses' => true,
         'declare_strict_types' => true,
         'dir_constant' => true,
         'echo_tag_syntax' => true,
@@ -88,9 +96,10 @@ $config->setFinder($finder)
         'implode_call' => true,
         'include' => true,
         'increment_style' => [
-            'style' => PhpCsFixer\Fixer\Operator\IncrementStyleFixer::STYLE_POST,
+            'style' => 'post',
         ],
         'indentation_type' => true,
+        'integer_literal_case' => true,
         'is_null' => true,
         'lambda_not_used_import' => true,
         'line_ending' => true,
@@ -104,6 +113,8 @@ $config->setFinder($finder)
         'method_argument_space' => [
             'on_multiline' => 'ensure_fully_multiline',
         ],
+        'method_chaining_indentation' => true,
+        'modernize_strpos' => true,
         'modernize_types_casting' => true,
         'multiline_comment_opening_closing' => true,
         'multiline_whitespace_before_semicolons' => true,
@@ -133,10 +144,12 @@ $config->setFinder($finder)
         'no_leading_namespace_whitespace' => true,
         'no_mixed_echo_print' => ['use' => 'print'],
         'no_multiline_whitespace_around_double_arrow' => true,
+        'no_multiple_statements_per_line' => true,
         'no_null_property_initialization' => true,
         'no_php4_constructor' => true,
         'no_short_bool_cast' => true,
         'no_singleline_whitespace_before_semicolons' => true,
+        'no_space_around_double_colon' => true,
         'no_spaces_after_function_name' => true,
         'no_spaces_around_offset' => true,
         'no_spaces_inside_parenthesis' => true,
@@ -156,7 +169,9 @@ $config->setFinder($finder)
         'no_unset_cast' => true,
         'no_unset_on_property' => true,
         'no_unused_imports' => true,
+        'no_useless_concat_operator' => true,
         'no_useless_else' => true,
+        'no_useless_nullsafe_operator' => true,
         'no_useless_return' => true,
         'no_useless_sprintf' => true,
         'no_whitespace_before_comma_in_array' => true,
@@ -164,6 +179,7 @@ $config->setFinder($finder)
         'non_printable_character' => true,
         'normalize_index_brace' => true,
         'object_operator_without_whitespace' => true,
+        'octal_notation' => true,
         'operator_linebreak' => [
             'only_booleans' => true,
             'position' => 'end',
@@ -194,9 +210,9 @@ $config->setFinder($finder)
         ],
         'ordered_imports' => [
             'imports_order' => [
-                PhpCsFixer\Fixer\Import\OrderedImportsFixer::IMPORT_TYPE_CONST,
-                PhpCsFixer\Fixer\Import\OrderedImportsFixer::IMPORT_TYPE_FUNCTION,
-                PhpCsFixer\Fixer\Import\OrderedImportsFixer::IMPORT_TYPE_CLASS,
+                'const',
+                'function',
+                'class',
             ]
         ],
         'ordered_interfaces' => [
@@ -204,6 +220,7 @@ $config->setFinder($finder)
             'order' => 'alpha',
         ],
         'ordered_traits' => true,
+        'ordered_types' => true,
         'php_unit_set_up_tear_down_visibility' => true,
         'php_unit_test_case_static_method_calls' => [
             'call_type' => 'this',
@@ -227,6 +244,7 @@ $config->setFinder($finder)
                 'uses',
             ],
         ],
+        'phpdoc_param_order' => true,
         'phpdoc_return_self_reference' => true,
         'phpdoc_scalar' => true,
         'phpdoc_separation' => true,
@@ -234,7 +252,7 @@ $config->setFinder($finder)
         'phpdoc_summary' => true,
         'phpdoc_tag_casing' => true,
         'phpdoc_tag_type' => true,
-        'phpdoc_to_comment' => true,
+        'phpdoc_to_comment' => false,
         'phpdoc_trim' => true,
         'phpdoc_trim_consecutive_blank_line_separation' => true,
         'phpdoc_types' => ['groups' => ['simple', 'meta']],
@@ -256,14 +274,17 @@ $config->setFinder($finder)
         'single_class_element_per_statement' => true,
         'single_import_per_statement' => true,
         'single_line_after_imports' => true,
+        'single_line_comment_spacing' => true,
         'single_quote' => true,
-        'single_space_after_construct' => true,
+        'single_space_around_construct' => true,
         'single_trait_insert_per_statement' => true,
         'space_after_semicolon' => true,
         'standardize_increment' => true,
         'standardize_not_equals' => true,
+        'statement_indentation' => true,
         'static_lambda' => true,
         'strict_param' => true,
+        'string_length_to_empty'=> true,
         'string_line_ending' => true,
         'switch_case_semicolon_to_colon' => true,
         'switch_case_space' => true,
@@ -273,7 +294,9 @@ $config->setFinder($finder)
         'ternary_to_null_coalescing' => true,
         'trailing_comma_in_multiline' => [
             'elements' => [
-                'arrays'
+                'arguments',
+                'arrays',
+                'match',
             ]
         ],
         'trim_array_spaces' => true,

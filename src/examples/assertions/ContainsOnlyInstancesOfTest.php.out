@@ -1,7 +1,7 @@
 ./tools/phpunit tests/ContainsOnlyInstancesOfTest.php
 PHPUnit 10.2.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.7
+Runtime:       PHP 8.2.9
 
 F                                                                   1 / 1 (100%)
 

@@ -7,7 +7,7 @@ final class DatabaseTest extends TestCase
     {
         if (!extension_loaded('pgsql')) {
             $this->markTestSkipped(
-                'The PostgreSQL extension is not available'
+                'The PostgreSQL extension is not available',
             );
         }
     }

@@ -7,7 +7,7 @@ final class XmlStringEqualsXmlFileTest extends TestCase
     {
         $this->assertXmlStringEqualsXmlFile(
             __DIR__ . '/expected.xml',
-            '<foo><baz/></foo>'
+            '<foo><baz/></foo>',
         );
     }
 }
