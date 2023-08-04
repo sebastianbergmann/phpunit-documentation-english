@@ -1,11 +1,11 @@
 ./tools/phpunit tests/JsonFileEqualsJsonFileTest.php
-PHPUnit 10.2.0 by Sebastian Bergmann and contributors.
+PHPUnit 10.3.0 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.2.9
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00.001, Memory: 14.41 MB
+Time: 00:00.001, Memory: 14.46 MB
 
 There was 1 failure:
 
@@ -24,4 +24,4 @@ Failed asserting that '{"mascot":"elePHPant"}\n
 /path/to/tests/JsonFileEqualsJsonFileTest.php:8
 
 FAILURES!
-Tests: 1, Assertions: 5, Failures: 1.
+Tests: 1, Assertions: 9, Failures: 1.

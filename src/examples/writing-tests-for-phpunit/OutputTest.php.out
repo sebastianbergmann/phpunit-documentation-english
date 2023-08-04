@@ -1,16 +1,16 @@
 ./tools/phpunit tests/OutputTest.php
-PHPUnit 10.2.0 by Sebastian Bergmann and contributors.
+PHPUnit 10.3.0 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.2.9
 
 .F                                                                  2 / 2 (100%)
 
-Time: 00:00.002, Memory: 14.41 MB
+Time: 00:00.002, Memory: 14.46 MB
 
 There was 1 failure:
 
 1) OutputTest::testExpectBarActualBaz
-Failed asserting that two strings are equal.
+Failed asserting that two strings are identical.
 --- Expected
 +++ Actual
 @@ @@

@@ -1,11 +1,11 @@
 ./tools/phpunit tests/JsonStringEqualsJsonFileTest.php
-PHPUnit 10.2.0 by Sebastian Bergmann and contributors.
+PHPUnit 10.3.0 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.2.9
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00.001, Memory: 14.41 MB
+Time: 00:00.002, Memory: 14.46 MB
 
 There was 1 failure:
 
@@ -23,4 +23,4 @@ Failed asserting that '{"mascot":"elephant"}' matches JSON string "{"mascot":"el
 /path/to/tests/JsonStringEqualsJsonFileTest.php:8
 
 FAILURES!
-Tests: 1, Assertions: 4, Failures: 1.
+Tests: 1, Assertions: 6, Failures: 1.

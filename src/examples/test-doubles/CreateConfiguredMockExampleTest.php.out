@@ -1,10 +1,10 @@
 ./tools/phpunit tests/CreateConfiguredMockExampleTest.php
-PHPUnit 10.2.0 by Sebastian Bergmann and contributors.
+PHPUnit 10.3.0 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.2.9
 
 .                                                                   1 / 1 (100%)
 
-Time: 00:00.002, Memory: 14.41 MB
+Time: 00:00.001, Memory: 14.46 MB
 
 OK (1 test, 2 assertions)
