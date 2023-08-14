@@ -286,7 +286,7 @@ For the actual running of tests, ``PHPUnit\TextUI\Application`` uses ``PHPUnit\T
 ``PHPUnit\TextUI\TestRunner::run()`` requires a ``PHPUnit\TextUI\Configuration\Configuration``,
 a ``PHPUnit\Runner\ResultCache\ResultCache``, and a ``PHPUnit\Framework\TestSuite``.
 
-A ``PHPUnit\TextUI\Configuration\Configuration`` can be built using ``PHPUnit\TextUI\Configuration\Builder::build()``.
+A ``PHPUnit\TextUI\Configuration\Configuration`` can be built using ``PHPUnit\TextUI\Configuration\Builder::fromParameters()``.
 You need to pass ``$_SERVER['argv']`` to this method. The method then parses CLI arguments/options and loads an XML
 configuration file, if one can be loaded.
 
