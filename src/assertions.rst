@@ -1039,6 +1039,20 @@ Running the test shown above yields the output shown below:
    Starting with PHPUnit 11, using the ``assertStringNotMatchesFormatFile()`` method
    will trigger a deprecation warning. The method will be removed in PHPUnit 12.
 
+``assertFileMatchesFormat()``
+-----------------------------
+
+``assertFileMatchesFormat(string $format, string $actualFile[, string $message])``
+
+Reports an error identified by ``$message`` if the contents of ``$actualFile`` does not match the ``$format`` string.
+
+``assertFileMatchesFormatFile()``
+---------------------------------
+
+``assertFileMatchesFormat(string $formatFile, string $actualFile[, string $message])``
+
+Reports an error identified by ``$message`` if the contents of ``$actualFile`` does not match the contents of the ``$formatFile``.
+
 .. _appendixes.assertions.assertStringEqualsFile:
 
 ``assertStringEqualsFile()``
