@@ -1002,6 +1002,15 @@ The format string may contain the following placeholders:
 
   ``%%``: A literal percent character: ``%``.
 
+.. admonition:: Deprecation: ``assertStringNotMatchesFormat()`` is deprecated
+
+   As of PHPUnit 10.4, the ``assertStringNotMatchesFormat()`` method is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``assertStringNotMatchesFormat()`` method
+   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
+
 .. _appendixes.assertions.assertStringMatchesFormatFile:
 
 ``assertStringMatchesFormatFile()``
@@ -1020,6 +1029,15 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/StringMatchesFormatFileTest.php.out
+
+.. admonition:: Deprecation: ``assertStringNotMatchesFormatFile()`` is deprecated
+
+   As of PHPUnit 10.4, the ``assertStringNotMatchesFormatFile()`` method is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``assertStringNotMatchesFormatFile()`` method
+   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
 
 .. _appendixes.assertions.assertStringEqualsFile:
 
