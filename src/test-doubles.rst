@@ -356,7 +356,7 @@ abstract class.
 
 .. admonition:: Deprecation: ``getMockForAbstractClass()`` is deprecated
 
-   As of PHPUnit 10.1, the ``getMockForAbstractClass()`` is soft-deprecated,
+   As of PHPUnit 10.1, the ``getMockForAbstractClass()`` method is soft-deprecated,
    meaning its declaration is annotated with ``@deprecated`` so that IDEs and
    static analysis tools can warn about its usage.
 
@@ -381,7 +381,7 @@ are mocked. This allows for testing the concrete methods of a trait.
 
 .. admonition:: Deprecation: ``getMockForTrait()`` is deprecated
 
-   As of PHPUnit 10.1, the ``getMockForTrait()`` is soft-deprecated,
+   As of PHPUnit 10.1, the ``getMockForTrait()`` method is soft-deprecated,
    meaning its declaration is annotated with ``@deprecated`` so that IDEs and
    static analysis tools can warn about its usage.
 
@@ -407,7 +407,7 @@ Here is an example that shows how to stub the web service described in :file:`He
 
 .. admonition:: Deprecation: ``getMockFromWsdl()`` is deprecated
 
-   As of PHPUnit 10.1, the ``getMockFromWsdl()`` is soft-deprecated,
+   As of PHPUnit 10.1, the ``getMockFromWsdl()`` method is soft-deprecated,
    meaning its declaration is annotated with ``@deprecated`` so that IDEs and
    static analysis tools can warn about its usage.
 
