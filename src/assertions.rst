@@ -2403,35 +2403,35 @@ Reports an error identified by ``$message`` if ``$variable`` is not ``null``.
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-.. _appendixes.assertions.assertObjectHasAttribute:
+.. _appendixes.assertions.assertObjectHasProperty:
 
-assertObjectHasAttribute()
-##########################
+assertObjectHasProperty()
+#########################
 
-``assertObjectHasAttribute(string $attributeName, object $object[, string $message = ''])``
+``assertObjectHasProperty(string $propertyName, object $object[, string $message = ''])``
 
-Reports an error identified by ``$message`` if ``$object->attributeName`` does not exist.
+Reports an error identified by ``$message`` if ``$object->propertyName`` does not exist.
 
-``assertObjectNotHasAttribute()`` is the inverse of this assertion and takes the same arguments.
+``assertObjectNotHasProperty()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
-    :caption: Usage of assertObjectHasAttribute()
-    :name: appendixes.assertions.assertObjectHasAttribute.example
+    :caption: Usage of assertObjectHasProperty()
+    :name: appendixes.assertions.assertObjectHasProperty.example
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    final class ObjectHasAttributeTest extends TestCase
+    final class ObjectHasPropertyTest extends TestCase
     {
         public function testFailure(): void
         {
-            $this->assertObjectHasAttribute('foo', new stdClass);
+            $this->assertObjectHasProperty('foo', new stdClass);
         }
     }
 
 .. parsed-literal::
 
-    $ phpunit ObjectHasAttributeTest
+    $ phpunit ObjectHasPropertyTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
@@ -2440,10 +2440,10 @@ Reports an error identified by ``$message`` if ``$object->attributeName`` does n
 
     There was 1 failure:
 
-    1) ObjectHasAttributeTest::testFailure
+    1) ObjectHasPropertyTest::testFailure
     Failed asserting that object of class "stdClass" has attribute "foo".
 
-    /home/sb/ObjectHasAttributeTest.php:6
+    /home/sb/ObjectHasPropertyTest.php:6
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
