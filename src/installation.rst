@@ -622,7 +622,7 @@ Using the ``composer outdated`` command we can see that we have PHPUnit 9.6.3 in
 Because PHPUnit 10 is a new major version, ``composer update`` will not update from PHPUnit 9.6.3 to PHPUnit 10.0.7.
 Updates to a new major version should be an explicit operation following a conscious decision.
 
-If you use semantic version constraints in your ``.phive/phars.xml`` file
+If you use semantic version constraints in your ``composer.json`` file
 (`and you should! <https://thephp.cc/articles/the-death-star-version-constraint>`_)
 then you will have to manually update PHPUnit's version constraint when you want to update to
 a new major version.
