@@ -81,7 +81,7 @@ package and class structure of the System Under Test (SUT) in the
 The :file:`tests/integration` directory contains integration test cases that are
 kept separate from the :file:`tests/unit` directory's unit tests.
 
-To run all tests for this project can need to point the PHPUnit
+To run all tests for this project we need to point the PHPUnit
 command-line test runner to the test directory:
 
 .. parsed-literal::

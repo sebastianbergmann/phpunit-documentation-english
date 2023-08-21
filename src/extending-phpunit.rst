@@ -162,7 +162,7 @@ Sharing an extension as a PHAR
 
 When users of your extension prefer to install PHPUnit as a PHAR, it is best to make your extension also available as a PHAR.
 
-To make your extension loadable as a PHAR, you need to include a `PHAR Manifest <https://github.com/phar-io/manifest>`.
+To make your extension loadable as a PHAR, you need to include a `PHAR Manifest <https://github.com/phar-io/manifest>`_.
 
 .. literalinclude:: examples/extending-phpunit/manifest.xml
    :caption: An example manifest.xml
