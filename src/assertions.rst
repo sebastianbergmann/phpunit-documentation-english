@@ -907,7 +907,7 @@ Running the test shown above yields the output shown below:
 
 .. _appendixes.assertions.assertStringEqualsStringIgnoringLineEndings:
 
-``assertStringEqualsStringIgnoringLineEndings``
+``assertStringEqualsStringIgnoringLineEndings()``
 -----------------------------------------------
 
 ``assertStringEqualsStringIgnoringLineEndings(string $expected, string $actual[, string $message])``
@@ -1107,6 +1107,8 @@ Running the test shown above yields the output shown below:
 Reports an error identified by ``$message`` if the value of ``$actualFile`` does not match the value of
 ``$expectedFile``.
 
+``assertJsonFileNotEqualsJsonFile()`` is the inverse of this assertion and takes the same arguments.
+
 .. literalinclude:: examples/assertions/JsonFileEqualsJsonFileTest.php
    :caption: Usage of assertJsonFileEqualsJsonFile()
    :language: php
@@ -1125,6 +1127,8 @@ Running the test shown above yields the output shown below:
 Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
 ``$expectedFile``.
 
+``assertJsonStringNotEqualsJsonFile()`` is the inverse of this assertion and takes the same arguments.
+
 .. literalinclude:: examples/assertions/JsonStringEqualsJsonFileTest.php
    :caption: Usage of assertJsonStringEqualsJsonFile()
    :language: php
@@ -1142,6 +1146,8 @@ Running the test shown above yields the output shown below:
 
 Reports an error identified by ``$message`` if the value of ``$actualJson`` does not match the value of
 ``$expectedJson``.
+
+``assertJsonStringNotEqualsJsonString()`` is the inverse of this assertion and takes the same arguments.
 
 .. literalinclude:: examples/assertions/JsonStringEqualsJsonStringTest.php
    :caption: Usage of assertJsonStringEqualsJsonString()
