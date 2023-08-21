@@ -651,7 +651,7 @@ the Mock Builder are documented below.
    will trigger a deprecation warning. The method will be removed in PHPUnit 12.
 
 
-``getMockForTrait``
+``getMockForTrait()``
 -------------------
 
 ``getMockForTrait()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMockForTrait()`` must be the last in the method chain.
