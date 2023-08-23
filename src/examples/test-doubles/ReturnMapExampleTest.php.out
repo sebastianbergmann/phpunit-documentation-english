@@ -1,18 +1,18 @@
-./tools/phpunit tests/ReturnValueMapExampleTest.php
+./tools/phpunit tests/ReturnMapExampleTest.php
 PHPUnit 10.0.19 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.2.9
 
 E                                                                   1 / 1 (100%)
 
-Time: 00:00.002, Memory: 14.31 MB
+Time: 00:00, Memory: 22.31 MB
 
 There was 1 error:
 
-1) ReturnValueMapExampleTest::testReturnValueMapStub
+1) ReturnMapExampleTest::testReturnMapStub
 PHPUnit\Framework\MockObject\ClassIsFinalException: Class "SomeClass" is declared "final" and cannot be doubled
 
-/path/to/tests/ReturnValueMapExampleTest.php:9
+/path/to/tests/ReturnMapExampleTest.php:9
 
 ERRORS!
 Tests: 1, Assertions: 0, Errors: 1.
