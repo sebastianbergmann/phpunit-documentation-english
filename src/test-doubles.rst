@@ -227,7 +227,7 @@ a reference to the stubbed object. Here is an example that shows how you can use
 
 
 ``willReturnMap()``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 Sometimes a stubbed method should return different values depending on a predefined list
 of arguments. Here is an example that shows how to use ``willReturnMap()`` to create a map
