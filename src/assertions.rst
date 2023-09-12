@@ -885,7 +885,7 @@ Running the test shown above yields the output shown below:
 .. _appendixes.assertions.assertStringEqualsStringIgnoringLineEndings:
 
 ``assertStringEqualsStringIgnoringLineEndings()``
------------------------------------------------
+-------------------------------------------------
 
 ``assertStringEqualsStringIgnoringLineEndings(string $expected, string $actual[, string $message])``
 
