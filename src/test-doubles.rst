@@ -652,7 +652,7 @@ the Mock Builder are documented below.
 
 
 ``getMockForTrait()``
--------------------
+---------------------
 
 ``getMockForTrait()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMockForTrait()`` must be the last in the method chain.
 
