@@ -9,11 +9,14 @@ $exclude = [
     'assertions/FileIsWritableTest.php',
     'assertions/IsReadableTest.php',
     'assertions/IsWritableTest.php',
-    'writing-tests-for-phpunit/NumericDataSetsTestUsingExternalDataProvider.php',
+    'error-handling/SourceClass.php',
+    'error-handling/SourceClassTest.php',
+    'error-handling/VendorClass.php',
     'extending-phpunit/OrderIdGeneratorExtendingAbstractTestCaseTest.php',
     'extending-phpunit/OrderIdGeneratorTest.php',
     'extending-phpunit/OrderIdGeneratorUsingAssertionTraitTest.php',
     'extending-phpunit/OrderIdGeneratorWithDomainSpecificAssertionTest.php',
+    'writing-tests-for-phpunit/NumericDataSetsTestUsingExternalDataProvider.php',
 ];
 
 $phpunit       = $command = __DIR__ . '/../tools/phpunit';
