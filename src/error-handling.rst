@@ -212,6 +212,8 @@ issues to ignore them for the current run:
 
     OK (1 test, 1 assertion)
 
+    2 issues were ignored by baseline.
+
 Disabling PHPUnit's error handler
 =================================
 
