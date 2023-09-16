@@ -268,7 +268,7 @@ in the context of :ref:`preventing unintentionally covered code <risky-tests.uni
 | Test Code | yes         | no           | yes        |
 +-----------+-------------+--------------+------------+
 
-The ``IgnoreClassForCodeCoverage(string $className)`` attribute can be used to ... todo ...
+As of PHPUnit 10.4, the ``CodeCoverageIgnore`` attribute is deprecated.
 
 .. _appendixes.attributes.IgnoreMethodForCodeCoverage:
 
@@ -281,7 +281,7 @@ The ``IgnoreClassForCodeCoverage(string $className)`` attribute can be used to .
 | Test Code | yes         | no           | yes        |
 +-----------+-------------+--------------+------------+
 
-The ``IgnoreMethodForCodeCoverage(string $className, string $methodName)`` attribute can be used to ... todo ...
+As of PHPUnit 10.4, the ``CodeCoverageIgnore`` attribute is deprecated.
 
 .. _appendixes.attributes.IgnoreFunctionForCodeCoverage:
 
@@ -294,7 +294,7 @@ The ``IgnoreMethodForCodeCoverage(string $className, string $methodName)`` attri
 | Test Code | yes         | no           | yes        |
 +-----------+-------------+--------------+------------+
 
-The ``IgnoreFunctionForCodeCoverage(string $functionName)`` attribute can be used to ... todo ...
+As of PHPUnit 10.4, the ``CodeCoverageIgnore`` attribute is deprecated.
 
 .. _appendixes.attributes.CodeCoverageIgnore:
 
@@ -316,9 +316,7 @@ The ``CodeCoverageIgnore`` attribute can be used in production code to
    code uses the Reflection API to instantiate attributes it is not responsible for, for
    instance PHPUnit's.
 
-As of PHPUnit 10.1, the ``CodeCoverageIgnore`` attribute (as well as the ``@codeCoverageIgnore``
-annotations) is deprecated. Use the ``IgnoreClassForCodeCoverage``, ``IgnoreMethodForCodeCoverage``,
-and ``IgnoreFunctionForCodeCoverage`` attributes on test classes instead.
+As of PHPUnit 10.1, the ``CodeCoverageIgnore`` attribute is deprecated.
 
 Data Provider
 =============
