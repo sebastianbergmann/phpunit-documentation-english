@@ -180,33 +180,22 @@ and to make sure you only generate code coverage with unit tests.
 Ignoring Code Blocks
 ====================
 
-Sometimes you have units of code that you cannot test and that you may
-want to ignore during code coverage analysis. PHPUnit lets you do this
-using the :ref:`IgnoreClassForCodeCoverage <appendixes.attributes.IgnoreClassForCodeCoverage>`,
-:ref:`IgnoreMethodForCodeCoverage <appendixes.attributes.IgnoreMethodForCodeCoverage>`, and
-:ref:`IgnoreFunctionForCodeCoverage <appendixes.attributes.IgnoreFunctionForCodeCoverage>` attributes.
-
-... todo ...
-
-As of PHPUnit 10.1, the ``PHPUnit\Framework\Attributes\CodeCoverageIgnore`` attribute and the
-``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations that can be used in
-production code are deprecated and you should migrate to the attributes explained above at your
-earliest convenience.
-
-The ``PHPUnit\Framework\Attributes\CodeCoverageIgnore`` attribute can be used on the class level
-as well as on the method level of production code. The ``@codeCoverageIgnoreStart`` and
-``@codeCoverageIgnoreEnd`` annotations can be used inside the body of a method, for instance, to
-ignore individual lines of production code:
+Sometimes you have units of code, or even just individual lines of code, that you cannot test
+and that you may want to ignore during code coverage analysis. PHPUnit lets you do this
+using the ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart``, and ``@codeCoverageIgnoreEnd``
+annotations that can be used in production code:
 
 .. code-block:: php
-    :caption: Using the ``CodeCoverageIgnore`` attribute and the ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
+    :caption: Using the ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart``, and ``@codeCoverageIgnoreEnd`` annotations
     :name: code-coverage.ignoring-code-blocks.examples.example.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
     use PHPUnit\Framework\TestCase;
 
-    #[CodeCoverageIgnore]
+    /**
+     * @codeCoverageIgnore
+     */
     final class Foo
     {
         public function bar(): void
@@ -216,7 +205,9 @@ ignore individual lines of production code:
 
     final class Bar
     {
-        #[CodeCoverageIgnore]
+        /**
+         * @codeCoverageIgnore
+         */
         public function foo(): void
         {
         }
@@ -229,3 +220,8 @@ ignore individual lines of production code:
     }
 
     exit; // @codeCoverageIgnore
+
+In the example shown above, the ``@codeCoverageIgnore`` annotation is used to ignore
+all code of the ``Foo`` class, all code of the ``Bar::foo()`` method, and the single
+line of code with the ``exit;`` statement. The line with the ``print '*';`` statement
+is ignored using ``// @codeCoverageIgnoreStart`` and ``// @codeCoverageIgnoreEnd``.
