@@ -247,15 +247,15 @@ a reference to the stubbed object. Here is an example that shows how you can use
    :language: php
 
 
-``willReturnValueMap()``
-^^^^^^^^^^^^^^^^^^^^^^^^
+``willReturnMap()``
+^^^^^^^^^^^^^^^^^^^
 
 Sometimes a stubbed method should return different values depending on a predefined list
-of arguments. Here is an example that shows how to use ``willReturnValueMap()`` to create a map
+of arguments. Here is an example that shows how to use ``willReturnMap()`` to create a map
 that associates arguments with corresponding return values:
 
-.. literalinclude:: examples/test-doubles/ReturnValueMapExampleTest.php
-   :caption: Using willReturnValueMap() to stub a method call to return the value from a map
+.. literalinclude:: examples/test-doubles/ReturnMapExampleTest.php
+   :caption: Using willReturnMap() to stub a method call to return the value from a map
    :language: php
 
 
