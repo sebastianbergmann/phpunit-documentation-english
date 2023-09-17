@@ -219,7 +219,7 @@ default progress output as well as the default result output. Then we use ``--lo
 to write event information to standard output:
 
 .. code-block::
-    :caption: todo
+    :caption: Output of "phpunit --no-output --log-events-text php://stdout" command
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events
 
     phpunit --no-output --log-events-text php://stdout
@@ -252,7 +252,7 @@ about resource consumption (time since the test runner was started, time since t
 and memory usage):
 
 .. code-block::
-    :caption: todo
+    :caption: Output of "phpunit --no-output --log-events-verbose-text php://stdout" command
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events-verbose
 
     phpunit --no-output --log-events-verbose-text php://stdout
