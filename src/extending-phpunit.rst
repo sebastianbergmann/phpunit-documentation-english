@@ -85,15 +85,23 @@ The PHPUnit configuration is an instance of ``PHPUnit\TextUI\Configuration\Confi
 
 You can inspect the configuration object to adjust the behavior of your extension. For example, you may want to extend PHPUnit with an extension that renders output on the console. If that is the case, you may be interested to know whether a user of PHPUnit wants to use colors or prefers a monochrome output.
 
-The extension facade is an instance of ``PHPUnit\Runner\Extension\Facade`` and allows you to register event subscribers and event tracers.
-
-The parameter collection is an instance of ``PHPUnit\Runner\Extension\ParameterCollection`` and gives you access to extension parameters a user has provided via PHPUnit's XML configuration file.
-
-You can use the parameter collection to allow users of the extension to configure the behavior of your extension.
+The parameter collection is an instance of ``PHPUnit\Runner\Extension\ParameterCollection`` and gives you access to extension parameters a user has provided via PHPUnit's XML configuration file. You can use the parameter collection to allow users of the extension to configure the behavior of your extension.
 
 .. Note::
 
   You must verify and process the values from the parameter collection yourself. PHPUnit has no functionality for verifying or casting the values from the parameter collection to other types.
+
+The extension facade is an instance of ``PHPUnit\Runner\Extension\Facade`` and allows you to register event subscribers and event tracers using the methods ``registerSubscribers()``, ``registerSubscriber()``, and ``registerTracer()``.
+
+The extension facade also provides the following methods for test runner extensions to indicate to the test runner that they intend to replace default functionality or require certain functionality to be activated:
+
+The ``replacesProgressOutput()`` method can be used to disable the test runner's default progress output while it runs the tests.
+
+The ``replacesResultOutput()`` method can be used to disable the test runner's default result output after it finished running the tests.
+
+The ``replacesOutput()`` method combines the effects of ``replacesProgressOutput()`` and ``replacesResultOutput()`` (see above).
+
+The ``requiresCodeCoverageCollection()`` method can be used to activate the collection of code coverage information.
 
 Implementing an event subscriber
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
