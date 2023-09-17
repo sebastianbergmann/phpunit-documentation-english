@@ -1,11 +1,11 @@
 ./tools/phpunit tests/StringMatchesFormatFileTest.php
 PHPUnit 10.2.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.9
+Runtime:       PHP 8.2.10
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00.001, Memory: 14.41 MB
+Time: 00:00, Memory: 22.41 MB
 
 There was 1 failure:
 
