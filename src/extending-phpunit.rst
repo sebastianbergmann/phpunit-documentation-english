@@ -103,6 +103,8 @@ The ``replacesOutput()`` method combines the effects of ``replacesProgressOutput
 
 The ``requiresCodeCoverageCollection()`` method can be used to activate the collection of code coverage information.
 
+The ``requiresExportOfObjects()`` method can be used to activate the export of objects for events such as ``Test\AssertionSucceeded`` and ``Test\AssertionFailed``, for example.
+
 Implementing an event subscriber
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
