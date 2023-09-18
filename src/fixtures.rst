@@ -144,6 +144,14 @@ The ``setUpBeforeClass()`` and ``tearDownAfterClass()`` template methods are cal
 the first test of the test case class is run and after the last test of the test case class
 is run, respectively.
 
+.. admonition:: Do not use assertions in ``setUpBeforeClass()`` or ``tearDownAfterClass()``
+
+   Please note that using assertions in ``setUpBeforeClass()`` or ``tearDownAfterClass()``
+   methods leads to undefined behavior. The only reason why using assertions in these
+   template methods does not lead to an error being emitted by the test runner is that we
+   want to avoid the runtime overhead of determining whether an assertion method is called
+   from these template methods.
+
 :numref:`fixtures.sharing-fixture.examples.DatabaseTest.php`
 uses the ``setUpBeforeClass()`` and
 ``tearDownAfterClass()`` template methods to connect to the
