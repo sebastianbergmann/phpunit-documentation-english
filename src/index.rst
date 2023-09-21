@@ -22,6 +22,7 @@ Contents:
    test-doubles
    code-coverage
    risky-tests
+   error-handling
    extending-phpunit
 
 .. toctree::
