@@ -58,7 +58,7 @@ Shown below is the default output PHPUnit's test runner prints for the example s
 .. parsed-literal::
 
     $ ./tools/phpunit
-    PHPUnit 10.1.3 by Sebastian Bergmann and contributors.
+    PHPUnit 10.2.7 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
@@ -76,7 +76,7 @@ Detailed information, for instance which issue was triggered where, is only prin
 .. parsed-literal::
 
     $ ./tools/phpunit --display-deprecations
-    PHPUnit 10.1.3 by Sebastian Bergmann and contributors.
+    PHPUnit 10.2.7 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
@@ -123,7 +123,7 @@ reporting of issues to our own code:
 .. parsed-literal::
 
     $ ./tools/phpunit --display-deprecations
-    PHPUnit 10.1.3 by Sebastian Bergmann and contributors.
+    PHPUnit 10.2.7 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
@@ -148,3 +148,21 @@ reporting of issues to our own code:
 
 As you can see in the output shown above, deprecations triggered in third-party code located in the
 ``vendor`` directory are not reported anymore.
+
+
+Ignoring issue suppression
+==========================
+
+By default, the error handler registered by PHPUnit's test runner respects the suppression operator (``@``).
+This means that issues triggered using ``@trigger_error()``, for example, will not be reported by the
+default progress and result printers.
+
+The suppression of issues using the suppression operator (``@``) can be ignored by configuration settings
+in PHPUnit's XML configuration file:
+
+* :ref:`appendixes.configuration.source.ignoreSuppressionOfDeprecations` setting can be used to ignore the suppression of ``E_USER_DEPRECATED`` issues
+* :ref:`appendixes.configuration.source.ignoreSuppressionOfPhpDeprecations` setting can be used to ignore the suppression of ``E_DEPRECATED`` issues
+* :ref:`appendixes.configuration.source.ignoreSuppressionOfNotices` setting can be used to ignore the suppression of ``E_USER_NOTICES`` issues
+* :ref:`appendixes.configuration.source.ignoreSuppressionOfPhpNotices` setting can be used to ignore the suppression of ``E_NOTICE`` and ``E_STRICT`` issues
+* :ref:`appendixes.configuration.source.ignoreSuppressionOfWarnings` setting can be used to ignore the suppression of ``E_USER_WARNING`` issues
+* :ref:`appendixes.configuration.source.ignoreSuppressionOfPhpWarnings` setting can be used to ignore the suppression of ``E_WARNING`` issues
