@@ -58,7 +58,7 @@ Shown below is the default output PHPUnit's test runner prints for the example s
 .. parsed-literal::
 
     $ ./tools/phpunit
-    PHPUnit 10.2.7 by Sebastian Bergmann and contributors.
+    PHPUnit 10.3.5 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
@@ -68,7 +68,7 @@ Shown below is the default output PHPUnit's test runner prints for the example s
     Time: 00:00.007, Memory: 4.00 MB
 
     OK, but there were issues!
-    Tests: 1, Assertions: 1, Deprecations: 1.
+    Tests: 1, Assertions: 1, Deprecations: 2.
 
 Detailed information, for instance which issue was triggered where, is only printed when ``--display-deprecations``,
 ``--display-notices``, or ``--display-warnings`` is used:
@@ -76,7 +76,7 @@ Detailed information, for instance which issue was triggered where, is only prin
 .. parsed-literal::
 
     $ ./tools/phpunit --display-deprecations
-    PHPUnit 10.2.7 by Sebastian Bergmann and contributors.
+    PHPUnit 10.3.5 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
@@ -85,25 +85,26 @@ Detailed information, for instance which issue was triggered where, is only prin
 
     Time: 00:00.006, Memory: 4.00 MB
 
-    1 test triggered 4 deprecations:
+    1 test triggered 2 deprecations:
 
-    1) example\SourceClassTest::testSomething
-    * deprecation
-      /path/to/example/src/SourceClass.php:10
+    1) /path/to/example/src/SourceClass.php:10
+    deprecation
 
-    * deprecation
-      /path/to/example/vendor/VendorClass.php:8
+    Triggered by:
 
-    * deprecation
-      /path/to/example/src/SourceClass.php:10
+    * example\SourceClassTest::testSomething (2 times)
+      /path/to/example/tests/SourceClassTest.php:8
 
-    * deprecation
-      /path/to/example/vendor/VendorClass.php:8
+    2) /path/to/example/vendor/VendorClass.php:8
+    deprecation
 
-    /path/to/example/tests/SourceClassTest.php:8
+    Triggered by:
+
+    * example\SourceClassTest::testSomething (2 times)
+      /path/to/example/tests/SourceClassTest.php:8
 
     OK, but some tests have issues!
-    Tests: 1, Assertions: 1, Deprecations: 1.
+    Tests: 1, Assertions: 1, Deprecations: 2.
 
 
 Limiting issues to "your code"
@@ -123,7 +124,7 @@ reporting of issues to our own code:
 .. parsed-literal::
 
     $ ./tools/phpunit --display-deprecations
-    PHPUnit 10.2.7 by Sebastian Bergmann and contributors.
+    PHPUnit 10.3.5 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
@@ -132,16 +133,15 @@ reporting of issues to our own code:
 
     Time: 00:00.007, Memory: 4.00 MB
 
-    1 test triggered 2 deprecations:
+    1 test triggered 1 deprecation:
 
-    1) example\SourceClassTest::testSomething
-    * deprecation
-      /path/to/example/src/SourceClass.php:10
+    1) /path/to/example/src/SourceClass.php:10
+    deprecation
 
-    * deprecation
-      /path/to/example/src/SourceClass.php:10
+    Triggered by:
 
-    /path/to/example/tests/SourceClassTest.php:8
+    * example\SourceClassTest::testSomething (2 times)
+      /path/to/example/tests/SourceClassTest.php:8
 
     OK, but there were issues!
     Tests: 1, Assertions: 1, Deprecations: 1.
@@ -166,3 +166,14 @@ in PHPUnit's XML configuration file:
 * :ref:`appendixes.configuration.source.ignoreSuppressionOfPhpNotices` setting can be used to ignore the suppression of ``E_NOTICE`` and ``E_STRICT`` issues
 * :ref:`appendixes.configuration.source.ignoreSuppressionOfWarnings` setting can be used to ignore the suppression of ``E_USER_WARNING`` issues
 * :ref:`appendixes.configuration.source.ignoreSuppressionOfPhpWarnings` setting can be used to ignore the suppression of ``E_WARNING`` issues
+
+
+Disabling PHPUnit's error handler
+=================================
+
+When you want to test your own `error handler <https://www.php.net/manual/en/function.set-error-handler.php>`_
+or want to test that unit of code under test triggers an expected issue, for instance, the error handler
+registered by PHPUnit's test runner will interfere with what you want to achieve.
+
+The ``#[WithoutErrorHandler]`` attribute can be used in such a case to disable PHPUnit's error handler for
+a test method.
