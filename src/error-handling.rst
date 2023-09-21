@@ -58,7 +58,7 @@ Shown below is the default output PHPUnit's test runner prints for the example s
 .. parsed-literal::
 
     $ ./tools/phpunit
-    PHPUnit 10.0.19 by Sebastian Bergmann and contributors.
+    PHPUnit 10.1.3 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
@@ -76,7 +76,7 @@ Detailed information, for instance which issue was triggered where, is only prin
 .. parsed-literal::
 
     $ ./tools/phpunit --display-deprecations
-    PHPUnit 10.0.19 by Sebastian Bergmann and contributors.
+    PHPUnit 10.1.3 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
@@ -85,7 +85,7 @@ Detailed information, for instance which issue was triggered where, is only prin
 
     Time: 00:00.006, Memory: 4.00 MB
 
-    There was 1 deprecation:
+    1 test triggered 4 deprecations:
 
     1) example\SourceClassTest::testSomething
     * deprecation
@@ -104,3 +104,47 @@ Detailed information, for instance which issue was triggered where, is only prin
 
     OK, but some tests have issues!
     Tests: 1, Assertions: 1, Deprecations: 1.
+
+
+Limiting issues to "your code"
+==============================
+
+The reporting of issues can be limited to "your code", excluding third-party code from directories such as ``vendor``,
+for example. You can configure what you consider "your code" in PHPUnit's XML configuration file
+(see :ref:`appendixes.configuration.source`):
+
+.. literalinclude:: examples/error-handling/your-code.xml
+   :caption: phpunit.xml
+   :language: xml
+
+Here is what the output of PHPUnit's test runner will look like after we configured (see above) it to restrict the
+reporting of issues to our own code:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --display-deprecations
+    PHPUnit 10.1.3 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.2.10
+    Configuration: /path/to/example/phpunit.xml
+
+    D                                                                   1 / 1 (100%)
+
+    Time: 00:00.007, Memory: 4.00 MB
+
+    1 test triggered 2 deprecations:
+
+    1) example\SourceClassTest::testSomething
+    * deprecation
+      /path/to/example/src/SourceClass.php:10
+
+    * deprecation
+      /path/to/example/src/SourceClass.php:10
+
+    /path/to/example/tests/SourceClassTest.php:8
+
+    OK, but there were issues!
+    Tests: 1, Assertions: 1, Deprecations: 1.
+
+As you can see in the output shown above, deprecations triggered in third-party code located in the
+``vendor`` directory are not reported anymore.
