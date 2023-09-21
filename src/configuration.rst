@@ -606,7 +606,7 @@ The example shown above instructs PHPUnit to include all sourcecode files with `
 The ``<directory>`` Element
 ---------------------------
 
-Parent elements: ``<include>``, ``<exclude>``
+Parent elements: ``<include>``, ``<exclude>``, ``<testsuite>``
 
 Configures a directory and its sub-directories for inclusion in or exclusion from code coverage report(s).
 
@@ -644,7 +644,7 @@ Configures the comparison operator to be used with ``version_compare()`` for the
 The ``<file>`` Element
 ----------------------
 
-Parent elements: ``<include>``, ``<exclude>``
+Parent elements: ``<include>``, ``<exclude>``, ``<testsuite>``
 
 Configures a file for inclusion in or exclusion from code coverage report(s).
 
