@@ -1,16 +1,16 @@
 ./tools/phpunit tests/StringContainsStringIgnoringCaseTest.php
-PHPUnit 10.3.0 by Sebastian Bergmann and contributors.
+PHPUnit 10.4.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.10
+Runtime:       PHP 8.2.11
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 22.46 MB
+Time: 00:00, Memory: 22.52 MB
 
 There was 1 failure:
 
 1) StringContainsStringIgnoringCaseTest::testFailure
-Failed asserting that 'bar' contains "foo".
+Failed asserting that 'bar' [Encoding ignored](length: 3) contains "foo" [Encoding ignored](length: 3).
 
 /path/to/tests/StringContainsStringIgnoringCaseTest.php:8
 

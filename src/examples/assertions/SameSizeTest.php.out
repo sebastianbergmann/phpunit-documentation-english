@@ -1,11 +1,11 @@
 ./tools/phpunit tests/SameSizeTest.php
-PHPUnit 10.3.0 by Sebastian Bergmann and contributors.
+PHPUnit 10.4.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.2.10
+Runtime:       PHP 8.2.11
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 22.46 MB
+Time: 00:00, Memory: 22.52 MB
 
 There was 1 failure:
 
