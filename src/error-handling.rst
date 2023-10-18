@@ -14,6 +14,12 @@ errors. We will use the term "issues" to refer to ``E_DEPRECATED``, ``E_USER_DEP
 The error handler is only active while a test is running and only processes issues triggered by test code or code that is
 called from test code. It ignores issues triggered by PHPUnit's own code as well as code from PHPUnit's dependencies.
 
+.. admonition:: Other error handlers
+
+   When PHPUnit's test runner becomes aware (after it called ``set_error_handler()`` to register its error handler)
+   that another error handler was registered then it immediately unregisters its error handler so that the
+   previously registered error handler remains active.
+
 The error handler emits events that are, for instance, subscribed to and used by the default progress and result printers
 as well as loggers.
 
