@@ -515,6 +515,87 @@ See how the output of ``phive outdated`` changes:
 Now we can run ``phive update`` and the new major version will be installed.
 
 
+What is inside the PHAR?
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+To avoid `problems <https://github.com/sebastianbergmann/phpunit/issues/2014>`_  that occur when the code under
+test shares dependencies with PHPUnit but requires different versions than the ones bundled in the PHAR, a couple
+of measures have been implemented.
+
+Most units of code bundled in PHPUnit's PHAR distribution, including all dependencies such as vendor directories,
+are moved to a new and distinct namespace, for instance. Classes that are part of PHPUnit's public API, for example
+``PHPUnit\Framework\TestCase``, are exempt from this.
+
+PHPUnit's PHAR does not use dynamic autoloading to load the bundled units of code. Instead, all units of code bundled
+in the PHAR are loaded on startup.
+
+Here is an `article <https://thephp.cc/articles/ready-or-not-here-it-comes?ref=phpunit>`_ that explains these
+measures in more detail.
+
+Sometimes you need to know exactly which versions of PHPUnit's dependencies are bundled in PHPUnit's PHAR distribution,
+for example in the context of `software supply chain security <https://thephp.cc/presentations/the-php-stacks-supply-chain?ref=phpunit>`_.
+For this purpose, PHPUnit's PHAR distribution offers additional CLI options that the Composer-installed test runner
+does not have.
+
+When PHPUnit's PHAR is invoked with the ``--manifest`` CLI option then it will print a plain-text manifest with
+information about the versions of PHPUnit's dependencies that are bundled in the PHAR:
+
+.. code::
+
+    php phpunit-10.0.19.phar --manifest
+    phpunit/phpunit: 10.0.19
+    myclabs/deep-copy: 1.11.1
+    nikic/php-parser: v4.15.4
+    phar-io/manifest: 2.0.3
+    phar-io/version: 3.2.1
+    phpunit/php-code-coverage: 10.0.2
+    phpunit/php-file-iterator: 4.0.1
+    phpunit/php-invoker: 4.0.0
+    phpunit/php-text-template: 3.0.0
+    phpunit/php-timer: 6.0.0
+    sebastian/cli-parser: 2.0.0
+    sebastian/code-unit: 2.0.0
+    sebastian/code-unit-reverse-lookup: 3.0.0
+    sebastian/comparator: 5.0.0
+    sebastian/complexity: 3.0.0
+    sebastian/diff: 5.0.1
+    sebastian/environment: 6.0.0
+    sebastian/exporter: 5.0.0
+    sebastian/global-state: 6.0.0
+    sebastian/lines-of-code: 2.0.0
+    sebastian/object-enumerator: 5.0.0
+    sebastian/object-reflector: 3.0.0
+    sebastian/recursion-context: 5.0.0
+    sebastian/type: 4.0.0
+    sebastian/version: 4.0.1
+    theseer/tokenizer: 1.2.1
+
+When PHPUnit's PHAR is invoked with the ``--sbom`` CLI option then it will print a Software Bill of Materials (SBOM)
+in XML format with information about the versions of PHPUnit's dependencies that are bundled in the PHAR:
+
+.. code::
+
+    php phpunit-10.0.19.phar --sbom
+    <?xml version="1.0"?>
+    <bom xmlns="http://cyclonedx.org/schema/bom/1.4">
+     <components>
+      <component type="library">
+       <group>phpunit</group>
+       <name>phpunit</name>
+       <version>10.0.19</version>
+       <description>The PHP Unit Testing framework.</description>
+       <licenses>
+        <license>
+         <id>BSD-3-Clause</id>
+        </license>
+       </licenses>
+       <purl>pkg:composer/phpunit/phpunit@10.0.19</purl>
+      </component>
+      .
+      .
+      .
+
+
 Composer
 --------
 
