@@ -595,6 +595,23 @@ in XML format with information about the versions of PHPUnit's dependencies that
       .
       .
 
+When PHPUnit's PHAR is invoked with the ``--composer-lock`` CLI option then it will print the ``composer.lock``
+file that was used to install PHPUnit's dependencies during the build of the PHAR:
+
+.. code::
+
+    php phpunit-10.5.1.phar --composer-lock
+    {
+        "_readme": [
+            "This file locks the dependencies of your project to a known state",
+            "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+            "This file is @generated automatically"
+        ],
+        "content-hash": "e06728e5442edec84af96f94a889b4a7",
+        .
+        .
+        .
+
 
 Composer
 --------
