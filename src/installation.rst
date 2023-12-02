@@ -484,7 +484,7 @@ This is because PHPUnit 10 is a new major version and updates to a new major ver
 an explicit operation following a conscious decision.
 
 If you use semantic version constraints in your ``.phive/phars.xml`` file
-(`and you should! <https://thephp.cc/articles/the-death-star-version-constraint>`_)
+(`and you should! <https://thephp.cc/articles/the-death-star-version-constraint?ref=phpunit>`_)
 then you will have to manually update PHPUnit's version constraint when you want to update to
 a new major version.
 
@@ -623,7 +623,7 @@ Because PHPUnit 10 is a new major version, ``composer update`` will not update f
 Updates to a new major version should be an explicit operation following a conscious decision.
 
 If you use semantic version constraints in your ``composer.json`` file
-(`and you should! <https://thephp.cc/articles/the-death-star-version-constraint>`_)
+(`and you should! <https://thephp.cc/articles/the-death-star-version-constraint?ref=phpunit>`_)
 then you will have to manually update PHPUnit's version constraint when you want to update to
 a new major version.
 
@@ -690,6 +690,6 @@ There is no reason why PHPUnit should be installed on a web server.
 If you put PHPUnit on a web server then your deployment process is broken.
 On a more general note, if your ``vendor`` directory is publicly accessible on your web server then your deployment process is also broken.
 
-`Please note that if you put PHPUnit on a web server "bad things" may happen. You have been warned. <https://thephp.cc/articles/phpunit-a-security-risk>`_
+`Please note that if you put PHPUnit on a web server "bad things" may happen. You have been warned. <https://thephp.cc/articles/phpunit-a-security-risk?ref=phpunit>`_
 
 Make sure your deployment process does not make PHPUnit, or any other development tool, publicly accessible on a web server.
