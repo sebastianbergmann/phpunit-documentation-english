@@ -1,11 +1,11 @@
 ./tools/phpunit --display-incomplete tests/WorkInProgressTest.php
-PHPUnit 10.5.0 by Sebastian Bergmann and contributors.
+PHPUnit 11.0-dev by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.3.0
 
 I                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 14.60 MB
+Time: 00:00, Memory: 14.57 MB
 
 There was 1 incomplete test:
 
