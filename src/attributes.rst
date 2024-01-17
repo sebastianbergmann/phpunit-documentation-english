@@ -623,6 +623,7 @@ The ``Group(string $name)`` attribute can be used to assign tests to test groups
 Groups can be used, for instance, to :ref:`select <textui.command-line-options.selection>`
 which tests should be run.
 
+The strings ``small``, ``medium``, and ``large`` may not be used as group names.
 
 .. _appendixes.attributes.Small:
 
@@ -635,9 +636,10 @@ which tests should be run.
 | Test Code  | yes         | no           | no         |
 +------------+-------------+--------------+------------+
 
-The ``Small`` attribute is an alias for ``Group('small')``.
+The ``Small`` attribute marks the tests of a test case class as small. These tests are
+added to a special test group named ``small`` that has special semantics.
 
-The group named ``small`` has special semantics that is relevant in the context of
+The size of a test is relevant in the context of
 :ref:`test execution timeouts <risky-tests.test-execution-timeout>`, for instance.
 
 Tests that are marked as small cause the lines of code that they cover to be highlighted
@@ -656,9 +658,10 @@ to tests that are marked :ref:`medium <appendixes.attributes.Medium>` or
 | Test Code  | yes         | no           | no         |
 +------------+-------------+--------------+------------+
 
-The ``Medium`` attribute is an alias for ``Group('medium')``.
+The ``Medium`` attribute marks the tests of a test case class as medium. These tests are
+added to a special test group named ``medium`` that has special semantics.
 
-The group named ``medium`` has special semantics that is relevant in the context of
+The size of a test is relevant in the context of
 :ref:`test execution timeouts <risky-tests.test-execution-timeout>`, for instance.
 
 Tests that are marked as medium cause the lines of code that they cover to be highlighted
@@ -678,9 +681,10 @@ of green compared to test that are marked small :ref:`small <appendixes.attribut
 | Test Code  | yes         | no           | no         |
 +------------+-------------+--------------+------------+
 
-The ``Large`` attribute is an alias for ``Group('large')``.
+The ``Large`` attribute marks the tests of a test case class as large. These tests are
+added to a special test group named ``large`` that has special semantics.
 
-The group named ``large`` has special semantics that is relevant in the context of
+The size of a test is relevant in the context of
 :ref:`test execution timeouts <risky-tests.test-execution-timeout>`, for instance.
 
 Tests that are marked as large cause the lines of code that they cover to be highlighted
