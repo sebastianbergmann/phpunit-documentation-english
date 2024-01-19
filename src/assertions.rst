@@ -117,6 +117,40 @@ Running the test shown above yields the output shown below:
 
 Identity is checked using the ``===`` operator.
 
+.. _appendixes.assertions.assertArrayIsIdenticalToArrayOnlyConsideringListOfKeys:
+
+``assertArrayIsIdenticalToArrayOnlyConsideringListOfKeys()``
+------------------------------------------------------------
+
+``assertArrayIsIdenticalToArrayOnlyConsideringListOfKeys(array $expected, array $actual, array $keysToBeConsidered[, string $message])``
+
+Reports an error identified by ``$message`` if two arrays are not identical while only considering array elements for which the keys have been specified.
+
+.. literalinclude:: examples/assertions/ArrayIsIdenticalToArrayOnlyConsideringListOfKeysTest.php
+   :caption: Usage of assertArrayIsIdenticalToArrayOnlyConsideringListOfKeys()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArrayIsIdenticalToArrayOnlyConsideringListOfKeysTest.php.out
+
+.. _appendixes.assertions.assertArrayIsIdenticalToArrayIgnoringListOfKeys:
+
+``assertArrayIsIdenticalToArrayIgnoringListOfKeys()``
+-----------------------------------------------------
+
+``assertArrayIsIdenticalToArrayIgnoringListOfKeys(array $expected, array $actual, array $keysToBeIgnored[, string $message])``
+
+Reports an error identified by ``$message`` if two arrays are not identical while only ignoring array elements for which the keys have been specified.
+
+.. literalinclude:: examples/assertions/ArrayIsIdenticalToArrayIgnoringListOfKeysTest.php
+   :caption: Usage of assertArrayIsIdenticalToArrayIgnoringListOfKeys()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArrayIsIdenticalToArrayIgnoringListOfKeysTest.php.out
+
 .. _appendixes.assertions.equality:
 
 Equality
@@ -310,6 +344,40 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/FileEqualsTest.php.out
+
+.. _appendixes.assertions.assertArrayIsEqualToArrayOnlyConsideringListOfKeys:
+
+``assertArrayIsEqualToArrayOnlyConsideringListOfKeys()``
+--------------------------------------------------------
+
+``assertArrayIsEqualToArrayOnlyConsideringListOfKeys(array $expected, array $actual, array $keysToBeConsidered[, string $message])``
+
+Reports an error identified by ``$message`` if two arrays are not equal while only considering array elements for which the keys have been specified.
+
+.. literalinclude:: examples/assertions/ArrayIsEqualToArrayOnlyConsideringListOfKeysTest.php
+   :caption: Usage of assertArrayIsEqualToArrayOnlyConsideringListOfKeys()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArrayIsEqualToArrayOnlyConsideringListOfKeysTest.php.out
+
+.. _appendixes.assertions.assertArrayIsEqualToArrayIgnoringListOfKeys:
+
+``assertArrayIsEqualToArrayIgnoringListOfKeys()``
+-------------------------------------------------
+
+``assertArrayIsEqualToArrayIgnoringListOfKeys(array $expected, array $actual, array $keysToBeIgnored[, string $message])``
+
+Reports an error identified by ``$message`` if two arrays are not equal while only ignoring array elements for which the keys have been specified.
+
+.. literalinclude:: examples/assertions/ArrayIsEqualToArrayIgnoringListOfKeysTest.php
+   :caption: Usage of assertArrayIsEqualToArrayIgnoringListOfKeys()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArrayIsEqualToArrayIgnoringListOfKeysTest.php.out
 
 .. _appendixes.assertions.iterable:
 
