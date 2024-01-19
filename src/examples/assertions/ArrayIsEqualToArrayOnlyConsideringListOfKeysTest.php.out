@@ -1,4 +1,4 @@
-./tools/phpunit tests/EqualsWithArraysTest.php
+./tools/phpunit tests/ArrayIsEqualToArrayOnlyConsideringListOfKeysTest.php
 PHPUnit 11.0-dev by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.3.2
@@ -9,20 +9,17 @@ Time: 00:00, Memory: 14.57 MB
 
 There was 1 failure:
 
-1) EqualsWithArraysTest::testFailure
+1) ArrayIsEqualToArrayOnlyConsideringListOfKeysTest::testFailure
 Failed asserting that two arrays are equal.
 --- Expected
 +++ Actual
 @@ @@
  Array (
-     0 => 'a'
--    1 => 'b'
--    2 => 'c'
-+    1 => 'c'
-+    2 => 'd'
+-    'foo' => 'bar'
++    'foo' => 'baz'
  )
 
-/path/to/tests/EqualsWithArraysTest.php:8
+/path/to/tests/ArrayIsEqualToArrayOnlyConsideringListOfKeysTest.php:8
 
 FAILURES!
 Tests: 1, Assertions: 1, Failures: 1.

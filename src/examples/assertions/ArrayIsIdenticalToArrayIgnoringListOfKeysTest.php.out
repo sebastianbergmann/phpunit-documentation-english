@@ -1,4 +1,4 @@
-./tools/phpunit tests/LongArrayDiffTest.php
+./tools/phpunit tests/ArrayIsIdenticalToArrayIgnoringListOfKeysTest.php
 PHPUnit 11.0-dev by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.3.2
@@ -9,22 +9,17 @@ Time: 00:00, Memory: 14.57 MB
 
 There was 1 failure:
 
-1) LongArrayDiffTest::testEquality
+1) ArrayIsIdenticalToArrayIgnoringListOfKeysTest::testFailure
 Failed asserting that two arrays are identical.
 --- Expected
 +++ Actual
 @@ @@
-     11 => 0,
-     12 => 1,
-     13 => 2,
--    14 => 3,
-+    14 => 33,
-     15 => 4,
-     16 => 5,
-     17 => 6,
+ Array &0 [
+-    'foo' => 'bar',
++    'foo' => 'baz',
  ]
 
-/path/to/tests/LongArrayDiffTest.php:8
+/path/to/tests/ArrayIsIdenticalToArrayIgnoringListOfKeysTest.php:8
 
 FAILURES!
 Tests: 1, Assertions: 1, Failures: 1.

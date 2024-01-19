@@ -1,4 +1,4 @@
-./tools/phpunit tests/StringMatchesFormatTest.php
+./tools/phpunit tests/ArrayIsEqualToArrayIgnoringListOfKeysTest.php
 PHPUnit 11.0-dev by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.3.2
@@ -9,15 +9,17 @@ Time: 00:00, Memory: 14.57 MB
 
 There was 1 failure:
 
-1) StringMatchesFormatTest::testFailure
-Failed asserting that string matches format description.
+1) ArrayIsEqualToArrayIgnoringListOfKeysTest::testFailure
+Failed asserting that two arrays are equal.
 --- Expected
 +++ Actual
 @@ @@
--%i
-+foo
+ Array (
+-    'foo' => 'bar'
++    'foo' => 'baz'
+ )
 
-/path/to/tests/StringMatchesFormatTest.php:8
+/path/to/tests/ArrayIsEqualToArrayIgnoringListOfKeysTest.php:8
 
 FAILURES!
 Tests: 1, Assertions: 1, Failures: 1.

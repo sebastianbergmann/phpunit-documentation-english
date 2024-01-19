@@ -1,7 +1,7 @@
 ./tools/phpunit tests/TrueTest.php
 PHPUnit 11.0-dev by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.3.0
+Runtime:       PHP 8.3.2
 
 F                                                                   1 / 1 (100%)
 
