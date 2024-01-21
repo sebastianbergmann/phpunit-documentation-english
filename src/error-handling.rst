@@ -220,6 +220,24 @@ issues to ignore them for the current run:
 
     2 issues were ignored by baseline.
 
+Expecting Deprecations (``E_USER_DEPRECATED``)
+==============================================
+
+The ``expectUserDeprecationMessage()`` method can be used to expect that an ``E_USER_DEPRECATED``
+issue with a specified message is triggered.
+
+.. literalinclude:: examples/error-handling/DeprecationExpectationTest.php
+   :caption: Usage of expectUserDeprecationMessage()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/error-handling/DeprecationExpectationTest.php.out
+
+Alternatively, the ``$this->expectUserDeprecationMessageMatches()`` can be used to expect that
+an ``E_USER_DEPRECATED`` issue is triggered where the deprecation message matches a specified
+regular expression.
+
 Disabling PHPUnit's error handler
 =================================
 
