@@ -16,9 +16,8 @@ called from test code. It ignores issues triggered by PHPUnit's own code as well
 
 .. admonition:: Other error handlers
 
-   When PHPUnit's test runner becomes aware (after it called ``set_error_handler()`` to register its error handler)
-   that another error handler was registered then it immediately unregisters its error handler so that the
-   previously registered error handler remains active.
+   By default, PHPUnit's test runner overwrites any error handler that was registered using ``set_error_handler()`` in a
+   test suite's bootstrap script, for instance.
 
 The error handler emits events that are, for instance, subscribed to and used by the default progress and result printers
 as well as loggers.
