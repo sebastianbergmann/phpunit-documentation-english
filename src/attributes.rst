@@ -232,7 +232,7 @@ that a test intends to cover the given class.
 +------------+-------------+--------------+------------+
 
 The ``CoversFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
-that a test intends to cover the given global function.
+that a test intends to cover the given function.
 
 
 .. _appendixes.attributes.CoversNothing:
