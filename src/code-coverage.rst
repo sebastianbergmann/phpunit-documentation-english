@@ -31,7 +31,7 @@ extensions for PHP.
 .. admonition:: Note
 
    When you want to use Xdebug for the collection of code coverage data then you
-   have to active Xdebug's `coverage <https://xdebug.org/docs/code_coverage#mode>`_
+   have to activate Xdebug's `coverage <https://xdebug.org/docs/code_coverage#mode>`_
    mode.
 
 PHPUnit can generate a code coverage report in HTML format as well as
