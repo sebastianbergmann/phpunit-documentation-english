@@ -220,6 +220,21 @@ The ``CoversClass(string $className)`` attribute can be used to :ref:`specify <c
 that a test intends to cover the given class.
 
 
+.. _appendixes.attributes.CoversMethod:
+
+``CoversMethod``
+----------------
+
++------------+-------------+--------------+------------+
+| Context    | Class Level | Method Level | Repeatable |
++============+=============+==============+============+
+| Test Code  | yes         | no           | yes        |
++------------+-------------+--------------+------------+
+
+The ``CoversMethod(string $className, string $methodName)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+that a test intends to cover the given method.
+
+
 .. _appendixes.attributes.CoversFunction:
 
 ``CoversFunction``
@@ -263,6 +278,22 @@ that a test does not intend to contribute to code coverage.
 
 The ``UsesClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
 that a test allows the execution of code in the given class, but does not intend to cover it. This is relevant
+in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
+
+
+.. _appendixes.attributes.UsesMethod:
+
+``UsesMethod``
+--------------
+
++------------+-------------+--------------+------------+
+| Context    | Class Level | Method Level | Repeatable |
++============+=============+==============+============+
+| Test Code  | yes         | no           | yes        |
++------------+-------------+--------------+------------+
+
+The ``UsesMethod(string $className)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+that a test allows the execution of code in the given method, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
 
