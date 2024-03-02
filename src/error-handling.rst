@@ -201,8 +201,8 @@ will write a list of all issues that are triggered to an XML file:
     Baseline written to /path/to/example/baseline.xml.
 
 When you run your test suite using the ``--use-baseline`` CLI option (or if you have configured a baseline
-in your XML configuration file for PHPUnit) then PHPUnit's test runner will use this list of already known
-issues to ignore them for the current run:
+in your XML configuration file for PHPUnit using the :ref:`appendixes.configuration.source.baseline` setting)
+then PHPUnit's test runner will use this list of already known issues to ignore them for the current run:
 
 .. parsed-literal::
 
