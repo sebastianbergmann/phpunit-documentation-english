@@ -667,6 +667,16 @@ Restricts the reporting of ``E_WARNING`` and ``E_USER_WARNING``
 list of the project's source code files.
 
 
+.. _appendixes.configuration.source.baseline:
+
+The ``<baseline>`` Attribute
+----------------------------
+
+Possible values: string
+
+The baseline file to be used when running the test suite.
+
+
 .. _appendixes.configuration.source.ignoreSuppressionOfDeprecations:
 
 The ``<ignoreSuppressionOfDeprecations>`` Attribute
