@@ -202,12 +202,6 @@ ensures that we always see all errors:
 
     error_reporting=-1
 
-When something goes really wrong then we want to see the entire error message (which is truncated to 1024 characters by default):
-
-.. code::
-
-    log_errors_max_len=0
-
 When Xdebug is loaded, we do not want it to print its exception traces while our tests are being executed:
 
 .. code::
