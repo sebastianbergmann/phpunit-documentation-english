@@ -46,7 +46,7 @@ is not specified using ``PHPUnit\Framework\Attributes\CoversClass``,
 ``PHPUnit\Framework\Attributes\UsesFunction`` (or using the
 :ref:`@covers <appendixes.annotations.covers>` or
 :ref:`@uses <appendixes.annotations.uses>` annotations) will be considered risky
-when this check is enabled.
+when this check is enabled and the size of the test is either small or unknown.
 
 Furthermore, by setting ``requireCoverageMetadata="true"`` in PHPUnit's
 :ref:`XML configuration file <appendixes.configuration>`, a test can be considered
