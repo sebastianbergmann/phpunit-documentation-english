@@ -119,10 +119,10 @@ The ``includeUncoveredFiles`` configuration setting is available to configure ho
 
 In order to get a complete and honest code coverage report, it is highly recommended to use the default setting.
 
-.. _code-coverage.specifying-covered-parts:
+.. _code-coverage.targeting-units-of-code:
 
-Specifying Covered Code Parts
-=============================
+Targeting Units of Code
+=======================
 
 The ``PHPUnit\Framework\Attributes\CoversClass`` and ``PHPUnit\Framework\Attributes\CoversFunction``
 attributes can be used in the test code to specify which units of code a test class intends to cover.
@@ -130,12 +130,12 @@ attributes can be used in the test code to specify which units of code a test cl
 When these attributes are used on a test case class, code coverage information is only collected for
 the listed units of code when the test methods of this test case class are executed.
 
-:numref:`code-coverage.specifying-covered-parts.examples.InvoiceTest.php`
+:numref:`code-coverage.targeting-units-of-code.examples.InvoiceTest.php`
 shows an example.
 
 .. code-block:: php
     :caption: Test class that specifies which class it wants to cover
-    :name: code-coverage.specifying-covered-parts.examples.InvoiceTest.php
+    :name: code-coverage.targeting-units-of-code.examples.InvoiceTest.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\Attributes\CoversClass;
@@ -163,7 +163,7 @@ and to make sure you only generate code coverage with unit tests.
 
 .. code-block:: php
     :caption: A test that specifies that it does not want to contribute to code coverage
-    :name: code-coverage.specifying-covered-parts.examples.GuestbookIntegrationTest.php
+    :name: code-coverage.targeting-units-of-code.examples.GuestbookIntegrationTest.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\Attributes\CoversNothing;

@@ -330,7 +330,7 @@ every test method needs to have an associated ``@covers`` annotation
 
 :numref:`appendixes.annotations.covers` shows
 the syntax of the ``@covers`` annotation.
-The section :ref:`code-coverage.specifying-covered-parts`
+The section :ref:`code-coverage.targeting-units-of-code`
 provides longer examples for using the annotation.
 
 Please note that this annotation requires a fully-qualified class name (FQCN).
@@ -395,7 +395,7 @@ test code to specify that no code coverage information will be
 recorded for the annotated test case.
 
 This can be used for integration testing. See
-:ref:`code-coverage.specifying-covered-parts.examples.GuestbookIntegrationTest.php`
+:ref:`code-coverage.targeting-units-of-code.examples.GuestbookIntegrationTest.php`
 for an example.
 
 The annotation can be used on the class and the method level and
@@ -802,7 +802,7 @@ example is a value object which is necessary for testing a unit of code.
         // ...
     }
 
-:numref:`code-coverage.specifying-covered-parts.examples.InvoiceTest.php`
+:numref:`code-coverage.targeting-units-of-code.examples.InvoiceTest.php`
 shows another example.
 
 In addition to being helpful for persons reading the code,
