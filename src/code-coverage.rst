@@ -157,6 +157,17 @@ attributes can be used to specify units of code that should be ignored for code 
 are allowed to be used by the code that is covered. This is explained in the section on
 :ref:`unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
+In the example shown above, the ``#[CoversClass(Invoice::class)]`` attribute tells PHPUnit that
+the tests of this test case class intend to cover the code of the ``Invoice`` class. When the
+tests of this test case class are run, only code coverage information for the ``Invoice`` class
+will be processed and code coverage information for all other code that may also be run while
+these tests are running will be ignored.
+
+In the example shown above, the ``#[UsesClass(Money::class)]`` attribute tells PHPUnit that
+it is expected and allowed that code from the ``Money`` class is also run while the tests of this
+test case class are run. This is important when it comes to considering a test risky when it
+runs code that is not expected to be run.
+
 The ``PHPUnit\Framework\Attributes\CoversNothing`` attribute can be used to specify that tests
 should not contribute to code coverage at all. This can be helpful when writing integration tests
 and to make sure you only generate code coverage with smaller tests.
