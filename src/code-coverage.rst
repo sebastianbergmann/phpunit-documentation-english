@@ -104,22 +104,25 @@ using Xdebug as PCOV only supports line coverage.
 Including Files
 ===============
 
-It is mandatory to configure a filter for telling
-PHPUnit which source code files to include in the code coverage report.
-This can either be done using the ``--coverage-filter``
-:ref:`command-line <textui.command-line-options>` option or via the
-configuration file (see :ref:`appendixes.configuration.source.include`).
+It is mandatory to configure which source code files you consider your own and therefore
+want to be included in the code coverage report. As other features of PHPUnit also need
+to know which source code files you consider your own, it is best practice to configure
+this in the XML configuration file (see :ref:`appendixes.configuration.source.include`).
+Alternatively, you may use the ``--coverage-filter`` :ref:`command-line <textui.command-line-options>`
+option.
 
 The ``includeUncoveredFiles`` configuration setting is available to configure how the filter is used:
 
-- ``includeUncoveredFiles="false"`` means that only files that have at least one line of executed code are included in the code coverage report
-
 - ``includeUncoveredFiles="true"`` (default) means that all files are included in the code coverage report even if not a single line of code of such a file is executed
 
-.. _code-coverage.specifying-covered-parts:
+- ``includeUncoveredFiles="false"`` means that only files that have at least one line of executed code are included in the code coverage report
 
-Specifying Covered Code Parts
-=============================
+In order to get a complete and honest code coverage report, it is highly recommended to use the default setting.
+
+.. _code-coverage.targeting-units-of-code:
+
+Targeting Units of Code
+=======================
 
 The ``PHPUnit\Framework\Attributes\CoversClass`` and ``PHPUnit\Framework\Attributes\CoversFunction``
 attributes can be used in the test code to specify which units of code a test class intends to cover.
@@ -127,12 +130,12 @@ attributes can be used in the test code to specify which units of code a test cl
 When these attributes are used on a test case class, code coverage information is only collected for
 the listed units of code when the test methods of this test case class are executed.
 
-:numref:`code-coverage.specifying-covered-parts.examples.InvoiceTest.php`
+:numref:`code-coverage.targeting-units-of-code.examples.InvoiceTest.php`
 shows an example.
 
 .. code-block:: php
     :caption: Test class that specifies which class it wants to cover
-    :name: code-coverage.specifying-covered-parts.examples.InvoiceTest.php
+    :name: code-coverage.targeting-units-of-code.examples.InvoiceTest.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\Attributes\CoversClass;
@@ -154,13 +157,24 @@ attributes can be used to specify units of code that should be ignored for code 
 are allowed to be used by the code that is covered. This is explained in the section on
 :ref:`unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
+In the example shown above, the ``#[CoversClass(Invoice::class)]`` attribute tells PHPUnit that
+the tests of this test case class intend to cover the code of the ``Invoice`` class. When the
+tests of this test case class are run, only code coverage information for the ``Invoice`` class
+will be processed and code coverage information for all other code that may also be run while
+these tests are running will be ignored.
+
+In the example shown above, the ``#[UsesClass(Money::class)]`` attribute tells PHPUnit that
+it is expected and allowed that code from the ``Money`` class is also run while the tests of this
+test case class are run. This is important when it comes to considering a test risky when it
+runs code that is not expected to be run.
+
 The ``PHPUnit\Framework\Attributes\CoversNothing`` attribute can be used to specify that tests
 should not contribute to code coverage at all. This can be helpful when writing integration tests
-and to make sure you only generate code coverage with unit tests.
+and to make sure you only generate code coverage with smaller tests.
 
 .. code-block:: php
     :caption: A test that specifies that it does not want to contribute to code coverage
-    :name: code-coverage.specifying-covered-parts.examples.GuestbookIntegrationTest.php
+    :name: code-coverage.targeting-units-of-code.examples.GuestbookIntegrationTest.php
 
     <?php declare(strict_types=1);
     use PHPUnit\Framework\Attributes\CoversNothing;

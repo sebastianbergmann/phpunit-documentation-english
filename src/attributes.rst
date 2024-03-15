@@ -216,7 +216,7 @@ Code Coverage
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-The ``CoversClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+The ``CoversClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test intends to cover the given class.
 
 
@@ -231,7 +231,7 @@ that a test intends to cover the given class.
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-The ``CoversMethod(string $className, string $methodName)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+The ``CoversMethod(string $className, string $methodName)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test intends to cover the given method.
 
 
@@ -246,7 +246,7 @@ that a test intends to cover the given method.
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-The ``CoversFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+The ``CoversFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test intends to cover the given function.
 
 
@@ -261,7 +261,7 @@ that a test intends to cover the given function.
 | Test Code  | yes         | yes          | no         |
 +------------+-------------+--------------+------------+
 
-The ``CoversNothing()`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+The ``CoversNothing()`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test does not intend to contribute to code coverage.
 
 
@@ -276,7 +276,7 @@ that a test does not intend to contribute to code coverage.
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-The ``UsesClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+The ``UsesClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test allows the execution of code in the given class, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
@@ -292,7 +292,7 @@ in the context of :ref:`preventing unintentionally covered code <risky-tests.uni
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-The ``UsesMethod(string $className)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+The ``UsesMethod(string $className)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test allows the execution of code in the given method, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
@@ -308,7 +308,7 @@ in the context of :ref:`preventing unintentionally covered code <risky-tests.uni
 | Test Code  | yes         | no           | yes        |
 +------------+-------------+--------------+------------+
 
-The ``UsesFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.specifying-covered-parts>`
+The ``UsesFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test allows the execution of code in the given global function, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
