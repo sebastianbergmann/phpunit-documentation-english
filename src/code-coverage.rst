@@ -104,11 +104,12 @@ using Xdebug as PCOV only supports line coverage.
 Including Files
 ===============
 
-It is mandatory to configure a filter for telling
-PHPUnit which source code files to include in the code coverage report.
-This can either be done using the ``--coverage-filter``
-:ref:`command-line <textui.command-line-options>` option or via the
-configuration file (see :ref:`appendixes.configuration.source.include`).
+It is mandatory to configure which source code files you consider your own and therefore
+want to be included in the code coverage report. As other features of PHPUnit also need
+to know which source code files you consider your own, it is best practice to configure
+this in the XML configuration file (see :ref:`appendixes.configuration.source.include`).
+Alternatively, you may use the ``--coverage-filter`` :ref:`command-line <textui.command-line-options>`
+option.
 
 The ``includeUncoveredFiles`` configuration setting is available to configure how the filter is used:
 
