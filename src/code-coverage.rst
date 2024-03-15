@@ -113,9 +113,11 @@ option.
 
 The ``includeUncoveredFiles`` configuration setting is available to configure how the filter is used:
 
+- ``includeUncoveredFiles="true"`` (default) means that all files are included in the code coverage report even if not a single line of code of such a file is executed
+
 - ``includeUncoveredFiles="false"`` means that only files that have at least one line of executed code are included in the code coverage report
 
-- ``includeUncoveredFiles="true"`` (default) means that all files are included in the code coverage report even if not a single line of code of such a file is executed
+In order to get a complete and honest code coverage report, it is highly recommended to use the default setting.
 
 .. _code-coverage.specifying-covered-parts:
 
