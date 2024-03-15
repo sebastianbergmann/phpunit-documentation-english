@@ -159,7 +159,7 @@ are allowed to be used by the code that is covered. This is explained in the sec
 
 The ``PHPUnit\Framework\Attributes\CoversNothing`` attribute can be used to specify that tests
 should not contribute to code coverage at all. This can be helpful when writing integration tests
-and to make sure you only generate code coverage with unit tests.
+and to make sure you only generate code coverage with smaller tests.
 
 .. code-block:: php
     :caption: A test that specifies that it does not want to contribute to code coverage
