@@ -169,6 +169,10 @@ it is expected and allowed that code from the ``Money`` class is also run while 
 test case class are run. This is important when it comes to considering a test risky when it
 runs code that is not expected to be run.
 
+As it is technically not possible to test a subclass in isolation from its base class(es),
+the ``#[CoversClass]`` and ``#[UsesClass]`` attributes consider the class whose name has been
+specified as well as all of its parent classes, if it has any.
+
 The ``PHPUnit\Framework\Attributes\CoversNothing`` attribute can be used to specify that tests
 should not contribute to code coverage at all. This can be helpful when writing integration tests
 and to make sure you only generate code coverage with smaller tests.
