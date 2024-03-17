@@ -14,7 +14,7 @@ is executed on a web server.
 PHPUnit provides a framework for writing tests as well as a command-line tool for running these tests. Before we discuss
 obtaining and using PHPUnit, let us have a look at installing and configuring the PHP command-line interpreter.
 
-PHPUnit 10 requires PHP 8.1; using the latest version of PHP is highly recommended.
+PHPUnit 11 requires PHP 8.2; using the latest version of PHP is highly recommended.
 
 
 .. _installation.php-on-the-command-line:
