@@ -10,7 +10,7 @@
         </testsuite>
     </testsuites>
 
-    <source restrictDeprecations="true"
+    <source ignoreIndirectDeprecations="true"
             restrictNotices="true"
             restrictWarnings="true">
         <include>

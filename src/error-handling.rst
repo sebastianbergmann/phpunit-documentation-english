@@ -30,28 +30,28 @@ Here is the code that we will use for the examples in the remainder of this chap
     .
     ├── phpunit.xml
     ├── src
-    │   └── SourceClass.php
+    │   └── FirstPartyClass.php
     ├── tests
-    │   └── SourceClassTest.php
+    │   └── FirstPartyClassTest.php
     └── vendor
         ├── autoload.php
-        └── VendorClass.php
+        └── ThirdPartyClass.php
 
     4 directories, 5 files
 
-.. literalinclude:: examples/error-handling/SourceClassTest.php
-   :caption: tests/SourceClassTest.php
+.. literalinclude:: examples/error-handling/deprecation/tests/FirstPartyClassTest.php
+   :caption: tests/FirstPartyClassTest.php
    :language: php
 
-.. literalinclude:: examples/error-handling/SourceClass.php
-   :caption: src/SourceClass.php
+.. literalinclude:: examples/error-handling/deprecation/src/FirstPartyClass.php
+   :caption: src/FirstPartyClass.php
    :language: php
 
-.. literalinclude:: examples/error-handling/VendorClass.php
-   :caption: vendor/VendorClass.php
+.. literalinclude:: examples/error-handling/deprecation/vendor/ThirdPartyClass.php
+   :caption: vendor/ThirdPartyClass.php
    :language: php
 
-.. literalinclude:: examples/error-handling/default.xml
+.. literalinclude:: examples/error-handling/deprecation/default.xml
    :caption: phpunit.xml
    :language: xml
 
@@ -66,15 +66,15 @@ Shown below is the default output PHPUnit's test runner prints for the example s
     $ ./tools/phpunit
     PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.10
+    Runtime:       PHP 8.3.4
     Configuration: /path/to/example/phpunit.xml
 
-    D                                                                   1 / 1 (100%)
+    DD                                                                  1 / 1 (100%)
 
-    Time: 00:00.007, Memory: 4.00 MB
+    Time: 00:00.002, Memory: 8.00 MB
 
     OK, but there were issues!
-    Tests: 1, Assertions: 1, Deprecations: 2.
+    Tests: 2, Assertions: 2, Deprecations: 2.
 
 Detailed information, for instance which issue was triggered where, is only printed when ``--display-deprecations``,
 ``--display-notices``, or ``--display-warnings`` is used:
@@ -84,34 +84,39 @@ Detailed information, for instance which issue was triggered where, is only prin
     $ ./tools/phpunit --display-deprecations
     PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.10
+    Runtime:       PHP 8.3.4
     Configuration: /path/to/example/phpunit.xml
 
-    D                                                                   1 / 1 (100%)
+    DD                                                                  1 / 1 (100%)
 
-    Time: 00:00.006, Memory: 4.00 MB
+    Time: 00:00.002, Memory: 8.00 MB
 
-    1 test triggered 2 deprecations:
+    2 tests triggered 2 deprecations:
 
-    1) /path/to/example/src/SourceClass.php:10
-    deprecation
-
-    Triggered by:
-
-    * example\SourceClassTest::testSomething (2 times)
-      /path/to/example/tests/SourceClassTest.php:8
-
-    2) /path/to/example/vendor/VendorClass.php:8
-    deprecation
+    1) /path/to/vendor/ThirdPartyClass.php:10
+    deprecation in third-party code
 
     Triggered by:
 
-    * example\SourceClassTest::testSomething (2 times)
-      /path/to/example/tests/SourceClassTest.php:8
+    * example\FirstPartyClassTest::testOne
+      /path/to/tests/FirstPartyClassTest.php:17
+
+    * example\FirstPartyClassTest::testTwo
+      /path/to/tests/FirstPartyClassTest.php:22
+
+    2) /path/to/src/FirstPartyClass.php:13
+    deprecation in first-party code
+
+    Triggered by:
+
+    * example\FirstPartyClassTest::testOne
+      /path/to/tests/FirstPartyClassTest.php:17
+
+    * example\FirstPartyClassTest::testTwo
+      /path/to/tests/FirstPartyClassTest.php:22
 
     OK, but there were issues!
-    Tests: 1, Assertions: 1, Deprecations: 2.
-
+    Tests: 2, Assertions: 2, Deprecations: 2.
 
 Limiting issues to "your code"
 ==============================
@@ -120,7 +125,7 @@ The reporting of issues can be limited to "your code", excluding third-party cod
 for example. You can configure what you consider "your code" in PHPUnit's XML configuration file
 (see :ref:`appendixes.configuration.source`):
 
-.. literalinclude:: examples/error-handling/your-code.xml
+.. literalinclude:: examples/error-handling/deprecation/your-code.xml
    :caption: phpunit.xml
    :language: xml
 
@@ -132,28 +137,48 @@ reporting of issues to our own code:
     $ ./tools/phpunit --display-deprecations
     PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.10
+    Runtime:       PHP 8.3.4
     Configuration: /path/to/example/phpunit.xml
 
-    D                                                                   1 / 1 (100%)
+    DD                                                                  1 / 1 (100%)
 
-    Time: 00:00.007, Memory: 4.00 MB
+    Time: 00:00.002, Memory: 8.00 MB
 
-    1 test triggered 1 deprecation:
+    2 tests triggered 2 deprecations:
 
-    1) /path/to/example/src/SourceClass.php:10
-    deprecation
+    1) /path/to/vendor/ThirdPartyClass.php:10
+    deprecation in third-party code
 
     Triggered by:
 
-    * example\SourceClassTest::testSomething (2 times)
-      /path/to/example/tests/SourceClassTest.php:8
+    * example\FirstPartyClassTest::testOne
+      /path/to/tests/FirstPartyClassTest.php:17
+
+    * example\FirstPartyClassTest::testTwo
+      /path/to/tests/FirstPartyClassTest.php:22
+
+    2) /path/to/src/FirstPartyClass.php:13
+    deprecation in first-party code
+
+    Triggered by:
+
+    * example\FirstPartyClassTest::testOne
+      /path/to/tests/FirstPartyClassTest.php:17
 
     OK, but there were issues!
-    Tests: 1, Assertions: 1, Deprecations: 1.
+    Tests: 2, Assertions: 2, Deprecations: 2.
 
-As you can see in the output shown above, deprecations triggered in third-party code located in the
+As you can see in the output shown above, deprecations triggered by third-party code located in the
 ``vendor`` directory are not reported anymore.
+
+The following attributes can be used on the ``<source>`` element to configure how PHPUnit
+uses the information what your code is:
+
+* :ref:`appendixes.configuration.source.ignoreSelfDeprecations` setting can be used to ignore deprecations triggered by first-party code in first-party code
+* :ref:`appendixes.configuration.source.ignoreDirectDeprecations` setting can be used to ignore deprecations triggered by first-party code in third-party code
+* :ref:`appendixes.configuration.source.ignoreIndirectDeprecations` setting can be used to ignore deprecations triggered by third-party code
+* :ref:`appendixes.configuration.source.restrictNotices` setting can be used to ignore notices in third-party code
+* :ref:`appendixes.configuration.source.restrictWarnings` setting can be used to ignore warnings in third-party code
 
 
 Ignoring issue suppression
