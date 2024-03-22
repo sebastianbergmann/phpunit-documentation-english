@@ -479,34 +479,14 @@ an explicit operation following a conscious decision.
 
 If you use semantic version constraints in your ``.phive/phars.xml`` file
 (`and you should! <https://thephp.cc/articles/the-death-star-version-constraint?ref=phpunit>`_)
-then you will have to manually update PHPUnit's version constraint when you want to update to
-a new major version.
-
-Here is what you should do: edit your project's ``.phive/phars.xml`` file and change ``^9.6``
-to ``^10.0``:
-
-.. code-block:: xml
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <phive xmlns="https://phar.io/phive">
-      <phar name="phpunit"
-            version="^10.0" installed="9.6.3"
-            location="./tools/phpunit" copy="true"/>
-    </phive>
-
-See how the output of ``phive outdated`` changes:
+then you have to use the ``install`` command and explicitly request the new major version to
+be installed:
 
 .. code::
 
-    phive outdated
-    Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
-    Found 1 outdated PHARs in phive.xml:
-
-    Name       Version Constraint    Installed    Available
-
-    phpunit    ^10.0                 9.6.3        10.0.7
-
-Now we can run ``phive update`` and the new major version will be installed.
+    phive install phpunit@^10.0
+    Phive 0.15.2 - Copyright (C) 2015-2024 by Arne Blankerts, Sebastian Heuer and Contributors
+    Linking /home/sb/.phive/phars/phpunit-10.5.15.phar to /path/to/tools/phpunit
 
 
 What is inside the PHAR?
