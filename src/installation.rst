@@ -89,19 +89,23 @@ maintained by Ondřej Surý.
 macOS
 ^^^^^
 
-The two most common ways to install PHP on macOS are using `Homebrew <https://brew.sh/>`_ and `MacPorts <https://www.macports.org/>`_.
-The instructions given below assume that you have Homebrew or MacPorts already set up.
+The most common way to install PHP on macOS is using `Homebrew <https://brew.sh/>`_.
+The instructions given below assume that you have Homebrew already set up.
 
-Homebrew
-""""""""
-
-If you use Homebrew, then the following command will install PHP 8.1:
+We will use the `homebrew-php formulae maintained by Shivam Mathur <https://github.com/shivammathur/homebrew-php>`_.
+The following command will fetch these formulae:
 
 .. code::
 
-    brew install php@81
+    brew tap shivammathur/php
 
-If you install PHP 8.1 with Homebrew, the following extensions required by PHPUnit are already installed and enabled by default:
+The following command will install PHP 8.2:
+
+.. code::
+
+    brew install shivammathur/php/php@8.2
+
+The following extensions required by PHPUnit are already installed and enabled by default:
 
 - ``dom``
 - ``json``
@@ -119,39 +123,14 @@ If you use Homebrew, then the following command will install and enable the ``pc
 
 .. code::
 
-  pecl install pcov
+  brew install pcov@8.2
 
-If you use Homebrew, then the following command will install and enable the ``xdebug`` extension:
-
-.. code::
-
-  pecl install xdebug
-
-MacPorts
-""""""""
-
-If you use MacPorts, then the following command will install PHP 8.1:
+The following command will install and enable the ``xdebug`` extension:
 
 .. code::
 
-    sudo port install php81
+  brew install xdebug@8.2
 
-If you install PHP 8.1 with MacPorts, the following extensions required by PHPUnit are already installed and enabled by default:
-
-- ``dom``
-- ``json``
-- ``libxml``
-- ``xml``
-- ``xmlwriter``
-
-You need to additionally install and enable the following extension:
-
-- ``mbstring``
-
-If you want to collect code coverage information, you need to additionally install and enable one of the following extensions:
-
-- ``pcov``
-- ``xdebug``
 
 Windows
 ^^^^^^^
