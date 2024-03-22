@@ -18,7 +18,12 @@ called from test code. It ignores issues triggered by PHPUnit's own code as well
 
    When PHPUnit's test runner becomes aware (after it called ``set_error_handler()`` to register its error handler)
    that another error handler was registered then it immediately unregisters its error handler so that the
-   previously registered error handler remains active.
+   previously registered error handler remains active. Consequently, the features described in this chapter are not
+   available when you use your own error handler.
+
+.. admonition:: Your own error handler should follow best practices
+
+   Your own error handler should ignore errors emitted by code it is not responsible for, for instance PHPUnit's code.
 
 The error handler emits events that are, for instance, subscribed to and used by the default progress and result printers
 as well as loggers.
