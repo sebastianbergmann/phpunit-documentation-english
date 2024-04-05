@@ -1,11 +1,11 @@
 ./tools/phpunit tests/MockBuilderExampleTest.php
-PHPUnit 11.0.0 by Sebastian Bergmann and contributors.
+PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.3.2
+Runtime:       PHP 8.3.4
 
 E                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 14.79 MB
+Time: 00:00, Memory: 22.86 MB
 
 There was 1 error:
 
@@ -19,9 +19,9 @@ PHPUnit\Framework\MockObject\Generator\ClassIsFinalException: Class "SomeClass" 
 1 test triggered 2 PHPUnit deprecations:
 
 1) MockBuilderExampleTest::testStub
-* MockBuilder::disableArgumentCloning() is deprecated and will be removed in PHPUnit 12. No replacement is/will be provided.
+* MockBuilder::disableArgumentCloning() is deprecated and will be removed in PHPUnit 12 without replacement.
 
-* MockBuilder::disallowMockingUnknownTypes() is deprecated and will be removed in PHPUnit 12. No replacement is/will be provided.
+* MockBuilder::disallowMockingUnknownTypes() is deprecated and will be removed in PHPUnit 12 without replacement.
 
 /path/to/tests/MockBuilderExampleTest.php:6
 

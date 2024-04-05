@@ -1,16 +1,16 @@
 ./tools/phpunit tests/AbstractClassTest.php
-PHPUnit 11.0.0 by Sebastian Bergmann and contributors.
+PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.3.2
+Runtime:       PHP 8.3.4
 
 D                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 14.79 MB
+Time: 00:00, Memory: 22.86 MB
 
 1 test triggered 1 PHPUnit deprecation:
 
 1) AbstractClassTest::testConcreteMethod
-getMockForAbstractClass() is deprecated and will be removed in PHPUnit 12. No replacement is/will be provided.
+getMockForAbstractClass() is deprecated and will be removed in PHPUnit 12 without replacement.
 
 /path/to/tests/AbstractClassTest.php:6
 
