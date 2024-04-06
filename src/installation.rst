@@ -119,7 +119,7 @@ If you want to collect code coverage information, you need to additionally insta
 - ``pcov``
 - ``xdebug``
 
-If you use Homebrew, then the following command will install and enable the ``pcov`` extension:
+The following command will install and enable the ``pcov`` extension:
 
 .. code::
 
