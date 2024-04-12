@@ -34,11 +34,10 @@ in every context where an object of the original type is expected or required.
    retain their original behavior except for ``static`` methods which will
    be replaced by a method throwing an exception.
 
-.. admonition:: Limitation: Enumerations and readonly classes
+.. admonition:: Limitation: Enumerations
 
    Enumerations (``enum``) are ``final`` classes and therefore cannot be
-   doubled. ``readonly`` classes cannot be extended by classes that are
-   not ``readonly`` and therefore cannot be doubled.
+   doubled.
 
 .. admonition:: Favour doubling interfaces over doubling classes
 
