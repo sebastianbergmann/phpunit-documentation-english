@@ -281,28 +281,6 @@ The ``UsesFunction(string $functionName)`` attribute can be used to :ref:`specif
 that a test allows the execution of code in the given global function, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
-.. _appendixes.attributes.CodeCoverageIgnore:
-
-``CodeCoverageIgnore``
-----------------------
-
-+-----------------+-------------+--------------+------------+
-| Context         | Class Level | Method Level | Repeatable |
-+=================+=============+==============+============+
-| Production Code | yes         | yes          | no         |
-+-----------------+-------------+--------------+------------+
-
-The ``CodeCoverageIgnore`` attribute can be used in production code to
-:ref:`ignore <code-coverage.ignoring-code-blocks>` a class or method for code coverage.
-
-.. admonition:: Warning
-
-   Using this attribute in production code may lead to problems when the code production
-   code uses the Reflection API to instantiate attributes it is not responsible for, for
-   instance PHPUnit's.
-
-As of PHPUnit 10.1, the ``CodeCoverageIgnore`` attribute is deprecated.
-
 Data Provider
 =============
 
