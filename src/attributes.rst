@@ -178,6 +178,21 @@ expectations on mock objects as :ref:`risky <risky-tests.useless-tests>`. The
 ``DoesNotPerformAssertions`` attribute can be used to prevent this.
 
 
+.. _appendixes.attributes.IgnoreDeprecations:
+
+``IgnoreDeprecations``
+======================
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
+
+The ``IgnoreDeprecations`` attribute can be used to configure PHPUnit's error handler to
+not emit events for ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` errors.
+
+
 .. _appendixes.attributes.WithoutErrorHandler:
 
 ``WithoutErrorHandler``
@@ -189,7 +204,7 @@ expectations on mock objects as :ref:`risky <risky-tests.useless-tests>`. The
 | no          | yes          | no         |
 +-------------+--------------+------------+
 
-The ``WithoutErrorHandler`` can be used to disable PHPUnit's error handler for
+The ``WithoutErrorHandler`` attribute can be used to disable PHPUnit's error handler for
 a test method.
 
 .. admonition:: Warning
