@@ -189,7 +189,7 @@ expectations on mock objects as :ref:`risky <risky-tests.useless-tests>`. The
 | Test Code  | no          | yes          | no         |
 +------------+-------------+--------------+------------+
 
-The ``WithoutErrorHandler`` can be used to disable PHPUnit's error handler for
+The ``WithoutErrorHandler`` attribute can be used to disable PHPUnit's error handler for
 a test method.
 
 .. admonition:: Warning
