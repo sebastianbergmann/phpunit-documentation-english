@@ -26,11 +26,11 @@ namespace. They are documented in this appendix.
 ``Test``
 ========
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
 
 As an alternative to prefixing your test method names with ``test``,
 you can use the ``Test`` attribute to mark it as a test method.
@@ -58,11 +58,11 @@ you can use the ``Test`` attribute to mark it as a test method.
 ``TestDox``
 ===========
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 The ``TestDox(string $text)`` attribute can be used to customize the text that is printed for
 a test when TestDox output is enabled.
@@ -167,11 +167,11 @@ That would be ``data set 1`` through ``data set 4`` in the example shown above.
 ``DoesNotPerformAssertions``
 ============================
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 By default, PHPUnit considers a test that does not perform assertions and does not configure
 expectations on mock objects as :ref:`risky <risky-tests.useless-tests>`. The
@@ -183,11 +183,11 @@ expectations on mock objects as :ref:`risky <risky-tests.useless-tests>`. The
 ``WithoutErrorHandler``
 =======================
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
 
 The ``WithoutErrorHandler`` can be used to disable PHPUnit's error handler for
 a test method.
@@ -210,11 +210,11 @@ Code Coverage
 ``CoversClass``
 ---------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | no           | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
 
 The ``CoversClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test intends to cover the given class.
@@ -225,11 +225,11 @@ that a test intends to cover the given class.
 ``CoversFunction``
 ------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | no           | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
 
 The ``CoversFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test intends to cover the given function.
@@ -240,11 +240,11 @@ that a test intends to cover the given function.
 ``CoversNothing``
 -----------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 The ``CoversNothing()`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test does not intend to contribute to code coverage.
@@ -255,11 +255,11 @@ that a test does not intend to contribute to code coverage.
 ``UsesClass``
 -------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | no           | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
 
 The ``UsesClass(string $className)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test allows the execution of code in the given class, but does not intend to cover it. This is relevant
@@ -271,11 +271,11 @@ in the context of :ref:`preventing unintentionally covered code <risky-tests.uni
 ``UsesFunction``
 ----------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | no           | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
 
 The ``UsesFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test allows the execution of code in the given global function, but does not intend to cover it. This is relevant
@@ -289,11 +289,11 @@ Data Provider
 ``DataProvider``
 ----------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DataProvider(string $methodName)`` attribute can be used on a test method
 to specify a static method that is declared in the same class as the test method
@@ -305,11 +305,11 @@ as a :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
 ``DataProviderExternal``
 ------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DataProviderExternal(string $className, string $methodName)`` attribute can be used
 on a test method to specify a static method that is declared in another class as a
@@ -321,11 +321,11 @@ on a test method to specify a static method that is declared in another class as
 ``TestWith``
 ------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``TestWith(array $data)`` attribute can be used to define a
 :ref:`data provider <writing-tests-for-phpunit.data-providers>` for a
@@ -380,11 +380,11 @@ Running the test shown above yields the output shown below:
 ``TestWithJson``
 ----------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``TestWithJson(string $json)`` attribute can be used to define a
 :ref:`data provider <writing-tests-for-phpunit.data-providers>` for a
@@ -442,11 +442,11 @@ Test Dependencies
 ``Depends``
 -----------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``Depends(string $methodName)`` attribute can be used to specify that a test
 :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
@@ -460,11 +460,11 @@ Any value that is passed from a producer (a depended-upon test) to a consumer
 ``DependsUsingDeepClone``
 -------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DependsUsingDeepClone(string $methodName)`` attribute can be used to specify that a test
 :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
@@ -479,11 +479,11 @@ Any value that is passed from a producer (a depended-upon test) to a consumer
 ``DependsUsingShallowClone``
 ----------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DependsUsingShallowClone(string $methodName)`` attribute can be used to specify that a test
 :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
@@ -498,11 +498,11 @@ Any value that is passed from a producer (a depended-upon test) to a consumer
 ``DependsExternal``
 -------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DependsExternal(string $className, string $methodName)`` attribute can be used
 to specify that a test :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
@@ -517,11 +517,11 @@ Any value that is passed from a producer (a depended-upon test) to a consumer
 ``DependsExternalUsingDeepClone``
 ---------------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DependsExternalUsingDeepClone(string $className, string $methodName)`` attribute can be used
 to specify that a test :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
@@ -536,11 +536,11 @@ Any value that is passed from a producer (a depended-upon test) to a consumer
 ``DependsExternalUsingShallowClone``
 ------------------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DependsExternalUsingShallowClone(string $className, string $methodName)`` attribute can be used
 to specify that a test :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
@@ -555,11 +555,11 @@ Any value that is passed from a producer (a depended-upon test) to a consumer
 ``DependsOnClass``
 ------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DependsOnClass(string $className)`` attribute can be used to specify that a test
 :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
@@ -574,11 +574,11 @@ Any value that is passed from a producer (a depended-upon test) to a consumer
 ``DependsOnClassUsingDeepClone``
 --------------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DependsOnClassUsingDeepClone(string $className)`` attribute can be used to specify that a test
 :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
@@ -593,11 +593,11 @@ Any value that is passed from a producer (a depended-upon test) to a consumer
 ``DependsOnClassUsingShallowClone``
 -----------------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
 
 The ``DependsOnClassUsingShallowClone(string $className)`` attribute can be used to specify that a test
 :ref:`depends <writing-tests-for-phpunit.test-dependencies>`
@@ -615,11 +615,11 @@ Test Groups
 ``Group``
 ---------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
 
 The ``Group(string $name)`` attribute can be used to assign tests to test groups.
 
@@ -633,11 +633,11 @@ The strings ``small``, ``medium``, and ``large`` may not be used as group names.
 ``Small``
 ---------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | no           | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | no         |
++-------------+--------------+------------+
 
 The ``Small`` attribute marks the tests of a test case class as small. These tests are
 added to a special test group named ``small`` that has special semantics.
@@ -655,11 +655,11 @@ to tests that are marked :ref:`medium <appendixes.attributes.Medium>` or
 ``Medium``
 ----------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | no           | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | no         |
++-------------+--------------+------------+
 
 The ``Medium`` attribute marks the tests of a test case class as medium. These tests are
 added to a special test group named ``medium`` that has special semantics.
@@ -678,11 +678,11 @@ of green compared to test that are marked small :ref:`small <appendixes.attribut
 ``Large``
 ---------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | no           | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | no         |
++-------------+--------------+------------+
 
 The ``Large`` attribute marks the tests of a test case class as large. These tests are
 added to a special test group named ``large`` that has special semantics.
@@ -701,11 +701,11 @@ to tests that are marked :ref:`medium <appendixes.attributes.Medium>` or
 ``Ticket``
 ----------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
 
 The ``Ticket(string $text)`` attribute is an alias for ``Group(string $text)``.
 
@@ -718,11 +718,11 @@ Template Methods
 ``BeforeClass``
 ---------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
 
 The ``BeforeClass`` attribute can be used to specify that a public static method should
 be invoked before the first test method of a test case class is run. This is equivalent
@@ -736,11 +736,11 @@ on :ref:`fixtures <fixtures>`.
 ``Before``
 ----------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
 
 The ``Before`` attribute can be used to specify that a protected non-static method should
 be invoked before each test method of a test case class is run. This is equivalent
@@ -755,11 +755,11 @@ on :ref:`fixtures <fixtures>`.
 ``PreCondition``
 ----------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
 
 The ``PreCondition`` attribute can be used to specify that a protected non-static method should
 be invoked before each test method (but after any ``setUp()`` methods) of a test case class is run.
@@ -771,11 +771,11 @@ This is equivalent to naming the method ``assertPreConditions()``.
 ``PostCondition``
 -----------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
 
 The ``PostCondition`` attribute can be used to specify that a protected non-static method should
 be invoked after each test method (but before any ``tearDown()`` methods) of a test case class is run.
@@ -787,11 +787,11 @@ This is equivalent to naming the method ``assertPostConditions()``.
 ``After``
 ---------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
 
 The ``After`` attribute can be used to specify that a protected non-static method should
 be invoked after each test method of a test case class is run. This is equivalent
@@ -806,11 +806,11 @@ on :ref:`fixtures <fixtures>`.
 ``AfterClass``
 --------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
 
 The ``AfterClass`` attribute can be used to specify that a public static method should
 be invoked after the last test method of a test case class is run. This is equivalent
@@ -828,11 +828,11 @@ Test Isolation
 ``BackupGlobals``
 -----------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 The ``BackupGlobals`` attribute can be used to specify that global and super-global variables
 should be backed up before a test and then restored after the test has been run.
@@ -843,11 +843,11 @@ should be backed up before a test and then restored after the test has been run.
 ``ExcludeGlobalVariableFromBackup``
 -----------------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
 
 The ``ExcludeGlobalVariableFromBackup($globalVariableName)`` attribute can be used to exclude
 the specified global variable from the backup and restore operations for global and super-global
@@ -859,11 +859,11 @@ variables.
 ``BackupStaticProperties``
 --------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 The ``BackupStaticProperties`` attribute can be used to specify that static properties of classes
 should be backed up before a test and then restored after the test has been run.
@@ -874,11 +874,11 @@ should be backed up before a test and then restored after the test has been run.
 ``ExcludeStaticPropertyFromBackup``
 -----------------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
 
 The ``ExcludeStaticPropertyFromBackup(string $className, string $propertyName)`` attribute can be
 used to exclude the specified static property from the backup and restore operations for static
@@ -890,11 +890,11 @@ properties of classes.
 ``RunInSeparateProcess``
 ------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | no          | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
 
 The ``RunInSeparateProcess`` attribute can be used to specify that a test should
 be run in a separate process.
@@ -905,11 +905,11 @@ be run in a separate process.
 ``RunTestsInSeparateProcesses``
 -------------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | no           | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | no         |
++-------------+--------------+------------+
 
 The ``RunTestsInSeparateProcesses`` attribute can be used to specify that all tests
 of a test case class should be run in separate processes (one separate process per test).
@@ -920,11 +920,11 @@ of a test case class should be run in separate processes (one separate process p
 ``RunClassInSeparateProcess``
 -----------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | no           | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | no         |
++-------------+--------------+------------+
 
 The ``RunClassInSeparateProcess`` attribute can be used to specify that all tests
 of a test case class should be run in a (single) separate process.
@@ -935,11 +935,11 @@ of a test case class should be run in a (single) separate process.
 ``PreserveGlobalState``
 -----------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 The ``PreserveGlobalState(bool $enabled)`` attribute can be used to specify whether
 the global state of the main PHPUnit test runner process should be made available in
@@ -954,11 +954,11 @@ Skipping Tests
 ``RequiresPhp``
 ---------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 The ``RequiresPhp(string $versionRequirement)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
@@ -980,11 +980,11 @@ Here are some examples:
 ``RequiresPhpExtension``
 ------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
 
 The ``RequiresPhpExtension(string $extension[, string $versionRequirement])`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
@@ -1004,11 +1004,11 @@ Here are some examples:
 ``RequiresSetting``
 -------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
 
 The ``RequiresSetting(string $setting, string $value)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
@@ -1020,11 +1020,11 @@ when the specified PHP configuration setting is not set to the expected value.
 ``RequiresPhpunit``
 -------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 The ``RequiresPhpunit(string $versionRequirement)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
@@ -1047,11 +1047,11 @@ Here are some examples:
 ``RequiresFunction``
 --------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
 
 The ``RequiresFunction(string $functionName)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
@@ -1063,11 +1063,11 @@ when the specified global function is not declared.
 ``RequiresMethod``
 ------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | yes        |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
 
 The ``RequiresMethod(string $className, string $methodName)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
@@ -1079,11 +1079,11 @@ when the specified method is not declared.
 ``RequiresOperatingSystem``
 ---------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 The ``RequiresOperatingSystem(string $regularExpression)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
@@ -1095,11 +1095,11 @@ when the specified regular expression does not match the value of the ``PHP_OS``
 ``RequiresOperatingSystemFamily``
 ---------------------------------
 
-+------------+-------------+--------------+------------+
-| Context    | Class Level | Method Level | Repeatable |
-+============+=============+==============+============+
-| Test Code  | yes         | yes          | no         |
-+------------+-------------+--------------+------------+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
 
 The ``RequiresOperatingSystemFamily(string $operatingSystemFamily)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
