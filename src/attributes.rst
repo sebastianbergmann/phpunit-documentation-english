@@ -162,6 +162,22 @@ Additionally, ``$_dataName`` is available and holds the name of the current data
 That would be ``data set 1`` through ``data set 4`` in the example shown above.
 
 
+.. _appendixes.attributes.DisableReturnValueGenerationForTestDoubles:
+
+``DisableReturnValueGenerationForTestDoubles``
+==============================================
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | no         |
++-------------+--------------+------------+
+
+The ``DisableReturnValueGenerationForTestDoubles`` attribute can be used to disable the return value generation
+for test doubles created using ``createMock()``, ``createMockForIntersectionOfInterfaces()``, ``createPartialMock()``,
+``createStub()``, and ``createStubForIntersectionOfInterfaces()`` for all tests of a test case class.
+
+
 .. _appendixes.attributes.DoesNotPerformAssertions:
 
 ``DoesNotPerformAssertions``
