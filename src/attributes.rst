@@ -312,45 +312,6 @@ The ``UsesFunction(string $functionName)`` attribute can be used to :ref:`specif
 that a test allows the execution of code in the given global function, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
-.. _appendixes.attributes.IgnoreClassForCodeCoverage:
-
-``IgnoreClassForCodeCoverage``
-------------------------------
-
-+-----------+-------------+--------------+------------+
-| Context   | Class Level | Method Level | Repeatable |
-+===========+=============+==============+============+
-| Test Code | yes         | no           | yes        |
-+-----------+-------------+--------------+------------+
-
-As of PHPUnit 10.4, the ``CodeCoverageIgnore`` attribute is deprecated.
-
-.. _appendixes.attributes.IgnoreMethodForCodeCoverage:
-
-``IgnoreMethodForCodeCoverage``
--------------------------------
-
-+-----------+-------------+--------------+------------+
-| Context   | Class Level | Method Level | Repeatable |
-+===========+=============+==============+============+
-| Test Code | yes         | no           | yes        |
-+-----------+-------------+--------------+------------+
-
-As of PHPUnit 10.4, the ``CodeCoverageIgnore`` attribute is deprecated.
-
-.. _appendixes.attributes.IgnoreFunctionForCodeCoverage:
-
-``IgnoreFunctionForCodeCoverage``
----------------------------------
-
-+-----------+-------------+--------------+------------+
-| Context   | Class Level | Method Level | Repeatable |
-+===========+=============+==============+============+
-| Test Code | yes         | no           | yes        |
-+-----------+-------------+--------------+------------+
-
-As of PHPUnit 10.4, the ``CodeCoverageIgnore`` attribute is deprecated.
-
 .. _appendixes.attributes.CodeCoverageIgnore:
 
 ``CodeCoverageIgnore``
