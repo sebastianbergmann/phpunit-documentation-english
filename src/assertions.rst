@@ -302,6 +302,8 @@ It is a bad practice to use ``assertEquals()`` (and its inverse, ``assertNotEqua
 
 The most common use case for custom comparators are Value Objects. These objects usually have an ``equals(self $other): bool`` method (or a method just like that but with a different name) for comparing two instances of the Value Object's type. ``assertObjectEquals()`` makes custom comparison of objects convenient for this common use case:
 
+``assertObjectNotEquals()`` is the inverse of this assertion and takes the same arguments.
+
 .. literalinclude:: examples/assertions/ObjectEqualsTest.php
    :caption: Usage of assertObjectEquals()
    :language: php
