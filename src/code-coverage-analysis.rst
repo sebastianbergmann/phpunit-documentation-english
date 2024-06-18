@@ -134,7 +134,6 @@ using the ``@codeCoverageIgnore``,
     :name: code-coverage-analysis.ignoring-code-blocks.examples.Sample.php
 
     <?php declare(strict_types=1);
-    use PHPUnit\Framework\TestCase;
 
     /**
      * @codeCoverageIgnore
