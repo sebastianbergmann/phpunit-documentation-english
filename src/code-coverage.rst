@@ -204,9 +204,6 @@ annotations that can be used in production code:
     :name: code-coverage.ignoring-code-blocks.examples.example.php
 
     <?php declare(strict_types=1);
-    use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
-    use PHPUnit\Framework\TestCase;
-
     /**
      * @codeCoverageIgnore
      */
