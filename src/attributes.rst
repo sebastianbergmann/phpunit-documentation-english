@@ -117,7 +117,7 @@ may use the method parameters as placeholders in your alternative description.
     {
         #[DataProvider('additionProvider')]
         #[TestDox('Adding $a to $b results in $expected')]
-        public function testAdd(int $expected, int $a, int $b)
+        public function testAdd(int $a, int $b, int $expected)
         {
             $this->assertSame($expected, $a + $b);
         }
