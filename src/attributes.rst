@@ -126,9 +126,9 @@ may use the method parameters as placeholders in your alternative description.
         {
             return [
                 'data set 1' => [0, 0, 0],
-                'data set 2' => [0, 1, 1],
-                'data set 3' => [1, 0, 1],
-                'data set 4' => [1, 1, 3]
+                'data set 2' => [1, 0, 1],
+                'data set 3' => [1, 1, 0],
+                'data set 4' => [3, 1, 1]
             ];
         }
     }
