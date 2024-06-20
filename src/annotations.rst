@@ -32,7 +32,7 @@ functionality will be implemented based on annotations.
 
 .. admonition:: Note
 
-   Do not use annotations in comments in new tests that you write.
+   Do not use annotations in comments in new test code that you write.
    Use :ref:`attributes <appendixes.attributes>` instead.
 
 
@@ -293,6 +293,13 @@ The ``@codeCoverageIgnore``,
 to exclude lines of code from the coverage analysis.
 
 For usage see :ref:`code-coverage.ignoring-code-blocks`.
+
+.. admonition:: Note
+
+   Please note that while annotations for test code have been deprecated and support
+   for them will be removed in PHPUnit 12, the ``@codeCoverageIgnore``,
+   ``@codeCoverageIgnoreStart``, and ``@codeCoverageIgnoreEnd`` annotations have not
+   been deprecated and support for them will not be removed.
 
 .. _appendixes.annotations.covers:
 
