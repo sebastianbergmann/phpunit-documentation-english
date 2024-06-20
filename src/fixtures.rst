@@ -217,7 +217,7 @@ In PHP, global variables work like this:
 
   In the scope of a function or method, you may access the global variable ``$foo`` by either directly accessing ``$GLOBALS['foo']`` or by using ``global $foo;`` to create a local variable with a reference to the global variable.
 
-Besides global variables, static attributes of classes are also part of
+Besides global variables, static properties of classes are also part of
 the global state.
 
 PHPUnit can optionally run your tests in a way where changes to global and super-global variables
@@ -225,12 +225,12 @@ PHPUnit can optionally run your tests in a way where changes to global and super
 ``$_REQUEST``) do not affect other tests. You can activate this behaviour by using the
 ``--globals-backup`` option or by setting ``backupGlobals="true"`` in the XML configuration file.
 
-By using the ``--static-backup`` option or setting ``backupStaticAttributes="true"`` in the
+By using the ``--static-backup`` option or setting ``backupStaticProperties="true"`` in the
 XML configuration file, this isolation can be extended to static properties of classes.
 
 .. admonition:: Note
 
-   The backup and restore operations for global variables and static class attributes use
+   The backup and restore operations for global variables and static class properties use
    ``serialize()`` and ``unserialize()``.
 
    Objects of some classes (e.g., ``PDO``) cannot be serialized and the backup operation
