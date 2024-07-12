@@ -456,6 +456,6 @@ Running the test shown above yields the output shown below:
 
 In this example the difference in the first index between
 ``1`` and ``'1'`` is
-reported even though ``assertEquals()`` considers the values as a match.
+reported even though ``assertSame()`` considers the values as a match.
 
 
