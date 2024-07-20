@@ -135,32 +135,6 @@ Test
 
     A test registered a custom ``Comparator`` for ``assertEquals()``
 
-``PHPUnit\Event\Test\AssertionSucceeded``
-
-    A test successfully asserted something
-
-.. admonition:: Deprecation: ``PHPUnit\Event\Test\AssertionSucceeded`` is deprecated
-
-   As of PHPUnit 10.5, the ``PHPUnit\Event\Test\AssertionSucceeded`` event is deprecated.
-   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about its usage.
-
-   Starting with PHPUnit 11, using the ``PHPUnit\Event\Test\AssertionSucceeded`` event
-   is no longer emitted and can no longer be subscribed to.
-
-``PHPUnit\Event\Test\AssertionFailed``
-
-    A test failed to assert something
-
-.. admonition:: Deprecation: ``PHPUnit\Event\Test\AssertionFailed`` is deprecated
-
-   As of PHPUnit 10.5, the ``PHPUnit\Event\Test\AssertionFailed`` event is deprecated.
-   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about its usage.
-
-   Starting with PHPUnit 11, using the ``PHPUnit\Event\Test\AssertionFailed`` event
-   is no longer emitted and can no longer be subscribed to.
-
 ``PHPUnit\Event\Test\MockObjectCreated``
 
     A test created a mock object
