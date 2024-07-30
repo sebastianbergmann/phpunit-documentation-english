@@ -32,7 +32,10 @@ in every context where an object of the original type is expected or required.
    Please note that ``final``, ``private``, and ``static`` methods cannot
    be doubled. They are ignored by PHPUnit's test double functionality and
    retain their original behavior except for ``static`` methods which will
-   be replaced by a method throwing an exception.
+   be replaced by a method throwing an exception. In case of final classes 
+   you can define an interface that a class implements and then mock that interface. 
+   This approach is more flexible and allows for better separation of the interface from the implementation.
+  
 
 .. admonition:: Limitation: Enumerations and readonly classes
 
