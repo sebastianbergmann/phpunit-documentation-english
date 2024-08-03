@@ -1,16 +1,18 @@
-./tools/phpunit --display-skipped tests/DatabaseTest.php
-PHPUnit 11.2.0 by Sebastian Bergmann and contributors.
+./tools/phpunit tests/DatabaseTest.php
+PHPUnit 11.3.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.3.8
+Runtime:       PHP 8.3.10
 
-S                                                                   1 / 1 (100%)
+R                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 22.90 MB
+Time: 00:00, Memory: 23.02 MB
 
-There was 1 skipped test:
+There was 1 risky test:
 
 1) DatabaseTest::testConnection
-The PostgreSQL extension is not available
+This test did not perform any assertions
 
-OK, but some tests were skipped!
-Tests: 1, Assertions: 0, Skipped: 1.
+/path/to/tests/DatabaseTest.php:15
+
+OK, but there were issues!
+Tests: 1, Assertions: 0, Risky: 1.
