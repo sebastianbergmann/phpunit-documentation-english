@@ -438,6 +438,11 @@ Alternative Output
 
     Replace default result output with TestDox format.
 
+``--testdox-summary``
+
+    Add summary of tests with errors, failures, or issues after TestDox output.
+    It requires the ``--testdox`` option.
+
 Logging
 -------
 
@@ -540,4 +545,3 @@ Miscellaneous
 ``--check-version``
 
     Check whether PHPUnit is the latest version and exits.
-
