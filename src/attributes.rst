@@ -817,10 +817,17 @@ Template Methods
 | no          | yes          | no         |
 +-------------+--------------+------------+
 
-The ``BeforeClass`` attribute can be used to specify that a public static method should
+The ``BeforeClass(int $priority = 0)`` attribute can be used to specify that a public static method should
 be invoked before the first test method of a test case class is run. This is the same
 phase where a method named ``setUpBeforeClass()`` would be invoked. We refer to such
 methods as "before test class" methods.
+
+When a test case class has more than one methods with the ``BeforeClass`` attribute then,
+by default, the test runner assumes that the order in which these methods are invoked
+does not matter. If this assumption is wrong and the order in which these methods are
+invoked does matter then the attribute's optional ``$priority`` argument (non-negative
+integer) can be used to define the desired invocation order: a method with a higher
+``$priority`` value is invoked before a method with a lower ``$priority`` value.
 
 .. _appendixes.attributes.Before:
 
@@ -833,10 +840,17 @@ methods as "before test class" methods.
 | no          | yes          | no         |
 +-------------+--------------+------------+
 
-The ``Before`` attribute can be used to specify that a protected non-static method should
+The ``Before(int $priority = 0)`` attribute can be used to specify that a protected non-static method should
 be invoked before each test method of a test case class is run. This is the same phase
 where a method named ``setUp()`` would be invoked. We refer to such methods as "before test"
 methods.
+
+When a test case class has more than one methods with the ``Before`` attribute then,
+by default, the test runner assumes that the order in which these methods are invoked
+does not matter. If this assumption is wrong and the order in which these methods are
+invoked does matter then the attribute's optional ``$priority`` argument (non-negative
+integer) can be used to define the desired invocation order: a method with a higher
+``$priority`` value is invoked before a method with a lower ``$priority`` value.
 
 
 .. _appendixes.attributes.PreCondition:
@@ -850,10 +864,17 @@ methods.
 | no          | yes          | no         |
 +-------------+--------------+------------+
 
-The ``PreCondition`` attribute can be used to specify that a protected non-static method should
+The ``PreCondition(int $priority = 0)`` attribute can be used to specify that a protected non-static method should
 be invoked before each test method (but after any "before test" methods) of a test case class is run.
 This is the same phase where a method named ``assertPreConditions()`` would be invoked.
 We refer to such methods as "pre-condition" methods.
+
+When a test case class has more than one methods with the ``PreCondition`` attribute then,
+by default, the test runner assumes that the order in which these methods are invoked
+does not matter. If this assumption is wrong and the order in which these methods are
+invoked does matter then the attribute's optional ``$priority`` argument (non-negative
+integer) can be used to define the desired invocation order: a method with a higher
+``$priority`` value is invoked before a method with a lower ``$priority`` value.
 
 
 .. _appendixes.attributes.PostCondition:
@@ -867,10 +888,17 @@ We refer to such methods as "pre-condition" methods.
 | no          | yes          | no         |
 +-------------+--------------+------------+
 
-The ``PostCondition`` attribute can be used to specify that a protected non-static method should
+The ``PostCondition(int $priority = 0)`` attribute can be used to specify that a protected non-static method should
 be invoked after each test method (but before any "after test" methods) of a test case class is run.
 This is the same phase where a method named ``assertPostConditions()`` would be invoked.
 We refer to such methods as "post-condition" methods.
+
+When a test case class has more than one methods with the ``PostCondition`` attribute then,
+by default, the test runner assumes that the order in which these methods are invoked
+does not matter. If this assumption is wrong and the order in which these methods are
+invoked does matter then the attribute's optional ``$priority`` argument (non-negative
+integer) can be used to define the desired invocation order: a method with a higher
+``$priority`` value is invoked before a method with a lower ``$priority`` value.
 
 
 .. _appendixes.attributes.After:
@@ -884,9 +912,16 @@ We refer to such methods as "post-condition" methods.
 | no          | yes          | no         |
 +-------------+--------------+------------+
 
-The ``After`` attribute can be used to specify that a protected non-static method should
+The ``After(int $priority = 0)`` attribute can be used to specify that a protected non-static method should
 be invoked after each test method of a test case class is run. This is the same phase where
 a method named ``tearDown()`` would be invoked. We refer to such methods as "after test" methods.
+
+When a test case class has more than one methods with the ``After`` attribute then,
+by default, the test runner assumes that the order in which these methods are invoked
+does not matter. If this assumption is wrong and the order in which these methods are
+invoked does matter then the attribute's optional ``$priority`` argument (non-negative
+integer) can be used to define the desired invocation order: a method with a higher
+``$priority`` value is invoked before a method with a lower ``$priority`` value.
 
 
 .. _appendixes.attributes.AfterClass:
@@ -900,10 +935,17 @@ a method named ``tearDown()`` would be invoked. We refer to such methods as "aft
 | no          | yes          | no         |
 +-------------+--------------+------------+
 
-The ``AfterClass`` attribute can be used to specify that a public static method should
+The ``AfterClass(int $priority = 0)`` attribute can be used to specify that a public static method should
 be invoked after the last test method of a test case class is run. This is the same phase
 where a method named ``tearDownAfterClass()`` would be invoked. We refer to such methods
 as "after test class" methods.
+
+When a test case class has more than one methods with the ``AfterClass`` attribute then,
+by default, the test runner assumes that the order in which these methods are invoked
+does not matter. If this assumption is wrong and the order in which these methods are
+invoked does matter then the attribute's optional ``$priority`` argument (non-negative
+integer) can be used to define the desired invocation order: a method with a higher
+``$priority`` value is invoked before a method with a lower ``$priority`` value.
 
 
 Test Isolation
