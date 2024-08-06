@@ -801,11 +801,9 @@ Template Methods
 +------------+-------------+--------------+------------+
 
 The ``BeforeClass`` attribute can be used to specify that a public static method should
-be invoked before the first test method of a test case class is run. This is equivalent
-to naming the method ``setUpBeforeClass()``.
-
-The topic of template methods such as ``setUpBeforeClass()`` is discussed in the chapter
-on :ref:`fixtures <fixtures>`.
+be invoked before the first test method of a test case class is run. This is the same
+phase where a method named ``setUpBeforeClass()`` would be invoked. We refer to such
+methods as "before test class" methods.
 
 .. _appendixes.attributes.Before:
 
@@ -819,11 +817,9 @@ on :ref:`fixtures <fixtures>`.
 +------------+-------------+--------------+------------+
 
 The ``Before`` attribute can be used to specify that a protected non-static method should
-be invoked before each test method of a test case class is run. This is equivalent
-to naming the method ``setUp()``.
-
-The topic of template methods such as ``setUp()`` is discussed in the chapter
-on :ref:`fixtures <fixtures>`.
+be invoked before each test method of a test case class is run. This is the same phase
+where a method named ``setUp()`` would be invoked. We refer to such methods as "before test"
+methods.
 
 
 .. _appendixes.attributes.PreCondition:
@@ -838,8 +834,9 @@ on :ref:`fixtures <fixtures>`.
 +------------+-------------+--------------+------------+
 
 The ``PreCondition`` attribute can be used to specify that a protected non-static method should
-be invoked before each test method (but after any ``setUp()`` methods) of a test case class is run.
-This is equivalent to naming the method ``assertPreConditions()``.
+be invoked before each test method (but after any "before test" methods) of a test case class is run.
+This is the same phase where a method named ``assertPreConditions()`` would be invoked.
+We refer to such methods as "pre-condition" methods.
 
 
 .. _appendixes.attributes.PostCondition:
@@ -854,8 +851,9 @@ This is equivalent to naming the method ``assertPreConditions()``.
 +------------+-------------+--------------+------------+
 
 The ``PostCondition`` attribute can be used to specify that a protected non-static method should
-be invoked after each test method (but before any ``tearDown()`` methods) of a test case class is run.
-This is equivalent to naming the method ``assertPostConditions()``.
+be invoked after each test method (but before any "after test" methods) of a test case class is run.
+This is the same phase where a method named ``assertPostConditions()`` would be invoked.
+We refer to such methods as "post-condition" methods.
 
 
 .. _appendixes.attributes.After:
@@ -870,11 +868,8 @@ This is equivalent to naming the method ``assertPostConditions()``.
 +------------+-------------+--------------+------------+
 
 The ``After`` attribute can be used to specify that a protected non-static method should
-be invoked after each test method of a test case class is run. This is equivalent
-to naming the method ``tearDown()``.
-
-The topic of template methods such as ``tearDown()`` is discussed in the chapter
-on :ref:`fixtures <fixtures>`.
+be invoked after each test method of a test case class is run. This is the same phase where
+a method named ``tearDown()`` would be invoked. We refer to such methods as "after test" methods.
 
 
 .. _appendixes.attributes.AfterClass:
@@ -889,11 +884,9 @@ on :ref:`fixtures <fixtures>`.
 +------------+-------------+--------------+------------+
 
 The ``AfterClass`` attribute can be used to specify that a public static method should
-be invoked after the last test method of a test case class is run. This is equivalent
-to naming the method ``tearDownAfterClass()``.
-
-The topic of template methods such as ``tearDownAfterClass()`` is discussed in the chapter
-on :ref:`fixtures <fixtures>`.
+be invoked after the last test method of a test case class is run. This is the same phase
+where a method named ``tearDownAfterClass()`` would be invoked. We refer to such methods
+as "after test class" methods.
 
 
 Test Isolation
