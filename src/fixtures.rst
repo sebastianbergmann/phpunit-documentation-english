@@ -22,9 +22,9 @@ The actual content of the test gets lost in the noise of setting up the test fix
 problem gets even worse when you write several tests with similar test fixtures.
 
 PHPUnit supports the reuse of setup code between tests. Before a test method is run, a
-template method called ``setUp()`` is invoked: this is where you can create your test
+template method named ``setUp()`` is invoked: this is where you can create your test
 fixture. Once the test method has finished running, whether it succeeded or failed,
-another template method called ``tearDown()`` is invoked: this is where you can clean
+another template method named ``tearDown()`` is invoked: this is where you can clean
 up the objects against which you tested.
 
 .. code-block:: php
