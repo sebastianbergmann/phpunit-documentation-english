@@ -508,6 +508,17 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether details on tests that triggered warnings should be printed.
 
+.. _appendixes.configuration.phpunit.shortenArraysForExportThreshold:
+
+The ``shortenArraysForExportThreshold`` Attribute
+-------------------------------------------------
+
+Possible values: integer (default: ``0``)
+
+This attribute configures whether the export of arrays should be limited to a specified number of elements.
+
+When set to ``0`` (default) then the export of arrays is not limited.
+
 .. _appendixes.configuration.testsuites:
 
 The ``<testsuites>`` Element
