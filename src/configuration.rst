@@ -20,7 +20,7 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 PHPUnit can optionally backup all global and super-global variables before each test and restore this backup after each test.
 
-This attribute configures this operation for all tests. This configuration can be overridden using the ``@backupGlobals`` annotation on the test case class and test method level.
+This attribute configures this operation for all tests. This configuration can be overridden using the ``BackupGlobals`` attribute on the test case class and test method level.
 
 .. _appendixes.configuration.phpunit.backupStaticProperties:
 
@@ -119,7 +119,7 @@ The ``requireCoverageMetadata`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether a test will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does not indicate the code it intends to cover using an attribute in code or an annotation in a code comment.
+This attribute configures whether a test will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does not indicate the code it intends to cover using an attribute.
 
 .. _appendixes.configuration.phpunit.processIsolation:
 
@@ -310,7 +310,7 @@ The ``beStrictAboutCoverageMetadata`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether PHPUnit should mark a test as risky when it executes code that is not specified to be covered or used using an attribute in code or an annotation in a code comment.
+This attribute configures whether PHPUnit should mark a test as risky when it executes code that is not specified to be covered or used using an attribute.
 
 .. _appendixes.configuration.phpunit.enforceTimeLimit:
 
@@ -337,7 +337,7 @@ The ``timeoutForSmallTests`` Attribute
 
 Possible values: integer (default: ``1``)
 
-This attribute configures the time limit for tests annotated with ``@small`` (in seconds).
+This attribute configures the time limit for tests attributed with ``Small`` (in seconds).
 
 .. _appendixes.configuration.phpunit.timeoutForMediumTests:
 
@@ -346,7 +346,7 @@ The ``timeoutForMediumTests`` Attribute
 
 Possible values: integer (default: ``10``)
 
-This attribute configures the time limit for tests annotated with ``@medium`` (in seconds).
+This attribute configures the time limit for tests attributed with ``Medium`` (in seconds).
 
 .. _appendixes.configuration.phpunit.timeoutForLargeTests:
 
@@ -355,7 +355,7 @@ The ``timeoutForLargeTests`` Attribute
 
 Possible values: integer (default: ``60``)
 
-This attribute configures the time limit for tests annotated with ``@large`` (in seconds).
+This attribute configures the time limit for tests attributed with ``Large`` (in seconds).
 
 .. _appendixes.configuration.phpunit.defaultTestSuite:
 
@@ -389,7 +389,7 @@ The ``registerMockObjectsFromTestArgumentsRecursively`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-This attribute configures whether arrays and object graphs that are passed from one test to another using the ``@depends`` annotation should be recursively scanned for mock objects.
+This attribute configures whether arrays and object graphs that are passed from one test to another using the ``Depends*`` attributes should be recursively scanned for mock objects.
 
 .. _appendixes.configuration.phpunit.extensionsDirectory:
 
@@ -425,7 +425,7 @@ This attribute configures the order in which tests are executed.
 - ``no-depends,size``: not ordered by dependency, then ordered by size
 - ``random``: ordered randomly
 - ``reverse``: ordered as PHPUnit found the tests, then ordered in reverse
-- ``size``: ordered by size (small, medium, large, unknown), also see (see :ref:`appendixes.annotations.small`, :ref:`appendixes.annotations.medium`, and :ref:`appendixes.annotations.large`)
+- ``size``: ordered by size (small, medium, large, unknown), also see (see :ref:`appendixes.attributes.Small`, :ref:`appendixes.attributes.Medium`, and :ref:`appendixes.attributes.Large`)
 
 .. _appendixes.configuration.phpunit.resolveDependencies:
 
@@ -434,7 +434,7 @@ The ``resolveDependencies`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
-This attribute configures whether dependencies between tests (expressed using the ``@depends`` annotation) should be resolved.
+This attribute configures whether dependencies between tests (expressed using the ``Depends*`` attributes) should be resolved.
 
 .. _appendixes.configuration.phpunit.testdox:
 
@@ -1103,7 +1103,7 @@ The ``<groups>`` Element
 
 Parent element: ``<phpunit>``
 
-The ``<groups>`` element and its ``<include>``, ``<exclude>``, and ``<group>`` children can be used to select groups of tests marked with the ``@group`` annotation (documented in :ref:`appendixes.annotations.group`) that should (not) be run:
+The ``<groups>`` element and its ``<include>``, ``<exclude>``, and ``<group>`` children can be used to select groups of tests marked with the ``Group`` attribute (documented in :ref:`appendixes.attributes.Group`) that should (not) be run:
 
 .. code-block:: xml
 
