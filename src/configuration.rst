@@ -652,6 +652,50 @@ Parent elements: ``<include>``, ``<exclude>``
 
 Configures a file for inclusion in or exclusion from the list of the project's source code files.
 
+.. _appendixes.configuration.source.deprecationTrigger:
+
+The ``<deprecationTrigger>`` Element
+------------------------------------
+
+Parent element: ``<source>``
+
+Some libraries use a wrapper around PHP's ``trigger_error()`` function such as ``symfony/deprecation-contracts``
+or ``doctrine/deprecations``. Using such a wrapper adds an additional stack frame that needs to be considered
+when reporting of the location where a deprecation was triggered.
+
+The ``<deprecationTrigger>`` element, together with its child elements ``<function>`` and ``<method>``
+can be used to configure functions or methods, respectively, as deprecation triggers.
+
+.. _appendixes.configuration.source.deprecationTrigger.function:
+
+The ``<function>`` Element
+**************************
+
+Parent element: ``<deprecationTrigger>``
+
+.. code-block:: xml
+
+    <deprecationTrigger>
+         <function>trigger_deprecation</function>
+     </deprecationTrigger>
+
+The example configuration shown above configures the global function ``trigger_deprecation()`` as a deprecation trigger.
+
+.. _appendixes.configuration.source.deprecationTrigger.method:
+
+The ``<method>`` Element
+************************
+
+Parent element: ``<deprecationTrigger>``
+
+.. code-block:: xml
+
+    <deprecationTrigger>
+         <method>DeprecationTrigger::triggerDeprecation</method>
+     </deprecationTrigger>
+
+The example configuration shown above configures the ``public`` ``static`` method ``triggerDeprecation()``
+of the ``DeprecationTrigger`` class as a deprecation trigger.
 
 .. _appendixes.configuration.source.ignoreSelfDeprecations:
 
