@@ -445,6 +445,15 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the output should be printed in TestDox format.
 
+.. _appendixes.configuration.phpunit.testdoxSummary:
+
+The ``testdoxSummary`` Attribute
+--------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether TestDox output for non-successful tests should be repeated after the regular TestDox output.
+
 .. _appendixes.configuration.phpunit.displayDetailsOnIncompleteTests:
 
 The ``displayDetailsOnIncompleteTests`` Attribute
