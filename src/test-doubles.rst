@@ -530,16 +530,6 @@ the Mock Builder are documented below.
 
 ``disableArgumentCloning()`` can be used to make it explicit that arguments passed to doubled methods are not cloned (which is the default behaviour).
 
-.. admonition:: Deprecation: ``enableArgumentCloning()`` and ``disableArgumentCloning()`` are deprecated
-
-   As of PHPUnit 10.1, the ``enableArgumentCloning()`` and ``disableArgumentCloning()`` methods are soft-deprecated,
-   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about their usage.
-
-   Starting with PHPUnit 11, using the ``enableArgumentCloning()`` and ``disableArgumentCloning()`` methods
-   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
-
-
 ``disableAutoReturnValueGeneration()``
 --------------------------------------
 
