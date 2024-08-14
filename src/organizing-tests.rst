@@ -169,6 +169,10 @@ directory is recursively traversed.
         </testsuites>
     </phpunit>
 
+Note that in the above example, you should substitute the major.minor version number for ``|version|``,
+e.g., ``xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"`` if your
+phpunit version number is 10.5.3.
+
 Now that we have an XML configuration file, we can invoke the PHPUnit test runner without
 arguments (``tests``, for instance) or options (``--bootstrap``, for instance) to run
 our tests:
