@@ -262,7 +262,7 @@ that a test intends to cover the given class.
 | yes         | no           | yes        |
 +-------------+--------------+------------+
 
-The ``CoversTrait(string $traintName)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
+The ``CoversTrait(string $traitName)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test intends to cover the given trait.
 
 
