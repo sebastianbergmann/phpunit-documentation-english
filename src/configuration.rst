@@ -565,6 +565,15 @@ A required PHP version can be specified using the ``phpVersion`` and ``phpVersio
 
 In the example above, the tests from the ``tests/unit`` directory are only added to the test suite if the PHP version is at least 8.0.0. The ``phpVersionOperator`` attribute is optional and defaults to ``>=``.
 
+The tests that are found using ``<directory>`` and ``<file>`` elements can be added to a comma-separated list of groups:
+
+.. code-block:: xml
+
+    <testsuites>
+      <testsuite name="unit">
+        <directory groups="foo,bar">tests/foo-bar</directory>
+      </testsuite>
+    </testsuites>
 
 .. _appendixes.configuration.source:
 
