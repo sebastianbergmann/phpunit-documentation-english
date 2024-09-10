@@ -440,8 +440,8 @@ Alternative Output
 
 ``--testdox-summary``
 
-    Add summary of tests with errors, failures, or issues after TestDox output.
-    It requires the ``--testdox`` option.
+    Repeat TestDox output for non-successful tests after the regular TestDox output.
+    This only has an effect when the ``--testdox`` option (see above) is also used.
 
 Logging
 -------
