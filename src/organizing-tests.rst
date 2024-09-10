@@ -156,7 +156,7 @@ directory is recursively traversed.
 
     <?xml version="1.0" encoding="UTF-8"?>
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/|version|/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
              bootstrap="tests/bootstrap.php">
         <testsuites>
             <testsuite name="unit">
@@ -169,9 +169,11 @@ directory is recursively traversed.
         </testsuites>
     </phpunit>
 
-Note that in the above example, you should substitute the major.minor version number for ``|version|``,
-e.g., ``xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"`` if your
-phpunit version number is 10.5.3.
+.. admonition:: Note
+
+   You should reference the schema definition that is appropriate for the PHPUnit version
+   you are using in your XML configuration file. The schema definition for PHPUnit |version|
+   can always be found at https://schema.phpunit.de/|version|/phpunit.xsd, for instance.
 
 Now that we have an XML configuration file, we can invoke the PHPUnit test runner without
 arguments (``tests``, for instance) or options (``--bootstrap``, for instance) to run
