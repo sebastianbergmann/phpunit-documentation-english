@@ -311,8 +311,12 @@ Exit with error code when ...
 ``--fail-on-deprecation``
 
     Exit with a shell exit code that signals failure even when all tests passed
-    but at least one test triggered a deprecation (``E_DEPRECATED``, ``E_USER_DEPRECATED``,
-    or PHPUnit deprecation).
+    but at least one test triggered a deprecation (``E_DEPRECATED`` or ``E_USER_DEPRECATED``).
+
+``--fail-on-phpunit-deprecation``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one PHPUnit deprecation was triggered.
 
 ``--fail-on-notice``
 
@@ -410,6 +414,10 @@ Details about Issues
 ``--display-deprecations``
 
     Display details for deprecations triggered by tests.
+
+``--display-phpunit-deprecations``
+
+    Display details for PHPUnit deprecations.
 
 ``--display-errors``
 
