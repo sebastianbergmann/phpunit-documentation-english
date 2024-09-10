@@ -180,6 +180,10 @@ Selection
     Only run tests that intend to use ``<name>`` and use code coverage metadata such as
     ``PHPUnit\Framework\Attributes\UsesClass`` to document this.
 
+``--requires-php-extension <name>``
+
+    Only run tests that require PHP extension ``<name>``.
+
 ``--list-tests``
 
     Print a list of tests.
