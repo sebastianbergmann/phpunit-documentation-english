@@ -1170,6 +1170,22 @@ Here are some examples:
 * ``#[RequiresPhpunit('^10.1')]``
 
 
+.. _appendixes.attributes.RequiresPhpunitExtension:
+
+``RequiresPhpunitExtension``
+----------------------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
+
+The ``RequiresPhpunitExtension(string $extensionClass)`` attribute can be used to
+:ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
+when the PHPUnit extension identified by its bootstrap class is not available.
+
+
 .. _appendixes.attributes.RequiresFunction:
 
 ``RequiresFunction``
