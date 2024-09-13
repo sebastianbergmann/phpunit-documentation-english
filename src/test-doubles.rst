@@ -548,15 +548,6 @@ the Mock Builder are documented below.
 
 ``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
 
-.. admonition:: Deprecation: ``disableAutoReturnValueGeneration()`` and ``enableAutoReturnValueGeneration()`` are deprecated
-
-   As of PHPUnit 10.3, the ``disableAutoReturnValueGeneration()`` and ``enableAutoReturnValueGeneration()`` methods are soft-deprecated,
-   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about their usage.
-
-   Starting with PHPUnit 11, using the ``disableAutoReturnValueGeneration()`` and ``enableAutoReturnValueGeneration()`` methods
-   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
-
 
 ``disallowMockingUnknownTypes()``
 ---------------------------------
