@@ -322,7 +322,8 @@ After executing the command shown above the project's directory will look like t
 
 .. code::
 
-    ├── phive.xml
+    ├── .phive
+    |   └── phars.xml
     ├── public
     ├── src
     ├── tests
@@ -369,7 +370,8 @@ After executing the command shown above the project's directory will look like t
 
 .. code::
 
-    ├── phive.xml
+    ├── .phive
+    |   └── phars.xml
     ├── public
     ├── src
     ├── tests
