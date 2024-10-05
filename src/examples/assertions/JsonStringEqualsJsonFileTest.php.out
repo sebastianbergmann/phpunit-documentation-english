@@ -1,11 +1,11 @@
 ./tools/phpunit tests/JsonStringEqualsJsonFileTest.php
-PHPUnit 11.3.3 by Sebastian Bergmann and contributors.
+PHPUnit 11.4.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.3.11
+Runtime:       PHP 8.3.12
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 23.02 MB
+Time: 00:00, Memory: 23.08 MB
 
 There was 1 failure:
 
