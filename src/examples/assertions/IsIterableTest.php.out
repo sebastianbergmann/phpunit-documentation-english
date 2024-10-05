@@ -1,11 +1,11 @@
 ./tools/phpunit tests/IsIterableTest.php
-PHPUnit 10.5.32 by Sebastian Bergmann and contributors.
+PHPUnit 10.5.35 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.3.11
+Runtime:       PHP 8.3.12
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 22.86 MB
+Time: 00:00, Memory: 22.88 MB
 
 There was 1 failure:
 
