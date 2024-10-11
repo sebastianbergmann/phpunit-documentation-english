@@ -381,7 +381,7 @@ After executing the command shown above the project's directory will look like t
 .. admonition:: Note
 
     Unfortunately, PhpStorm only recognizes a file as a PHP archive when it has the ``.phar`` suffix.
-    This is remedied by creating a symbolic link: ``ln -s phpunit tools/phpunit.phar``.
+    This is remedied by creating a symbolic link: ``ln -s tools/phpunit phpunit.phar``.
 
 Updating PHPUnit with Phive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
