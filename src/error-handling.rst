@@ -268,6 +268,8 @@ Alternatively, the ``$this->expectUserDeprecationMessageMatches()`` can be used 
 an ``E_USER_DEPRECATED`` issue is triggered where the deprecation message matches a specified
 regular expression.
 
+This can be used together with the ``#[IgnoreDeprecations]`` attribute to not let the test fail.
+
 Disabling PHPUnit's error handler
 =================================
 
