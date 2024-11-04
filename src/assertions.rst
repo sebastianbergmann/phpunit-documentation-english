@@ -443,6 +443,13 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/CountTest.php.out
 
+.. admonition:: Note
+
+    Please note that ``assertCount()`` and ``assertNotCount()`` do not support generators.
+    Generators can only be iterated over once and they cannot be cloned.
+    Passing a generator to ``assertCount()`` or ``assertNotCount()`` would therefore change
+    the state of something that is supposed to be only verified.
+
 .. _appendixes.assertions.assertSameSize:
 
 ``assertSameSize()``
@@ -462,6 +469,13 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/SameSizeTest.php.out
 
+.. admonition:: Note
+
+    Please note that ``assertSameSize()`` and ``assertNotSameSize()`` do not support generators.
+    Generators can only be iterated over once and they cannot be cloned.
+    Passing a generator to ``assertSameSize()`` or ``assertNotSameSize()`` would therefore change
+    the state of something that is supposed to be only verified.
+
 .. _appendixes.assertions.assertEmpty:
 
 ``assertEmpty()``
@@ -480,6 +494,13 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/EmptyTest.php.out
+
+.. admonition:: Note
+
+    Please note that ``assertEmpty()`` and ``assertNotEmpty()`` do not support generators.
+    Generators can only be iterated over once and they cannot be cloned.
+    Passing a generator to ``assertEmpty()`` or ``assertNotEmpty()`` would therefore change
+    the state of something that is supposed to be only verified.
 
 .. _appendixes.assertions.assertGreaterThan:
 
