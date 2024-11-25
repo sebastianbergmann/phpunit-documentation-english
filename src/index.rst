@@ -32,7 +32,6 @@ Contents:
 
    assertions
    attributes
-   annotations
    events
    configuration
    copyright

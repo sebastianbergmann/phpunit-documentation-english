@@ -38,15 +38,12 @@ the :ref:`command-line <textui.command-line-options>` or by setting
 :ref:`XML configuration file <appendixes.configuration>`.
 
 A test that is attributed with ``PHPUnit\Framework\Attributes\CoversClass``
-or ``PHPUnit\Framework\Attributes\CoversFunction`` (or annotated with
-:ref:`@covers <appendixes.annotations.covers>`) and that executes code which
+or ``PHPUnit\Framework\Attributes\CoversFunction`` and that executes code which
 is not specified using ``PHPUnit\Framework\Attributes\CoversClass``,
 ``PHPUnit\Framework\Attributes\CoversFunction``,
 ``PHPUnit\Framework\Attributes\UsesClass``, or
-``PHPUnit\Framework\Attributes\UsesFunction`` (or using the
-:ref:`@covers <appendixes.annotations.covers>` or
-:ref:`@uses <appendixes.annotations.uses>` annotations) will be considered risky
-when this check is enabled and the size of the test is either small or unknown.
+``PHPUnit\Framework\Attributes\UsesFunction`` will be considered risky when this
+check is enabled and the size of the test is either small or unknown.
 
 Furthermore, by setting ``requireCoverageMetadata="true"`` in PHPUnit's
 :ref:`XML configuration file <appendixes.configuration>`, a test can be considered

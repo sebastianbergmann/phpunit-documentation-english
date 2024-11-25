@@ -241,11 +241,3 @@ In the example shown above, the ``@codeCoverageIgnore`` annotation is used to ig
 all code of the ``Foo`` class, all code of the ``Bar::foo()`` method, and the single
 line of code with the ``exit;`` statement. The line with the ``print '*';`` statement
 is ignored using ``// @codeCoverageIgnoreStart`` and ``// @codeCoverageIgnoreEnd``.
-
-.. admonition:: Note
-
-   Please note that while annotations in code comments in test code have been deprecated
-   and support for them will be removed in PHPUnit 12, the ``@codeCoverageIgnore``,
-   ``@codeCoverageIgnoreStart``, and ``@codeCoverageIgnoreEnd`` annotations in code
-   comments in production code have not been deprecated and support for them will not be
-   removed.
