@@ -197,7 +197,7 @@ Ignoring Code Blocks
 Sometimes you have units of code, or even just individual lines of code, that you cannot test
 and that you may want to ignore during code coverage analysis. PHPUnit lets you do this
 using the ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart``, and ``@codeCoverageIgnoreEnd``
-annotations that can be used in production code:
+annotations that can be used in code comments in production code:
 
 .. code-block:: php
     :caption: Using the ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart``, and ``@codeCoverageIgnoreEnd`` annotations
@@ -239,7 +239,8 @@ is ignored using ``// @codeCoverageIgnoreStart`` and ``// @codeCoverageIgnoreEnd
 
 .. admonition:: Note
 
-   Please note that while annotations for test code have been deprecated and support
-   for them will be removed in PHPUnit 12, the ``@codeCoverageIgnore``,
-   ``@codeCoverageIgnoreStart``, and ``@codeCoverageIgnoreEnd`` annotations have not
-   been deprecated and support for them will not be removed.
+   Please note that while annotations in code comments in test code have been deprecated
+   and support for them will be removed in PHPUnit 12, the ``@codeCoverageIgnore``,
+   ``@codeCoverageIgnoreStart``, and ``@codeCoverageIgnoreEnd`` annotations in code
+   comments in production code have not been deprecated and support for them will not be
+   removed.
