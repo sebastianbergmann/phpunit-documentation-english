@@ -1,7 +1,7 @@
 ./tools/phpunit tests/ArrayDiffTest.php
-PHPUnit 10.5.35 by Sebastian Bergmann and contributors.
+PHPUnit 10.5.38 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.3.12
+Runtime:       PHP 8.4.1
 
 F                                                                   1 / 1 (100%)
 
