@@ -257,6 +257,26 @@ that associates arguments with corresponding return values:
    :caption: Using willReturnMap() to stub a method call to return the value from a map
    :language: php
 
+Get-Hooked Properties
+^^^^^^^^^^^^^^^^^^^^^
+
+PHP 8.4 introduced the language feature of `get-hooked properties <https://www.php.net/releases/8.4/en.php#property_hooks>`_.
+
+The example below shows an interface that declares a get-hooked property:
+
+.. literalinclude:: examples/test-doubles/src/InterfaceWithGetHookedProperty.php
+   :caption: Interface that declares a get-hooked property
+   :language: php
+
+The behaviour of the get-hooked property ``property`` can be configured like so:
+
+.. literalinclude:: examples/test-doubles/GetHookedPropertyStubExampleTest.php
+   :caption: Test that uses a test stub of an interface with a get-hooked property
+   :language: php
+
+In the example shown above, ``PropertyHook::get('property')`` to specify that we want
+to configure the behaviour of the method that is called when the property named ``property``
+is accessed for reading.
 
 .. _test-doubles.mock-objects:
 
@@ -662,3 +682,25 @@ practice defaults used by ``createStub()`` and ``createMock()``:
 .. literalinclude:: examples/test-doubles/MockBuilderExampleTest.php
    :caption: Using the Mock Builder API to configure how the test double class is generated
    :language: php
+
+
+Set-Hooked Properties
+---------------------
+
+PHP 8.4 introduced the language feature of `set-hooked properties <https://www.php.net/releases/8.4/en.php#property_hooks>`_.
+
+The example below shows an interface that declares a set-hooked property:
+
+.. literalinclude:: examples/test-doubles/src/InterfaceWithSetHookedProperty.php
+   :caption: Interface that declares a set-hooked property
+   :language: php
+
+Expectations for the set-hooked property ``property`` can be configured like so:
+
+.. literalinclude:: examples/test-doubles/SetHookedPropertyMockExampleTest.php
+   :caption: Test that uses a mock object of an interface with a set-hooked property
+   :language: php
+
+In the example shown above, ``PropertyHook::set('property')`` to specify that we want
+to configure an expectation for the method that is called when the property named ``property``
+is accessed for writing.
