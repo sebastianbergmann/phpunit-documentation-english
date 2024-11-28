@@ -387,9 +387,9 @@ Running the test shown above yields the output shown below:
 ``assertContainsOnlyInstancesOf()``
 -----------------------------------
 
-``assertContainsOnlyInstancesOf(string $classname, iterable $haystack[, string $message])``
+``assertContainsOnlyInstancesOf(string $type, iterable $haystack[, string $message])``
 
-Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class ``$classname``.
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class or interface ``$type``.
 
 .. literalinclude:: examples/assertions/ContainsOnlyInstancesOfTest.php
    :caption: Usage of assertContainsOnlyInstancesOf()
