@@ -369,6 +369,9 @@ Reports an error identified by ``$message`` if ``$haystack`` does not contain on
 
 ``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type or not.
 
+These are the strings supported for ``$type`` when ``$isNativeType`` is ``true``:
+``array``, ``bool``, ``boolean``, ``callable``, ``double``, ``float``, ``int``, ``integer``, ``iterable``, ``null``, ``numeric``, ``object``, ``real``, ``resource``, ``scalar``, or ``string``.
+
 ``assertNotContainsOnly()`` is the inverse of this assertion and takes the same arguments.
 
 .. literalinclude:: examples/assertions/ContainsOnlyTest.php
