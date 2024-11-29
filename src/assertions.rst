@@ -433,11 +433,11 @@ comparison logic implemented by the ``==`` operator.
 ``assertContainsOnly()``
 ------------------------
 
-``assertContainsOnly(string $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
+``assertContainsOnly(string|NativeType $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
 
 Reports an error identified by ``$message`` if ``$haystack`` does not contain only variables of type ``$type``.
 
-``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type or not.
+``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type or not when a value of type ``string`` is passed for the ``$type`` parameter.
 
 These are the strings supported for ``$type`` when ``$isNativeType`` is ``true``:
 ``array``, ``bool``, ``boolean``, ``callable``, ``double``, ``float``, ``int``, ``integer``, ``iterable``, ``null``, ``numeric``, ``object``, ``real``, ``resource``, ``scalar``, or ``string``.
@@ -451,6 +451,13 @@ These are the strings supported for ``$type`` when ``$isNativeType`` is ``true``
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/ContainsOnlyTest.php.out
+
+.. admonition:: Deprecation: Support for ``string`` values for the ``$type`` parameter
+
+  As of PHPUnit 11.5, passing ``string`` values for the ``$type`` parameter is deprecated.
+  Support for this will be removed in PHPUnit 12.
+
+  Please use values of type ``NativeType`` instead to specify the expected native type.
 
 .. admonition:: Deprecation: Support for classes and interfaces
 
@@ -1679,7 +1686,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the array has a given key.
     * - ``PHPUnit\Framework\Constraint\TraversableContains contains(mixed $value)``
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains a given value.
-    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnly(string $type)``
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnly(NativeType|string $type)``
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only values of a given type.
     * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyInstancesOf(string $classname)``
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only instances of a given classname.
@@ -1707,7 +1714,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the value is ``null``.
     * - ``PHPUnit\Framework\Constraint\IsTrue isTrue()``
       - Constraint that asserts that the value is ``true``.
-    * - ``PHPUnit\Framework\Constraint\IsType isType(string $type)``
+    * - ``PHPUnit\Framework\Constraint\IsType isType(NativeType|string $type)``
       - Constraint that asserts that the value is of a specified type.
     * - ``PHPUnit\Framework\Constraint\LessThan lessThan(mixed $value)``
       - Constraint that asserts that the value is smaller than a given value.
