@@ -433,12 +433,9 @@ comparison logic implemented by the ``==`` operator.
 ``assertContainsOnly()``
 ------------------------
 
-``assertContainsOnly(string $type, iterable $haystack[, string $message = ''])``
+``assertContainsOnly(NativeType $type, iterable $haystack[, string $message = ''])``
 
 Reports an error identified by ``$message`` if ``$haystack`` does not contain only variables of type ``$type``.
-
-These are the strings supported for ``$type``:
-``array``, ``bool``, ``boolean``, ``callable``, ``double``, ``float``, ``int``, ``integer``, ``iterable``, ``null``, ``numeric``, ``object``, ``real``, ``resource``, ``scalar``, or ``string``.
 
 ``assertNotContainsOnly()`` is the inverse of this assertion and takes the same arguments.
 
@@ -1668,7 +1665,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the array has a given key.
     * - ``PHPUnit\Framework\Constraint\TraversableContains contains(mixed $value)``
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains a given value.
-    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnly(string $type)``
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnly(NativeType $type)``
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only values of a given type.
     * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyInstancesOf(string $classname)``
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only instances of a given classname.
@@ -1696,7 +1693,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the value is ``null``.
     * - ``PHPUnit\Framework\Constraint\IsTrue isTrue()``
       - Constraint that asserts that the value is ``true``.
-    * - ``PHPUnit\Framework\Constraint\IsType isType(string $type)``
+    * - ``PHPUnit\Framework\Constraint\IsType isType(NativeType $type)``
       - Constraint that asserts that the value is of a specified type.
     * - ``PHPUnit\Framework\Constraint\LessThan lessThan(mixed $value)``
       - Constraint that asserts that the value is smaller than a given value.
