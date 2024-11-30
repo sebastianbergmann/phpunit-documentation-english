@@ -1,11 +1,11 @@
 ./tools/phpunit tests/EqualsTest.php
-PHPUnit 11.4.3 by Sebastian Bergmann and contributors.
+PHPUnit 11.5-g1d71d8f8f6 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.4.1
 
 FFF                                                                 3 / 3 (100%)
 
-Time: 00:00.001, Memory: 25.14 MB
+Time: 00:00.001, Memory: 25.32 MB
 
 There were 3 failures:
 
