@@ -1,0 +1,20 @@
+./tools/phpunit tests/ContainsOnlyNullTest.php
+PHPUnit 12.0-g4d6a8c6f1e by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.4.1
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00, Memory: 23.21 MB
+
+There was 1 failure:
+
+1) ContainsOnlyNullTest::testFailure
+Failed asserting that Array &0 [
+    0 => 'string',
+] contains only values of type "null".
+
+/path/to/tests/ContainsOnlyNullTest.php:8
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.
