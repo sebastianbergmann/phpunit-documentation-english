@@ -1,0 +1,2 @@
+./tools/phpunit tests/GetHookedPropertyStubExampleTest.php
+Class GetHookedPropertyStubExampleTest cannot be found in /path/to/tests/GetHookedPropertyStubExampleTest.php

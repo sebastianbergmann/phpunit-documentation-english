@@ -1,11 +1,18 @@
 ./tools/phpunit tests/WsdlStubExampleTest.php
-PHPUnit 11.5-g1d71d8f8f6 by Sebastian Bergmann and contributors.
+PHPUnit 12.0-gf9a0e9f860 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.4.1
 
-D                                                                   1 / 1 (100%)
+E                                                                   1 / 1 (100%)
 
-Time: 00:00.002, Memory: 25.32 MB
+Time: 00:00, Memory: 23.21 MB
 
-OK, but there were issues!
-Tests: 1, Assertions: 1, PHPUnit Deprecations: 1.
+There was 1 error:
+
+1) WsdlStubExampleTest::testWebserviceCanBeStubbed
+Error: Call to undefined method WsdlStubExampleTest::getMockFromWsdl()
+
+/path/to/tests/WsdlStubExampleTest.php:8
+
+ERRORS!
+Tests: 1, Assertions: 0, Errors: 1.
