@@ -1693,7 +1693,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the value is ``null``.
     * - ``PHPUnit\Framework\Constraint\IsTrue isTrue()``
       - Constraint that asserts that the value is ``true``.
-    * - ``PHPUnit\Framework\Constraint\IsType isType(NativeType $type)``
+    * - ``PHPUnit\Framework\Constraint\IsType isType(string $type)``
       - Constraint that asserts that the value is of a specified type.
     * - ``PHPUnit\Framework\Constraint\LessThan lessThan(mixed $value)``
       - Constraint that asserts that the value is smaller than a given value.
