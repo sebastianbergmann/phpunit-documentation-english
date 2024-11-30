@@ -433,11 +433,11 @@ comparison logic implemented by the ``==`` operator.
 ``assertContainsOnly()``
 ------------------------
 
-``assertContainsOnly(string|NativeType $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
+``assertContainsOnly(string $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
 
 Reports an error identified by ``$message`` if ``$haystack`` does not contain only variables of type ``$type``.
 
-``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type or not when a value of type ``string`` is passed for the ``$type`` parameter.
+``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type.
 
 These are the strings supported for ``$type`` when ``$isNativeType`` is ``true``:
 ``array``, ``bool``, ``boolean``, ``callable``, ``double``, ``float``, ``int``, ``integer``, ``iterable``, ``null``, ``numeric``, ``object``, ``real``, ``resource``, ``scalar``, or ``string``.
@@ -452,21 +452,242 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/ContainsOnlyTest.php.out
 
-.. admonition:: Deprecation: Support for ``string`` values for the ``$type`` parameter
+.. admonition:: Deprecation: ``assertContainsOnly()`` is deprecated
 
-  As of PHPUnit 11.5, passing ``string`` values for the ``$type`` parameter is deprecated.
-  Support for this will be removed in PHPUnit 12.
+   As of PHPUnit 11.5, the ``assertContainsOnly()`` method is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
 
-  Please use values of type ``NativeType`` instead to specify the expected native type.
+   Starting with PHPUnit 12, using the ``assertContainsOnly()`` method will
+   trigger a deprecation warning. The method will be removed in PHPUnit 13.
 
-.. admonition:: Deprecation: Support for classes and interfaces
+.. _appendixes.assertions.assertContainsOnlyArray:
 
-  As of PHPUnit 11.5, passing the name of a class or interface for the ``$type`` parameter
-  as well as using the ``$isNativeType`` parameter is deprecated. Support for this will be
-  removed in PHPUnit 12.
+``assertContainsOnlyArray()``
+-----------------------------
 
-  Please use ``assertContainsOnlyInstancesOf()`` instead to assert that a haystack
-  contains only instances of a specified class or interface.
+``assertContainsOnlyArray(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``array``.
+
+``assertContainsNotOnlyArray()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyArrayTest.php
+   :caption: Usage of assertContainsOnlyArray()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyArrayTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyBool:
+
+``assertContainsOnlyBool()``
+----------------------------
+
+``assertContainsOnlyBool(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``bool``.
+
+``assertContainsNotOnlyBool()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyBoolTest.php
+   :caption: Usage of assertContainsOnlyBool()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyBoolTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyCallable:
+
+``assertContainsOnlyCallable()``
+--------------------------------
+
+``assertContainsOnlyCallable(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``callable``.
+
+``assertContainsNotOnlyCallable()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyCallableTest.php
+   :caption: Usage of assertContainsOnlyCallable()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyCallableTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyFloat:
+
+``assertContainsOnlyFloat()``
+-----------------------------
+
+``assertContainsOnlyFloat(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``float``.
+
+``assertContainsNotOnlyFloat()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyFloatTest.php
+   :caption: Usage of assertContainsOnlyFloat()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyFloatTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyInt:
+
+``assertContainsOnlyInt()``
+---------------------------
+
+``assertContainsOnlyInt(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``int``.
+
+``assertContainsNotOnlyInt()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyIntTest.php
+   :caption: Usage of assertContainsOnlyInt()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyIntTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyIterable:
+
+``assertContainsOnlyIterable()``
+--------------------------------
+
+``assertContainsOnlyIterable(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``iterable``.
+
+``assertContainsNotOnlyInt()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyIterableTest.php
+   :caption: Usage of assertContainsOnlyIterable()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyIterableTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyNumeric:
+
+``assertContainsOnlyNumeric()``
+-------------------------------
+
+``assertContainsOnlyNumeric(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``numeric``.
+
+``assertContainsNotOnlyNumeric()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyNumericTest.php
+   :caption: Usage of assertContainsOnlyNumeric()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyNumericTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyObject:
+
+``assertContainsOnlyObject()``
+------------------------------
+
+``assertContainsOnlyObject(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``object``.
+
+``assertContainsNotOnlyObject()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyObjectTest.php
+   :caption: Usage of assertContainsOnlyObject()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyObjectTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyResource:
+
+``assertContainsOnlyResource()``
+--------------------------------
+
+``assertContainsOnlyResource(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``resource``.
+
+``assertContainsNotOnlyResource()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyResourceTest.php
+   :caption: Usage of assertContainsOnlyResource()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyResourceTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyClosedResource:
+
+``assertContainsOnlyClosedResource()``
+--------------------------------------
+
+``assertContainsOnlyClosedResource(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``resource (closed)``.
+
+``assertContainsNotOnlyClosedResource()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyClosedResourceTest.php
+   :caption: Usage of assertContainsOnlyClosedResource()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyClosedResourceTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyScalar:
+
+``assertContainsOnlyScalar()``
+------------------------------
+
+``assertContainsOnlyScalar(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``scalar``.
+
+``assertContainsNotOnlyScalar()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyScalarTest.php
+   :caption: Usage of assertContainsOnlyScalar()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyScalarTest.php.out
+
+.. _appendixes.assertions.assertContainsOnlyString:
+
+``assertContainsOnlyString()``
+------------------------------
+
+``assertContainsOnlyString(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``string``.
+
+``assertContainsNotOnlyString()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyStringTest.php
+   :caption: Usage of assertContainsOnlyString()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyStringTest.php.out
 
 .. _appendixes.assertions.assertContainsOnlyInstancesOf:
 
@@ -476,6 +697,8 @@ Running the test shown above yields the output shown below:
 ``assertContainsOnlyInstancesOf(string $type, iterable $haystack[, string $message])``
 
 Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class or interface ``$type``.
+
+``assertContainsNotOnlyInstancesOf()`` is the inverse of this assertion and takes the same arguments.
 
 .. literalinclude:: examples/assertions/ContainsOnlyInstancesOfTest.php
    :caption: Usage of assertContainsOnlyInstancesOf()
@@ -1686,7 +1909,7 @@ available ``PHPUnit\Framework\Constraint`` classes.
       - Constraint that asserts that the array has a given key.
     * - ``PHPUnit\Framework\Constraint\TraversableContains contains(mixed $value)``
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains a given value.
-    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnly(NativeType|string $type)``
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnly(string $type)``
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only values of a given type.
     * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyInstancesOf(string $classname)``
       - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only instances of a given classname.
