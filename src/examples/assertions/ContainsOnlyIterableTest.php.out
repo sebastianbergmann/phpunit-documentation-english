@@ -1,0 +1,20 @@
+./tools/phpunit tests/ContainsOnlyIterableTest.php
+PHPUnit 11.5-g7976d5649c by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.4.1
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00, Memory: 25.33 MB
+
+There was 1 failure:
+
+1) ContainsOnlyIterableTest::testFailure
+Failed asserting that Array &0 [
+    0 => null,
+] contains only values of type "iterable".
+
+/path/to/tests/ContainsOnlyIterableTest.php:8
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.

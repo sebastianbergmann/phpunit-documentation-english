@@ -575,6 +575,25 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/ContainsOnlyIterableTest.php.out
 
+.. _appendixes.assertions.assertContainsOnlyNull:
+
+``assertContainsOnlyNull()``
+----------------------------
+
+``assertContainsOnlyNull(iterable $haystack[, string $message])``
+
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``null``.
+
+``assertContainsNotOnlyNull()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/ContainsOnlyNullTest.php
+   :caption: Usage of assertContainsOnlyNull()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ContainsOnlyNullTest.php.out
+
 .. _appendixes.assertions.assertContainsOnlyNumeric:
 
 ``assertContainsOnlyNumeric()``
