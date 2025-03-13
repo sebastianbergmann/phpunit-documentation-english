@@ -119,6 +119,13 @@ If you want to collect code coverage information, you need to additionally insta
 - ``pcov``
 - ``xdebug``
 
+To install these extensions, we need the `homebrew-extensions formulae <https://github.com/shivammathur/homebrew-extensions>`_.
+The following command will fetch these formulae:
+
+.. code::
+
+    brew tap shivammathur/extensions
+
 The following command will install and enable the ``pcov`` extension:
 
 .. code::
