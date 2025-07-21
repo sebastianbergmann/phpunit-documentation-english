@@ -563,7 +563,7 @@ The ``<testsuite>`` Element
 
 Parent element: ``<testsuites>``
 
-A ``<testsuite>`` element must have a ``name`` attribute and may have one or more ``<directory>`` and/or ``<file>`` child elements that configure directories and/or files, respectively, that should be searched for tests.
+A ``<testsuite>`` element must have a ``name`` attribute and may have one or more ``<directory>`` and/or ``<file>`` child elements that configure directories and/or files, respectively, that should be searched for tests. Files and directories can be excluded by using ``<exclude>`` child elements.
 
 .. code-block:: xml
 
@@ -578,6 +578,7 @@ A ``<testsuite>`` element must have a ``name`` attribute and may have one or mor
 
       <testsuite name="edge-to-edge">
         <directory>tests/edge-to-edge</directory>
+        <exclude>tests/edge-to-edge/pathToIgnore</exclude>
       </testsuite>
     </testsuites>
 
