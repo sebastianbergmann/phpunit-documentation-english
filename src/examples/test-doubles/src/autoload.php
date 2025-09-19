@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 require __DIR__ . '/AbstractClass.php';
-require __DIR__ . '/AbstractTrait.php';
 require __DIR__ . '/C.php';
 require __DIR__ . '/D.php';
 require __DIR__ . '/Dependency.php';

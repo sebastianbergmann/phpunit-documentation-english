@@ -9,8 +9,6 @@ final class MockBuilderExampleTest extends TestCase
         $stub = $this->getMockBuilder(SomeClass::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
-            ->disableArgumentCloning()
-            ->disallowMockingUnknownTypes()
             ->getMock();
 
         // Configure the stub.
