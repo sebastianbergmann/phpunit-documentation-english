@@ -1,16 +1,16 @@
 ./tools/phpunit tests/BiscuitTest.php
-PHPUnit 12.3.0 by Sebastian Bergmann and contributors.
+PHPUnit 12.3.11 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.4.11
+Runtime:       PHP 8.4.12
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 25.79 MB
+Time: 00:00, Memory: 15.81 MB
 
 There was 1 failure:
 
 1) BiscuitTest::testEquals
-Failed asserting that Biscuit Object #366 (
+Failed asserting that Biscuit Object #464 (
     'name' => 'Ginger',
 ) is equal to Biscuit Object #383 (
     'name' => 'Ginger',
