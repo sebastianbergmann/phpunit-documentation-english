@@ -1243,7 +1243,7 @@ Here are some examples:
 * ``#[RequiresPhp('>= 8.3.0')]``
 * ``#[RequiresPhp('^8.3')]``
 
- As of PHPUnit 12.0, use of a version requirement without a operator, e.g. `'8.3.0'` is hard-deprecated.
+ As of PHPUnit 12.4, use of a version requirement without a operator, e.g. `'8.3.0'` is hard-deprecated.
  Using such a requirement will trigger a deprecation warning. Support will be removed in PHPUnit 13.
 
 .. _appendixes.attributes.RequiresPhpExtension:
