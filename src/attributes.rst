@@ -1234,15 +1234,17 @@ The ``RequiresPhp(string $versionRequirement)`` attribute can be used to
 when the PHP version used to run PHPUnit does not match the specified version requirement.
 
 ``$versionRequirement`` can either be a `version number string <https://www.php.net/manual/en/function.version-compare.php>`_
-that is optionally preceded by an operator supported by PHP's ``version_compare()``
+that is preceded by an operator supported by PHP's ``version_compare()``
 function or a `version constraint <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_
 in the syntax that is supported by Composer.
 
 Here are some examples:
 
-* ``#[RequiresPhp('8.3.0')]``
 * ``#[RequiresPhp('>= 8.3.0')]``
 * ``#[RequiresPhp('^8.3')]``
+
+ As of PHPUnit 12.0, use of a version requirement without a operator, e.g. `'8.3.0'` is hard-deprecated.
+ Using such a requirement will trigger a deprecation warning. Support will be removed in PHPUnit 13.
 
 .. _appendixes.attributes.RequiresPhpExtension:
 
