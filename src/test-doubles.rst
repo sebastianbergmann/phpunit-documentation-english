@@ -308,6 +308,11 @@ The behaviour of doubled methods can be configured using methods such as ``willR
 Expectations for invocations of doubled methods ("method must be called with specified arguments",
 "method must not be called", etc.) can be configured using the mock object's ``expects()`` method.
 
+.. admonition:: Note
+
+    Since PHPUnit 12.5, a notice is emitted when no expectations are configured for a mock object.
+    The ``AllowMockObjectsWithoutExpectations`` attribute can be used to opt out of the check that emits this notice.
+
 
 ``createMockForIntersectionOfInterfaces()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
