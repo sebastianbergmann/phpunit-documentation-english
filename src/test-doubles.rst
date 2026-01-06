@@ -356,6 +356,66 @@ return values using an associative array (``['methodName' => <return value>]``):
    :language: php
 
 
+``getMockBuilder()``
+^^^^^^^^^^^^^^^^^^^^
+
+As mentioned before, when the defaults used by the ``createStub()`` and ``createMock()`` methods
+to generate the test double do not match your needs then you can use the ``getMockBuilder($type)``
+method to customize the test double generation using a fluent interface. The methods provided by
+the Mock Builder are documented below.
+
+
+``setConstructorArgs()``
+""""""""""""""""""""""""
+
+``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
+
+
+``disableOriginalConstructor()``
+""""""""""""""""""""""""""""""""
+
+``disableOriginalConstructor()`` can be used to disable the call to the constructor of the original class.
+
+``enableOriginalConstructor()`` can be used to make it explicit that the constructor of the original class should be called (which is the default behaviour).
+
+
+``disableOriginalClone()``
+""""""""""""""""""""""""""
+
+``disableOriginalClone()`` can be used to disable the call to the clone constructor of the original class.
+
+``enableOriginalClone()`` can be used to make it explicit that the clone constructor of the original class should be called (which is the default behaviour).
+
+
+``disableAutoReturnValueGeneration()``
+""""""""""""""""""""""""""""""""""""""
+
+``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
+
+``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
+
+
+``onlyMethods()``
+"""""""""""""""""
+
+``onlyMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. The specified methods must exist in the class that is mocked.
+
+
+``getMock()``
+"""""""""""""
+
+``getMock()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMock()`` must be the last in the method chain.
+
+
+Here is an example that shows how to use the Mock Builder's fluent interface to configure
+the creation of a test stub. The configuration of this test double uses the same best
+practice defaults used by ``createStub()`` and ``createMock()``:
+
+.. literalinclude:: examples/test-doubles/MockBuilderExampleTest.php
+   :caption: Using the Mock Builder API to configure how the test double class is generated
+   :language: php
+
+
 Configuring Mock Objects
 ------------------------
 
@@ -417,70 +477,6 @@ the number of invocations:
 -
 
   ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
-
-
-MockBuilder API
-===============
-
-As mentioned before, when the defaults used by the ``createStub()`` and ``createMock()`` methods
-to generate the test double do not match your needs then you can use the ``getMockBuilder($type)``
-method to customize the test double generation using a fluent interface. The methods provided by
-the Mock Builder are documented below.
-
-
-``setConstructorArgs()``
-------------------------
-
-``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
-
-
-``disableOriginalConstructor()``
---------------------------------
-
-``disableOriginalConstructor()`` can be used to disable the call to the constructor of the original class.
-
-``enableOriginalConstructor()`` can be used to make it explicit that the constructor of the original class should be called (which is the default behaviour).
-
-
-``disableOriginalClone()``
---------------------------
-
-``disableOriginalClone()`` can be used to disable the call to the clone constructor of the original class.
-
-``enableOriginalClone()`` can be used to make it explicit that the clone constructor of the original class should be called (which is the default behaviour).
-
-
-``disableAutoReturnValueGeneration()``
---------------------------------------
-
-``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
-
-``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
-
-
-``onlyMethods()``
------------------
-
-``onlyMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. The specified methods must exist in the class that is mocked.
-
-
-``getMock()``
--------------
-
-``getMock()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMock()`` must be the last in the method chain.
-
-
-Here is an example that shows how to use the Mock Builder's fluent interface to configure
-the creation of a test stub. The configuration of this test double uses the same best
-practice defaults used by ``createStub()`` and ``createMock()``:
-
-.. literalinclude:: examples/test-doubles/MockBuilderExampleTest.php
-   :caption: Using the Mock Builder API to configure how the test double class is generated
-   :language: php
-
-
-Set-Hooked Properties
----------------------
 
 PHP 8.4 introduced the language feature of `set-hooked properties <https://www.php.net/releases/8.4/en.php#property_hooks>`_.
 
