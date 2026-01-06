@@ -438,6 +438,193 @@ Here is an example that shows how to stub the web service described in :file:`He
    will trigger a deprecation warning. The method will be removed in PHPUnit 12.
 
 
+``getMockBuilder()``
+^^^^^^^^^^^^^^^^^^^^
+
+As mentioned before, when the defaults used by the ``createStub()`` and ``createMock()`` methods
+to generate the test double do not match your needs then you can use the ``getMockBuilder($type)``
+method to customize the test double generation using a fluent interface. The methods provided by
+the Mock Builder are documented below.
+
+
+``setMockClassName()``
+""""""""""""""""""""""
+
+``setMockClassName($name)`` can be used to specify a class name for the generated test double class.
+
+.. admonition:: Deprecation: ``setMockClassName()`` is deprecated
+
+   As of PHPUnit 10.3, the ``setMockClassName()`` method is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``setMockClassName()`` method will trigger a deprecation warning.
+   The method will be removed in PHPUnit 12.
+
+
+``setConstructorArgs()``
+""""""""""""""""""""""""
+
+``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
+
+
+``disableOriginalConstructor()``
+""""""""""""""""""""""""""""""""
+
+``disableOriginalConstructor()`` can be used to disable the call to the constructor of the original class.
+
+``enableOriginalConstructor()`` can be used to make it explicit that the constructor of the original class should be called (which is the default behaviour).
+
+
+``disableOriginalClone()``
+""""""""""""""""""""""""""
+
+``disableOriginalClone()`` can be used to disable the call to the clone constructor of the original class.
+
+``enableOriginalClone()`` can be used to make it explicit that the clone constructor of the original class should be called (which is the default behaviour).
+
+
+``enableArgumentCloning()``
+"""""""""""""""""""""""""""
+
+``enableArgumentCloning()`` can be used to enable the cloning of arguments passed to doubled methods.
+
+``disableArgumentCloning()`` can be used to make it explicit that arguments passed to doubled methods are not cloned (which is the default behaviour).
+
+.. admonition:: Deprecation: ``enableArgumentCloning()`` and ``disableArgumentCloning()`` are deprecated
+
+   As of PHPUnit 10.1, the ``enableArgumentCloning()`` and ``disableArgumentCloning()`` methods are soft-deprecated,
+   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about their usage.
+
+   Starting with PHPUnit 11, using the ``enableArgumentCloning()`` and ``disableArgumentCloning()`` methods
+   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
+
+
+``disableAutoReturnValueGeneration()``
+""""""""""""""""""""""""""""""""""""""
+
+``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
+
+``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
+
+
+``disallowMockingUnknownTypes()``
+"""""""""""""""""""""""""""""""""
+
+``disallowMockingUnknownTypes()`` can be used to disallow the doubling of unknown types.
+
+``allowMockingUnknownTypes()`` can be used to make it explicit that the doubling of unknown types is allowed (which is the default).
+
+.. admonition:: Deprecation: ``disallowMockingUnknownTypes()`` and ``allowMockingUnknownTypes()`` are deprecated
+
+   As of PHPUnit 10.1, the ``disallowMockingUnknownTypes()`` and ``allowMockingUnknownTypes()`` methods are soft-deprecated,
+   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about their usage.
+
+   Starting with PHPUnit 11, using the ``disallowMockingUnknownTypes()`` and ``allowMockingUnknownTypes()`` methods
+   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
+
+
+``disableAutoload()``
+"""""""""""""""""""""
+
+``disableAutoload()`` can be used to disable PHP's autoloading functionality during the generation of the test double class.
+
+``enableAutoload()`` can be used to make it explicit that PHP's autoloading functionality should be enabled (which is the default behaviour).
+
+.. admonition:: Deprecation: ``disableAutoload()`` and ``enableAutoload()`` are deprecated
+
+   As of PHPUnit 10.1, the ``disableAutoload()`` and ``enableAutoload()`` methods are soft-deprecated,
+   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about their usage.
+
+   Starting with PHPUnit 11, using the ``disableAutoload()`` and ``enableAutoload()`` methods
+   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
+
+
+``enableProxyingToOriginalMethods()``
+"""""""""""""""""""""""""""""""""""""
+
+``enableProxyingToOriginalMethods()`` can be used to enable the invocation of the original methods. The object to be used for invoking the original methods must be configured using ``setProxyTarget()``.
+
+``disableProxyingToOriginalMethods()`` can be used to make it explicit that the original methods are not invoked (which is the default behaviour).
+
+.. admonition:: Deprecation: ``enableProxyingToOriginalMethods()``, ``setProxyTarget()``, and ``disableProxyingToOriginalMethods()`` are deprecated
+
+   As of PHPUnit 10.1, the ``enableProxyingToOriginalMethods()``, ``setProxyTarget()``, and ``disableProxyingToOriginalMethods()`` methods are soft-deprecated,
+   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about their usage.
+
+   Starting with PHPUnit 11, using the ``enableProxyingToOriginalMethods()``, ``setProxyTarget()``, and ``disableProxyingToOriginalMethods()`` methods
+   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
+
+
+``onlyMethods()``
+"""""""""""""""""
+
+``onlyMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. The specified methods must exist in the class that is mocked.
+
+
+``addMethods()``
+""""""""""""""""
+
+``addMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that do not exist in the interface or class that is mocked. Methods that do exist in the interface or class remain unchanged.
+
+.. admonition:: Deprecation: ``addMethods()`` is deprecated
+
+   As of PHPUnit 10.1, the ``addMethods()`` method is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``addMethods()`` method
+   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
+
+
+``getMock()``
+"""""""""""""
+
+``getMock()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMock()`` must be the last in the method chain.
+
+
+``getMockForAbstractClass()``
+"""""""""""""""""""""""""""""
+
+``getMockForAbstractClass()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMockForAbstractClass()`` must be the last in the method chain.
+
+.. admonition:: Deprecation: ``getMockForAbstractClass()`` is deprecated
+
+   As of PHPUnit 10.1, the ``getMockForAbstractClass()`` method is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``getMockForAbstractClass()`` method
+   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
+
+
+``getMockForTrait()``
+"""""""""""""""""""""
+
+``getMockForTrait()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMockForTrait()`` must be the last in the method chain.
+
+.. admonition:: Deprecation: ``getMockForTrait()`` is deprecated
+
+   As of PHPUnit 10.1, the ``getMockForTrait()`` method is soft-deprecated,
+   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
+   static analysis tools can warn about its usage.
+
+   Starting with PHPUnit 11, using the ``getMockForTrait()`` method
+   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
+
+Here is an example that shows how to use the Mock Builder's fluent interface to configure
+the creation of a test stub. The configuration of this test double uses the same best
+practice defaults used by ``createStub()`` and ``createMock()``:
+
+.. literalinclude:: examples/test-doubles/MockBuilderExampleTest.php
+   :caption: Using the Mock Builder API to configure how the test double class is generated
+   :language: php
+
+
 Configuring Mock Objects
 ------------------------
 
@@ -499,197 +686,6 @@ the number of invocations:
 -
 
   ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
-
-
-MockBuilder API
-===============
-
-As mentioned before, when the defaults used by the ``createStub()`` and ``createMock()`` methods
-to generate the test double do not match your needs then you can use the ``getMockBuilder($type)``
-method to customize the test double generation using a fluent interface. The methods provided by
-the Mock Builder are documented below.
-
-
-``setMockClassName()``
-----------------------
-
-``setMockClassName($name)`` can be used to specify a class name for the generated test double class.
-
-.. admonition:: Deprecation: ``setMockClassName()`` is deprecated
-
-   As of PHPUnit 10.3, the ``setMockClassName()`` method is soft-deprecated,
-   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about its usage.
-
-   Starting with PHPUnit 11, using the ``setMockClassName()`` method will trigger a deprecation warning.
-   The method will be removed in PHPUnit 12.
-
-
-``setConstructorArgs()``
-------------------------
-
-``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
-
-
-``disableOriginalConstructor()``
---------------------------------
-
-``disableOriginalConstructor()`` can be used to disable the call to the constructor of the original class.
-
-``enableOriginalConstructor()`` can be used to make it explicit that the constructor of the original class should be called (which is the default behaviour).
-
-
-``disableOriginalClone()``
---------------------------
-
-``disableOriginalClone()`` can be used to disable the call to the clone constructor of the original class.
-
-``enableOriginalClone()`` can be used to make it explicit that the clone constructor of the original class should be called (which is the default behaviour).
-
-
-``enableArgumentCloning()``
----------------------------
-
-``enableArgumentCloning()`` can be used to enable the cloning of arguments passed to doubled methods.
-
-``disableArgumentCloning()`` can be used to make it explicit that arguments passed to doubled methods are not cloned (which is the default behaviour).
-
-.. admonition:: Deprecation: ``enableArgumentCloning()`` and ``disableArgumentCloning()`` are deprecated
-
-   As of PHPUnit 10.1, the ``enableArgumentCloning()`` and ``disableArgumentCloning()`` methods are soft-deprecated,
-   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about their usage.
-
-   Starting with PHPUnit 11, using the ``enableArgumentCloning()`` and ``disableArgumentCloning()`` methods
-   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
-
-
-``disableAutoReturnValueGeneration()``
---------------------------------------
-
-``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
-
-``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
-
-
-``disallowMockingUnknownTypes()``
----------------------------------
-
-``disallowMockingUnknownTypes()`` can be used to disallow the doubling of unknown types.
-
-``allowMockingUnknownTypes()`` can be used to make it explicit that the doubling of unknown types is allowed (which is the default).
-
-.. admonition:: Deprecation: ``disallowMockingUnknownTypes()`` and ``allowMockingUnknownTypes()`` are deprecated
-
-   As of PHPUnit 10.1, the ``disallowMockingUnknownTypes()`` and ``allowMockingUnknownTypes()`` methods are soft-deprecated,
-   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about their usage.
-
-   Starting with PHPUnit 11, using the ``disallowMockingUnknownTypes()`` and ``allowMockingUnknownTypes()`` methods
-   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
-
-
-``disableAutoload()``
----------------------
-
-``disableAutoload()`` can be used to disable PHP's autoloading functionality during the generation of the test double class.
-
-``enableAutoload()`` can be used to make it explicit that PHP's autoloading functionality should be enabled (which is the default behaviour).
-
-.. admonition:: Deprecation: ``disableAutoload()`` and ``enableAutoload()`` are deprecated
-
-   As of PHPUnit 10.1, the ``disableAutoload()`` and ``enableAutoload()`` methods are soft-deprecated,
-   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about their usage.
-
-   Starting with PHPUnit 11, using the ``disableAutoload()`` and ``enableAutoload()`` methods
-   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
-
-
-``enableProxyingToOriginalMethods()``
--------------------------------------
-
-``enableProxyingToOriginalMethods()`` can be used to enable the invocation of the original methods. The object to be used for invoking the original methods must be configured using ``setProxyTarget()``.
-
-``disableProxyingToOriginalMethods()`` can be used to make it explicit that the original methods are not invoked (which is the default behaviour).
-
-.. admonition:: Deprecation: ``enableProxyingToOriginalMethods()``, ``setProxyTarget()``, and ``disableProxyingToOriginalMethods()`` are deprecated
-
-   As of PHPUnit 10.1, the ``enableProxyingToOriginalMethods()``, ``setProxyTarget()``, and ``disableProxyingToOriginalMethods()`` methods are soft-deprecated,
-   meaning their declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about their usage.
-
-   Starting with PHPUnit 11, using the ``enableProxyingToOriginalMethods()``, ``setProxyTarget()``, and ``disableProxyingToOriginalMethods()`` methods
-   will trigger a deprecation warning. The methods will be removed in PHPUnit 12.
-
-
-``onlyMethods()``
------------------
-
-``onlyMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. The specified methods must exist in the class that is mocked.
-
-
-``addMethods()``
-----------------
-
-``addMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that do not exist in the interface or class that is mocked. Methods that do exist in the interface or class remain unchanged.
-
-.. admonition:: Deprecation: ``addMethods()`` is deprecated
-
-   As of PHPUnit 10.1, the ``addMethods()`` method is soft-deprecated,
-   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about its usage.
-
-   Starting with PHPUnit 11, using the ``addMethods()`` method
-   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
-
-
-``getMock()``
--------------
-
-``getMock()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMock()`` must be the last in the method chain.
-
-
-``getMockForAbstractClass()``
------------------------------
-
-``getMockForAbstractClass()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMockForAbstractClass()`` must be the last in the method chain.
-
-.. admonition:: Deprecation: ``getMockForAbstractClass()`` is deprecated
-
-   As of PHPUnit 10.1, the ``getMockForAbstractClass()`` method is soft-deprecated,
-   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about its usage.
-
-   Starting with PHPUnit 11, using the ``getMockForAbstractClass()`` method
-   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
-
-
-``getMockForTrait()``
----------------------
-
-``getMockForTrait()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMockForTrait()`` must be the last in the method chain.
-
-.. admonition:: Deprecation: ``getMockForTrait()`` is deprecated
-
-   As of PHPUnit 10.1, the ``getMockForTrait()`` method is soft-deprecated,
-   meaning its declaration is annotated with ``@deprecated`` so that IDEs and
-   static analysis tools can warn about its usage.
-
-   Starting with PHPUnit 11, using the ``getMockForTrait()`` method
-   will trigger a deprecation warning. The method will be removed in PHPUnit 12.
-
-Here is an example that shows how to use the Mock Builder's fluent interface to configure
-the creation of a test stub. The configuration of this test double uses the same best
-practice defaults used by ``createStub()`` and ``createMock()``:
-
-.. literalinclude:: examples/test-doubles/MockBuilderExampleTest.php
-   :caption: Using the Mock Builder API to configure how the test double class is generated
-   :language: php
-
-
-Set-Hooked Properties
----------------------
 
 PHP 8.4 introduced the language feature of `set-hooked properties <https://www.php.net/releases/8.4/en.php#property_hooks>`_.
 
