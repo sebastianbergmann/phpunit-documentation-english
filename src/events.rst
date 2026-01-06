@@ -48,7 +48,6 @@ TestRunner
 
     The test runner started executing tests
 
-
 ``PHPUnit\Event\TestRunner\DeprecationTriggered``
 
     A deprecation in the test runner was triggered
