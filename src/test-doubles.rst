@@ -421,6 +421,12 @@ When the defaults used by ``createMock()`` to generate the mock object do not ma
 The methods provided by the Mock Builder are documented below.
 
 
+``setMockClassName()``
+""""""""""""""""""""""
+
+``setMockClassName(string $name)`` can be called to specify the class name of the generated class for the mock object.
+
+
 ``setConstructorArgs()``
 """"""""""""""""""""""""
 
