@@ -20,6 +20,10 @@ Application
 TestRunner
 ===========
 
+``PHPUnit\Event\TestRunner\EventFacadeSealed``
+
+    The event facade was sealed; no more event subscribers can be registered
+
 ``PHPUnit\Event\TestRunner\Configured``
 
     The test runner was configured
@@ -44,18 +48,57 @@ TestRunner
 
     The test runner started executing tests
 
+``PHPUnit\Event\TestRunner\ChildProcessStarted``
+
+    The test runner started a PHP child process
+
+``PHPUnit\Event\TestRunner\ChildProcessErrored``
+
+    A PHP child process started by the test runner errored
+
+``PHPUnit\Event\TestRunner\ChildProcessFinished``
+
+    A PHP child process started by the test runner finished
 
 ``PHPUnit\Event\TestRunner\DeprecationTriggered``
 
     A deprecation in the test runner was triggered
 
+``PHPUnit\Event\TestRunner\NoticeTriggered``
+
+    A PHPUnit notice in the test runner was triggered
+
 ``PHPUnit\Event\TestRunner\WarningTriggered``
 
     A warning in the test runner was triggered
 
+``PHPUnit\Event\TestRunner\ExecutionAborted``
+
+    The test runner aborted the execution of tests
+
 ``PHPUnit\Event\TestRunner\ExecutionFinished``
 
     The test runner finished executing tests
+
+``PHPUnit\Event\TestRunner\StaticAnalysisForCodeCoverageStarted``
+
+    The static code analysis required for code coverage reporting started
+
+``PHPUnit\Event\TestRunner\StaticAnalysisForCodeCoverageFinished``
+
+    The static code analysis required for code coverage reporting finished
+
+``PHPUnit\Event\TestRunner\GarbageCollectionDisabled``
+
+    The test runner disabled PHP's garbage collector
+
+``PHPUnit\Event\TestRunner\GarbageCollectionEnabled``
+
+    The test runner enabled PHP's garbage collector
+
+``PHPUnit\Event\TestRunner\GarbageCollectionTriggered``
+
+    The test runner triggered PHP's garbage collector
 
 ``PHPUnit\Event\TestRunner\Finished``
 
@@ -99,6 +142,26 @@ Test
 
     The preparation of a test for execution was started
 
+``PHPUnit\Event\Test\PreparationErrored``
+
+    The preparation of a test errored
+
+``PHPUnit\Event\Test\PreparationFailed``
+
+    The preparation of a test failed
+
+``PHPUnit\Event\Test\Prepared``
+
+    The test was successfully prepared for execution
+
+``PHPUnit\Event\Test\DataProviderMethodCalled``
+
+    A data provider method was called for a test method
+
+``PHPUnit\Event\Test\DataProviderMethodFinished``
+
+    All data provider methods were called for a test method
+
 ``PHPUnit\Event\Test\BeforeFirstTestMethodCalled``
 
     A "before first test" method was called for a test case class
@@ -106,6 +169,10 @@ Test
 ``PHPUnit\Event\Test\BeforeFirstTestMethodErrored``
 
     A "before first test" method errored for a test case class
+
+``PHPUnit\Event\Test\BeforeFirstTestMethodFailed``
+
+    A "before first test" method failed for a test case class
 
 ``PHPUnit\Event\Test\BeforeFirstTestMethodFinished``
 
@@ -119,6 +186,10 @@ Test
 
     A "before test" method errored for a test method
 
+``PHPUnit\Event\Test\BeforeTestMethodFailed``
+
+    A "before test" method failed for a test method
+
 ``PHPUnit\Event\Test\BeforeTestMethodFinished``
 
     All "before test" methods were called for a test method
@@ -130,6 +201,10 @@ Test
 ``PHPUnit\Event\Test\PreConditionErrored``
 
     A "precondition" method errored for a test method
+
+``PHPUnit\Event\Test\PreConditionFailed``
+
+    A "precondition" method failed for a test method
 
 ``PHPUnit\Event\Test\PreConditionFinished``
 
@@ -223,6 +298,10 @@ Test
 
     A test triggered a PHPUnit error
 
+``PHPUnit\Event\Test\PhpunitNoticeTriggered``
+
+    A test triggered a PHPUnit notice
+
 ``PHPUnit\Event\Test\ErrorTriggered``
 
     A test triggered an error (not a PHPUnit error)
@@ -259,6 +338,10 @@ Test
 
     A "postcondition" method errored for a test method
 
+``PHPUnit\Event\Test\PostConditionFailed``
+
+    A "postcondition" method failed for a test method
+
 ``PHPUnit\Event\Test\PostConditionFinished``
 
     All "postcondition" methods were called for a test method
@@ -270,6 +353,10 @@ Test
 ``PHPUnit\Event\Test\AfterTestMethodErrored``
 
     An "after test" method errored for a test method
+
+``PHPUnit\Event\Test\AfterTestMethodFailed``
+
+    An "after test" method failed for a test method
 
 ``PHPUnit\Event\Test\AfterTestMethodFinished``
 
@@ -283,6 +370,14 @@ Test
 
     An "after last test" method errored for a test case class
 
+``PHPUnit\Event\Test\AfterLastTestMethodFailed``
+
+    An "after last test" method failed for a test case class
+
 ``PHPUnit\Event\Test\AfterLastTestMethodFinished``
 
     All "after last test" methods were called for a test case class
+
+``PHPUnit\Event\Test\AdditionalInformationProvided``
+
+    A test method provided additional information
