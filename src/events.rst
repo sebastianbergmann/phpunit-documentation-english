@@ -20,6 +20,10 @@ Application
 TestRunner
 ===========
 
+``PHPUnit\Event\TestRunner\EventFacadeSealed``
+
+    The event facade was sealed; no more event subscribers can be registered
+
 ``PHPUnit\Event\TestRunner\Configured``
 
     The test runner was configured
@@ -53,9 +57,25 @@ TestRunner
 
     A warning in the test runner was triggered
 
+``PHPUnit\Event\TestRunner\ExecutionAborted``
+
+    The test runner aborted the execution of tests
+
 ``PHPUnit\Event\TestRunner\ExecutionFinished``
 
     The test runner finished executing tests
+
+``PHPUnit\Event\TestRunner\GarbageCollectionDisabled``
+
+    The test runner disabled PHP's garbage collector
+
+``PHPUnit\Event\TestRunner\GarbageCollectionEnabled``
+
+    The test runner enabled PHP's garbage collector
+
+``PHPUnit\Event\TestRunner\GarbageCollectionTriggered``
+
+    The test runner triggered PHP's garbage collector
 
 ``PHPUnit\Event\TestRunner\Finished``
 
@@ -98,6 +118,22 @@ Test
 ``PHPUnit\Event\Test\PreparationStarted``
 
     The preparation of a test for execution was started
+
+``PHPUnit\Event\Test\PreparationFailed``
+
+    The preparation of a test failed
+
+``PHPUnit\Event\Test\Prepared``
+
+    The test was successfully prepared for execution
+
+``PHPUnit\Event\Test\DataProviderMethodCalled``
+
+    A data provider method was called for a test method
+
+``PHPUnit\Event\Test\DataProviderMethodFinished``
+
+    All data provider methods were called for a test method
 
 ``PHPUnit\Event\Test\BeforeFirstTestMethodCalled``
 
