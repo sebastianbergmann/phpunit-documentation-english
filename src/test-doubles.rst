@@ -116,6 +116,62 @@ return values using an associative array (``['methodName' => <return value>]``):
    :language: php
 
 
+``getStubBuilder()``
+^^^^^^^^^^^^^^^^^^^^
+
+When the defaults used by ``createStub()`` to generate the test stub do not match your needs then you can use the
+``getStubBuilder($type)`` method to customize the test stub generation using a fluent interface.
+
+The methods provided by the Stub Builder are documented below.
+
+
+``setStubClassName()``
+""""""""""""""""""""""
+
+``setStubClassName(string $name)`` can be called to specify the class name of the generated class for the test stub.
+
+``setConstructorArgs()``
+""""""""""""""""""""""""
+
+``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
+
+
+``disableOriginalConstructor()``
+""""""""""""""""""""""""""""""""
+
+``disableOriginalConstructor()`` can be used to disable the call to the constructor of the original class.
+
+``enableOriginalConstructor()`` can be used to make it explicit that the constructor of the original class should be called (which is the default behaviour).
+
+
+``disableOriginalClone()``
+""""""""""""""""""""""""""
+
+``disableOriginalClone()`` can be used to disable the call to the clone constructor of the original class.
+
+``enableOriginalClone()`` can be used to make it explicit that the clone constructor of the original class should be called (which is the default behaviour).
+
+
+``disableAutoReturnValueGeneration()``
+""""""""""""""""""""""""""""""""""""""
+
+``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
+
+``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
+
+
+``onlyMethods()``
+"""""""""""""""""
+
+``onlyMethods(array $methods)`` can be called on the Stub Builder object to specify the methods that are to be replaced with a configurable test stub. The behavior of the other methods is not changed. The specified methods must exist in the class that is stubbed.
+
+
+``getStub()``
+"""""""""""""
+
+``getStub()`` generates and returns a test stub based on the configuration made using previous methods calls. The call to ``getStub()`` must be the last in the method chain.
+
+
 Configuring Test Stubs
 ----------------------
 
@@ -359,10 +415,10 @@ return values using an associative array (``['methodName' => <return value>]``):
 ``getMockBuilder()``
 ^^^^^^^^^^^^^^^^^^^^
 
-As mentioned before, when the defaults used by the ``createStub()`` and ``createMock()`` methods
-to generate the test double do not match your needs then you can use the ``getMockBuilder($type)``
-method to customize the test double generation using a fluent interface. The methods provided by
-the Mock Builder are documented below.
+When the defaults used by ``createMock()`` to generate the mock object do not match your needs then you can use the
+``getMockBuilder($type)`` method to customize the mock object generation using a fluent interface.
+
+The methods provided by the Mock Builder are documented below.
 
 
 ``setConstructorArgs()``
