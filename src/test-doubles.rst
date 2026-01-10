@@ -1058,6 +1058,102 @@ The test will fail if:
 - The method is called fewer or more times than expected
 
 
+Verifying relative call order between mock object expectations
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+The ``id()`` and ``after()`` methods allow us to define dependencies between mock expectations, ensuring that one method is called only after another method has been called first.
+
+* ``id(string $id)``: Assigns a unique identifier to an expectation
+* ``after(string $id)``: Specifies that this expectation should only be verified after the expectation with the given ID has been matched
+
+Below is a complete example demonstrating how to use ``id()`` and ``after()`` to verify that ``two()`` is called after ``one()``:
+
+.. code-block:: php
+
+   public function testTwoIsCalledAfterOne(): void
+   {
+       $mock = $this->createMock(ServiceInterface::class);
+
+       $mock
+           ->expects($this->once())
+           ->method('one')
+           ->id('first-call');
+
+       $mock
+           ->expects($this->once())
+           ->method('two')
+           ->after('first-call');
+
+       $mock->one();
+       $mock->two();
+   }
+
+**1. Configuring the first expectation**
+
+.. code-block:: php
+
+   $mock
+       ->expects($this->once())
+       ->method('one')
+       ->id('first-call');
+
+* ``expects($this->once())`` sets up an expectation that the following method should be called exactly once
+* ``method('one')`` specifies that this expectation applies to the `one()` method
+* ``id('first-call')`` assigns the unique identifier ``"first-call"`` to this expectation. This ID can be referenced by other expectations using ``after()``.
+
+**2. Configuring the second expectation**
+
+.. code-block:: php
+
+   $mock
+       ->expects($this->once())
+       ->method('two')
+       ->after('first-call');
+
+* ``expects($this->once())`` sets up an expectation that ``two()`` should be called exactly once
+* ``method('two')`` specifies that this expectation applies to the ``two()`` method
+* ``after('first-call')`` creates a dependency on the expectation with ID ``"first-call"'"``
+
+This means:
+
+* The expectation for ``two()`` will only be verified **after** ``one()`` has been called
+* If ``two()`` is called before ``one()``, that call will not count toward satisfying this expectation
+* The test will fail if ``two()`` is not called after ``one()`` has been called
+
+**3. Executing the system under test**
+
+.. code-block:: php
+
+   $mock->one();
+   $mock->two();
+
+* The call to ``one()`` on the mock object satisfies the first expectation and "unlocks" the second expectation
+* The call to ``two()`` on the mock object satisfies the second expectation, since ``one()`` was already called
+
+If ``two()`` is called **before** ``one()``, that call does **not** count toward satisfying the ``after()`` expectation.
+
+Attempting to register the same ID twice will cause the test to error.
+Using ``after()`` with an ID that has not been registered with ``id()`` will cause the test to fail.
+
+.. admonition:: Warning: Avoid using ``id()`` and ``after()``
+
+   The ``id()`` and ``after()`` methods should be avoided as they introduce unnecessary complexity and make tests harder to understand and maintain.
+
+   Tests that rely on strict call ordering are often brittle and may break when implementation details change, even if the behavior remains correct.
+
+**Why using id() and after() should be avoided:**
+
+* **Brittle Tests:** Tests that verify call order are tightly coupled to implementation details. Refactoring code that changes the order of internal calls (without changing behavior) will break these tests.
+* **Complexity:** The ``id()`` and ``after()`` mechanism adds cognitive complexity. Readers of your tests need to understand this additional concept.
+* **Hidden Dependencies:** The relationship between expectations is not immediately obvious, making tests harder to debug when they fail.
+* **Limited Flexibility:** The mechanism only supports simple "A before B" relationships. More complex ordering requirements become even more unwieldy.
+* **Better Alternatives Exist:** Most scenarios where call order matters can be tested more effectively:
+   - Test the final state or output rather than intermediate calls
+   - Use integration tests for workflows where order matters
+   - Design interfaces that do not require specific call ordering
+   - Use ``withParameterSetsInAnyOrder()`` or ``withParameterSetsInOrder()`` instead
+
+
 Set-Hooked Properties
 """""""""""""""""""""
 
