@@ -885,94 +885,94 @@ PHPUnit provides many constraint methods for argument verification:
 
 **Identity and Equality**
 
-* `identicalTo()`
-* `equalTo()`
-* `equalToCanonicalizing()`
-* `equalToIgnoringCase()`
-* `equalToWithDelta()`
-* `objectEquals()`
+* ``identicalTo()``
+* ``equalTo()``
+* ``equalToCanonicalizing()``
+* ``equalToIgnoringCase()``
+* ``equalToWithDelta()``
+* ``objectEquals()``
 
 **Cardinality**
 
-* `isEmpty()`
-* `countOf()`
-* `greaterThan()`
-* `greaterThanOrEqual()`
-* `lessThan()`
-* `lessThanOrEqual()`
+* ``isEmpty()``
+* ``countOf()``
+* ``greaterThan()``
+* ``greaterThanOrEqual()``
+* ``lessThan()``
+* ``lessThanOrEqual()``
 
 **Math**
 
-* `isFinite()`
-* `isInfinite()`
-* `isNan()`
+* ``isFinite()``
+* ``isInfinite()``
+* ``isNan()``
 
 **Boolean**
 
-* `isFalse()`
-* `isTrue()`
+* ``isFalse()``
+* ``isTrue()``
 
 **Operator**
 
-* `logicalAnd()`
-* `logicalNot()`
-* `logicalOr()`
-* `logicalXor()`
+* ``logicalAnd()``
+* ``logicalNot()``
+* ``logicalOr()``
+* ``logicalXor()``
 
 **String**
 
-* `isJson()`
-* `matches()`
-* `matchesRegularExpression()`
-* `stringContains()`
-* `stringEndsWith()`
-* `stringEqualsStringIgnoringLineEndings()`
-* `stringStartsWith()`
+* ``isJson()``
+* ``matches()``
+* ``matchesRegularExpression()``
+* ``stringContains()``
+* ``stringEndsWith()``
+* ``stringEqualsStringIgnoringLineEndings()``
+* ``stringStartsWith()``
 
 **Traversable**
 
-* `arrayHasKey()`
-* `containsEqual()`
-* `containsIdentical()`
-* `containsOnlyArray()`
-* `containsOnlyBool()`
-* `containsOnlyCallable()`
-* `containsOnlyClosedResource()`
-* `containsOnlyFloat()`
-* `containsOnlyInstancesOf()`
-* `containsOnlyInt()`
-* `containsOnlyIterable()`
-* `containsOnlyNull()`
-* `containsOnlyNumeric()`
-* `containsOnlyObject()`
-* `containsOnlyResource()`
-* `containsOnlyScalar()`
-* `containsOnlyString()`
-* `isList()`
+* ``arrayHasKey()``
+* ``containsEqual()``
+* ``containsIdentical()``
+* ``containsOnlyArray()``
+* ``containsOnlyBool()``
+* ``containsOnlyCallable()``
+* ``containsOnlyClosedResource()``
+* ``containsOnlyFloat()``
+* ``containsOnlyInstancesOf()``
+* ``containsOnlyInt()``
+* ``containsOnlyIterable()``
+* ``containsOnlyNull()``
+* ``containsOnlyNumeric()``
+* ``containsOnlyObject()``
+* ``containsOnlyResource()``
+* ``containsOnlyScalar()``
+* ``containsOnlyString()``
+* ``isList()``
 
 **Type**
 
-* `isArray()`
-* `isBool()`
-* `isCallable()`
-* `isClosedResource()`
-* `isFloat()`
-* `isInstanceOf()`
-* `isInt()`
-* `isIterable()`
-* `isNull()`
-* `isNumeric()`
-* `isObject()`
-* `isResource()`
-* `isScalar()`
-* `isString()`
+* ``isArray()``
+* ``isBool()``
+* ``isCallable()``
+* ``isClosedResource()``
+* ``isFloat()``
+* ``isInstanceOf()``
+* ``isInt()``
+* ``isIterable()``
+* ``isNull()``
+* ``isNumeric()``
+* ``isObject()``
+* ``isResource()``
+* ``isScalar()``
+* ``isString()``
 
 **Filesystem**
 
-* `directoryExists()`
-* `fileExists()`
-* `isReadable()`
-* `isWritable()`
+* ``directoryExists()``
+* ``fileExists()``
+* ``isReadable()``
+* ``isWritable()``
 
 
 Expecting calls to the same method with varying arguments in specific order
