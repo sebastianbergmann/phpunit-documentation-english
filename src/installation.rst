@@ -14,7 +14,7 @@ is executed on a web server.
 PHPUnit provides a framework for writing tests as well as a command-line tool for running these tests. Before we discuss
 obtaining and using PHPUnit, let us have a look at installing and configuring the PHP command-line interpreter.
 
-PHPUnit 12 requires PHP 8.3; using the latest version of PHP is highly recommended.
+PHPUnit 13 requires PHP 8.4; using the latest version of PHP is highly recommended.
 
 
 .. _installation.php-on-the-command-line:
@@ -100,11 +100,11 @@ The following command will fetch these formulae:
     brew tap shivammathur/php
     brew tap shivammathur/extensions
 
-The following command will install PHP 8.3:
+The following command will install PHP 8.4:
 
 .. code::
 
-    brew install shivammathur/php/php@8.3
+    brew install shivammathur/php/php@8.4
 
 The following extensions required by PHPUnit are already installed and enabled by default:
 
@@ -124,13 +124,13 @@ The following command will install and enable the ``pcov`` extension:
 
 .. code::
 
-  brew install pcov@8.3
+  brew install pcov@8.4
 
 The following command will install and enable the ``xdebug`` extension:
 
 .. code::
 
-  brew install xdebug@8.3
+  brew install xdebug@8.4
 
 
 Windows
