@@ -975,6 +975,89 @@ PHPUnit provides many constraint methods for argument verification:
 * `isWritable()`
 
 
+Expecting calls to the same method with varying arguments in specific order
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+When testing code that calls the same method multiple times with different arguments, we often need to verify that:
+
+1. The method is called the expected number of times
+2. Each call receives the correct arguments
+3. The calls happen in a specific order
+
+Consider a service that depends on a ``Dispatcher`` to dispatch events using its ``dispatch()`` method.
+These are use cases where the order in which these events are dispatched matters.
+We cannot handle this scenario using ``with()`` (see above) because setting up two separate expectations using ``expects()`` for the same method does not work (the second overwrites the first).
+
+The ``withParameterSetsInOrder()`` method solves this by allowing us to specify multiple parameter sets that must be matched in sequence:
+
+.. code-block:: php
+
+   $dispatcher = $this->createMock(Dispatcher::class);
+
+   $dispatcher
+       ->expects($this->exactly(2))
+       ->method('dispatch')
+       ->withParameterSetsInOrder(
+           [new AnEvent],
+           [new AnotherEvent],
+       );
+
+   $service = new Service($dispatcher);
+
+   $service->doSomething();
+
+**Ordered parameter sets** allow us to verify that a method is called multiple times with different arguments in a specific order.
+This is essential when the order of operations affects correctness or we need to verify a specific workflow or protocol.
+
+The test will fail if:
+
+* The method is called with the wrong arguments
+* The calls happen in the wrong order
+* The method is called fewer or more times than expected
+
+
+Expecting calls to the same method with varying arguments in any order
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Sometimes we need to verify that a method is called multiple times with specific arguments, but the order of the calls does not matter.
+For example:
+
+* Logging multiple events where sequence is irrelevant
+* Sending notifications to multiple recipients
+* Recording audit entries that are independent of each other
+
+The ``withParameterSetsInAnyOrder()`` method allows us to specify multiple parameter sets that must all be used, but can be matched in any order:
+
+.. code-block:: php
+
+   $dispatcher = $this->createMock(Dispatcher::class);
+
+   $dispatcher
+       ->expects($this->exactly(2))
+       ->method('dispatch')
+       ->withParameterSetsInAnyOrder(
+           [new AnotherEvent],
+           [new AnEvent],
+       );
+
+   $service = new Service($dispatcher);
+
+   $service->doSomething();
+
+**Unordered parameter sets** allow us to verify that a method is called multiple times with specific arguments, without enforcing a particular sequence.
+This is useful when:
+
+1. The order of operations does not affect correctness
+2. We want to allow implementation flexibility
+3. We are testing code where calls might be reordered for optimization
+
+The test will fail if:
+
+- The method is called with arguments that do not match any expected parameter set
+- Not all parameter sets are used (some expected calls are missing)
+- The method is called fewer or more times than expected
+
+
 Set-Hooked Properties
 """""""""""""""""""""
 
