@@ -100,11 +100,11 @@ The following command will fetch these formulae:
     brew tap shivammathur/php
     brew tap shivammathur/extensions
 
-The following command will install PHP 8.2:
+The following command will install PHP 8.3:
 
 .. code::
 
-    brew install shivammathur/php/php@8.2
+    brew install shivammathur/php/php@8.3
 
 The following extensions required by PHPUnit are already installed and enabled by default:
 
@@ -124,13 +124,13 @@ The following command will install and enable the ``pcov`` extension:
 
 .. code::
 
-  brew install pcov@8.2
+  brew install pcov@8.3
 
 The following command will install and enable the ``xdebug`` extension:
 
 .. code::
 
-  brew install xdebug@8.2
+  brew install xdebug@8.3
 
 
 Windows
