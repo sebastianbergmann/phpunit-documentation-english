@@ -372,6 +372,11 @@ Exit with error code when ...
     Exit with a shell exit code that signals failure even when all tests passed
     but at least one PHPUnit deprecation was triggered.
 
+``--fail-on-phpunit-notice``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one PHPUnit notice was triggered.
+
 ``--fail-on-notice``
 
     Exit with a shell exit code that signals failure even when all tests passed
@@ -472,6 +477,10 @@ Details about Issues
 ``--display-phpunit-deprecations``
 
     Display details for PHPUnit deprecations.
+
+``--display-phpunit-notices``
+
+    Display details for PHPUnit notices.
 
 ``--display-errors``
 
