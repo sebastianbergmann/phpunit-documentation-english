@@ -1184,3 +1184,88 @@ Best Practices
 5. **One concept per test:** Test either state (with stubs) or behavior (with mocks), not both in the same test.
 6. **Avoid brittle tests:** Do not mock internal implementation details. Mock interfaces and public contracts.
 7. **Review PHPUnit notices:** If you see a notice about unused mock objects, consider whether you should add expectations or use a test stub instead.
+
+
+Sealed Test Doubles
+-------------------
+
+The ``seal()`` method is part of the fluent API for configuring test stubs and mock objects.
+When you seal a test double, you prevent any further configuration and signal that the test double is fully configured.
+
+**Key Benefits**
+
+* **Prevents accidental misconfiguration**: Once sealed, any attempt to configure additional behavior or expectations will error the test
+* **Stricter mock behavior**: For mock objects, sealing adds implicit ``never()`` expectations for all methods that were not explicitly configured, causing the test to fail if those methods are called
+* **Self-documenting tests**: Sealing explicitly communicates that the test double configuration is complete
+
+
+Sealed Test Stubs
+^^^^^^^^^^^^^^^^^
+
+This example shows how a test stub is sealed using the ``seal()`` method:
+
+.. code-block:: php
+
+   public function testDemonstratingSealedTestStubs(): void
+   {
+       $stub = $this->createStub(InterfaceName::class);
+
+       $stub
+           ->method('doSomething')
+           ->willReturn('value')
+           ->seal();
+
+       // ...
+
+       $stub->doSomething();
+       $stub->doSomethingElse();
+   }
+
+A sealed test stub's method that has not been configured, such as ``doSomethingElse()`` in the example above, can be called.
+
+Unless the return value generator is disabled, a sealed test stub's method for which no behaviour has been configured (returning a value or throwing an exception) will return the minimum viable value compatible with the method's return type declaration.
+
+Sealed Mock Objects
+^^^^^^^^^^^^^^^^^^^
+
+This example shows how a mock object is sealed using the ``seal()`` method:
+
+.. code-block:: php
+
+   public function testDemonstratingSealedTestStubs(): void
+   {
+       $mock = $this->createMock(InterfaceName::class);
+
+       $mock
+           ->expects($this->once())
+           ->method('doSomething')
+           ->seal();
+
+       // ...
+
+       $mock->doSomething();
+       $mock->doSomethingElse();
+   }
+
+A sealed mock object's method that has not been configured, such as ``doSomethingElse()`` in the above example, is not expected to be called.
+If it is called, then the test will fail. This is equivalent to the following:
+
+.. code-block:: php
+
+   public function testDemonstratingSealedTestStubs(): void
+   {
+       $mock = $this->createMock(InterfaceName::class);
+
+       $mock
+           ->expects($this->once())
+           ->method('doSomething');
+
+       $mock
+           ->expects($this->never())
+           ->method('doSomethingElse');
+
+       // ...
+
+       $mock->doSomething();
+       $mock->doSomethingElse();
+   }
