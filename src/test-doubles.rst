@@ -12,6 +12,19 @@ Gerard Meszaros introduces the concept of test doubles in his "xUnit Test Patter
 
     When we are writing a test in which we cannot (or chose not to) use a real depended-on component (DOC), we can replace it with a Test Double. The Test Double doesn't have to behave exactly like the real DOC; it merely has to provide the same API as the real one so that the SUT thinks it is the real one!
 
+PHPUnit provides a powerful and flexible API for creating and configuring test stubs and mock objects.
+These test doubles are essential for unit testing, as they allow us to isolate the code under test from its dependencies and verify its behaviour without executing the code of the real collaborating objects.
+
+A test stub replaces a real dependency and can be configured to return predefined values or throw exceptions.
+Test stubs give us control over indirect inputs to our system under test, enabling us to force it onto specific execution paths and test different scenarios without relying on external systems or services.
+
+A mock object is a type of test stub that can be configured with expectations about how it will be called.
+Mock objects serve as observation points, enabling us to verify indirect outputs and communication between our system under test and its collaborators.
+By expecting that specific methods were called with the expected arguments, we can ensure that our code interacts correctly with its dependencies.
+
+This chapter focuses exclusively on test stubs and mock objects.
+Other types of test double, such as dummies, fakes, and spies, are beyond the scope of this documentation.
+
 **Use a test stub when:**
 
 - You need to control what a dependency returns
@@ -25,6 +38,8 @@ Gerard Meszaros introduces the concept of test doubles in his "xUnit Test Patter
 - You are testing the communication between objects
 - The number of method calls matters
 - The arguments passed to methods matter
+
+For a detailed discussion of the conceptual differences between test stubs and mock objects and when to use which, see "`Testing with(out) dependencies <https://phpunit.expert/articles/testing-with-and-without-dependencies.html?ref=phpunit>`_".
 
 
 **Example Code**
