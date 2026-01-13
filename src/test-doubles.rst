@@ -1284,3 +1284,15 @@ If it is called, then the test will fail. This is equivalent to the following:
        $mock->doSomething();
        $mock->doSomethingElse();
    }
+
+
+.. _test-doubles.mock-objects.requiring-sealed-mock-objects:
+
+Requiring sealed mock objects
+"""""""""""""""""""""""""""""
+
+The ``seal()`` method explained above provides developers with an opt-in mechanism to finalise the configuration of mock objects and prevent unexpected method calls.
+However, individual developers must remember to call this method on their mock objects for this safety feature to take effect.
+
+As projects mature and teams establish testing standards, it becomes valuable to enforce certain testing practices at the project level, rather than relying on individual developers to apply them consistently.
+This is why ``requireSealedMockObjects="true"`` can be used in PHPUnit's XML configuration file to set up a project-level policy to enforce the best practice of sealing mock objects.

@@ -26,6 +26,14 @@ option on the :ref:`command-line <textui.command-line-options>` or by setting
 PHPUnit's :ref:`XML configuration file <appendixes.configuration>`.
 
 
+.. _risky-tests.unsealed-mock-objects:
+
+Unsealed Mock Objects
+=====================
+
+By setting ``requireSealedMockObjects="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.configuration.phpunit.requireSealedMockObjects>`, you can configure PHPUnit to consider a test risky when it does not seal the mock objects it creates (see :ref:`test-doubles.mock-objects.requiring-sealed-mock-objects`).
+
+
 .. _risky-tests.unintentionally-covered-code:
 
 Unintentionally Covered Code

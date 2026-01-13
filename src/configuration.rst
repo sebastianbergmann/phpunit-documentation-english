@@ -121,6 +121,15 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether a test will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does not indicate the code it intends to cover using an attribute.
 
+.. _appendixes.configuration.phpunit.requireSealedMockObjects:
+
+The ``requireSealedMockObjects`` Attribute
+------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether a test will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does not seal the mock objects it creates (see :ref:`test-doubles.mock-objects.requiring-sealed-mock-objects`).
+
 .. _appendixes.configuration.phpunit.processIsolation:
 
 The ``processIsolation`` Attribute
