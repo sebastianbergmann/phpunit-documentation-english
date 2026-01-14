@@ -81,8 +81,7 @@ Shown below is the default output PHPUnit's test runner prints for the example s
     OK, but there were issues!
     Tests: 2, Assertions: 2, Deprecations: 2.
 
-Detailed information, for instance which issue was triggered where, is only printed when ``--display-deprecations``,
-``--display-notices``, or ``--display-warnings`` is used:
+Detailed information, for instance which issue was triggered where, is only printed when ``--display-deprecations``, ``--display-notices``, ``--display-warnings``, or ``--display-all-issues``` is used:
 
 .. parsed-literal::
 

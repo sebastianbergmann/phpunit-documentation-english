@@ -473,6 +473,10 @@ Details about Issues
 
     Display details for PHPUnit deprecations.
 
+``--display-phpunit-notices``
+
+    Display details for PHPUnit notices.
+
 ``--display-errors``
 
     Display details for errors triggered by tests.
