@@ -214,11 +214,11 @@ Selection
 
 ``--group <name>``
 
-    Only run tests from the specified list of comma-separated test groups.
+    Run only the tests from the specified group. The ``--group`` option can be used multiple times to select multiple groups for test execution.
 
 ``--exclude-group <name>``
 
-    Run all tests except for those from the specified list of comma-separated test groups.
+    Run all tests, except for tests from the specified group. The ``--exclude-group`` option can be used multiple times to exclude multiple groups from test execution.
 
 ``--covers <name>``
 
