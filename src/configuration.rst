@@ -275,6 +275,8 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that triggered a deprecation (``E_DEPRECATED`` or ``E_USER_DEPRECATED``).
 
+.. _appendixes.configuration.phpunit.failOnPhpunitDeprecation:
+
 The ``failOnPhpunitDeprecation`` Attribute
 ------------------------------------------
 
@@ -539,6 +541,8 @@ The ``displayDetailsOnTestsThatTriggerDeprecations`` Attribute
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether details on tests that triggered deprecations should be printed.
+
+.. _appendixes.configuration.phpunit.displayDetailsOnPhpunitDeprecations:
 
 The ``displayDetailsOnPhpunitDeprecations`` Attribute
 -----------------------------------------------------
