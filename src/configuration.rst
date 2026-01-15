@@ -282,6 +282,15 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but PHPUnit deprecations were triggered.
 
+.. _appendixes.configuration.phpunit.failOnPhpunitNotice:
+
+The ``failOnPhpunitNotice`` Attribute
+------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but PHPUnit notices were triggered.
+
 .. _appendixes.configuration.phpunit.failOnNotice:
 
 The ``failOnNotice`` Attribute
@@ -537,6 +546,15 @@ The ``displayDetailsOnPhpunitDeprecations`` Attribute
 Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether details on PHPUnit deprecations should be printed.
+
+.. _appendixes.configuration.phpunit.displayDetailsOnPhpunitNotices:
+
+The ``displayDetailsOnPhpunitNotices`` Attribute
+-----------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether details on PHPUnit notices should be printed.
 
 .. _appendixes.configuration.phpunit.displayDetailsOnTestsThatTriggerErrors:
 
