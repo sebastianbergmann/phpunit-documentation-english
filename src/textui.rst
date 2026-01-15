@@ -214,11 +214,11 @@ Selection
 
 ``--group <name>``
 
-    Run only the tests from the specified groups. You may provide a separate ``--group`` parameter for each group you wish to target.
+    Run only the tests from the specified group. The ``--group`` option can be used multiple times to select multiple groups for test execution.
 
 ``--exclude-group <name>``
 
-    Run all tests, excluding specific groups by providing multiple ``--exclude-group`` parameters.
+    Run all tests, except for tests from the specified group. The ``--exclude-group`` option can be used multiple times to exclude multiple groups from test execution.
 
 ``--covers <name>``
 
