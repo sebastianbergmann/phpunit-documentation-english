@@ -1169,6 +1169,110 @@ Using ``after()`` with an ID that has not been registered with ``id()`` will cau
    - Use ``withParameterSetsInAnyOrder()`` or ``withParameterSetsInOrder()`` instead
 
 
+Methods that never return
+"""""""""""""""""""""""""
+
+The ``never`` return type indicates that a function or method will never return normally. Such methods either:
+
+* Throw an exception
+* Call ``exit()`` or ``die()``
+* Enter an infinite loop
+
+When writing unit tests, mocking methods with a ``never`` return type requires special handling because the mock cannot actually "never return" as it must do something when called.
+
+When you create a mock object of an interface or extendable class that has a method with a ``never`` return type, the mock object will throw a ``NeverReturningMethodException`` when that method is called.
+This exception simulates the behavior of a method that never returns normally.
+
+Consider the following scenario where we have an ``ErrorHandler`` interface with a ``handle()`` method that has a ``never`` return type:
+
+.. literalinclude:: examples/test-doubles/src/never/ErrorHandler.php
+   :caption: An interface that defines an error handler that never returns
+   :language: php
+
+.. literalinclude:: examples/test-doubles/src/never/ErrorHandlerImplementation.php
+   :caption: An implementation of the error handler interface
+   :language: php
+
+.. literalinclude:: examples/test-doubles/src/never/ServiceImplementation.php
+   :caption: A class that depends on the error handler
+   :language: php
+
+We want to test that, when an exception is thrown during the execution of ``ServiceImplementation::doSomething()``, the ``ErrorHandler::handle()`` method is called with an exception object of the expected type. Here is how to do that:
+
+**1. Creating the mock object**
+
+.. code-block:: php
+
+   $errorHandler = $this->createMock(ErrorHandler::class);
+
+This line creates a mock object that implements the ``ErrorHandler`` interface.
+The mock object will have all the methods defined in the interface, including the ``handle()`` method with its ``never`` return type.
+
+**2. Configuring the mock object**
+
+.. code-block:: php
+
+   $errorHandler
+       ->expects($this->once())
+       ->method('handle')
+       ->with($this->isInstanceOf(Exception::class))
+       ->seal();
+
+This fluent chain configures the mock object's behavior and expectations:
+
+* ``->expects($this->once())``: Sets up an expectation that the ``handle()`` method will be called exactly once during the test. If the method is not called, or called more than once, the test will fail.
+* ``->method('handle')``: Specifies that we are configuring the ``handle()`` method of the mock object.
+* ``->with($this->isInstanceOf(Exception::class))``: Specifies that the ``handle()`` method must be called with an argument that is an instance of the ``Exception`` class. This constraint validates the argument passed to the method.
+* ``->seal()``: Finalizes the mock configuration and prevents any further configuration changes.
+
+**3. Creating the system under test**
+
+.. code-block:: php
+
+   $service = new ServiceImplementation($errorHandler);
+
+This line creates an instance of the ``ServiceImplementation`` class, injecting the mock object we created and configured to replace the ``ErrorHandler`` dependency.
+This is standard dependency injection, allowing us to test ``ServiceImplementation`` in isolation from its dependency ``ErrorHandler``.
+
+**4. Configuring the expectation that the mocked method never returns**
+
+.. code-block:: php
+
+   $this->expectException(NeverReturningMethodException::class);
+
+This line tells PHPUnit to expect that a ``NeverReturningMethodException`` will be thrown during the test.
+This is the key to testing methods with ``never`` return type:
+
+* When ``$service->doSomething()`` is called, it will internally call ``$this->errorHandler->handle($e)``
+* Since ``handle()`` has a `never` return type, PHPUnit throws a ``NeverReturningMethodException``
+* By expecting this exception, we document our assumption that the ``handle()`` method never returns
+
+**5. Executing the system under test**
+
+.. code-block:: php
+
+   $service->doSomething();
+
+This line calls the method we want to test. The execution flow is:
+
+1. ``doSomething()`` is called on the service
+2. Inside ``doSomething()``, an exception is thrown and caught
+3. The caught exception is passed to ``$this->errorHandler->handle($e)``
+4. The mock object's ``handle()`` method is invoked
+5. PHPUnit verifies the expectation (called once with an ``Exception`` instance)
+6. PHPUnit throws ``NeverReturningMethodException`` because the method has a ``never`` return type
+7. The test passes because we expected this exception
+
+Always use ``$this->expectException(NeverReturningMethodException::class)`` when testing code that calls a mocked method with ``never`` return type.
+
+**The exception replaces the "never return" behavior:** In real code, a method with ``never`` return type would call ``exit()``, throw an exception, or loop forever.
+In tests, ``NeverReturningMethodException`` simulates this by providing a controlled way to exit the method.
+
+**Verification still works:** Even though an exception is thrown, PHPUnit still verifies that your expectations (like ``expects($this->once())`` and ``with()``) are met.
+
+This pattern allows you to effectively test code that depends on methods that never return normally, while still being able to verify that those methods are called with the correct arguments.
+
+
 Set-Hooked Properties
 """""""""""""""""""""
 
