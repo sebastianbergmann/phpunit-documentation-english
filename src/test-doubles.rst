@@ -1172,9 +1172,7 @@ Using ``after()`` with an ID that has not been registered with ``id()`` will cau
 Set-Hooked Properties
 """""""""""""""""""""
 
-PHP 8.4 introduced the language feature of `set-hooked properties <https://www.php.net/releases/8.4/en.php#property_hooks>`_.
-
-The example below shows an interface that declares a set-hooked property:
+The example below shows an interface that declares a `set-hooked property <https://www.php.net/manual/en/language.oop5.property-hooks.php>`_:
 
 .. literalinclude:: examples/test-doubles/src/InterfaceWithSetHookedProperty.php
    :caption: Interface that declares a set-hooked property
