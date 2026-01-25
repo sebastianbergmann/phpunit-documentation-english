@@ -1,22 +1,18 @@
 ./tools/phpunit tests/ContainsOnlyTest.php
-PHPUnit 12.5.2 by Sebastian Bergmann and contributors.
+PHPUnit 13.0-g21408c1e35 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.0
+Runtime:       PHP 8.5.2
 
-F                                                                   1 / 1 (100%)
+E                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 15.89 MB
+Time: 00:00, Memory: 15.94 MB
 
-There was 1 failure:
+There was 1 error:
 
 1) ContainsOnlyTest::testFailure
-Failed asserting that Array &0 [
-    0 => '1',
-    1 => '2',
-    2 => 3,
-] contains only values of type "string".
+Error: Call to undefined method ContainsOnlyTest::assertContainsOnly()
 
 /path/to/tests/ContainsOnlyTest.php:8
 
-FAILURES!
-Tests: 1, Assertions: 1, Failures: 1, PHPUnit Deprecations: 1.
+ERRORS!
+Tests: 1, Assertions: 0, Errors: 1.
