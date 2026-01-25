@@ -1,0 +1,29 @@
+./tools/phpunit tests/ArraysHaveIdenticalValuesIgnoringOrderTest.php
+PHPUnit 13.0-g21408c1e35 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.2
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00, Memory: 15.94 MB
+
+There was 1 failure:
+
+1) ArraysHaveIdenticalValuesIgnoringOrderTest::testFailure
+Failed asserting that two arrays are identical while ignoring keys and order.
+--- Expected
++++ Actual
+@@ @@
+ Array &0 [
+-    0 => 1,
+-    1 => 2,
+-    2 => 3,
++    0 => 3,
++    1 => '2',
++    2 => 1,
+ ]
+
+/path/to/tests/ArraysHaveIdenticalValuesIgnoringOrderTest.php:8
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.

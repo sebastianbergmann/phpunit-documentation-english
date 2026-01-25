@@ -117,6 +117,74 @@ Running the test shown above yields the output shown below:
 
 Identity is checked using the ``===`` operator.
 
+.. _appendixes.assertions.assertArraysAreIdentical:
+
+``assertArraysAreIdentical()``
+------------------------------
+
+``assertArraysAreIdentical(array $expected, array $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$expected`` and ``$actual`` are not identical. The arrays must have the same key-value pairs in the same order. Keys and values are compared using strict comparison (``===``).
+
+.. literalinclude:: examples/assertions/ArraysAreIdenticalTest.php
+   :caption: Usage of assertArraysAreIdentical()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArraysAreIdenticalTest.php.out
+
+.. _appendixes.assertions.assertArraysAreIdenticalIgnoringOrder:
+
+``assertArraysAreIdenticalIgnoringOrder()``
+-------------------------------------------
+
+``assertArraysAreIdenticalIgnoringOrder(array $expected, array $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$expected`` and ``$actual`` are not identical while ignoring the order of elements. The arrays must have the same key-value pairs, but the order of elements does not matter. Keys and values are compared using strict comparison (``===``).
+
+.. literalinclude:: examples/assertions/ArraysAreIdenticalIgnoringOrderTest.php
+   :caption: Usage of assertArraysAreIdenticalIgnoringOrder()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArraysAreIdenticalIgnoringOrderTest.php.out
+
+.. _appendixes.assertions.assertArraysHaveIdenticalValues:
+
+``assertArraysHaveIdenticalValues()``
+-------------------------------------
+
+``assertArraysHaveIdenticalValues(array $expected, array $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$expected`` and ``$actual`` do not have identical values. Array keys are ignored; only values are compared in order. Values are compared using strict comparison (``===``).
+
+.. literalinclude:: examples/assertions/ArraysHaveIdenticalValuesTest.php
+   :caption: Usage of assertArraysHaveIdenticalValues()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArraysHaveIdenticalValuesTest.php.out
+
+.. _appendixes.assertions.assertArraysHaveIdenticalValuesIgnoringOrder:
+
+``assertArraysHaveIdenticalValuesIgnoringOrder()``
+--------------------------------------------------
+
+``assertArraysHaveIdenticalValuesIgnoringOrder(array $expected, array $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$expected`` and ``$actual`` do not have identical values while ignoring the order of elements. Array keys are ignored; only values are compared, and the order of values does not matter. Values are compared using strict comparison (``===``).
+
+.. literalinclude:: examples/assertions/ArraysHaveIdenticalValuesIgnoringOrderTest.php
+   :caption: Usage of assertArraysHaveIdenticalValuesIgnoringOrder()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArraysHaveIdenticalValuesIgnoringOrderTest.php.out
+
 .. _appendixes.assertions.assertArrayIsIdenticalToArrayOnlyConsideringListOfKeys:
 
 ``assertArrayIsIdenticalToArrayOnlyConsideringListOfKeys()``
@@ -346,6 +414,75 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/FileEqualsTest.php.out
+
+.. _appendixes.assertions.assertArraysAreEqual:
+
+``assertArraysAreEqual()``
+--------------------------
+
+``assertArraysAreEqual(array $expected, array $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$expected`` and ``$actual`` are not equal. The arrays must have the same key-value pairs in the same order. Keys and values are compared using loose comparison (``==``).
+
+.. literalinclude:: examples/assertions/ArraysAreEqualTest.php
+   :caption: Usage of assertArraysAreEqual()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArraysAreEqualTest.php.out
+
+.. _appendixes.assertions.assertArraysAreEqualIgnoringOrder:
+
+``assertArraysAreEqualIgnoringOrder()``
+---------------------------------------
+
+``assertArraysAreEqualIgnoringOrder(array $expected, array $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$expected`` and ``$actual`` are not equal while ignoring the order of elements. The arrays must have the same key-value pairs, but the order of elements does not matter. Keys and values are compared using loose comparison (``==``).
+
+.. literalinclude:: examples/assertions/ArraysAreEqualIgnoringOrderTest.php
+   :caption: Usage of assertArraysAreEqualIgnoringOrder()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArraysAreEqualIgnoringOrderTest.php.out
+
+.. _appendixes.assertions.assertArraysHaveEqualValues:
+
+``assertArraysHaveEqualValues()``
+---------------------------------
+
+``assertArraysHaveEqualValues(array $expected, array $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$expected`` and ``$actual`` do not have equal values. Array keys are ignored; only values are compared in order. Values are compared using loose comparison (``==``).
+
+.. literalinclude:: examples/assertions/ArraysHaveEqualValuesTest.php
+   :caption: Usage of assertArraysHaveEqualValues()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArraysHaveEqualValuesTest.php.out
+
+.. _appendixes.assertions.assertArraysHaveEqualValuesIgnoringOrder:
+
+``assertArraysHaveEqualValuesIgnoringOrder()``
+----------------------------------------------
+
+``assertArraysHaveEqualValuesIgnoringOrder(array $expected, array $actual[, string $message])``
+
+Reports an error identified by ``$message`` if ``$expected`` and ``$actual`` do not have equal values while ignoring the order of elements. Array keys are ignored; only values are compared, and the order of values does not matter. Values are compared using loose comparison (``==``).
+
+.. literalinclude:: examples/assertions/ArraysHaveEqualValuesIgnoringOrderTest.php
+   :caption: Usage of assertArraysHaveEqualValuesIgnoringOrder()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/ArraysHaveEqualValuesIgnoringOrderTest.php.out
+
 
 .. _appendixes.assertions.assertArrayIsEqualToArrayOnlyConsideringListOfKeys:
 
