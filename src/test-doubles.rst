@@ -6,26 +6,250 @@
 Test Doubles
 ************
 
-Gerard Meszaros introduces the concept of Test Doubles in
-his "xUnit Test Patterns" book like so:
+Gerard Meszaros introduces the concept of test doubles in his "xUnit Test Patterns" book like so:
 
-    Sometimes it is just plain hard to test the system under test (SUT)
-    because it depends on other components that cannot be used in the test
-    environment. This could be because they aren't available, they will not
-    return the results needed for the test or because executing them would
-    have undesirable side effects. In other cases, our test strategy requires
-    us to have more control or visibility of the internal behavior of the SUT.
+    Sometimes it is just plain hard to test the system under test (SUT) because it depends on other components that cannot be used in the test environment. This could be because they aren't available, they will not return the results needed for the test or because executing them would have undesirable side effects. In other cases, our test strategy requires us to have more control or visibility of the internal behavior of the SUT.
 
-    When we are writing a test in which we cannot (or chose not to) use a real
-    depended-on component (DOC), we can replace it with a Test Double. The
-    Test Double doesn't have to behave exactly like the real DOC; it merely
-    has to provide the same API as the real one so that the SUT thinks it is
-    the real one!
+    When we are writing a test in which we cannot (or chose not to) use a real depended-on component (DOC), we can replace it with a Test Double. The Test Double doesn't have to behave exactly like the real DOC; it merely has to provide the same API as the real one so that the SUT thinks it is the real one!
 
-The ``createStub(string $type)`` and ``createMock(string $type)`` methods can be used
-in a test to automatically generate an object that can act as a test double for the
-specified original type (interface or extendable class). This test double object can be used
-in every context where an object of the original type is expected or required.
+PHPUnit provides a powerful and flexible API for creating and configuring test stubs and mock objects.
+These test doubles are essential for unit testing, as they allow us to isolate the code under test from its dependencies and verify its behaviour without executing the code of the real collaborating objects.
+
+A test stub replaces a real dependency and can be configured to return predefined values or throw exceptions.
+Test stubs give us control over indirect inputs to our system under test, enabling us to force it onto specific execution paths and test different scenarios without relying on external systems or services.
+
+A mock object is a type of test stub that can be configured with expectations about how it will be called.
+Mock objects serve as observation points, enabling us to verify indirect outputs and communication between our system under test and its collaborators.
+By expecting that specific methods were called with the expected arguments, we can ensure that our code interacts correctly with its dependencies.
+
+This chapter focuses exclusively on test stubs and mock objects.
+Other types of test double, such as dummies, fakes, and spies, are beyond the scope of this documentation.
+
+**Use a test stub when:**
+
+- You need to control what a dependency returns
+- You are testing the logic of the SUT
+- The interactions with the dependency do not matter
+- You need to isolate the SUT from slow or unavailable dependencies
+
+**Use a mock object when:**
+
+- You need to verify that methods are called
+- You are testing the communication between objects
+- The number of method calls matters
+- The arguments passed to methods matter
+
+For a detailed discussion of the conceptual differences between test stubs and mock objects and when to use which, see "`Testing with(out) dependencies <https://phpunit.expert/articles/testing-with-and-without-dependencies.html?ref=phpunit>`_".
+
+
+**Example Code**
+
+Some of the examples in this chapter use an interface named ``Database`` and a class namedcalled ``Service``.
+These are introduced now so that we are familiar with them when they appear in the examples.
+
+.. literalinclude:: examples/test-doubles/src/Database.php
+   :caption: An interface that defines a contract for database operations
+   :language: php
+
+**Explanation:**
+
+* This interface defines a contract for database operations
+* ``execute()`` is used for write operations (``INSERT``, ``UPDATE``, ``DELETE``), returns ``true`` on success, and throws an exception of failure
+* ``query()`` is used for read operations (``SELECT``), returns an array of results on success, and throws an exception of failure
+* Both methods accept SQL strings and variadic arguments for prepared statements
+
+.. literalinclude:: examples/test-doubles/src/Service.php
+   :caption: A class that depends on ``Database``
+   :language: php
+
+**Explanation:**
+
+* ``Service`` is a ``final readonly`` class that depends on ``Database``
+* The ``Database`` dependency is injected through the constructor, which makes the class testable in isolation from both the dependency and the database server
+* ``doSomething()`` queries the database and returns ``true`` if rows are found, ``false`` otherwise
+* ``doSomethingElse()`` executes an ``INSERT`` statement to add data to the database
+
+
+.. _test-doubles.test-stubs:
+
+Test Stubs
+==========
+
+What are test stubs?
+--------------------
+
+A **test stub** provides a replacement for a real collaborating object (a dependency) that your code interacts with.
+Test stubs allow you to test code in isolation without executing the actual implementation of the dependency.
+
+A test stub is a replacement for a real component on which the System Under Test (SUT) depends.
+This gives the test a **control point** for the **indirect inputs** of the SUT.
+By controlling these indirect inputs, you can force the SUT into specific execution paths that you want to verify in your test.
+
+**Use test stubs when you want to:**
+
+* Decouple your code from slow or unavailable dependencies (databases, external APIs)
+* Provide specific return values to test different code paths
+* Test error handling by simulating failures
+* Focus on testing the logic of the SUT rather than its dependencies
+
+
+Common use cases
+----------------
+
+Configuring return values
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If your code depends on a service that returns data, you can use a test stub to control the results of that service without actually calling it.
+
+.. literalinclude:: examples/test-doubles/src/ServiceTest_1.php
+   :caption: We use a test stub to provide indirect input for the object we want to test
+   :language: php
+
+**1. Creating the test stub**
+
+.. code-block:: php
+
+   $database = $this->createStub(Database::class);
+
+* **What**: Creates a test stub that implements the ``Database`` interface
+* **How**: ``createStub()`` generates a test stub where all methods return default values unless configured otherwise
+* **Why**: We need an object that "looks like" ``Database`` to test ``Service`` in isolation from a real database connection
+
+Test stubs are ideal when we only need to control **what the dependency returns** (indirect input).
+
+**2. Configuring the test stub**
+
+.. code-block:: php
+
+   $database
+       ->method('query')
+       ->willReturn([['foo' => 'bar']]);
+
+* **What**: Configures the test stub to return a specific value when ``query()`` is called
+* **How**:
+
+  * ``method('query')`` specifies which method to configure
+  * ``willReturn([['foo' => 'bar']])`` sets the return value to an array containing one row
+* **Why**: This simulates the scenario where the database query finds matching rows
+
+**3. Creating the system under test**
+
+.. code-block:: php
+
+   $service = new Service($database);
+
+* **What**: Instantiates the ``Service`` class with the test stub as its dependency
+* **How**: The test stub is passed to the constructor, satisfying the ``Database`` type requirement
+* **Why**: This is the object we are actually testing and by injecting the test stub, we control the database behavior
+
+**4. Asserting the expected behavior**
+
+.. code-block:: php
+
+   $this->assertTrue($service->doSomething());
+
+* **What**: Verifies that ``doSomething()`` returns ``true``
+* **How**: ``assertTrue()`` fails the test if the value is not exactly ``true``
+* **Why**: When the query returns rows, ``doSomething()`` should return `true`
+
+**Key Concept: Indirect Input**
+
+**Indirect input** occurs when the system under test receives data from a dependency rather than directly from arguments passed to the tested method or function.
+In this test:
+
+1. The test cannot directly pass data to ``doSomething()`` as it takes no parameters
+2. Instead, ``doSomething()`` gets its data by calling ``$this->database->query()``
+3. The test stub provides this **indirect input** by returning ``[['foo' => 'bar']]``
+
+
+Configuring exceptions
+^^^^^^^^^^^^^^^^^^^^^^
+
+You can configure test stubs to throw exceptions, enabling you to test how your code handles errors.
+
+.. literalinclude:: examples/test-doubles/src/ServiceTest_2.php
+   :caption: We use a test stub that throws an exception to test an error path
+   :language: php
+
+**1. Creating the test stub**
+
+.. code-block:: php
+
+   $database = $this->createStub(Database::class);
+
+* **What**: Creates a test stub that implements the ``Database`` interface
+* **How**: ``createStub()`` generates a test stub where all methods return default values unless configured otherwise
+* **Why**: We need an object that "looks like" ``Database`` to test ``Service`` in isolation from a real database connection
+
+Test stubs are ideal when we only need to control **what the dependency returns** (indirect input).
+
+**2. Configuring the test stub**
+
+.. code-block:: php
+
+   $database
+       ->method('query')
+       ->willThrowException(new DatabaseException);
+
+* **What**: Configures the test stub to throw a specific exception when ``query()`` is called
+* **How**:
+
+  * ``method('query')`` specifies which method to configure
+  * ``willThrowException(new DatabaseException)`` sets the exception to be thrown
+* **Why**: This simulates the scenario where an error occurs while querying the database
+
+**3. Configuring the expectation**
+
+.. code-block:: php
+
+   $this->expectException(ServiceException::class);
+
+* **What**: Configures the test to only be successful if a ``ServiceException`` is thrown
+* **How**: We pass the name of the exception we expect to ``expectException()``
+* **Why**: We want to test that a ``DatabaseException`` thrown by a ``Database`` implementation results in a ``ServiceException`` being thrown
+
+**4. Creating the system under test**
+
+.. code-block:: php
+
+   $service = new Service($database);
+
+* **What**: Instantiates the ``Service`` class with the test stub as its dependency
+* **How**: The test stub is passed to the constructor, satisfying the ``Database`` type requirement
+* **Why**: This is the object we are actually testing and by injecting the test stub, we control the database behavior
+
+**4. Invoking what we want to test**
+
+.. code-block:: php
+
+   $service->doSomething();
+
+
+Reference
+---------
+
+Creating test stubs
+^^^^^^^^^^^^^^^^^^^
+
+``createStub()``
+""""""""""""""""
+
+Creates a test stub for the specified interface (or extendable class).
+
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+All methods of the original type are replaced with an implementation that returns an automatically generated value that satisfies the method's return type declaration without calling the original method.
+These methods are referred to as "doubled methods" or "stubbed methods".
+
+Doubled methods can be configured using the methods described below.
+
+
+.. admonition:: Limitation: final classes
+
+   Please note that ``final`` classes cannot be doubled.
+
 
 .. admonition:: Limitation: final, private, and static methods
 
@@ -34,277 +258,268 @@ in every context where an object of the original type is expected or required.
    retain their original behavior except for ``static`` methods which will
    be replaced by a method throwing an exception.
 
+
 .. admonition:: Limitation: Enumerations
 
    Enumerations (``enum``) are ``final`` classes and therefore cannot be
    doubled.
 
-.. admonition:: Favour doubling interfaces over doubling classes
-
-   Not only because of the limitations mentioned above, but also to improve
-   your software design, favour the doubling of interfaces over the doubling
-   of classes.
-
-
-.. _test-doubles.test-stubs:
-
-Test Stubs
-==========
-
-The practice of replacing an object with a test double that (optionally) returns
-configured return values is referred to as *stubbing*. You can use a *test stub* to
-"replace a real component on which the SUT depends so that the test has a control
-point for the indirect inputs of the SUT. This allows the test to force the SUT
-down paths it might not otherwise execute" (Gerard Meszaros).
-
-
-Creating Test Stubs
--------------------
-
-``createStub()``
-^^^^^^^^^^^^^^^^
-
-The ``createStub(string $type)`` method returns a test stub for the specified interface or extendable class.
-
-All methods of the original type are replaced with an implementation that returns an automatically
-generated value that satisfies the method's return type declaration without calling the original method.
-These methods are referred to as "doubled methods".
-
-The behaviour of doubled methods can be configured using methods such as ``willReturn()`` or
-``willThrowException()``. These methods are explained later.
-
 
 ``createStubForIntersectionOfInterfaces()``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""
 
-The ``createStubForIntersectionOfInterfaces(array $interfaces)`` method can be used to
-create a test stub for an intersection of interfaces based on a list of interface names.
+Creates a test stub for an intersection of interfaces.
 
-Consider you have the following interfaces ``X`` and ``Y``:
+.. code-block:: php
 
-.. literalinclude:: examples/test-doubles/src/X.php
-   :caption: An interface named X
-   :language: php
+   $stub = $this->createStubForIntersectionOfInterfaces(
+       [InterfaceA::class, InterfaceB::class]
+   );
 
-.. literalinclude:: examples/test-doubles/src/Y.php
-   :caption: An interface named Y
-   :language: php
-
-And you have a class that you want to test named ``Z``:
-
-.. literalinclude:: examples/test-doubles/src/Z.php
-   :caption: A class named Z
-   :language: php
-
-To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
-use the ``createStubForIntersectionOfInterfaces(array $interfaces)`` method to create
-a test stub that satisfies ``X&Y`` like so:
-
-.. literalinclude:: examples/test-doubles/StubForIntersectionExampleTest.php
-   :caption: Using createStubForIntersectionOfInterfaces() to create a test stub for an intersection type
-   :language: php
+This is useful when you need to replace an object that implements multiple interfaces.
 
 
 ``createConfiguredStub()``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""
 
-The ``createConfiguredStub()`` method is a convenience wrapper around ``createStub()`` that allows configuring
-return values using an associative array (``['methodName' => <return value>]``):
+Creates a test stub with methods already configured to return specific values.
 
-.. literalinclude:: examples/test-doubles/CreateConfiguredStubExampleTest.php
-   :caption: Using createConfiguredStub() to create a test stub and configure return values
-   :language: php
+.. code-block:: php
+
+   $stub = $this->createConfiguredStub(
+       InterfaceName::class,
+       [
+           'methodOne' => 'return value one',
+           'methodTwo' => 'return value two',
+       ]
+   );
+
+   // $stub->methodOne() will return "return value one"
+   // $stub->methodTwo() will return "return value two"
+
+This is a convenience method for simple cases.
 
 
 ``getStubBuilder()``
-^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""
 
-When the defaults used by ``createStub()`` to generate the test stub do not match your needs then you can use the
-``getStubBuilder($type)`` method to customize the test stub generation using a fluent interface.
+The ``getStubBuilder()`` method provides a fluent API for creating test stubs.
+It should only be used for **edge cases** that are not supported by the simpler ``createStub()`` or ``createStubForIntersectionOfInterfaces()`` methods.
 
-The methods provided by the Stub Builder are documented below.
+Use ``getStubBuilder()`` only when you need advanced configuration such as:
 
+* Specifying a custom class name for the test stub
+* Enabling the original constructor with custom arguments
+* Creating partial test stubs (only doubling specific methods)
+* Controlling clone behavior
+* Disabling automatic return value generation
 
-``setStubClassName()``
-""""""""""""""""""""""
+The ``getStubBuilder(string $type)`` method returns an object that can be used to configure and subsequently perform the creation of a test stub for the specified interface (or extendable class).
 
-``setStubClassName(string $name)`` can be called to specify the class name of the generated class for the test stub.
+The object returned by ``getStubBuilder()`` has, among other methods, a method named ``getStub()``.
+This creates and returns the configured test stub.
+This method must be called last in the fluent API's method call chain.
 
-``setConstructorArgs()``
-""""""""""""""""""""""""
-
-``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
-
-
-``disableOriginalConstructor()``
-""""""""""""""""""""""""""""""""
-
-``disableOriginalConstructor()`` can be used to disable the call to the constructor of the original class.
-
-``enableOriginalConstructor()`` can be used to make it explicit that the constructor of the original class should be called (which is the default behaviour).
+The following methods can be used on the object returned by ``getStubBuilder()`` to configure the creation of the test stub:
 
 
-``disableOriginalClone()``
-""""""""""""""""""""""""""
+**setStubClassName(string $name)**
 
-``disableOriginalClone()`` can be used to disable the call to the clone constructor of the original class.
+Specifies a custom class name for the generated test stub class.
 
-``enableOriginalClone()`` can be used to make it explicit that the clone constructor of the original class should be called (which is the default behaviour).
+.. admonition:: Note
 
-
-``disableAutoReturnValueGeneration()``
-""""""""""""""""""""""""""""""""""""""
-
-``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
-
-``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
+   The specified class name must not already exist.
 
 
-``onlyMethods()``
-"""""""""""""""""
+**onlyMethods(array $methods)**
 
-``onlyMethods(array $methods)`` can be called on the Stub Builder object to specify the methods that are to be replaced with a configurable test stub. The behavior of the other methods is not changed. The specified methods must exist in the class that is stubbed.
+Specifies which methods should be doubled (stubbed).
+Methods not in this list will retain their original implementation, creating a **partial double**.
 
+.. admonition:: Note
 
-``getStub()``
-"""""""""""""
-
-``getStub()`` generates and returns a test stub based on the configuration made using previous methods calls. The call to ``getStub()`` must be the last in the method chain.
+   All specified methods must exist in the class.
 
 
-Configuring Test Stubs
-----------------------
+**setConstructorArgs(array $arguments)**
+
+Specifies the arguments to pass to the constructor when ``enableOriginalConstructor()`` (see below) is used.
+
+
+**disableOriginalConstructor()**
+
+This disables the invocation of the original constructor.
+This is useful when you want to create a partial double and the constructor either has side effects or requires dependencies that you do not want to provide.
+
+.. admonition:: Note
+
+   ``createStub()``, ``createConfiguredStub()``, ``createMock()``, and ``createConfiguredMock()`` create test doubles without invoking the original constructor when they are used to create a test double for an extendable class.
+
+
+**enableOriginalConstructor()**
+
+Enables the invocation of the original constructor. Use this with ``setConstructorArgs()`` (see above) to pass required arguments.
+
+.. admonition:: Note
+
+   This is the default behaviour.
+   The ``enableOriginalConstructor()`` method only exists in case you want to explicitly indicate in your test code that you are relying on this behaviour.
+
+
+**disableOriginalClone()**
+
+Disables the invocation of the original ``__clone()`` method when the test stub is cloned.
+
+.. admonition:: Note
+
+   The original ``__clone()`` method is not called for test doubles for extendable classes created by ``createStub()``, ``createConfiguredStub()``, ``createMock()``, and ``createConfiguredMock()``.
+
+
+**enableOriginalClone()**
+
+Enables the invocation of the original ``__clone()`` method when the test stub is cloned.
+
+.. admonition:: Note
+
+   This is the default behaviour.
+   The ``enableOriginalClone()`` method only exists in case you want to explicitly indicate in your test code that you are relying on this behaviour.
+
+
+**enableAutoReturnValueGeneration()**
+
+Enables automatic generation of return values for doubled methods that do not have explicit return value configuration.
+
+.. admonition:: Note
+
+   This is the default behaviour.
+   The ``enableAutoReturnValueGeneration()`` method only exists in case you want to explicitly indicate in your test code that you are relying on this behaviour.
+
+
+**disableAutoReturnValueGeneration()**
+
+Disables automatic generation of return values.
+When disabled, stubbed methods without explicit configuration will return ``null`` or throw an exception depending on the declared return type.
+
+
+
+
+
+Configuring return values
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``willReturn()``
-^^^^^^^^^^^^^^^^
+""""""""""""""""
 
-Using the ``willReturn()`` method, for instance, you can configure a doubled method to return a
-specified value when it is called. This configured value must be compatible with the method's
-return type declaration.
+Configures a method to return a specific value.
 
-Consider that we have a class that we want to test, ``SomeClass``, which depends
-on ``Dependency``:
+.. code-block:: php
 
-.. literalinclude:: examples/test-doubles/src/SomeClass.php
-   :caption: The class we want to test
-   :language: php
+   $stub = $this->createStub(InterfaceName::class);
 
-.. literalinclude:: examples/test-doubles/src/Dependency.php
-   :caption: The dependency we want to stub
-   :language: php
+   $stub
+       ->method('doSomething')
+       ->willReturn('result');
 
-Here is a first example of how to use the ``createStub(string $type)`` method to
-create a test stub for ``Dependency`` so that we can test ``SomeClass`` without
-using a real implementation of ``Dependency``:
+   // $stub->doSomething() always returns "result"
 
-.. literalinclude:: examples/test-doubles/SomeClassTest.php
-   :caption: Stubbing a method call to return a fixed value
-   :name: test-doubles.test-stubs.examples.SomeClassTest.php
-   :language: php
+The return value must be compatible with the method's return type declaration.
 
-.. admonition:: Limitation: Methods named "method"
+``willReturn()`` can be used to configure a method to return different values on consecutive calls:
 
-   The example shown above only works when the original interface or class does not
-   declare a method named "method".
+.. code-block:: php
 
-   If the original interface or class does declare a method named "method" then
-   ``$stub->expects($this->any())->method('doSomething')->willReturn('foo');``
-   has to be used.
+   $stub = $this->createStub(InterfaceName::class);
 
-In the example shown above, we first use the ``createStub()`` method to create a test stub,
-an object that looks like an instance of ``Dependency``.
+   $stub
+       ->method('doSomething')
+       ->willReturn('first result', 'second result');
 
-We then use the `Fluent Interface <http://martinfowler.com/bliki/FluentInterface.html>`_
-that PHPUnit provides to specify the behavior for the test stub.
+   // $stub->doSomething() returns "first result" when it is invoked for the first time
+   // $stub->doSomething() returns "second result" when it is invoked for the second time
+   // $stub->doSomething() will trigger an error when it is invoked more than twice
 
-"Behind the scenes", PHPUnit automatically generates a new PHP class that implements
-the desired behavior when the ``createStub()`` method is used.
-
-Please note that ``createStub()`` will automatically and recursively stub return values
-based on a method's return type. Consider the example shown below:
-
-.. literalinclude:: examples/test-doubles/src/C.php
-   :caption: A method with a return type declaration
-   :language: php
-
-In the example shown above, the ``C::m()`` method has a return type declaration
-indicating that this method returns an object of type ``D``. When a test double
-for ``C`` is created and no return value is configured for ``m()`` using
-``willReturn()`` (see above), for instance, then when ``m()`` is invoked PHPUnit
-will automatically create a test double for ``D`` to be returned.
-
-Similarly, if ``m`` had a return type declaration for a scalar type then a return
-value such as ``0`` (for ``int``), ``0.0`` (for ``float``), or ``[]`` (for ``array``)
-would be generated.
-
-A list of desired return values can also be specified. Here is an example:
-
-.. literalinclude:: examples/test-doubles/OnConsecutiveCallsExampleTest.php
-   :caption: Using willReturn() to stub a method call to return a list of values in the specified order
-   :language: php
-
-
-``willThrowException()``
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Instead of returning a value, a stubbed method can also raise an exception.
-Here is an example that shows how to use ``willThrowException()`` to do this:
-
-.. literalinclude:: examples/test-doubles/ThrowExceptionExampleTest.php
-   :caption: Using willThrowException() to stub a method call to throw an exception
-   :language: php
-
-
-``willReturnArgument()``
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Sometimes you want to return one of the arguments of a method call (unchanged) as the
-result of a stubbed method call. Here is an example that shows how you can achieve this
-using ``willReturnArgument()``:
-
-.. literalinclude:: examples/test-doubles/ReturnArgumentExampleTest.php
-   :caption: Using willReturnArgument() to stub a method call to return one of the arguments
-   :language: php
-
-
-``willReturnCallback()``
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-When the stubbed method call should return a calculated value instead of a fixed one
-(see ``willReturn()``) or an (unchanged) argument (see ``willReturnArgument()``), you
-can use ``willReturnCallback()`` to have the stubbed method return the result of a callback
-function or method. Here is an example:
-
-.. literalinclude:: examples/test-doubles/ReturnCallbackExampleTest.php
-   :caption: Using willReturnCallback() to stub a method call to return a value from a callback
-   :language: php
+If a method is configured to return different values on consecutive calls, it can only be invoked a number of times equivalent to the number of configured return values.
 
 
 ``willReturnSelf()``
-^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""
 
-When testing a fluent interface, it is sometimes useful to have a stubbed method return
-a reference to the stubbed object. Here is an example that shows how you can use
-``willReturnSelf()`` to achieve this:
+Configures a method to return the test stub object itself.
 
-.. literalinclude:: examples/test-doubles/ReturnSelfExampleTest.php
-   :caption: Using willReturnSelf() to stub a method call to return a reference to the stub object
-   :language: php
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+   $stub
+       ->method('doSomething')
+       ->willReturnSelf();
+
+This is useful for testing fluent interfaces.
+
+
+``willReturnArgument()``
+""""""""""""""""""""""""
+
+Configures a method to return one of its arguments.
+
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+   $stub
+       ->method('doSomething')
+       ->willReturnArgument(0);
+
+   // $stub->doSomething('some value') returns 'some value'
+
+The argument index is zero-based.
 
 
 ``willReturnMap()``
-^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""
 
-Sometimes a stubbed method should return different values depending on a predefined list
-of arguments. Here is an example that shows how to use ``willReturnMap()`` to create a map
-that associates arguments with corresponding return values:
+Configures a method to return different values based on the arguments it receives.
 
-.. literalinclude:: examples/test-doubles/ReturnMapExampleTest.php
-   :caption: Using willReturnMap() to stub a method call to return the value from a map
-   :language: php
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+   $stub
+       ->method('doSomething')
+       ->willReturnMap([
+           ['foo', 'bar', 'baz'],
+           ['one', 'two', 'three'],
+       ]);
+
+   // $stub->doSomething('foo', 'bar') returns 'baz'
+   // $stub->doSomething('one', 'two') returns 'three'
+
+Each inner array contains the method arguments followed by the return value.
+
+
+``willReturnCallback()``
+""""""""""""""""""""""""
+
+Configures a method to return the result of a callback function.
+
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+   $stub
+       ->method('doSomething')
+       ->willReturnCallback(
+           static fn(string $input) => strtoupper($input)
+       );
+
+   // $stub->doSomething('string') returns 'STRING'
+
+The callback receives the method arguments and can implement complex logic.
+
 
 Get-Hooked Properties
-^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""
 
 PHP 8.4 introduced the language feature of `get-hooked properties <https://www.php.net/releases/8.4/en.php#property_hooks>`_.
 
@@ -320,229 +535,662 @@ The behaviour of the get-hooked property ``property`` can be configured like so:
    :caption: Test that uses a test stub of an interface with a get-hooked property
    :language: php
 
-In the example shown above, ``PropertyHook::get('property')`` to specify that we want
-to configure the behaviour of the method that is called when the property named ``property``
-is accessed for reading.
+In the example shown above, ``PropertyHook::get('property')`` to specify that we want to configure the behaviour of the method that is called when the property named ``property`` is accessed for reading.
+
+
+Configuring exceptions
+^^^^^^^^^^^^^^^^^^^^^^
+
+``willThrowException()``
+""""""""""""""""""""""""
+
+Configures a method to throw an exception instead of returning a value.
+
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+   $stub
+       ->method('doSomething')
+       ->willThrowException(new Exception);
+
+   // $stub->doSomething() throws the configured exception
+
+
+Return Value Generation
+-----------------------
+
+Please note that methods with no configured behaviour will automatically and recursively stub return values based on the return type of the method.
+Consider the example shown below:
+
+.. literalinclude:: examples/test-doubles/src/C.php
+   :caption: A method with a return type declaration
+   :language: php
+
+In the above example, the ``C::m()`` method has a return type declaration indicating that it returns an object of type ``D``.
+When a test double for ``C`` is created and no return value is configured for ``m()`` using ``willReturn()``, for example, PHPUnit will automatically create a test double for ``D`` to be returned when ``m()`` is invoked.
+
+Similarly, if ``m()`` had a return type declaration for a scalar type, a return value such as ``0`` (for ``int``), ``0.0`` (for ``float``), ``""`` (for ``string``), etc. would be generated.
+
+You can disable this return value generation using the ``#[DisableReturnValueGenerationForTestDoubles]`` attribute on the test case class.
+
 
 .. _test-doubles.mock-objects:
 
 Mock Objects
 ============
 
-The practice of replacing an object with a test double that verifies
-expectations, for instance asserting that a method has been called, is
-referred to as *mocking*.
+What are mock objects?
+----------------------
 
-You can use a *mock object* "as an observation point that is used to verify
-the indirect outputs of the SUT as it is exercised. Typically, the mock object
-also includes the functionality of a test stub in that it must return values to
-the SUT if it hasn't already failed the tests but the emphasis is on the
-verification of the indirect outputs. Therefore, a mock object is a lot more than
-just a test stub plus assertions; it is used in a fundamentally different way"
-(Gerard Meszaros).
+A **mock object** is a test stub that can additionally be configured with **expectations** about how it should be called.
+Mock objects allow you to verify the communication between your System Under Test and its collaborators.
+
+While a test stub provides control over **indirect inputs** (data flowing into the SUT), a mock object provides an **observation point** for **indirect outputs** (method calls from the SUT to its dependencies).
+Mock objects verify that the SUT communicates correctly with its dependencies.
+
+**Use mock objects when you want to:**
+
+* Verify that specific methods are called
+* Verify the arguments passed to methods
+* Verify the number of times methods are called
+* Test the coordination and communication between objects
+
+If you create a mock object but do not configure any expectations on it, PHPUnit will emit a notice.
+This indicates you should either add expectations or use ``createStub()`` instead.
+
+Please read "`Testing with(out) dependencies <https://phpunit.expert/articles/testing-with-and-without-dependencies.html?ref=phpunit>`_" and "`The Stub/Mock Intervention <https://phpunit.expert/articles/the-stub-mock-intervention.html?ref=phpunit>`_" for some background on why this distinction between test stubs and mock objects is critical.
 
 
-Creating Mock Objects
----------------------
+Common use cases
+----------------
 
-.. admonition:: Note
+Using a mock object for testing direct output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    Mock Objects cannot be created in a data provider method.
+Use a mock object to verify that actions occur when your code triggers them in its dependencies.
+
+.. literalinclude:: examples/test-doubles/src/ServiceTest_3.php
+   :caption: We use a test stub to provide indirect input for the object we want to test
+   :language: php
+
+**1. Creating the mock object**
+
+.. code-block:: php
+
+   $database = $this->createMock(Database::class);
+
+* **What**: Creates a mock object that implements the ``Database`` interface
+* **How**: ``createMock()`` generates a mock object that can verify method calls and their arguments
+* **Why**: We need to verify that ``Service`` correctly calls the database's ``execute()`` method
+
+Mock objects are ideal when we need to verify **how the system under test interacts with its dependencies** (indirect output).
+
+**2. Setting up expectations**
+
+.. code-block:: php
+
+   $database
+       ->expects($this->once())
+       ->method('execute')
+       ->with(
+           'INSERT INTO bar (foo, baz) VALUES (?, ?);',
+           'value',
+           'another value',
+       );
+
+* **What**: Configures the mock object to expect a specific method call with specific arguments
+* **How**:
+
+  * ``expects($this->once())`` - The method must be called exactly once; the test fails if called zero times or more than once
+  * ``method('execute')`` - Specifies which method should be called
+  * `with(...)` - Specifies the arguments that must be passed; the test fails if different arguments are used
+* **Why**: This is the core of mock-based testing. We verify that ``doSomethingElse()`` sends the correct SQL and parameters to the ``Database`` object
+
+**3. Creating the system under test**
+
+.. code-block:: php
+
+   $service = new Service($database);
+
+* **What**: Instantiates the ``Service`` class with the mock object as its dependency
+* **How**: The mock object is passed to the constructor, satisfying the ``Database`` type requirement
+* **Why**: This is the object we are actually testing and by injecting the mock object, we can verify the communication between ``Service`` and ``Database``
+
+**4. Executing the system under test**
+
+.. code-block:: php
+
+   $service->doSomethingElse();
+
+* **What**: Calls the method we want to test
+
+When the test method completes, PHPUnit automatically verifies that all expectations set on the mock object were met.
+
+**Key Concept: Indirect Output**
+
+**Indirect output** occurs when the system under test sends data to a dependency rather than returning it directly.
+In this test:
+
+1. ``doSomethingElse()`` returns nothing (``void``), there is no direct output to assert
+2. Instead, the method's effect is calling ``$this->database->execute()`` with specific arguments
+3. The mock object captures this **indirect output** and verifies it matches our expectations
+
+
+Reference
+---------
+
+Creating mock objects
+^^^^^^^^^^^^^^^^^^^^^
 
 ``createMock()``
-^^^^^^^^^^^^^^^^
+""""""""""""""""
 
-The ``createMock(string $type)`` method returns a mock object for the specified interface or extendable class.
+Creates a mock object for the specified interface (or extendable class).
 
-All methods of the original type are replaced with an implementation that returns an automatically
-generated value that satisfies the method's return type declaration without calling the original method.
-These methods are referred to as "doubled methods".
+.. code-block:: php
 
-The behaviour of doubled methods can be configured using methods such as ``willReturn()`` or
-``willThrowException()``. These methods are explained in the section on Test Stubs above.
+   $mock = $this->createMock(InterfaceName::class);
 
-Expectations for invocations of doubled methods ("method must be called with specified arguments",
-"method must not be called", etc.) can be configured using the mock object's ``expects()`` method.
+All methods can be configured with return values and expectations.
 
-.. admonition:: Note
 
-    Since PHPUnit 12.5, a notice is emitted when no expectations are configured for a mock object.
-    The ``AllowMockObjectsWithoutExpectations`` attribute can be used to opt out of the check that emits this notice.
+.. admonition:: Limitation: final classes
+
+   Please note that ``final`` classes cannot be doubled.
+
+
+.. admonition:: Limitation: final, private, and static methods
+
+   Please note that ``final``, ``private``, and ``static`` methods cannot
+   be doubled. They are ignored by PHPUnit's test double functionality and
+   retain their original behavior except for ``static`` methods which will
+   be replaced by a method throwing an exception.
+
+
+.. admonition:: Limitation: Enumerations
+
+   Enumerations (``enum``) are ``final`` classes and therefore cannot be
+   doubled.
 
 
 ``createMockForIntersectionOfInterfaces()``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""
 
-The ``createMockForIntersectionOfInterfaces(array $interfaces)`` method can be used to
-create a mock object for an intersection of interfaces based on a list of interface names.
+Creates a mock object for an intersection of interfaces.
 
-Consider you have the following interfaces ``X`` and ``Y``:
+.. code-block:: php
 
-.. literalinclude:: examples/test-doubles/src/X.php
-   :caption: An interface named X
-   :language: php
+   $mock = $this->createMockForIntersectionOfInterfaces(
+       [InterfaceA::class, InterfaceB::class]
+   );
 
-.. literalinclude:: examples/test-doubles/src/Y.php
-   :caption: An interface named Y
-   :language: php
-
-And you have a class that you want to test named ``Z``:
-
-.. literalinclude:: examples/test-doubles/src/Z.php
-   :caption: A class named Z
-   :language: php
-
-To test ``Z``, we need an object that satisfies the intersection type ``X&Y``. We can
-use the ``createMockForIntersectionOfInterfaces(array $interfaces)`` method to create
-a test stub that satisfies ``X&Y`` like so:
-
-.. literalinclude:: examples/test-doubles/MockForIntersectionExampleTest.php
-   :caption: Using createMockForIntersectionOfInterfaces() to create a mock object for an intersection type
-   :language: php
+This is useful when you need to replace an object that implements multiple interfaces.
 
 
 ``createConfiguredMock()``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""
 
-The ``createConfiguredMock()`` method is a convenience wrapper around ``createMock()`` that allows configuring
-return values using an associative array (``['methodName' => <return value>]``):
+Creates a mock object with methods already configured to return specific values.
 
-.. literalinclude:: examples/test-doubles/CreateConfiguredMockExampleTest.php
-   :caption: Using createConfiguredMock() to create a mock object and configure return values
-   :language: php
+.. code-block:: php
+
+   $mock = $this->createConfiguredMock(
+       InterfaceName::class,
+       [
+           'methodOne' => 'return value one',
+           'methodTwo' => 'return value two',
+       ]
+   );
+
+   // $mock->methodOne() will return "return value one"
+   // $mock->methodTwo() will return "return value two"
+
+This is a convenience method for simple cases.
 
 
 ``getMockBuilder()``
+""""""""""""""""""""
+
+The ``getMockBuilder()`` method provides a fluent API for creating mock objects.
+It should only be used for **edge cases** that are not supported by the simpler ``createMock()`` or ``createMockForIntersectionOfInterfaces()`` methods.
+
+The documentation and recommendations for ``getStubBuilder()`` (see above) also apply to ``getMockBuilder()``, with two differences:
+
+* The method for specifying a custom class name for the generated mock object class is ``setMockClassName()``
+* The name of the method that must be called last in the fluent API's method call chain is ``getMock()``
+
+
+Configuring behavior
 ^^^^^^^^^^^^^^^^^^^^
 
-When the defaults used by ``createMock()`` to generate the mock object do not match your needs then you can use the
-``getMockBuilder($type)`` method to customize the mock object generation using a fluent interface.
-
-The methods provided by the Mock Builder are documented below.
+Mock objects support all the same methods for configuring behavior (return values, exceptions) as test stubs.
+See the test stub reference section above for detailed examples of these methods.
 
 
-``setMockClassName()``
-""""""""""""""""""""""
+Configuring expectations
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-``setMockClassName(string $name)`` can be called to specify the class name of the generated class for the mock object.
-
-
-``setConstructorArgs()``
-""""""""""""""""""""""""
-
-``setConstructorArgs(array $args)`` can be called to provide a parameter array that is passed to the original class' constructor (which is not replaced with a dummy implementation by default).
+Expectations define how many times and with what arguments a method should be called.
 
 
-``disableOriginalConstructor()``
-""""""""""""""""""""""""""""""""
+``once()``
+""""""""""
 
-``disableOriginalConstructor()`` can be used to disable the call to the constructor of the original class.
+The method must be called exactly once.
 
-``enableOriginalConstructor()`` can be used to make it explicit that the constructor of the original class should be called (which is the default behaviour).
+.. code-block:: php
 
+   $mock = $this->createMock(InterfaceName::class);
 
-``disableOriginalClone()``
-""""""""""""""""""""""""""
+   $mock
+       ->expects($this->once())
+       ->method('doSomething');
 
-``disableOriginalClone()`` can be used to disable the call to the clone constructor of the original class.
-
-``enableOriginalClone()`` can be used to make it explicit that the clone constructor of the original class should be called (which is the default behaviour).
-
-
-``disableAutoReturnValueGeneration()``
-""""""""""""""""""""""""""""""""""""""
-
-``disableAutoReturnValueGeneration()`` can be used to disable the automatic generation of return values when no return value is configured.
-
-``enableAutoReturnValueGeneration()`` can be used to make it explicit that automatic generation of return values when no return value is configured is enabled (which is the default).
+``once()`` is a convenience wrapper for ``exactly(1)``.
 
 
-``onlyMethods()``
+``exactly(int $count)``
+"""""""""""""""""""""""
+
+The method must be called exactly ``$count`` times.
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->exactly(2))
+       ->method('doSomething');
+
+
+``atLeastOnce()``
 """""""""""""""""
 
-``onlyMethods(array $methods)`` can be called on the Mock Builder object to specify the methods that are to be replaced with a configurable test double. The behavior of the other methods is not changed. The specified methods must exist in the class that is mocked.
+The method must be called at least once.
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->atLeastOnce())
+       ->method('doSomething');
+
+``atLeastOnce()`` is a convenience wrapper for ``atLeast(1)``.
 
 
-``getMock()``
-"""""""""""""
+``atLeast(int $requiredInvocations)``
+"""""""""""""""""""""""""""""""""""""
 
-``getMock()`` generates and returns a mock object based on the configuration made using previous methods calls. The call to ``getMock()`` must be the last in the method chain.
+The method must be called at least ``$requiredInvocations`` times.
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->atLeast(2))
+       ->method('doSomething');
 
 
-Here is an example that shows how to use the Mock Builder's fluent interface to configure
-the creation of a test stub. The configuration of this test double uses the same best
-practice defaults used by ``createStub()`` and ``createMock()``:
+``atMost(int $allowedInvocations)``
+"""""""""""""""""""""""""""""""""""
 
-.. literalinclude:: examples/test-doubles/MockBuilderExampleTest.php
-   :caption: Using the Mock Builder API to configure how the test double class is generated
+The method must not be called more than ``$allowedInvocations`` times.
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->atMost(2))
+       ->method('doSomething');
+
+
+``never()``
+"""""""""""
+
+The method must not be called.
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->never())
+       ->method('doSomething');
+
+``never()`` is a convenience wrapper for ``exactly(0)``.
+
+
+``with()``
+""""""""""
+
+The ``with()`` method verifies the arguments passed to the mocked method.
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->once())
+       ->method('doSomething')
+       ->with('argument 1', 'argument 2');
+
+In the example shown above, we configure the mock object to expect exactly one call to the method ``doSomething()``.
+For this single call, the arguments ``"argument 1"`` and ``argument 2"`` must be passed.
+
+The example shown above is equivalent to the following:
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->once())
+       ->method('doSomething')
+       ->with($this->equalTo('argument 1'), $this->equalTo('argument 2'));
+
+The ``with()`` method verifies the arguments passed to the mocked method using ``Constraint`` objects.
+If a value passed to ``with()`` is not a ``Constraint`` object then that value is automatically wrapped in a ``Constraint`` object that verifies equality.
+A ``Constraint`` object that verifies equality can be manually created using ``$this->equalTo()``.
+
+PHPUnit provides many constraint methods for argument verification:
+
+**Identity and Equality**
+
+* ``identicalTo()``
+* ``equalTo()``
+* ``equalToCanonicalizing()``
+* ``equalToIgnoringCase()``
+* ``equalToWithDelta()``
+* ``objectEquals()``
+
+**Cardinality**
+
+* ``isEmpty()``
+* ``countOf()``
+* ``greaterThan()``
+* ``greaterThanOrEqual()``
+* ``lessThan()``
+* ``lessThanOrEqual()``
+
+**Math**
+
+* ``isFinite()``
+* ``isInfinite()``
+* ``isNan()``
+
+**Boolean**
+
+* ``isFalse()``
+* ``isTrue()``
+
+**Operator**
+
+* ``logicalAnd()``
+* ``logicalNot()``
+* ``logicalOr()``
+* ``logicalXor()``
+
+**String**
+
+* ``isJson()``
+* ``matches()``
+* ``matchesRegularExpression()``
+* ``stringContains()``
+* ``stringEndsWith()``
+* ``stringEqualsStringIgnoringLineEndings()``
+* ``stringStartsWith()``
+
+**Traversable**
+
+* ``arrayHasKey()``
+* ``containsEqual()``
+* ``containsIdentical()``
+* ``containsOnlyArray()``
+* ``containsOnlyBool()``
+* ``containsOnlyCallable()``
+* ``containsOnlyClosedResource()``
+* ``containsOnlyFloat()``
+* ``containsOnlyInstancesOf()``
+* ``containsOnlyInt()``
+* ``containsOnlyIterable()``
+* ``containsOnlyNull()``
+* ``containsOnlyNumeric()``
+* ``containsOnlyObject()``
+* ``containsOnlyResource()``
+* ``containsOnlyScalar()``
+* ``containsOnlyString()``
+* ``isList()``
+
+**Type**
+
+* ``isArray()``
+* ``isBool()``
+* ``isCallable()``
+* ``isClosedResource()``
+* ``isFloat()``
+* ``isInstanceOf()``
+* ``isInt()``
+* ``isIterable()``
+* ``isNull()``
+* ``isNumeric()``
+* ``isObject()``
+* ``isResource()``
+* ``isScalar()``
+* ``isString()``
+
+**Filesystem**
+
+* ``directoryExists()``
+* ``fileExists()``
+* ``isReadable()``
+* ``isWritable()``
+
+
+Verifying relative call order between mock object expectations
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+The ``id()`` and ``after()`` methods allow us to define dependencies between mock expectations, ensuring that one method is called only after another method has been called first.
+
+* ``id(string $id)``: Assigns a unique identifier to an expectation
+* ``after(string $id)``: Specifies that this expectation should only be verified after the expectation with the given ID has been matched
+
+Below is a complete example demonstrating how to use ``id()`` and ``after()`` to verify that ``two()`` is called after ``one()``:
+
+.. code-block:: php
+
+   public function testTwoIsCalledAfterOne(): void
+   {
+       $mock = $this->createMock(ServiceInterface::class);
+
+       $mock
+           ->expects($this->once())
+           ->method('one')
+           ->id('first-call');
+
+       $mock
+           ->expects($this->once())
+           ->method('two')
+           ->after('first-call');
+
+       $mock->one();
+       $mock->two();
+   }
+
+**1. Configuring the first expectation**
+
+.. code-block:: php
+
+   $mock
+       ->expects($this->once())
+       ->method('one')
+       ->id('first-call');
+
+* ``expects($this->once())`` sets up an expectation that the following method should be called exactly once
+* ``method('one')`` specifies that this expectation applies to the `one()` method
+* ``id('first-call')`` assigns the unique identifier ``"first-call"`` to this expectation. This ID can be referenced by other expectations using ``after()``.
+
+**2. Configuring the second expectation**
+
+.. code-block:: php
+
+   $mock
+       ->expects($this->once())
+       ->method('two')
+       ->after('first-call');
+
+* ``expects($this->once())`` sets up an expectation that ``two()`` should be called exactly once
+* ``method('two')`` specifies that this expectation applies to the ``two()`` method
+* ``after('first-call')`` creates a dependency on the expectation with ID ``"first-call"'"``
+
+This means:
+
+* The expectation for ``two()`` will only be verified **after** ``one()`` has been called
+* If ``two()`` is called before ``one()``, that call will not count toward satisfying this expectation
+* The test will fail if ``two()`` is not called after ``one()`` has been called
+
+**3. Executing the system under test**
+
+.. code-block:: php
+
+   $mock->one();
+   $mock->two();
+
+* The call to ``one()`` on the mock object satisfies the first expectation and "unlocks" the second expectation
+* The call to ``two()`` on the mock object satisfies the second expectation, since ``one()`` was already called
+
+If ``two()`` is called **before** ``one()``, that call does **not** count toward satisfying the ``after()`` expectation.
+
+Attempting to register the same ID twice will cause the test to error.
+Using ``after()`` with an ID that has not been registered with ``id()`` will cause the test to fail.
+
+.. admonition:: Warning: Avoid using ``id()`` and ``after()``
+
+   The ``id()`` and ``after()`` methods should be avoided as they introduce unnecessary complexity and make tests harder to understand and maintain.
+
+   Tests that rely on strict call ordering are often brittle and may break when implementation details change, even if the behavior remains correct.
+
+**Why using id() and after() should be avoided:**
+
+* **Brittle Tests:** Tests that verify call order are tightly coupled to implementation details. Refactoring code that changes the order of internal calls (without changing behavior) will break these tests.
+* **Complexity:** The ``id()`` and ``after()`` mechanism adds cognitive complexity. Readers of your tests need to understand this additional concept.
+* **Hidden Dependencies:** The relationship between expectations is not immediately obvious, making tests harder to debug when they fail.
+* **Limited Flexibility:** The mechanism only supports simple "A before B" relationships. More complex ordering requirements become even more unwieldy.
+* **Better Alternatives Exist:** Most scenarios where call order matters can be tested more effectively:
+   - Test the final state or output rather than intermediate calls
+   - Use integration tests for workflows where order matters
+   - Design interfaces that do not require specific call ordering
+
+
+Methods that never return
+"""""""""""""""""""""""""
+
+The ``never`` return type indicates that a function or method will never return normally. Such methods either:
+
+* Throw an exception
+* Call ``exit()`` or ``die()``
+* Enter an infinite loop
+
+When writing unit tests, mocking methods with a ``never`` return type requires special handling because the mock cannot actually "never return" as it must do something when called.
+
+When you create a mock object of an interface or extendable class that has a method with a ``never`` return type, the mock object will throw a ``NeverReturningMethodException`` when that method is called.
+This exception simulates the behavior of a method that never returns normally.
+
+Consider the following scenario where we have an ``ErrorHandler`` interface with a ``handle()`` method that has a ``never`` return type:
+
+.. literalinclude:: examples/test-doubles/src/never/ErrorHandler.php
+   :caption: An interface that defines an error handler that never returns
    :language: php
 
-
-Configuring Mock Objects
-------------------------
-
-Here is an example: suppose we want to test that the correct method, ``update()``
-in our example, is called on an object that observes another object.
-
-Here is the code for the ``Subject`` class and the ``Observer`` interface that are part
-of the System under Test (SUT):
-
-.. literalinclude:: examples/test-doubles/src/Subject.php
-   :caption: Subject class that is part of the System under Test (SUT)
+.. literalinclude:: examples/test-doubles/src/never/ErrorHandlerImplementation.php
+   :caption: An implementation of the error handler interface
    :language: php
 
-.. literalinclude:: examples/test-doubles/src/Observer.php
-   :caption: Observer interface that is part of the System under Test (SUT)
+.. literalinclude:: examples/test-doubles/src/never/ServiceImplementation.php
+   :caption: A class that depends on the error handler
    :language: php
 
-Here is an example that shows how to use a mock object to test the interaction between
-``Subject`` and ``Observer`` objects:
+We want to test that, when an exception is thrown during the execution of ``ServiceImplementation::doSomething()``, the ``ErrorHandler::handle()`` method is called with an exception object of the expected type. Here is how to do that:
 
-.. literalinclude:: examples/test-doubles/SubjectTest.php
-   :caption: Testing that a method gets called once and with a specified argument
-   :language: php
+**1. Creating the mock object**
 
-We first use the ``createMock()`` method to create a mock object for the ``Observer``.
+.. code-block:: php
 
-Because we are interested in verifying the communication between two objects (that a method is called
-and which arguments it is called with), we use the ``expects()`` and ``with()`` methods to specify
-what this communication should look like.
+   $errorHandler = $this->createMock(ErrorHandler::class);
 
-The ``with()`` method can take any number of arguments, corresponding to the number of arguments
-to the method being mocked. You can specify more advanced constraints on the method's arguments
-than a simple match.
+This line creates a mock object that implements the ``ErrorHandler`` interface.
+The mock object will have all the methods defined in the interface, including the ``handle()`` method with its ``never`` return type.
 
-:ref:`appendixes.assertions.assertThat.tables.constraints` shows the constraints that can be
-applied to method arguments and here is a list of the matchers that are available to specify
-the number of invocations:
+**2. Configuring the mock object**
 
--
+.. code-block:: php
 
-  ``any()`` returns a matcher that matches when the method it is evaluated for is executed zero or more times
+   $errorHandler
+       ->expects($this->once())
+       ->method('handle')
+       ->with($this->isInstanceOf(Exception::class));
 
--
+This fluent chain configures the mock object's behavior and expectations:
 
-  ``never()`` returns a matcher that matches when the method it is evaluated for is never executed
+* ``->expects($this->once())``: Sets up an expectation that the ``handle()`` method will be called exactly once during the test. If the method is not called, or called more than once, the test will fail.
+* ``->method('handle')``: Specifies that we are configuring the ``handle()`` method of the mock object.
+* ``->with($this->isInstanceOf(Exception::class))``: Specifies that the ``handle()`` method must be called with an argument that is an instance of the ``Exception`` class. This constraint validates the argument passed to the method.
 
--
+**3. Creating the system under test**
 
-  ``atLeastOnce()`` returns a matcher that matches when the method it is evaluated for is executed at least once
+.. code-block:: php
 
--
+   $service = new ServiceImplementation($errorHandler);
 
-  ``once()`` returns a matcher that matches when the method it is evaluated for is executed exactly once
+This line creates an instance of the ``ServiceImplementation`` class, injecting the mock object we created and configured to replace the ``ErrorHandler`` dependency.
+This is standard dependency injection, allowing us to test ``ServiceImplementation`` in isolation from its dependency ``ErrorHandler``.
 
--
+**4. Configuring the expectation that the mocked method never returns**
 
-  ``atMost(int $count)`` returns a matcher that matches when the method it is evaluated for is executed at most ``$count`` times
+.. code-block:: php
 
--
+   $this->expectException(NeverReturningMethodException::class);
 
-  ``exactly(int $count)`` returns a matcher that matches when the method it is evaluated for is executed exactly ``$count`` times
+This line tells PHPUnit to expect that a ``NeverReturningMethodException`` will be thrown during the test.
+This is the key to testing methods with ``never`` return type:
 
-PHP 8.4 introduced the language feature of `set-hooked properties <https://www.php.net/releases/8.4/en.php#property_hooks>`_.
+* When ``$service->doSomething()`` is called, it will internally call ``$this->errorHandler->handle($e)``
+* Since ``handle()`` has a `never` return type, PHPUnit throws a ``NeverReturningMethodException``
+* By expecting this exception, we document our assumption that the ``handle()`` method never returns
 
-The example below shows an interface that declares a set-hooked property:
+**5. Executing the system under test**
+
+.. code-block:: php
+
+   $service->doSomething();
+
+This line calls the method we want to test. The execution flow is:
+
+1. ``doSomething()`` is called on the service
+2. Inside ``doSomething()``, an exception is thrown and caught
+3. The caught exception is passed to ``$this->errorHandler->handle($e)``
+4. The mock object's ``handle()`` method is invoked
+5. PHPUnit verifies the expectation (called once with an ``Exception`` instance)
+6. PHPUnit throws ``NeverReturningMethodException`` because the method has a ``never`` return type
+7. The test passes because we expected this exception
+
+Always use ``$this->expectException(NeverReturningMethodException::class)`` when testing code that calls a mocked method with ``never`` return type.
+
+**The exception replaces the "never return" behavior:** In real code, a method with ``never`` return type would call ``exit()``, throw an exception, or loop forever.
+In tests, ``NeverReturningMethodException`` simulates this by providing a controlled way to exit the method.
+
+**Verification still works:** Even though an exception is thrown, PHPUnit still verifies that your expectations (like ``expects($this->once())`` and ``with()``) are met.
+
+This pattern allows you to effectively test code that depends on methods that never return normally, while still being able to verify that those methods are called with the correct arguments.
+
+
+Set-Hooked Properties
+"""""""""""""""""""""
+
+The example below shows an interface that declares a `set-hooked property <https://www.php.net/manual/en/language.oop5.property-hooks.php>`_:
 
 .. literalinclude:: examples/test-doubles/src/InterfaceWithSetHookedProperty.php
    :caption: Interface that declares a set-hooked property
@@ -554,6 +1202,16 @@ Expectations for the set-hooked property ``property`` can be configured like so:
    :caption: Test that uses a mock object of an interface with a set-hooked property
    :language: php
 
-In the example shown above, ``PropertyHook::set('property')`` to specify that we want
-to configure an expectation for the method that is called when the property named ``property``
-is accessed for writing.
+In the example shown above, ``PropertyHook::set('property')`` to specify that we want to configure an expectation for the method that is called when the property named ``property`` is accessed for writing.
+
+
+Best Practices
+==============
+
+1. **Favour doubling interfaces** over doubling classes.
+2. **Use meaningful names:** Name your test doubles clearly to indicate their purpose.
+3. **Keep it simple:** Do not over-configure test doubles. Only configure the methods you need.
+4. **Test at the right level:** Mock service boundaries (repositories, external services), not domain objects or value objects.
+5. **One concept per test:** Test either state (with stubs) or behavior (with mocks), not both in the same test.
+6. **Avoid brittle tests:** Do not mock internal implementation details. Mock interfaces and public contracts.
+7. **Review PHPUnit notices:** If you see a notice about unused mock objects, consider whether you should add expectations or use a test stub instead.
