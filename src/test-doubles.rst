@@ -1349,7 +1349,7 @@ This example shows how a mock object is sealed using the ``seal()`` method:
 
 .. code-block:: php
 
-   public function testDemonstratingSealedTestStubs(): void
+   public function testDemonstratingSealedMockObjects(): void
    {
        $mock = $this->createMock(InterfaceName::class);
 
@@ -1369,7 +1369,7 @@ If it is called, then the test will fail. This is equivalent to the following:
 
 .. code-block:: php
 
-   public function testDemonstratingSealedTestStubs(): void
+   public function testDemonstratingSealedMockObjects(): void
    {
        $mock = $this->createMock(InterfaceName::class);
 
