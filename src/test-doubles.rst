@@ -819,6 +819,15 @@ The method must be called at least once.
 
 ``atLeastOnce()`` is a convenience wrapper for ``atLeast(1)``.
 
+.. admonition:: Avoid using ``atLeastOnce()``
+
+   Non-exact invocation expectations like ``atLeastOnce()`` should generally be avoided because they make test
+   intent less explicit. When the exact number of invocations does not matter, a test stub is usually more
+   appropriate than a mock object. When the number of invocations does matter, ``exactly()`` or ``once()``
+   communicates intent more clearly.
+
+   See `GitHub issue #6483 <https://github.com/sebastianbergmann/phpunit/issues/6483>`_ for details.
+
 
 ``atLeast(int $requiredInvocations)``
 """""""""""""""""""""""""""""""""""""
@@ -833,6 +842,15 @@ The method must be called at least ``$requiredInvocations`` times.
        ->expects($this->atLeast(2))
        ->method('doSomething');
 
+.. admonition:: Avoid using ``atLeast()``
+
+   Non-exact invocation expectations like ``atLeast()`` should generally be avoided because they make test
+   intent less explicit. When the exact number of invocations does not matter, a test stub is usually more
+   appropriate than a mock object. When the number of invocations does matter, ``exactly()`` communicates
+   intent more clearly.
+
+   See `GitHub issue #6483 <https://github.com/sebastianbergmann/phpunit/issues/6483>`_ for details.
+
 
 ``atMost(int $allowedInvocations)``
 """""""""""""""""""""""""""""""""""
@@ -846,6 +864,15 @@ The method must not be called more than ``$allowedInvocations`` times.
    $mock
        ->expects($this->atMost(2))
        ->method('doSomething');
+
+.. admonition:: Avoid using ``atMost()``
+
+   Non-exact invocation expectations like ``atMost()`` should generally be avoided because they make test
+   intent less explicit. When the exact number of invocations does not matter, a test stub is usually more
+   appropriate than a mock object. When the number of invocations does matter, ``exactly()`` or ``never()``
+   communicates intent more clearly.
+
+   See `GitHub issue #6483 <https://github.com/sebastianbergmann/phpunit/issues/6483>`_ for details.
 
 
 ``never()``
