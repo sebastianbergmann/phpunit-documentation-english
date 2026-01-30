@@ -864,6 +864,21 @@ The method must not be called.
 ``never()`` is a convenience wrapper for ``exactly(0)``.
 
 
+.. admonition:: Deprecation: ``any()`` is deprecated
+
+   The ``any()`` matcher, used as ``$this->expects($this->any())``, is deprecated.
+   It will be removed in PHPUnit 14.
+
+   Using ``any()`` with ``expects()`` is contradictory: you are creating a mock object (designed to verify
+   communication between objects) while essentially saying "I don't care if this communication happens at all".
+
+   If you do not need to verify that a method is called, use ``createStub()`` instead of ``createMock()``.
+   Test stubs are the appropriate choice when you only need to control what a dependency returns
+   without verifying how many times it is called.
+
+   See `GitHub issue #6461 <https://github.com/sebastianbergmann/phpunit/issues/6461>`_ for details.
+
+
 ``with()``
 """"""""""
 
