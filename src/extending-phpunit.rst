@@ -63,6 +63,28 @@ You can then enhance a concrete test case by using the trait.
    :caption: A concrete test case using a trait with a domain-specific assertion
    :language: php
 
+.. _extending-phpunit.customizing-test-method-invocation:
+
+Customizing test method invocation
+==================================
+
+You can extend PHPUnit by overriding the ``TestCase::invokeTestMethod()`` method in a test case class.
+
+The ``invokeTestMethod()`` method is responsible for invoking the test method. By default, it simply
+calls the test method with the provided arguments:
+
+.. code-block:: php
+   :caption: Default implementation of invokeTestMethod()
+
+    protected function invokeTestMethod(string $methodName, array $testArguments): mixed
+    {
+        return $this->{$methodName}(...$testArguments);
+    }
+
+Frameworks that require special execution contexts, such as asynchronous frameworks,
+can override this method to wrap the test method invocation with their runtime scheduler.
+
+
 .. _extending-phpunit.extending-the-test-runner:
 
 Extending the Test Runner
