@@ -44,7 +44,7 @@ For a detailed discussion of the conceptual differences between test stubs and m
 
 **Example Code**
 
-Some of the examples in this chapter use an interface named ``Database`` and a class namedcalled ``Service``.
+Some of the examples in this chapter use an interface named ``Database`` and a class named ``Service``.
 These are introduced now so that we are familiar with them when they appear in the examples.
 
 .. literalinclude:: examples/test-doubles/src/Database.php
