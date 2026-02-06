@@ -1,5 +1,5 @@
 ./tools/phpunit tests/IsIterableTest.php
-PHPUnit 13.0-g21408c1e35 by Sebastian Bergmann and contributors.
+PHPUnit 13.0.0 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.5.2
 
