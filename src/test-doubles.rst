@@ -938,15 +938,6 @@ The ``with()`` method verifies the arguments passed to the mocked method using `
 If a value passed to ``with()`` is not a ``Constraint`` object then that value is automatically wrapped in a ``Constraint`` object that verifies equality.
 A ``Constraint`` object that verifies equality can be manually created using ``$this->equalTo()``.
 
-.. admonition:: Deprecation: Using ``with()`` on test stubs has no effect
-
-   Calling ``with()`` on a test stub (created using ``createStub()``, for instance) has no effect because
-   argument verification is only performed for mock objects.
-
-   Since PHPUnit 12.5.11, using ``with()`` on a test stub is deprecated and will trigger a deprecation warning.
-   Using ``with()`` on a test stub no longer works in PHPUnit 13. Use ``createMock()`` instead of
-   ``createStub()`` when you need to verify the arguments passed to a method.
-
 PHPUnit provides many constraint methods for argument verification:
 
 **Identity and Equality**
