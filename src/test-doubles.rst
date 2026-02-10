@@ -938,6 +938,16 @@ The ``with()`` method verifies the arguments passed to the mocked method using `
 If a value passed to ``with()`` is not a ``Constraint`` object then that value is automatically wrapped in a ``Constraint`` object that verifies equality.
 A ``Constraint`` object that verifies equality can be manually created using ``$this->equalTo()``.
 
+.. admonition:: Deprecation: Using ``with()`` without ``expects()`` is deprecated
+
+   Using ``with()`` on a mock object without also using ``expects()`` is deprecated.
+   This will no longer be possible in PHPUnit 14.
+
+   The ``with()`` method is used to verify the arguments passed to a method, which is an expectation about
+   how the mock object is called. Using ``with()`` without ``expects()`` is contradictory: you are specifying
+   which arguments a method should be called with while not setting up an expectation for how many times the
+   method should be called. Use ``expects()`` together with ``with()`` to make the intent of your test explicit.
+
 PHPUnit provides many constraint methods for argument verification:
 
 **Identity and Equality**
