@@ -167,7 +167,14 @@ Configuration
 
 ``-d <key[=value]>``
 
-    Set a PHP configuration setting (php.ini).
+    Set a PHP configuration setting (php.ini) using ``ini_set()``.
+
+.. admonition:: Note
+
+   Because the ``-d`` CLI option uses ``ini_set()`` internally, it can only be used for PHP configuration
+   settings that can be changed at runtime. PHP configuration settings that can only be set in a
+   configuration file (``php.ini``, for instance) or on the command line (using PHP's ``-d`` option) cannot
+   be set using the ``-d`` CLI option.
 
 ``--cache-directory <dir>``
 

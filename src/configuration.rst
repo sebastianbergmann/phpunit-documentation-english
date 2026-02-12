@@ -1359,7 +1359,7 @@ The ``<ini>`` Element
 
 Parent element: ``<php>``
 
-This element can be used to set a PHP configuration setting.
+This element can be used to set a PHP configuration setting using ``ini_set()``.
 
 .. code-block:: xml
 
@@ -1372,6 +1372,13 @@ The XML configuration above corresponds to the following PHP code:
 .. code-block:: php
 
     ini_set('foo', 'bar');
+
+.. admonition:: Note
+
+   Because the ``<ini>`` element uses ``ini_set()`` internally, it can only be used for PHP configuration
+   settings that can be changed at runtime. PHP configuration settings that can only be set in a
+   configuration file (``php.ini``, for instance) or on the command line (using PHP's ``-d`` option) cannot
+   be set using the ``<ini>`` element.
 
 .. _appendixes.configuration.php.const:
 
