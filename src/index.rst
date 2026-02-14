@@ -32,8 +32,9 @@ Contents:
 
    assertions
    attributes
-   events
+   cli-options
    configuration
+   events
    copyright
 
 
