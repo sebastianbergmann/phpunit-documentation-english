@@ -108,7 +108,7 @@ It is mandatory to configure which source code files you consider your own and t
 want to be included in the code coverage report. As other features of PHPUnit also need
 to know which source code files you consider your own, it is best practice to configure
 this in the XML configuration file (see :ref:`appendixes.configuration.source.include`).
-Alternatively, you may use the ``--coverage-filter`` :ref:`command-line <textui.command-line-options>`
+Alternatively, you may use the ``--coverage-filter`` :ref:`command-line <appendixes.cli-options.code-coverage>`
 option.
 
 The ``includeUncoveredFiles`` configuration setting is available to configure how the filter is used:

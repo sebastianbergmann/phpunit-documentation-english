@@ -871,7 +871,7 @@ Test Groups
 
 The ``Group(string $name)`` attribute can be used to assign tests to test groups.
 
-Groups can be used, for instance, to :ref:`select <textui.command-line-options.selection>`
+Groups can be used, for instance, to :ref:`select <appendixes.cli-options.selection>`
 which tests should be run.
 
 The strings ``small``, ``medium``, and ``large`` may not be used as group names.
