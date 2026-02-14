@@ -6,7 +6,7 @@
 CLI Options
 ***********
 
-This chapter provides a reference overview of all command-line options supported by PHPUnit's test runner.
+This appendix provides a reference overview of all command-line options supported by PHPUnit's test runner.
 
 
 Configuration
