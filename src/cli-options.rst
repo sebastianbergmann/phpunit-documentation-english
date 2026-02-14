@@ -9,6 +9,8 @@ CLI Options
 This appendix provides a reference overview of all command-line options supported by PHPUnit's test runner.
 
 
+.. _appendixes.cli-options.configuration:
+
 Configuration
 =============
 
@@ -51,6 +53,8 @@ Configuration
 ``--ignore-baseline``
    Ignores any configured baseline file, causing all issues to be reported regardless of whether they appear in the baseline.
 
+
+.. _appendixes.cli-options.selection:
 
 Selection
 =========
@@ -103,6 +107,8 @@ Selection
 ``--test-suffix <suffixes>``
    Restricts test file discovery to files with the specified suffix or suffixes. The default is ``Test.php,.phpt``.
 
+
+.. _appendixes.cli-options.execution:
 
 Execution
 =========
@@ -237,6 +243,8 @@ Execution
    Sets the seed for the random number generator when using ``--order-by random``. Using the same seed produces the same test order, which is useful for reproducing failures.
 
 
+.. _appendixes.cli-options.reporting:
+
 Reporting
 =========
 
@@ -314,6 +322,8 @@ Reporting
    Includes telemetry information such as timing and memory usage in the debugging output. This option is used in conjunction with ``--debug``.
 
 
+.. _appendixes.cli-options.logging:
+
 Logging
 =======
 
@@ -344,6 +354,8 @@ Logging
 ``--no-logging``
    Ignores all logging configured in the XML configuration file. No log files will be written regardless of XML configuration settings.
 
+
+.. _appendixes.cli-options.code-coverage:
 
 Code Coverage
 =============
@@ -396,6 +408,8 @@ Code Coverage
 ``--no-coverage``
    Ignores all code coverage reporting configured in the XML configuration file. No coverage data will be collected or reported.
 
+
+.. _appendixes.cli-options.miscellaneous:
 
 Miscellaneous
 =============
