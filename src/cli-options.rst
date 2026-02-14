@@ -72,7 +72,7 @@ Selection
    Excludes the specified test suite or suites from the test run. Multiple suite names can be separated by commas.
 
 ``--list-groups``
-   Lists all available test groups defined via ``#[Group]`` attributes and then exits. No tests are executed.
+   Lists all available test groups and then exits. No tests are executed.
 
 ``--group <name>``
    Only runs tests belonging to the specified group or groups. Multiple group names can be separated by commas.
