@@ -72,7 +72,7 @@ Selection
    Excludes the specified test suite or suites from the test run. Multiple suite names can be separated by commas.
 
 ``--list-groups``
-   Lists all available test groups defined via ``@group`` annotations or attributes and then exits. No tests are executed.
+   Lists all available test groups defined via ``#[Group]`` attributes and then exits. No tests are executed.
 
 ``--group <name>``
    Only runs tests belonging to the specified group or groups. Multiple group names can be separated by commas.
@@ -81,10 +81,10 @@ Selection
    Excludes tests belonging to the specified group or groups from the test run. Multiple group names can be separated by commas.
 
 ``--covers <name>``
-   Only runs tests that declare they intend to cover the specified class or function. This filters based on ``@covers`` annotations or ``#[CoversClass]`` attributes.
+   Only runs tests that declare they intend to cover the specified class or function. This filters based on ``#[Covers*]`` attributes.
 
 ``--uses <name>``
-   Only runs tests that declare they intend to use the specified class or function. This filters based on ``@uses`` annotations or ``#[UsesClass]`` attributes.
+   Only runs tests that declare they intend to use the specified class or function. This filters based on ``#[Uses*]`` attributes.
 
 ``--requires-php-extension <name>``
    Only runs tests that declare a requirement for the specified PHP extension. Tests without this requirement are skipped.
