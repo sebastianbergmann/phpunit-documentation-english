@@ -1,7 +1,7 @@
 ./tools/phpunit tests/EqualsTest.php
 PHPUnit 12.5.2 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.0
+Runtime:       PHP 8.5.3
 
 FFF                                                                 3 / 3 (100%)
 

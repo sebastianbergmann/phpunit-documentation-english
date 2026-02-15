@@ -227,6 +227,64 @@ This section contains information about errors, failures, skipped tests, incompl
 This section is only printed when there are errors, failures, or issues to report. It can be disabled using the ``--no-results`` and ``--no-output`` CLI options.
 
 
+.. _textui.output.failure-output:
+
+Failure output
+^^^^^^^^^^^^^^
+
+Whenever a test fails, PHPUnit tries its best to provide you with as much
+context as possible that can help to identify the problem.
+
+.. literalinclude:: examples/textui/ArrayDiffTest.php
+   :caption: Output generated when an array comparison fails
+   :name: textui.output.failure-output.examples.ArrayDiffTest.php
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/textui/ArrayDiffTest.php.out
+
+In this example only one of the array values differs and the other values
+are shown to provide context on where the error occurred.
+
+When the generated output would be long to read PHPUnit will split it up
+and provide a few lines of context around every difference.
+
+.. literalinclude:: examples/textui/LongArrayDiffTest.php
+   :caption: Output when an array comparison of a long array fails
+   :name: textui.output.failure-output.examples.LongArrayDiffTest.php
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/textui/LongArrayDiffTest.php.out
+
+.. _textui.output.failure-output.edge-cases:
+
+Edge cases
+""""""""""
+
+When a comparison fails PHPUnit creates textual representations of the
+input values and compares those. Due to that implementation a diff
+might show more problems than actually exist.
+
+This only happens when using ``assertEquals()`` or other "weak" comparison
+functions on arrays or objects.
+
+.. literalinclude:: examples/textui/ArrayWeakComparisonTest.php
+   :caption: Edge case in the diff generation when using weak comparison
+   :name: textui.output.failure-output.edge-cases.examples.ArrayWeakComparisonTest.php
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/textui/ArrayWeakComparisonTest.php.out
+
+In this example the difference in the first index between
+``1`` and ``'1'`` is
+reported even though ``assertEquals()`` considers the values as a match.
+
+
 .. _textui.output.summary:
 
 Summary
