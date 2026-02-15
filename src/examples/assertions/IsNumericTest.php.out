@@ -1,7 +1,7 @@
 ./tools/phpunit tests/IsNumericTest.php
 PHPUnit 13.0.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.2
+Runtime:       PHP 8.5.3
 
 F                                                                   1 / 1 (100%)
 

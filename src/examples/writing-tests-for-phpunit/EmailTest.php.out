@@ -1,0 +1,10 @@
+./tools/phpunit tests/EmailTest.php
+PHPUnit 13.0.0 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.3
+
+..                                                                  2 / 2 (100%)
+
+Time: 00:00, Memory: 15.94 MB
+
+OK (2 tests, 2 assertions)

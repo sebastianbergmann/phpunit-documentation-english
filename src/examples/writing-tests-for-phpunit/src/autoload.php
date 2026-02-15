@@ -1,2 +1,2 @@
 <?php declare(strict_types=1);
-require __DIR__ . '/Greeter.php';
+require __DIR__ . '/Email.php';
