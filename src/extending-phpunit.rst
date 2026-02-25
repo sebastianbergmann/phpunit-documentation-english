@@ -184,6 +184,418 @@ You can find a list of all events PHPUnit currently emits in the :ref:`appendix 
 
   PHPUnit currently does not support registering custom events.
 
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer:
+
+A complete example: custom printer
+----------------------------------
+
+PHPUnit's default output shows a progress bar of dots and letters while tests run, followed by a detailed result summary.
+An extension can suppress that output entirely and substitute its own by calling ``replaceOutput()`` on the extension facade during bootstrap.
+This section walks through a complete example to explain every piece that is needed.
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printerwhat-we-are-building:
+
+What we are building
+^^^^^^^^^^^^^^^^^^^^
+
+The example extension prints one line per test in the following format::
+
+    ExampleTest::testPasses ... passed (0.001s)
+    ExampleTest::testFails ... failed (0.002s)
+    ExampleTest::testIsSkipped ... skipped (0.001s)
+    ExampleTest::testIsIncomplete ... incomplete (0.001s)
+
+It is intentionally minimal so that the focus stays on the extension infrastructure rather than on formatting details.
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.structure:
+
+Structure of the extension
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The extension is made up of four kinds of objects:
+
+* **Extension** — the entry point that PHPUnit bootstraps
+* **Printer** — contains the output logic, writing to ``STDOUT``
+* **Subscribers** — one per test event, each forwarding the relevant data to
+  the ``Printer``
+* **Configuration** — the ``phpunit.xml`` file that registers the extension
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.extension:
+
+Step 1: Implement the extension entry point
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Every PHPUnit extension must contain a class that implements ``PHPUnit\Runner\Extension\Extension``:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\ExtensionExample\Printer;
+
+    use PHPUnit\Runner\Extension\Extension as ExtensionInterface;
+    use PHPUnit\Runner\Extension\Facade;
+    use PHPUnit\Runner\Extension\ParameterCollection;
+    use PHPUnit\TextUI\Configuration\Configuration;
+
+    final class Extension implements ExtensionInterface
+    {
+        public function bootstrap(Configuration $configuration, Facade $facade, ParameterCollection $parameters): void
+        {
+            $facade->replaceOutput();
+
+            $printer = new Printer;
+
+            $facade->registerSubscribers(
+                new Subscriber\TestPreparationStartedSubscriber($printer),
+                new Subscriber\TestPassedSubscriber($printer),
+                new Subscriber\TestFailedSubscriber($printer),
+                new Subscriber\TestErroredSubscriber($printer),
+                new Subscriber\TestSkippedSubscriber($printer),
+                new Subscriber\TestMarkedIncompleteSubscriber($printer),
+                new Subscriber\TestFinishedSubscriber($printer),
+            );
+        }
+    }
+
+The interface requires a single method, ``bootstrap()``, which PHPUnit calls once after it has loaded all extensions but before it runs any tests.
+The method receives three arguments:
+
+``$configuration``
+    The fully resolved ``Configuration`` object that reflects the settings from ``phpunit.xml`` and the command line.
+    The extension can inspect it to adapt its behaviour, but it is read-only.
+
+``$facade``
+    The ``Facade`` object through which the extension interacts with PHPUnit.
+    Calling ``replaceOutput()`` on it tells PHPUnit to suppress its own progress and result output so the extension can produce its own.
+    ``registerSubscribers()`` connects the extension's subscriber objects to PHPUnit's event system.
+
+``$parameters``
+    An immutable key/value map populated from the ``<parameter>`` child elements that can appear inside the ``<bootstrap>`` element in ``phpunit.xml``.
+    The example extension does not use parameters.
+
+.. note::
+
+    Calling ``$facade->replaceOutput()`` suppresses both the progress output and the result output that PHPUnit would otherwise print.
+    If you only want to replace one of the two, call ``$facade->replaceProgressOutput()`` or ``$facade->replaceResultOutput()`` instead.
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.printer:
+
+Step 2: Implement the printer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``Printer`` class is responsible for all output from our extension.
+It is a plain PHP class with no PHPUnit interface requirements; subscribers call its methods directly:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\ExtensionExample\Printer;
+
+    use function fwrite;
+    use function sprintf;
+    use PHPUnit\Event\Telemetry\HRTime;
+
+    final class Printer
+    {
+        private ?HRTime $startTime;
+        private string $outcome;
+
+        public function testPreparationStarted(string $testId, HRTime $startTime): void
+        {
+            $this->startTime = $startTime;
+            $this->outcome   = 'unknown';
+
+            fwrite(
+                STDOUT,
+                sprintf(
+                    '%s ... ',
+                    $testId,
+                ),
+            );
+        }
+
+        public function testOutcome(string $outcome): void
+        {
+            $this->outcome = $outcome;
+        }
+
+        public function testFinished(HRTime $endTime): void
+        {
+            fwrite(
+                STDOUT,
+                sprintf(
+                    '%s (%.3fs)' . PHP_EOL,
+                    $this->outcome,
+                    $endTime->duration($this->startTime)->asFloat(),
+                ),
+            );
+
+            $this->startTime = null;
+            $this->outcome   = 'unknown';
+        }
+    }
+
+The ``Printer`` maintains two pieces of state between the start and the end of each test:
+
+* ``$startTime`` — an ``HRTime`` instance captured when the test begins, used to compute the elapsed time when the test finishes.
+* ``$outcome`` — a string set by whichever outcome subscriber fires (``passed``, ``failed``, ``errored``, ``skipped``, or ``incomplete``).
+
+When ``testPreparationStarted()`` is called, the printer writes the test identifier followed by `` ... `` and leaves the cursor on the same line.
+When ``testFinished()`` is called, it appends the outcome and elapsed time and moves to the next line.  Between those two calls, exactly one outcome method will have been called to record the result.
+
+``HRTime::duration()`` returns a ``Duration`` object; ``Duration::asFloat()`` converts it to a number of seconds as a ``float``, which ``sprintf`` formats to three decimal places.
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.subscribers:
+
+Step 3: Implement the subscribers
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A subscriber is a class that implements one of PHPUnit's event subscriber interfaces.
+Each interface corresponds to one event and has a single method, ``notify()``, that PHPUnit calls when the event fires.
+The subscriber receives the event object and can read data from it.
+
+Every subscriber in this extension follows the same pattern: it holds a reference to the shared ``Printer`` instance and delegates to one of the printer's methods.
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.subscribers.preparation:
+
+TestPreparationStartedSubscriber
+"""""""""""""""""""""""""""""""""
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\ExtensionExample\Printer\Subscriber;
+
+    use PHPUnit\Event\Test\PreparationStarted;
+    use PHPUnit\Event\Test\PreparationStartedSubscriber;
+    use PHPUnit\ExtensionExample\Printer\Printer;
+
+    final readonly class TestPreparationStartedSubscriber implements PreparationStartedSubscriber
+    {
+        public function __construct(private Printer $printer) {}
+
+        public function notify(PreparationStarted $event): void
+        {
+            $this->printer->testPreparationStarted(
+                $event->test()->id(),
+                $event->telemetryInfo()->time()
+            );
+        }
+    }
+
+This subscriber fires just before PHPUnit sets up a test (before ``setUp()`` runs).
+It reads the test identifier from ``$event->test()->id()`` — which returns a string such as ``ExampleTest::testPasses`` — and the current high-resolution time from ``$event->telemetryInfo()->time()``.
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.subscribers.outcome:
+
+Outcome Subscribers
+"""""""""""""""""""
+
+Four outcome events can fire after a test completes, one for each possible result.
+Each is handled by a dedicated subscriber that calls ``Printer::testOutcome()`` with the corresponding label.
+
+**TestPassedSubscriber** — fires when all assertions pass:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\ExtensionExample\Printer\Subscriber;
+
+    use PHPUnit\Event\Test\Passed;
+    use PHPUnit\Event\Test\PassedSubscriber;
+    use PHPUnit\ExtensionExample\Printer\Printer;
+
+    final readonly class TestPassedSubscriber implements PassedSubscriber
+    {
+        public function __construct(private Printer $printer) {}
+
+        public function notify(Passed $event): void
+        {
+            $this->printer->testOutcome('passed');
+        }
+    }
+
+**TestFailedSubscriber** — fires when an assertion fails:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\ExtensionExample\Printer\Subscriber;
+
+    use PHPUnit\Event\Test\Failed;
+    use PHPUnit\Event\Test\FailedSubscriber;
+    use PHPUnit\ExtensionExample\Printer\Printer;
+
+    final readonly class TestFailedSubscriber implements FailedSubscriber
+    {
+        public function __construct(private Printer $printer) {}
+
+        public function notify(Failed $event): void
+        {
+            $this->printer->testOutcome('failed');
+        }
+    }
+
+**TestErroredSubscriber** — fires when the test throws an unexpected exception or a PHP error that is not an assertion failure:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\ExtensionExample\Printer\Subscriber;
+
+    use PHPUnit\Event\Test\Errored;
+    use PHPUnit\Event\Test\ErroredSubscriber;
+    use PHPUnit\ExtensionExample\Printer\Printer;
+
+    final readonly class TestErroredSubscriber implements ErroredSubscriber
+    {
+        public function __construct(private Printer $printer) {}
+
+        public function notify(Errored $event): void
+        {
+            $this->printer->testOutcome('errored');
+        }
+    }
+
+**TestSkippedSubscriber** — fires when the test calls ``$this->markTestSkipped()``:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\ExtensionExample\Printer\Subscriber;
+
+    use PHPUnit\Event\Test\Skipped;
+    use PHPUnit\Event\Test\SkippedSubscriber;
+    use PHPUnit\ExtensionExample\Printer\Printer;
+
+    final readonly class TestSkippedSubscriber implements SkippedSubscriber
+    {
+        public function __construct(private Printer $printer) {}
+
+        public function notify(Skipped $event): void
+        {
+            $this->printer->testOutcome('skipped');
+        }
+    }
+
+**TestMarkedIncompleteSubscriber** — fires when the test calls ``$this->markTestIncomplete()``:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\ExtensionExample\Printer\Subscriber;
+
+    use PHPUnit\Event\Test\MarkedIncomplete;
+    use PHPUnit\Event\Test\MarkedIncompleteSubscriber;
+    use PHPUnit\ExtensionExample\Printer\Printer;
+
+    final readonly class TestMarkedIncompleteSubscriber implements MarkedIncompleteSubscriber
+    {
+        public function __construct(private Printer $printer) {}
+
+        public function notify(MarkedIncomplete $event): void
+        {
+            $this->printer->testOutcome('incomplete');
+        }
+    }
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.subscribers.finished:
+
+TestFinishedSubscriber
+""""""""""""""""""""""
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\ExtensionExample\Printer\Subscriber;
+
+    use PHPUnit\Event\Test\Finished;
+    use PHPUnit\Event\Test\FinishedSubscriber;
+    use PHPUnit\ExtensionExample\Printer\Printer;
+
+    final readonly class TestFinishedSubscriber implements FinishedSubscriber
+    {
+        public function __construct(private Printer $printer) {}
+
+        public function notify(Finished $event): void
+        {
+            $this->printer->testFinished(
+                $event->telemetryInfo()->time(),
+            );
+        }
+    }
+
+This subscriber fires after ``tearDown()`` has completed.
+It passes the current high-resolution time to ``Printer::testFinished()``, which uses it together with the start time saved earlier to compute the test duration.
+
+.. note::
+
+    The sequence of events for a single test is always:
+
+    1. ``Test\PreparationStarted``
+    2. Exactly one outcome event: ``Test\Passed``, ``Test\Failed``, ``Test\Errored``, ``Test\Skipped``, or ``Test\MarkedIncomplete``
+    3. ``Test\Finished``
+
+    Because outcome events fire before ``Test\Finished``, the ``Printer`` always knows the outcome when it writes the completed line.
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.configuration:
+
+Step 4: Register the Extension in phpunit.xml
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+PHPUnit discovers extensions through the ``<extensions>`` element in ``phpunit.xml``:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="../phpunit.xsd"
+             bootstrap="autoload.php">
+        <extensions>
+            <bootstrap class="PHPUnit\ExtensionExample\Printer\Extension"/>
+        </extensions>
+
+        <testsuites>
+            <testsuite name="default">
+                <directory>tests</directory>
+            </testsuite>
+        </testsuites>
+    </phpunit>
+
+The ``class`` attribute of ``<bootstrap>`` must be the fully qualified class name of the class that implements ``PHPUnit\Runner\Extension\Extension``.
+PHPUnit instantiates the class and calls its ``bootstrap()`` method.
+
+Optional parameters can be passed to an extension by adding ``<parameter>`` elements inside ``<bootstrap>``:
+
+.. code-block:: xml
+
+    <bootstrap class="PHPUnit\ExtensionExample\Printer\Extension">
+        <parameter name="colorize" value="true"/>
+    </bootstrap>
+
+The extension can then read the parameter value in ``bootstrap()`` using ``$parameters->get('colorize')``.
+Always call ``$parameters->has()`` first to check whether the parameter was supplied.
+
+.. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.autoloading:
+
+How it all fits together
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+When PHPUnit runs with the example extension active, the following sequence of events takes place for each test:
+
+1. PHPUnit emits ``Test\PreparationStarted``.
+   ``TestPreparationStartedSubscriber`` calls ``Printer::testPreparationStarted()``, which saves the start time and writes ``ExampleTest::testPasses ... `` to ``STDOUT`` without a trailing newline.
+
+2. The test method executes.
+   Depending on what the method does, PHPUnit emits one outcome event.
+   The corresponding subscriber calls ``Printer::testOutcome()`` to record the result label.
+
+3. PHPUnit emits ``Test\Finished``.
+``TestFinishedSubscriber`` calls ``Printer::testFinished()``, which appends the label and the elapsed time to the line already started in step 1, then resets the printer's state.
+
+Because ``$facade->replaceOutput()`` was called during bootstrap, PHPUnit prints nothing of its own.
+The extension has full control over what appears on the terminal.
+
 Sharing an extension
 --------------------
 
