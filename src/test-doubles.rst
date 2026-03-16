@@ -1308,23 +1308,12 @@ If ``two()`` is called **before** ``one()``, that call does **not** count toward
 Attempting to register the same ID twice will cause the test to error.
 Using ``after()`` with an ID that has not been registered with ``id()`` will cause the test to fail.
 
-.. admonition:: Warning: Avoid using ``id()`` and ``after()``
+.. admonition:: Deprecation: ``id()`` and ``after()`` are deprecated
 
-   The ``id()`` and ``after()`` methods should be avoided as they introduce unnecessary complexity and make tests harder to understand and maintain.
+   The ``id()`` and ``after()`` methods are soft-deprecated since PHPUnit 13.1.
+   They will be hard-deprecated in PHPUnit 14 and they will be removed in PHPUnit 15.
 
-   Tests that rely on strict call ordering are often brittle and may break when implementation details change, even if the behavior remains correct.
-
-**Why using id() and after() should be avoided:**
-
-* **Brittle Tests:** Tests that verify call order are tightly coupled to implementation details. Refactoring code that changes the order of internal calls (without changing behavior) will break these tests.
-* **Complexity:** The ``id()`` and ``after()`` mechanism adds cognitive complexity. Readers of your tests need to understand this additional concept.
-* **Hidden Dependencies:** The relationship between expectations is not immediately obvious, making tests harder to debug when they fail.
-* **Limited Flexibility:** The mechanism only supports simple "A before B" relationships. More complex ordering requirements become even more unwieldy.
-* **Better Alternatives Exist:** Most scenarios where call order matters can be tested more effectively:
-   - Test the final state or output rather than intermediate calls
-   - Use integration tests for workflows where order matters
-   - Design interfaces that do not require specific call ordering
-   - Use ``withParameterSetsInAnyOrder()`` or ``withParameterSetsInOrder()`` instead
+   See `GitHub issue #6537 <https://github.com/sebastianbergmann/phpunit/issues/6537>`_ for details.
 
 
 .. _test-doubles.mock-objects.reference.configuring-expectations.methods-that-never-return:
