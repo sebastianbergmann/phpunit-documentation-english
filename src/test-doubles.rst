@@ -962,6 +962,33 @@ The method must not be called.
 ``never()`` is a convenience wrapper for ``exactly(0)``.
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.any:
+
+``any()``
+"""""""""
+
+The method may be called zero or more times.
+No expectation is set on the number of invocations, so the test will not fail regardless of how many times the method is called (including not at all).
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->any())
+       ->method('doSomething')
+       ->willReturn('value');
+
+The mock object configuration shown above is equivalent to the test stub configuration shown below:
+
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+   $stub
+       ->method('doSomething')
+       ->willReturn('value');
+
 .. admonition:: Deprecation: ``any()`` is deprecated
 
    The ``any()`` matcher, used as ``$this->expects($this->any())``, is deprecated.
