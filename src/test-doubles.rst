@@ -75,6 +75,8 @@ These are introduced now so that we are familiar with them when they appear in t
 Test Stubs
 ==========
 
+.. _test-doubles.test-stubs.what-are-test-stubs:
+
 What are test stubs?
 --------------------
 
@@ -93,8 +95,12 @@ By controlling these indirect inputs, you can force the SUT into specific execut
 * Focus on testing the logic of the SUT rather than its dependencies
 
 
+.. _test-doubles.test-stubs.common-use-cases:
+
 Common use cases
 ----------------
+
+.. _test-doubles.test-stubs.common-use-cases.configuring-return-values:
 
 Configuring return values
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -162,6 +168,8 @@ In this test:
 3. The test stub provides this **indirect input** by returning ``[['foo' => 'bar']]``
 
 
+.. _test-doubles.test-stubs.common-use-cases.configuring-exceptions:
+
 Configuring exceptions
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -225,11 +233,17 @@ Test stubs are ideal when we only need to control **what the dependency returns*
    $service->doSomething();
 
 
+.. _test-doubles.test-stubs.reference:
+
 Reference
 ---------
 
+.. _test-doubles.test-stubs.reference.creating-test-stubs:
+
 Creating test stubs
 ^^^^^^^^^^^^^^^^^^^
+
+.. _test-doubles.test-stubs.reference.creating-test-stubs.createStub:
 
 ``createStub()``
 """"""""""""""""
@@ -265,6 +279,8 @@ Doubled methods can be configured using the methods described below.
    doubled.
 
 
+.. _test-doubles.test-stubs.reference.creating-test-stubs.createStubForIntersectionOfInterfaces:
+
 ``createStubForIntersectionOfInterfaces()``
 """""""""""""""""""""""""""""""""""""""""""
 
@@ -278,6 +294,8 @@ Creates a test stub for an intersection of interfaces.
 
 This is useful when you need to replace an object that implements multiple interfaces.
 
+
+.. _test-doubles.test-stubs.reference.creating-test-stubs.createConfiguredStub:
 
 ``createConfiguredStub()``
 """"""""""""""""""""""""""
@@ -299,6 +317,8 @@ Creates a test stub with methods already configured to return specific values.
 
 This is a convenience method for simple cases.
 
+
+.. _test-doubles.test-stubs.reference.creating-test-stubs.getStubBuilder:
 
 ``getStubBuilder()``
 """"""""""""""""""""
@@ -402,11 +422,12 @@ Disables automatic generation of return values.
 When disabled, stubbed methods without explicit configuration will return ``null`` or throw an exception depending on the declared return type.
 
 
-
-
+.. _test-doubles.test-stubs.reference.configuring-return-values:
 
 Configuring return values
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _test-doubles.test-stubs.reference.configuring-return-values.willReturn:
 
 ``willReturn()``
 """"""""""""""""
@@ -442,6 +463,8 @@ The return value must be compatible with the method's return type declaration.
 If a method is configured to return different values on consecutive calls, it can only be invoked a number of times equivalent to the number of configured return values.
 
 
+.. _test-doubles.test-stubs.reference.configuring-return-values.willReturnSelf:
+
 ``willReturnSelf()``
 """"""""""""""""""""
 
@@ -457,6 +480,8 @@ Configures a method to return the test stub object itself.
 
 This is useful for testing fluent interfaces.
 
+
+.. _test-doubles.test-stubs.reference.configuring-return-values.willReturnArgument:
 
 ``willReturnArgument()``
 """"""""""""""""""""""""
@@ -475,6 +500,8 @@ Configures a method to return one of its arguments.
 
 The argument index is zero-based.
 
+
+.. _test-doubles.test-stubs.reference.configuring-return-values.willReturnMap:
 
 ``willReturnMap()``
 """""""""""""""""""
@@ -498,6 +525,8 @@ Configures a method to return different values based on the arguments it receive
 Each inner array contains the method arguments followed by the return value.
 
 
+.. _test-doubles.test-stubs.reference.configuring-return-values.willReturnCallback:
+
 ``willReturnCallback()``
 """"""""""""""""""""""""
 
@@ -517,6 +546,8 @@ Configures a method to return the result of a callback function.
 
 The callback receives the method arguments and can implement complex logic.
 
+
+.. _test-doubles.test-stubs.reference.configuring-return-values.get-hooked-properties:
 
 Get-Hooked Properties
 """""""""""""""""""""
@@ -538,8 +569,12 @@ The behaviour of the get-hooked property ``property`` can be configured like so:
 In the example shown above, ``PropertyHook::get('property')`` to specify that we want to configure the behaviour of the method that is called when the property named ``property`` is accessed for reading.
 
 
+.. _test-doubles.test-stubs.reference.configuring-exceptions:
+
 Configuring exceptions
 ^^^^^^^^^^^^^^^^^^^^^^
+
+.. _test-doubles.test-stubs.reference.configuring-exceptions.willThrowException:
 
 ``willThrowException()``
 """"""""""""""""""""""""
@@ -556,6 +591,8 @@ Configures a method to throw an exception instead of returning a value.
 
    // $stub->doSomething() throws the configured exception
 
+
+.. _test-doubles.test-stubs.reference.return-value-generation:
 
 Return Value Generation
 -----------------------
@@ -580,6 +617,8 @@ You can disable this return value generation using the ``#[DisableReturnValueGen
 Mock Objects
 ============
 
+.. _test-doubles.mock-objects.what-are-mock-objects:
+
 What are mock objects?
 ----------------------
 
@@ -602,8 +641,12 @@ This indicates you should either add expectations or use ``createStub()`` instea
 Please read "`Testing with(out) dependencies <https://phpunit.expert/articles/testing-with-and-without-dependencies.html?ref=phpunit>`_" and "`The Stub/Mock Intervention <https://phpunit.expert/articles/the-stub-mock-intervention.html?ref=phpunit>`_" for some background on why this distinction between test stubs and mock objects is critical.
 
 
+.. _test-doubles.mock-objects.common-use-cases:
+
 Common use cases
 ----------------
+
+.. _test-doubles.mock-objects.common-use-cases.using-a-mock-object-for-testing-direct-output:
 
 Using a mock object for testing direct output
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -677,11 +720,17 @@ In this test:
 3. The mock object captures this **indirect output** and verifies it matches our expectations
 
 
+.. _test-doubles.mock-objects.reference:
+
 Reference
 ---------
 
+.. _test-doubles.mock-objects.reference.creating-mock-objects:
+
 Creating mock objects
 ^^^^^^^^^^^^^^^^^^^^^
+
+.. _test-doubles.mock-objects.reference.creating-mock-objects.createMock:
 
 ``createMock()``
 """"""""""""""""
@@ -714,6 +763,8 @@ All methods can be configured with return values and expectations.
    doubled.
 
 
+.. _test-doubles.mock-objects.reference.creating-mock-objects.createMockForIntersectionOfInterfaces:
+
 ``createMockForIntersectionOfInterfaces()``
 """""""""""""""""""""""""""""""""""""""""""
 
@@ -727,6 +778,8 @@ Creates a mock object for an intersection of interfaces.
 
 This is useful when you need to replace an object that implements multiple interfaces.
 
+
+.. _test-doubles.mock-objects.reference.creating-mock-objects.createConfiguredMock:
 
 ``createConfiguredMock()``
 """"""""""""""""""""""""""
@@ -749,6 +802,8 @@ Creates a mock object with methods already configured to return specific values.
 This is a convenience method for simple cases.
 
 
+.. _test-doubles.mock-objects.reference.creating-mock-objects.getMockBuilder:
+
 ``getMockBuilder()``
 """"""""""""""""""""
 
@@ -761,6 +816,8 @@ The documentation and recommendations for ``getStubBuilder()`` (see above) also 
 * The name of the method that must be called last in the fluent API's method call chain is ``getMock()``
 
 
+.. _test-doubles.mock-objects.reference.configuring-behaviour:
+
 Configuring behavior
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -768,11 +825,15 @@ Mock objects support all the same methods for configuring behavior (return value
 See the test stub reference section above for detailed examples of these methods.
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations:
+
 Configuring expectations
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Expectations define how many times and with what arguments a method should be called.
 
+
+.. _test-doubles.mock-objects.reference.configuring-expectations.once:
 
 ``once()``
 """"""""""
@@ -790,6 +851,8 @@ The method must be called exactly once.
 ``once()`` is a convenience wrapper for ``exactly(1)``.
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.exactly:
+
 ``exactly(int $count)``
 """""""""""""""""""""""
 
@@ -803,6 +866,8 @@ The method must be called exactly ``$count`` times.
        ->expects($this->exactly(2))
        ->method('doSomething');
 
+
+.. _test-doubles.mock-objects.reference.configuring-expectations.atLeastOnce:
 
 ``atLeastOnce()``
 """""""""""""""""
@@ -829,6 +894,8 @@ The method must be called at least once.
    See `GitHub issue #6483 <https://github.com/sebastianbergmann/phpunit/issues/6483>`_ for details.
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.atLeast:
+
 ``atLeast(int $requiredInvocations)``
 """""""""""""""""""""""""""""""""""""
 
@@ -851,6 +918,8 @@ The method must be called at least ``$requiredInvocations`` times.
 
    See `GitHub issue #6483 <https://github.com/sebastianbergmann/phpunit/issues/6483>`_ for details.
 
+
+.. _test-doubles.mock-objects.reference.configuring-expectations.atMost:
 
 ``atMost(int $allowedInvocations)``
 """""""""""""""""""""""""""""""""""
@@ -875,6 +944,8 @@ The method must not be called more than ``$allowedInvocations`` times.
    See `GitHub issue #6483 <https://github.com/sebastianbergmann/phpunit/issues/6483>`_ for details.
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.never:
+
 ``never()``
 """""""""""
 
@@ -891,6 +962,33 @@ The method must not be called.
 ``never()`` is a convenience wrapper for ``exactly(0)``.
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.any:
+
+``any()``
+"""""""""
+
+The method may be called zero or more times.
+No expectation is set on the number of invocations, so the test will not fail regardless of how many times the method is called (including not at all).
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->any())
+       ->method('doSomething')
+       ->willReturn('value');
+
+The mock object configuration shown above is equivalent to the test stub configuration shown below:
+
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+   $stub
+       ->method('doSomething')
+       ->willReturn('value');
+
 .. admonition:: Deprecation: ``any()`` is deprecated
 
    The ``any()`` matcher, used as ``$this->expects($this->any())``, is deprecated.
@@ -905,6 +1003,8 @@ The method must not be called.
 
    See `GitHub issue #6461 <https://github.com/sebastianbergmann/phpunit/issues/6461>`_ for details.
 
+
+.. _test-doubles.mock-objects.reference.configuring-expectations.with:
 
 ``with()``
 """"""""""
@@ -1125,6 +1225,8 @@ The test will fail if:
 - The method is called fewer or more times than expected
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.verifying-relative-call-order-between-mock-object-expectations:
+
 Verifying relative call order between mock object expectations
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1220,6 +1322,8 @@ Using ``after()`` with an ID that has not been registered with ``id()`` will cau
    - Design interfaces that do not require specific call ordering
    - Use ``withParameterSetsInAnyOrder()`` or ``withParameterSetsInOrder()`` instead
 
+
+.. _test-doubles.mock-objects.reference.configuring-expectations.methods-that-never-return:
 
 Methods that never return
 """""""""""""""""""""""""
@@ -1325,6 +1429,8 @@ In tests, ``NeverReturningMethodException`` simulates this by providing a contro
 This pattern allows you to effectively test code that depends on methods that never return normally, while still being able to verify that those methods are called with the correct arguments.
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.set-hooked-properties:
+
 Set-Hooked Properties
 """""""""""""""""""""
 
@@ -1342,6 +1448,8 @@ Expectations for the set-hooked property ``property`` can be configured like so:
 
 In the example shown above, ``PropertyHook::set('property')`` to specify that we want to configure an expectation for the method that is called when the property named ``property`` is accessed for writing.
 
+
+.. _test-doubles.best-practices:
 
 Best Practices
 ==============
