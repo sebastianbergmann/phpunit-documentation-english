@@ -1142,6 +1142,8 @@ PHPUnit provides many constraint methods for argument verification:
 * ``isWritable()``
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.with.expecting-calls-to-the-same-method-with-varying-arguments-in-specific-order:
+
 Expecting calls to the same method with varying arguments in specific order
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1182,6 +1184,8 @@ The test will fail if:
 * The calls happen in the wrong order
 * The method is called fewer or more times than expected
 
+
+.. _test-doubles.mock-objects.reference.configuring-expectations.with.expecting-calls-to-the-same-method-with-varying-arguments-in-any-order:
 
 Expecting calls to the same method with varying arguments in any order
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
