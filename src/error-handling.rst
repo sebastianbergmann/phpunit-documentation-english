@@ -269,6 +269,124 @@ regular expression.
 
 This can be used together with the ``#[IgnoreDeprecations]`` attribute to not let the test fail.
 
+.. _error-handling.issue-trigger-resolvers:
+
+Custom Issue Trigger Resolvers
+==============================
+
+While the ``<deprecationTrigger>`` element (see :ref:`appendixes.configuration.source.deprecationTrigger`) allows you to
+configure functions and methods that act as wrappers around ``trigger_error()``, some frameworks require more
+sophisticated logic to determine the correct caller and callee for issue classification. For these cases, PHPUnit
+supports custom issue trigger resolvers.
+
+A custom issue trigger resolver is a class that implements the ``PHPUnit\Runner\IssueTriggerResolver\Resolver`` interface:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\Runner\IssueTriggerResolver;
+
+    interface Resolver
+    {
+        /**
+         * Return null to defer to the next resolver in the chain.
+         *
+         * @param list<array{file?: string, line?: int, class?: class-string, function?: string, type?: string, args?: list<mixed>}> $trace
+         */
+        public function resolve(array $trace, string $message): ?Resolution;
+    }
+
+The ``resolve()`` method receives the filtered stack trace and the error message. It must return either:
+
+- A ``PHPUnit\Runner\IssueTriggerResolver\Resolution`` object that specifies the callee and caller file paths
+- ``null`` to defer to the next resolver in the chain
+
+The ``Resolution`` class is constructed with two nullable string arguments: the callee file path and the caller file path:
+
+.. code-block:: php
+
+    new Resolution(
+        $trace[1]['file'] ?? null, // callee (where the issue originated)
+        $trace[2]['file'] ?? null, // caller (what called the code that triggered the issue)
+    );
+
+PHPUnit uses these file paths to classify the issue as ``self``, ``direct``, ``indirect``, or ``test``
+by checking whether each file belongs to first-party code, third-party code, test code, or PHPUnit itself.
+
+Implementing a custom resolver
+------------------------------
+
+Consider a framework that wraps ``trigger_error()`` in its own method:
+
+.. code-block:: php
+
+    namespace Vendor;
+
+    final class Framework
+    {
+        public function trigger(): void
+        {
+            @trigger_error('framework deprecation', E_USER_DEPRECATED);
+        }
+    }
+
+Without a custom resolver, PHPUnit's default resolver uses ``$trace[0]`` as the callee (the file containing
+``trigger_error()``) and ``$trace[1]`` as the caller. When the framework method is in the call stack, this
+means the framework file is the callee and the first-party code calling it is the caller, which may not
+accurately reflect the intended classification.
+
+A custom resolver can inspect the stack trace and adjust the caller/callee accordingly:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace Vendor;
+
+    use PHPUnit\Runner\IssueTriggerResolver\Resolution;
+    use PHPUnit\Runner\IssueTriggerResolver\Resolver;
+
+    final class FrameworkResolver implements Resolver
+    {
+        public function resolve(array $trace, string $message): ?Resolution
+        {
+            if (isset($trace[0]['file']) && str_contains($trace[0]['file'], 'Framework.php')) {
+                return new Resolution(
+                    $trace[1]['file'] ?? null,
+                    $trace[2]['file'] ?? null,
+                );
+            }
+
+            return null;
+        }
+    }
+
+This resolver checks whether the first frame in the stack trace is from the framework. If so, it shifts
+the caller/callee by one frame to skip the framework's wrapper. If the condition does not match, it returns
+``null`` to let the next resolver (or the default resolver) handle the issue.
+
+Registering a custom resolver
+------------------------------
+
+Custom resolvers are registered in PHPUnit's XML configuration file using the
+``<issueTriggerResolvers>`` element inside ``<source>`` (see :ref:`appendixes.configuration.source.issueTriggerResolvers`):
+
+.. code-block:: xml
+
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+
+        <issueTriggerResolvers>
+            <issueTriggerResolver className="Vendor\FrameworkResolver"/>
+        </issueTriggerResolvers>
+    </source>
+
+Multiple resolvers can be registered and are called in the order they are listed. The first resolver that
+returns a ``Resolution`` object wins. If all custom resolvers return ``null``, PHPUnit falls back to its
+default resolver.
+
+
 Disabling PHPUnit's error handler
 =================================
 

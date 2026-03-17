@@ -811,6 +811,60 @@ Parent element: ``<deprecationTrigger>``
 The example configuration shown above configures the ``public`` ``static`` method ``triggerDeprecation()``
 of the ``DeprecationTrigger`` class as a deprecation trigger.
 
+.. _appendixes.configuration.source.issueTriggerResolvers:
+
+The ``<issueTriggerResolvers>`` Element
+---------------------------------------
+
+Parent element: ``<source>``
+
+The ``<issueTriggerResolvers>`` element can be used to register custom issue trigger resolver classes.
+An issue trigger resolver allows you to override how PHPUnit determines the caller and callee files
+when classifying issues (deprecations, notices, warnings) as ``self``, ``direct``, ``indirect``, or ``test``.
+
+This is useful when a framework or library wraps ``trigger_error()`` in a way that the
+``<deprecationTrigger>`` element cannot handle, for instance when the wrapper is a method that requires
+inspecting the error message or the stack trace arguments to determine the correct caller and callee.
+
+.. _appendixes.configuration.source.issueTriggerResolvers.issueTriggerResolver:
+
+The ``<issueTriggerResolver>`` Element
+**************************************
+
+Parent element: ``<issueTriggerResolvers>``
+
+.. code-block:: xml
+
+    <issueTriggerResolvers>
+        <issueTriggerResolver className="Vendor\FrameworkResolver"/>
+    </issueTriggerResolvers>
+
+The ``className`` attribute must be the fully qualified class name of a class that implements the
+``PHPUnit\Runner\IssueTriggerResolver\Resolver`` interface.
+
+Multiple resolvers can be registered:
+
+.. code-block:: xml
+
+    <issueTriggerResolvers>
+        <issueTriggerResolver className="Vendor\FirstResolver"/>
+        <issueTriggerResolver className="Vendor\SecondResolver"/>
+    </issueTriggerResolvers>
+
+Resolvers are called in the order they are listed. Each resolver can either return a
+``PHPUnit\Runner\IssueTriggerResolver\Resolution`` object (to override the caller/callee determination)
+or return ``null`` to defer to the next resolver in the chain. If no custom resolver handles the issue,
+PHPUnit's default resolver is used.
+
+At startup, PHPUnit validates each configured resolver:
+
+- If the class does not exist, a test runner warning is emitted
+- If the class does not implement ``PHPUnit\Runner\IssueTriggerResolver\Resolver``, a test runner warning is emitted
+
+Invalid entries are skipped after the warning is emitted and do not prevent the test suite from running.
+
+See :ref:`error-handling.issue-trigger-resolvers` for more information about implementing custom issue trigger resolvers.
+
 .. _appendixes.configuration.source.ignoreSelfDeprecations:
 
 The ``<ignoreSelfDeprecations>`` Attribute
