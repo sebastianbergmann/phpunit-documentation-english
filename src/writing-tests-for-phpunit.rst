@@ -363,3 +363,41 @@ If this expected output is not generated, the test will be counted as a failure.
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/writing-tests-for-phpunit/OutputTest.php.out
+
+
+.. _writing-tests-for-phpunit.testing-error-log:
+
+Testing error log output
+========================
+
+Sometimes you want to assert that the code under test calls PHP's ``error_log()`` function.
+PHPUnit captures ``error_log()`` output during test execution.
+
+The ``expectErrorLog()`` method can be used to expect that ``error_log()`` is called at least once
+during the test. If ``error_log()`` is not called, the test will be counted as a failure.
+
+.. code-block:: php
+    :caption: Testing that error_log() is called
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class ErrorLogTest extends TestCase
+    {
+        public function testSomethingIsLogged(): void
+        {
+            // Code under test that calls error_log()
+            error_log('something happened');
+
+            $this->expectErrorLog();
+        }
+    }
+
+When ``expectErrorLog()`` is not used and the code under test calls ``error_log()``, the logged
+output is printed as part of the test output (with date prefixes stripped).
+
+.. admonition:: Note
+
+   The ``expectErrorLog()`` method must be called during the test method, but it does not
+   matter whether it is called before or after the code that calls ``error_log()``. This
+   is consistent with how ``expectOutputString()`` works.
