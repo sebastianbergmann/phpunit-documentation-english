@@ -266,3 +266,7 @@ For unit tests, it is recommended to explicitly reset the values of static prope
 in your ``setUp()`` code instead (and ideally also ``tearDown()``, so as to not affect subsequently
 executed tests).
 
+The :ref:`WithEnvironmentVariable <appendixes.attributes.WithEnvironmentVariable>` attribute can be used
+to set or remove environment variables for the duration of a test. Environment variables are set before
+``setUp()`` is called and restored to their original values after ``tearDown()`` has completed.
+
