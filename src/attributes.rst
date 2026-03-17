@@ -366,6 +366,74 @@ on a test method to specify a static method that is declared in another class as
 :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
 
 
+.. _appendixes.attributes.DataProviderClosure:
+
+``DataProviderClosure``
+-----------------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | yes        |
++-------------+--------------+------------+
+
+The ``DataProviderClosure(Closure $closure, bool $validateArgumentCount = true)`` attribute can be used to define
+a :ref:`data provider <writing-tests-for-phpunit.data-providers>` for a test method using a static closure
+instead of a separate static method.
+
+The closure must return an iterable (array or ``Traversable``) of arrays. Each array entry provides the arguments
+for one invocation of the test method.
+
+.. code-block:: php
+    :caption: Using the ``DataProviderClosure`` attribute
+    :name: appendixes.attributes.dataproviderclosure.examples.ExampleTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\DataProviderClosure;
+    use PHPUnit\Framework\TestCase;
+
+    final class DataTest extends TestCase
+    {
+        #[DataProviderClosure(static function (): array {
+            return [[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 2]];
+        })]
+        public function testAdd(int $a, int $b, int $expected): void
+        {
+            $this->assertSame($expected, $a + $b);
+        }
+    }
+
+Named data sets can be used by providing string keys in the returned array:
+
+.. code-block:: php
+    :caption: Using the ``DataProviderClosure`` attribute with named data sets
+
+    #[DataProviderClosure(static function (): array {
+        return [
+            'zeros'        => [0, 0, 0],
+            'one plus one' => [1, 1, 2],
+        ];
+    })]
+    public function testAdd(int $a, int $b, int $expected): void
+    {
+        $this->assertSame($expected, $a + $b);
+    }
+
+By default, PHPUnit warns when a data set provides more arguments than the test method accepts.
+This can be disabled by setting ``validateArgumentCount`` to ``false``:
+
+.. code-block:: php
+    :caption: Disabling argument count validation
+
+    #[DataProviderClosure(static function (): array {
+        return [[1, 2, 3]];
+    }, validateArgumentCount: false)]
+    public function testOne(int $a, int $b): void
+    {
+        $this->assertGreaterThan(0, $a + $b);
+    }
+
+
 .. _appendixes.attributes.TestWith:
 
 ``TestWith``

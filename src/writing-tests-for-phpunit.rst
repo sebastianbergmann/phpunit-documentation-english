@@ -149,6 +149,9 @@ It must return a value that is `iterable <https://www.php.net/manual/en/language
 In each iteration step, it must yield an array.
 For each of these arrays, the test method will be called with the contents of the array as its arguments.
 
+Alternatively, the :ref:`DataProviderClosure <appendixes.attributes.DataProviderClosure>` attribute can be used to define
+a data provider inline as a static closure, without having to implement a separate static method.
+
 .. literalinclude:: examples/writing-tests-for-phpunit/NumericDataSetsTest.php
    :caption: Using a data provider that returns an array of arrays
    :name: writing-tests-for-phpunit.data-providers.examples.NumericDataSetsTest.php
