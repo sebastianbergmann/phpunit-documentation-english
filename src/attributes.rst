@@ -1229,6 +1229,77 @@ the global state of the main PHPUnit test runner process should be made availabl
 the child process when a test is run in a separate process.
 
 
+.. _appendixes.attributes.WithEnvironmentVariable:
+
+``WithEnvironmentVariable``
+---------------------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
+
+The ``WithEnvironmentVariable(string $environmentVariableName, ?string $value = null)`` attribute can be
+used to set an environment variable for the duration of a test. The environment variable is set before
+before-test methods such as ```setUp()`` are called and restored to its original value after after-test
+methods such as ``tearDown()`` have been called.
+
+When used on a class, the environment variable is set for all tests in that class. When used on a method,
+it applies only to that test method. A method-level attribute overrides a class-level attribute for the
+same environment variable.
+
+.. code-block:: php
+    :caption: Using the ``WithEnvironmentVariable`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\WithEnvironmentVariable;
+    use PHPUnit\Framework\TestCase;
+
+    #[WithEnvironmentVariable('APP_ENV', 'testing')]
+    final class EnvironmentTest extends TestCase
+    {
+        public function testAppEnvIsSetFromClassAttribute(): void
+        {
+            $this->assertSame('testing', $_ENV['APP_ENV']);
+            $this->assertSame('testing', getenv('APP_ENV'));
+        }
+
+        #[WithEnvironmentVariable('APP_ENV', 'production')]
+        public function testAppEnvIsOverriddenByMethodAttribute(): void
+        {
+            $this->assertSame('production', $_ENV['APP_ENV']);
+            $this->assertSame('production', getenv('APP_ENV'));
+        }
+
+        #[WithEnvironmentVariable('APP_DEBUG', 'true')]
+        public function testAdditionalVariableFromMethodAttribute(): void
+        {
+            $this->assertSame('testing', $_ENV['APP_ENV']);
+            $this->assertSame('true', $_ENV['APP_DEBUG']);
+        }
+    }
+
+When ``$value`` is ``null`` (or omitted), the environment variable is removed for the duration
+of the test:
+
+.. code-block:: php
+    :caption: Removing an environment variable for a test
+
+    #[WithEnvironmentVariable('APP_ENV')]
+    public function testAppEnvIsNotSet(): void
+    {
+        $this->assertFalse(isset($_ENV['APP_ENV']));
+        $this->assertFalse(getenv('APP_ENV'));
+    }
+
+The environment variable is set in both ``$_ENV`` and via ``putenv()``, so it is accessible
+through both ``$_ENV`` and ``getenv()``. After the test, the original state is restored.
+
+When multiple ``WithEnvironmentVariable`` attributes are specified for the same variable name,
+the last one wins.
+
+
 Skipping Tests
 ==============
 
