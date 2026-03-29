@@ -236,6 +236,20 @@ The ``CoversFunction(string $functionName)`` attribute can be used to :ref:`spec
 that a test intends to cover the given function.
 
 
+.. _appendixes.attributes.CoversNamespace:
+
+``CoversNamespace``
+-------------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
+
+The ``CoversNamespace(string $namespace)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>` that a test intends to cover code in the given namespace.
+
+
 .. _appendixes.attributes.CoversNothing:
 
 ``CoversNothing``
@@ -345,6 +359,21 @@ in the context of :ref:`preventing unintentionally covered code <risky-tests.uni
 The ``UsesFunction(string $functionName)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test allows the execution of code in the given global function, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
+
+
+.. _appendixes.attributes.UsesNamespace:
+
+``UsesNamespace``
+-----------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
+
+The ``UsesNamespace(string $namespace)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>` that a test allows the execution of code in the given namespace, but does not intend to cover it.
+This is relevant in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
 Data Provider
 =============
