@@ -37,17 +37,13 @@ the :ref:`command-line <appendixes.cli-options.execution>` or by setting
 ``beStrictAboutCoverageMetadata="true"`` in PHPUnit's
 :ref:`XML configuration file <appendixes.configuration>`.
 
-A test that is attributed with ``PHPUnit\Framework\Attributes\CoversClass``
-or ``PHPUnit\Framework\Attributes\CoversFunction`` and that executes code which
-is not specified using ``PHPUnit\Framework\Attributes\CoversClass``,
-``PHPUnit\Framework\Attributes\CoversFunction``,
-``PHPUnit\Framework\Attributes\UsesClass``, or
-``PHPUnit\Framework\Attributes\UsesFunction`` will be considered risky when this
-check is enabled and the size of the test is either small or unknown.
+A test that has :ref:`code coverage targets <code-coverage.targeting-units-of-code>` (for example ``PHPUnit\Framework\Attributes\CoversClass``) and that executes code which is not specified using a ``Covers*`` or ``Uses*`` attribute will be considered risky when this check is enabled.
 
-Furthermore, by setting ``requireCoverageMetadata="true"`` in PHPUnit's
-:ref:`XML configuration file <appendixes.configuration>`, a test can be considered
-risky when it does not have code coverage metadata.
+This check is not performed for tests attributed with ``#[Medium]`` or ``#[Large]``.
+Medium and large tests typically exercise more code than small, focused unit tests and are therefore more likely to execute code that is not explicitly listed as covered or used.
+
+Furthermore, by setting ``requireCoverageMetadata="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.configuration>`, a test that does not have any code coverage metadata (no ``Covers*`` attribute at all) will be considered risky.
+This check is performed regardless of the test's size.
 
 
 .. _risky-tests.output-during-test-execution:
