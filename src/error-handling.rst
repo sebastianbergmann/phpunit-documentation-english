@@ -125,9 +125,17 @@ Detailed information, for instance which issue was triggered where, is only prin
 Limiting issues to "your code"
 ==============================
 
-The reporting of issues can be limited to "your code", excluding third-party code from directories such as ``vendor``,
-for example. You can configure what you consider "your code" in PHPUnit's XML configuration file
-(see :ref:`appendixes.configuration.source`):
+A common problem is that dependencies in ``vendor`` trigger deprecation warnings, notices, or warnings that clutter your test output.
+The reporting of issues can be limited to "your code" so that you only see issues that originate from code you are responsible for.
+
+First, you need to configure what you consider "your code" using the ``<source>`` element in your XML configuration file (see :ref:`appendixes.configuration.source`).
+Then you can use the following attributes on the ``<source>`` element to filter issues:
+
+* ``ignoreIndirectDeprecations="true"`` ignores ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` triggered by third-party code (e.g. code in ``vendor``)
+* ``restrictNotices="true"`` ignores ``E_NOTICE``, ``E_USER_NOTICE``, and ``E_STRICT`` triggered by third-party code
+* ``restrictWarnings="true"`` ignores ``E_WARNING`` and ``E_USER_WARNING`` triggered by third-party code
+
+Here is a configuration that only reports issues from your own code:
 
 .. literalinclude:: examples/error-handling/deprecation/your-code.xml
    :caption: phpunit.xml
@@ -268,6 +276,13 @@ an ``E_USER_DEPRECATED`` issue is triggered where the deprecation message matche
 regular expression.
 
 This can be used together with the ``#[IgnoreDeprecations]`` attribute to not let the test fail.
+
+.. admonition:: Testing deprecated functionality
+
+   When you deprecate functionality in your code, you want to keep tests for the deprecated code until it is actually removed.
+   Use the ``#[IgnoreDeprecations]`` attribute together with ``expectUserDeprecationMessage()`` on tests that directly exercise deprecated functionality.
+   This ensures the deprecated code still works as expected, the expected deprecation message is verified, and the test is not reported as having triggered a deprecation.
+
 
 .. _error-handling.issue-trigger-resolvers:
 
