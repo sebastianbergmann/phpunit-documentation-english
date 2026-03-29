@@ -21,6 +21,7 @@ Contents:
    fixtures
    test-doubles
    code-coverage
+   testdox
    risky-tests
    error-handling
    extending-phpunit
