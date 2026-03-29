@@ -772,6 +772,8 @@ Any value that is passed from a producer (a depended-upon test) to a consumer
 TestDox
 =======
 
+See :ref:`testdox` for a detailed discussion of the TestDox functionality.
+
 .. _appendixes.attributes.TestDox:
 
 ``TestDox``

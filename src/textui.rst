@@ -321,26 +321,8 @@ PHPUnit supports alternative output formats that replace the default progress an
 TestDox
 ^^^^^^^
 
-The ``--testdox`` option replaces the default result output with TestDox format. TestDox renders test method names as human-readable sentences, providing a behavior-driven view of the test suite:
-
-.. parsed-literal::
-
-    $ ./tools/phpunit --testdox
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    Runtime:       PHP 8.5.3
-    Configuration: /path/to/project/phpunit.xml
-
-    ..                                                                  2 / 2 (100%)
-
-    Time: 00:00.077, Memory: 10.00 MB
-
-    Example (ExampleTest)
-     ✔ Does something
-
-    OK (2 tests, 2 assertions)
-
-The ``--testdox-summary`` option repeats the TestDox output for tests that had errors, failures, or issues at the end of the test run.
+The ``--testdox`` option replaces the default result output with TestDox format.
+See :ref:`testdox` for details.
 
 
 .. _textui.output.alternative-formats.debug:
