@@ -241,3 +241,74 @@ In the example shown above, the ``@codeCoverageIgnore`` annotation is used to ig
 all code of the ``Foo`` class, all code of the ``Bar::foo()`` method, and the single
 line of code with the ``exit;`` statement. The line with the ``print '*';`` statement
 is ignored using ``// @codeCoverageIgnoreStart`` and ``// @codeCoverageIgnoreEnd``.
+
+.. _code-coverage.phpcov:
+
+PHPCOV
+======
+
+`PHPCOV <https://github.com/sebastianbergmann/phpcov>`_ is a command-line tool for working with serialized code coverage data (``*.cov`` files) produced by PHPUnit.
+
+PHPCOV provides two commands: ``merge`` for merging code coverage data from multiple test runs, and ``patch-coverage`` for analyzing the code coverage of changed lines in a patch.
+
+Merging Code Coverage Data
+--------------------------
+
+When tests are run in parallel or across separate processes, each run can produce its own serialized code coverage file using the ``--coverage-php`` option of PHPUnit.
+The ``phpcov merge`` command merges these files and generates a combined code coverage report.
+
+.. code-block:: bash
+
+    phpunit --coverage-php /tmp/coverage/FooTest.cov --filter FooTest
+    phpunit --coverage-php /tmp/coverage/BarTest.cov --filter BarTest
+
+    phpcov merge --html /tmp/coverage-report /tmp/coverage
+
+The ``phpcov merge`` command requires a directory containing ``*.cov`` files as its argument.
+At least one report format must be specified:
+
+- ``--clover <file>`` generates a report in Clover XML format
+- ``--openclover <file>`` generates a report in OpenClover XML format
+- ``--cobertura <file>`` generates a report in Cobertura XML format
+- ``--crap4j <file>`` generates a report in Crap4J XML format
+- ``--html <directory>`` generates a report in HTML format
+- ``--php <file>`` exports serialized code coverage data
+- ``--text <file>`` generates a report in text format
+- ``--xml <directory>`` generates a report in PHPUnit XML format
+
+Multiple report formats can be generated in a single invocation:
+
+.. code-block:: bash
+
+    phpcov merge --html /tmp/html --openclover /tmp/clover.xml /tmp/coverage
+
+The ``--source <directory>`` option can be used to specify the path to the source code when merging on a different machine than where the code coverage data was collected.
+
+By default, the merge command requires that all ``*.cov`` files were created using the same PHP version, the same code coverage driver, and with matching git information.
+These requirements can be relaxed using the following options:
+
+- ``--do-not-require-matching-git-information``
+- ``--do-not-require-matching-php-version``
+- ``--do-not-require-matching-code-coverage-driver``
+
+Patch Coverage
+--------------
+
+The ``phpcov patch-coverage`` command calculates the code coverage for changed lines in a unified diff.
+This is useful, for instance, to determine whether the changes in a commit are covered by tests.
+
+.. code-block:: bash
+
+    git diff HEAD~1 > /tmp/patch.txt
+    phpunit --coverage-php /tmp/coverage.cov
+
+    phpcov patch-coverage /tmp/coverage.cov /tmp/patch.txt
+
+This command requires a serialized code coverage file (``*.cov``) and a patch file in unified diff format as its arguments.
+The ``--path-prefix <prefix>`` option can be used to strip a prefix from paths in the patch file so that they match the paths in the code coverage data.
+
+The exit code indicates the result:
+
+- ``0`` -- all changed executable lines are covered
+- ``1`` -- some changed executable lines are not covered
+- ``2`` -- no changed executable lines were detected (which may indicate a path mismatch)
