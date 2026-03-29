@@ -25,6 +25,9 @@ option on the :ref:`command-line <appendixes.cli-options.execution>` or by setti
 ``beStrictAboutTestsThatDoNotTestAnything="false"`` in
 PHPUnit's :ref:`XML configuration file <appendixes.configuration>`.
 
+Conversely, a test that is attributed with ``PHPUnit\Framework\Attributes\DoesNotPerformAssertions`` but still performs assertions will also be considered risky.
+This check is always active and cannot be disabled.
+
 
 .. _risky-tests.unintentionally-covered-code:
 
@@ -42,8 +45,9 @@ A test that has :ref:`code coverage targets <code-coverage.targeting-units-of-co
 This check is not performed for tests attributed with ``#[Medium]`` or ``#[Large]``.
 Medium and large tests typically exercise more code than small, focused unit tests and are therefore more likely to execute code that is not explicitly listed as covered or used.
 
-Furthermore, by setting ``requireCoverageMetadata="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.configuration>`, a test that does not have any code coverage metadata (no ``Covers*`` attribute at all) will be considered risky.
-This check is performed regardless of the test's size.
+Furthermore, by setting ``requireCoverageMetadata="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.configuration>`, a test that does not define code coverage
+metadata (such as ``CoversClass``, ``CoversMethod``, ``CoversFunction``, ``CoversNothing``, etc.) will be considered risky.
+Unlike the strict coverage check described above, this check is performed regardless of the test's size (``#[Small]``, ``#[Medium]``, or ``#[Large]``).
 
 
 .. _risky-tests.output-during-test-execution:
@@ -60,6 +64,9 @@ by using the ``--disallow-test-output`` option on the
 A test that emits output, for instance by invoking ``print`` in
 either the test code or the tested code, will be considered risky when this
 check is enabled.
+
+Additionally, when this check is enabled, a test will be considered risky if test code or tested code opens output buffers (using ``ob_start()``) but does not close them before the test finishes.
+Similarly, a test will be considered risky if it closes output buffers that it did not open itself.
 
 
 .. _risky-tests.test-execution-timeout:
@@ -101,5 +108,15 @@ can be enabled by using the ``--strict-global-state``
 option on the :ref:`command-line <appendixes.cli-options.execution>` or by setting
 ``beStrictAboutChangesToGlobalState="true"`` in PHPUnit's
 :ref:`XML configuration file <appendixes.configuration>`.
+
+
+.. _risky-tests.test-size-dependencies:
+
+Test Size Dependencies
+======================
+
+A test that depends on a test that is larger than itself will be considered risky.
+For example, a test attributed with ``PHPUnit\Framework\Attributes\Small`` that depends (via ``PHPUnit\Framework\Attributes\Depends`` or ``PHPUnit\Framework\Attributes\DependsExternal``) on a test attributed with ``PHPUnit\Framework\Attributes\Medium`` or ``PHPUnit\Framework\Attributes\Large`` will be considered risky.
+This check is always active and cannot be disabled.
 
 
