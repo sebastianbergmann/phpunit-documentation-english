@@ -565,7 +565,7 @@ Running the test shown above yields the output shown below:
 
 Reports an error identified by ``$message`` if ``$haystack`` does not contain only values of type ``iterable``.
 
-``assertContainsNotOnlyInt()`` is the inverse of this assertion and takes the same arguments.
+``assertContainsNotOnlyIterable()`` is the inverse of this assertion and takes the same arguments.
 
 .. literalinclude:: examples/assertions/ContainsOnlyIterableTest.php
    :caption: Usage of assertContainsOnlyIterable()
