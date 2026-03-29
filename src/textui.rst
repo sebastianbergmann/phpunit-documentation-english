@@ -368,7 +368,7 @@ The following options control what is displayed in the test results section. By 
 - ``--display-errors`` shows details for errors triggered by tests
 - ``--display-all-issues`` enables all of the above
 
-The ``--colors`` option controls the use of colors in terminal output. Accepted values are ``never``, ``auto`` (uses colors when the terminal supports it), and ``always``.
+The ``--colors=<flag>`` option controls the use of colors in terminal output. Accepted values are ``never``, ``auto`` (uses colors when the terminal supports it), and ``always``.
 
 The ``--columns`` option controls the width of the progress output. Use ``--columns max`` to use the full terminal width.
 
