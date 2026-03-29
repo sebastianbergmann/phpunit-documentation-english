@@ -64,9 +64,30 @@ up the objects against which you tested.
 The ``setUp()`` and ``tearDown()`` template methods are run once for each test method
 (and on fresh instances) of the test case class.
 
-One problem with the ``setUp()`` and ``tearDown()`` template methods is that they are called
-even for tests that do not use the test fixture managed by these methods, in the example shown
-above the ``$this->example`` property.
+.. _fixtures.template-methods:
+
+Template Methods
+================
+
+``setUp()`` and ``tearDown()`` are actually two of six template methods that PHPUnit calls during the lifecycle of a test case class.
+Here is the complete execution order::
+
+    setUpBeforeClass()          Once before the first test of the class
+    ├── setUp()                 Before each test
+    │   ├── assertPreConditions()
+    │   │   ├── test method
+    │   │   assertPostConditions()
+    │   tearDown()              After each test
+    tearDownAfterClass()        Once after the last test of the class
+
+``setUpBeforeClass()`` and ``tearDownAfterClass()`` are called once for the entire test case class (see :ref:`Sharing Fixture <fixtures.sharing-fixture>`).
+The other four template methods are called for each test method.
+``assertPreConditions()`` and ``assertPostConditions()`` are explained :ref:`below <fixtures.pre-and-post-conditions>`.
+
+For each of these template methods, an equivalent attribute is available that allows you to configure multiple methods for the same phase, with optional priority ordering.
+See :ref:`Using Attributes Instead of Template Methods <fixtures.attributes>` for details.
+
+One problem with the ``setUp()`` and ``tearDown()`` template methods is that they are called even for tests that do not use the test fixture managed by these methods, in the example shown above the ``$this->example`` property.
 
 Another problem can occur when inheritance comes into play:
 
@@ -102,10 +123,9 @@ Another problem can occur when inheritance comes into play:
         }
     }
 
-If we forget to call ``parent::setUp()`` when implementing ``ExampleTest::setUp()``, the functionality provided
-by ``MyTestCase`` will not work. To reduce this risk, the :ref:`attributes <appendixes.attributes>`
-``PHPUnit\Framework\Attributes\Before`` and ``PHPUnit\Framework\Attributes\After`` are available. With these,
-multiple methods can be configured to be called before and after a test, respectively.
+If we forget to call ``parent::setUp()`` when implementing ``ExampleTest::setUp()``, the functionality provided by ``MyTestCase`` will not work. To reduce this risk, attributes such as ``PHPUnit\Framework\Attributes\Before`` and ``PHPUnit\Framework\Attributes\After`` are available.
+With these, multiple methods can be configured to be called before and after a test, respectively, without having to call ``parent::setUp()``.
+See :ref:`Using Attributes Instead of Template Methods <fixtures.attributes>` for details and examples.
 
 .. _fixtures.more-setup-than-teardown:
 
@@ -125,6 +145,160 @@ of the test object, you may want to ``unset()`` the variables holding those obje
 Objects created within ``setUp()`` (or test methods) that are stored in properties of the
 test object are only automatically garbage collected at the end of the PHP process that
 runs PHPUnit.
+
+.. _fixtures.pre-and-post-conditions:
+
+Pre-Conditions and Post-Conditions
+===================================
+
+The ``assertPreConditions()`` template method is called after ``setUp()`` but before the test method.
+The ``assertPostConditions()`` template method is called after the test method but before ``tearDown()``.
+
+These methods are intended for assertions that are shared by all tests of a test case class.
+Unlike ``setUp()`` and ``tearDown()``, a failure in ``assertPreConditions()`` or ``assertPostConditions()`` is reported as a test failure (not as an error), which means that the failure message will include assertion details.
+
+.. code-block:: php
+    :caption: Using assertPreConditions() and assertPostConditions()
+    :name: fixtures.examples.PreAndPostConditionsTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class SomeTest extends TestCase
+    {
+        private ?SomeObject $object;
+
+        protected function setUp(): void
+        {
+            $this->object = new SomeObject;
+        }
+
+        protected function assertPreConditions(): void
+        {
+            $this->assertTrue($this->object->isReady());
+        }
+
+        protected function assertPostConditions(): void
+        {
+            $this->assertFalse($this->object->hasErrors());
+        }
+
+        protected function tearDown(): void
+        {
+            $this->object = null;
+        }
+
+        public function testSomething(): void
+        {
+            $this->object->doSomething();
+
+            $this->assertSame('expected', $this->object->result());
+        }
+    }
+
+In the example above, ``assertPreConditions()`` verifies the fixture is in a valid state before each test, and ``assertPostConditions()`` verifies that no errors occurred after each test.
+These checks apply to all tests in the class without having to repeat them in each test method.
+
+
+.. _fixtures.attributes:
+
+Using Attributes Instead of Template Methods
+=============================================
+
+For each of the six template methods, PHPUnit provides a corresponding attribute that can be used to mark methods that should be called in the same phase:
+
++------------------------------+------------------------------------------------------------------+
+| Template Method              | Attribute                                                        |
++==============================+==================================================================+
+| ``setUpBeforeClass()``       | :ref:`BeforeClass <appendixes.attributes.BeforeClass>`           |
++------------------------------+------------------------------------------------------------------+
+| ``setUp()``                  | :ref:`Before <appendixes.attributes.Before>`                     |
++------------------------------+------------------------------------------------------------------+
+| ``assertPreConditions()``    | :ref:`PreCondition <appendixes.attributes.PreCondition>`         |
++------------------------------+------------------------------------------------------------------+
+| ``assertPostConditions()``   | :ref:`PostCondition <appendixes.attributes.PostCondition>`       |
++------------------------------+------------------------------------------------------------------+
+| ``tearDown()``               | :ref:`After <appendixes.attributes.After>`                       |
++------------------------------+------------------------------------------------------------------+
+| ``tearDownAfterClass()``     | :ref:`AfterClass <appendixes.attributes.AfterClass>`             |
++------------------------------+------------------------------------------------------------------+
+
+The key advantage of using attributes over template methods is that multiple methods can be configured for the same phase.
+This is especially useful in class hierarchies:
+each class can declare its own hook methods without having to call ``parent::setUp()``, for example.
+
+.. code-block:: php
+    :caption: Using #[Before] and #[After] attributes
+    :name: fixtures.examples.AttributeHooksTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\After;
+    use PHPUnit\Framework\Attributes\Before;
+    use PHPUnit\Framework\TestCase;
+
+    abstract class MyTestCase extends TestCase
+    {
+        #[Before]
+        protected function setUpLogger(): void
+        {
+            // Set up logging for all tests ...
+        }
+
+        #[After]
+        protected function tearDownLogger(): void
+        {
+            // Tear down logging after all tests ...
+        }
+    }
+
+.. code-block:: php
+    :caption: Subclass does not need to call parent::setUp()
+    :name: fixtures.examples.AttributeHooksSubclassTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Before;
+
+    final class MyTest extends MyTestCase
+    {
+        #[Before]
+        protected function setUpFixture(): void
+        {
+            // Set up the fixture for this test class ...
+        }
+
+        public function testSomething(): void
+        {
+            // Both setUpLogger() and setUpFixture() have been called at this point
+            // ...
+        }
+    }
+
+When a test case class has more than one method configured with the same attribute, the test runner assumes that the invocation order does not matter.
+If the order does matter, the attribute's optional ``$priority`` argument can be used to control it: a method with a higher ``$priority`` value is invoked before a method with a lower ``$priority`` value.
+
+.. code-block:: php
+    :caption: Controlling execution order with priorities
+    :name: fixtures.examples.PriorityTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Before;
+    use PHPUnit\Framework\TestCase;
+
+    final class PriorityTest extends TestCase
+    {
+        #[Before(priority: 2)]
+        protected function connectToDatabase(): void
+        {
+            // This runs first (higher priority) ...
+        }
+
+        #[Before(priority: 1)]
+        protected function seedDatabase(): void
+        {
+            // This runs second (lower priority) ...
+        }
+    }
+
 
 .. _fixtures.sharing-fixture:
 
@@ -179,6 +353,8 @@ database after the last test of the test case, respectively.
             self::$dbh = null;
         }
     }
+
+The :ref:`BeforeClass <appendixes.attributes.BeforeClass>` and :ref:`AfterClass <appendixes.attributes.AfterClass>` attributes provide the same functionality as ``setUpBeforeClass()`` and ``tearDownAfterClass()`` but allow multiple methods to be configured for the same phase, with optional priority ordering (see :ref:`Using Attributes Instead of Template Methods <fixtures.attributes>`).
 
 It cannot be emphasized enough that sharing fixtures between tests
 reduces the value of the tests. The underlying design problem is
