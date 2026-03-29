@@ -1433,18 +1433,17 @@ The ``RequiresPhp(string $versionRequirement)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
 when the PHP version used to run PHPUnit does not match the specified version requirement.
 
-``$versionRequirement`` can either be a `version number string <https://www.php.net/manual/en/function.version-compare.php>`_
-that is preceded by an operator supported by PHP's ``version_compare()``
-function or a `version constraint <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_
-in the syntax that is supported by Composer.
+``$versionRequirement`` must be one of the following:
+
+* A version number string preceded by a comparison operator supported by PHP's `version_compare() <https://www.php.net/manual/en/function.version-compare.php>`_ function: ``>=``, ``>``, ``<=``, ``<``, ``==``, or ``!=``
+* A `version constraint <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_ in the syntax supported by Composer (e.g. ``^8.3``, ``~8.3.0``, ``>=8.3 <8.5``)
 
 Here are some examples:
 
-* ``#[RequiresPhp('>= 8.3.0')]``
-* ``#[RequiresPhp('^8.3')]``
+* ``#[RequiresPhp('>= 8.3')]`` — PHP 8.3.0 or newer
+* ``#[RequiresPhp('^8.3')]`` — PHP 8.3.0 or newer, but below 9.0.0 (Composer syntax)
+* ``#[RequiresPhp('~8.3.0')]`` — PHP 8.3.0 or newer, but below 8.4.0 (Composer syntax)
 
- As of PHPUnit 12.4, use of a version requirement without a operator, e.g. `'8.3.0'` is hard-deprecated.
- Using such a requirement will trigger a deprecation warning. Support will be removed in PHPUnit 13.
 
 .. _appendixes.attributes.RequiresPhpExtension:
 
@@ -1501,14 +1500,10 @@ The ``RequiresPhpunit(string $versionRequirement)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
 when the PHPUnit version does not match the specified version requirement.
 
-``$versionRequirement`` can either be a `version number string <https://www.php.net/manual/en/function.version-compare.php>`_
-that is optionally preceded by an operator supported by PHP's ``version_compare()``
-function or a `version constraint <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_
-in the syntax that is supported by Composer.
+``$versionRequirement`` follows the same format that is described :ref:`here <appendixes.attributes.RequiresPhp>`.
 
 Here are some examples:
 
-* ``#[RequiresPhpunit('10.1.0')]``
 * ``#[RequiresPhpunit('>= 10.1.0')]``
 * ``#[RequiresPhpunit('^10.1')]``
 
