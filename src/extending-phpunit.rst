@@ -63,6 +63,108 @@ You can then enhance a concrete test case by using the trait.
    :caption: A concrete test case using a trait with a domain-specific assertion
    :language: php
 
+.. _extending-phpunit.implementing-custom-constraints:
+
+Implementing custom constraints
+================================
+
+You can extend PHPUnit by implementing a custom constraint.
+A custom constraint is a class that extends the ``PHPUnit\Framework\Constraint\Constraint`` class.
+
+A custom constraint must implement two methods:
+
+The ``matches(mixed $other): bool`` method contains the evaluation logic.
+It returns ``true`` when the constraint is met and ``false`` otherwise.
+
+The ``toString(): string`` method returns a string representation of the constraint.
+This string is used in failure messages when an assertion using this constraint fails.
+
+For example, you may want to implement a constraint that checks whether a string is a valid order ID.
+
+.. literalinclude:: examples/extending-phpunit/IsValidOrderId.php
+   :caption: A custom constraint that checks whether a string is a valid order ID
+   :language: php
+
+You can use a custom constraint with ``assertThat()``.
+
+.. literalinclude:: examples/extending-phpunit/IsValidOrderIdTest.php
+   :caption: A test using a custom constraint with assertThat()
+   :language: php
+
+You can optionally override these methods on the ``PHPUnit\Framework\Constraint\Constraint`` class for more control over failure messages:
+
+The ``failureDescription(mixed $other): string`` method returns the description of the failure when the constraint is not met.
+By default, this method combines the string representation of the evaluated value with the string returned by ``toString()``.
+
+The ``additionalFailureDescription(mixed $other): string`` method can be used to provide additional details, such as a diff, in the failure message.
+
+You can find a list of all built-in constraints in the :ref:`appendix <appendixes.assertions.constraints>`.
+
+
+.. _extending-phpunit.implementing-custom-assertions:
+
+Implementing custom assertions
+===============================
+
+You can combine a custom constraint with a trait or abstract test case (as shown :ref:`above <extending-phpunit.extracting-traits>`) to create a reusable custom assertion.
+
+For example, you can wrap the ``IsValidOrderId`` constraint from above in a trait that provides an ``assertStringIsOrderId()`` method.
+
+.. literalinclude:: examples/extending-phpunit/CustomAssertionTrait.php
+   :caption: A trait wrapping a custom constraint into a custom assertion method
+   :language: php
+
+You can then use this trait in a concrete test case.
+
+.. literalinclude:: examples/extending-phpunit/OrderIdGeneratorUsingCustomAssertionTraitTest.php
+   :caption: A concrete test case using a custom assertion backed by a custom constraint
+   :language: php
+
+This approach gives you the best of both worlds: a convenient assertion method for test authors and a well-structured constraint that provides clear failure messages.
+
+
+.. _extending-phpunit.implementing-custom-comparators:
+
+Implementing custom comparators
+================================
+
+A custom comparator controls how ``assertEquals()`` and ``assertNotEquals()`` compare objects of a specific type.
+
+A custom comparator is a class that extends the ``SebastianBergmann\Comparator\Comparator`` class that must implement two methods:
+
+The ``accepts(mixed $expected, mixed $actual): bool`` method returns ``true`` when this comparator can handle the given pair of values.
+
+The ``assertEquals(mixed $expected, mixed $actual, float $delta = 0.0, bool $canonicalize = false, bool $ignoreCase = false): void`` method performs the comparison.
+It must throw a ``SebastianBergmann\Comparator\ComparisonFailure`` exception when the values are not equal.
+
+For example, consider a ``Money`` value object.
+
+.. literalinclude:: examples/extending-phpunit/Money.php
+   :caption: A Money value object
+   :language: php
+
+You may want to implement a comparator that compares ``Money`` objects by their amount and currency.
+
+.. literalinclude:: examples/extending-phpunit/MoneyComparator.php
+   :caption: A custom comparator for Money objects
+   :language: php
+
+You must register a custom comparator with the ``SebastianBergmann\Comparator\Factory`` before it can be used.
+After you are done, you should unregister it again.
+The best place to do this is in a before-test method such as ``setUp()`` and an after-test method such as ``tearDown()`` methods of your test case.
+
+.. literalinclude:: examples/extending-phpunit/MoneyComparatorTest.php
+   :caption: A test registering and using a custom comparator
+   :language: php
+
+Once the custom comparator is registered, it will be used whenever ``assertEquals()`` or ``assertNotEquals()`` is called with two ``Money`` objects.
+
+.. admonition:: Alternative for simple cases
+
+   If your value object has an ``equals()`` method (or a similar method), consider using ``assertObjectEquals()`` instead of implementing a custom comparator.
+   See :ref:`assertObjectEquals() <appendixes.assertions.assertObjectEquals>` for details.
+
+
 .. _extending-phpunit.extending-the-test-runner:
 
 Extending the Test Runner
