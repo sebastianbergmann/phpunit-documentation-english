@@ -48,6 +48,18 @@ You can also run the tests of a specific test source file by passing its path as
 When invoked as shown above, the PHPUnit command-line test runner will look for a :file:`ExampleTest.php` source code file in the current working directory, load it, and expect to find an ``ExampleTest`` test case class. It will then run the tests found in that class.
 
 
+.. _textui.running-tests.phpt:
+
+PHPT tests
+----------
+
+In addition to test classes, PHPUnit's test runner can also execute `PHPT <https://qa.php.net/phpt_details.php>`_ tests.
+PHPT is a simple test format used by the PHP project itself.
+Files with the ``.phpt`` suffix are automatically discovered by the test runner (see the ``--test-suffix`` option in :ref:`appendixes.cli-options.selection`).
+
+This can be useful, for instance, for end-to-end tests of CLI tools or for getting basic regression tests in place for legacy codebases.
+
+
 .. _textui.selecting-tests:
 
 Selecting tests
