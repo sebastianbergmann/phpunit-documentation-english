@@ -364,6 +364,15 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/writing-tests-for-phpunit/OutputTest.php.out
 
+The ``expectOutputRegex()`` method can be used instead of ``expectOutputString()`` when you want to
+match the expected output against a regular expression:
+
+.. code-block:: php
+
+    $this->expectOutputRegex('/foo .+ bar/');
+
+If the generated output does not match the regular expression, the test will be counted as a failure.
+
 
 .. _writing-tests-for-phpunit.testing-error-log:
 
