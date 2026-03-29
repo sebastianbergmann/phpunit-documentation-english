@@ -802,6 +802,34 @@ Creates a mock object with methods already configured to return specific values.
 This is a convenience method for simple cases.
 
 
+.. _test-doubles.mock-objects.reference.creating-mock-objects.createPartialMock:
+
+``createPartialMock()``
+"""""""""""""""""""""""
+
+Creates a mock object for an extendable class where only the specified methods are doubled.
+All other methods retain their original implementation.
+
+.. code-block:: php
+
+   $mock = $this->createPartialMock(
+       ClassName::class,
+       ['methodToDouble']
+   );
+
+   $mock
+       ->expects($this->once())
+       ->method('methodToDouble')
+       ->willReturn('mocked value');
+
+   // $mock->methodToDouble() is expected to be called once
+   // $mock->methodToDouble() returns "mocked value"
+   // All other methods of ClassName execute their real code
+
+This can be useful when you need to test a class but want to replace only specific methods (for example, methods that interact with external systems) while keeping the rest of the class' behavior intact.
+The original constructor is disabled.
+
+
 .. _test-doubles.mock-objects.reference.creating-mock-objects.getMockBuilder:
 
 ``getMockBuilder()``
