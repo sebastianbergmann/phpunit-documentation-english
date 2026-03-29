@@ -1415,6 +1415,9 @@ the last one wins.
 Skipping Tests
 ==============
 
+The ``Requires*`` attributes documented in this section are convenience functionality for replacing custom skip logic in :ref:`before-class or before-test methods <fixtures.template-methods>` for common cases.
+For skip logic that goes beyond what these attributes support, use ``markTestSkipped()`` in a ``setUp()`` or ``setUpBeforeClass()`` method (or in a method configured with the ``#[Before]`` or ``#[BeforeClass]`` attribute).
+
 .. _appendixes.attributes.RequiresPhp:
 
 ``RequiresPhp``

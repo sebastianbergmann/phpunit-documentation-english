@@ -345,6 +345,13 @@ All attributes listed above are declared in the ``PHPUnit\Framework\Attributes``
         }
     }
 
+.. admonition:: Custom Skip Logic
+
+   The ``Requires*`` attributes listed above are convenience functionality for the most common cases.
+   They replace custom skip logic that you would otherwise have to write in :ref:`before-class or before-test methods <fixtures.template-methods>`.
+
+   When you need skip logic that goes beyond what the ``Requires*`` attributes support (for example, skipping a test when an extension *is* available, or when a combination of conditions is met), use ``markTestSkipped()`` in a ``setUp()`` or ``setUpBeforeClass()`` method (or in a method configured with the ``#[Before]`` or ``#[BeforeClass]`` attribute).
+
 
 
 .. _writing-tests-for-phpunit.testing-output:
