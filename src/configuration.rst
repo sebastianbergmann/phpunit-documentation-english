@@ -780,6 +780,17 @@ when reporting of the location where a deprecation was triggered.
 The ``<deprecationTrigger>`` element, together with its child elements ``<function>`` and ``<method>``
 can be used to configure functions or methods, respectively, as deprecation triggers.
 
+The optional ``ignoreUndefinedTriggers`` attribute can be set to ``true`` to suppress the warnings that PHPUnit
+emits when a configured deprecation trigger function or method is not declared. This is useful when the availability
+of a trigger depends on which optional packages are installed.
+
+.. code-block:: xml
+
+    <deprecationTrigger ignoreUndefinedTriggers="true">
+        <function>trigger_deprecation</function>
+        <method>Doctrine\Deprecations\Deprecation::trigger</method>
+    </deprecationTrigger>
+
 .. _appendixes.configuration.source.deprecationTrigger.function:
 
 The ``<function>`` Element
