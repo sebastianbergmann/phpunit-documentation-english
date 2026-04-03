@@ -111,11 +111,15 @@ The **Act** phase calls ``Email::fromString()`` with an invalid email address. I
 
 The ``expectException()`` method **must** be called before the code that is expected to throw the exception. This is why the structure is "Arrange, Expect, Act" and not "Arrange, Act, Assert".
 
-In addition to the ``expectException()`` method, the ``expectExceptionCode()``, ``expectExceptionMessage()``, and ``expectExceptionMessageMatches()`` methods exist to set up expectations for exceptions raised by the code under test.
+In addition to the ``expectException()`` method, the ``expectExceptionCode()``, ``expectExceptionMessageIs()``, ``expectExceptionMessageIsOrContains()``, and ``expectExceptionMessageMatches()`` methods exist to set up expectations for exceptions raised by the code under test.
 
-.. admonition:: Note
+The ``expectExceptionMessageIs()`` method performs an exact string comparison between the expected and actual exception messages.
 
-   Note that ``expectExceptionMessage()`` asserts that the ``$actual`` message contains the ``$expected`` message and does not perform an exact string comparison.
+The ``expectExceptionMessageIsOrContains()`` method asserts that the actual exception message is equal to or contains the expected message. When the expected message is an empty string, it asserts that the actual exception message is also an empty string. Otherwise, it asserts that the actual exception message contains the expected message.
+
+.. admonition:: Deprecated
+
+   The ``expectExceptionMessage()`` method was deprecated in PHPUnit 13.2 and will be removed in PHPUnit 15. Use ``expectExceptionMessageIsOrContains()`` instead.
 
 
 .. _writing-tests-for-phpunit.verifying-side-effects:
