@@ -438,15 +438,19 @@ When a test suite is large, it can be useful to stop execution as soon as a prob
 
 The ``--stop-on-*`` family of options controls this:
 
-- ``--stop-on-defect`` stops after the first error, failure, warning, or risky test
-- ``--stop-on-error`` stops after the first error
-- ``--stop-on-failure`` stops after the first failure
-- ``--stop-on-warning`` stops after the first warning
-- ``--stop-on-risky`` stops after the first risky test
-- ``--stop-on-deprecation`` stops after the first deprecation
-- ``--stop-on-notice`` stops after the first notice
-- ``--stop-on-skipped`` stops after the first skipped test
-- ``--stop-on-incomplete`` stops after the first incomplete test
+- ``--stop-on-defect[=<n>]`` stops after the first (or n-th) error, failure, warning, or risky test
+- ``--stop-on-error[=<n>]`` stops after the first (or n-th) error
+- ``--stop-on-failure[=<n>]`` stops after the first (or n-th) failure
+- ``--stop-on-warning[=<n>]`` stops after the first (or n-th) warning
+- ``--stop-on-risky[=<n>]`` stops after the first (or n-th) risky test
+- ``--stop-on-deprecation[=<n>]`` stops after the first (or n-th) deprecation
+- ``--stop-on-notice[=<n>]`` stops after the first (or n-th) notice
+- ``--stop-on-skipped[=<n>]`` stops after the first (or n-th) skipped test
+- ``--stop-on-incomplete[=<n>]`` stops after the first (or n-th) incomplete test
+
+When used without a value, these options stop execution after the first occurrence. When a threshold
+``n`` is specified (for example, ``--stop-on-failure=3``), execution continues until ``n`` occurrences
+have been encountered.
 
 See :ref:`appendixes.cli-options.execution` for the complete reference.
 

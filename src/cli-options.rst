@@ -143,32 +143,32 @@ Execution
 ``--do-not-report-useless-tests``
    Suppresses reporting of useless tests. A test is considered useless if it does not perform any assertions.
 
-``--stop-on-defect``
-   Stops test execution after the first error, failure, warning, or risky test. This is a shorthand for enabling all specific stop-on options.
+``--stop-on-defect[=<n>]``
+   Stops test execution after the first (or n-th) error, failure, warning, or risky test. This is a shorthand for enabling all specific stop-on options. When used without a value, execution stops after the first defect. When a threshold ``n`` is specified, execution stops after ``n`` defects have been encountered.
 
-``--stop-on-error``
-   Stops test execution after the first test that results in an error.
+``--stop-on-error[=<n>]``
+   Stops test execution after the first (or n-th) test that results in an error.
 
-``--stop-on-failure``
-   Stops test execution after the first test that results in a failure.
+``--stop-on-failure[=<n>]``
+   Stops test execution after the first (or n-th) test that results in a failure.
 
-``--stop-on-warning``
-   Stops test execution after the first test that triggers a warning.
+``--stop-on-warning[=<n>]``
+   Stops test execution after the first (or n-th) test that triggers a warning.
 
-``--stop-on-risky``
-   Stops test execution after the first test that is considered risky.
+``--stop-on-risky[=<n>]``
+   Stops test execution after the first (or n-th) test that is considered risky.
 
-``--stop-on-deprecation``
-   Stops test execution after the first test that triggers a deprecation.
+``--stop-on-deprecation[=<n>]``
+   Stops test execution after the first (or n-th) test that triggers a deprecation.
 
-``--stop-on-notice``
-   Stops test execution after the first test that triggers a notice.
+``--stop-on-notice[=<n>]``
+   Stops test execution after the first (or n-th) test that triggers a notice.
 
-``--stop-on-skipped``
-   Stops test execution after the first skipped test.
+``--stop-on-skipped[=<n>]``
+   Stops test execution after the first (or n-th) skipped test.
 
-``--stop-on-incomplete``
-   Stops test execution after the first incomplete test.
+``--stop-on-incomplete[=<n>]``
+   Stops test execution after the first (or n-th) incomplete test.
 
 ``--fail-on-empty-test-suite``
    Causes PHPUnit to return a failure exit code when no tests were executed. This is useful in CI pipelines to detect misconfigured test suites.
