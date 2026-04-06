@@ -260,6 +260,9 @@ Reporting
 ``--columns max``
    Uses the maximum number of columns available in the terminal for progress output.
 
+``--diff-context <n>``
+   Sets the number of context lines shown around changes in diffs (default: ``3``). When a test fails and PHPUnit displays the difference between the expected and actual values, this option controls how many unchanged lines are displayed before and after each change to provide context.
+
 ``--stderr``
    Writes output to STDERR instead of STDOUT. This can be useful when STDOUT is being redirected or captured.
 

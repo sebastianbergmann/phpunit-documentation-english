@@ -374,6 +374,15 @@ Possible values: integer (default: ``0``)
 
 This attribute configures the default time limit (in seconds).
 
+.. _appendixes.configuration.phpunit.diffContext:
+
+The ``diffContext`` Attribute
+-----------------------------
+
+Possible values: integer (default: ``3``)
+
+This attribute configures the number of context lines shown around changes in diffs.
+
 .. _appendixes.configuration.phpunit.timeoutForSmallTests:
 
 The ``timeoutForSmallTests`` Attribute
