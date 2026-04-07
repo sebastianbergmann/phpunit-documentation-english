@@ -524,6 +524,50 @@ Configures a method to return different values based on the arguments it receive
 
 Each inner array contains the method arguments followed by the return value.
 
+Each parameter position in the value map can be either a literal value (matched with ``===``)
+or a PHPUnit constraint:
+
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+   $stub
+       ->method('doSomething')
+       ->willReturnMap([
+           [$this->greaterThan(5), 'large'],
+           [$this->lessThanOrEqual(5), 'small'],
+       ]);
+
+   // $stub->doSomething(10) returns 'large'
+   // $stub->doSomething(3) returns 'small'
+
+When no entry in the value map matches, ``null`` is returned.
+
+
+.. _test-doubles.test-stubs.reference.configuring-return-values.willReturnStrictMap:
+
+``willReturnStrictMap()``
+"""""""""""""""""""""""""
+
+Works like ``willReturnMap()``, but throws an ``ExpectationFailedException`` when no entry
+in the value map matches the method invocation instead of silently returning ``null``:
+
+.. code-block:: php
+
+   $stub = $this->createStub(InterfaceName::class);
+
+   $stub
+       ->method('doSomething')
+       ->willReturnStrictMap([
+           [1, 'one'],
+           [2, 'two'],
+       ]);
+
+   // $stub->doSomething(1) returns 'one'
+   // $stub->doSomething(99) throws ExpectationFailedException
+
+Like ``willReturnMap()``, constraint objects can be used for parameter matching.
+
 
 .. _test-doubles.test-stubs.reference.configuring-return-values.willReturnCallback:
 
