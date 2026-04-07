@@ -92,6 +92,9 @@ Selection
 ``--list-test-files``
    Lists all test files that would be executed and then exits. No tests are actually run.
 
+``--list-test-ids``
+   Lists all tests that would be executed as test IDs and then exits. A test ID is the fully qualified test name, for example ``PHPUnit\TestFixture\ExampleTest::testOne``. For tests with data sets, a ``#`` suffix is appended with the data set index or name, for example ``PHPUnit\TestFixture\ExampleTest::testOne#0`` or ``PHPUnit\TestFixture\ExampleTest::testOne#named data set``.
+
 ``--list-tests``
    Lists all tests that would be executed and then exits. Each test is shown with its fully qualified name.
 

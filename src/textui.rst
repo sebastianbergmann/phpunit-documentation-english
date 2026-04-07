@@ -141,6 +141,8 @@ Listing tests
 
 The ``--list-tests`` option prints a list of all tests that would be executed without actually running them. This is useful for verifying that your selection options are working as expected.
 
+The ``--list-test-ids`` option prints a list of all tests that would be executed as test IDs (one per line) without actually running them. The output of this option is suitable for use with ``--test-id-filter-file``.
+
 The ``--list-tests-xml`` option writes this list in XML format to a specified file.
 
 See :ref:`appendixes.cli-options.selection` for the complete reference of all test selection options.
