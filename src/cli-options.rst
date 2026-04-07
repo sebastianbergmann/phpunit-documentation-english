@@ -110,6 +110,9 @@ Selection
 ``--test-files-file <file>``
    Only runs tests from the test files listed in the specified file, with one file path per line. This provides an explicit list of test files to execute.
 
+``--test-id-filter-file <file>``
+   Only runs the tests listed by test ID in the specified file, with one test ID per line. A test ID is the fully qualified test name, for example ``PHPUnit\TestFixture\ExampleTest::testOne``.
+
 
 .. _appendixes.cli-options.execution:
 
