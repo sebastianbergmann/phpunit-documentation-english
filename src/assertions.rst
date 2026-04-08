@@ -415,6 +415,25 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/FileEqualsTest.php.out
 
+.. _appendixes.assertions.assertFileEqualsFileIgnoringWhitespace:
+
+``assertFileEqualsFileIgnoringWhitespace()``
+--------------------------------------------
+
+``assertFileEqualsFileIgnoringWhitespace(string $expected, string $actual[, string $message])``
+
+Reports an error identified by ``$message`` if the file specified by ``$expected`` does not have the same contents as the file specified by ``$actual`` (ignoring whitespace differences). All consecutive whitespace is normalized to a single space and leading/trailing whitespace is trimmed before comparison.
+
+``assertFileNotEqualsFileIgnoringWhitespace()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/FileEqualsFileIgnoringWhitespaceTest.php
+   :caption: Usage of assertFileEqualsFileIgnoringWhitespace()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/FileEqualsFileIgnoringWhitespaceTest.php.out
+
 .. _appendixes.assertions.assertArraysAreEqual:
 
 ``assertArraysAreEqual()``
@@ -1399,6 +1418,25 @@ Running the test shown above yields the output shown below:
 
 Reports an error identified by ``$message`` if the two strings ``$expected`` and ``$actual`` are not equal while ignoring line endings.
 
+.. _appendixes.assertions.assertStringEqualsStringIgnoringWhitespace:
+
+``assertStringEqualsStringIgnoringWhitespace()``
+-------------------------------------------------
+
+``assertStringEqualsStringIgnoringWhitespace(string $expected, string $actual[, string $message])``
+
+Reports an error identified by ``$message`` if the two strings ``$expected`` and ``$actual`` are not equal while ignoring whitespace differences. All consecutive whitespace (spaces, tabs, newlines, etc.) is normalized to a single space and leading/trailing whitespace is trimmed before comparison.
+
+``assertStringNotEqualsStringIgnoringWhitespace()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/StringEqualsStringIgnoringWhitespaceTest.php
+   :caption: Usage of assertStringEqualsStringIgnoringWhitespace()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/StringEqualsStringIgnoringWhitespaceTest.php.out
+
 .. _appendixes.assertions.assertMatchesRegularExpression:
 
 ``assertMatchesRegularExpression()``
@@ -1537,6 +1575,25 @@ Reports an error identified by ``$message`` if the file specified by ``$expected
 Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/StringEqualsFileTest.php.out
+
+.. _appendixes.assertions.assertStringEqualsFileIgnoringWhitespace:
+
+``assertStringEqualsFileIgnoringWhitespace()``
+----------------------------------------------
+
+``assertStringEqualsFileIgnoringWhitespace(string $expectedFile, string $actualString[, string $message])``
+
+Reports an error identified by ``$message`` if the file specified by ``$expectedFile`` does not have ``$actualString`` as its contents (ignoring whitespace differences). All consecutive whitespace is normalized to a single space and leading/trailing whitespace is trimmed before comparison.
+
+``assertStringNotEqualsFileIgnoringWhitespace()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/StringEqualsFileIgnoringWhitespaceTest.php
+   :caption: Usage of assertStringEqualsFileIgnoringWhitespace()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/StringEqualsFileIgnoringWhitespaceTest.php.out
 
 .. _appendixes.assertions.json:
 

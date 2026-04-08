@@ -1,0 +1,18 @@
+./tools/phpunit tests/FileEqualsFileIgnoringWhitespaceTest.php
+PHPUnit 13.2.0 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.4
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00, Memory: 25.94 MB
+
+There was 1 failure:
+
+1) FileEqualsFileIgnoringWhitespaceTest::testFailure
+Failed asserting that 'actual' is equal to "expected" ignoring whitespace.
+
+/path/to/tests/FileEqualsFileIgnoringWhitespaceTest.php:8
+
+FAILURES!
+Tests: 1, Assertions: 3, Failures: 1.
