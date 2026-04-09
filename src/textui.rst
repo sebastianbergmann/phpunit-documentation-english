@@ -516,6 +516,8 @@ The ``--order-by`` option controls the order in which tests are executed. Suppor
 
 Multiple values can be combined: ``--order-by defects,random`` runs previously failing tests first, then executes the remaining tests in random order.
 
+Convenience aliases are available: ``--resolve-dependencies`` (for ``--order-by depends``), ``--ignore-dependencies`` (for ``--order-by no-depends``), ``--random-order`` (for ``--order-by random``), and ``--reverse-order`` (for ``--order-by reverse``).
+
 .. parsed-literal::
 
     $ ./tools/phpunit --order-by random --random-order-seed 42
