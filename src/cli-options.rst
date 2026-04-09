@@ -239,8 +239,20 @@ Execution
 ``--order-by <order>``
    Controls the order in which tests are executed. Supported values are ``default``, ``defects``, ``depends``, ``duration``, ``no-depends``, ``random``, ``reverse``, and ``size``. Multiple values can be combined with a comma.
 
+``--resolve-dependencies``
+   Alias for ``--order-by depends``.
+
+``--ignore-dependencies``
+   Alias for ``--order-by no-depends``.
+
+``--random-order``
+   Alias for ``--order-by random``.
+
 ``--random-order-seed <N>``
    Sets the seed for the random number generator when using ``--order-by random``. Using the same seed produces the same test order, which is useful for reproducing failures.
+
+``--reverse-order``
+   Alias for ``--order-by reverse``.
 
 
 .. _appendixes.cli-options.reporting:
