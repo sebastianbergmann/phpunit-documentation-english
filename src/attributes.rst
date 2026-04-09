@@ -1311,6 +1311,10 @@ be run in a separate process.
 The ``RunTestsInSeparateProcesses`` attribute can be used to specify that all tests
 of a test case class should be run in separate processes (one separate process per test).
 
+This attribute is inherited from parent classes: if a parent class is annotated with
+``#[RunTestsInSeparateProcesses]``, all child classes will also run their tests in
+separate processes.
+
 
 .. _appendixes.attributes.RunClassInSeparateProcess:
 
