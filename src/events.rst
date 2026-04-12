@@ -62,15 +62,43 @@ TestRunner
 
 ``PHPUnit\Event\TestRunner\DeprecationTriggered``
 
-    A deprecation in the test runner was triggered
+    PHPUnit itself reports a deprecation about the test runner. This event will be renamed to ``PHPUnit\Event\TestRunner\PhpunitDeprecationTriggered`` in PHPUnit 14.
 
 ``PHPUnit\Event\TestRunner\NoticeTriggered``
 
-    A PHPUnit notice in the test runner was triggered
+    PHPUnit itself reports a notice about the test runner. This event will be renamed to ``PHPUnit\Event\TestRunner\PhpunitNoticeTriggered`` in PHPUnit 14.
 
 ``PHPUnit\Event\TestRunner\WarningTriggered``
 
-    A warning in the test runner was triggered
+    PHPUnit itself reports a warning about the test runner. This event will be renamed to ``PHPUnit\Event\TestRunner\PhpunitWarningTriggered`` in PHPUnit 14.
+
+``PHPUnit\Event\TestRunner\PhpDeprecationTriggered``
+
+    A PHP deprecation (``E_DEPRECATED``) was triggered outside of a test
+
+``PHPUnit\Event\TestRunner\Issue\DeprecationTriggered``
+
+    A deprecation (``E_USER_DEPRECATED``) was triggered outside of a test. This event will be moved to ``PHPUnit\Event\TestRunner\DeprecationTriggered`` in PHPUnit 14.
+
+``PHPUnit\Event\TestRunner\ErrorTriggered``
+
+    An error was triggered outside of a test
+
+``PHPUnit\Event\TestRunner\PhpNoticeTriggered``
+
+    A PHP notice (``E_NOTICE``) was triggered outside of a test
+
+``PHPUnit\Event\TestRunner\Issue\NoticeTriggered``
+
+    A notice (``E_USER_NOTICE``) was triggered outside of a test. This event will be moved to ``PHPUnit\Event\TestRunner\NoticeTriggered`` in PHPUnit 14.
+
+``PHPUnit\Event\TestRunner\PhpWarningTriggered``
+
+    A PHP warning (``E_WARNING``) was triggered outside of a test
+
+``PHPUnit\Event\TestRunner\Issue\WarningTriggered``
+
+    A warning (``E_USER_WARNING``) was triggered outside of a test. This event will be moved to ``PHPUnit\Event\TestRunner\WarningTriggered`` in PHPUnit 14.
 
 ``PHPUnit\Event\TestRunner\ExecutionAborted``
 
