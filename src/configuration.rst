@@ -356,6 +356,15 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether PHPUnit should mark a test as risky when it executes code that is not specified to be covered or used using an attribute.
 
+.. _appendixes.configuration.phpunit.requireCoverageContribution:
+
+The ``requireCoverageContribution`` Attribute
+---------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether PHPUnit should mark a test as risky when it has code coverage targets but does not execute any line of the targeted code.
+
 .. _appendixes.configuration.phpunit.enforceTimeLimit:
 
 The ``enforceTimeLimit`` Attribute

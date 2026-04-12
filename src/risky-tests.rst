@@ -58,6 +58,20 @@ metadata (such as ``CoversClass``, ``CoversMethod``, ``CoversFunction``, ``Cover
 Unlike the strict coverage check described above, this check is performed regardless of the test's size (``#[Small]``, ``#[Medium]``, or ``#[Large]``).
 
 
+.. _risky-tests.no-code-coverage-contribution:
+
+No Code Coverage Contribution
+=============================
+
+PHPUnit can be strict about tests that do not contribute to code coverage. This check
+can be enabled by using the ``--require-coverage-contribution`` option on
+the :ref:`command-line <appendixes.cli-options.execution>` or by setting
+``requireCoverageContribution="true"`` in PHPUnit's
+:ref:`XML configuration file <appendixes.configuration>`.
+
+A test that has :ref:`code coverage targets <code-coverage.targeting-units-of-code>` but does not execute any line of the targeted code will be considered risky when this check is enabled.
+
+
 .. _risky-tests.output-during-test-execution:
 
 Output During Test Execution

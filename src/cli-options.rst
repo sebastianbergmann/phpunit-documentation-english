@@ -134,6 +134,9 @@ Execution
 ``--strict-coverage``
    Enforces strict mode for code coverage metadata. Tests that execute code not declared in their ``#[Covers*]`` or ``#[Uses*]`` metadata will be marked as risky.
 
+``--require-coverage-contribution``
+   Marks tests as risky when they have code coverage targets but do not execute any line of the targeted code.
+
 ``--strict-global-state``
    Enforces strict checking of global state changes. Tests that modify global state (such as global variables, super-globals, or static properties) will be marked as risky.
 
