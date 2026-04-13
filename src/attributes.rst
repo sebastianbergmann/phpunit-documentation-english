@@ -389,9 +389,14 @@ Data Provider
 | no          | yes          | yes        |
 +-------------+--------------+------------+
 
-The ``DataProvider(string $methodName)`` attribute can be used on a test method
-to specify a static method that is declared in the same class as the test method
-as a :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
+The ``DataProvider(string $methodName, bool $validateArgumentCount = true, bool $skipWhenEmpty = false)``
+attribute can be used on a test method to specify a static method that is declared in the same
+class as the test method as a :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
+
+By default, PHPUnit reports an error when a data provider returns no data sets. Setting
+``skipWhenEmpty`` to ``true`` causes the test to be marked as skipped instead. This is useful
+when a data provider legitimately produces no data sets in certain environments, for example
+when the data depends on optional fixtures or platform-specific conditions.
 
 
 .. _appendixes.attributes.DataProviderExternal:
@@ -405,9 +410,12 @@ as a :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
 | no          | yes          | yes        |
 +-------------+--------------+------------+
 
-The ``DataProviderExternal(string $className, string $methodName)`` attribute can be used
-on a test method to specify a static method that is declared in another class as a
-:ref:`data provider <writing-tests-for-phpunit.data-providers>`.
+The ``DataProviderExternal(string $className, string $methodName, bool $validateArgumentCount = true, bool $skipWhenEmpty = false)``
+attribute can be used on a test method to specify a static method that is declared in another
+class as a :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
+
+As with ``DataProvider``, setting ``skipWhenEmpty`` to ``true`` causes the test to be marked
+as skipped when the data provider returns no data sets instead of reporting an error.
 
 
 .. _appendixes.attributes.DataProviderClosure:
