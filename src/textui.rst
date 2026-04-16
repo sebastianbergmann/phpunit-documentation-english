@@ -178,10 +178,11 @@ Configuration
 
 ``--cache-directory <dir>``
 
-    Configure a directory where the PHPUnit test runner can cache data such as test results
-    (required for reordering tests based on previous failures, for instance) or information
-    about tested code as well as test code generated using static analysis (significantly
-    improves performance of code coverage analysis, for instance).
+    Configure a directory where the PHPUnit test runner stores data between test suite
+    runs. The following data is stored in this directory:
+
+    - ``test-results``: Results of the previous test suite run (used for reordering tests based on previous defects or duration with the ``--order-by`` option, for instance; see :ref:`appendixes.configuration.phpunit.cacheResult`)
+    - ``code-coverage``: Results of static analysis of tested code and test code (only written when code coverage reporting is requested; significantly improves performance of code coverage analysis on subsequent runs)
 
 ``--generate-configuration``
 
@@ -397,12 +398,13 @@ Test Result Cache
 
 ``--cache-result``
 
-    Write test results to cache file. This is required for reordering tests based on
-    previous failures, for instance.
+    Write test results to the ``test-results`` cache file. This is required for
+    reordering tests based on previous defects or duration, for instance. See
+    :ref:`appendixes.configuration.phpunit.cacheResult`.
 
 ``--do-not-cache-result``
 
-    Do not write test results to cache file.
+    Do not write test results to the ``test-results`` cache file.
 
 
 Test Order
@@ -579,7 +581,10 @@ Code Coverage
 
 ``--warm-coverage-cache``
 
-    Warm cache for static analysis that is needed for code coverage reporting.
+    Perform static analysis of tested code and test code ahead of time and store the result
+    in the ``code-coverage`` cache directory. Without this option, the static analysis that
+    is needed for code coverage reporting is performed on the fly during the test suite run
+    and the result is then stored in the cache.
 
 ``--coverage-filter <dir>``
 
