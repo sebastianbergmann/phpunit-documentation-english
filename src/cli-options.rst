@@ -36,7 +36,10 @@ Configuration
    Sets a ``php.ini`` configuration value for the duration of the test run. For boolean settings, the value can be omitted to set it to ``1``.
 
 ``--cache-directory <dir>``
-   Specifies the directory where PHPUnit stores its cache files. This includes the result cache and static analysis cache used for code coverage.
+   Specifies the directory where PHPUnit stores data between test suite runs. The following data is stored in this directory:
+
+   - ``test-results``: Results of the previous test suite run (used for reordering tests based on previous defects or duration with the ``--order-by`` option, for instance)
+   - ``code-coverage``: Results of static analysis of tested code and test code (only written when code coverage reporting is requested; significantly improves performance of code coverage analysis on subsequent runs)
 
 ``--generate-configuration``
    Generates a ``phpunit.xml`` configuration file with suggested settings through an interactive wizard. This is a convenient way to bootstrap a new PHPUnit configuration.
@@ -231,10 +234,10 @@ Execution
    Disables the signaling of failure when a test is marked incomplete. This overrides the corresponding XML configuration setting.
 
 ``--cache-result``
-   Enables writing of test results to the cache file. The result cache is used by the ``--order-by defects`` option to prioritize previously failing tests.
+   Enables writing of test results to the ``test-results`` cache file. The result cache is used by the ``--order-by defects`` and ``--order-by duration`` options to reorder tests based on results of previous test suite runs.
 
 ``--do-not-cache-result``
-   Disables writing of test results to the cache file. This overrides the corresponding XML configuration setting.
+   Disables writing of test results to the ``test-results`` cache file. This overrides the corresponding XML configuration setting.
 
 ``--order-by <order>``
    Controls the order in which tests are executed. Supported values are ``default``, ``defects``, ``depends``, ``duration``, ``no-depends``, ``random``, ``reverse``, and ``size``. Multiple values can be combined with a comma.
@@ -406,7 +409,7 @@ Code Coverage
    Excludes the ``<source>`` element from the XML coverage report. This reduces the size of the generated XML files by omitting source code.
 
 ``--warm-coverage-cache``
-   Warms the static analysis cache used for code coverage. Running this before the actual test run can improve coverage collection performance.
+   Performs static analysis of tested code and test code ahead of time and stores the result in the ``code-coverage`` cache directory. Without this option, the static analysis that is needed for code coverage reporting is performed on the fly during the test suite run and the result is then stored in the cache.
 
 ``--coverage-filter <dir>``
    Adds the specified directory to the code coverage filter. Only files within filtered directories will be included in the coverage report.
