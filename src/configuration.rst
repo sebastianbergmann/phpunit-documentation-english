@@ -45,8 +45,11 @@ This attribute configures the bootstrap script that is loaded before the tests a
 The ``cacheDirectory`` Attribute
 --------------------------------
 
-This attribute configures the directory in which PHPUnit caches information such as test results (see below)
-or the result of static code analysis that is performed for code coverage reporting.
+This attribute configures the directory in which PHPUnit stores data between test suite runs.
+The following data is stored in this directory:
+
+- ``test-results``: Results of the previous test suite run (used for reordering tests based on previous defects or duration, for instance; see below)
+- ``code-coverage``: Results of static analysis of tested code and test code (only written when code coverage reporting is requested; significantly improves performance of code coverage analysis on subsequent runs)
 
 .. _appendixes.configuration.phpunit.cacheResult:
 
@@ -55,7 +58,9 @@ The ``cacheResult`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
-This attribute configures the caching of test results. This caching is required for ordering tests by defects or duration with the ``executionOrder`` attribute (see :ref:`appendixes.configuration.phpunit.executionOrder`).
+This attribute configures the storing of test results in the ``test-results`` cache file. This is required for ordering tests by defects or duration with the ``executionOrder`` attribute (see :ref:`appendixes.configuration.phpunit.executionOrder`).
+
+Use ``--do-not-cache-result`` on the command line or set this attribute to ``false`` to prevent the writing of the ``test-results`` cache file.
 
 .. _appendixes.configuration.phpunit.colors:
 
@@ -453,7 +458,7 @@ Using multiple values is possible. These need to be separated by ``,``.
 
 This attribute configures the order in which tests are executed.
 
-- ``default``: ordered as PHPUnit found the tests
+- ``default``: ordered in the order in which PHPUnit found the tests (does not use the result cache)
 - ``defects``: ordered by defect (errored, failed, warning, incomplete, risky, skipped, unknown, passed), requires enabled :ref:`result cache<appendixes.configuration.phpunit.cacheResult>`
 - ``depends``: ordered by dependency (tests without dependencies first, dependent tests last)
 - ``depends,defects``: ordered by dependency first, then ordered by defects
