@@ -222,21 +222,45 @@ Selection
 
 ``--group <name>``
 
-    Run only the tests from the specified group. The ``--group`` option can be used multiple times to select multiple groups for test execution.
+    Run only the tests from the specified group. The ``--group`` option can be used multiple
+    times to select multiple groups for test execution.
+
+.. admonition:: Deprecation: Comma-Separated Values
+
+   Using comma-separated values with ``--group`` (for example ``--group foo,bar``) is
+   deprecated and will no longer work in PHPUnit 12. Use ``--group foo --group bar`` instead.
 
 ``--exclude-group <name>``
 
-    Run all tests, except for tests from the specified group. The ``--exclude-group`` option can be used multiple times to exclude multiple groups from test execution.
+    Run all tests, except for tests from the specified group. The ``--exclude-group`` option
+    can be used multiple times to exclude multiple groups from test execution.
+
+.. admonition:: Deprecation: Comma-Separated Values
+
+   Using comma-separated values with ``--exclude-group`` is deprecated and will no longer
+   work in PHPUnit 12. Use ``--exclude-group foo --exclude-group bar`` instead.
 
 ``--covers <name>``
 
     Only run tests that intend to cover ``<name>`` and use code coverage metadata such as
-    ``PHPUnit\Framework\Attributes\CoversClass`` to document this.
+    ``PHPUnit\Framework\Attributes\CoversClass`` to document this. The ``--covers`` option
+    can be used multiple times.
+
+.. admonition:: Deprecation: Comma-Separated Values
+
+   Using comma-separated values with ``--covers`` is deprecated and will no longer work in
+   PHPUnit 12. Use ``--covers Foo --covers Bar`` instead.
 
 ``--uses <name>``
 
     Only run tests that intend to use ``<name>`` and use code coverage metadata such as
-    ``PHPUnit\Framework\Attributes\UsesClass`` to document this.
+    ``PHPUnit\Framework\Attributes\UsesClass`` to document this. The ``--uses`` option can
+    be used multiple times.
+
+.. admonition:: Deprecation: Comma-Separated Values
+
+   Using comma-separated values with ``--uses`` is deprecated and will no longer work in
+   PHPUnit 12. Use ``--uses Foo --uses Bar`` instead.
 
 ``--requires-php-extension <name>``
 
@@ -256,9 +280,15 @@ Selection
     ``--filter <pattern>`` may be used multiple times and then combines the individual
     filters into a single filter using a *logical and*.
 
-``--test-suffix <suffixes>``
+``--test-suffix <suffix>``
 
-    Only search for tests in files with specified suffix(es). Default: ``Test.php``, ``.phpt``.
+    Only search for tests in files with the specified suffix. Default suffixes: ``Test.php``
+    and ``.phpt``. The ``--test-suffix`` option can be used multiple times.
+
+.. admonition:: Deprecation: Comma-Separated Values
+
+   Using comma-separated values with ``--test-suffix`` is deprecated and will no longer work
+   in PHPUnit 12. Use ``--test-suffix Test.php --test-suffix .phpt`` instead.
 
 
 Execution
