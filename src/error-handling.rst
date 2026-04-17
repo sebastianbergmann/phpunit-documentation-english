@@ -128,7 +128,7 @@ Limiting issues to "your code"
 A common problem is that dependencies in ``vendor`` trigger deprecation warnings, notices, or warnings that clutter your test output.
 The reporting of issues can be limited to "your code" so that you only see issues that originate from code you are responsible for.
 
-First, you need to configure what you consider "your code" using the ``<source>`` element in your XML configuration file (see :ref:`appendixes.configuration.source`).
+First, you need to configure what you consider "your code" using the ``<source>`` element in your XML configuration file (see :ref:`appendixes.xml-configuration-file.source`).
 Then you can use the following attributes on the ``<source>`` element to filter issues:
 
 * ``ignoreIndirectDeprecations="true"`` ignores ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` triggered by third-party code (e.g. code in ``vendor``)
@@ -186,11 +186,11 @@ As you can see in the output shown above, deprecations triggered by third-party 
 The following attributes can be used on the ``<source>`` element to configure how PHPUnit
 uses the information what your code is:
 
-* :ref:`appendixes.configuration.source.ignoreSelfDeprecations` setting can be used to ignore deprecations triggered by first-party code in first-party code
-* :ref:`appendixes.configuration.source.ignoreDirectDeprecations` setting can be used to ignore deprecations triggered by first-party code in third-party code
-* :ref:`appendixes.configuration.source.ignoreIndirectDeprecations` setting can be used to ignore deprecations triggered by third-party code
-* :ref:`appendixes.configuration.source.restrictNotices` setting can be used to ignore notices in third-party code
-* :ref:`appendixes.configuration.source.restrictWarnings` setting can be used to ignore warnings in third-party code
+* :ref:`appendixes.xml-configuration-file.source.ignoreSelfDeprecations` setting can be used to ignore deprecations triggered by first-party code in first-party code
+* :ref:`appendixes.xml-configuration-file.source.ignoreDirectDeprecations` setting can be used to ignore deprecations triggered by first-party code in third-party code
+* :ref:`appendixes.xml-configuration-file.source.ignoreIndirectDeprecations` setting can be used to ignore deprecations triggered by third-party code
+* :ref:`appendixes.xml-configuration-file.source.restrictNotices` setting can be used to ignore notices in third-party code
+* :ref:`appendixes.xml-configuration-file.source.restrictWarnings` setting can be used to ignore warnings in third-party code
 
 
 Ignoring issue suppression
@@ -203,12 +203,12 @@ default progress and result printers.
 The suppression of issues using the suppression operator (``@``) can be ignored by configuration settings
 in PHPUnit's XML configuration file:
 
-* :ref:`appendixes.configuration.source.ignoreSuppressionOfDeprecations` setting can be used to ignore the suppression of ``E_USER_DEPRECATED`` issues
-* :ref:`appendixes.configuration.source.ignoreSuppressionOfPhpDeprecations` setting can be used to ignore the suppression of ``E_DEPRECATED`` issues
-* :ref:`appendixes.configuration.source.ignoreSuppressionOfNotices` setting can be used to ignore the suppression of ``E_USER_NOTICES`` issues
-* :ref:`appendixes.configuration.source.ignoreSuppressionOfPhpNotices` setting can be used to ignore the suppression of ``E_NOTICE`` and ``E_STRICT`` issues
-* :ref:`appendixes.configuration.source.ignoreSuppressionOfWarnings` setting can be used to ignore the suppression of ``E_USER_WARNING`` issues
-* :ref:`appendixes.configuration.source.ignoreSuppressionOfPhpWarnings` setting can be used to ignore the suppression of ``E_WARNING`` issues
+* :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfDeprecations` setting can be used to ignore the suppression of ``E_USER_DEPRECATED`` issues
+* :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfPhpDeprecations` setting can be used to ignore the suppression of ``E_DEPRECATED`` issues
+* :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfNotices` setting can be used to ignore the suppression of ``E_USER_NOTICES`` issues
+* :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfPhpNotices` setting can be used to ignore the suppression of ``E_NOTICE`` and ``E_STRICT`` issues
+* :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfWarnings` setting can be used to ignore the suppression of ``E_USER_WARNING`` issues
+* :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfPhpWarnings` setting can be used to ignore the suppression of ``E_WARNING`` issues
 
 
 Ignoring previously reported issues
@@ -238,7 +238,7 @@ will write a list of all issues that are triggered to an XML file:
     Baseline written to /path/to/example/baseline.xml.
 
 When you run your test suite using the ``--use-baseline`` CLI option (or if you have configured a baseline
-in your XML configuration file for PHPUnit using the :ref:`appendixes.configuration.source.baseline` setting)
+in your XML configuration file for PHPUnit using the :ref:`appendixes.xml-configuration-file.source.baseline` setting)
 then PHPUnit's test runner will use this list of already known issues to ignore them for the current run:
 
 .. parsed-literal::
@@ -289,7 +289,7 @@ This can be used together with the ``#[IgnoreDeprecations]`` attribute to not le
 Custom Issue Trigger Resolvers
 ==============================
 
-While the ``<deprecationTrigger>`` element (see :ref:`appendixes.configuration.source.deprecationTrigger`) allows you to
+While the ``<deprecationTrigger>`` element (see :ref:`appendixes.xml-configuration-file.source.deprecationTrigger`) allows you to
 configure functions and methods that act as wrappers around ``trigger_error()``, some frameworks require more
 sophisticated logic to determine the correct caller and callee for issue classification. For these cases, PHPUnit
 supports custom issue trigger resolvers.
@@ -383,7 +383,7 @@ Registering a custom resolver
 ------------------------------
 
 Custom resolvers are registered in PHPUnit's XML configuration file using the
-``<issueTriggerResolvers>`` element inside ``<source>`` (see :ref:`appendixes.configuration.source.issueTriggerResolvers`):
+``<issueTriggerResolvers>`` element inside ``<source>`` (see :ref:`appendixes.xml-configuration-file.source.issueTriggerResolvers`):
 
 .. code-block:: xml
 

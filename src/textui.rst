@@ -583,7 +583,7 @@ These logfiles are commonly used for CI tool integration and reporting.
 
 The ``--testdox-html`` and ``--testdox-text`` options write a report to a file; they are not intended to replace or augment the console output. For TestDox-formatted console output use ``--testdox`` (see :ref:`textui.output.alternative-formats.testdox`).
 
-Logging can also be configured in the XML configuration file (see :ref:`appendixes.configuration.logging`).
+Logging can also be configured in the XML configuration file (see :ref:`appendixes.xml-configuration-file.logging`).
 
 The ``--no-logging`` option ignores all logging configured in the XML configuration file.
 

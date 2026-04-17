@@ -33,8 +33,9 @@ Contents:
 
    assertions
    attributes
-   cli-options
    configuration
+   cli-options
+   xml-configuration-file
    events
    copyright
 
