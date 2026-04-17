@@ -761,6 +761,15 @@ Possible values: string (default: ``'.php'``)
 
 Configures a suffix-based filter that is applied to the names of files in the directory and its sub-directories.
 
+The ``includeInCodeCoverage`` Attribute
+***************************************
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+Only meaningful when the ``<directory>`` element is a child of ``<include>``.
+
+When set to ``false``, the files in the directory and its sub-directories are part of the project's source code files (for example, for the purpose of reporting deprecations triggered in them) but are not considered for code coverage analysis.
+
 
 .. _appendixes.xml-configuration-file.source.file:
 
@@ -770,6 +779,16 @@ The ``<file>`` Element
 Parent elements: ``<include>``, ``<exclude>``
 
 Configures a file for inclusion in or exclusion from the list of the project's source code files.
+
+The ``includeInCodeCoverage`` Attribute
+***************************************
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+Only meaningful when the ``<file>`` element is a child of ``<include>``.
+
+When set to ``false``, the file is part of the project's source code files (for example, for the purpose of reporting deprecations triggered in it) but is not considered for code coverage analysis.
+
 
 .. _appendixes.xml-configuration-file.source.deprecationTrigger:
 
@@ -784,6 +803,15 @@ when reporting of the location where a deprecation was triggered.
 
 The ``<deprecationTrigger>`` element, together with its child elements ``<function>`` and ``<method>``
 can be used to configure functions or methods, respectively, as deprecation triggers.
+
+The ``ignoreUndefinedTriggers`` Attribute
+*****************************************
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+When set to ``true``, functions and methods configured as deprecation triggers that are not defined at the time the configuration is loaded are silently ignored instead of causing a test runner warning.
+
+This is useful, for instance, when a deprecation trigger is provided by a library that is only installed as a development dependency in some projects.
 
 .. _appendixes.xml-configuration-file.source.deprecationTrigger.function:
 
@@ -1147,7 +1175,11 @@ Configures a code coverage report in HTML format.
 The ``outputDirectory`` Attribute
 +++++++++++++++++++++++++++++++++
 
+Possible values: string
+
 The directory to which the HTML report is written.
+
+When this attribute is not set, the ``--coverage-html`` :ref:`command-line option <appendixes.cli-options.code-coverage>` must be used to specify the output directory.
 
 The ``lowUpperBound`` Attribute
 +++++++++++++++++++++++++++++++
@@ -1166,37 +1198,128 @@ The lower bound of what should be considered "high coverage".
 The ``colorSuccessHigh`` Attribute
 ++++++++++++++++++++++++++++++++++
 
-Possible values: string (default: ``#99cb84``)
+Possible values: string (default: ``#8cb4d5``)
 
 The color used to indicate that a line of code is covered by small (and larger) tests, for instance.
 
 The ``colorSuccessMedium`` Attribute
 ++++++++++++++++++++++++++++++++++++
 
-Possible values: string (default: ``#c3e3b5``)
+Possible values: string (default: ``#b3d1e8``)
 
 The color used to indicate that a line of code is covered by medium (and large) tests, for instance.
 
 The ``colorSuccessLow`` Attribute
 +++++++++++++++++++++++++++++++++
 
-Possible values: string (default: ``#dff0d8``)
+Possible values: string (default: ``#d6e6f2``)
 
 The color used to indicate that a line of code is covered by large tests, for instance.
+
+The ``colorSuccessBar`` Attribute
++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#1a73b4``)
+
+The color used for the "success" portion of coverage progress bars.
 
 The ``colorWarning`` Attribute
 ++++++++++++++++++++++++++++++
 
-Possible values: string (default: ``#fcf8e3``)
+Possible values: string (default: ``#fdf0d5``)
 
 The color used to indicate that a line of code cannot be covered, for instance.
+
+The ``colorWarningBar`` Attribute
++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#e5a100``)
+
+The color used for the "warning" portion of coverage progress bars.
 
 The ``colorDanger`` Attribute
 ++++++++++++++++++++++++++++++
 
-Possible values: string (default: ``#f2dede``)
+Possible values: string (default: ``#fad4c0``)
 
 The color used to indicate that a line of code can be covered but is not covered, for instance.
+
+The ``colorDangerBar`` Attribute
+++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#d45500``)
+
+The color used for the "danger" portion of coverage progress bars.
+
+The ``colorBreadcrumbs`` Attribute
+++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``var(--bs-gray-200)``)
+
+The color used for the breadcrumb navigation in the HTML report.
+
+The ``colorSuccessHighDark`` Attribute
+++++++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#2a4a6b``)
+
+The dark-mode variant of ``colorSuccessHigh``.
+
+The ``colorSuccessMediumDark`` Attribute
+++++++++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#2d4f6e``)
+
+The dark-mode variant of ``colorSuccessMedium``.
+
+The ``colorSuccessLowDark`` Attribute
++++++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#1e3550``)
+
+The dark-mode variant of ``colorSuccessLow``.
+
+The ``colorSuccessBarDark`` Attribute
++++++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#1560a0``)
+
+The dark-mode variant of ``colorSuccessBar``.
+
+The ``colorWarningDark`` Attribute
+++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#3d3010``)
+
+The dark-mode variant of ``colorWarning``.
+
+The ``colorWarningBarDark`` Attribute
++++++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#b88a00``)
+
+The dark-mode variant of ``colorWarningBar``.
+
+The ``colorDangerDark`` Attribute
++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#4a2a10``)
+
+The dark-mode variant of ``colorDanger``.
+
+The ``colorDangerBarDark`` Attribute
+++++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``#b54400``)
+
+The dark-mode variant of ``colorDangerBar``.
+
+The ``colorBreadcrumbsDark`` Attribute
+++++++++++++++++++++++++++++++++++++++
+
+Possible values: string (default: ``var(--bs-gray-800)``)
+
+The dark-mode variant of ``colorBreadcrumbs``.
 
 The ``customCssFile`` Attribute
 +++++++++++++++++++++++++++++++
