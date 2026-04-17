@@ -23,7 +23,7 @@ perform assertions and do not configure expectations on mock objects.
 This check can be disabled by using the ``--do-not-report-useless-tests``
 option on the :ref:`command-line <appendixes.cli-options.execution>` or by setting
 ``beStrictAboutTestsThatDoNotTestAnything="false"`` in
-PHPUnit's :ref:`XML configuration file <appendixes.configuration>`.
+PHPUnit's :ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
 Conversely, a test that is attributed with ``PHPUnit\Framework\Attributes\DoesNotPerformAssertions`` but still performs assertions will also be considered risky.
 This check is always active and cannot be disabled.
@@ -34,7 +34,7 @@ This check is always active and cannot be disabled.
 Unsealed Mock Objects
 =====================
 
-By setting ``requireSealedMockObjects="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.configuration.phpunit.requireSealedMockObjects>`, you can configure PHPUnit to consider a test risky when it does not seal the mock objects it creates (see :ref:`test-doubles.mock-objects.requiring-sealed-mock-objects`).
+By setting ``requireSealedMockObjects="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.xml-configuration-file.phpunit.requireSealedMockObjects>`, you can configure PHPUnit to consider a test risky when it does not seal the mock objects it creates (see :ref:`test-doubles.mock-objects.requiring-sealed-mock-objects`).
 
 
 .. _risky-tests.unintentionally-covered-code:
@@ -46,14 +46,14 @@ PHPUnit can be strict about unintentionally covered code. This check
 can be enabled by using the ``--strict-coverage`` option on
 the :ref:`command-line <appendixes.cli-options.execution>` or by setting
 ``beStrictAboutCoverageMetadata="true"`` in PHPUnit's
-:ref:`XML configuration file <appendixes.configuration>`.
+:ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
 A test that has :ref:`code coverage targets <code-coverage.targeting-units-of-code>` (for example ``PHPUnit\Framework\Attributes\CoversClass``) and that executes code which is not specified using a ``Covers*`` or ``Uses*`` attribute will be considered risky when this check is enabled.
 
 This check is not performed for tests attributed with ``#[Medium]`` or ``#[Large]``.
 Medium and large tests typically exercise more code than small, focused unit tests and are therefore more likely to execute code that is not explicitly listed as covered or used.
 
-Furthermore, by setting ``requireCoverageMetadata="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.configuration>`, a test that does not define code coverage
+Furthermore, by setting ``requireCoverageMetadata="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.xml-configuration-file>`, a test that does not define code coverage
 metadata (such as ``CoversClass``, ``CoversMethod``, ``CoversFunction``, ``CoversNothing``, etc.) will be considered risky.
 Unlike the strict coverage check described above, this check is performed regardless of the test's size (``#[Small]``, ``#[Medium]``, or ``#[Large]``).
 
@@ -67,7 +67,7 @@ PHPUnit can be strict about output during tests. This check can be enabled
 by using the ``--disallow-test-output`` option on the
 :ref:`command-line <appendixes.cli-options.execution>` or by setting
 ``beStrictAboutOutputDuringTests="true"`` in PHPUnit's
-:ref:`XML configuration file <appendixes.configuration>`.
+:ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
 A test that emits output, for instance by invoking ``print`` in
 either the test code or the tested code, will be considered risky when this
@@ -85,25 +85,25 @@ Test Execution Timeout
 PHPUnit can enforce a time limit for the execution of a test when the ``pcntl`` extension
 is available. The enforcing of this time limit can be enabled by using the
 ``--enforce-time-limit`` option on the :ref:`command-line <appendixes.cli-options.execution>`
-or by setting ``enforceTimeLimit="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.configuration>`.
+or by setting ``enforceTimeLimit="true"`` in PHPUnit's :ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
 A test that is attributed with ``PHPUnit\Framework\Attributes\Large``
 (or annotated with ``@large``) will be considered risky when it takes
 longer than 60 seconds to run. This timeout is configurable via the
 ``timeoutForLargeTests`` attribute in the
-:ref:`XML configuration file <appendixes.configuration>`.
+:ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
 A test that is attributed with ``PHPUnit\Framework\Attributes\Medium``
 (or annotated with ``@medium``) will be considered risky when it takes
 longer than 10 seconds to run. This timeout is configurable via the
 ``timeoutForMediumTests`` attribute in the
-:ref:`XML configuration file <appendixes.configuration>`.
+:ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
 A test that is attributed with ``PHPUnit\Framework\Attributes\Small``
 (or annotated with ``@small``) will be considered risky when it takes
 longer than 1 second to run. This timeout is configurable via the
 ``timeoutForSmallTests`` attribute in the
-:ref:`XML configuration file <appendixes.configuration>`.
+:ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
 
 .. _risky-tests.global-state-manipulation:
@@ -115,7 +115,7 @@ PHPUnit can be strict about tests that manipulate global state. This check
 can be enabled by using the ``--strict-global-state``
 option on the :ref:`command-line <appendixes.cli-options.execution>` or by setting
 ``beStrictAboutChangesToGlobalState="true"`` in PHPUnit's
-:ref:`XML configuration file <appendixes.configuration>`.
+:ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
 
 .. _risky-tests.test-size-dependencies:

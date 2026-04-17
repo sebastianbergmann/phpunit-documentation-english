@@ -723,14 +723,14 @@ When users of your extension prefer to install PHPUnit as a Composer package, it
 Registering an extension
 ------------------------
 
-You can register one or more PHPUnit extensions from PHARs or from Composer package using the :ref:`extensions <appendixes.configuration.extensions>`, :ref:`bootstrap <appendixes.configuration.extensions.bootstrap>`, and :ref:`parameters <appendixes.configuration.extensions.extension.arguments>` elements of the :ref:`PHPUnit XML configuration file <appendixes.configuration>`.
+You can register one or more PHPUnit extensions from PHARs or from Composer package using the :ref:`extensions <appendixes.xml-configuration-file.extensions>`, :ref:`bootstrap <appendixes.xml-configuration-file.extensions.bootstrap>`, and :ref:`parameters <appendixes.xml-configuration-file.extensions.extension.arguments>` elements of the :ref:`PHPUnit XML configuration file <appendixes.xml-configuration-file>`.
 
 Registering an extension from a PHAR
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When you install PHPUnit as a PHAR, it is best to load extensions from a PHAR.
 
-You can use the :ref:`extensionsDirectory <appendixes.configuration.phpunit.extensionsDirectory>` attribute of the :ref:`phpunit <appendixes.configuration.phpunit>` element to configure the directory from which PHPUnit should load extensions as a PHAR.
+You can use the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute of the :ref:`phpunit <appendixes.xml-configuration-file.phpunit>` element to configure the directory from which PHPUnit should load extensions as a PHAR.
 
 .. literalinclude:: examples/extending-phpunit/phpunit-phar.xml
    :caption: An XML configuration registering an ExampleExtension with parameters, loaded from an extensions directory
@@ -741,7 +741,7 @@ Registering an extension from a Composer package
 
 When you install PHPUnit as a Composer package, it is best to load extensions from Composer packages.
 
-You do not need to configure the :ref:`extensionsDirectory <appendixes.configuration.phpunit.extensionsDirectory>` attribute, as extensions from Composer packages will be available through the autoloading mechanism of Composer.
+You do not need to configure the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute, as extensions from Composer packages will be available through the autoloading mechanism of Composer.
 
 .. literalinclude:: examples/extending-phpunit/phpunit-composer.xml
    :caption: An XML configuration registering an ExampleExtension with parameters
