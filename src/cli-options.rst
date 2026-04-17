@@ -105,7 +105,7 @@ Selection
    Lists all tests that would be executed in XML format and writes the output to the specified file. No tests are actually run.
 
 ``--filter <pattern>``
-   Selects tests whose name matches ``<pattern>``. In addition to full PCRE regular expressions, a shortcut syntax is accepted for selecting individual data sets (``testFoo#3``, ``testFoo#1-3``, ``testFoo@named set``). See :ref:`textui.selecting-tests.filter` for the full syntax.
+   Selects tests whose name matches ``<pattern>``. In addition to full PCRE regular expressions, a shortcut syntax is accepted for selecting individual data sets (``testFoo#3``, ``testFoo#1-3``, ``testFoo@named set``, ``testFoo#named set``). See :ref:`textui.selecting-tests.filter` for the full syntax.
 
 ``--exclude-filter <pattern>``
    The inverse of ``--filter``; accepts the same pattern syntax and removes matching tests from the run.
@@ -115,6 +115,9 @@ Selection
 
 ``--test-files-file <file>``
    Only runs tests from the test files listed in the specified file, with one file path per line. This provides an explicit list of test files to execute.
+
+``--run-test-id <test-id>``
+   Only runs the single test identified by ``<test-id>``. Matching is strict and exact. A test ID is the fully qualified test name, for example ``PHPUnit\TestFixture\ExampleTest::testOne``. For tests with data sets, a ``#`` suffix is appended with the data set index or name, for example ``PHPUnit\TestFixture\ExampleTest::testOne#0`` or ``PHPUnit\TestFixture\ExampleTest::testOne#named data set``.
 
 ``--test-id-filter-file <file>``
    Only runs the tests listed by test ID in the specified file, with one test ID per line. A test ID is the fully qualified test name, for example ``PHPUnit\TestFixture\ExampleTest::testOne``.

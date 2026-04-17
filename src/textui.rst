@@ -132,6 +132,9 @@ For common cases you do not need to write a regular expression. The following sh
 ``testMethodName@one.*``
     Selects the test method together with any named data set that matches the regular expression ``one.*``.
 
+``testMethodName#one plus one``
+    Selects the test method together with the named data set ``"one plus one"``. This form is equivalent to ``testMethodName@one plus one`` and is accepted so that the test ID format produced by ``--list-test-ids`` can be passed directly to ``--filter``. Quote the argument so the shell preserves spaces.
+
 When the shortcut form is used, matching is **case-insensitive**.
 
 
@@ -195,6 +198,34 @@ Filtering by covered unit
 The ``--covers`` option runs only tests that declare they intend to cover a specified class or function. The ``--uses`` option runs only tests that declare they intend to use a specified class or function.
 
 
+.. _textui.selecting-tests.test-id:
+
+Filtering by test ID
+--------------------
+
+A test ID is the canonical, fully qualified identifier of a single test. It has one of these forms:
+
+.. parsed-literal::
+
+    Fully\\Qualified\\ClassName::testMethodName
+    Fully\\Qualified\\ClassName::testMethodName#0
+    Fully\\Qualified\\ClassName::testMethodName#named data set
+
+Test IDs are matched strictly and exactly; they are not patterns.
+
+The ``--run-test-id`` option runs the single test identified by the given test ID:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --run-test-id 'PHPUnit\\TestFixture\\ExampleTest::testOne#named data set'
+
+The ``--test-id-filter-file`` option runs the tests whose IDs are listed in the specified file, with one test ID per line. Together with ``--list-test-ids`` (see :ref:`textui.selecting-tests.listing`) this enables a list/filter/run workflow that is useful, for example, for splitting a test suite across parallel CI jobs:
+
+1. List all test IDs: ``phpunit --list-test-ids > test-ids.txt``
+2. Split or filter the file into batches
+3. Run a batch: ``phpunit --test-id-filter-file batch-1.txt``
+
+
 .. _textui.selecting-tests.listing:
 
 Listing tests
@@ -202,7 +233,7 @@ Listing tests
 
 The ``--list-tests`` option prints a list of all tests that would be executed without actually running them. This is useful for verifying that your selection options are working as expected.
 
-The ``--list-test-ids`` option prints a list of all tests that would be executed as test IDs (one per line) without actually running them. The output of this option is suitable for use with ``--test-id-filter-file``.
+The ``--list-test-ids`` option prints a list of all tests that would be executed as test IDs (one per line) without actually running them. The output of this option is suitable for use with ``--test-id-filter-file`` and ``--run-test-id`` (see :ref:`textui.selecting-tests.test-id`).
 
 The ``--list-tests-xml`` option writes this list in XML format to a specified file.
 
