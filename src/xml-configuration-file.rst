@@ -58,7 +58,7 @@ The ``cacheResult`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
-This attribute configures the storing of test results in the ``test-results`` cache file. This is required for ordering tests by defects or duration with the ``executionOrder`` attribute (see :ref:`appendixes.xml-configuration-file.phpunit.executionOrder`).
+This attribute configures the storing of test results in the ``test-results`` cache file. This is required for ordering tests by defects, duration, or size with the ``executionOrder`` attribute (see :ref:`appendixes.xml-configuration-file.phpunit.executionOrder`).
 
 Use ``--do-not-cache-result`` on the command line or set this attribute to ``false`` to prevent the writing of the ``test-results`` cache file.
 
@@ -470,29 +470,31 @@ When ``phpunit.phar`` is used then this attribute may be used to configure a dir
 The ``executionOrder`` Attribute
 --------------------------------
 
-Possible values: ``default``, ``defects``, ``depends``, ``no-depends``, ``duration``, ``random``, ``reverse``, ``size`` (default: ``default``)
+Possible values: ``default``, ``defects``, ``depends``, ``no-depends``, ``duration-ascending``, ``duration-descending``, ``random``, ``reverse``, ``size-ascending``, ``size-descending`` (default: ``default``)
 
 Using multiple values is possible. These need to be separated by ``,``.
 
 This attribute configures the order in which tests are executed.
 
+Primary orderings:
+
 - ``default``: ordered in the order in which PHPUnit found the tests (does not use the result cache)
 - ``defects``: ordered by defect (errored, failed, warning, incomplete, risky, skipped, unknown, passed), requires enabled :ref:`result cache<appendixes.xml-configuration-file.phpunit.cacheResult>`
-- ``depends``: ordered by dependency (tests without dependencies first, dependent tests last)
-- ``depends,defects``: ordered by dependency first, then ordered by defects
-- ``depends,duration``: ordered by dependency first, then ordered by duration
-- ``depends,random``: ordered by dependency first, then ordered randomly
-- ``depends,reverse``: ordered by dependency first, then ordered in reverse
-- ``duration``: ordered by duration (fastest test first, slowest test last), requires enabled :ref:`result cache<appendixes.xml-configuration-file.phpunit.cacheResult>`
-- ``no-depends``: not ordered by dependency
-- ``no-depends,defects``: not ordered by dependency, then ordered by defects
-- ``no-depends,duration``: not ordered by dependency, then ordered by duration
-- ``no-depends,random``: not ordered by dependency, then ordered randomly
-- ``no-depends,reverse``: not ordered by dependency, then ordered in reverse
-- ``no-depends,size``: not ordered by dependency, then ordered by size
+- ``duration-ascending``: ordered by duration (fastest test first, slowest test last), requires enabled :ref:`result cache<appendixes.xml-configuration-file.phpunit.cacheResult>`
+- ``duration-descending``: ordered by duration (slowest test first, fastest test last), requires enabled :ref:`result cache<appendixes.xml-configuration-file.phpunit.cacheResult>`
 - ``random``: ordered randomly
 - ``reverse``: ordered as PHPUnit found the tests, then ordered in reverse
-- ``size``: ordered by size (small, medium, large, unknown), also see (see :ref:`appendixes.attributes.Small`, :ref:`appendixes.attributes.Medium`, and :ref:`appendixes.attributes.Large`)
+- ``size-ascending``: ordered by size (small, medium, large, unknown), also see :ref:`appendixes.attributes.Small`, :ref:`appendixes.attributes.Medium`, and :ref:`appendixes.attributes.Large`
+- ``size-descending``: ordered by size in reverse (large, medium, small, unknown)
+
+Dependency modifiers (combined with the primary orderings above via ``,``):
+
+- ``depends``: order by dependency first (tests without dependencies first, dependent tests last), then apply the remaining orderings
+- ``no-depends``: do not order by dependency, then apply the remaining orderings
+
+Valid combinations include ``depends,defects``, ``depends,duration-ascending``, ``depends,duration-descending``, ``depends,random``, ``depends,reverse``, ``depends,size-ascending``, ``depends,size-descending``, and the corresponding ``no-depends,*`` variants.
+
+The ``defects`` ordering can also be combined with a secondary ordering that is applied within each defect bucket: ``defects,duration-ascending``, ``defects,duration-descending``, ``defects,random``, ``defects,reverse``, ``defects,size-ascending``, ``defects,size-descending``. These can also be prefixed with ``depends,`` or ``no-depends,``, for example ``depends,defects,duration-ascending``.
 
 .. _appendixes.xml-configuration-file.phpunit.resolveDependencies:
 

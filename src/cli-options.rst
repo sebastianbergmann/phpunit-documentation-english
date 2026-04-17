@@ -255,7 +255,7 @@ Execution
    Disables writing of test results to the ``test-results`` cache file. This overrides the corresponding XML configuration setting.
 
 ``--order-by <order>``
-   Controls the order in which tests are executed. Supported values are ``default``, ``defects``, ``depends``, ``duration``, ``no-depends``, ``random``, ``reverse``, and ``size``. Multiple values can be combined with a comma.
+   Controls the order in which tests are executed. Primary orderings are ``default``, ``defects``, ``duration-ascending``, ``duration-descending``, ``random``, ``reverse``, ``size-ascending``, and ``size-descending``. These can be combined with the dependency modifiers ``depends`` and ``no-depends`` by separating values with a comma. See :ref:`appendixes.xml-configuration-file.phpunit.executionOrder` for the full list of accepted combinations. The values ``duration`` and ``size`` are still accepted as shortcuts for ``duration-ascending`` and ``size-ascending`` respectively, but are deprecated and will be removed in PHPUnit 14.
 
 ``--resolve-dependencies``
    Alias for ``--order-by depends``.

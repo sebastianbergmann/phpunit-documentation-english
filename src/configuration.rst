@@ -99,6 +99,9 @@ Execution
     * - ``--strict-coverage``
       - :ref:`beStrictAboutCoverageMetadata <appendixes.xml-configuration-file.phpunit.beStrictAboutCoverageMetadata>` attribute on ``<phpunit>``
       - ``false``
+    * - ``--require-coverage-contribution``
+      - :ref:`requireCoverageContribution <appendixes.xml-configuration-file.phpunit.requireCoverageContribution>` attribute on ``<phpunit>``
+      - ``false``
     * - ``--strict-global-state``
       - :ref:`beStrictAboutChangesToGlobalState <appendixes.xml-configuration-file.phpunit.beStrictAboutChangesToGlobalState>` attribute on ``<phpunit>``
       - ``false``
@@ -234,6 +237,9 @@ Reporting
     * - ``--columns <n>``
       - :ref:`columns <appendixes.xml-configuration-file.phpunit.columns>` attribute on ``<phpunit>``
       - ``80``
+    * - ``--diff-context <n>``
+      - :ref:`diffContext <appendixes.xml-configuration-file.phpunit.diffContext>` attribute on ``<phpunit>``
+      - ``3``
     * - ``--stderr``
       - :ref:`stderr <appendixes.xml-configuration-file.phpunit.stderr>` attribute on ``<phpunit>``
       - ``false``
@@ -455,7 +461,7 @@ Code coverage:
 
 - :ref:`includeUncoveredFiles <appendixes.xml-configuration-file.coverage>` attribute on ``<coverage>`` (default: ``true``)
 - :ref:`ignoreDeprecatedCodeUnits <appendixes.xml-configuration-file.coverage>` attribute on ``<coverage>`` (default: ``false``)
-- :ref:`\<html\> <appendixes.xml-configuration-file.coverage.report.html>` color and bound attributes (``lowUpperBound``, ``highLowerBound``, ``colorSuccessLow``, ``colorSuccessMedium``, ``colorSuccessHigh``, ``colorWarning``, ``colorDanger``, ``customCssFile``)
+- :ref:`\<html\> <appendixes.xml-configuration-file.coverage.report.html>` color and bound attributes (``lowUpperBound``, ``highLowerBound``, ``colorSuccessLow``, ``colorSuccessMedium``, ``colorSuccessHigh``, ``colorSuccessBar``, ``colorWarning``, ``colorWarningBar``, ``colorDanger``, ``colorDangerBar``, ``colorBreadcrumbs``, their ``*Dark`` variants, and ``customCssFile``)
 - ``threshold`` attribute on ``<coverage><report><crap4j>`` (default: ``50``)
 
 PHP environment:
