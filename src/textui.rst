@@ -73,7 +73,7 @@ PHPUnit provides several command-line options for selecting which tests to run.
 Filtering by test name
 ----------------------
 
-The ``--filter`` option allows you to select tests using a regular expression pattern matched against the test name:
+The ``--filter`` option selects tests whose name matches a pattern:
 
 .. parsed-literal::
 
@@ -88,6 +88,67 @@ The ``--filter`` option allows you to select tests using a regular expression pa
     Time: 00:00.077, Memory: 10.00 MB
 
     OK (1 test, 1 assertion)
+
+The pattern is matched against the full test name, which has one of these forms:
+
+.. parsed-literal::
+
+    Fully\\Qualified\\ClassName::testMethodName
+    Fully\\Qualified\\ClassName::testMethodName with data set #0
+    Fully\\Qualified\\ClassName::testMethodName with data set "named set"
+
+Matching is a partial match (the pattern does not need to cover the entire name) and *not* anchored. For example, ``--filter testAdd`` also matches a test named ``testAddress``.
+
+PHPT tests (see :ref:`textui.running-tests.phpt`) are never selected by ``--filter``.
+
+The ``--exclude-filter`` option accepts the same pattern syntax described below and removes matching tests from the run. It can be combined with ``--filter``.
+
+
+.. _textui.selecting-tests.filter.shortcuts:
+
+Shortcut syntax
+^^^^^^^^^^^^^^^
+
+For common cases you do not need to write a regular expression. The following shortcut forms are recognized and translated into an appropriate pattern internally:
+
+``testMethodName``
+    Selects all tests whose name contains ``testMethodName``.
+
+``ClassName::testMethodName``
+    Selects a specific test method in a specific class.
+
+``testMethodName#3``
+    Selects the test method together with data set ``#3`` (a numeric data set key).
+
+``testMethodName#1-3``
+    Selects the test method together with numeric data sets in the inclusive range ``1`` to ``3``.
+
+``#1-3``
+    Selects numeric data sets in the inclusive range ``1`` to ``3`` across all test methods.
+
+``testMethodName@one plus one``
+    Selects the test method together with the named data set ``"one plus one"``. Quote the argument so the shell preserves spaces.
+
+``testMethodName@one.*``
+    Selects the test method together with any named data set that matches the regular expression ``one.*``.
+
+When the shortcut form is used, matching is **case-insensitive**.
+
+
+.. _textui.selecting-tests.filter.regex:
+
+Regular expression syntax
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If the pattern begins with a non-alphanumeric character and is a valid `PCRE regular expression <https://www.php.net/manual/en/book.pcre.php>`_, it is used verbatim (including its delimiters and modifiers). This form is useful when the shortcut syntax is not expressive enough, or when you need case-sensitive matching:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --filter '/^App\\\\Domain\\\\.*Test::test/'
+
+.. admonition:: Caution
+
+    Fully-qualified class names contain backslashes, and backslashes are special in regular expressions. If you want to use ``--filter`` with a fully-qualified class name, either escape every backslash (``App\\\\Domain\\\\FooTest``) or wrap the pattern with explicit delimiters (``/App\\\\Domain\\\\FooTest/``). The filter is *not* passed through ``preg_quote()``, so all regular expression metacharacters remain active.
 
 
 .. _textui.selecting-tests.testsuite:
