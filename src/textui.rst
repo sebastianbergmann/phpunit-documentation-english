@@ -379,6 +379,21 @@ The ``--reverse-list`` option prints defects in reverse order, showing the most 
 See :ref:`appendixes.cli-options.reporting` for the complete reference of all reporting options.
 
 
+.. _textui.output.interaction:
+
+Interaction between output options
+----------------------------------
+
+The options described above fall into two groups:
+
+- ``--no-output``, ``--no-progress``, and ``--no-results`` suppress sections of the **default** output format described in :ref:`textui.output`.
+- ``--testdox``, ``--teamcity``, and ``--debug`` select an **alternative** output format that replaces the default progress and result output.
+
+The ``--no-*`` options apply to the default output format only. They do not suppress the output produced by an alternative output format. For example, ``--testdox --no-output`` will still produce TestDox output.
+
+The ``--testdox-html`` and ``--testdox-text`` options are **logging** options (see :ref:`textui.logging`): they write a TestDox-formatted report to a file. They are not intended to replace or augment the console output. Use ``--testdox`` when you want TestDox-formatted output on the console.
+
+
 .. _textui.exit-codes:
 
 Exit codes
@@ -473,6 +488,8 @@ PHPUnit can write test results to log files in various formats:
 - ``--log-events-verbose-text <file>`` writes all test runner events with extended information
 
 These logfiles are commonly used for CI tool integration and reporting.
+
+The ``--testdox-html`` and ``--testdox-text`` options write a report to a file; they are not intended to replace or augment the console output. For TestDox-formatted console output use ``--testdox`` (see :ref:`textui.output.alternative-formats.testdox`).
 
 Logging can also be configured in the XML configuration file (see :ref:`appendixes.configuration.logging`).
 
