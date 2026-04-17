@@ -78,16 +78,16 @@ Selection
    Lists all available test groups and then exits. No tests are executed.
 
 ``--group <name>``
-   Only runs tests belonging to the specified group or groups. Multiple group names can be separated by commas.
+   Only runs tests belonging to the specified group. This option can be used multiple times to select tests from more than one group.
 
 ``--exclude-group <name>``
-   Excludes tests belonging to the specified group or groups from the test run. Multiple group names can be separated by commas.
+   Excludes tests belonging to the specified group from the test run. This option can be used multiple times to exclude tests from more than one group.
 
 ``--covers <name>``
-   Only runs tests that declare they intend to cover the specified class or function. This filters based on ``#[Covers*]`` attributes.
+   Only runs tests that declare they intend to cover the specified class or function. This filters based on ``#[Covers*]`` attributes. This option can be used multiple times.
 
 ``--uses <name>``
-   Only runs tests that declare they intend to use the specified class or function. This filters based on ``#[Uses*]`` attributes.
+   Only runs tests that declare they intend to use the specified class or function. This filters based on ``#[Uses*]`` attributes. This option can be used multiple times.
 
 ``--requires-php-extension <name>``
    Only runs tests that declare a requirement for the specified PHP extension. Tests without this requirement are skipped.
@@ -107,8 +107,8 @@ Selection
 ``--exclude-filter <pattern>``
    Excludes tests matching the specified regular expression pattern. This is the inverse of ``--filter`` and removes matching tests from the run.
 
-``--test-suffix <suffixes>``
-   Restricts test file discovery to files with the specified suffix or suffixes. The default is ``Test.php,.phpt``.
+``--test-suffix <suffix>``
+   Restricts test file discovery to files with the specified suffix. The defaults are ``Test.php`` and ``.phpt``. This option can be used multiple times.
 
 ``--test-files-file <file>``
    Only runs tests from the test files listed in the specified file, with one file path per line. This provides an explicit list of test files to execute.
