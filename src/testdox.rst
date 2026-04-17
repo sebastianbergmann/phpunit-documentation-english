@@ -315,7 +315,7 @@ with ``[ ]``:
      [x] Greets with good evening after 6 pm
 
 This can also be configured in the XML configuration file using the ``<testdoxText>`` element
-inside the ``<logging>`` element (see :ref:`appendixes.configuration.logging.testdoxText`).
+inside the ``<logging>`` element (see :ref:`appendixes.xml-configuration-file.logging.testdoxText`).
 
 
 .. _testdox.output.html:
@@ -328,7 +328,7 @@ HTML file. This produces a browsable document with styled results where successf
 are marked with a green ✓ and defective tests are marked with a red ✗.
 
 This can also be configured in the XML configuration file using the ``<testdoxHtml>`` element
-inside the ``<logging>`` element (see :ref:`appendixes.configuration.logging.testdoxHtml`).
+inside the ``<logging>`` element (see :ref:`appendixes.xml-configuration-file.logging.testdoxHtml`).
 
 
 .. _testdox.xml-configuration:
@@ -340,10 +340,10 @@ TestDox output can be enabled through the XML configuration file as an alternati
 using CLI options.
 
 The ``testdox`` attribute on the ``<phpunit>`` element enables TestDox console output
-(see :ref:`appendixes.configuration.phpunit.testdox`).
+(see :ref:`appendixes.xml-configuration-file.phpunit.testdox`).
 
 The ``testdoxSummary`` attribute on the ``<phpunit>`` element enables the TestDox summary
-(see :ref:`appendixes.configuration.phpunit.testdoxSummary`).
+(see :ref:`appendixes.xml-configuration-file.phpunit.testdoxSummary`).
 
 File-based TestDox output is configured using child elements of the ``<logging>`` element:
 

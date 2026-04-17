@@ -49,7 +49,7 @@ processing.
 
 Please refer to :ref:`textui` for a list of command-line options
 that control code coverage functionality as well as
-:ref:`appendixes.configuration.source` and :ref:`appendixes.configuration.coverage`
+:ref:`appendixes.xml-configuration-file.source` and :ref:`appendixes.xml-configuration-file.coverage`
 for the relevant configuration settings for reporting code coverage.
 
 .. _code-coverage.metrics:
@@ -114,7 +114,7 @@ Including Files
 It is mandatory to configure which source code files you consider your own and therefore
 want to be included in the code coverage report. As other features of PHPUnit also need
 to know which source code files you consider your own, it is best practice to configure
-this in the XML configuration file (see :ref:`appendixes.configuration.source.include`).
+this in the XML configuration file (see :ref:`appendixes.xml-configuration-file.source.include`).
 Alternatively, you may use the ``--coverage-filter`` :ref:`command-line <appendixes.cli-options.code-coverage>`
 option.
 

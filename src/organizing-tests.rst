@@ -142,7 +142,7 @@ For more fine-grained control of which tests to run we can use the
 Composing a Test Suite Using XML Configuration
 ==============================================
 
-PHPUnit's XML configuration file (:ref:`appendixes.configuration`)
+PHPUnit's XML configuration file (:ref:`appendixes.xml-configuration-file`)
 can also be used to compose a test suite.
 :numref:`organizing-tests.xml-configuration.examples.phpunit.xml`
 shows a minimal :file:`phpunit.xml` file that will add all
