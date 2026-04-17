@@ -276,13 +276,13 @@ Reporting
    Writes output to STDERR instead of STDOUT. This can be useful when STDOUT is being redirected or captured.
 
 ``--no-progress``
-   Disables the output of test execution progress. The character-based progress indicator will not be shown.
+   Disables the progress section of the default output (see :ref:`textui.output.progress`). Alternative output formats selected via ``--testdox``, ``--teamcity``, or ``--debug`` are not affected by this option.
 
 ``--no-results``
-   Disables the output of test results. The summary of errors, failures, and other issues will not be displayed.
+   Disables the test results and summary sections of the default output (see :ref:`textui.output.test-results` and :ref:`textui.output.summary`). Alternative output formats selected via ``--testdox``, ``--teamcity``, or ``--debug`` are not affected by this option.
 
 ``--no-output``
-   Disables all output from PHPUnit. This suppresses both progress and result output entirely.
+   Disables the default output of PHPUnit (runtime information, progress, test results, and summary). Alternative output formats selected via ``--testdox``, ``--teamcity``, or ``--debug`` are not affected by this option and will still produce their own output.
 
 ``--display-incomplete``
    Displays details for incomplete tests in the test results. By default, only a count of incomplete tests is shown.
@@ -325,10 +325,10 @@ Reporting
    Replaces the default progress and result output with TeamCity format. This is used for integration with JetBrains TeamCity and other CI tools that support the TeamCity service message protocol.
 
 ``--testdox``
-   Replaces the default result output with TestDox format. TestDox renders test method names as human-readable sentences, providing a behavior-driven view of the test suite.
+   Replaces the default result output with TestDox format. TestDox renders test method names as human-readable sentences, providing a behavior-driven view of the test suite. To write TestDox output to a file instead, use ``--testdox-html`` or ``--testdox-text`` (see :ref:`appendixes.cli-options.logging`).
 
 ``--testdox-summary``
-   Repeats the TestDox output for tests that had errors, failures, or issues at the end of the test run. This provides a focused summary of problematic tests in TestDox format.
+   Repeats the TestDox output for tests that had errors, failures, or issues at the end of the test run. This provides a focused summary of problematic tests in TestDox format. Requires ``--testdox``.
 
 ``--debug``
    Replaces the default progress and result output with detailed debugging information. This shows event-by-event details of the test execution process.
@@ -355,10 +355,10 @@ Logging
    Writes the test results in TeamCity format to the specified file. This is useful when you need TeamCity-formatted output in a log file while using a different console output format.
 
 ``--testdox-html <file>``
-   Writes the test results in TestDox format as an HTML file. This produces a browsable, human-readable document of test behaviors.
+   Writes the test results in TestDox format as an HTML file. This produces a browsable, human-readable document of test behaviors. This option is intended for writing a report to a file; for TestDox-formatted console output use ``--testdox`` instead.
 
 ``--testdox-text <file>``
-   Writes the test results in TestDox format as a plain text file. This produces a simple text document of test behaviors.
+   Writes the test results in TestDox format as a plain text file. This produces a simple text document of test behaviors. This option is intended for writing a report to a file; for TestDox-formatted console output use ``--testdox`` instead.
 
 ``--log-events-text <file>``
    Streams all test runner events as plain text to the specified file. This provides a comprehensive log of every event that occurs during the test run.
