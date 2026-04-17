@@ -105,10 +105,10 @@ Selection
    Lists all tests that would be executed in XML format and writes the output to the specified file. No tests are actually run.
 
 ``--filter <pattern>``
-   Filters which tests to run using a regular expression pattern matched against the test name. This allows fine-grained selection of individual tests or test methods.
+   Selects tests whose name matches ``<pattern>``. In addition to full PCRE regular expressions, a shortcut syntax is accepted for selecting individual data sets (``testFoo#3``, ``testFoo#1-3``, ``testFoo@named set``). See :ref:`textui.selecting-tests.filter` for the full syntax.
 
 ``--exclude-filter <pattern>``
-   Excludes tests matching the specified regular expression pattern. This is the inverse of ``--filter`` and removes matching tests from the run.
+   The inverse of ``--filter``; accepts the same pattern syntax and removes matching tests from the run.
 
 ``--test-suffix <suffix>``
    Restricts test file discovery to files with the specified suffix. The defaults are ``Test.php`` and ``.phpt``. This option can be used multiple times.

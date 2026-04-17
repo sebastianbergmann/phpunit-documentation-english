@@ -183,6 +183,8 @@ Running the test shown above yields the output shown below:
     (``$a``, ``$b`` and ``$expected`` in the example above) with the :ref:`TestDox <appendixes.attributes.TestDox>` attribute.
     You can also refer to the name of a named data set with ``$_dataName``.
 
+Individual data sets can be selected from the command line via the ``--filter`` option; see :ref:`textui.selecting-tests.filter` for the syntax.
+
 When a test receives input from both a data provider method and from one or more tests it depends on, the arguments from the data provider will come before the ones from depended-upon tests.
 The arguments from depended-upon tests will be the same for each data set.
 
