@@ -294,13 +294,13 @@ Reporting
    Writes output to STDERR instead of STDOUT. This can be useful when STDOUT is being redirected or captured.
 
 ``--no-progress``
-   Disables the progress section of the default output (see :ref:`textui.output.progress`). Alternative output formats selected via ``--testdox``, ``--teamcity``, or ``--debug`` are not affected by this option.
+   Disables the progress section of the default output (see :ref:`textui.output.progress`). Alternative output formats selected via ``--testdox``, ``--teamcity``, ``--compact``, or ``--debug`` are not affected by this option.
 
 ``--no-results``
-   Disables the test results and summary sections of the default output (see :ref:`textui.output.test-results` and :ref:`textui.output.summary`). Alternative output formats selected via ``--testdox``, ``--teamcity``, or ``--debug`` are not affected by this option.
+   Disables the test results and summary sections of the default output (see :ref:`textui.output.test-results` and :ref:`textui.output.summary`). Alternative output formats selected via ``--testdox``, ``--teamcity``, ``--compact``, or ``--debug`` are not affected by this option.
 
 ``--no-output``
-   Disables the default output of PHPUnit (runtime information, progress, test results, and summary). Alternative output formats selected via ``--testdox``, ``--teamcity``, or ``--debug`` are not affected by this option and will still produce their own output.
+   Disables the default output of PHPUnit (runtime information, progress, test results, and summary). Alternative output formats selected via ``--testdox``, ``--teamcity``, ``--compact``, or ``--debug`` are not affected by this option and will still produce their own output.
 
 ``--display-incomplete``
    Displays details for incomplete tests in the test results. By default, only a count of incomplete tests is shown.
@@ -338,6 +338,9 @@ Reporting
 
 ``--reverse-list``
    Prints defects in reverse order. This shows the most recently encountered defects first, which can be useful for large test suites.
+
+``--compact``
+   Replaces the default progress and result output with a compact format that omits the progress section, the timing and memory usage line, and color codes. By default only errors, failures, and risky tests are shown in detail; the ``--display-*`` options can be used to include additional issues. Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. See :ref:`textui.output.alternative-formats.compact` for details.
 
 ``--teamcity``
    Replaces the default progress and result output with TeamCity format. This is used for integration with JetBrains TeamCity and other CI tools that support the TeamCity service message protocol.

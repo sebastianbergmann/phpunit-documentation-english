@@ -447,6 +447,51 @@ TeamCity
 The ``--teamcity`` option replaces the default progress and result output with TeamCity format. This is used for integration with PhpStorm or TeamCity.
 
 
+.. _textui.output.alternative-formats.compact:
+
+Compact
+^^^^^^^
+
+The ``--compact`` option replaces the default progress and result output with a compact format that is stripped down to what is actionable: there is no progress section, no timing or memory usage line, and no use of color. When all tests pass, only the runtime information section and a single summary line are printed:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --compact tests
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime: PHP 8.5.5
+
+    OK (4699 tests, 13576 assertions)
+
+When tests fail or have other issues, each defect is printed as a clearly delimited block with the test name, the assertion message, and the file location:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --compact tests
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime: PHP 8.5.5
+
+    FAILURES (23 tests, 42 assertions, 1 failure)
+
+    --- FAILURE: ExampleTest::testSomething
+    Failed asserting that false is true.
+
+    /path/to/tests/ExampleTest.php:47
+
+The summary line begins with ``OK`` when all tests pass, ``FAILURES`` when at least one test failed, and ``ERRORS`` when at least one test errored. The counts that follow include the number of tests run and assertions made as well as, when non-zero, the number of errors, failures, deprecations, warnings, notices, skipped tests, incomplete tests, and risky tests.
+
+Defects are listed in this order: errors, failures, deprecations, warnings, notices, errors triggered by tests, risky tests, incomplete tests, skipped tests.
+
+By default, only errors, failures, and risky tests are shown in detail. Like the default output, ``--compact`` respects the :ref:`--display-* flags <textui.output.controlling>`: use ``--display-deprecations``, ``--display-warnings``, ``--display-notices``, ``--display-errors``, ``--display-incomplete``, ``--display-skipped``, or ``--display-all-issues`` to display additional details.
+
+Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. This makes it easy to enable compact output globally without changing how PHPUnit is invoked, for example when running tests inside an AI-based coding assistant where every token of test output consumes context window budget.
+
+.. admonition:: Note
+
+   When both the ``PHPUNIT_COMPACT_OUTPUT`` environment variable and the ``--compact`` CLI option are set, compact output is used. The CLI option ``--compact`` cannot be combined with ``--teamcity``, ``--testdox``, ``--testdox-summary``, ``--debug``, or ``--no-output``.
+
+
 .. _textui.output.controlling:
 
 Controlling output
@@ -479,7 +524,7 @@ Interaction between output options
 The options described above fall into two groups:
 
 - ``--no-output``, ``--no-progress``, and ``--no-results`` suppress sections of the **default** output format described in :ref:`textui.output`.
-- ``--testdox``, ``--teamcity``, and ``--debug`` select an **alternative** output format that replaces the default progress and result output.
+- ``--testdox``, ``--teamcity``, ``--compact``, and ``--debug`` select an **alternative** output format that replaces the default progress and result output.
 
 The ``--no-*`` options apply to the default output format only. They do not suppress the output produced by an alternative output format. For example, ``--testdox --no-output`` will still produce TestDox output.
 
