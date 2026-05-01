@@ -33,8 +33,7 @@ human-readable documentation.
 Class Names
 -----------
 
-A test class name is prettified by removing the ``Test`` suffix (or ``Test`` / ``Tests`` prefix),
-then splitting the camelCase name into words. For example, ``GreeterTest`` becomes ``Greeter``.
+A test class name is prettified by removing the ``Test`` suffix, then splitting the camelCase name into words. For example, ``GreeterTest`` becomes ``Greeter``.
 
 When the test class is in a namespace, the unqualified class name is used as the title with
 the fully qualified class name (without the ``Test`` suffix) in parentheses. For example,
