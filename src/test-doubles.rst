@@ -1301,6 +1301,50 @@ The test will fail if:
 - The method is called fewer or more times than expected
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.with.expecting-calls-to-the-same-method-with-varying-arguments-in-partial-order:
+
+Expecting calls to the same method with varying arguments in partial order
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Sometimes the order of some calls matters while the order of others does not.
+For example, an initialization call must happen at a specific position in the sequence, but the calls around it can occur in any order.
+
+The ``withParameterSetsInPartialOrder()`` method allows us to specify multiple parameter sets where individual sets can be "pinned" to a specific position while the remaining sets may be matched in any order.
+A parameter set is pinned by wrapping it in an array with the key ``pinned``; its position in the argument list of ``withParameterSetsInPartialOrder()`` determines the call index (zero-based) at which it must be matched:
+
+.. code-block:: php
+
+   $dispatcher = $this->createMock(Dispatcher::class);
+
+   $dispatcher
+       ->expects($this->exactly(3))
+       ->method('dispatch')
+       ->withParameterSetsInPartialOrder(
+           [new AnEvent],
+           [new AnotherEvent],
+           ['pinned' => new FinalEvent],
+       );
+
+   $service = new Service($dispatcher);
+
+   $service->doSomething();
+
+In the example above, ``AnEvent`` and ``AnotherEvent`` may be dispatched in either order for the first two calls, but ``FinalEvent`` must be the argument of the third (and last) call.
+
+**Partially ordered parameter sets** allow us to combine the strictness of :ref:`ordered <test-doubles.mock-objects.reference.configuring-expectations.with.expecting-calls-to-the-same-method-with-varying-arguments-in-specific-order>` parameter sets with the flexibility of :ref:`unordered <test-doubles.mock-objects.reference.configuring-expectations.with.expecting-calls-to-the-same-method-with-varying-arguments-in-any-order>` parameter sets.
+This is useful when:
+
+* Only some calls have a meaningful order (for example, a setup or teardown call), while others can be reordered
+* We want to anchor a specific call to a specific position without over-specifying the order of all other calls
+
+The test will fail if:
+
+* A pinned parameter set is not matched at its configured position
+* The method is called with arguments that do not match any remaining (non-pinned) parameter set
+* Not all parameter sets are used (some expected calls are missing)
+* The method is called fewer or more times than expected
+
+
 .. _test-doubles.mock-objects.reference.configuring-expectations.verifying-relative-call-order-between-mock-object-expectations:
 
 Verifying relative call order between mock object expectations
