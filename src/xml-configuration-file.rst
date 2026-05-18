@@ -652,8 +652,15 @@ A ``<testsuite>`` element must have a ``name`` attribute and may have one or mor
         <testsuite name="integration" bootstrap="tests/integration/bootstrap.php">
           <directory>tests/integration</directory>
         </testsuite>
+
+        <testsuite name="smoke">
+          <file>tests/smoke/FirstTest.php</file>
+          <file>tests/smoke/SecondTest.php</file>
+        </testsuite>
       </testsuites>
     </phpunit>
+
+While the ``<directory>`` element adds all test classes found in a directory to the test suite, the ``<file>`` element adds the test class found in a single file. This is useful when only a few selected files from a directory should be part of a test suite.
 
 The ``bootstrap`` Attribute
 ***************************
