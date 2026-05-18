@@ -173,7 +173,7 @@ directory is recursively traversed.
 
    You should reference the schema definition that is appropriate for the PHPUnit version
    you are using in your XML configuration file. The schema definition for PHPUnit |version|
-   can always be found at https://schema.phpunit.de/|version|/phpunit.xsd, for instance.
+   can always be found at |schema|, for instance.
 
 Now that we have an XML configuration file, we can invoke the PHPUnit test runner without
 arguments (``tests``, for instance) or options (``--bootstrap``, for instance) to run
