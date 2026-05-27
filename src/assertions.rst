@@ -1632,7 +1632,7 @@ XML
 
 ``assertXmlFileEqualsXmlFile(string $expectedFile, string $actualFile[, string $message])``
 
-Reports an error identified by ``$message`` if the XML document in ``$actualFile`` is not equal to the XML document in ``$expectedFile``.
+Reports an error identified by ``$message`` if the XML document in ``$actualFile`` is not equal to the XML document in ``$expectedFile``. Comments in the XML documents are ignored when comparing them.
 
 ``assertXmlFileNotEqualsXmlFile()`` is the inverse of this assertion and takes the same arguments.
 
@@ -1651,7 +1651,7 @@ Running the test shown above yields the output shown below:
 
 ``assertXmlStringEqualsXmlFile(string $expectedFile, string $actualXml[, string $message])``
 
-Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedFile``.
+Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedFile``. Comments in the XML documents are ignored when comparing them.
 
 ``assertXmlStringNotEqualsXmlFile()`` is the inverse of this assertion and takes the same arguments.
 
@@ -1670,7 +1670,7 @@ Running the test shown above yields the output shown below:
 
 ``assertXmlStringEqualsXmlString(string $expectedXml, string $actualXml[, string $message])``
 
-Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedXml``.
+Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedXml``. Comments in the XML documents are ignored when comparing them.
 
 ``assertXmlStringNotEqualsXmlString()`` is the inverse of this assertion and takes the same arguments.
 
