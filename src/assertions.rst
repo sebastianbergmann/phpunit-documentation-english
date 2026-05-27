@@ -1739,6 +1739,63 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/XmlStringEqualsXmlStringTest.php.out
 
+.. _appendixes.assertions.assertXmlFileEqualsXmlFileConsideringComments:
+
+``assertXmlFileEqualsXmlFileConsideringComments()``
+---------------------------------------------------
+
+``assertXmlFileEqualsXmlFileConsideringComments(string $expectedFile, string $actualFile[, string $message])``
+
+Reports an error identified by ``$message`` if the XML document in ``$actualFile`` is not equal to the XML document in ``$expectedFile``. Unlike ``assertXmlFileEqualsXmlFile()``, comments in the XML documents are considered when comparing them.
+
+``assertXmlFileNotEqualsXmlFileConsideringComments()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/XmlFileEqualsXmlFileConsideringCommentsTest.php
+   :caption: Usage of assertXmlFileEqualsXmlFileConsideringComments()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/XmlFileEqualsXmlFileConsideringCommentsTest.php.out
+
+.. _appendixes.assertions.assertXmlStringEqualsXmlFileConsideringComments:
+
+``assertXmlStringEqualsXmlFileConsideringComments()``
+-----------------------------------------------------
+
+``assertXmlStringEqualsXmlFileConsideringComments(string $expectedFile, string $actualXml[, string $message])``
+
+Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedFile``. Unlike ``assertXmlStringEqualsXmlFile()``, comments in the XML documents are considered when comparing them.
+
+``assertXmlStringNotEqualsXmlFileConsideringComments()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlFileConsideringCommentsTest.php
+   :caption: Usage of assertXmlStringEqualsXmlFileConsideringComments()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlFileConsideringCommentsTest.php.out
+
+.. _appendixes.assertions.assertXmlStringEqualsXmlStringConsideringComments:
+
+``assertXmlStringEqualsXmlStringConsideringComments()``
+-------------------------------------------------------
+
+``assertXmlStringEqualsXmlStringConsideringComments(string $expectedXml, string $actualXml[, string $message])``
+
+Reports an error identified by ``$message`` if the XML document in ``$actualXml`` is not equal to the XML document in ``$expectedXml``. Unlike ``assertXmlStringEqualsXmlString()``, comments in the XML documents are considered when comparing them.
+
+``assertXmlStringNotEqualsXmlStringConsideringComments()`` is the inverse of this assertion and takes the same arguments.
+
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlStringConsideringCommentsTest.php
+   :caption: Usage of assertXmlStringEqualsXmlStringConsideringComments()
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/assertions/XmlStringEqualsXmlStringConsideringCommentsTest.php.out
+
 .. _appendixes.assertions.filesystem:
 
 Filesystem

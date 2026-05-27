@@ -1,0 +1,26 @@
+./tools/phpunit tests/XmlFileEqualsXmlFileConsideringCommentsTest.php
+PHPUnit 13.2.0 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.4
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00, Memory: 25.94 MB
+
+There was 1 failure:
+
+1) XmlFileEqualsXmlFileConsideringCommentsTest::testFailure
+Failed asserting that two DOM documents are equal.
+--- Expected
++++ Actual
+@@ @@
+ <?xml version="1.0"?>
+ <root>
+-  <!-- a comment -->
+   <node/>
+ </root>
+
+/path/to/tests/XmlFileEqualsXmlFileConsideringCommentsTest.php:8
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.
