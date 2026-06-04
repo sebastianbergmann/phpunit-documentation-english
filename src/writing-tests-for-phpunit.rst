@@ -213,6 +213,12 @@ shows the methods provided for testing output
     * - ``void expectOutputString(string $expectedString)``
       - Set up the expectation that the output is equal to an ``$expectedString``.
 
+.. note::
+
+   Only one expectation on output can be configured. ``expectOutputString()``
+   and ``expectOutputRegex()`` cannot be combined and must not be called more
+   than once.
+
 .. _writing-tests-for-phpunit.incomplete-tests:
 
 Incomplete Tests
