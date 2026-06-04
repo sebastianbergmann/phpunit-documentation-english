@@ -251,6 +251,12 @@ By default, PHPUnit does not change the order in which tests are executed, so yo
 A test that has more than one test dependency attribute will get a fixture from the first producer as the first argument, a fixture from the second producer as the second argument, and so on.
 
 
+.. note::
+
+   Only one expectation on output can be configured. ``expectOutputString()``
+   and ``expectOutputRegex()`` cannot be combined and must not be called more
+   than once.
+
 .. _writing-tests-for-phpunit.incomplete-tests:
 
 Incomplete Tests
