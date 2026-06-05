@@ -1,11 +1,11 @@
 ./tools/phpunit tests/StringEqualsFileTest.php
-PHPUnit 13.0.0 by Sebastian Bergmann and contributors.
+PHPUnit 13.2.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.4
+Runtime:       PHP 8.5.7
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 25.94 MB
+Time: 00:00, Memory: 28.00 MB
 
 There was 1 failure:
 
@@ -21,4 +21,4 @@ Failed asserting that two strings are equal.
 /path/to/tests/StringEqualsFileTest.php:8
 
 FAILURES!
-Tests: 1, Assertions: 2, Failures: 1.
+Tests: 1, Assertions: 3, Failures: 1.
