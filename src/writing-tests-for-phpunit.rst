@@ -258,12 +258,6 @@ By default, PHPUnit does not change the order in which tests are executed, so yo
 A test that has more than one test dependency attribute will get a fixture from the first producer as the first argument, a fixture from the second producer as the second argument, and so on.
 
 
-.. note::
-
-   Only one expectation on output can be configured. ``expectOutputString()``
-   and ``expectOutputRegex()`` cannot be combined and must not be called more
-   than once.
-
 .. _writing-tests-for-phpunit.incomplete-tests:
 
 Incomplete Tests
@@ -394,6 +388,35 @@ match the expected output against a regular expression:
     $this->expectOutputRegex('/foo .+ bar/');
 
 If the generated output does not match the regular expression, the test will be counted as a failure.
+
+Combining and repeating output expectations
+--------------------------------------------
+
+``expectOutputString()`` and ``expectOutputRegex()`` may be combined with one another and each may be called more than once.
+Every expectation that is configured is verified against the generated output, and the test only passes when all of them are met:
+
+.. code-block:: php
+
+    $this->expectOutputRegex('/^f/');
+    $this->expectOutputRegex('/o$/');
+    $this->expectOutputString('foo');
+
+    print 'foo';
+
+Calling either method repeatedly with an argument that has already been configured has no effect:
+duplicate expectations are ignored.
+
+Because the generated output cannot be identical to two different strings at the same time, calling ``expectOutputString()`` more than once with different arguments triggers a PHPUnit warning:
+
+.. code-block:: php
+
+    $this->expectOutputString('foo');
+    $this->expectOutputString('bar'); // triggers a PHPUnit warning
+
+.. note::
+
+   Prior to PHPUnit 13.3, only a single output expectation could be configured.
+   ``expectOutputString()`` and ``expectOutputRegex()`` could not be combined and could not be called more than once.
 
 
 .. _writing-tests-for-phpunit.testing-error-log:
