@@ -1,4 +1,4 @@
-./tools/phpunit tests/ContainsOnlyTest.php
+./tools/phpunit tests/IsValidOrderIdTest.php
 PHPUnit 13.1.14 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.5.7
@@ -9,10 +9,10 @@ Time: 00:00, Memory: 27.64 MB
 
 There was 1 error:
 
-1) ContainsOnlyTest::testFailure
-Error: Call to undefined method ContainsOnlyTest::assertContainsOnly()
+1) IsValidOrderIdTest::testGenerateGeneratesId
+Error: Class "OrderIdGenerator" not found
 
-/path/to/tests/ContainsOnlyTest.php:8
+/path/to/tests/IsValidOrderIdTest.php:8
 
 ERRORS!
 Tests: 1, Assertions: 0, Errors: 1.
