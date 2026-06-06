@@ -925,6 +925,54 @@ Invalid entries are skipped after the warning is emitted and do not prevent the 
 
 See :ref:`error-handling.issue-trigger-resolvers` for more information about implementing custom issue trigger resolvers.
 
+.. _appendixes.xml-configuration-file.source.deprecationFilters:
+
+The ``<deprecationFilters>`` Element
+------------------------------------
+
+Parent element: ``<source>``
+
+The ``<deprecationFilters>`` element can be used to register custom deprecation filter classes.
+A deprecation filter allows you to suppress individual deprecations based on custom logic, for instance
+by inspecting the deprecation message, the file and line where it was triggered, or how the deprecation
+was triggered (``self``, ``direct``, or ``indirect``).
+
+.. _appendixes.xml-configuration-file.source.deprecationFilters.deprecationFilter:
+
+The ``<deprecationFilter>`` Element
+***********************************
+
+Parent element: ``<deprecationFilters>``
+
+.. code-block:: xml
+
+    <deprecationFilters>
+        <deprecationFilter className="App\Tests\MyDeprecationFilter"/>
+    </deprecationFilters>
+
+The ``className`` attribute must be the fully qualified class name of a class that implements the
+``PHPUnit\Runner\DeprecationFilter`` interface and that can be instantiated without arguments.
+
+Multiple filters can be registered:
+
+.. code-block:: xml
+
+    <deprecationFilters>
+        <deprecationFilter className="App\Tests\FirstDeprecationFilter"/>
+        <deprecationFilter className="App\Tests\SecondDeprecationFilter"/>
+    </deprecationFilters>
+
+A deprecation is ignored as soon as one of the registered filters returns ``true`` for it.
+
+At startup, PHPUnit validates each configured filter:
+
+- If the class does not exist, a test runner warning is emitted
+- If the class does not implement ``PHPUnit\Runner\DeprecationFilter``, a test runner warning is emitted
+
+Invalid entries are skipped after the warning is emitted and do not prevent the test suite from running.
+
+See :ref:`error-handling.deprecation-filters` for more information about implementing custom deprecation filters.
+
 .. _appendixes.xml-configuration-file.source.ignoreSelfDeprecations:
 
 The ``<ignoreSelfDeprecations>`` Attribute

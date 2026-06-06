@@ -402,6 +402,94 @@ returns a ``Resolution`` object wins. If all custom resolvers return ``null``, P
 default resolver.
 
 
+.. _error-handling.deprecation-filters:
+
+Custom Deprecation Filters
+==========================
+
+The configuration settings described above let you ignore deprecations based on where they are triggered
+(``self``, ``direct``, or ``indirect``). Sometimes you need finer-grained control, for instance to suppress
+a particular deprecation message that you cannot fix yet, while still reporting all other deprecations. For
+these cases, PHPUnit supports custom deprecation filters.
+
+A custom deprecation filter is a class that implements the ``PHPUnit\Runner\DeprecationFilter`` interface:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace PHPUnit\Runner;
+
+    use PHPUnit\Event\Code\IssueTrigger\IssueTrigger;
+
+    interface DeprecationFilter
+    {
+        /**
+         * Return true to ignore the deprecation, false to let PHPUnit process it.
+         */
+        public function ignores(string $message, string $file, int $line, IssueTrigger $trigger): bool;
+    }
+
+The ``ignores()`` method is called for every ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` issue. It receives:
+
+- ``$message``: the deprecation message
+- ``$file``: the file in which the deprecation was triggered
+- ``$line``: the line on which the deprecation was triggered
+- ``$trigger``: an ``IssueTrigger`` object describing how the deprecation was triggered
+
+The method must return ``true`` to ignore the deprecation or ``false`` to let PHPUnit process it.
+
+A deprecation that is ignored by a filter is treated exactly like a deprecation that is ignored using the
+``#[IgnoreDeprecations]`` attribute: it is not shown in the test runner's progress output or in the
+deprecation summary, and it does not count towards ``failOnDeprecation`` (see
+:ref:`appendixes.xml-configuration-file.phpunit.failOnDeprecation`).
+
+Implementing a custom deprecation filter
+----------------------------------------
+
+The following filter ignores a single deprecation message while letting PHPUnit process all other deprecations:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace App\Tests;
+
+    use function str_contains;
+    use PHPUnit\Event\Code\IssueTrigger\IssueTrigger;
+    use PHPUnit\Runner\DeprecationFilter;
+
+    final class MyDeprecationFilter implements DeprecationFilter
+    {
+        public function ignores(string $message, string $file, int $line, IssueTrigger $trigger): bool
+        {
+            return str_contains($message, 'please ignore this deprecation');
+        }
+    }
+
+The ``$trigger`` argument can be used to make the decision depend on how the deprecation was triggered.
+For instance, ``$trigger->isIndirect()`` returns ``true`` when the deprecation was triggered by third-party code.
+
+Registering a custom deprecation filter
+---------------------------------------
+
+Custom deprecation filters are registered in PHPUnit's XML configuration file using the
+``<deprecationFilters>`` element inside ``<source>`` (see :ref:`appendixes.xml-configuration-file.source.deprecationFilters`):
+
+.. code-block:: xml
+
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+
+        <deprecationFilters>
+            <deprecationFilter className="App\Tests\MyDeprecationFilter"/>
+        </deprecationFilters>
+    </source>
+
+Multiple filters can be registered. A deprecation is ignored as soon as one of the registered filters
+returns ``true`` for it.
+
+
 Disabling PHPUnit's error handler
 =================================
 
