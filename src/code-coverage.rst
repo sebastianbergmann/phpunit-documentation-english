@@ -202,6 +202,34 @@ and to make sure you only generate code coverage with smaller tests.
         }
     }
 
+The ``#[CoversNothing]`` attribute can also be used on individual test methods. This is useful
+when most tests of a test case class should contribute to code coverage, but a single test method
+should be excluded:
+
+.. code-block:: php
+    :caption: A test method that does not contribute to code coverage
+    :name: code-coverage.targeting-units-of-code.examples.InvoiceTestWithCoversNothing.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\CoversClass;
+    use PHPUnit\Framework\Attributes\CoversNothing;
+    use PHPUnit\Framework\TestCase;
+
+    #[CoversClass(Invoice::class)]
+    final class InvoiceTest extends TestCase
+    {
+        public function testAmountInitiallyIsEmpty(): void
+        {
+            // contributes to code coverage for Invoice
+        }
+
+        #[CoversNothing]
+        public function testIntegrationWithExternalService(): void
+        {
+            // does not contribute to code coverage
+        }
+    }
+
 .. _code-coverage.ignoring-code-blocks:
 
 Ignoring Code Blocks
