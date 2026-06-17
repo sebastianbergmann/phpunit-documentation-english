@@ -23,6 +23,7 @@ Contents:
    code-coverage
    testdox
    risky-tests
+   flaky-tests
    error-handling
    extending-phpunit
 

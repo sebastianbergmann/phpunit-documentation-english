@@ -1426,6 +1426,90 @@ When multiple ``WithEnvironmentVariable`` attributes are specified for the same 
 the last one wins.
 
 
+Flaky Tests
+===========
+
+The attributes documented in this section are used for dealing with :ref:`flaky tests <flaky-tests>`.
+
+.. _appendixes.attributes.Repeat:
+
+``Repeat``
+----------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
+
+The ``Repeat(int $times[, int $failureThreshold])`` attribute can be used to run a test method ``$times`` times,
+stopping at the first failure. This helps :ref:`find flaky tests and stress-test stateful code <flaky-tests.repeating-tests>`.
+
+The optional ``$failureThreshold`` argument, which defaults to ``1``, controls how many repetitions may fail before
+the remaining repetitions are skipped.
+
+.. code-block:: php
+    :caption: Using the ``Repeat`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Repeat;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        #[Repeat(100)]
+        public function testSomething(): void
+        {
+            // ...
+        }
+    }
+
+The attribute applies only to test methods that declare an explicit ``void`` return type and do not depend on
+another test. PHPUnit emits a warning when the attribute is used on a test method that does not meet these
+requirements. A method-level ``Repeat`` attribute takes precedence over the ``--repeat`` and ``--retry``
+:ref:`command-line options <appendixes.cli-options.execution>`.
+
+
+.. _appendixes.attributes.Retry:
+
+``Retry``
+---------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| no          | yes          | no         |
++-------------+--------------+------------+
+
+The ``Retry(int $maxAttempts)`` attribute can be used to attempt a test method up to ``$maxAttempts`` times,
+stopping at the first success. This helps :ref:`tolerate flaky tests that cannot be eliminated <flaky-tests.retrying-tests>`,
+while keeping them visible. The first attempt whose status is neither a failure nor an error decides the test's result.
+
+.. code-block:: php
+    :caption: Using the ``Retry`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Retry;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        #[Retry(3)]
+        public function testSomething(): void
+        {
+            // ...
+        }
+    }
+
+The attribute applies only to test methods that declare an explicit ``void`` return type and do not depend on
+another test. PHPUnit emits a warning when the attribute is used on a test method that does not meet these
+requirements. A method-level ``Retry`` attribute takes precedence over the ``--repeat`` and ``--retry``
+:ref:`command-line options <appendixes.cli-options.execution>`.
+
+When a test method is annotated with both ``Repeat`` and ``Retry``, PHPUnit emits a warning and ignores the
+``Retry`` attribute.
+
+
 Skipping Tests
 ==============
 

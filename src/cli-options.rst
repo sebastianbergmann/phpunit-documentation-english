@@ -269,6 +269,12 @@ Execution
 ``--random-order-seed <N>``
    Sets the seed for the random number generator when using ``--order-by random``. Using the same seed produces the same test order, which is useful for reproducing failures.
 
+``--repeat <N>``
+   Runs each eligible test ``N`` times, stopping at the first failure. This helps find flaky tests and stress-test stateful code. See :ref:`flaky-tests.repeating-tests`. Mutually exclusive with ``--retry``.
+
+``--retry <N>``
+   Attempts each eligible test up to ``N`` times, stopping at the first success. This helps tolerate flaky tests that cannot be eliminated, while keeping them visible. See :ref:`flaky-tests.retrying-tests`. Mutually exclusive with ``--repeat``.
+
 ``--reverse-order``
    Alias for ``--order-by reverse``.
 
