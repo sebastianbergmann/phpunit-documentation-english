@@ -1155,6 +1155,79 @@ When set to ``false``, only line coverage data will be collected, processed, and
 
 When set to ``true``, line coverage, branch coverage, and path coverage data will be collected, processed, and reported. This requires a code coverage driver that supports path coverage. Path Coverage is currently only implemented by Xdebug.
 
+.. _appendixes.xml-configuration-file.coverage.driver:
+
+The ``driver`` Attribute
+------------------------
+
+By default, PHPUnit automatically selects a code coverage driver from the drivers that are available in the current runtime environment (for instance, Xdebug or PCOV).
+
+The ``driver`` attribute can be used to configure a custom code coverage driver class that PHPUnit should use instead of selecting one automatically:
+
+.. code-block:: xml
+
+    <coverage driver="My\Custom\Driver">
+        <!-- ... -->
+    </coverage>
+
+The configured class must
+
+* exist and be autoloadable,
+* extend ``SebastianBergmann\CodeCoverage\Driver\Driver``, and
+* be instantiable (not be ``abstract``).
+
+When PHPUnit instantiates the configured driver class, it inspects the constructor of the class:
+
+* When the constructor has at least one required parameter, PHPUnit passes the code coverage ``SebastianBergmann\CodeCoverage\Filter`` object as the first argument.
+* Otherwise, the class is instantiated without arguments.
+
+After the driver has been instantiated, PHPUnit configures its granularity according to the ``pathCoverage`` attribute.
+
+Here is an example of a custom code coverage driver whose constructor receives the ``Filter`` object:
+
+.. code-block:: php
+
+    <?php declare(strict_types=1);
+    namespace My\Custom;
+
+    use SebastianBergmann\CodeCoverage\Data\RawCodeCoverageData;
+    use SebastianBergmann\CodeCoverage\Driver\Driver as CodeCoverageDriver;
+    use SebastianBergmann\CodeCoverage\Filter;
+
+    final class Driver extends CodeCoverageDriver
+    {
+        private readonly Filter $filter;
+
+        public function __construct(Filter $filter)
+        {
+            $this->filter = $filter;
+        }
+
+        public function name(): string
+        {
+            return 'My Custom Driver';
+        }
+
+        public function version(): string
+        {
+            return '1.0.0';
+        }
+
+        public function start(): void
+        {
+            // ...
+        }
+
+        public function stop(): RawCodeCoverageData
+        {
+            // ...
+        }
+    }
+
+.. note::
+
+   ``RawCodeCoverageData`` is an internal implementation detail that is not covered by the backward compatibility promise for ``phpunit/php-code-coverage``. This might change in the future, but for the time being, implementors of custom coverage drivers must realize that they are dealing with library internals.
+
 The ``disableCodeCoverageIgnore`` Attribute
 -------------------------------------------
 
