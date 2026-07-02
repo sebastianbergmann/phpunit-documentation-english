@@ -252,3 +252,22 @@ The precedence rules between the attributes and the command-line options are:
   and ``--retry`` command-line options.
 
 - The ``--repeat`` and ``--retry`` command-line options are mutually exclusive.
+
+
+.. _flaky-tests.data-providers:
+
+Data Providers
+==============
+
+Repeating and retrying both work together with data providers:
+each data set is repeated or retried individually.
+
+All repetitions or attempts for a data set receive the same argument values from the data provider.
+The arguments are not cloned between repetitions or attempts:
+when a data provider provides an object and the test mutates it, subsequent repetitions or attempts of that data set observe the mutated object, not the object as it was originally provided.
+
+The exception is a test that is run in a separate PHP process.
+Each repetition or attempt then receives its own copy of the arguments, because the arguments are serialized when they are passed to the child process.
+
+A test that is repeated or retried should therefore not rely on mutating argument objects that are provided by a data provider.
+State that the test modifies should be created in the test method itself or in ``setUp()``.
