@@ -17,9 +17,20 @@ called from test code. It ignores issues triggered by PHPUnit's own code as well
 .. admonition:: Other error handlers
 
    When PHPUnit's test runner becomes aware (after it called ``set_error_handler()`` to register its error handler)
-   that another error handler was registered then it immediately unregisters its error handler so that the
-   previously registered error handler remains active. Consequently, the features described in this chapter are not
-   available when you use your own error handler.
+   that another error handler was registered then it keeps its error handler active and calls the previously
+   registered error handler before it processes an issue. Consequently, the features described in this chapter
+   remain available when you use your own error handler. The return value of the previously registered error
+   handler does not prevent PHPUnit's test runner from processing an issue.
+
+   When the previously registered error handler throws an exception, for instance to turn errors into exceptions,
+   then this exception replaces the error: PHPUnit's test runner does not process an issue and the exception
+   propagates into the test, where it can be expected using ``expectException()``, for example. Be aware that this
+   also applies to deprecations: when the previously registered error handler throws an exception for
+   ``E_DEPRECATED`` or ``E_USER_DEPRECATED`` errors then a test that triggers such an error will be reported
+   as errored instead of as having triggered a deprecation.
+
+   The ``#[WithoutErrorHandler]`` attribute can be used to disable PHPUnit's error handler for a test method
+   so that only the previously registered error handler is active while the test method is run.
 
 .. admonition:: Your own error handler should follow best practices
 
