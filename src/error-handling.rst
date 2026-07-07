@@ -20,7 +20,10 @@ called from test code. It ignores issues triggered by PHPUnit's own code as well
    that another error handler was registered then it keeps its error handler active and calls the previously
    registered error handler before it processes an issue. Consequently, the features described in this chapter
    remain available when you use your own error handler. The return value of the previously registered error
-   handler does not prevent PHPUnit's test runner from processing an issue.
+   handler does not prevent PHPUnit's test runner from processing an issue. While the previously registered
+   error handler runs, ``error_reporting()`` returns the value it would return without PHPUnit's test runner,
+   so error handlers that check ``error_reporting()`` dynamically (also to respect the ``@`` operator) behave
+   as they do in production.
 
    When the previously registered error handler throws an exception, for instance to turn errors into exceptions,
    then this exception replaces the error: PHPUnit's test runner does not process an issue and the exception
