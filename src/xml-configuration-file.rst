@@ -280,6 +280,39 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that triggered a deprecation (``E_DEPRECATED`` or ``E_USER_DEPRECATED``).
 
+.. _appendixes.xml-configuration-file.phpunit.failOnSelfDeprecation:
+
+The ``failOnSelfDeprecation`` Attribute
+---------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that triggered a deprecation (``E_DEPRECATED`` or ``E_USER_DEPRECATED``) by first-party code in first-party code.
+
+This setting only takes effect when PHPUnit can identify how a deprecation was triggered, which requires the ``<source>`` element (see :ref:`appendixes.xml-configuration-file.source`) to be configured. See :ref:`error-handling.failing-on-deprecations-by-trigger` for details.
+
+.. _appendixes.xml-configuration-file.phpunit.failOnDirectDeprecation:
+
+The ``failOnDirectDeprecation`` Attribute
+-----------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that triggered a deprecation (``E_DEPRECATED`` or ``E_USER_DEPRECATED``) by first-party code in third-party code.
+
+This setting only takes effect when PHPUnit can identify how a deprecation was triggered, which requires the ``<source>`` element (see :ref:`appendixes.xml-configuration-file.source`) to be configured. See :ref:`error-handling.failing-on-deprecations-by-trigger` for details.
+
+.. _appendixes.xml-configuration-file.phpunit.failOnIndirectDeprecation:
+
+The ``failOnIndirectDeprecation`` Attribute
+-------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but there are tests that triggered a deprecation (``E_DEPRECATED`` or ``E_USER_DEPRECATED``) by third-party code.
+
+This setting only takes effect when PHPUnit can identify how a deprecation was triggered, which requires the ``<source>`` element (see :ref:`appendixes.xml-configuration-file.source`) to be configured. See :ref:`error-handling.failing-on-deprecations-by-trigger` for details.
+
 .. _appendixes.xml-configuration-file.phpunit.failOnPhpunitDeprecation:
 
 The ``failOnPhpunitDeprecation`` Attribute

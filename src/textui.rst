@@ -580,6 +580,8 @@ These options are commonly used in CI pipelines to enforce strict quality standa
 
 The ``--fail-on-*`` options have ``--do-not-fail-on-*`` counterparts that can be used to override settings from the XML configuration file.
 
+For deprecations, the failure behaviour can be refined based on how a deprecation was triggered. The ``--fail-on-self-deprecation``, ``--fail-on-direct-deprecation``, and ``--fail-on-indirect-deprecation`` options (and their ``--do-not-fail-on-*`` counterparts) control the exit code separately for each trigger type. See :ref:`error-handling.failing-on-deprecations-by-trigger` for details.
+
 See :ref:`appendixes.cli-options.execution` for the complete reference.
 
 

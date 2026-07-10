@@ -197,6 +197,15 @@ Execution
 ``--fail-on-deprecation``
    Causes PHPUnit to return a failure exit code when any test triggers a deprecation.
 
+``--fail-on-self-deprecation``
+   Causes PHPUnit to return a failure exit code when any test triggers a deprecation in first-party code. This option only takes effect when PHPUnit can identify how a deprecation was triggered. See :ref:`error-handling.failing-on-deprecations-by-trigger`.
+
+``--fail-on-direct-deprecation``
+   Causes PHPUnit to return a failure exit code when any test triggers a deprecation in third-party code that is called from first-party code. This option only takes effect when PHPUnit can identify how a deprecation was triggered. See :ref:`error-handling.failing-on-deprecations-by-trigger`.
+
+``--fail-on-indirect-deprecation``
+   Causes PHPUnit to return a failure exit code when any test triggers a deprecation in third-party code that is called from third-party code. This option only takes effect when PHPUnit can identify how a deprecation was triggered. See :ref:`error-handling.failing-on-deprecations-by-trigger`.
+
 ``--fail-on-phpunit-deprecation``
    Causes PHPUnit to return a failure exit code when a PHPUnit deprecation is triggered. PHPUnit deprecations relate to deprecated usage of PHPUnit's own API.
 
@@ -229,6 +238,15 @@ Execution
 
 ``--do-not-fail-on-deprecation``
    Disables the signaling of failure when a deprecation is triggered. This overrides the corresponding XML configuration setting.
+
+``--do-not-fail-on-self-deprecation``
+   Disables the signaling of failure when a deprecation is triggered in first-party code, even when ``--fail-on-deprecation`` is used. This overrides the corresponding XML configuration setting. See :ref:`error-handling.failing-on-deprecations-by-trigger`.
+
+``--do-not-fail-on-direct-deprecation``
+   Disables the signaling of failure when a deprecation is triggered in third-party code that is called from first-party code, even when ``--fail-on-deprecation`` is used. This overrides the corresponding XML configuration setting. See :ref:`error-handling.failing-on-deprecations-by-trigger`.
+
+``--do-not-fail-on-indirect-deprecation``
+   Disables the signaling of failure when a deprecation is triggered in third-party code that is called from third-party code, even when ``--fail-on-deprecation`` is used. This overrides the corresponding XML configuration setting. See :ref:`error-handling.failing-on-deprecations-by-trigger`.
 
 ``--do-not-fail-on-phpunit-deprecation``
    Disables the signaling of failure when a PHPUnit deprecation is triggered. This overrides the corresponding XML configuration setting.

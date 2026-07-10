@@ -207,6 +207,55 @@ uses the information what your code is:
 * :ref:`appendixes.xml-configuration-file.source.restrictWarnings` setting can be used to ignore warnings in third-party code
 
 
+.. _error-handling.failing-on-deprecations-by-trigger:
+
+Failing on deprecations based on how they are triggered
+=======================================================
+
+The ``failOnDeprecation`` setting (see :ref:`appendixes.xml-configuration-file.phpunit.failOnDeprecation`)
+and the ``--fail-on-deprecation`` CLI option are all-or-nothing: when they are used, every deprecation that
+is reported causes PHPUnit's test runner to exit with a shell exit code that indicates failure.
+
+This is not always what you want. Deprecations triggered by first-party code in first-party code (``self``)
+or by first-party code in third-party code (``direct``) are deprecations that you can act on by changing your
+own code. Deprecations triggered by third-party code in third-party code (``indirect``) are usually outside
+of your control: you may want to see them without letting them fail the test run.
+
+When PHPUnit can identify how a deprecation was triggered, which requires the ``<source>`` element
+(see :ref:`appendixes.xml-configuration-file.source`) to be configured, the shell exit code can be
+controlled separately for each trigger type:
+
+* the :ref:`failOnSelfDeprecation <appendixes.xml-configuration-file.phpunit.failOnSelfDeprecation>` attribute and the ``--fail-on-self-deprecation`` / ``--do-not-fail-on-self-deprecation`` CLI options control failing on deprecations triggered by first-party code in first-party code
+* the :ref:`failOnDirectDeprecation <appendixes.xml-configuration-file.phpunit.failOnDirectDeprecation>` attribute and the ``--fail-on-direct-deprecation`` / ``--do-not-fail-on-direct-deprecation`` CLI options control failing on deprecations triggered by first-party code in third-party code
+* the :ref:`failOnIndirectDeprecation <appendixes.xml-configuration-file.phpunit.failOnIndirectDeprecation>` attribute and the ``--fail-on-indirect-deprecation`` / ``--do-not-fail-on-indirect-deprecation`` CLI options control failing on deprecations triggered by third-party code
+
+These settings are overrides that are layered on top of ``failOnDeprecation``:
+
+* By default, each trigger type follows the ``failOnDeprecation`` setting.
+* Configuring ``failOnSelfDeprecation="true"``, ``failOnDirectDeprecation="true"``, or ``failOnIndirectDeprecation="true"`` (or using the corresponding ``--fail-on-*`` CLI option) enables failing on deprecations of that trigger type even when ``failOnDeprecation`` is not enabled.
+* Using ``--do-not-fail-on-self-deprecation``, ``--do-not-fail-on-direct-deprecation``, or ``--do-not-fail-on-indirect-deprecation`` exempts deprecations of that trigger type from failing the test run even when ``failOnDeprecation`` is enabled.
+* Deprecations that are not classified as ``self``, ``direct``, or ``indirect`` (for instance deprecations triggered by test code, or deprecations for which no trigger could be identified) always follow the ``failOnDeprecation`` setting.
+
+Here is a configuration for a common workflow: deprecations that you can act on (``self`` and ``direct``)
+fail the test run while indirect deprecations are only reported:
+
+.. literalinclude:: examples/error-handling/deprecation/fail-on-trigger.xml
+   :caption: phpunit.xml
+   :language: xml
+
+The same effect can be achieved on the command line by combining ``--fail-on-deprecation`` with
+``--do-not-fail-on-indirect-deprecation``.
+
+A deprecation that is exempted from failing the test run is still counted and still displayed: the test
+runner prints "OK, but there were issues!", but the shell exit code indicates success. Like
+``failOnDeprecation``, the trigger-specific settings implicitly enable the display of deprecation details.
+
+Together with the ``ignoreSelfDeprecations``, ``ignoreDirectDeprecations``, and ``ignoreIndirectDeprecations``
+attributes on the ``<source>`` element that were discussed earlier in this chapter, each trigger type
+supports three states: a deprecation can be reported and fail the test run, it can be reported without
+failing the test run, or it can be ignored entirely.
+
+
 Ignoring issue suppression
 ==========================
 

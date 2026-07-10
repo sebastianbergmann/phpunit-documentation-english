@@ -199,6 +199,15 @@ Failing on Issues
     * - ``--fail-on-deprecation`` / ``--do-not-fail-on-deprecation``
       - :ref:`failOnDeprecation <appendixes.xml-configuration-file.phpunit.failOnDeprecation>` attribute on ``<phpunit>``
       - ``false``
+    * - ``--fail-on-self-deprecation`` / ``--do-not-fail-on-self-deprecation``
+      - :ref:`failOnSelfDeprecation <appendixes.xml-configuration-file.phpunit.failOnSelfDeprecation>` attribute on ``<phpunit>``
+      - ``false``
+    * - ``--fail-on-direct-deprecation`` / ``--do-not-fail-on-direct-deprecation``
+      - :ref:`failOnDirectDeprecation <appendixes.xml-configuration-file.phpunit.failOnDirectDeprecation>` attribute on ``<phpunit>``
+      - ``false``
+    * - ``--fail-on-indirect-deprecation`` / ``--do-not-fail-on-indirect-deprecation``
+      - :ref:`failOnIndirectDeprecation <appendixes.xml-configuration-file.phpunit.failOnIndirectDeprecation>` attribute on ``<phpunit>``
+      - ``false``
     * - ``--fail-on-phpunit-deprecation`` / ``--do-not-fail-on-phpunit-deprecation``
       - :ref:`failOnPhpunitDeprecation <appendixes.xml-configuration-file.phpunit.failOnPhpunitDeprecation>` attribute on ``<phpunit>``
       - ``false``
