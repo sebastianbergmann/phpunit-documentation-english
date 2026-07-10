@@ -417,6 +417,14 @@ Code Coverage
 ``--coverage-html <dir>``
    Writes the code coverage report in HTML format to the specified directory. This produces a browsable report with line-by-line coverage highlighting.
 
+``--without-class-view``
+   Renders the code coverage report in HTML format without the class view. The class view shows code coverage information aggregated by classes, traits, and functions.
+
+``--without-file-view``
+   Renders the code coverage report in HTML format without the file view. The file view shows code coverage information organized by directories and files, including line-by-line coverage highlighting.
+
+   The class view and the file view cannot both be disabled. When both ``--without-class-view`` and ``--without-file-view`` are used, PHPUnit emits a warning and renders both views.
+
 ``--coverage-php <file>``
    Writes serialized code coverage data to the specified file. This data can later be merged with other coverage data or processed programmatically.
 

@@ -1329,6 +1329,22 @@ The directory to which the HTML report is written.
 
 When this attribute is not set, the ``--coverage-html`` :ref:`command-line option <appendixes.cli-options.code-coverage>` must be used to specify the output directory.
 
+The ``classView`` Attribute
++++++++++++++++++++++++++++
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+Whether the class view is rendered. The class view shows code coverage information aggregated by classes, traits, and functions.
+
+The ``fileView`` Attribute
+++++++++++++++++++++++++++
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+Whether the file view is rendered. The file view shows code coverage information organized by directories and files, including line-by-line coverage highlighting.
+
+The class view and the file view cannot both be disabled. When both ``classView`` and ``fileView`` are set to ``false``, PHPUnit emits a warning and renders both views.
+
 The ``lowUpperBound`` Attribute
 +++++++++++++++++++++++++++++++
 

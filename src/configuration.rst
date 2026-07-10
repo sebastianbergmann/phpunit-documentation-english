@@ -346,6 +346,12 @@ Code Coverage
     * - ``--coverage-html <dir>``
       - :ref:`\<html outputDirectory\> <appendixes.xml-configuration-file.coverage.report.html>` under ``<coverage><report>``
       - —
+    * - ``--without-class-view``
+      - ``classView`` attribute on ``<coverage><report><html>`` (inverted)
+      - ``true``
+    * - ``--without-file-view``
+      - ``fileView`` attribute on ``<coverage><report><html>`` (inverted)
+      - ``true``
     * - ``--coverage-php <file>``
       - :ref:`\<php outputFile\> <appendixes.xml-configuration-file.coverage.report.php>` under ``<coverage><report>``
       - —
