@@ -181,6 +181,40 @@ As it is technically not possible to test a subclass in isolation from its base 
 the ``#[CoversClass]`` and ``#[UsesClass]`` attributes consider the class whose name has been
 specified as well as all of its parent classes, if it has any.
 
+Instead of targeting units of code by the name of a class, method, function, trait, or
+namespace, you can target them by their location in the filesystem. The
+``PHPUnit\Framework\Attributes\CoversFile``, ``PHPUnit\Framework\Attributes\CoversDirectory``,
+and ``PHPUnit\Framework\Attributes\CoversDirectoryRecursively`` attributes can be used to
+specify that a test intends to cover the code in the given source code file, in the source
+code files located in the given directory, or in the source code files located in the given
+directory and its subdirectories, respectively. The
+``PHPUnit\Framework\Attributes\UsesFile``, ``PHPUnit\Framework\Attributes\UsesDirectory``,
+and ``PHPUnit\Framework\Attributes\UsesDirectoryRecursively`` attributes are their
+counterparts for specifying code that is allowed to be executed, but is not intended
+to be covered.
+
+.. code-block:: php
+    :caption: Test class that specifies which directory it wants to cover
+    :name: code-coverage.targeting-units-of-code.examples.DispatcherTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\CoversDirectory;
+    use PHPUnit\Framework\TestCase;
+
+    #[CoversDirectory(__DIR__ . '/../src/Dispatcher')]
+    final class DispatcherTest extends TestCase
+    {
+        // ...
+    }
+
+Relative paths are resolved based on the current working directory in which PHPUnit is run.
+It is therefore recommended to build absolute paths using the ``__DIR__`` constant, as shown
+in the example above.
+
+Filesystem targets must be part of the code that is configured to be first-party code using
+:ref:`\<source\> <appendixes.xml-configuration-file.source.include>`. When a target is outside
+of the configured source, a warning is emitted and the attribute is ignored.
+
 The ``PHPUnit\Framework\Attributes\CoversNothing`` attribute can be used to specify that tests
 should not contribute to code coverage at all. This can be helpful when writing integration tests
 and to make sure you only generate code coverage with smaller tests.

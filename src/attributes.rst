@@ -250,6 +250,66 @@ that a test intends to cover the given function.
 The ``CoversNamespace(string $namespace)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>` that a test intends to cover code in the given namespace.
 
 
+.. _appendixes.attributes.CoversFile:
+
+``CoversFile``
+--------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
+
+The ``CoversFile(string $path)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
+that a test intends to cover code in the given source code file.
+
+The given file must be part of the code that is configured to be first-party code using
+:ref:`\<source\> <appendixes.xml-configuration-file.source.include>`. If it is not, a warning
+is emitted and the attribute is ignored.
+
+
+.. _appendixes.attributes.CoversDirectory:
+
+``CoversDirectory``
+-------------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
+
+The ``CoversDirectory(string $directory)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
+that a test intends to cover code in the source code files located in the given directory.
+Source code files located in subdirectories of the given directory are not considered;
+use :ref:`CoversDirectoryRecursively <appendixes.attributes.CoversDirectoryRecursively>` for that.
+
+The given directory must be part of the code that is configured to be first-party code using
+:ref:`\<source\> <appendixes.xml-configuration-file.source.include>`. If it is not, a warning
+is emitted and the attribute is ignored.
+
+
+.. _appendixes.attributes.CoversDirectoryRecursively:
+
+``CoversDirectoryRecursively``
+------------------------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
+
+The ``CoversDirectoryRecursively(string $directory)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
+that a test intends to cover code in the source code files located in the given directory
+and its subdirectories.
+
+The given directory must be part of the code that is configured to be first-party code using
+:ref:`\<source\> <appendixes.xml-configuration-file.source.include>`. If it is not, a warning
+is emitted and the attribute is ignored.
+
+
 .. _appendixes.attributes.CoversNothing:
 
 ``CoversNothing``
@@ -374,6 +434,70 @@ in the context of :ref:`preventing unintentionally covered code <risky-tests.uni
 
 The ``UsesNamespace(string $namespace)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>` that a test allows the execution of code in the given namespace, but does not intend to cover it.
 This is relevant in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
+
+
+.. _appendixes.attributes.UsesFile:
+
+``UsesFile``
+------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
+
+The ``UsesFile(string $path)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
+that a test allows the execution of code in the given source code file, but does not intend to cover it.
+This is relevant in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
+
+The given file must be part of the code that is configured to be first-party code using
+:ref:`\<source\> <appendixes.xml-configuration-file.source.include>`. If it is not, a warning
+is emitted and the attribute is ignored.
+
+
+.. _appendixes.attributes.UsesDirectory:
+
+``UsesDirectory``
+-----------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
+
+The ``UsesDirectory(string $directory)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
+that a test allows the execution of code in the source code files located in the given directory,
+but does not intend to cover it. This is relevant in the context of
+:ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
+Source code files located in subdirectories of the given directory are not considered;
+use :ref:`UsesDirectoryRecursively <appendixes.attributes.UsesDirectoryRecursively>` for that.
+
+The given directory must be part of the code that is configured to be first-party code using
+:ref:`\<source\> <appendixes.xml-configuration-file.source.include>`. If it is not, a warning
+is emitted and the attribute is ignored.
+
+
+.. _appendixes.attributes.UsesDirectoryRecursively:
+
+``UsesDirectoryRecursively``
+----------------------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | no           | yes        |
++-------------+--------------+------------+
+
+The ``UsesDirectoryRecursively(string $directory)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
+that a test allows the execution of code in the source code files located in the given directory
+and its subdirectories, but does not intend to cover it. This is relevant in the context of
+:ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
+
+The given directory must be part of the code that is configured to be first-party code using
+:ref:`\<source\> <appendixes.xml-configuration-file.source.include>`. If it is not, a warning
+is emitted and the attribute is ignored.
 
 Data Provider
 =============
