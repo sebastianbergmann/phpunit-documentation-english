@@ -236,6 +236,12 @@ These settings are overrides that are layered on top of ``failOnDeprecation``:
 * Using ``--do-not-fail-on-self-deprecation``, ``--do-not-fail-on-direct-deprecation``, or ``--do-not-fail-on-indirect-deprecation`` exempts deprecations of that trigger type from failing the test run even when ``failOnDeprecation`` or ``failOnAllIssues`` is enabled.
 * Deprecations that are not classified as ``self``, ``direct``, or ``indirect`` (for instance deprecations triggered by test code, or deprecations for which no trigger could be identified) always follow the ``failOnDeprecation`` setting.
 
+Configuring ``failOnSelfDeprecation="false"``, ``failOnDirectDeprecation="false"``, or ``failOnIndirectDeprecation="false"``
+in the XML configuration file cannot exempt a trigger type when ``failOnDeprecation`` is enabled: only the
+``--do-not-fail-on-*`` CLI options can do that. So that this conflict does not go unnoticed, PHPUnit emits a test
+runner warning for such a setting that has no effect, for example ``failOnSelfDeprecation="false" has no effect
+because failOnDeprecation is enabled. Use the --do-not-fail-on-self-deprecation CLI option instead``.
+
 Here is a configuration for a common workflow: deprecations that you can act on (``self`` and ``direct``)
 fail the test run while indirect deprecations are only reported:
 
