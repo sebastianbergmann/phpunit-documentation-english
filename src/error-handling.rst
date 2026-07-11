@@ -233,7 +233,7 @@ These settings are overrides that are layered on top of ``failOnDeprecation``:
 
 * By default, each trigger type follows the ``failOnDeprecation`` setting.
 * Configuring ``failOnSelfDeprecation="true"``, ``failOnDirectDeprecation="true"``, or ``failOnIndirectDeprecation="true"`` (or using the corresponding ``--fail-on-*`` CLI option) enables failing on deprecations of that trigger type even when ``failOnDeprecation`` is not enabled.
-* Using ``--do-not-fail-on-self-deprecation``, ``--do-not-fail-on-direct-deprecation``, or ``--do-not-fail-on-indirect-deprecation`` exempts deprecations of that trigger type from failing the test run even when ``failOnDeprecation`` is enabled.
+* Using ``--do-not-fail-on-self-deprecation``, ``--do-not-fail-on-direct-deprecation``, or ``--do-not-fail-on-indirect-deprecation`` exempts deprecations of that trigger type from failing the test run even when ``failOnDeprecation`` or ``failOnAllIssues`` is enabled.
 * Deprecations that are not classified as ``self``, ``direct``, or ``indirect`` (for instance deprecations triggered by test code, or deprecations for which no trigger could be identified) always follow the ``failOnDeprecation`` setting.
 
 Here is a configuration for a common workflow: deprecations that you can act on (``self`` and ``direct``)

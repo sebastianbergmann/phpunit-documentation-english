@@ -227,6 +227,16 @@ Failing on Issues
       - :ref:`failOnIncomplete <appendixes.xml-configuration-file.phpunit.failOnIncomplete>` attribute on ``<phpunit>``
       - ``false``
 
+``failOnAllIssues="true"`` takes precedence over the fine-grained ``failOn*``
+attributes: configuring a fine-grained ``failOn*`` attribute to ``false`` does
+not disable failing on the respective issue type (see
+:ref:`appendixes.xml-configuration-file.phpunit.failOnAllIssues`).
+
+The ``--do-not-fail-on-*`` CLI options have no XML configuration file
+counterpart. They take precedence over the ``failOn*`` attributes listed
+above, including ``failOnAllIssues``, and are the only way to not fail on
+a specific issue type when ``failOnAllIssues="true"`` is configured.
+
 
 .. _appendixes.configuration.reporting:
 
