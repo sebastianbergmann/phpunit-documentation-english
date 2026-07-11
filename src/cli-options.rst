@@ -216,7 +216,7 @@ Execution
    Causes PHPUnit to return a failure exit code when any test is marked incomplete.
 
 ``--fail-on-all-issues``
-   Causes PHPUnit to return a failure exit code when any issue is triggered. This is a shorthand that enables all ``--fail-on-*`` options at once.
+   Causes PHPUnit to return a failure exit code when any issue is triggered. This is a shorthand that enables all ``--fail-on-*`` options at once. It takes precedence over the fine-grained ``failOn*`` attributes of the XML configuration file; only the ``--do-not-fail-on-*`` options can disable failing on a specific issue type when it is used.
 
 ``--do-not-fail-on-empty-test-suite``
    Disables the signaling of failure when no tests were run. This overrides the corresponding XML configuration setting.

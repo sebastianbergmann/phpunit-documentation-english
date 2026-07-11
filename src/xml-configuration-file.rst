@@ -236,6 +236,25 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when an issue is triggered.
 
+Configuring ``failOnAllIssues="true"`` is equivalent to configuring
+``failOnDeprecation="true"``, ``failOnEmptyTestSuite="true"``,
+``failOnIncomplete="true"``, ``failOnNotice="true"``,
+``failOnPhpunitDeprecation="true"``, ``failOnPhpunitNotice="true"``,
+``failOnPhpunitWarning="true"``, ``failOnRisky="true"``,
+``failOnSkipped="true"``, and ``failOnWarning="true"``.
+
+.. admonition:: Precedence over fine-grained ``failOn*`` settings
+
+   ``failOnAllIssues="true"`` takes precedence over the fine-grained
+   ``failOn*`` attributes documented below. When ``failOnAllIssues`` is
+   configured to ``true``, configuring a fine-grained ``failOn*`` attribute
+   to ``false`` has no effect. For example, configuring
+   ``failOnAllIssues="true"`` together with ``failOnDeprecation="false"``
+   does not disable failing on deprecations.
+
+   The ``--do-not-fail-on-*`` CLI options are the only way to not fail on
+   a specific issue type when ``failOnAllIssues="true"`` is configured.
+
 .. admonition:: Backward Compatibility
 
    Please note that if you configure ``failOnAllIssues`` to ``true``
