@@ -500,7 +500,20 @@ These options are commonly used in CI pipelines to enforce strict quality standa
     OK, but there were issues!
     Tests: 2, Assertions: 2, Deprecations: 1, Warnings: 1.
 
-The ``--fail-on-*`` options have ``--do-not-fail-on-*`` counterparts that can be used to override settings from the XML configuration file.
+``--fail-on-all-issues`` and its XML configuration file counterpart,
+``failOnAllIssues="true"``, take precedence over the fine-grained ``failOn*``
+attributes of the XML configuration file: configuring a fine-grained
+``failOn*`` attribute to ``false`` has no effect when ``failOnAllIssues``
+is configured to ``true``.
+
+The fine-grained ``--fail-on-*`` options have ``--do-not-fail-on-*``
+counterparts that can be used to override settings from the XML configuration
+file. A ``--do-not-fail-on-*`` option disables failing on the respective issue
+type and takes precedence over all ``--fail-on-*`` options and
+``failOn*`` attributes, including ``--fail-on-all-issues`` and
+``failOnAllIssues="true"``. The ``--do-not-fail-on-*`` options are therefore
+the only way to not fail on a specific issue type when
+``failOnAllIssues="true"`` is configured.
 
 See :ref:`appendixes.cli-options.execution` for the complete reference.
 
