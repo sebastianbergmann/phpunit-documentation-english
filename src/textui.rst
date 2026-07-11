@@ -426,6 +426,37 @@ Exit with error code when ...
     Exit with a shell exit code that signals failure even when all tests passed
     but at least one test was skipped.
 
+``--fail-on-phpunit-warning``
+
+    Exit with a shell exit code that signals failure even when all tests passed
+    but at least one PHPUnit warning was triggered.
+
+``--fail-on-empty-test-suite``
+
+    Exit with a shell exit code that signals failure when the configured test
+    suite is empty.
+
+``--fail-on-all-issues``
+
+    Exit with a shell exit code that signals failure when at least one issue
+    was triggered. This is equivalent to using all of the ``--fail-on-*``
+    options listed above.
+
+The fine-grained ``--fail-on-*`` options listed above have ``--do-not-fail-on-*``
+counterparts: ``--do-not-fail-on-warning``, ``--do-not-fail-on-risky``,
+``--do-not-fail-on-deprecation``, ``--do-not-fail-on-phpunit-deprecation``,
+``--do-not-fail-on-notice``, ``--do-not-fail-on-incomplete``,
+``--do-not-fail-on-skipped``, ``--do-not-fail-on-phpunit-warning``, and
+``--do-not-fail-on-empty-test-suite``.
+
+A ``--do-not-fail-on-*`` option disables failing on the respective issue type.
+It takes precedence over ``--fail-on-all-issues``, over the corresponding
+``--fail-on-*`` option, and over the corresponding ``failOnAllIssues`` and
+``failOn*`` attributes of the XML configuration file
+(see :ref:`appendixes.configuration.phpunit.failOnAllIssues`).
+The ``--do-not-fail-on-*`` options are therefore the only way to not fail on
+a specific issue type when ``failOnAllIssues="true"`` is configured.
+
 
 Test Result Cache
 ^^^^^^^^^^^^^^^^^
