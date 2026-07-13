@@ -166,6 +166,56 @@ Once the custom comparator is registered, it will be used whenever ``assertEqual
    See :ref:`assertObjectEquals() <appendixes.assertions.assertObjectEquals>` for details.
 
 
+.. _extending-phpunit.implementing-custom-object-exporters:
+
+Implementing custom object exporters
+====================================
+
+When an assertion fails, PHPUnit exports the values that were involved so that they can be represented as strings in the failure message.
+By default, an object is exported with all its properties.
+This can make failure messages hard to read when the objects involved are large or contain properties that are irrelevant for understanding the failure.
+
+A custom object exporter controls how objects of a specific type are represented in failure messages.
+
+A custom object exporter is a class that implements the ``SebastianBergmann\Exporter\ObjectExporter`` interface, which declares two methods:
+
+The ``handles(object $object): bool`` method returns ``true`` when this object exporter can export the given object.
+
+The ``export(object $object, Exporter $exporter, int $indentation): string`` method returns the string representation of the given object.
+The ``$exporter`` argument can be used to export the values of the object's properties.
+The ``$indentation`` argument provides the current level of indentation to support nested output.
+
+For example, you may want to represent the ``Money`` objects from the previous section compactly by their amount and currency.
+
+.. literalinclude:: examples/extending-phpunit/MoneyExporter.php
+   :caption: A custom object exporter for Money objects
+   :language: php
+
+You can register a custom object exporter using the ``registerObjectExporter()`` method of the ``PHPUnit\Framework\TestCase`` class.
+PHPUnit automatically unregisters custom object exporters after the test has finished.
+
+.. literalinclude:: examples/extending-phpunit/MoneyExporterTest.php
+   :caption: A test registering and using a custom object exporter
+   :language: php
+
+The assertion in the test shown above fails with the message shown below:
+
+.. code-block::
+
+    Failed asserting that an array contains Money (100 EUR).
+
+Without the custom object exporter, the same failure would be described using the default representation:
+
+.. code-block::
+
+    Failed asserting that an array contains Money Object #519 (
+        'amount' => 100,
+        'currency' => 'EUR',
+    ).
+
+Custom object exporters are used wherever PHPUnit exports values: in the failure descriptions of constraints as well as in the diffs shown for comparison failures.
+
+
 .. _extending-phpunit.customizing-test-method-invocation:
 
 Customizing test method invocation
