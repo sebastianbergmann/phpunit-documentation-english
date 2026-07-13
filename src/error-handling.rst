@@ -11,8 +11,16 @@ PHPUnit's test runner registers an `error handler <https://www.php.net/manual/en
 errors. We will use the term "issues" to refer to ``E_DEPRECATED``, ``E_USER_DEPRECATED``, ``E_NOTICE``, ``E_USER_NOTICE``,
 ``E_STRICT``, ``E_WARNING``, and ``E_USER_WARNING`` errors for the remainder of this chapter.
 
-The error handler is only active while a test is running and only processes issues triggered by test code or code that is
+``E_STRICT`` was deprecated in PHP 8.4. On PHP versions where ``E_STRICT`` errors still exist, PHPUnit processes
+them as if they were ``E_NOTICE`` errors.
+
+The error handler also processes ``E_USER_ERROR`` errors. These are not issues in the sense used in this chapter,
+they are handled differently (see :ref:`error-handling.e-user-error`).
+
+The error handler is active while a test is running and only processes issues triggered by test code or code that is
 called from test code. It ignores issues triggered by PHPUnit's own code as well as code from PHPUnit's dependencies.
+Issues that are triggered while the test suite is loaded, before the first test is run, are processed separately
+(see :ref:`error-handling.issues-outside-of-tests`).
 
 .. admonition:: Other error handlers
 
@@ -136,6 +144,19 @@ Detailed information, for instance which issue was triggered where, is only prin
     OK, but there were issues!
     Tests: 2, Assertions: 2, Deprecations: 2.
 
+Each of these CLI options has a corresponding attribute on the ``<phpunit>`` element of the XML configuration file,
+for instance ``displayDetailsOnTestsThatTriggerDeprecations``
+(see :ref:`appendixes.xml-configuration-file.phpunit.displayDetailsOnTestsThatTriggerDeprecations`).
+
+By default, issues do not affect the shell exit code: it indicates success even when the tests triggered issues.
+The :ref:`failOnDeprecation <appendixes.xml-configuration-file.phpunit.failOnDeprecation>`,
+:ref:`failOnNotice <appendixes.xml-configuration-file.phpunit.failOnNotice>`, and
+:ref:`failOnWarning <appendixes.xml-configuration-file.phpunit.failOnWarning>` attributes as well as the
+:ref:`failOnAllIssues <appendixes.xml-configuration-file.phpunit.failOnAllIssues>` attribute (and the corresponding
+``--fail-on-*`` CLI options) can be used to let the test runner exit with a shell exit code that indicates failure
+when issues were triggered. Enabling one of these settings implicitly enables the display of the corresponding
+issue details.
+
 Limiting issues to "your code"
 ==============================
 
@@ -205,6 +226,14 @@ uses the information what your code is:
 * :ref:`appendixes.xml-configuration-file.source.ignoreIndirectDeprecations` setting can be used to ignore deprecations triggered by third-party code
 * :ref:`appendixes.xml-configuration-file.source.restrictNotices` setting can be used to ignore notices in third-party code
 * :ref:`appendixes.xml-configuration-file.source.restrictWarnings` setting can be used to ignore warnings in third-party code
+
+PHPUnit only identifies how an issue was triggered when the ``<source>`` element is configured. This identification
+can also be disabled explicitly by setting ``identifyIssueTrigger="false"`` on the ``<source>`` element
+(see :ref:`appendixes.xml-configuration-file.source.identifyIssueTrigger`). When trigger identification is disabled,
+all issues are treated as if it was unknown whether they were triggered by first-party code or third-party code:
+the ``ignoreSelfDeprecations``, ``ignoreDirectDeprecations``, and ``ignoreIndirectDeprecations`` settings as well as
+the trigger-specific ``failOn*Deprecation`` settings discussed below have no effect. The ``restrictNotices`` and
+``restrictWarnings`` settings are not affected by this: they only consider the location where the issue was triggered.
 
 
 .. _error-handling.failing-on-deprecations-by-trigger:
@@ -278,6 +307,7 @@ in PHPUnit's XML configuration file:
 * :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfPhpNotices` setting can be used to ignore the suppression of ``E_NOTICE`` and ``E_STRICT`` issues
 * :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfWarnings` setting can be used to ignore the suppression of ``E_USER_WARNING`` issues
 * :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfPhpWarnings` setting can be used to ignore the suppression of ``E_WARNING`` issues
+* :ref:`appendixes.xml-configuration-file.source.ignoreSuppressionOfErrors` setting can be used to ignore the suppression of ``E_USER_ERROR`` errors (see :ref:`error-handling.e-user-error`)
 
 
 Ignoring previously reported issues
@@ -326,6 +356,15 @@ then PHPUnit's test runner will use this list of already known issues to ignore 
 
     2 issues were ignored by baseline.
 
+The ``--ignore-baseline`` CLI option can be used to ignore a baseline that is configured in the XML configuration
+file for a single test run so that all issues are reported again.
+
+Deprecations, notices, and warnings that are triggered by tests are put on the baseline when it is generated.
+PHPUnit's own deprecations, notices, and warnings as well as issues triggered outside of tests
+(see :ref:`error-handling.issues-outside-of-tests`) are not put on the baseline. Issues that are suppressed using
+the suppression operator (``@``) are only put on the baseline when the corresponding ``ignoreSuppressionOf*``
+setting (see above) is configured.
+
 Expecting Deprecations (``E_USER_DEPRECATED``)
 ==============================================
 
@@ -346,11 +385,57 @@ regular expression.
 
 This can be used together with the ``#[IgnoreDeprecations]`` attribute to not let the test fail.
 
+The ``#[IgnoreDeprecations]`` attribute (see :ref:`appendixes.attributes.IgnoreDeprecations`) can be used both on
+the test class and on the test method and is repeatable. It accepts an optional regular expression as its
+``messagePattern`` argument. When a message pattern is specified, only deprecations with a message that matches
+the regular expression are ignored. This allows you to ignore the deprecation that a test expects while all other
+deprecations triggered by the test are still reported.
+
 .. admonition:: Testing deprecated functionality
 
    When you deprecate functionality in your code, you want to keep tests for the deprecated code until it is actually removed.
    Use the ``#[IgnoreDeprecations]`` attribute together with ``expectUserDeprecationMessage()`` on tests that directly exercise deprecated functionality.
    This ensures the deprecated code still works as expected, the expected deprecation message is verified, and the test is not reported as having triggered a deprecation.
+
+
+.. _error-handling.deprecation-triggers:
+
+Wrappers for trigger_error()
+============================
+
+Some libraries do not call PHP's ``trigger_error()`` function directly to trigger ``E_USER_DEPRECATED`` issues,
+but use a wrapper such as the ``trigger_deprecation()`` function from ``symfony/deprecation-contracts`` or the
+``Doctrine\Deprecations\Deprecation::trigger()`` method from ``doctrine/deprecations``. Such a wrapper adds a
+stack frame: from PHP's point of view, the deprecation is triggered inside the wrapper, not in the deprecated
+code that calls the wrapper.
+
+The ``<deprecationTrigger>`` element (see :ref:`appendixes.xml-configuration-file.source.deprecationTrigger`)
+can be used to configure functions and methods as deprecation triggers:
+
+.. code-block:: xml
+
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+
+        <deprecationTrigger>
+            <function>trigger_deprecation</function>
+            <method>Doctrine\Deprecations\Deprecation::trigger</method>
+        </deprecationTrigger>
+    </source>
+
+Configuring deprecation triggers has two effects on the processing of ``E_USER_DEPRECATED`` issues:
+
+* The location that is reported for a deprecation is the location where the configured wrapper was called,
+  not the location inside the wrapper where ``trigger_error()`` was called.
+* The stack frames of configured wrappers are ignored when PHPUnit identifies how a deprecation was triggered,
+  so that the deprecation is classified based on the code that uses the wrapper.
+
+Functions and methods that are configured as deprecation triggers but are not defined when the configuration is
+loaded cause a test runner warning. The ``ignoreUndefinedTriggers`` attribute on the ``<deprecationTrigger>``
+element can be used to silently ignore such entries, for instance when a deprecation trigger is provided by a
+library that is not installed in all environments.
 
 
 .. _error-handling.issue-trigger-resolvers:
@@ -559,6 +644,61 @@ Multiple filters can be registered. A deprecation is ignored as soon as one of t
 returns ``true`` for it.
 
 
+.. _error-handling.e-user-error:
+
+Errors (``E_USER_ERROR``)
+=========================
+
+When test code, or code that is called from test code, triggers an ``E_USER_ERROR`` error then PHPUnit's error
+handler turns this error into an exception: the execution of the test is aborted at the point where the error
+was triggered and the test is reported as errored.
+
+The suppression operator (``@``) does not change this behavior: the test is aborted and reported as errored even
+when the ``E_USER_ERROR`` error was suppressed.
+
+Triggering an ``E_USER_ERROR`` error using ``trigger_error()`` has been deprecated in PHP 8.4. Code that uses
+``trigger_error($message, E_USER_ERROR)`` should be migrated to throw an exception (or call ``exit()``).
+
+
+.. _error-handling.issues-outside-of-tests:
+
+Issues triggered outside of tests
+=================================
+
+Not all code runs while a test is running: test class files are loaded and data providers are executed while the
+test suite is being loaded, before the first test is run. PHPUnit's error handler also processes issues that are
+triggered during this phase.
+
+Issues that are triggered while a data provider runs are attributed to the tests that use the data provided by
+the data provider: they are reported as if they had been triggered by these tests.
+
+Other issues that are triggered while the test suite is loaded, for instance a deprecation triggered when a test
+class file is loaded, cannot be attributed to a test. They are counted and reported separately as issues that
+were "triggered outside of tests". The details for these issues are displayed using the same ``--display-*`` CLI
+options and ``displayDetailsOn*`` configuration settings that were discussed earlier in this chapter, and they
+are considered by the ``failOn*`` settings.
+
+The bootstrap script (see :ref:`appendixes.xml-configuration-file.phpunit.bootstrap`) runs before PHPUnit's
+error handler is registered: issues triggered by the bootstrap script are not processed by PHPUnit.
+
+
+Error handlers registered by tests
+==================================
+
+PHPUnit's test runner takes a snapshot of the registered error handlers before each test and compares it to the
+registered error handlers after the test:
+
+* When a test registers an error handler and does not remove it, the test is considered :ref:`risky <risky-tests.leaked-error-and-exception-handlers>`
+  and reported with the message "Test code or tested code did not remove its own error handlers". This check is
+  not performed for tests that are run in a separate process.
+* When a test removes error handlers that it did not register, for instance PHPUnit's own error handler, the test
+  is considered :ref:`risky <risky-tests.leaked-error-and-exception-handlers>` and reported with the message "Test code or tested code removed error
+  handlers other than its own".
+
+After each test, PHPUnit's test runner restores the error handlers that were registered before the test so that
+subsequent tests are not affected.
+
+
 Disabling PHPUnit's error handler
 =================================
 
@@ -568,3 +708,11 @@ registered by PHPUnit's test runner will interfere with what you want to achieve
 
 The ``#[WithoutErrorHandler]`` attribute can be used in such a case to disable PHPUnit's error handler for
 a test method.
+
+Disabling PHPUnit's error handler is also required when the code under test relies on ``error_get_last()`` or
+``error_reporting()``: while PHPUnit's error handler is active, errors that it processes are not reported by
+``error_get_last()`` and ``error_reporting()`` returns a masked value so that PHP itself does not report errors
+that PHPUnit's error handler already processes.
+
+Be aware that features of PHPUnit that rely on its error handler, meaning everything discussed in this chapter,
+do not work for a test method that uses the ``#[WithoutErrorHandler]`` attribute.

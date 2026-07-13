@@ -132,6 +132,29 @@ option on the :ref:`command-line <appendixes.cli-options.execution>` or by setti
 :ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
 
+.. _risky-tests.leaked-error-and-exception-handlers:
+
+Leaked Error and Exception Handlers
+===================================
+
+PHPUnit's test runner compares the error handlers and exception handlers that are registered before a test
+to those that are registered after the test:
+
+* A test that registers an error handler or an exception handler and does not remove it will be considered
+  risky and reported with the message "Test code or tested code did not remove its own error handlers"
+  (or "... exception handlers", respectively). This does not apply to tests that are run in a separate process.
+* A test that removes error handlers or exception handlers that it did not register, for instance PHPUnit's
+  own error handler, will be considered risky and reported with the message "Test code or tested code removed
+  error handlers other than its own" (or "... exception handlers ...", respectively).
+
+After each test, PHPUnit's test runner restores the error handlers and exception handlers that were registered
+before the test so that subsequent tests are not affected.
+
+This check is always active and cannot be disabled.
+
+See :ref:`error-handling` for details on PHPUnit's error handler.
+
+
 .. _risky-tests.test-size-dependencies:
 
 Test Size Dependencies

@@ -356,6 +356,15 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but PHPUnit notices were triggered.
 
+.. _appendixes.xml-configuration-file.phpunit.failOnPhpunitWarning:
+
+The ``failOnPhpunitWarning`` Attribute
+------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+This attribute configures whether the PHPUnit test runner should exit with a shell exit code that indicates failure when all tests are successful but PHPUnit warnings were triggered.
+
 .. _appendixes.xml-configuration-file.phpunit.failOnNotice:
 
 The ``failOnNotice`` Attribute
@@ -1030,6 +1039,20 @@ At startup, PHPUnit validates each configured filter:
 Invalid entries are skipped after the warning is emitted and do not prevent the test suite from running.
 
 See :ref:`error-handling.deprecation-filters` for more information about implementing custom deprecation filters.
+
+.. _appendixes.xml-configuration-file.source.identifyIssueTrigger:
+
+The ``<identifyIssueTrigger>`` Attribute
+----------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+Configures whether PHPUnit identifies how an issue was triggered: by first-party code in first-party code (``self``), by first-party code in third-party code (``direct``), or by third-party code (``indirect``).
+
+When this attribute is set to ``false``, all issues are treated as if it was unknown whether they were triggered by first-party code or third-party code. Settings that depend on trigger identification, such as ``ignoreSelfDeprecations``, ``ignoreDirectDeprecations``, ``ignoreIndirectDeprecations``, ``failOnSelfDeprecation``, ``failOnDirectDeprecation``, and ``failOnIndirectDeprecation``, then have no effect.
+
+See :ref:`error-handling.failing-on-deprecations-by-trigger` for details.
+
 
 .. _appendixes.xml-configuration-file.source.ignoreSelfDeprecations:
 

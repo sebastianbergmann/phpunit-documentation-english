@@ -99,11 +99,12 @@ expectations on mock objects as :ref:`risky <risky-tests.useless-tests>`. The
 +-------------+--------------+------------+
 | Class Level | Method Level | Repeatable |
 +=============+==============+============+
-| yes         | yes          | no         |
+| yes         | yes          | yes        |
 +-------------+--------------+------------+
 
-The ``IgnoreDeprecations`` attribute can be used to configure PHPUnit's error handler to
+The ``IgnoreDeprecations(null|string $messagePattern = null)`` attribute can be used to configure PHPUnit's error handler to
 not emit events for ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` errors.
+When a ``$messagePattern`` is specified, only deprecations whose message matches the given regular expression pattern are ignored.
 
 
 .. _appendixes.attributes.WithoutErrorHandler:
