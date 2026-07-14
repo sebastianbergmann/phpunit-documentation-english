@@ -2,12 +2,12 @@
 use PHPUnit\Framework\MockObject\Runtime\PropertyHook;
 use PHPUnit\Framework\TestCase;
 
-final class ExampleTest extends TestCase
+final class GetHookedPropertyStubExampleTest extends TestCase
 {
     public function testExample(): void
     {
         $stub = $this->createStub(
-            InterfaceWithHookedProperty::class,
+            InterfaceWithGetHookedProperty::class,
         );
 
         $stub

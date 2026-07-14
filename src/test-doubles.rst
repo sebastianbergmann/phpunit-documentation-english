@@ -612,6 +612,12 @@ The behaviour of the get-hooked property ``property`` can be configured like so:
 
 In the example shown above, ``PropertyHook::get('property')`` to specify that we want to configure the behaviour of the method that is called when the property named ``property`` is accessed for reading.
 
+A test double implements both a get hook and a set hook for every doubled property, even when the property only declares one of them.
+The interface shown above only declares a get hook for ``property``, but the test double also implements a set hook that can be configured using ``PropertyHook::set('property')``.
+
+Property hooks that are declared ``final`` are not doubled.
+Properties that do not declare any hooks are not doubled: they behave like regular properties on the test double.
+
 
 .. _test-doubles.test-stubs.reference.configuring-exceptions:
 
@@ -1556,6 +1562,12 @@ Expectations for the set-hooked property ``property`` can be configured like so:
    :language: php
 
 In the example shown above, ``PropertyHook::set('property')`` to specify that we want to configure an expectation for the method that is called when the property named ``property`` is accessed for writing.
+
+A test double implements both a get hook and a set hook for every doubled property, even when the property only declares one of them.
+The interface shown above only declares a set hook for ``property``, but the test double also implements a get hook for which expectations can be configured using ``PropertyHook::get('property')``.
+
+Property hooks that are declared ``final`` are not doubled.
+Properties that do not declare any hooks are not doubled: they behave like regular properties on the test double.
 
 
 .. _test-doubles.best-practices:
