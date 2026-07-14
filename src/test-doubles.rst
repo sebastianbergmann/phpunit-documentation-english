@@ -331,6 +331,7 @@ Use ``getStubBuilder()`` only when you need advanced configuration such as:
 * Specifying a custom class name for the test stub
 * Enabling the original constructor with custom arguments
 * Creating partial test stubs (only doubling specific methods)
+* Doubling properties that do not declare property hooks
 * Controlling clone behavior
 * Disabling automatic return value generation
 
@@ -360,6 +361,15 @@ Methods not in this list will retain their original implementation, creating a *
 .. admonition:: Note
 
    All specified methods must exist in the class.
+
+
+**doubleProperties(array $properties)**
+
+Specifies properties that do not declare property hooks for which property hooks should be doubled (see :ref:`test-doubles.test-stubs.reference.configuring-return-values.properties-without-hooks`).
+
+.. admonition:: Note
+
+   A property can only be doubled when it exists, is public, is not static, is not readonly, is not final, and declares a type.
 
 
 **setConstructorArgs(array $arguments)**
@@ -616,7 +626,37 @@ A test double implements both a get hook and a set hook for every doubled proper
 The interface shown above only declares a get hook for ``property``, but the test double also implements a set hook that can be configured using ``PropertyHook::set('property')``.
 
 Property hooks that are declared ``final`` are not doubled.
-Properties that do not declare any hooks are not doubled: they behave like regular properties on the test double.
+Properties that do not declare any hooks are not doubled by default: they behave like regular properties on the test double.
+They can be doubled on an opt-in basis, though (see :ref:`test-doubles.test-stubs.reference.configuring-return-values.properties-without-hooks`).
+
+
+.. _test-doubles.test-stubs.reference.configuring-return-values.properties-without-hooks:
+
+Properties without Hooks
+""""""""""""""""""""""""
+
+PHP allows a child class to add hooks to a property that its parent class declared without hooks.
+PHPUnit makes this capability available for test doubles: the ``doubleProperties()`` method of the object returned by ``getStubBuilder()`` (or ``getMockBuilder()``) opts a property that does not declare hooks in to being doubled.
+
+The example below shows a class with a property that does not declare hooks:
+
+.. literalinclude:: examples/test-doubles/src/ClassWithPropertyWithoutHooks.php
+   :caption: Class with a property that does not declare hooks
+   :language: php
+
+The behaviour of the property ``property`` can be configured like so:
+
+.. literalinclude:: examples/test-doubles/DoubledPropertyStubExampleTest.php
+   :caption: Test that uses a test stub with a doubled property that does not declare hooks
+   :language: php
+
+A property that has been opted in with ``doubleProperties()`` supports everything that hooked properties support: ``PropertyHook::get()`` and ``PropertyHook::set()`` can be used to configure return values and callbacks as well as expectations.
+
+Doubling a property changes how it behaves: writing to the property no longer stores a value and reading from it no longer returns the stored value.
+Properties that are not listed in ``doubleProperties()`` are not affected and continue to behave like regular properties on the test double.
+
+A property can only be doubled when it exists, is public, is not static, is not readonly, is not final, and declares a type.
+``doubleProperties()`` fails with a clear error message when one of these requirements is not met.
 
 
 .. _test-doubles.test-stubs.reference.configuring-exceptions:
@@ -1567,7 +1607,22 @@ A test double implements both a get hook and a set hook for every doubled proper
 The interface shown above only declares a set hook for ``property``, but the test double also implements a get hook for which expectations can be configured using ``PropertyHook::get('property')``.
 
 Property hooks that are declared ``final`` are not doubled.
-Properties that do not declare any hooks are not doubled: they behave like regular properties on the test double.
+Properties that do not declare any hooks are not doubled by default: they behave like regular properties on the test double.
+They can be doubled on an opt-in basis, though (see :ref:`test-doubles.mock-objects.reference.configuring-expectations.properties-without-hooks`).
+
+
+.. _test-doubles.mock-objects.reference.configuring-expectations.properties-without-hooks:
+
+Properties without Hooks
+""""""""""""""""""""""""
+
+The ``doubleProperties()`` method of the object returned by ``getMockBuilder()`` opts a property that does not declare hooks in to being doubled (see :ref:`test-doubles.test-stubs.reference.configuring-return-values.properties-without-hooks` for details and limitations).
+
+Expectations for a property that has been opted in with ``doubleProperties()`` can be configured just like expectations for a hooked property:
+
+.. literalinclude:: examples/test-doubles/DoubledPropertyMockExampleTest.php
+   :caption: Test that uses a mock object with a doubled property that does not declare hooks
+   :language: php
 
 
 .. _test-doubles.best-practices:
