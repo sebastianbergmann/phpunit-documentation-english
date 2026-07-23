@@ -690,6 +690,19 @@ This attribute configures whether the export of arrays should be limited to a sp
 
 When set to ``0`` (default) then the export of arrays is not limited.
 
+.. _appendixes.xml-configuration-file.phpunit.warnWhenPhpIsNotConfiguredForDevelopment:
+
+The ``warnWhenPhpIsNotConfiguredForDevelopment`` Attribute
+----------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the test runner triggers a warning when PHP is not configured for development (see :ref:`installation.configuring-php-for-development`).
+
+When this attribute is set to ``true``, a test runner warning is triggered for each PHP configuration setting that is not configured as recommended.
+
+This configuration can be overridden for a single run using the ``--warn-when-php-is-not-configured-for-development`` and ``--do-not-warn-when-php-is-not-configured-for-development`` CLI options.
+
 .. _appendixes.xml-configuration-file.testsuites:
 
 The ``<testsuites>`` Element

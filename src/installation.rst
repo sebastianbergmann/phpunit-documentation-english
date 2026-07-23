@@ -166,6 +166,8 @@ Now we have the PHP command-line interpreter set up, and it is time to learn how
 With ``php --version`` we can verify that the PHP command-line interpreter, ``php``, is on the path, works, and check which version it is.
 
 
+.. _installation.configuring-php-for-development:
+
 Configuring PHP for Development
 -------------------------------
 

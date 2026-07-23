@@ -38,6 +38,9 @@ Configuration
     * - ``--cache-result`` / ``--do-not-cache-result``
       - :ref:`cacheResult <appendixes.xml-configuration-file.phpunit.cacheResult>` attribute on ``<phpunit>``
       - ``true``
+    * - ``--warn-when-php-is-not-configured-for-development`` / ``--do-not-warn-when-php-is-not-configured-for-development``
+      - :ref:`warnWhenPhpIsNotConfiguredForDevelopment <appendixes.xml-configuration-file.phpunit.warnWhenPhpIsNotConfiguredForDevelopment>` attribute on ``<phpunit>``
+      - ``false``
     * - ``--extension <class>``
       - :ref:`\<bootstrap\> <appendixes.xml-configuration-file.extensions.bootstrap>` under ``<extensions>``
       - (additive)
