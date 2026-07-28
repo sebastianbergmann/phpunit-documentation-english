@@ -38,7 +38,7 @@ Configuration
 ``--cache-directory <dir>``
    Specifies the directory where PHPUnit stores data between test suite runs. The following data is stored in this directory:
 
-   - ``test-results``: Results of the previous test suite run (used for reordering tests based on previous defects or duration with the ``--order-by`` option, for instance)
+   - ``test-run-history``: Status and duration of each test from the previous test suite run (used for reordering tests based on previous defects or duration with the ``--order-by`` option, for instance)
    - ``code-coverage``: Results of static analysis of tested code and test code (only written when code coverage reporting is requested; significantly improves performance of code coverage analysis on subsequent runs)
 
 ``--generate-configuration``
@@ -266,11 +266,11 @@ Execution
 ``--do-not-fail-on-incomplete``
    Disables the signaling of failure when a test is marked incomplete. This overrides the corresponding XML configuration setting.
 
-``--cache-result``
-   Enables writing of test results to the ``test-results`` cache file. The result cache is used by the ``--order-by defects`` and ``--order-by duration`` options to reorder tests based on results of previous test suite runs.
+``--record-test-run-history``
+   Enables the recording of the status and duration of each test in the ``test-run-history`` file. The test run history is used by the ``--order-by defects``, ``--order-by duration-ascending``, and ``--order-by duration-descending`` options to reorder tests based on previous test suite runs.
 
-``--do-not-cache-result``
-   Disables writing of test results to the ``test-results`` cache file. This overrides the corresponding XML configuration setting.
+``--do-not-record-test-run-history``
+   Disables the recording of the status and duration of each test in the ``test-run-history`` file. This overrides the corresponding XML configuration setting.
 
 ``--warn-when-php-is-not-configured-for-development``
    Enables the triggering of a test runner warning when PHP is not configured for development (see :ref:`installation.configuring-php-for-development`). A warning is triggered for each PHP configuration setting that is not configured as recommended. This overrides the corresponding XML configuration setting.

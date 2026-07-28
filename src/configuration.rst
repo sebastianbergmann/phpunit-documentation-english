@@ -35,8 +35,8 @@ Configuration
     * - ``--cache-directory <dir>``
       - :ref:`cacheDirectory <appendixes.xml-configuration-file.phpunit.cacheDirectory>` attribute on ``<phpunit>``
       - —
-    * - ``--cache-result`` / ``--do-not-cache-result``
-      - :ref:`cacheResult <appendixes.xml-configuration-file.phpunit.cacheResult>` attribute on ``<phpunit>``
+    * - ``--record-test-run-history`` / ``--do-not-record-test-run-history``
+      - :ref:`recordTestRunHistory <appendixes.xml-configuration-file.phpunit.recordTestRunHistory>` attribute on ``<phpunit>``
       - ``true``
     * - ``--warn-when-php-is-not-configured-for-development`` / ``--do-not-warn-when-php-is-not-configured-for-development``
       - :ref:`warnWhenPhpIsNotConfiguredForDevelopment <appendixes.xml-configuration-file.phpunit.warnWhenPhpIsNotConfiguredForDevelopment>` attribute on ``<phpunit>``

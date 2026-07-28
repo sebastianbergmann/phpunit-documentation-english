@@ -661,12 +661,12 @@ The ``--order-by`` option controls the order in which tests are executed. Suppor
 
 ``defects``
 
-    Tests that failed in a previous run are executed first. This requires the result
-    cache (enabled by default, see ``--cache-result``)
+    Tests that failed in a previous run are executed first. This requires the test run
+    history (enabled by default, see ``--record-test-run-history``)
 
 ``duration``
 
-    Tests are ordered by duration, shortest first. This requires the result cache
+    Tests are ordered by duration, shortest first. This requires the test run history
 
 ``random``
 

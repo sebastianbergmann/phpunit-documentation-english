@@ -48,19 +48,19 @@ The ``cacheDirectory`` Attribute
 This attribute configures the directory in which PHPUnit stores data between test suite runs.
 The following data is stored in this directory:
 
-- ``test-results``: Results of the previous test suite run (used for reordering tests based on previous defects or duration, for instance; see below)
+- ``test-run-history``: Status and duration of each test from the previous test suite run (used for reordering tests based on previous defects or duration, for instance; see below)
 - ``code-coverage``: Results of static analysis of tested code and test code (only written when code coverage reporting is requested; significantly improves performance of code coverage analysis on subsequent runs)
 
-.. _appendixes.xml-configuration-file.phpunit.cacheResult:
+.. _appendixes.xml-configuration-file.phpunit.recordTestRunHistory:
 
-The ``cacheResult`` Attribute
------------------------------
+The ``recordTestRunHistory`` Attribute
+--------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
-This attribute configures the storing of test results in the ``test-results`` cache file. This is required for ordering tests by defects, duration, or size with the ``executionOrder`` attribute (see :ref:`appendixes.xml-configuration-file.phpunit.executionOrder`).
+This attribute configures the recording of the status and duration of each test in the ``test-run-history`` file. This is required for ordering tests by defects or duration with the ``executionOrder`` attribute (see :ref:`appendixes.xml-configuration-file.phpunit.executionOrder`).
 
-Use ``--do-not-cache-result`` on the command line or set this attribute to ``false`` to prevent the writing of the ``test-results`` cache file.
+Use ``--do-not-record-test-run-history`` on the command line or set this attribute to ``false`` to prevent the writing of the ``test-run-history`` file.
 
 .. _appendixes.xml-configuration-file.phpunit.colors:
 
@@ -545,10 +545,10 @@ This attribute configures the order in which tests are executed.
 
 Primary orderings:
 
-- ``default``: ordered in the order in which PHPUnit found the tests (does not use the result cache)
-- ``defects``: ordered by defect (errored, failed, warning, incomplete, risky, skipped, unknown, passed), requires enabled :ref:`result cache<appendixes.xml-configuration-file.phpunit.cacheResult>`
-- ``duration-ascending``: ordered by duration (fastest test first, slowest test last), requires enabled :ref:`result cache<appendixes.xml-configuration-file.phpunit.cacheResult>`
-- ``duration-descending``: ordered by duration (slowest test first, fastest test last), requires enabled :ref:`result cache<appendixes.xml-configuration-file.phpunit.cacheResult>`
+- ``default``: ordered in the order in which PHPUnit found the tests (does not use the test run history)
+- ``defects``: ordered by defect (errored, failed, warning, incomplete, risky, skipped, unknown, passed), requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`
+- ``duration-ascending``: ordered by duration (fastest test first, slowest test last), requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`
+- ``duration-descending``: ordered by duration (slowest test first, fastest test last), requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`
 - ``random``: ordered randomly
 - ``reverse``: ordered as PHPUnit found the tests, then ordered in reverse
 - ``size-ascending``: ordered by size (small, medium, large, unknown), also see :ref:`appendixes.attributes.Small`, :ref:`appendixes.attributes.Medium`, and :ref:`appendixes.attributes.Large`
