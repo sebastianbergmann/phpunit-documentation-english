@@ -312,6 +312,52 @@ all code of the ``Foo`` class, all code of the ``Bar::foo()`` method, and the si
 line of code with the ``exit;`` statement. The line with the ``print '*';`` statement
 is ignored using ``// @codeCoverageIgnoreStart`` and ``// @codeCoverageIgnoreEnd``.
 
+.. _code-coverage.html-report:
+
+The Code Coverage Report in HTML Format
+=======================================
+
+The ``--coverage-html <dir>`` CLI option, and the corresponding
+:ref:`\<html\> <appendixes.xml-configuration-file.coverage.report.html>` element in the XML
+configuration file, generate a browsable code coverage report in HTML format.
+
+This report has two views of the same code coverage data, and links between them:
+
+- The *file view* organizes the code coverage information by directories and files.
+  The page for a file shows the source code of that file with line-by-line coverage highlighting.
+
+- The *class view* aggregates the code coverage information by classes, traits, and functions,
+  organized by namespace, and has its own pages for namespaces and classes.
+
+Each view has a dashboard that visualizes the code coverage information of the project,
+for instance to identify the units of code that are least covered.
+
+Both views are rendered by default. The ``--without-class-view`` and ``--without-file-view``
+CLI options, as well as the ``classView`` and ``fileView`` attributes of the ``<html>`` element
+in the XML configuration file, can be used to render only one of them. The two views cannot both
+be disabled.
+
+
+.. _code-coverage.html-report.test-size-filter:
+
+Filtering by Test Size
+----------------------
+
+The pages that list directories, files, namespaces, classes, traits, and functions have a
+``Small``, ``Medium``, ``Large``, and ``All`` filter. Selecting one or more test sizes
+recalculates the reported line, method, and class coverage of the listed items considering only
+code that was covered by tests of the selected sizes. ``All`` clears the filter.
+
+This is useful, for instance, to see how much of the code under test is covered by small tests
+alone, and which parts of it are only covered by larger tests.
+
+The size of a test is declared using the ``#[Small]``, ``#[Medium]``, and ``#[Large]`` attributes
+(see :ref:`appendixes.attributes.Small`). Code that was only covered by tests that do not declare
+their size is only accounted for in ``All``, and not in any of the size-specific selections.
+
+Filtering happens in the browser and therefore requires JavaScript.
+
+
 .. _code-coverage.phpcov:
 
 PHPCOV
@@ -320,6 +366,22 @@ PHPCOV
 `PHPCOV <https://github.com/sebastianbergmann/phpcov>`_ is a command-line tool for working with serialized code coverage data (``*.cov`` files) produced by PHPUnit.
 
 PHPCOV provides two commands: ``merge`` for merging code coverage data from multiple test runs, and ``patch-coverage`` for analyzing the code coverage of changed lines in a patch.
+
+.. admonition:: Serialization format
+
+   A ``*.cov`` file begins with the version of the serialization format that was used to write it.
+   Only files that use the serialization format of the current version of ``phpunit/php-code-coverage`` can be read, merged, and reported on.
+
+   The serialization format was changed, and its version was raised from ``1`` to ``2``, in ``phpunit/php-code-coverage`` 14.3, which is used by PHPUnit 13.3.
+   A ``*.cov`` file that was written by an earlier version cannot be read any more, and an error such as the one shown below is reported:
+
+   .. parsed-literal::
+
+       Coverage data was written using serialization format 1 and cannot be read by code that supports serialization format 2
+
+   Such a file has to be recreated by running the tests again.
+   Keep this in mind when ``*.cov`` files are cached between builds, or when they are collected from build jobs that use different versions of PHPUnit.
+
 
 Merging Code Coverage Data
 --------------------------

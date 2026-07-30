@@ -462,7 +462,7 @@ Code Coverage
    When generating a text coverage report, includes files that have no coverage at all. By default, completely uncovered files are omitted from the text report.
 
 ``--coverage-xml <dir>``
-   Writes the code coverage report in XML format to the specified directory. This generates one XML file per source file along with an index file.
+   Writes the code coverage report in XML format to the specified directory. This generates one XML file per source file along with an index file. For each line of code that was executed, this report records the tests that executed it as well as how often each of them executed it (see :ref:`appendixes.xml-configuration-file.coverage.report.xml`).
 
 ``--exclude-source-from-xml-coverage``
    Excludes the ``<source>`` element from the XML coverage report. This reduces the size of the generated XML files by omitting source code.

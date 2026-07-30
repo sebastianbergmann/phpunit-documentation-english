@@ -1279,6 +1279,8 @@ When PHPUnit instantiates the configured driver class, it inspects the construct
 
 After the driver has been instantiated, PHPUnit configures its granularity according to the ``pathCoverage`` attribute.
 
+A driver that counts how often a line was executed, and not only whether it was executed at all, should override the ``collectsHitCounts()`` method of ``SebastianBergmann\CodeCoverage\Driver\Driver`` and return ``true``. These hit counts are reported in the :ref:`code coverage report in PHPUnit XML format <appendixes.xml-configuration-file.coverage.report.xml>`.
+
 Here is an example of a custom code coverage driver whose constructor receives the ``Filter`` object:
 
 .. code-block:: php
@@ -1640,6 +1642,23 @@ The ``<xml>`` Element
 Parent element: ``<report>``
 
 Configures a code coverage report in PHPUnit XML format.
+
+For each line of code that was executed, this report records the tests that executed it.
+The ``count`` attribute of a ``<covered>`` element expresses how often the respective test
+executed the line:
+
+.. code-block:: xml
+
+    <line nr="22">
+      <covered by="BankAccountTest::testBalanceCannotBecomeNegative" count="1"/>
+      <covered by="BankAccountTest::testDepositWithdrawMoney" count="3"/>
+    </line>
+
+A code coverage driver does not have to collect how often a line was executed. Neither Xdebug
+nor PCOV does, and for a driver that does not, ``count`` is ``1`` for every line that was
+executed by the respective test. A :ref:`custom code coverage driver
+<appendixes.xml-configuration-file.coverage.driver>` that counts executions can report exact
+hit counts.
 
 The ``outputDirectory`` Attribute
 +++++++++++++++++++++++++++++++++
