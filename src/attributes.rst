@@ -1594,6 +1594,10 @@ another test. PHPUnit emits a warning when the attribute is used on a test metho
 requirements. A method-level ``Repeat`` attribute takes precedence over the ``--repeat`` and ``--retry``
 :ref:`command-line options <appendixes.cli-options.execution>`.
 
+``Repeat(1)`` runs the test method exactly once and thereby
+:ref:`opts it out <flaky-tests.opting-out>` of the ``--repeat`` command-line option. A number of repetitions,
+or a failure threshold, that is not a positive integer has the same effect and triggers a warning.
+
 
 .. _appendixes.attributes.Retry:
 
@@ -1630,6 +1634,10 @@ The attribute applies only to test methods that declare an explicit ``void`` ret
 another test. PHPUnit emits a warning when the attribute is used on a test method that does not meet these
 requirements. A method-level ``Retry`` attribute takes precedence over the ``--repeat`` and ``--retry``
 :ref:`command-line options <appendixes.cli-options.execution>`.
+
+``Retry(1)`` attempts the test method exactly once and thereby
+:ref:`opts it out <flaky-tests.opting-out>` of the ``--retry`` command-line option. A maximum number of
+attempts that is not a positive integer has the same effect and triggers a warning.
 
 When a test method is annotated with both ``Repeat`` and ``Retry``, PHPUnit emits a warning and ignores the
 ``Retry`` attribute.

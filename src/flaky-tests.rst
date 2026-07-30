@@ -43,6 +43,9 @@ same test at the same time.
    test methods are silently run once. When the ``#[Repeat]`` or ``#[Retry]``
    attribute is used on an ineligible test method, PHPUnit emits a warning.
 
+   These requirements concern test methods. :ref:`PHPT tests <flaky-tests.phpt>`
+   are always eligible.
+
 
 .. _flaky-tests.repeating-tests:
 
@@ -254,6 +257,44 @@ The precedence rules between the attributes and the command-line options are:
 - The ``--repeat`` and ``--retry`` command-line options are mutually exclusive.
 
 
+.. _flaky-tests.opting-out:
+
+Opting Individual Tests Out
+===========================
+
+Because the attributes take precedence over the command-line options, an
+attribute that asks for a single run opts a test method out of the
+corresponding command-line option:
+
+- ``#[Repeat(1)]`` runs the test method exactly once, even when ``--repeat``
+  is used.
+
+- ``#[Retry(1)]`` attempts the test method exactly once, even when ``--retry``
+  is used.
+
+This is useful for a test that must not be run more than once, for instance
+because it is expensive or because it depends on state that only exists on the
+first run.
+
+An attribute that asks for a single run only opts out of its own
+command-line option: ``#[Repeat(1)]`` does not prevent ``--retry`` from
+retrying the test method, and ``#[Retry(1)]`` does not prevent ``--repeat``
+from repeating it.
+
+An argument that is not a positive integer has the same effect as the value
+``1``, and PHPUnit emits a warning that names the test method and the invalid
+value:
+
+- ``#[Repeat]`` with a number of repetitions, or a failure threshold, that is
+  not a positive integer
+
+- ``#[Retry]`` with a maximum number of attempts that is not a positive
+  integer
+
+Because such a test method is run only once, its eligibility for repeating or
+retrying does not matter and no warning about eligibility is emitted for it.
+
+
 .. _flaky-tests.data-providers:
 
 Data Providers
@@ -271,3 +312,27 @@ Each repetition or attempt then receives its own copy of the arguments, because 
 
 A test that is repeated or retried should therefore not rely on mutating argument objects that are provided by a data provider.
 State that the test modifies should be created in the test method itself or in ``setUp()``.
+
+
+.. _flaky-tests.phpt:
+
+PHPT Tests
+==========
+
+Repeating and retrying also work for :ref:`PHPT tests <textui.running-tests.phpt>`.
+
+Because attributes cannot be used in a PHPT file, repeating and retrying a PHPT
+test can only be requested using the ``--repeat`` and ``--retry`` command-line
+options. These options apply to every PHPT test of the test suite that is run:
+the eligibility requirements that apply to test methods do not apply to PHPT
+tests.
+
+.. parsed-literal::
+
+    $ phpunit --repeat 3 tests/example.phpt
+
+Each repetition or attempt of a PHPT test is reported individually, using its
+repetition or attempt number, just like a repeated or retried test method.
+The remaining repetitions of a PHPT test are skipped as soon as one repetition
+fails: the failure threshold that can be configured using the ``#[Repeat]``
+attribute has no equivalent for PHPT tests.
