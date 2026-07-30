@@ -323,8 +323,17 @@ HTML Output
 -----------
 
 The ``--testdox-html <file>`` CLI option writes the test results in TestDox format as an
-HTML file. This produces a browsable document with styled results where successful tests
-are marked with a green ✓ and defective tests are marked with a red ✗.
+HTML file. This produces a browsable document that
+
+- has a header with the number of tests that passed and, when there were any, the number of
+  tests that did not pass,
+- groups the tests by the test class they belong to, and
+- marks successful tests with a ✓ and defective tests with a ✗, and highlights them
+  accordingly.
+
+The document is self-contained: it embeds its styling and does not load any external
+resources. It adapts to the light or dark color scheme that the browser reports, and it
+is legible on small screens.
 
 This can also be configured in the XML configuration file using the ``<testdoxHtml>`` element
 inside the ``<logging>`` element (see :ref:`appendixes.xml-configuration-file.logging.testdoxHtml`).
