@@ -62,6 +62,8 @@ This attribute configures the recording of the status and duration of each test 
 
 Use ``--do-not-record-test-run-history`` on the command line or set this attribute to ``false`` to prevent the writing of the ``test-run-history`` file.
 
+PHPUnit emits a test runner warning such as ``Tests cannot be ordered by defects because recording of the test run history is disabled`` when ordering by defects or duration is configured while the recording of the test run history is disabled.
+
 .. _appendixes.xml-configuration-file.phpunit.colors:
 
 The ``colors`` Attribute

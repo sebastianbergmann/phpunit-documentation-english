@@ -270,7 +270,7 @@ Execution
    Enables the recording of the status and duration of each test in the ``test-run-history`` file. The test run history is used by the ``--order-by defects``, ``--order-by duration-ascending``, and ``--order-by duration-descending`` options to reorder tests based on previous test suite runs.
 
 ``--do-not-record-test-run-history``
-   Disables the recording of the status and duration of each test in the ``test-run-history`` file. This overrides the corresponding XML configuration setting.
+   Disables the recording of the status and duration of each test in the ``test-run-history`` file. This overrides the corresponding XML configuration setting. PHPUnit emits a test runner warning when this is combined with ``--order-by defects`` or ``--order-by duration-*``, as those cannot work without the test run history.
 
 ``--warn-when-php-is-not-configured-for-development``
    Enables the triggering of a test runner warning when PHP is not configured for development (see :ref:`installation.configuring-php-for-development`). A warning is triggered for each PHP configuration setting that is not configured as recommended. This overrides the corresponding XML configuration setting.

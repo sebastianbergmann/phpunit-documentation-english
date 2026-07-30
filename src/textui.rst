@@ -691,6 +691,21 @@ The ``--order-by`` option controls the order in which tests are executed. Suppor
 
 Multiple values can be combined: ``--order-by defects,random`` runs previously failing tests first, then executes the remaining tests in random order.
 
+.. admonition:: Note
+
+    Ordering by defects and ordering by duration are based on the test run history.
+    When the recording of the test run history is disabled, for instance using the
+    ``--do-not-record-test-run-history`` CLI option or the ``recordTestRunHistory="false"``
+    attribute in the XML configuration file, the tests cannot be ordered this way and PHPUnit
+    emits a test runner warning:
+
+    .. parsed-literal::
+
+        Tests cannot be ordered by defects because recording of the test run history is disabled
+
+    The tests are then executed in the order that the other ``--order-by`` values, if any,
+    lead to.
+
 Convenience aliases are available: ``--resolve-dependencies`` (for ``--order-by depends``), ``--ignore-dependencies`` (for ``--order-by no-depends``), ``--random-order`` (for ``--order-by random``), and ``--reverse-order`` (for ``--order-by reverse``).
 
 .. parsed-literal::
