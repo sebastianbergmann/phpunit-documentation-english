@@ -214,6 +214,13 @@ Without the custom object exporter, the same failure would be described using th
     ).
 
 Custom object exporters are used wherever PHPUnit exports values: in the failure descriptions of constraints as well as in the diffs shown for comparison failures.
+They are also used for every occurrence of an object: when the same object appears more than once in an exported value, each of its occurrences is exported by the custom object exporter.
+
+More than one custom object exporter can be registered.
+The object exporter that was registered last is asked first whether it handles an object, so it takes precedence over the object exporters that were registered before it.
+An object exporter that was registered earlier is used for the objects that the object exporters registered after it do not handle.
+The same precedence rule applies to :ref:`custom comparators <extending-phpunit.implementing-custom-comparators>`.
+Objects that no registered object exporter handles are exported using the default representation.
 
 
 .. _extending-phpunit.customizing-test-method-invocation:
