@@ -60,6 +60,26 @@ TestRunner
 
     A PHP child process started by the test runner finished
 
+The ``ChildProcessStarted``, ``ChildProcessErrored``, and ``ChildProcessFinished`` events
+carry the reason why a child process was used. Their ``reason()`` method returns a case of
+the ``PHPUnit\Event\TestRunner\ChildProcessReason`` enumeration:
+
+``ChildProcessReason::TestRequiringProcessIsolation``
+
+    The child process runs a test that is run in a separate process
+
+``ChildProcessReason::PhptTest``
+
+    The child process runs the ``FILE`` section of a PHPT test
+
+``ChildProcessReason::PhptSkipIfSection``
+
+    The child process runs the ``SKIPIF`` section of a PHPT test
+
+``ChildProcessReason::PhptCleanSection``
+
+    The child process runs the ``CLEAN`` section of a PHPT test
+
 ``PHPUnit\Event\TestRunner\DeprecationTriggered``
 
     PHPUnit itself reports a deprecation about the test runner. This event will be renamed to ``PHPUnit\Event\TestRunner\PhpunitDeprecationTriggered`` in PHPUnit 14.
@@ -289,6 +309,14 @@ Test
 ``PHPUnit\Event\Test\Failed``
 
     A test failed
+
+``PHPUnit\Event\Test\AttemptErrored``
+
+    An attempt of a :ref:`retried <flaky-tests.retrying-tests>` test errored and another attempt is made. The events of such an attempt are not emitted, this event is emitted instead of ``PHPUnit\Event\Test\Errored``
+
+``PHPUnit\Event\Test\AttemptFailed``
+
+    An attempt of a :ref:`retried <flaky-tests.retrying-tests>` test failed and another attempt is made. The events of such an attempt are not emitted, this event is emitted instead of ``PHPUnit\Event\Test\Failed``
 
 ``PHPUnit\Event\Test\Passed``
 
