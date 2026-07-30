@@ -183,6 +183,15 @@ Running the test shown above yields the output shown below:
     (``$a``, ``$b`` and ``$expected`` in the example above) with the :ref:`TestDox <appendixes.attributes.TestDox>` attribute.
     You can also refer to the name of a named data set with ``$_dataName``.
 
+The name of a data set is the key that the data provider used for it, and PHPUnit uses this key verbatim.
+A data set with an integer key is reported by its number, for instance ``with data set #0``, while a data set with a string key is reported by its name, for instance ``with data set "one plus one"``.
+
+Keep in mind that PHP canonicalizes array keys that represent an integer: the keys ``0``, ``'0'``, and ``'123'`` all become integer keys.
+A numeric string that PHP does not canonicalize, on the other hand, remains a string key and is therefore used as the name of the data set as it is written.
+The data sets named ``'1.5'`` and ``'1.9'``, for example, are reported as ``with data set "1.5"`` and ``with data set "1.9"`` and thereby remain distinguishable in the test output, in log files, and when they are selected using ``--filter``.
+
+Bidirectional control characters in the name of a data set are escaped, for instance as ``\u{202E}``, so that they cannot change the direction in which the surrounding text is displayed.
+
 Individual data sets can be selected from the command line via the ``--filter`` option; see :ref:`textui.selecting-tests.filter` for the syntax.
 
 When a test receives input from both a data provider method and from one or more tests it depends on, the arguments from the data provider will come before the ones from depended-upon tests.
