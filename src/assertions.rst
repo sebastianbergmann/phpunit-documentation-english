@@ -8,6 +8,9 @@ Assertions
 
 This appendix lists the various assertion methods that are available.
 
+An assertion that fails ends the execution of the test method it is used in.
+See :ref:`writing-tests-for-phpunit.asserting-return-values` for details.
+
 .. _appendixes.assertions.static-vs-non-static-usage-of-assertion-methods:
 
 Static vs. Non-Static Usage of Assertion Methods
