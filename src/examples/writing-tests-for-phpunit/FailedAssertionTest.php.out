@@ -1,0 +1,18 @@
+./tools/phpunit tests/FailedAssertionTest.php
+PHPUnit 13.2.0 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.9
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00, Memory: 28.00 MB
+
+There was 1 failure:
+
+1) FailedAssertionTest::testAssertionsAfterAFailedAssertionAreNotExecuted
+Failed asserting that 3 is identical to 2.
+
+/path/to/tests/FailedAssertionTest.php:9
+
+FAILURES!
+Tests: 1, Assertions: 2, Failures: 1.

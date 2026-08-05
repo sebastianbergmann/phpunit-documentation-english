@@ -67,6 +67,29 @@ The **Assert** phase uses ``assertSame()`` to verify that the ``Email`` object's
 Asserting return values like this is the most common operation in a test method.
 See :ref:`appendixes.assertions` for the full list of assertion methods that PHPUnit provides.
 
+An assertion that fails ends the execution of the test method:
+the statements that follow the failed assertion, including any further assertions, are not executed.
+The first assertion that fails is therefore the only failure that is reported for a test.
+
+.. literalinclude:: examples/writing-tests-for-phpunit/FailedAssertionTest.php
+   :caption: A test method with three assertions, the second of which fails
+   :name: writing-tests-for-phpunit.examples.FailedAssertionTest.php
+   :language: php
+
+Running the test shown above yields the output shown below:
+
+.. literalinclude:: examples/writing-tests-for-phpunit/FailedAssertionTest.php.out
+
+Only two assertions are counted: the third one was never executed.
+
+.. admonition:: Note
+
+    When you want to verify multiple values that belong together, assert the data structure as a whole using a single assertion instead of asserting each value separately.
+    The failure of such an assertion shows all values that differ from what was expected, not just the first one.
+
+    When you want each value to be verified and reported independently, use a :ref:`data provider <writing-tests-for-phpunit.data-providers>`.
+    Each data set is reported as a separate test, so the failure of one does not hide the result of another.
+
 Ideally, each test method should only verify one aspect of the system under test.
 In ``testCanBeCreatedFromValidEmail()``, however, we technically test two things:
 that an ``Email`` object can be constructed from a valid string (the named constructor
