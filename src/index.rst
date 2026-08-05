@@ -38,6 +38,7 @@ Contents:
    cli-options
    xml-configuration-file
    events
+   phpt
    copyright
 
 

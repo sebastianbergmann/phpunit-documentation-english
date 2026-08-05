@@ -319,7 +319,7 @@ State that the test modifies should be created in the test method itself or in `
 PHPT Tests
 ==========
 
-Repeating and retrying also work for :ref:`PHPT tests <textui.running-tests.phpt>`.
+Repeating and retrying also work for :ref:`PHPT tests <appendixes.phpt>`.
 
 Because attributes cannot be used in a PHPT file, repeating and retrying a PHPT
 test can only be requested using the ``--repeat`` and ``--retry`` command-line
