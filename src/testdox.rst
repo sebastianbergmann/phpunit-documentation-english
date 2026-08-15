@@ -82,6 +82,84 @@ Running this test with the ``--testdox`` option yields the output shown below:
 
     OK (4 tests, 4 assertions)
 
+.. _testdox.default-behaviour.numeric-suffixes:
+
+Numeric Suffixes
+----------------
+
+A number at the end of a test method name is treated as a disambiguator when a test method
+with the same name, but without that number, has already been processed. Such a number is
+removed from the prettified name because ``testValidBool()``, ``testValidBool2()``, and
+``testValidBool3()`` all describe the same behaviour:
+
+.. code-block:: php
+    :caption: Test methods that only differ in a numeric suffix
+    :name: testdox.examples.NumericSuffix.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    final class ValidBoolTest extends TestCase
+    {
+        public function testValidBool(): void
+        {
+            // ...
+        }
+
+        public function testValidBool2(): void
+        {
+            // ...
+        }
+    }
+
+Running these tests with TestDox output enabled yields:
+
+.. parsed-literal::
+
+    Valid Bool
+     ✔ Valid bool
+     ✔ Valid bool
+
+When no test method with the same name, but without the trailing number, exists, then the
+number is kept. ``testValidBoolIs2()``, for instance, is prettified to ``Valid bool is 2``.
+
+Use the ``TestDox`` attribute to specify the documentation text explicitly when the number
+should appear in the output:
+
+.. code-block:: php
+    :caption: Using the ``TestDox`` attribute to keep a numeric suffix
+    :name: testdox.examples.NumericSuffixTestDox.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\TestDox;
+    use PHPUnit\Framework\TestCase;
+
+    final class ValidBoolTest extends TestCase
+    {
+        public function testValidBool(): void
+        {
+            // ...
+        }
+
+        #[TestDox('Valid bool 2')]
+        public function testValidBool2(): void
+        {
+            // ...
+        }
+    }
+
+Running these tests with TestDox output enabled yields:
+
+.. parsed-literal::
+
+    Valid Bool
+     ✔ Valid bool
+     ✔ Valid bool 2
+
+Better yet, name the test methods (or specify their ``TestDox`` descriptions) after the
+behaviour they verify, so that disambiguation by number is not required in the first place.
+
+
 .. _testdox.default-behaviour.data-providers:
 
 Data Providers
