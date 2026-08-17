@@ -449,6 +449,9 @@ Code Coverage
 
    The class view and the file view cannot both be disabled. When both ``--without-class-view`` and ``--without-file-view`` are used, PHPUnit emits a warning and renders both views.
 
+``--coverage-jsonl <dir>``
+   Writes the code coverage report in JSONL format to the specified directory. This format reports the code that is not covered, together with the mapping of tests to the code they execute, for consumption by tooling. See :ref:`code-coverage.jsonl-report`.
+
 ``--coverage-php <file>``
    Writes serialized code coverage data to the specified file. This data can later be merged with other coverage data or processed programmatically.
 

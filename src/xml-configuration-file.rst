@@ -1349,6 +1349,7 @@ Configures the code coverage reports to be generated.
         <cobertura outputFile="cobertura.xml"/>
         <crap4j outputFile="crap4j.xml" threshold="50"/>
         <html outputDirectory="html-coverage" lowUpperBound="50" highLowerBound="90"/>
+        <jsonl outputDirectory="jsonl-coverage"/>
         <php outputFile="coverage.php"/>
         <text outputFile="coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
         <xml outputDirectory="xml-coverage"/>
@@ -1589,6 +1590,26 @@ The ``customCssFile`` Attribute
 Possible values: string
 
 The path to a custom CSS file.
+
+.. _appendixes.xml-configuration-file.coverage.report.jsonl:
+
+The ``<jsonl>`` Element
+***********************
+
+Parent element: ``<report>``
+
+Configures a code coverage report in JSONL format.
+
+This report reports the code that was not covered, rather than every executable line, and
+exports the mapping of tests to the code they execute. It is intended to be consumed by tooling.
+See :ref:`code-coverage.jsonl-report` for the format of the three files it writes.
+
+The ``outputDirectory`` Attribute
++++++++++++++++++++++++++++++++++
+
+Possible values: string
+
+The directory to which the JSONL report is written.
 
 .. _appendixes.xml-configuration-file.coverage.report.php:
 

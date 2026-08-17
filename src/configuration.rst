@@ -374,6 +374,9 @@ Code Coverage
     * - ``--without-file-view``
       - ``fileView`` attribute on ``<coverage><report><html>`` (inverted)
       - ``true``
+    * - ``--coverage-jsonl <dir>``
+      - :ref:`\<jsonl outputDirectory\> <appendixes.xml-configuration-file.coverage.report.jsonl>` under ``<coverage><report>``
+      - —
     * - ``--coverage-php <file>``
       - :ref:`\<php outputFile\> <appendixes.xml-configuration-file.coverage.report.php>` under ``<coverage><report>``
       - —

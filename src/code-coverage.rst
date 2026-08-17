@@ -45,8 +45,8 @@ extensions for PHP.
 PHPUnit can generate a code coverage report in HTML format as well as
 XML-based logfiles with code coverage information in various formats
 (Clover, Cobertura, Crap4J, PHPUnit). Code coverage information can also be reported
-as text (and printed to STDOUT) and exported as PHP code for further
-processing.
+as text (and printed to STDOUT), in :ref:`JSONL format <code-coverage.jsonl-report>` for
+consumption by tooling, and exported as PHP code for further processing.
 
 Please refer to :ref:`textui` for a list of command-line options
 that control code coverage functionality as well as
@@ -356,6 +356,211 @@ The size of a test is declared using the ``#[Small]``, ``#[Medium]``, and ``#[La
 their size is only accounted for in ``All``, and not in any of the size-specific selections.
 
 Filtering happens in the browser and therefore requires JavaScript.
+
+
+.. _code-coverage.jsonl-report:
+
+The Code Coverage Report in JSONL Format
+========================================
+
+The ``--coverage-jsonl <dir>`` CLI option, and the corresponding
+:ref:`\<jsonl\> <appendixes.xml-configuration-file.coverage.report.jsonl>` element in the XML
+configuration file, generate a code coverage report in JSONL format.
+
+Unlike the other report formats, which are meant to be read in a browser or consumed by a CI
+server, this one is meant to be read by tooling that works on the source code itself. It reports
+the gap, the code that was not covered, rather than every executable line, and it exports the
+test-to-code mapping that PHPUnit collects.
+
+The report is a directory with three files:
+
+.. code-block:: text
+
+    <dir>/meta.json         one JSON object with the schema version and run metadata
+    <dir>/coverage.jsonl    one JSON object per source file
+    <dir>/tests.jsonl       one JSON object per test
+
+The two ``.jsonl`` files are `JSON Lines <https://jsonlines.org/>`_: one complete JSON object per
+line, not pretty-printed, with no enclosing array. Each line can therefore be read on its own,
+without parsing the rest of the file, which is what makes ``grep`` a usable tool on these files
+(see :ref:`code-coverage.jsonl-report.consuming`).
+
+Two runs over identical code with identical test results produce byte-identical output, apart
+from the ``generatedAt`` timestamp in ``meta.json``. Records are sorted, so a diff between two
+runs is meaningful.
+
+.. _code-coverage.jsonl-report.meta:
+
+``meta.json``
+-------------
+
+.. code-block:: json
+
+    {
+        "schemaVersion": 1,
+        "generator": "php-code-coverage 14.4.0",
+        "generatedAt": "2026-08-17T08:16:48+02:00",
+        "sourceRoot": "/path/to/project/src",
+        "branchCoverage": true,
+        "files": 42,
+        "executableLines": 3117,
+        "executedLines": 2988
+    }
+
+``sourceRoot`` is the longest common prefix of the paths of the files that appear in the report,
+and every path in the other two files is relative to it. Note that this is derived from the
+covered files, not from the project root: a report covering a single file has that file's
+directory as its ``sourceRoot``.
+
+``branchCoverage`` states whether branch coverage was collected at all, so that a consumer knows
+whether the absence of a ``branches`` key means "no branch was missed" or "branches were not
+measured". It is ``true`` only when the run used ``--branch-coverage`` or ``--path-coverage``.
+
+.. _code-coverage.jsonl-report.coverage:
+
+``coverage.jsonl``
+------------------
+
+One record per source file that contains executable code, sorted by path. Formatted here for
+legibility; in the file each record is a single line:
+
+.. code-block:: json
+
+    {
+        "file": "Util/Color.php",
+        "executable": 65,
+        "executed": 65,
+        "symbols": [
+            {
+                "name": "PHPUnit\\Util\\Color::colorize",
+                "lines": "89-114",
+                "state": "partial",
+                "branches": {
+                    "executed": 12,
+                    "total": 12,
+                    "uncovered": ["91", "95", "101", "104", "109"]
+                }
+            }
+        ]
+    }
+
+.. list-table::
+    :header-rows: 1
+
+    * - Key
+      - Description
+    * - ``file``
+      - Path relative to ``sourceRoot``, ``/`` separated on all platforms.
+    * - ``executable``
+      - Number of executable lines in the file.
+    * - ``executed``
+      - Number of executable lines that were executed at least once.
+    * - ``uncovered``
+      - Lines that are executable but were not executed. Omitted when there are none.
+    * - ``symbols``
+      - The methods and functions in the file, ordered by start line. Omitted when the file contains none.
+
+A file that is fully covered still gets a record, without an ``uncovered`` key. A file with no
+executable lines is omitted entirely.
+
+Each symbol has a ``name`` (fully qualified), a ``lines`` range covering its declaration, a
+``state``, and optionally ``uncovered`` and ``branches`` keys:
+
+.. list-table::
+    :header-rows: 1
+
+    * - ``state``
+      - Meaning
+    * - ``covered``
+      - Every executable line of the symbol was executed and, where branch coverage was collected, every branch was taken.
+    * - ``partial``
+      - Some but not all executable lines were executed, **or** every line was executed but a branch was never taken.
+    * - ``uncovered``
+      - No executable line of the symbol was executed.
+
+Line numbers are encoded as ranges: a run of consecutive lines becomes ``"45-52"``, a single line
+becomes ``"77"``. These are always strings, never integers, so that a consumer does not have to
+handle two types. Ranges within a list are ordered ascending and never overlap. Because uncovered
+code is usually contiguous — an untested method, an unreached ``catch`` block — this is
+substantially more compact than a line-by-line list.
+
+.. admonition:: Note
+
+   No percentage appears anywhere in this format. The raw ``executable`` and ``executed`` counts
+   are reported so that a consumer that needs a ratio can compute one.
+
+.. _code-coverage.jsonl-report.branches:
+
+Branch Information
+------------------
+
+When branch coverage was collected, a symbol with more than one basic block also has a
+``branches`` key. ``executed`` and ``total`` count basic blocks, and agree with the numbers the
+other report formats show. ``uncovered`` lists the lines at which control flow was never taken:
+the lines of blocks that were never entered, and the line of the conditional jump for each block
+that was entered but has an outgoing edge that was never followed.
+
+The lines under ``branches.uncovered`` are therefore **not** a subset of the file's ``uncovered``
+lines. A line can have been executed and still appear there. This is the point of the key: in the
+example above, ``PHPUnit\Util\Color::colorize`` has every one of its 65 lines executed and every
+one of its 12 blocks entered, yet five of its conditionals were only ever taken one way. Line
+coverage alone reports that method as fully covered; ``"state": "partial"`` and the five listed
+lines say what is actually still untested.
+
+.. _code-coverage.jsonl-report.tests:
+
+``tests.jsonl``
+---------------
+
+One record per test that covered at least one line, sorted by test name:
+
+.. code-block:: json
+
+    {"test":"PHPUnit\\Util\\ColorTest::testColorize#empty string","covers":{"Util/Color.php":["91-92"]}}
+
+``test`` is the test's identifier as recorded during the run. ``covers`` maps each file path,
+relative to ``sourceRoot``, to the ranges of lines that this test executed.
+
+This is the same test-to-code mapping that the :ref:`PHPUnit XML report
+<appendixes.xml-configuration-file.coverage.report.xml>` records, in a considerably more compact
+form. It answers two questions that a coverage percentage cannot: which tests exercise a given
+piece of code, and whether a newly written test actually reached the lines it was meant to reach.
+
+``tests.jsonl`` is normally the largest of the three files.
+
+.. _code-coverage.jsonl-report.consuming:
+
+Consuming the Report
+--------------------
+
+Because each record is a single line, the report can be queried without a JSON parser. To get the
+record for one source file:
+
+.. code-block:: bash
+
+    grep '"file":"Util/Color.php"' coverage.jsonl
+
+To list the tests that cover a given file:
+
+.. code-block:: bash
+
+    grep '"Util/Color.php"' tests.jsonl
+
+With `jq <https://jqlang.org/>`_, to list the symbols that are not fully covered:
+
+.. code-block:: bash
+
+    jq -r 'select(.symbols) | .file as $f | .symbols[]
+           | select(.state != "covered") | "\($f) \(.lines) \(.name) \(.state)"' coverage.jsonl
+
+.. _code-coverage.jsonl-report.stability:
+
+Schema Stability
+----------------
+
+``meta.json`` carries a ``schemaVersion``. It is incremented only when a change breaks a consumer
+that relies on the current version. Adding an optional key is not a breaking change, so a consumer
+must tolerate keys it does not know about.
 
 
 .. _code-coverage.phpcov:
