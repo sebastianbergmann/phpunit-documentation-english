@@ -94,6 +94,130 @@ TestDox appends the data set information to the prettified method name:
 - For named data sets: ``with "name"``
 
 
+.. _testdox.ordering:
+
+Ordering
+========
+
+The TestDox report is not a log of the test run. The output of ``--debug`` as well as the
+Open Test Reporting (XML) logfile are event logs: they report what happened, in the order
+it happened. TestDox is different: it is meant to read like documentation of the code
+under test. It is therefore sorted for readability and stable, no matter in which order
+the tests were actually run.
+
+Three sorting rules are applied:
+
+1. Test classes are sorted against each other by their prettified class name, using
+   case-insensitive natural ordering.
+
+2. Within a test class, the test methods are grouped by the class that declares them.
+   Those groups are ordered parent class first, subclass last.
+
+3. Within each of these groups, the test methods are sorted by the line number at which
+   they are declared in the source code.
+
+The order in which the tests were executed plays no role. Neither does
+:ref:`Depends <writing-tests-for-phpunit.test-dependencies>`, nor
+``--order-by``, nor ``--random-order-seed``.
+
+Consider the following test class:
+
+.. code-block:: php
+    :caption: A test class with a test dependency
+    :name: testdox.examples.SimpleTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Depends;
+    use PHPUnit\Framework\TestCase;
+
+    final class SimpleTest extends TestCase
+    {
+        #[Depends('testCharlie')]
+        public function testAlpha(): void
+        {
+            $this->assertTrue(true);
+        }
+
+        public function testBravo(): void
+        {
+            $this->assertTrue(true);
+        }
+
+        public function testCharlie(): void
+        {
+            $this->assertTrue(true);
+        }
+    }
+
+The dependency forces ``testAlpha`` to be run last, so the execution order is
+``testBravo``, ``testCharlie``, ``testAlpha``. The TestDox output, however, is in
+source code order:
+
+.. parsed-literal::
+
+    Simple
+     ✔ Alpha
+     ✔ Bravo
+     ✔ Charlie
+
+
+.. _testdox.ordering.inheritance-and-traits:
+
+Inheritance and Traits
+----------------------
+
+Because of the second sorting rule, test methods that are inherited from an abstract
+test case class are shown before the test methods that are declared in the concrete
+test class, regardless of when they were run.
+
+Traits are handled differently: for a test method that is imported from a trait,
+``ReflectionMethod::getDeclaringClass()`` returns the class that uses the trait, not the
+trait itself. All test methods that are imported from traits are therefore put into the
+same group as the test methods that are declared in the class itself. The third sorting
+rule then sorts them by line number, using line numbers that originate from different
+files:
+
+.. code-block:: php
+    :caption: A test class that imports test methods from traits
+    :name: testdox.examples.MixTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    // TraitA.php: testFromTraitA is declared on line 13
+    // TraitB.php: testFromTraitB is declared on line 5
+
+    final class MixTest extends TestCase
+    {
+        use TraitA;
+        use TraitB;
+
+        // this method is declared on line 12
+        public function testDeclaredHere(): void
+        {
+            $this->assertTrue(true);
+        }
+    }
+
+The TestDox output for the test class shown above is:
+
+.. parsed-literal::
+
+    Mix
+     ✔ From trait b
+     ✔ Declared here
+     ✔ From trait a
+
+The ordering shown above is not random, but it is driven by line numbers that come from
+unrelated files. Test methods that are imported from traits are not taken into account
+for TestDox sorting.
+
+If you want the TestDox report to read in a particular order then arrange the source code
+in that order, as this is the only lever TestDox responds to. Prefer inheritance over
+traits when the grouping matters to you: the parent-before-child rule is predictable
+whereas cross-file line numbers are not.
+
+
 .. _testdox.customizing-test-documentation:
 
 Customizing Test Documentation
