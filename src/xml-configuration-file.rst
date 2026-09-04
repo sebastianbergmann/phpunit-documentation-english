@@ -798,6 +798,8 @@ The tests that are found using ``<directory>`` and ``<file>`` elements can be ad
       </testsuite>
     </testsuites>
 
+The group names given here are subject to the same restriction as the group names given with the ``Group`` attribute: a name that contains ``+`` between two other characters cannot be used to select tests, and PHPUnit warns about it (see :ref:`textui.selecting-tests.group`).
+
 .. _appendixes.xml-configuration-file.source:
 
 The ``<source>`` Element
@@ -1801,6 +1803,18 @@ The ``<groups>`` element and its ``<include>``, ``<exclude>``, and ``<group>`` c
     </groups>
 
 The example shown above is equivalent to invoking the PHPUnit test runner with ``--group name --exclude-group name``.
+
+A ``<group>`` element can combine several group names with ``+`` to select the tests that are in all of them, just as ``--group`` and ``--exclude-group`` can (see :ref:`textui.selecting-tests.group`):
+
+.. code-block:: xml
+
+    <groups>
+      <include>
+        <group>database+slow</group>
+      </include>
+    </groups>
+
+The example shown above selects only the tests that are in the group ``database`` and in the group ``slow``.
 
 .. _appendixes.xml-configuration-file.extensions:
 

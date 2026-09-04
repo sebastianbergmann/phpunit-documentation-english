@@ -191,6 +191,47 @@ The ``--group`` option runs only the tests that belong to a specified group. Gro
 
 The ``--exclude-group`` option excludes tests belonging to a specified group.
 
+Both options can be used more than once. A test is run when it is in *any* of the groups selected with ``--group``, and it is not run when it is in *any* of the groups selected with ``--exclude-group``:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --group database --group network
+
+The command shown above runs the tests that are in the group ``database``, the tests that are in the group ``network``, and the tests that are in both.
+
+Selecting the tests that are in every one of several groups
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Separating the names of groups with ``+`` selects the tests that are in *all* of them:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --group database+slow
+
+The command shown above runs only the tests that are in the group ``database`` *and* in the group ``slow``. A test that is in only one of them is not run.
+
+Any number of group names can be combined this way, and such a combination can be used wherever a single group name can be used. The two ways of combining groups can be mixed: each value of the option is a combination of groups a test has to be in, and a test is run when it matches at least one of these values.
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --group database+slow --group smoke
+
+The command shown above runs the tests that are in both ``database`` and ``slow``, as well as the tests that are in ``smoke``.
+
+``--exclude-group`` works the same way:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --exclude-group database+slow
+
+The command shown above runs every test except the ones that are in both ``database`` and ``slow``. A test that is only in ``database``, or only in ``slow``, is still run.
+
+.. admonition:: Caution
+
+    Because ``+`` combines group names, it cannot also be part of a group name. A group named ``database+slow`` cannot be selected: ``--group database+slow`` asks for the tests that are in ``database`` and in ``slow``, not for the tests that are in the group whose name is ``database+slow``.
+
+    PHPUnit emits a warning where such a group name is declared so that this does not go unnoticed. Only a ``+`` between two group names is treated as a combination, though: ``+name``, ``name+``, and ``+`` are ordinary group names and can be selected as before.
+
 
 .. _textui.selecting-tests.covers:
 

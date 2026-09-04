@@ -78,10 +78,10 @@ Selection
    Lists all available test groups and then exits. No tests are executed.
 
 ``--group <name>``
-   Only runs tests belonging to the specified group. This option can be used multiple times to select tests from more than one group.
+   Only runs tests belonging to the specified group. This option can be used multiple times to select tests from more than one group. Names separated with ``+`` select the tests that are in all of the named groups: ``--group database+slow`` only runs the tests that are in the group ``database`` and in the group ``slow``. See :ref:`textui.selecting-tests.group`.
 
 ``--exclude-group <name>``
-   Excludes tests belonging to the specified group from the test run. This option can be used multiple times to exclude tests from more than one group.
+   Excludes tests belonging to the specified group from the test run. This option can be used multiple times to exclude tests from more than one group. Names separated with ``+`` exclude the tests that are in all of the named groups. See :ref:`textui.selecting-tests.group`.
 
 ``--covers <name>``
    Only runs tests that declare they intend to cover the specified class or function. This filters based on ``#[Covers*]`` attributes. This option can be used multiple times.

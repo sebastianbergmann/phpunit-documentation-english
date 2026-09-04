@@ -1123,6 +1123,8 @@ which tests should be run.
 
 The strings ``small``, ``medium``, and ``large`` may not be used as group names.
 
+A group name that contains ``+`` between two other characters, such as ``database+slow``, cannot be used to select tests: the ``--group`` and ``--exclude-group`` options of the PHPUnit test runner use ``+`` to combine several group names into a selection of the tests that are in all of them (see :ref:`textui.selecting-tests.group`). PHPUnit emits a warning for such a group name, but the group is still assigned to the test.
+
 .. _appendixes.attributes.Small:
 
 ``Small``
