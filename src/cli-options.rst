@@ -279,7 +279,7 @@ Execution
    Disables the triggering of a test runner warning when PHP is not configured for development. This overrides the corresponding XML configuration setting.
 
 ``--order-by <order>``
-   Controls the order in which tests are executed. Accepted orders are ``default``, ``duration-ascending``, ``duration-descending``, ``random``, ``reverse``, ``size-ascending``, and ``size-descending``. Exactly one order can be configured. The order may be followed by ``,defects`` to move the tests that errored or failed during the previous test run to the front, for instance ``--order-by duration-ascending,defects``. ``--order-by defects`` can also be used without configuring an order. See :ref:`textui.test-execution-order`.
+   Controls the order in which tests are executed. Accepted orders are ``default``, ``duration-ascending``, ``duration-descending``, ``modified-ascending``, ``modified-descending``, ``random``, ``reverse``, ``size-ascending``, and ``size-descending``. Exactly one order can be configured. The order may be followed by ``,defects`` to move the tests that errored or failed during the previous test run to the front, for instance ``--order-by duration-ascending,defects``. ``--order-by defects`` can also be used without configuring an order. See :ref:`textui.test-execution-order`.
 
    The values ``depends`` and ``no-depends`` are deprecated, use ``--resolve-dependencies`` and ``--ignore-dependencies`` instead. Writing ``defects`` before the order, and configuring more than one order, are deprecated as well. The values ``duration`` and ``size`` are still accepted as shortcuts for ``duration-ascending`` and ``size-ascending`` respectively, but are deprecated and will be removed in PHPUnit 14.
 

@@ -539,7 +539,7 @@ When ``phpunit.phar`` is used then this attribute may be used to configure a dir
 The ``executionOrder`` Attribute
 --------------------------------
 
-Possible values: ``default``, ``defects``, ``duration-ascending``, ``duration-descending``, ``random``, ``reverse``, ``size-ascending``, ``size-descending`` (default: ``default``)
+Possible values: ``default``, ``defects``, ``duration-ascending``, ``duration-descending``, ``modified-ascending``, ``modified-descending``, ``random``, ``reverse``, ``size-ascending``, ``size-descending`` (default: ``default``)
 
 This attribute configures the order in which tests are executed. It configures a pipeline of reordering stages that is applied to the tests of every test suite, one stage after another (see :ref:`textui.test-execution-order`).
 
@@ -548,12 +548,16 @@ The order is the first stage of the pipeline. Exactly one order can be configure
 - ``default``: ordered in the order in which PHPUnit found the tests (does not use the test run history)
 - ``duration-ascending``: ordered by duration (fastest test first, slowest test last), requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`
 - ``duration-descending``: ordered by duration (slowest test first, fastest test last), requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`
+- ``modified-ascending``: ordered by the time the source files of a test were last modified (least recently modified test first)
+- ``modified-descending``: ordered by the time the source files of a test were last modified (most recently modified test first)
 - ``random``: ordered randomly
 - ``reverse``: ordered as PHPUnit found the tests, then ordered in reverse
 - ``size-ascending``: ordered by size (small, medium, large, unknown), also see :ref:`appendixes.attributes.Small`, :ref:`appendixes.attributes.Medium`, and :ref:`appendixes.attributes.Large`
 - ``size-descending``: ordered by size in reverse (large, medium, small, unknown)
 
 The order may be followed by ``,defects``, for instance ``executionOrder="duration-ascending,defects"``. This adds a second stage that moves the tests that errored or failed during the previous test run to the front. Tests that are not moved to the front keep the order that the first stage established. This requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`. ``executionOrder="defects"`` can also be used on its own, without configuring an order.
+
+Ordering by modification time is intended for local development and is not meaningful on a continuous integration server, where all files are usually written at the same time (see :ref:`textui.test-execution-order`).
 
 Whether dependencies between tests are resolved is configured using the :ref:`resolveDependencies<appendixes.xml-configuration-file.phpunit.resolveDependencies>` attribute. Dependency resolution is always the last stage of the pipeline.
 

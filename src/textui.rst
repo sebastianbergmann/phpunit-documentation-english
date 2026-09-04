@@ -676,6 +676,16 @@ The order is the first stage of the pipeline. Exactly one order can be configure
     Tests are ordered by duration, slowest test first. This requires the test run
     history
 
+``modified-ascending``
+
+    Tests are ordered by the time their source files were last modified, least
+    recently modified test first
+
+``modified-descending``
+
+    Tests are ordered by the time their source files were last modified, most
+    recently modified test first
+
 ``random``
 
     Tests are executed in random order. Use ``--random-order-seed`` to make the order
@@ -692,6 +702,26 @@ The order is the first stage of the pipeline. Exactly one order can be configure
 ``size-descending``
 
     Tests are ordered by size in reverse (large, medium, small, unknown)
+
+Ordering by modification time
+-----------------------------
+
+``--order-by modified-descending`` runs the tests you have worked on most recently first. Combined with ``--stop-on-failure``, this shortens the feedback loop while a new test is being written.
+
+The source files of a test are the files a change to which can change what the test does: the file that declares the test class, the files that declare the classes it extends, and the files that declare the traits any of them use. The most recent modification among them decides, so modifying a base test class or a trait moves every test class that uses it to the front as well. For a PHPT test, the ``.phpt`` file is the test. A test suite is as new as the newest test it contains.
+
+.. admonition:: Note
+
+    The modification time of a file is not a record of who changed what: checking out a
+    branch, cloning a repository, installing dependencies, and copying or deploying files
+    all set it to the time of that operation. On a continuous integration server, where
+    every file is usually written at the same time, this order is therefore meaningless.
+    It is intended for local development and should not be configured in a project's XML
+    configuration file.
+
+    Many file systems store modification times with a resolution of one second, so files
+    that were written during the same second are equally new. Tests that are equally new
+    keep the order that they had before this stage was applied.
 
 Running previously defective tests first
 ----------------------------------------
