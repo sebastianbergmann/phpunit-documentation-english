@@ -655,20 +655,26 @@ The ``--no-logging`` option ignores all logging configured in the XML configurat
 Test execution order
 ====================
 
-The ``--order-by`` option controls the order in which tests are executed. Supported values include:
+By default, PHPUnit executes the tests of each test suite in the order in which it discovered them. The ``--order-by`` option changes that: it configures a pipeline of reordering stages that is applied to the tests of every test suite, one stage after another.
+
+Order
+-----
+
+The order is the first stage of the pipeline. Exactly one order can be configured:
 
 ``default``
 
-    Tests are executed in the order they are discovered
+    Tests are executed in the order in which they were discovered
 
-``defects``
+``duration-ascending``
 
-    Tests that failed in a previous run are executed first. This requires the test run
+    Tests are ordered by duration, fastest test first. This requires the test run
     history (enabled by default, see ``--record-test-run-history``)
 
-``duration``
+``duration-descending``
 
-    Tests are ordered by duration, shortest first. This requires the test run history
+    Tests are ordered by duration, slowest test first. This requires the test run
+    history
 
 ``random``
 
@@ -679,19 +685,22 @@ The ``--order-by`` option controls the order in which tests are executed. Suppor
 
     Tests are executed in reverse discovery order
 
-``size``
+``size-ascending``
 
     Tests are ordered by size (small, medium, large, unknown)
 
-``depends``
+``size-descending``
 
-    Tests are reordered to satisfy ``#[Depends]`` declarations
+    Tests are ordered by size in reverse (large, medium, small, unknown)
 
-``no-depends``
+Running previously defective tests first
+----------------------------------------
 
-    Tests are not reordered to satisfy ``#[Depends]`` declarations
+The order can be followed by ``defects``, for instance ``--order-by duration-ascending,defects``. This adds a second stage that moves the tests that were defective during the previous test run to the front, so that a defect is reached as fast as possible. Tests that are not moved to the front keep the order that the first stage established.
 
-Multiple values can be combined: ``--order-by defects,random`` runs previously failing tests first, then executes the remaining tests in random order.
+Only tests that errored or failed count as defects. A test that was skipped, that was marked as incomplete, or that triggered an issue is not moved to the front. A test suite counts as defective when at least one of the tests it contains counts as defective, so that defects are moved to the front through arbitrarily deeply nested test suites as well.
+
+``--order-by defects`` can also be used on its own, without configuring an order.
 
 .. admonition:: Note
 
@@ -705,10 +714,19 @@ Multiple values can be combined: ``--order-by defects,random`` runs previously f
 
         Tests cannot be ordered by defects because recording of the test run history is disabled
 
-    The tests are then executed in the order that the other ``--order-by`` values, if any,
-    lead to.
+    The tests are then executed in the order that the remaining stages, if any, lead to.
 
-Convenience aliases are available: ``--resolve-dependencies`` (for ``--order-by depends``), ``--ignore-dependencies`` (for ``--order-by no-depends``), ``--random-order`` (for ``--order-by random``), and ``--reverse-order`` (for ``--order-by reverse``).
+Resolving dependencies between tests
+------------------------------------
+
+Dependency resolution is the last stage of the pipeline: it reorders the tests of a test suite so that as many ``Depends*`` declarations as possible are satisfied. It is enabled by default and is controlled using the ``--resolve-dependencies`` and ``--ignore-dependencies`` CLI options, or the ``resolveDependencies`` attribute in the XML configuration file.
+
+Because any stage that ran after it would undo the order it establishes, dependency resolution is always applied last.
+
+Aliases
+-------
+
+Convenience aliases are available: ``--random-order`` (for ``--order-by random``) and ``--reverse-order`` (for ``--order-by reverse``).
 
 .. parsed-literal::
 
@@ -724,5 +742,37 @@ Convenience aliases are available: ``--resolve-dependencies`` (for ``--order-by 
     Time: 00:00.077, Memory: 10.00 MB
 
     OK (2 tests, 2 assertions)
+
+.. _textui.test-execution-order.deprecated:
+
+Deprecated ways of configuring the execution order
+--------------------------------------------------
+
+The values below are still accepted by ``--order-by`` and by the ``executionOrder`` attribute in the XML configuration file, but PHPUnit emits a test runner deprecation for them:
+
+``depends`` and ``no-depends``
+
+    Whether dependencies between tests are resolved is not an order. Use the
+    ``--resolve-dependencies`` and ``--ignore-dependencies`` CLI options, or the
+    ``resolveDependencies`` attribute in the XML configuration file, instead.
+
+``defects`` written before the order
+
+    ``defects,duration-ascending`` and ``duration-ascending,defects`` currently mean the
+    same thing: the order is applied first and defects are moved to the front afterwards.
+    In PHPUnit 14, the stages will be applied in the order in which they are written, and
+    the two values will therefore mean different things. Write the order first, for
+    instance ``duration-ascending,defects``.
+
+More than one order
+
+    For instance ``duration-ascending,reverse``. The order that is written last currently
+    overrides the ones written before it. This will be an error in PHPUnit 14.
+
+``duration`` and ``size``
+
+    Use ``duration-ascending`` and ``size-ascending`` instead.
+
+A value that PHPUnit does not know is rejected with an error when it is used for ``--order-by``. When it is used for the ``executionOrder`` attribute then it is currently ignored, which is deprecated and will be an error in PHPUnit 14.
 
 See :ref:`appendixes.cli-options.execution` for the complete reference.

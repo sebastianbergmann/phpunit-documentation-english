@@ -539,16 +539,13 @@ When ``phpunit.phar`` is used then this attribute may be used to configure a dir
 The ``executionOrder`` Attribute
 --------------------------------
 
-Possible values: ``default``, ``defects``, ``depends``, ``no-depends``, ``duration-ascending``, ``duration-descending``, ``random``, ``reverse``, ``size-ascending``, ``size-descending`` (default: ``default``)
+Possible values: ``default``, ``defects``, ``duration-ascending``, ``duration-descending``, ``random``, ``reverse``, ``size-ascending``, ``size-descending`` (default: ``default``)
 
-Using multiple values is possible. These need to be separated by ``,``.
+This attribute configures the order in which tests are executed. It configures a pipeline of reordering stages that is applied to the tests of every test suite, one stage after another (see :ref:`textui.test-execution-order`).
 
-This attribute configures the order in which tests are executed.
-
-Primary orderings:
+The order is the first stage of the pipeline. Exactly one order can be configured:
 
 - ``default``: ordered in the order in which PHPUnit found the tests (does not use the test run history)
-- ``defects``: ordered by defect (errored, failed, warning, incomplete, risky, skipped, unknown, passed), requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`
 - ``duration-ascending``: ordered by duration (fastest test first, slowest test last), requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`
 - ``duration-descending``: ordered by duration (slowest test first, fastest test last), requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`
 - ``random``: ordered randomly
@@ -556,14 +553,17 @@ Primary orderings:
 - ``size-ascending``: ordered by size (small, medium, large, unknown), also see :ref:`appendixes.attributes.Small`, :ref:`appendixes.attributes.Medium`, and :ref:`appendixes.attributes.Large`
 - ``size-descending``: ordered by size in reverse (large, medium, small, unknown)
 
-Dependency modifiers (combined with the primary orderings above via ``,``):
+The order may be followed by ``,defects``, for instance ``executionOrder="duration-ascending,defects"``. This adds a second stage that moves the tests that errored or failed during the previous test run to the front. Tests that are not moved to the front keep the order that the first stage established. This requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`. ``executionOrder="defects"`` can also be used on its own, without configuring an order.
 
-- ``depends``: order by dependency first (tests without dependencies first, dependent tests last), then apply the remaining orderings
-- ``no-depends``: do not order by dependency, then apply the remaining orderings
+Whether dependencies between tests are resolved is configured using the :ref:`resolveDependencies<appendixes.xml-configuration-file.phpunit.resolveDependencies>` attribute. Dependency resolution is always the last stage of the pipeline.
 
-Valid combinations include ``depends,defects``, ``depends,duration-ascending``, ``depends,duration-descending``, ``depends,random``, ``depends,reverse``, ``depends,size-ascending``, ``depends,size-descending``, and the corresponding ``no-depends,*`` variants.
+The values below are still accepted, but PHPUnit emits a test runner deprecation for them:
 
-The ``defects`` ordering can also be combined with a secondary ordering that is applied within each defect bucket: ``defects,duration-ascending``, ``defects,duration-descending``, ``defects,random``, ``defects,reverse``, ``defects,size-ascending``, ``defects,size-descending``. These can also be prefixed with ``depends,`` or ``no-depends,``, for example ``depends,defects,duration-ascending``.
+- ``depends`` and ``no-depends``: use ``resolveDependencies="true"`` and ``resolveDependencies="false"`` instead
+- ``defects`` written before the order, for instance ``defects,duration-ascending``: the order is currently always applied before defects are moved to the front, no matter how the values are written. PHPUnit 14 will apply the stages in the order in which the values are written. Write the order first, for instance ``duration-ascending,defects``
+- more than one order, for instance ``duration-ascending,reverse``: the order that is written last currently overrides the ones written before it. This will be an error in PHPUnit 14
+- ``duration`` and ``size``: use ``duration-ascending`` and ``size-ascending`` instead
+- a value that PHPUnit does not know: such a value is currently ignored. This will be an error in PHPUnit 14
 
 .. _appendixes.xml-configuration-file.phpunit.resolveDependencies:
 
@@ -572,7 +572,7 @@ The ``resolveDependencies`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
-This attribute configures whether dependencies between tests (expressed using the ``Depends*`` attributes) should be resolved.
+This attribute configures whether dependencies between tests (expressed using the ``Depends*`` attributes) should be resolved. When they are, the tests of each test suite are reordered so that as many dependencies as possible are satisfied. This reordering is always applied last, after the reordering configured using the :ref:`executionOrder<appendixes.xml-configuration-file.phpunit.executionOrder>` attribute.
 
 .. _appendixes.xml-configuration-file.phpunit.testdox:
 

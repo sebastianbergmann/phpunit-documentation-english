@@ -165,7 +165,8 @@ TestSuite
 
 ``PHPUnit\Event\TestSuite\Sorted``
 
-    The test suite was sorted
+    The test suite was sorted; ``pipeline()`` returns the names of the reordering stages
+    that were applied, in the order in which they were applied
 
 ``PHPUnit\Event\TestRunner\ExecutionStarted``
 
