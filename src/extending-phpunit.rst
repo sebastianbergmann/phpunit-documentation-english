@@ -327,7 +327,7 @@ to write event information to standard output:
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events
 
     phpunit --no-output --log-events-text php://stdout
-    PHPUnit Started (PHPUnit 10.0.0 using PHP 8.2.1 (cli) on Linux)
+    PHPUnit Started (PHPUnit 12.5.34 using PHP 8.5.10 (cli) on Darwin)
     Test Runner Configured
     Test Suite Loaded (2 tests)
     Event Facade Sealed

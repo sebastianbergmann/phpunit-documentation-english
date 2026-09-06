@@ -1592,9 +1592,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/DirectoryIsReadableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -1630,9 +1630,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/DirectoryIsWritableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -1687,9 +1687,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/FileIsReadableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -1725,9 +1725,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/FileIsWritableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -1763,9 +1763,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/IsReadableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -1801,9 +1801,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/IsWritableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 

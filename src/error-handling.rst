@@ -69,9 +69,9 @@ Shown below is the default output PHPUnit's test runner prints for the example s
 .. parsed-literal::
 
     $ ./tools/phpunit
-    PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.3.4
+    Runtime:       PHP 8.5.10
     Configuration: /path/to/example/phpunit.xml
 
     DD                                                                  1 / 1 (100%)
@@ -86,9 +86,9 @@ Detailed information, for instance which issue was triggered where, is only prin
 .. parsed-literal::
 
     $ ./tools/phpunit --display-deprecations
-    PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.3.4
+    Runtime:       PHP 8.5.10
     Configuration: /path/to/example/phpunit.xml
 
     DD                                                                  1 / 1 (100%)
@@ -147,9 +147,9 @@ reporting of issues to our own code:
 .. parsed-literal::
 
     $ ./tools/phpunit --display-deprecations
-    PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.3.4
+    Runtime:       PHP 8.5.10
     Configuration: /path/to/example/phpunit.xml
 
     DD                                                                  1 / 1 (100%)
@@ -223,7 +223,7 @@ will write a list of all issues that are triggered to an XML file:
 .. parsed-literal::
 
     $ phpunit --generate-baseline baseline.xml
-    PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
@@ -244,7 +244,7 @@ then PHPUnit's test runner will use this list of already known issues to ignore 
 .. parsed-literal::
 
     $ phpunit --use-baseline baseline.xml
-    PHPUnit 11.1.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.2.10
     Configuration: /path/to/example/phpunit.xml
