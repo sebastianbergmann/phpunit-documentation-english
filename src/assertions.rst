@@ -387,9 +387,9 @@ Running the test shown above yields the output shown below:
 ``assertContainsOnlyInstancesOf()``
 -----------------------------------
 
-``assertContainsOnlyInstancesOf(string $type, iterable $haystack[, string $message])``
+``assertContainsOnlyInstancesOf(string $className, iterable $haystack[, string $message])``
 
-Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class or interface ``$type``.
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class or interface ``$className``.
 
 .. literalinclude:: examples/assertions/ContainsOnlyInstancesOfTest.php
    :caption: Usage of assertContainsOnlyInstancesOf()
@@ -621,9 +621,9 @@ Running the test shown above yields the output shown below:
 ``assertIsList()``
 ------------------
 
-``assertIsList(mixed $actual[, string $message])``
+``assertIsList(mixed $array[, string $message])``
 
-Reports an error identified by ``$message`` if ``$actual`` is not an array where the keys are consecutive numbers from 0 to ``count($actual) - 1``.
+Reports an error identified by ``$message`` if ``$array`` is not an array where the keys are consecutive numbers from 0 to ``count($array) - 1``.
 
 .. literalinclude:: examples/assertions/IsListTest.php
    :caption: Usage of assertIsList()
@@ -1367,9 +1367,9 @@ Running the test shown above yields the output shown below:
 ``assertFileIsReadable()``
 --------------------------
 
-``assertFileIsReadable(string $filename[, string $message])``
+``assertFileIsReadable(string $file[, string $message])``
 
-Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not readable.
+Reports an error identified by ``$message`` if the file specified by ``$file`` is not a file or is not readable.
 
 ``assertFileIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
 
@@ -1405,9 +1405,9 @@ Running the test shown above yields the output shown below:
 ``assertFileIsWritable()``
 --------------------------
 
-``assertFileIsWritable(string $filename[, string $message])``
+``assertFileIsWritable(string $file[, string $message])``
 
-Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not writable.
+Reports an error identified by ``$message`` if the file specified by ``$file`` is not a file or is not writable.
 
 ``assertFileIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
 
