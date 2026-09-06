@@ -1,0 +1,18 @@
+./tools/phpunit tests/IsValidOrderIdTest.php
+PHPUnit 12.5.34 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.10
+
+E                                                                   1 / 1 (100%)
+
+Time: 00:00, Memory: 26.00 MB
+
+There was 1 error:
+
+1) IsValidOrderIdTest::testGenerateGeneratesId
+Error: Class "OrderIdGenerator" not found
+
+/path/to/tests/IsValidOrderIdTest.php:8
+
+ERRORS!
+Tests: 1, Assertions: 0, Errors: 1.

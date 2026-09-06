@@ -1,0 +1,16 @@
+./tools/phpunit tests/OrderIdGeneratorUsingCustomAssertionTraitTest.php
+
+
+An error occurred inside PHPUnit.
+
+Message:  Trait "CustomAssertionTrait" not found
+Location: /path/to/tests/OrderIdGeneratorUsingCustomAssertionTraitTest.php:4
+
+#0 phar:///Users/sb/Work/OpenSource/phpunit-documentation-english/tools/phpunit/phpunit/Runner/TestSuiteLoader.php(99): require_once()
+#1 phar:///Users/sb/Work/OpenSource/phpunit-documentation-english/tools/phpunit/phpunit/Runner/TestSuiteLoader.php(48): PHPUnit\Runner\TestSuiteLoader->loadSuiteClassFile('/Users/sb/Work/...')
+#2 phar:///Users/sb/Work/OpenSource/phpunit-documentation-english/tools/phpunit/phpunit/TextUI/Configuration/TestSuiteBuilder.php(92): PHPUnit\Runner\TestSuiteLoader->load('/Users/sb/Work/...')
+#3 phar:///Users/sb/Work/OpenSource/phpunit-documentation-english/tools/phpunit/phpunit/TextUI/Configuration/TestSuiteBuilder.php(55): PHPUnit\TextUI\Configuration\TestSuiteBuilder->testSuiteFromPath('/Users/sb/Work/...', Array)
+#4 phar:///Users/sb/Work/OpenSource/phpunit-documentation-english/tools/phpunit/phpunit/TextUI/Application.php(268): PHPUnit\TextUI\Configuration\TestSuiteBuilder->build(Object(PHPUnit\TextUI\Configuration\Configuration))
+#5 phar:///Users/sb/Work/OpenSource/phpunit-documentation-english/tools/phpunit/phpunit/TextUI/Application.php(158): PHPUnit\TextUI\Application->buildTestSuite(Object(PHPUnit\TextUI\Configuration\Configuration))
+#6 /Users/sb/Work/OpenSource/phpunit-documentation-english/tools/phpunit(3306): PHPUnit\TextUI\Application->run(Array)
+#7 {main}

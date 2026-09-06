@@ -1,10 +1,10 @@
 ./tools/phpunit tests/GreeterTest.php
-PHPUnit 12.5.2 by Sebastian Bergmann and contributors.
+PHPUnit 12.5.34 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.4
+Runtime:       PHP 8.5.10
 
 ....                                                                4 / 4 (100%)
 
-Time: 00:00.001, Memory: 25.89 MB
+Time: 00:00, Memory: 28.00 MB
 
 OK (4 tests, 4 assertions)

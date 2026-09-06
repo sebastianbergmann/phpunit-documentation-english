@@ -1,11 +1,11 @@
 ./tools/phpunit tests/NanTest.php
-PHPUnit 12.5.2 by Sebastian Bergmann and contributors.
+PHPUnit 12.5.34 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.4
+Runtime:       PHP 8.5.10
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 25.89 MB
+Time: 00:00, Memory: 28.00 MB
 
 There was 1 failure:
 
