@@ -225,14 +225,16 @@ Do not worry if terms such as "code coverage" or "line coverage" do not mean any
 Installing PHPUnit
 ==================
 
+.. _installation.phar:
+
 PHP Archive (PHAR)
 ------------------
 
 The recommended way to install and use PHPUnit is to download a distribution that is packaged as a PHP Archive (PHAR).
 Releases of PHPUnit packaged as PHP archives are available on ``https://phar.phpunit.de/``.
 
-At ``https://phar.phpunit.de/phpunit-10.phar``, for instance, you will always find the latest version of PHPUnit 10.
-At ``https://phar.phpunit.de/phpunit-10.0.0.phar``, for instance, you will always find that specific version of PHPUnit.
+At ``https://phar.phpunit.de/phpunit-12.phar``, for instance, you will always find the latest version of PHPUnit 12.
+At ``https://phar.phpunit.de/phpunit-12.5.0.phar``, for instance, you will always find that specific version of PHPUnit.
 At ``https://phar.phpunit.de/phpunit-snapshot.phar`` you will always find the latest development snapshot of PHPUnit.
 
 Such a PHP archive has all required (as well as some optional) dependencies of PHPUnit bundled in a single file. The PHAR (``ext/phar``) extension is required if you want to use PHPUnit from a PHP archive.
@@ -244,12 +246,12 @@ You can simply download a release of PHPUnit packaged as a PHP archive and immed
 
 .. code::
 
-    wget -O phpunit.phar https://phar.phpunit.de/phpunit-10.phar
+    wget -O phpunit.phar https://phar.phpunit.de/phpunit-12.phar
 
 .. code::
 
     php phpunit.phar --version
-    PHPUnit 10.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit 12.5.0 by Sebastian Bergmann and contributors.
 
 It is a common practice to make the PHAR executable:
 
@@ -262,7 +264,7 @@ Now you can directly run the PHAR:
 .. code::
 
     ./phpunit.phar --version
-    PHPUnit 10.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit 12.5.0 by Sebastian Bergmann and contributors.
 
 All official releases distributed by the PHPUnit Project are signed by the release manager for the release.
 PGP signatures and SHA256 hashes are available for verification on ``https://phar.phpunit.de/``.
@@ -271,8 +273,8 @@ Here is an example of how you can manually verify a PHP archive of a PHPUnit rel
 
 .. code::
 
-    wget -O phpunit.phar https://phar.phpunit.de/phpunit-10.phar
-    wget -O phpunit.phar.asc https://phar.phpunit.de/phpunit-10.phar.asc
+    wget -O phpunit.phar https://phar.phpunit.de/phpunit-12.phar
+    wget -O phpunit.phar.asc https://phar.phpunit.de/phpunit-12.phar.asc
     gpg --keyserver pgp.uni-mainz.de --recv-keys 0x4AA394086372C20A
     gpg phpunit.phar.asc
 
@@ -295,7 +297,7 @@ You can download PHPUnit's PHP archive to that ``tools`` directory manually, of 
 
 .. code::
 
-    wget -O phpunit.phar https://phar.phpunit.de/phpunit-10.phar
+    wget -O phpunit.phar https://phar.phpunit.de/phpunit-12.phar
     chmod +x phpunit.phar
     mv phpunit.phar tools
 
@@ -332,9 +334,9 @@ After executing the command shown above the project's directory will look like t
     ├── src
     ├── tests
     └── tools
-        └── phpunit -> ~/.phive/phars/phpunit-10.0.0.phar
+        └── phpunit -> ~/.phive/phars/phpunit-12.5.0.phar
 
-Phive has downloaded the PHP archive for PHPUnit 10.0.0, placed it in a cache located in your home directory,
+Phive has downloaded the PHP archive for PHPUnit 12.5.0, placed it in a cache located in your home directory,
 and created a symbolic link from there to ``tools/phpunit``.
 
 You can now invoke the project-local installation of PHPUnit by running ``./tools/phpunit``:
@@ -342,7 +344,7 @@ You can now invoke the project-local installation of PHPUnit by running ``./tool
 .. code::
 
     ./tools/phpunit --version
-    PHPUnit 10.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit 12.5.0 by Sebastian Bergmann and contributors.
 
 The ``.phive/phars.xml`` file that was generated in your project's root directory contains metadata about your project's tool dependencies:
 
@@ -351,14 +353,14 @@ The ``.phive/phars.xml`` file that was generated in your project's root director
     <?xml version="1.0" encoding="UTF-8"?>
     <phive xmlns="https://phar.io/phive">
       <phar name="phpunit"
-            version="^10.0" installed="10.0.0"
+            version="^12.5" installed="12.5.0"
             location="./tools/phpunit" copy="true"/>
     </phive>
 
 ``.phive/phars.xml`` should be put under version control.
 
-The ``^10.0`` is a semantic version constraint: Phive will always install the latest version of PHPUnit
-that is compatible with PHPUnit 10.0.
+The ``^12.5`` is a semantic version constraint: Phive will always install the latest version of PHPUnit
+that is compatible with PHPUnit 12.5.
 
 Phive does not only provide a convenient way for installing, managing, and updating tools that are distributed as a PHP archive.
 Phive also keeps you safe by automatically verifying the PGP signatures while downloading the PHAR files.
@@ -390,18 +392,18 @@ After executing the command shown above the project's directory will look like t
 Updating PHPUnit with Phive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``phive install phpunit`` adds a dependency on PHPUnit with a version constraint that uses the caret operator (``^``) for semantic versioning: ``version="^10.0"``.
+``phive install phpunit`` adds a dependency on PHPUnit with a version constraint that uses the caret operator (``^``) for semantic versioning: ``version="^12.5"``.
 
-With this configuration, Phive will always install the latest version of PHPUnit that is compatible with PHPUnit 10.0.
+With this configuration, Phive will always install the latest version of PHPUnit that is compatible with PHPUnit 12.5.
 
-This ensures you "stay fresh" as long as PHPUnit 10 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 10.1. And when the time comes and PHPUnit 11 is released then Phive will not automatically and unexpectedly install it.
+This ensures you "stay fresh" as long as PHPUnit 12 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 12.6. And when the time comes and PHPUnit 13 is released then Phive will not automatically and unexpectedly install it.
 
 
 Updating to a new minor or patch version
 """"""""""""""""""""""""""""""""""""""""
 
-Consider the following situation: you use the semantic version constraint ``^9.6`` for PHPUnit in your
-``.phive/phars.xml`` file and have PHPUnit 9.6.0 installed. Here is what your ``.phive/phars.xml`` file
+Consider the following situation: you use the semantic version constraint ``^11.5`` for PHPUnit in your
+``.phive/phars.xml`` file and have PHPUnit 11.5.0 installed. Here is what your ``.phive/phars.xml`` file
 currently looks like:
 
 .. code-block:: xml
@@ -409,11 +411,11 @@ currently looks like:
     <?xml version="1.0" encoding="UTF-8"?>
     <phive xmlns="https://phar.io/phive">
       <phar name="phpunit"
-            version="^9.6" installed="9.6.0"
+            version="^11.5" installed="11.5.0"
             location="./tools/phpunit" copy="true"/>
     </phive>
 
-Since you used ``phive update`` last, PHPUnit 9.6.3 became available. You can use the ``phive outdated``
+Since you used ``phive update`` last, PHPUnit 11.5.3 became available. You can use the ``phive outdated``
 command to check whether an update is available for any of your project's PHP archives that are managed
 by Phive:
 
@@ -425,10 +427,10 @@ by Phive:
 
     Name       Version Constraint    Installed    Available
 
-    phpunit    ^9.6                  9.6.0        9.6.3
+    phpunit    ^11.5                 11.5.0       11.5.3
 
-Because PHPUnit 9.6.3 is a new patch version (and not a new major version), ``phive update``
-will update from PHPUnit 9.6.0 to PHPUnit 9.6.3.
+Because PHPUnit 11.5.3 is a new patch version (and not a new major version), ``phive update``
+will update from PHPUnit 11.5.0 to PHPUnit 11.5.3.
 
 
 Updating to a new major version
@@ -441,12 +443,12 @@ Consider the following situation:
     <?xml version="1.0" encoding="UTF-8"?>
     <phive xmlns="https://phar.io/phive">
       <phar name="phpunit"
-            version="^9.6" installed="9.6.3"
+            version="^11.5" installed="11.5.3"
             location="./tools/phpunit" copy="true"/>
     </phive>
 
-Now PHPUnit 10, a new major version, became available. However, running ``phive outdated`` does
-not offer us the update to PHPUnit 10:
+Now PHPUnit 12, a new major version, became available. However, running ``phive outdated`` does
+not offer us the update to PHPUnit 12:
 
 .. code::
 
@@ -459,7 +461,7 @@ not offer us the update to PHPUnit 10:
     Unfortunately, the output of ``phive outdated`` is confusing when no new minor or patch
     versions are available, but a new major version is available.
 
-This is because PHPUnit 10 is a new major version and updates to a new major version should be
+This is because PHPUnit 12 is a new major version and updates to a new major version should be
 an explicit operation following a conscious decision.
 
 If you use semantic version constraints in your ``.phive/phars.xml`` file
@@ -469,9 +471,9 @@ be installed:
 
 .. code::
 
-    phive install phpunit@^10.0
+    phive install phpunit@^12.5
     Phive 0.15.2 - Copyright (C) 2015-2024 by Arne Blankerts, Sebastian Heuer and Contributors
-    Linking /home/sb/.phive/phars/phpunit-10.5.15.phar to /path/to/tools/phpunit
+    Linking /home/sb/.phive/phars/phpunit-12.5.34.phar to /path/to/tools/phpunit
 
 
 What is inside the PHAR?
@@ -501,54 +503,53 @@ information about the versions of PHPUnit's dependencies that are bundled in the
 
 .. code::
 
-    php phpunit-10.5.1.phar --manifest
-    phpunit/phpunit: 10.5.1
-    myclabs/deep-copy: 1.11.1
-    nikic/php-parser: v4.17.1
-    phar-io/manifest: 2.0.3
+    php phpunit-12.5.34.phar --manifest
+    phpunit/phpunit: 12.5.34
+    myclabs/deep-copy: 1.14.0
+    nikic/php-parser: v5.8.0
+    phar-io/manifest: 2.0.4
     phar-io/version: 3.2.1
-    phpunit/php-code-coverage: 10.1.9
-    phpunit/php-file-iterator: 4.1.0
-    phpunit/php-invoker: 4.0.0
-    phpunit/php-text-template: 3.0.1
-    phpunit/php-timer: 6.0.0
-    sebastian/cli-parser: 2.0.0
-    sebastian/code-unit: 2.0.0
-    sebastian/code-unit-reverse-lookup: 3.0.0
-    sebastian/comparator: 5.0.1
-    sebastian/complexity: 3.1.0
-    sebastian/diff: 5.0.3
-    sebastian/environment: 6.0.1
-    sebastian/exporter: 5.1.1
-    sebastian/global-state: 6.0.1
-    sebastian/lines-of-code: 2.0.1
-    sebastian/object-enumerator: 5.0.0
-    sebastian/object-reflector: 3.0.0
-    sebastian/recursion-context: 5.0.0
-    sebastian/type: 4.0.0
-    sebastian/version: 4.0.1
-    theseer/tokenizer: 1.2.2
+    phpunit/php-code-coverage: 12.5.7
+    phpunit/php-file-iterator: 6.0.2
+    phpunit/php-invoker: 6.0.0
+    phpunit/php-text-template: 5.0.0
+    phpunit/php-timer: 8.0.0
+    sebastian/cli-parser: 4.2.1
+    sebastian/comparator: 7.1.8
+    sebastian/complexity: 5.0.0
+    sebastian/diff: 7.0.1
+    sebastian/environment: 8.1.2
+    sebastian/exporter: 7.0.3
+    sebastian/global-state: 8.0.3
+    sebastian/lines-of-code: 4.0.1
+    sebastian/object-enumerator: 7.0.0
+    sebastian/object-reflector: 5.0.0
+    sebastian/recursion-context: 7.0.1
+    sebastian/type: 6.0.4
+    sebastian/version: 6.0.0
+    staabm/side-effects-detector: 1.0.5
+    theseer/tokenizer: 2.0.1
 
 When PHPUnit's PHAR is invoked with the ``--sbom`` CLI option then it will print a Software Bill of Materials (SBOM)
 in XML format with information about the versions of PHPUnit's dependencies that are bundled in the PHAR:
 
 .. code::
 
-    php phpunit-10.5.1.phar --sbom
+    php phpunit-12.5.34.phar --sbom
     <?xml version="1.0"?>
     <bom xmlns="http://cyclonedx.org/schema/bom/1.4">
      <components>
       <component type="library">
        <group>phpunit</group>
        <name>phpunit</name>
-       <version>10.5.1</version>
+       <version>12.5.34</version>
        <description>The PHP Unit Testing framework.</description>
        <licenses>
         <license>
          <id>BSD-3-Clause</id>
         </license>
        </licenses>
-       <purl>pkg:composer/phpunit/phpunit@10.5.1</purl>
+       <purl>pkg:composer/phpunit/phpunit@12.5.34</purl>
       </component>
       .
       .
@@ -559,7 +560,7 @@ file that was used to install PHPUnit's dependencies during the build of the PHA
 
 .. code::
 
-    php phpunit-10.5.1.phar --composer-lock
+    php phpunit-12.5.34.phar --composer-lock
     {
         "_readme": [
             "This file locks the dependencies of your project to a known state",
@@ -611,17 +612,17 @@ The project-local installation of PHPUnit can be invoked like this:
 .. code::
 
     ./vendor/bin/phpunit --version
-    PHPUnit 10.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit 12.5.0 by Sebastian Bergmann and contributors.
 
 
 Updating PHPUnit with Composer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``composer require --dev phpunit/phpunit`` adds a development-time dependency on PHPUnit with a version constraint that uses the caret operator (``^``) for semantic versioning: ``"phpunit/phpunit": "^10.0"``.
+``composer require --dev phpunit/phpunit`` adds a development-time dependency on PHPUnit with a version constraint that uses the caret operator (``^``) for semantic versioning: ``"phpunit/phpunit": "^12.5"``.
 
-With this configuration, Composer will always install the latest version of PHPUnit that is compatible with PHPUnit 10.0.
+With this configuration, Composer will always install the latest version of PHPUnit that is compatible with PHPUnit 12.5.
 
-This ensures you "stay fresh" as long as PHPUnit 10 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 10.1. And when the time comes and PHPUnit 11 is released then Composer will not automatically and unexpectedly install it.
+This ensures you "stay fresh" as long as PHPUnit 12 is the current stable version of PHPUnit and includes new minor versions such as PHPUnit 12.6. And when the time comes and PHPUnit 13 is released then Composer will not automatically and unexpectedly install it.
 
 Updating to a new minor or patch version
 """"""""""""""""""""""""""""""""""""""""
@@ -632,11 +633,11 @@ Consider the following situation:
 
     {
         "require-dev": {
-            "phpunit/phpunit": "^9.6"
+            "phpunit/phpunit": "^11.5"
         }
     }
 
-Using the ``composer outdated`` command we can see that we have PHPUnit 9.6.0 in our project and that a new patch version is available:
+Using the ``composer outdated`` command we can see that we have PHPUnit 11.5.0 in our project and that a new patch version is available:
 
 .. code::
 
@@ -646,9 +647,9 @@ Using the ``composer outdated`` command we can see that we have PHPUnit 9.6.0 in
     ~ major release available - update possible
 
     Direct dependencies required in composer.json:
-    phpunit/phpunit 9.6.0 ! 9.6.3 The PHP Unit Testing framework.
+    phpunit/phpunit 11.5.0 ! 11.5.3 The PHP Unit Testing framework.
 
-Because PHPUnit 9.6.3 is a new patch version, ``composer update`` will update from PHPUnit 9.6.0 to PHPUnit 9.6.3.
+Because PHPUnit 11.5.3 is a new patch version, ``composer update`` will update from PHPUnit 11.5.0 to PHPUnit 11.5.3.
 
 
 Updating to a new major version
@@ -660,11 +661,11 @@ Consider the following situation:
 
     {
         "require-dev": {
-            "phpunit/phpunit": "^9.6"
+            "phpunit/phpunit": "^11.5"
         }
     }
 
-Using the ``composer outdated`` command we can see that we have PHPUnit 9.6.3 in our project and that a new major version is available:
+Using the ``composer outdated`` command we can see that we have PHPUnit 11.5.3 in our project and that a new major version is available:
 
 .. code::
 
@@ -674,9 +675,9 @@ Using the ``composer outdated`` command we can see that we have PHPUnit 9.6.3 in
     ~ major release available - update possible
 
     Direct dependencies required in composer.json:
-    phpunit/phpunit                    9.6.3  ~ 10.0.7 The PHP Unit Testing framework.
+    phpunit/phpunit                    11.5.3 ~ 12.0.7 The PHP Unit Testing framework.
 
-Because PHPUnit 10 is a new major version, ``composer update`` will not update from PHPUnit 9.6.3 to PHPUnit 10.0.7.
+Because PHPUnit 12 is a new major version, ``composer update`` will not update from PHPUnit 11.5.3 to PHPUnit 12.0.7.
 Updates to a new major version should be an explicit operation following a conscious decision.
 
 If you use semantic version constraints in your ``composer.json`` file
@@ -684,14 +685,14 @@ If you use semantic version constraints in your ``composer.json`` file
 then you will have to manually update PHPUnit's version constraint when you want to update to
 a new major version.
 
-Here is what you should do: edit your project's ``composer.json`` file and change ``^9.6``
-to ``^10.0``:
+Here is what you should do: edit your project's ``composer.json`` file and change ``^11.5``
+to ``^12.5``:
 
 .. code-block:: json
 
     {
         "require-dev": {
-            "phpunit/phpunit": "^10.0"
+            "phpunit/phpunit": "^12.5"
         }
     }
 
@@ -721,11 +722,11 @@ A common approach for installing PHPUnit globally is to download a release of PH
 
 .. code::
 
-    wget -O phpunit.phar https://phar.phpunit.de/phpunit-10.phar
+    wget -O phpunit.phar https://phar.phpunit.de/phpunit-12.phar
     chmod +x phpunit.phar
     sudo mv phpunit.phar /usr/local/bin/phpunit
     phpunit --version
-    PHPUnit 10.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit 12.5.0 by Sebastian Bergmann and contributors.
 
 Both Composer and Phive can be used to perform a global installation of PHPUnit.
 
