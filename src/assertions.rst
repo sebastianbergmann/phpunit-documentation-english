@@ -1073,7 +1073,7 @@ Reports an error identified by ``$message`` if the contents of ``$actualFile`` d
 ``assertFileMatchesFormatFile()``
 ---------------------------------
 
-``assertFileMatchesFormat(string $formatFile, string $actualFile[, string $message])``
+``assertFileMatchesFormatFile(string $formatFile, string $actualFile[, string $message])``
 
 Reports an error identified by ``$message`` if the contents of ``$actualFile`` does not match the contents of the ``$formatFile``.
 
