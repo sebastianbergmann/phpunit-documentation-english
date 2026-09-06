@@ -868,9 +868,9 @@ Running the test shown above yields the output shown below:
 ``assertContainsOnlyInstancesOf()``
 -----------------------------------
 
-``assertContainsOnlyInstancesOf(string $type, iterable $haystack[, string $message])``
+``assertContainsOnlyInstancesOf(string $className, iterable $haystack[, string $message])``
 
-Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class or interface ``$type``.
+Reports an error identified by ``$message`` if ``$haystack`` does not contain only instances of class or interface ``$className``.
 
 ``assertContainsNotOnlyInstancesOf()`` is the inverse of this assertion and takes the same arguments.
 
@@ -993,9 +993,9 @@ Running the test shown above yields the output shown below:
 ``assertGreaterThan()``
 -----------------------
 
-``assertGreaterThan(mixed $expected, mixed $actual[, string $message])``
+``assertGreaterThan(mixed $minimum, mixed $actual[, string $message])``
 
-Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than the value of ``$expected``.
+Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than the value of ``$minimum``.
 
 .. literalinclude:: examples/assertions/GreaterThanTest.php
    :caption: Usage of assertGreaterThan()
@@ -1010,9 +1010,9 @@ Running the test shown above yields the output shown below:
 ``assertGreaterThanOrEqual()``
 ------------------------------
 
-``assertGreaterThanOrEqual(mixed $expected, mixed $actual[, string $message])``
+``assertGreaterThanOrEqual(mixed $minimum, mixed $actual[, string $message])``
 
-Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than or equal to the value of ``$expected``.
+Reports an error identified by ``$message`` if the value of ``$actual`` is not greater than or equal to the value of ``$minimum``.
 
 .. literalinclude:: examples/assertions/GreaterThanOrEqualTest.php
    :caption: Usage of assertGreaterThanOrEqual()
@@ -1027,9 +1027,9 @@ Running the test shown above yields the output shown below:
 ``assertLessThan()``
 --------------------
 
-``assertLessThan(mixed $expected, mixed $actual[, string $message])``
+``assertLessThan(mixed $maximum, mixed $actual[, string $message])``
 
-Reports an error identified by ``$message`` if the value of ``$actual`` is not less than the value of ``$expected``.
+Reports an error identified by ``$message`` if the value of ``$actual`` is not less than the value of ``$maximum``.
 
 .. literalinclude:: examples/assertions/LessThanTest.php
    :caption: Usage of assertLessThan()
@@ -1044,9 +1044,9 @@ Running the test shown above yields the output shown below:
 ``assertLessThanOrEqual()``
 ---------------------------
 
-``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message])``
+``assertLessThanOrEqual(mixed $maximum, mixed $actual[, string $message])``
 
-Reports an error identified by ``$message`` if the value of ``$actual`` is not less than or equal to the value of ``$expected``.
+Reports an error identified by ``$message`` if the value of ``$actual`` is not less than or equal to the value of ``$maximum``.
 
 .. literalinclude:: examples/assertions/LessThanOrEqualTest.php
    :caption: Usage of assertLessThanOrEqual()
@@ -1104,9 +1104,9 @@ Running the test shown above yields the output shown below:
 ``assertIsList()``
 ------------------
 
-``assertIsList(mixed $actual[, string $message])``
+``assertIsList(mixed $array[, string $message])``
 
-Reports an error identified by ``$message`` if ``$actual`` is not an array where the keys are consecutive numbers from 0 to ``count($actual) - 1``.
+Reports an error identified by ``$message`` if ``$array`` is not an array where the keys are consecutive numbers from 0 to ``count($array) - 1``.
 
 .. literalinclude:: examples/assertions/IsListTest.php
    :caption: Usage of assertIsList()
@@ -1923,9 +1923,9 @@ Running the test shown above yields the output shown below:
 ``assertFileIsReadable()``
 --------------------------
 
-``assertFileIsReadable(string $filename[, string $message])``
+``assertFileIsReadable(string $file[, string $message])``
 
-Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not readable.
+Reports an error identified by ``$message`` if the file specified by ``$file`` is not a file or is not readable.
 
 ``assertFileIsNotReadable()`` is the inverse of this assertion and takes the same arguments.
 
@@ -1961,9 +1961,9 @@ Running the test shown above yields the output shown below:
 ``assertFileIsWritable()``
 --------------------------
 
-``assertFileIsWritable(string $filename[, string $message])``
+``assertFileIsWritable(string $file[, string $message])``
 
-Reports an error identified by ``$message`` if the file specified by ``$filename`` is not a file or is not writable.
+Reports an error identified by ``$message`` if the file specified by ``$file`` is not a file or is not writable.
 
 ``assertFileIsNotWritable()`` is the inverse of this assertion and takes the same arguments.
 
