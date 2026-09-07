@@ -1228,6 +1228,7 @@ The ``<coverage>`` element and its children can be used to configure code covera
 .. code-block:: xml
 
     <coverage includeUncoveredFiles="true"
+              branchCoverage="false"
               pathCoverage="false"
               ignoreDeprecatedCodeUnits="true"
               disableCodeCoverageIgnore="true">
@@ -1248,12 +1249,21 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether code units annotated with ``@deprecated`` should be ignored from code coverage.
 
+The ``branchCoverage`` Attribute
+--------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+When set to ``true``, line coverage and branch coverage data will be collected, processed, and reported. This requires a code coverage driver that supports branch coverage. Branch Coverage is currently only implemented by Xdebug.
+
+This attribute has no effect when ``pathCoverage`` is set to ``true``, as path coverage implies branch coverage.
+
 The ``pathCoverage`` Attribute
 ------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
-When set to ``false``, only line coverage data will be collected, processed, and reported.
+When set to ``false``, only line coverage data will be collected, processed, and reported, unless ``branchCoverage`` is set to ``true``.
 
 When set to ``true``, line coverage, branch coverage, and path coverage data will be collected, processed, and reported. This requires a code coverage driver that supports path coverage. Path Coverage is currently only implemented by Xdebug.
 
@@ -1283,7 +1293,7 @@ When PHPUnit instantiates the configured driver class, it inspects the construct
 * When the constructor has at least one required parameter, PHPUnit passes the code coverage ``SebastianBergmann\CodeCoverage\Filter`` object as the first argument.
 * Otherwise, the class is instantiated without arguments.
 
-After the driver has been instantiated, PHPUnit configures its granularity according to the ``pathCoverage`` attribute.
+After the driver has been instantiated, PHPUnit configures its granularity according to the ``branchCoverage`` and ``pathCoverage`` attributes.
 
 A driver that counts how often a line was executed, and not only whether it was executed at all, should override the ``collectsHitCounts()`` method of ``SebastianBergmann\CodeCoverage\Driver\Driver`` and return ``true``. These hit counts are reported in the :ref:`code coverage report in PHPUnit XML format <appendixes.xml-configuration-file.coverage.report.xml>`.
 

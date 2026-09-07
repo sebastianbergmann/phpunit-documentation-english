@@ -347,6 +347,9 @@ Code Coverage
     * - CLI option
       - XML setting
       - Default
+    * - ``--branch-coverage``
+      - :ref:`branchCoverage <appendixes.xml-configuration-file.coverage>` attribute on ``<coverage>``
+      - ``false``
     * - ``--path-coverage``
       - :ref:`pathCoverage <appendixes.xml-configuration-file.coverage>` attribute on ``<coverage>``
       - ``false``

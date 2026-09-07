@@ -526,7 +526,7 @@ The summary line begins with ``OK`` when all tests pass, ``FAILURES`` when at le
 
 Defects are listed in this order: errors, failures, deprecations, warnings, notices, errors triggered by tests, risky tests, incomplete tests, skipped tests.
 
-By default, only errors, failures, and risky tests are shown in detail. Like the default output, ``--compact`` respects the :ref:`--display-* flags <textui.output.controlling>`: use ``--display-deprecations``, ``--display-warnings``, ``--display-notices``, ``--display-errors``, ``--display-incomplete``, ``--display-skipped``, or ``--display-all-issues`` to display additional details.
+By default, only errors, failures, and risky tests are shown in detail. Like the default output, ``--compact`` respects the ``--display-*`` flags described under :ref:`textui.output.controlling`: use ``--display-deprecations``, ``--display-warnings``, ``--display-notices``, ``--display-errors``, ``--display-incomplete``, ``--display-skipped``, or ``--display-all-issues`` to display additional details.
 
 Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. This makes it easy to enable compact output globally without changing how PHPUnit is invoked, for example when running tests inside an AI-based coding assistant where every token of test output consumes context window budget.
 

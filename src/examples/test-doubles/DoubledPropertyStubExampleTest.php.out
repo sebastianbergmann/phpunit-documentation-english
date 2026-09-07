@@ -1,18 +1,10 @@
 ./tools/phpunit tests/DoubledPropertyStubExampleTest.php
-PHPUnit 13.2.6 by Sebastian Bergmann and contributors.
+PHPUnit 13.3.2 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.5.10
 
-E                                                                   1 / 1 (100%)
+.                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 28.00 MB
+Time: 00:00, Memory: 30.09 MB
 
-There was 1 error:
-
-1) DoubledPropertyStubExampleTest::testExample
-Error: Call to undefined method PHPUnit\Framework\MockObject\TestStubBuilder::doubleProperties()
-
-/path/to/tests/DoubledPropertyStubExampleTest.php:10
-
-ERRORS!
-Tests: 1, Assertions: 0, Errors: 1.
+OK (1 test, 1 assertion)

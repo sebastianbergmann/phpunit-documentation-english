@@ -471,7 +471,6 @@ Testing error log output
 ========================
 
 Sometimes you want to assert that the code under test calls PHP's ``error_log()`` function.
-PHPUnit captures ``error_log()`` output during test execution.
 
 The ``expectErrorLog()`` method can be used to expect that ``error_log()`` is called at least once
 during the test. If ``error_log()`` is not called, the test will be counted as a failure.
@@ -486,18 +485,19 @@ during the test. If ``error_log()`` is not called, the test will be counted as a
     {
         public function testSomethingIsLogged(): void
         {
+            $this->expectErrorLog();
+
             // Code under test that calls error_log()
             error_log('something happened');
-
-            $this->expectErrorLog();
         }
     }
 
-When ``expectErrorLog()`` is not used and the code under test calls ``error_log()``, the logged
-output is printed as part of the test output (with date prefixes stripped).
+Calling ``expectErrorLog()`` redirects ``error_log()`` output to a temporary file for the
+remainder of the test. Only output that is written after ``expectErrorLog()`` was called
+satisfies the expectation, so the method has to be called before the code under test.
 
-.. admonition:: Note
-
-   The ``expectErrorLog()`` method must be called during the test method, but it does not
-   matter whether it is called before or after the code that calls ``error_log()``. This
-   is consistent with how ``expectOutputString()`` works.
+When ``expectErrorLog()`` is not used, PHPUnit does not interfere with ``error_log()``:
+the logged output goes to the error log that is configured for the PHP process. When no
+error log is configured, PHP writes the message to the standard error stream. For a test
+that :ref:`runs in a separate process <appendixes.attributes.RunInSeparateProcess>`, output
+on the standard error stream of the child process is reported as a test error.

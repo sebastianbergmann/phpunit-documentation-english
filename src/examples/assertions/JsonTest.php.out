@@ -1,11 +1,11 @@
 ./tools/phpunit tests/JsonTest.php
-PHPUnit 13.2.6 by Sebastian Bergmann and contributors.
+PHPUnit 13.3.2 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.5.10
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 28.00 MB
+Time: 00:00, Memory: 30.09 MB
 
 There was 1 failure:
 

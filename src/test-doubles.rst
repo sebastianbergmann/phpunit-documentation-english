@@ -1260,6 +1260,28 @@ PHPUnit provides many constraint methods for argument verification:
 * ``isWritable()``
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.withAnyParameters:
+
+``withAnyParameters()``
+"""""""""""""""""""""""
+
+The ``withAnyParameters()`` method configures an expectation that accepts any arguments:
+
+.. code-block:: php
+
+   $mock = $this->createMock(InterfaceName::class);
+
+   $mock
+       ->expects($this->once())
+       ->method('doSomething')
+       ->withAnyParameters();
+
+This is equivalent to not using ``with()`` at all, but states the intent explicitly.
+
+``with()`` and ``withAnyParameters()`` are mutually exclusive: only one of them may be used
+for a method, and only one expectation configured for a method may verify its arguments.
+
+
 .. _test-doubles.mock-objects.reference.configuring-expectations.with.expecting-calls-to-the-same-method-with-varying-arguments-in-specific-order:
 
 Expecting calls to the same method with varying arguments in specific order
