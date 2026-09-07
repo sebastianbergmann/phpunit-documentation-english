@@ -131,9 +131,13 @@ In order to get a complete and honest code coverage report, it is highly recomme
 Targeting Units of Code
 =======================
 
-The ``PHPUnit\Framework\Attributes\CoversClass``, ``PHPUnit\Framework\Attributes\CoversMethod``,
-and ``PHPUnit\Framework\Attributes\CoversFunction`` attributes can be used in the test code to
-specify which units of code a test class intends to cover.
+The ``PHPUnit\Framework\Attributes\CoversClass``, ``PHPUnit\Framework\Attributes\CoversTrait``,
+``PHPUnit\Framework\Attributes\CoversMethod``, ``PHPUnit\Framework\Attributes\CoversFunction``,
+``PHPUnit\Framework\Attributes\CoversNamespace``,
+``PHPUnit\Framework\Attributes\CoversClassesThatExtendClass``, and
+``PHPUnit\Framework\Attributes\CoversClassesThatImplementInterface`` attributes can be used in the
+test code to specify which units of code a test class intends to cover. They are documented in
+:ref:`the appendix on attributes <appendixes.attributes.CoversClass>`.
 
 When these attributes are used on a test case class, code coverage information is only collected for
 the listed units of code when the test methods of this test case class are executed.
@@ -160,10 +164,13 @@ shows an example.
         }
     }
 
-The ``PHPUnit\Framework\Attributes\UsesClass``, ``PHPUnit\Framework\Attributes\UsesMethod``,
-and ``PHPUnit\Framework\Attributes\UsesFunction`` attributes can be used to specify units of code
-that should be ignored for code coverage, but which are allowed to be used by the code that is
-covered. This is explained in the section on :ref:`unintentionally covered code <risky-tests.unintentionally-covered-code>`.
+The ``PHPUnit\Framework\Attributes\UsesClass``, ``PHPUnit\Framework\Attributes\UsesTrait``,
+``PHPUnit\Framework\Attributes\UsesMethod``, ``PHPUnit\Framework\Attributes\UsesFunction``,
+``PHPUnit\Framework\Attributes\UsesNamespace``,
+``PHPUnit\Framework\Attributes\UsesClassesThatExtendClass``, and
+``PHPUnit\Framework\Attributes\UsesClassesThatImplementInterface`` attributes can be used to specify
+units of code that should be ignored for code coverage, but which are allowed to be used by the code
+that is covered. This is explained in the section on :ref:`unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
 In the example shown above, the ``#[CoversClass(Invoice::class)]`` attribute tells PHPUnit that
 the tests of this test case class intend to cover the code of the ``Invoice`` class. When the
