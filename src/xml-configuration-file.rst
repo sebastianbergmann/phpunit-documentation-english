@@ -833,6 +833,24 @@ Parent element: ``<deprecationTrigger>``
 The example configuration shown above configures the ``public`` ``static`` method ``triggerDeprecation()``
 of the ``DeprecationTrigger`` class as a deprecation trigger.
 
+.. _appendixes.xml-configuration-file.source.identifyIssueTrigger:
+
+The ``<identifyIssueTrigger>`` Attribute
+----------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+Configures whether PHPUnit identifies the code that triggered an issue, so that it can be
+classified as being triggered by first-party code (self or direct) or third-party code (indirect).
+
+Identifying the trigger of an issue requires static analysis of the project's source code files
+and therefore has a noticeable impact on performance. When this is set to ``false``, PHPUnit does
+not perform this analysis. Configuration settings that depend on the classification of an issue
+trigger, such as the ``<ignoreSelfDeprecations>``, ``<ignoreDirectDeprecations>``, and
+``<ignoreIndirectDeprecations>`` attributes documented below, then have no effect. PHPUnit emits
+a warning when one of these attributes is enabled while the identification of issue triggers is disabled.
+
+
 .. _appendixes.xml-configuration-file.source.ignoreSelfDeprecations:
 
 The ``<ignoreSelfDeprecations>`` Attribute
@@ -1038,9 +1056,10 @@ Configures the code coverage reports to be generated.
         <cobertura outputFile="cobertura.xml"/>
         <crap4j outputFile="crap4j.xml" threshold="50"/>
         <html outputDirectory="html-coverage" lowUpperBound="50" highLowerBound="90"/>
+        <openclover outputFile="openclover.xml"/>
         <php outputFile="coverage.php"/>
         <text outputFile="coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
-        <xml outputDirectory="xml-coverage"/>
+        <xml outputDirectory="xml-coverage" includeSource="true"/>
     </report>
 
 
@@ -1168,6 +1187,23 @@ Possible values: string
 
 The path to a custom CSS file.
 
+.. _appendixes.xml-configuration-file.coverage.report.openclover:
+
+The ``<openclover>`` Element
+****************************
+
+Parent element: ``<report>``
+
+Configures a code coverage report in OpenClover XML format.
+
+The ``outputFile`` Attribute
+++++++++++++++++++++++++++++
+
+Possible values: string
+
+The file to which the OpenClover XML report is written.
+
+
 .. _appendixes.xml-configuration-file.coverage.report.php:
 
 The ``<php>`` Element
@@ -1228,6 +1264,14 @@ Possible values: string
 
 The directory to which the PHPUnit XML report is written.
 
+The ``includeSource`` Attribute
++++++++++++++++++++++++++++++++
+
+Possible values: ``true`` or ``false`` (default: ``true``)
+
+Configures whether the source code of the covered files is included in the report.
+Setting this to ``false`` significantly reduces the size of the generated report.
+
 
 .. _appendixes.xml-configuration-file.logging:
 
@@ -1242,6 +1286,7 @@ The ``<logging>`` element and its children can be used to configure the logging 
 
     <logging>
         <junit outputFile="junit.xml"/>
+        <otr outputFile="otr.xml" includeGitInformation="false"/>
         <teamcity outputFile="teamcity.txt"/>
         <testdoxHtml outputFile="testdox.html"/>
         <testdoxText outputFile="testdox.txt"/>
@@ -1263,6 +1308,30 @@ The ``outputFile`` Attribute
 Possible values: string
 
 The file to which the test result logfile in JUnit XML format is written.
+
+
+.. _appendixes.xml-configuration-file.logging.otr:
+
+The ``<otr>`` Element
+---------------------
+
+Parent element: ``<logging>``
+
+Configures a test result logfile in Open Test Reporting (OTR) XML format.
+
+The ``outputFile`` Attribute
+****************************
+
+Possible values: string
+
+The file to which the test result logfile in Open Test Reporting XML format is written.
+
+The ``includeGitInformation`` Attribute
+***************************************
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+Configures whether information about the Git repository the tests are run in is included in the report.
 
 
 .. _appendixes.xml-configuration-file.logging.teamcity:
@@ -1621,4 +1690,49 @@ The XML configuration above corresponds to the following PHP code:
 .. code-block:: php
 
     $_REQUEST['foo'] = 'bar';
+
+.. _appendixes.xml-configuration-file.php.verbatim:
+
+The ``verbatim`` Attribute
+--------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+By default, the values ``"true"`` and ``"false"`` are converted to the corresponding
+``bool`` values before they are set:
+
+.. code-block:: xml
+
+    <php>
+      <var name="foo" value="true"/>
+    </php>
+
+The XML configuration above corresponds to the following PHP code:
+
+.. code-block:: php
+
+    $GLOBALS['foo'] = true;
+
+The ``verbatim`` attribute can be used to set the value as the ``string`` it is written as instead:
+
+.. code-block:: xml
+
+    <php>
+      <var name="foo" value="true" verbatim="true"/>
+    </php>
+
+The XML configuration above corresponds to the following PHP code:
+
+.. code-block:: php
+
+    $GLOBALS['foo'] = 'true';
+
+This attribute is supported by the ``<var>``, ``<env>``, ``<get>``, ``<post>``, ``<cookie>``,
+``<server>``, ``<files>``, and ``<request>`` elements.
+
+.. admonition:: Note
+
+   Values set using the ``<env>`` element are converted to ``string`` by PHP when they are set.
+   Without ``verbatim``, ``<env name="foo" value="true"/>`` therefore results in ``$_ENV['foo']``
+   being ``"1"``, the ``string`` representation of ``true``, rather than ``"true"``.
 
