@@ -47,6 +47,9 @@ Configuration
 ``--migrate-configuration``
    Migrates an existing XML configuration file to the current format. This is useful after upgrading PHPUnit to a new major version that introduces configuration changes.
 
+``--validate-configuration``
+   Validates the XML configuration file against the XML schema definition for the current PHPUnit version and then exits. Validation errors are reported with the line numbers on which they occur.
+
 ``--generate-baseline <file>``
    Generates a baseline file that records currently existing issues such as deprecations and warnings. This baseline can later be used to suppress known issues so that only new issues are reported.
 
@@ -473,11 +476,17 @@ Code Coverage
 ``--coverage-filter <dir>``
    Adds the specified directory to the code coverage filter. Only files within filtered directories will be included in the coverage report.
 
+``--branch-coverage``
+   Enables branch coverage reporting in addition to line coverage. Branch coverage tracks which branches of the code have been executed. This requires a code coverage driver that supports branch coverage.
+
 ``--path-coverage``
    Enables path coverage reporting in addition to line coverage. Path coverage tracks which execution paths through the code have been tested, providing deeper insight than line coverage alone.
 
 ``--disable-coverage-ignore``
    Disables the ``@codeCoverageIgnore`` metadata. When this option is used, code annotated with coverage-ignore metadata will be included in the coverage report.
+
+``--disable-coverage-targeting``
+   Disables the attributes that :ref:`target units of code <code-coverage.targeting-units-of-code>`, such as ``CoversClass``, ``UsesClass``, and ``CoversNothing``. When this option is used, code coverage is collected for every test and is not limited to the targeted units of code.
 
 ``--no-coverage``
    Ignores all code coverage reporting configured in the XML configuration file. No coverage data will be collected or reported.

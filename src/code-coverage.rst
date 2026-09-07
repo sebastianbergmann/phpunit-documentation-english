@@ -105,7 +105,11 @@ Various software metrics exist to measure code coverage:
 
 The library used by PHPUnit supports all code coverage software metrics listed above.
 To report branch coverage and path coverage, code coverage data has to be collected
-using Xdebug as PCOV only supports line coverage.
+using Xdebug as PCOV only supports line coverage. Branch coverage and path coverage
+are not collected by default: they have to be enabled using the ``--branch-coverage``
+and ``--path-coverage`` :ref:`command-line <appendixes.cli-options.code-coverage>`
+options or the corresponding ``branchCoverage`` and ``pathCoverage`` attributes in the
+:ref:`XML configuration file <appendixes.xml-configuration-file.coverage>`.
 
 .. _code-coverage.including-files:
 
