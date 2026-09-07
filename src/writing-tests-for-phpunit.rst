@@ -140,6 +140,20 @@ In addition to the ``expectException()`` method, the ``expectExceptionCode()``, 
 
    Note that ``expectExceptionMessage()`` asserts that the ``$actual`` message contains the ``$expected`` message and does not perform an exact string comparison.
 
+The ``expectExceptionObject(Throwable $exception)`` method can be used to set up expectations for the class, the message, and the code of an exception based on an example object:
+
+.. code-block:: php
+
+    $this->expectExceptionObject(new InvalidArgumentException('message', 1));
+
+The call shown above is equivalent to the three calls shown below:
+
+.. code-block:: php
+
+    $this->expectException(InvalidArgumentException::class);
+    $this->expectExceptionMessage('message');
+    $this->expectExceptionCode(1);
+
 
 .. _writing-tests-for-phpunit.verifying-side-effects:
 
