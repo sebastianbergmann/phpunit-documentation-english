@@ -431,7 +431,7 @@ to exclude specific static properties from the backup and restore operations for
 
    The backup operation for static properties of classes is performed before a test method,
    but only if it is enabled. If a static value was changed by a previously executed test that
-   did not have ``BackupStaticProperties(true)``, then that value will be backed up and restored —
+   did not have ``BackupStaticProperties(true)``, then that value will be backed up and restored,
    not the originally declared default value.
 
    The same applies to static properties of classes that were newly loaded/declared within a test.

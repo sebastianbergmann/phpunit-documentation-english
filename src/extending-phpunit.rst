@@ -372,11 +372,11 @@ Structure of the extension
 
 The extension is made up of four kinds of objects:
 
-* **Extension** — the entry point that PHPUnit bootstraps
-* **Printer** — contains the output logic, writing to ``STDOUT``
-* **Subscribers** — one per test event, each forwarding the relevant data to
+* **Extension**: the entry point that PHPUnit bootstraps
+* **Printer**: contains the output logic, writing to ``STDOUT``
+* **Subscribers**: one per test event, each forwarding the relevant data to
   the ``Printer``
-* **Configuration** — the ``phpunit.xml`` file that registers the extension
+* **Configuration**: the ``phpunit.xml`` file that registers the extension
 
 .. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.extension:
 
@@ -495,8 +495,8 @@ It is a plain PHP class with no PHPUnit interface requirements; subscribers call
 
 The ``Printer`` maintains two pieces of state between the start and the end of each test:
 
-* ``$startTime`` — an ``HRTime`` instance captured when the test begins, used to compute the elapsed time when the test finishes.
-* ``$outcome`` — a string set by whichever outcome subscriber fires (``passed``, ``failed``, ``errored``, ``skipped``, or ``incomplete``).
+* ``$startTime``: an ``HRTime`` instance captured when the test begins, used to compute the elapsed time when the test finishes.
+* ``$outcome``: a string set by whichever outcome subscriber fires (``passed``, ``failed``, ``errored``, ``skipped``, or ``incomplete``).
 
 When ``testPreparationStarted()`` is called, the printer writes the test identifier followed by `` ... `` and leaves the cursor on the same line.
 When ``testFinished()`` is called, it appends the outcome and elapsed time and moves to the next line.  Between those two calls, exactly one outcome method will have been called to record the result.
@@ -542,7 +542,7 @@ TestPreparationStartedSubscriber
     }
 
 This subscriber fires just before PHPUnit sets up a test (before ``setUp()`` runs).
-It reads the test identifier from ``$event->test()->id()`` — which returns a string such as ``ExampleTest::testPasses`` — and the current high-resolution time from ``$event->telemetryInfo()->time()``.
+It reads the test identifier from ``$event->test()->id()`` (which returns a string such as ``ExampleTest::testPasses``) and the current high-resolution time from ``$event->telemetryInfo()->time()``.
 
 .. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.subscribers.outcome:
 
@@ -552,7 +552,7 @@ Outcome Subscribers
 Four outcome events can fire after a test completes, one for each possible result.
 Each is handled by a dedicated subscriber that calls ``Printer::testOutcome()`` with the corresponding label.
 
-**TestPassedSubscriber** — fires when all assertions pass:
+**TestPassedSubscriber** fires when all assertions pass:
 
 .. code-block:: php
 
@@ -573,7 +573,7 @@ Each is handled by a dedicated subscriber that calls ``Printer::testOutcome()`` 
         }
     }
 
-**TestFailedSubscriber** — fires when an assertion fails:
+**TestFailedSubscriber** fires when an assertion fails:
 
 .. code-block:: php
 
@@ -594,7 +594,7 @@ Each is handled by a dedicated subscriber that calls ``Printer::testOutcome()`` 
         }
     }
 
-**TestErroredSubscriber** — fires when the test throws an unexpected exception or a PHP error that is not an assertion failure:
+**TestErroredSubscriber** fires when the test throws an unexpected exception or a PHP error that is not an assertion failure:
 
 .. code-block:: php
 
@@ -615,7 +615,7 @@ Each is handled by a dedicated subscriber that calls ``Printer::testOutcome()`` 
         }
     }
 
-**TestSkippedSubscriber** — fires when the test calls ``$this->markTestSkipped()``:
+**TestSkippedSubscriber** fires when the test calls ``$this->markTestSkipped()``:
 
 .. code-block:: php
 
@@ -636,7 +636,7 @@ Each is handled by a dedicated subscriber that calls ``Printer::testOutcome()`` 
         }
     }
 
-**TestMarkedIncompleteSubscriber** — fires when the test calls ``$this->markTestIncomplete()``:
+**TestMarkedIncompleteSubscriber** fires when the test calls ``$this->markTestIncomplete()``:
 
 .. code-block:: php
 
@@ -813,11 +813,11 @@ default progress output as well as the default result output. Then we use ``--lo
 to write event information to standard output:
 
 .. code-block::
-    :caption: Output of "phpunit --no-output --log-events-text php://stdout" command
+    :caption: Output of ``phpunit --no-output --log-events-text php://stdout``
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events
 
     phpunit --no-output --log-events-text php://stdout
-    PHPUnit Started (PHPUnit 12.5.34 using PHP 8.5.10 (cli) on Darwin)
+    PHPUnit Started (PHPUnit 13.3.2 using PHP 8.5.10 (cli) on Darwin)
     Test Runner Configured
     Event Facade Sealed
     Test Suite Loaded (2 tests)
@@ -844,11 +844,11 @@ about resource consumption (time since the test runner was started, time since t
 and memory usage):
 
 .. code-block::
-    :caption: Output of "phpunit --no-output --log-events-verbose-text php://stdout" command
+    :caption: Output of ``phpunit --no-output --log-events-verbose-text php://stdout``
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events-verbose
 
     phpunit --no-output --log-events-verbose-text php://stdout
-    [00:00:00.000009375 / 00:00:00.000009375] [26671776 bytes] PHPUnit Started (PHPUnit 12.5.34 using PHP 8.5.10 (cli) on Darwin)
+    [00:00:00.000009375 / 00:00:00.000009375] [26671776 bytes] PHPUnit Started (PHPUnit 13.3.2 using PHP 8.5.10 (cli) on Darwin)
     [00:00:00.000231875 / 00:00:00.000222500] [26671776 bytes] Test Runner Configured
     [00:00:00.000344292 / 00:00:00.000112417] [26671776 bytes] Event Facade Sealed
     [00:00:00.000605500 / 00:00:00.000261208] [26671776 bytes] Test Suite Loaded (2 tests)

@@ -452,9 +452,9 @@ The ``--path-prefix <prefix>`` option can be used to strip a prefix from paths i
 
 The exit code indicates the result:
 
-- ``0`` -- all changed executable lines are covered
-- ``1`` -- some changed executable lines are not covered
-- ``2`` -- no changed executable lines were detected (which may indicate a path mismatch)
+- ``0``: all changed executable lines are covered
+- ``1``: some changed executable lines are not covered
+- ``2``: no changed executable lines were detected (which may indicate a path mismatch)
 
 
 .. _code-coverage.limitations:

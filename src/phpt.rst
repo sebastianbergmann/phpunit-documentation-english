@@ -526,7 +526,7 @@ PHPT is a good fit when
 PHPT is not a good fit for the majority of tests:
 
 - A PHPT test compares the entire output of a process with an expected output. This makes the test sensitive to changes that are unrelated to what it verifies, and it makes the intent of the test harder to see than a focused assertion does.
-- The infrastructure that PHPUnit provides for writing tests — fixtures, test doubles, data providers, dependencies between tests, attributes, and the assertions documented in :ref:`appendixes.assertions` — is not available in a PHPT test.
+- The infrastructure that PHPUnit provides for writing tests (fixtures, test doubles, data providers, dependencies between tests, attributes, and the assertions documented in :ref:`appendixes.assertions`) is not available in a PHPT test.
 - Starting a PHP process for each test is significantly slower than running a test method in the process that runs PHPUnit.
 
 Use PHPT for the tests that need it, and tests that are implemented as methods of test classes for everything else.
