@@ -1497,7 +1497,221 @@ Using ``after()`` with an ID that has not been registered with ``id()`` will cau
    The ``id()`` and ``after()`` methods are soft-deprecated since PHPUnit 13.1.
    They will be hard-deprecated in PHPUnit 14 and they will be removed in PHPUnit 15.
 
+   Use :ref:`an invocation journal <test-doubles.mock-objects.reference.configuring-expectations.recording-the-order-in-which-methods-are-called>` to verify the order in which the methods of mock objects are called.
+
    See `GitHub issue #6537 <https://github.com/sebastianbergmann/phpunit/issues/6537>`_ for details.
+
+
+.. _test-doubles.mock-objects.reference.configuring-expectations.recording-the-order-in-which-methods-are-called:
+
+Recording the order in which methods are called
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+The ``withParameterSetsInOrder()``, ``withParameterSetsInAnyOrder()``, and ``withParameterSetsInPartialOrder()`` methods shown above verify the order of multiple calls to the same method of the same mock object.
+Sometimes, though, the order of calls to different methods, possibly on different mock objects, is part of the contract we want to test.
+
+An invocation journal records the invocations of the methods of one or more mock objects, in the order in which they happen, so that we can assert that order ourselves:
+
+* ``createInvocationJournal()``: Creates an invocation journal, an object that implements the ``PHPUnit\Framework\MockObject\InvocationJournal`` interface
+* ``recordInvocationsIn(InvocationJournal $journal, ?string $label = null, array $methodLabels = [])``: Registers ``$journal`` with a mock object so that every invocation of one of its methods is recorded in ``$journal``
+* ``InvocationJournal::asArray()``: Returns the labels of the recorded invocations, in the order in which the invocations happened
+* ``InvocationJournal::only()``: Returns only those recorded invocations whose label was passed, in the order in which the invocations happened
+
+A journal only records; it does not verify anything by itself. We assert the recorded order using an ordinary assertion.
+
+Consider a ``Publisher`` that writes a value to a ``Database`` and then announces the change through a ``Dispatcher``.
+The event must not be announced before the data has been written, because a subscriber that reacts to the event has to be able to read the new value.
+The order of these two calls is therefore part of the contract of ``Publisher``.
+
+Below is a complete example demonstrating how to use an invocation journal to verify that ``Dispatcher::dispatch()`` is called after ``Database::execute()``:
+
+.. code-block:: php
+
+   public function testEventIsDispatchedAfterDataHasBeenWritten(): void
+   {
+       $journal = $this->createInvocationJournal();
+
+       $database   = $this->createMock(Database::class);
+       $dispatcher = $this->createMock(Dispatcher::class);
+
+       $database->recordInvocationsIn($journal, 'database');
+       $dispatcher->recordInvocationsIn($journal, 'dispatcher');
+
+       $database
+           ->expects($this->once())
+           ->method('execute')
+           ->willReturn(true);
+
+       $dispatcher
+           ->expects($this->once())
+           ->method('dispatch');
+
+       $publisher = new Publisher($database, $dispatcher);
+
+       $publisher->publish('value');
+
+       $this->assertSame(
+           ['database::execute()', 'dispatcher::dispatch()'],
+           $journal->asArray(),
+       );
+   }
+
+**1. Creating the invocation journal**
+
+.. code-block:: php
+
+   $journal = $this->createInvocationJournal();
+
+* ``createInvocationJournal()`` creates a new, empty invocation journal
+* The journal is returned as an ``InvocationJournal``, an interface that only allows us to read what was recorded. Only PHPUnit writes to a journal.
+* A single journal can be shared by any number of mock objects. This is what makes it possible to verify the order of calls across mock object boundaries.
+
+**2. Registering the journal with the mock objects**
+
+.. code-block:: php
+
+   $database->recordInvocationsIn($journal, 'database');
+   $dispatcher->recordInvocationsIn($journal, 'dispatcher');
+
+* ``recordInvocationsIn()`` registers the journal with a mock object. From that point on, every invocation of one of that mock object's methods is recorded.
+* The journal records invocations, not expectations: a method is recorded when it is called, regardless of which expectations are configured for it, and regardless of whether it matches any of them.
+* Because both mock objects record in the same journal, their invocations are recorded on one common timeline.
+* The optional second argument is the label used for this mock object. It is described below.
+
+**3. Configuring the expectations**
+
+.. code-block:: php
+
+   $database
+       ->expects($this->once())
+       ->method('execute')
+       ->willReturn(true);
+
+   $dispatcher
+       ->expects($this->once())
+       ->method('dispatch');
+
+* Expectations are configured as usual. Recording is independent of them: it neither requires an expectation nor changes how one is verified.
+* Recording an invocation does not interfere with configuring a return value. ``willReturn()`` and the other ``will*()`` methods are unaffected.
+
+**4. Exercising the system under test**
+
+.. code-block:: php
+
+   $publisher = new Publisher($database, $dispatcher);
+
+   $publisher->publish('value');
+
+* The two mock objects are injected into the ``Publisher`` object we want to test
+* While ``publish()`` runs, each invocation of a method of a registered mock object appends an entry to the journal
+* An invocation is recorded before the behaviour configured for it is invoked. Invocations that are made from within a callback configured using ``willReturnCallback()``, for instance, are therefore recorded after the invocation that caused them.
+* The expectations configured using ``expects($this->once())`` are verified at the end of the test as usual.
+
+**5. Asserting the order in which the methods were called**
+
+.. code-block:: php
+
+   $this->assertSame(
+       ['database::execute()', 'dispatcher::dispatch()'],
+       $journal->asArray(),
+   );
+
+* ``asArray()`` returns the labels of all recorded invocations as a list, in the order in which the invocations happened
+* ``assertSame()`` compares that list with the order we expect. The test fails, with a diff of the two lists, if ``dispatch()`` was called before ``execute()``.
+* The journal does not assert anything by itself. It only records what happened; we decide what to assert about it.
+
+Each entry is built from the label of the mock object and the name of the method that was invoked.
+The ``$label`` argument of ``recordInvocationsIn()`` is optional:
+
+.. code-block:: php
+
+   $database->recordInvocationsIn($journal);
+
+When no label is passed, the fully-qualified name of the doubled type is used, for example ``Database::execute()``.
+Pass a label explicitly when a shorter label makes the assertion easier to read, or when two mock objects for the same type record their invocations in the same journal.
+
+Individual methods can be given a label of their own using the third argument, which maps method names to labels:
+
+.. code-block:: php
+
+   $database->recordInvocationsIn($journal, 'database', ['execute' => 'write']);
+   $dispatcher->recordInvocationsIn($journal, 'dispatcher', ['dispatch' => 'dispatch']);
+
+   // ...
+
+   $this->assertSame(['write', 'dispatch'], $journal->asArray());
+
+A label configured this way replaces the entire entry: an invocation of ``execute()`` is recorded as ``write``, not as ``database::write()``.
+Methods that are not named in the map are recorded as ``label::method()`` as before.
+Use this when the name of the step matters more to the reader of the test than the name of the method that implements it.
+
+The name of a property hook is written the way it is written everywhere else in the test double API:
+
+.. code-block:: php
+
+   $double->recordInvocationsIn($journal, 'double', ['$property::get' => 'read']);
+
+Naming a method that the mock object does not have, or giving it an empty label, is an error and is reported as such.
+
+Because the order is verified using an ordinary assertion, we choose how strict that assertion is:
+
+.. code-block:: php
+
+   $invocations = $journal->asArray();
+
+   // the methods were called in exactly this order
+   $this->assertSame(['database::execute()', 'dispatcher::dispatch()'], $invocations);
+
+   // both methods were called, the order does not matter
+   $this->assertEqualsCanonicalizing(['database::execute()', 'dispatcher::dispatch()'], $invocations);
+
+   // 'database::execute()' happened at some point before 'dispatcher::dispatch()'
+   $this->assertLessThan(
+       array_search('dispatcher::dispatch()', $invocations, true),
+       array_search('database::execute()', $invocations, true),
+   );
+
+A journal records every invocation of every mock object registered with it.
+When only some of those invocations are of interest, ``only()`` narrows what we assert on, without changing what was recorded:
+
+.. code-block:: php
+
+   $this->assertSame(['write', 'dispatch'], $journal->only('write', 'dispatch'));
+
+This asserts that ``write`` happened before ``dispatch``, and says nothing about any other invocation that may have happened before, between, or after them.
+It is how a *relative* order is expressed: the journal remains a complete record of what happened, and the assertion decides how much of it matters.
+
+.. admonition:: Note
+
+   Narrowing to exactly the one label that is then asserted, as in ``assertSame(['write'], $journal->only('write'))``, asserts only that ``write`` happened at all.
+   Pass every label whose relative order matters.
+
+``InvocationJournal`` implements ``Countable`` and ``IteratorAggregate``, so ``assertCount()`` can be used to assert how many invocations were recorded, and a journal can be iterated directly:
+
+.. code-block:: php
+
+   $this->assertCount(2, $journal);
+
+   foreach ($journal as $invocation) {
+       // ...
+   }
+
+.. admonition:: Note
+
+   ``recordInvocationsIn()`` is only available for mock objects, not for test stubs.
+   The only reason to observe the order in which methods are called is to assert that order, and assertions about how a test double was used belong on a mock object.
+
+   A mock object that only records its invocations, and for which no expectations are configured, does not trigger the notice about mock objects without expectations.
+
+.. admonition:: Only verify an order that is part of a contract
+
+   Verify the order in which methods are called only when that order is part of a contract: when the system under test promises it, or when the interface of a collaborator documents it.
+
+   Do not pin down an order that is merely an accident of how a method happens to be written today.
+   Such a test fails on refactorings that change no behaviour, and it tells its readers that an implementation detail is a promise.
+
+   Often, an apparent ordering requirement is really a statement about state: not "``beginTransaction()`` was called before ``commit()``", but "the work was performed while a transaction was open".
+   Assertions about state are more precise, and they explain *why* the order matters.
 
 
 .. _test-doubles.mock-objects.reference.configuring-expectations.methods-that-never-return:
