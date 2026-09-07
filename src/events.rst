@@ -202,6 +202,10 @@ Test
 
     The test was successfully prepared for execution
 
+``PHPUnit\Event\Test\CustomTestMethodInvocationUsed``
+
+    A test method was invoked using a custom implementation of ``TestCase::invokeTestMethod()``
+
 ``PHPUnit\Event\Test\DataProviderMethodCalled``
 
     A data provider method was called for a test method
@@ -258,10 +262,6 @@ Test
 
     All "precondition" methods were called for a test method
 
-``PHPUnit\Event\Test\TestPrepared``
-
-    A test was prepared for execution
-
 ``PHPUnit\Event\Test\ComparatorRegistered``
 
     A test registered a custom ``Comparator`` for ``assertEquals()``
@@ -274,25 +274,9 @@ Test
 
     A test created a mock object for an intersection of interfaces
 
-``PHPUnit\Event\Test\MockObjectForTraitCreated``
-
-    A test created a mock object for a trait
-
-``PHPUnit\Event\Test\MockObjectForAbstractClassCreated``
-
-    A test created a mock object for an abstract class
-
-``PHPUnit\Event\Test\MockObjectFromWsdlCreated``
-
-    A test created a mock object from a WSDL file
-
 ``PHPUnit\Event\Test\PartialMockObjectCreated``
 
     A test created a partial mock object
-
-``PHPUnit\Event\Test\TestProxyCreated``
-
-    A test created a test proxy
 
 ``PHPUnit\Event\Test\TestStubCreated``
 

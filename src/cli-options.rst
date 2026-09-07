@@ -502,3 +502,20 @@ Miscellaneous
 
 ``--check-php-configuration``
    Checks whether the current PHP configuration follows best practices for running PHPUnit. Reports any ``php.ini`` settings that may cause issues during test execution.
+
+
+.. _appendixes.cli-options.phar-only:
+
+PHP Archive (PHAR) Only
+=======================
+
+The following options are only available when PHPUnit is used from a :ref:`PHP Archive (PHAR) <installation.phar>`.
+
+``--manifest``
+   Prints the Software Bill of Materials (SBOM) for the PHP archive in plain-text format and then exits.
+
+``--sbom``
+   Prints the Software Bill of Materials (SBOM) for the PHP archive in CycloneDX XML format and then exits.
+
+``--composer-lock``
+   Prints the ``composer.lock`` file that was used to build the PHP archive and then exits.

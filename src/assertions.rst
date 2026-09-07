@@ -611,10 +611,10 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/ContainsOnlyTest.php.out
 
-.. admonition:: Deprecation: ``assertContainsOnly()`` is deprecated
+.. admonition:: Deprecation: ``assertContainsOnly()`` and ``assertNotContainsOnly()`` are deprecated
 
-   As of PHPUnit 12.0, the ``assertContainsOnly()`` method is hard-deprecated.
-   Using this method will trigger a deprecation warning. The method will be removed in PHPUnit 13.
+   As of PHPUnit 11.5, the ``assertContainsOnly()`` and ``assertNotContainsOnly()`` methods are hard-deprecated.
+   Using these methods will trigger a deprecation warning. The methods will be removed in PHPUnit 13.
 
 .. _appendixes.assertions.assertContainsOnlyArray:
 
@@ -1843,9 +1843,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/DirectoryIsReadableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -1881,9 +1881,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/DirectoryIsWritableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -1938,9 +1938,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/FileIsReadableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -1976,9 +1976,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/FileIsWritableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -2014,9 +2014,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/IsReadableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -2052,9 +2052,9 @@ Running the test shown above yields the output shown below:
 .. parsed-literal::
 
     ./tools/phpunit tests/IsWritableTest.php
-    PHPUnit 10.0.11 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.2.3
+    Runtime:       PHP 8.5.10
 
     F
 
@@ -2153,57 +2153,137 @@ available ``PHPUnit\Framework\Constraint`` classes.
     * - ``PHPUnit\Framework\Constraint\IsAnything anything()``
       - Constraint that accepts any input value.
     * - ``PHPUnit\Framework\Constraint\ArrayHasKey arrayHasKey(mixed $key)``
-      - Constraint that asserts that the array has a given key.
-    * - ``PHPUnit\Framework\Constraint\TraversableContains contains(mixed $value)``
-      - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains a given value.
+      - Constraint that asserts that the ``array`` or ``ArrayAccess`` object has a given key.
+    * - ``PHPUnit\Framework\Constraint\Callback callback(callable $callback)``
+      - Constraint that asserts that the value satisfies a given callback.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsEqual containsEqual(mixed $value)``
+      - Constraint that asserts that the ``iterable`` contains a given value, using non-strict comparison.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsIdentical containsIdentical(mixed $value)``
+      - Constraint that asserts that the ``iterable`` contains a given value, using strict comparison.
     * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnly(string $type)``
-      - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only values of a given type.
-    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyInstancesOf(string $classname)``
-      - Constraint that asserts that the ``array`` or object that implements the ``Iterator`` interface contains only instances of a given classname.
-    * - ``PHPUnit\Framework\Constraint\IsEqual equalTo($value, $delta = 0, $maxDepth = 10)``
-      - Constraint that checks if one value is equal to another.
+      - Constraint that asserts that the ``iterable`` contains only values of a given type. **Hard-deprecated since PHPUnit 11.5**, use one of the ``containsOnly*()`` constraints listed below instead.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyArray()``
+      - Constraint that asserts that the ``iterable`` contains only values of type ``array``.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyBool()``
+      - Constraint that asserts that the ``iterable`` contains only values of type ``bool``.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyCallable()``
+      - Constraint that asserts that the ``iterable`` contains only values of type ``callable``.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyClosedResource()``
+      - Constraint that asserts that the ``iterable`` contains only closed resources.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyFloat()``
+      - Constraint that asserts that the ``iterable`` contains only values of type ``float``.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyInstancesOf(string $className)``
+      - Constraint that asserts that the ``iterable`` contains only instances of a given class or interface.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyInt()``
+      - Constraint that asserts that the ``iterable`` contains only values of type ``int``.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyIterable()``
+      - Constraint that asserts that the ``iterable`` contains only values of type ``iterable``.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyNull()``
+      - Constraint that asserts that the ``iterable`` contains only ``null`` values.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyNumeric()``
+      - Constraint that asserts that the ``iterable`` contains only numeric values.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyObject()``
+      - Constraint that asserts that the ``iterable`` contains only values of type ``object``.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyResource()``
+      - Constraint that asserts that the ``iterable`` contains only resources.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyScalar()``
+      - Constraint that asserts that the ``iterable`` contains only scalar values.
+    * - ``PHPUnit\Framework\Constraint\TraversableContainsOnly containsOnlyString()``
+      - Constraint that asserts that the ``iterable`` contains only values of type ``string``.
+    * - ``PHPUnit\Framework\Constraint\Count countOf(int $count)``
+      - Constraint that asserts that the ``iterable`` or ``Countable`` object has a given number of elements.
     * - ``PHPUnit\Framework\Constraint\DirectoryExists directoryExists()``
-      - Constraint that checks if the directory exists.
+      - Constraint that asserts that the directory exists.
+    * - ``PHPUnit\Framework\Constraint\IsEqual equalTo(mixed $value)``
+      - Constraint that asserts that one value is equal to another.
+    * - ``PHPUnit\Framework\Constraint\IsEqualCanonicalizing equalToCanonicalizing(mixed $value)``
+      - Constraint that asserts that one value is equal to another, canonicalizing arrays before comparing them.
+    * - ``PHPUnit\Framework\Constraint\IsEqualIgnoringCase equalToIgnoringCase(mixed $value)``
+      - Constraint that asserts that one value is equal to another, ignoring the case of strings.
+    * - ``PHPUnit\Framework\Constraint\IsEqualWithDelta equalToWithDelta(mixed $value, float $delta)``
+      - Constraint that asserts that one value is equal to another, allowing for a given delta when comparing floating point numbers.
     * - ``PHPUnit\Framework\Constraint\FileExists fileExists()``
-      - Constraint that checks if the file(name) exists.
-    * - ``PHPUnit\Framework\Constraint\IsReadable isReadable()``
-      - Constraint that checks if the file(name) is readable.
-    * - ``PHPUnit\Framework\Constraint\IsWritable isWritable()``
-      - Constraint that checks if the file(name) is writable.
+      - Constraint that asserts that the file exists.
     * - ``PHPUnit\Framework\Constraint\GreaterThan greaterThan(mixed $value)``
       - Constraint that asserts that the value is greater than a given value.
     * - ``PHPUnit\Framework\Constraint\LogicalOr greaterThanOrEqual(mixed $value)``
       - Constraint that asserts that the value is greater than or equal to a given value.
     * - ``PHPUnit\Framework\Constraint\IsIdentical identicalTo(mixed $value)``
       - Constraint that asserts that one value is identical to another.
+    * - ``PHPUnit\Framework\Constraint\IsType isArray()``
+      - Constraint that asserts that the value is of type ``array``.
+    * - ``PHPUnit\Framework\Constraint\IsType isBool()``
+      - Constraint that asserts that the value is of type ``bool``.
+    * - ``PHPUnit\Framework\Constraint\IsType isCallable()``
+      - Constraint that asserts that the value is of type ``callable``.
+    * - ``PHPUnit\Framework\Constraint\IsType isClosedResource()``
+      - Constraint that asserts that the value is a closed resource.
+    * - ``PHPUnit\Framework\Constraint\IsEmpty isEmpty()``
+      - Constraint that asserts that the value is empty.
     * - ``PHPUnit\Framework\Constraint\IsFalse isFalse()``
       - Constraint that asserts that the value is ``false``.
+    * - ``PHPUnit\Framework\Constraint\IsFinite isFinite()``
+      - Constraint that asserts that the value is a finite number.
+    * - ``PHPUnit\Framework\Constraint\IsType isFloat()``
+      - Constraint that asserts that the value is of type ``float``.
+    * - ``PHPUnit\Framework\Constraint\IsInfinite isInfinite()``
+      - Constraint that asserts that the value is an infinite number.
     * - ``PHPUnit\Framework\Constraint\IsInstanceOf isInstanceOf(string $className)``
-      - Constraint that asserts that the object is an instance of a given class.
+      - Constraint that asserts that the object is an instance of a given class or interface.
+    * - ``PHPUnit\Framework\Constraint\IsType isInt()``
+      - Constraint that asserts that the value is of type ``int``.
+    * - ``PHPUnit\Framework\Constraint\IsType isIterable()``
+      - Constraint that asserts that the value is of type ``iterable``.
+    * - ``PHPUnit\Framework\Constraint\IsJson isJson()``
+      - Constraint that asserts that the string is valid JSON.
+    * - ``PHPUnit\Framework\Constraint\IsList isList()``
+      - Constraint that asserts that the ``array`` is a list.
+    * - ``PHPUnit\Framework\Constraint\IsNan isNan()``
+      - Constraint that asserts that the value is ``NAN``.
     * - ``PHPUnit\Framework\Constraint\IsNull isNull()``
       - Constraint that asserts that the value is ``null``.
+    * - ``PHPUnit\Framework\Constraint\IsType isNumeric()``
+      - Constraint that asserts that the value is numeric.
+    * - ``PHPUnit\Framework\Constraint\IsType isObject()``
+      - Constraint that asserts that the value is of type ``object``.
+    * - ``PHPUnit\Framework\Constraint\IsReadable isReadable()``
+      - Constraint that asserts that the file or directory is readable.
+    * - ``PHPUnit\Framework\Constraint\IsType isResource()``
+      - Constraint that asserts that the value is a resource.
+    * - ``PHPUnit\Framework\Constraint\IsType isScalar()``
+      - Constraint that asserts that the value is scalar.
+    * - ``PHPUnit\Framework\Constraint\IsType isString()``
+      - Constraint that asserts that the value is of type ``string``.
     * - ``PHPUnit\Framework\Constraint\IsTrue isTrue()``
       - Constraint that asserts that the value is ``true``.
     * - ``PHPUnit\Framework\Constraint\IsType isType(string $type)``
-      - Constraint that asserts that the value is of a specified type.
+      - Constraint that asserts that the value is of a given type. **Hard-deprecated since PHPUnit 11.5**, use one of the ``is*()`` constraints listed above instead.
+    * - ``PHPUnit\Framework\Constraint\IsWritable isWritable()``
+      - Constraint that asserts that the file or directory is writable.
     * - ``PHPUnit\Framework\Constraint\LessThan lessThan(mixed $value)``
-      - Constraint that asserts that the value is smaller than a given value.
+      - Constraint that asserts that the value is less than a given value.
     * - ``PHPUnit\Framework\Constraint\LogicalOr lessThanOrEqual(mixed $value)``
-      - Constraint that asserts that the value is smaller than or equal to a given value.
-    * - ``logicalAnd()``
+      - Constraint that asserts that the value is less than or equal to a given value.
+    * - ``PHPUnit\Framework\Constraint\LogicalAnd logicalAnd(mixed ...$constraints)``
       - Logical AND.
-    * - ``logicalNot(PHPUnit\Framework\Constraint $constraint)``
+    * - ``PHPUnit\Framework\Constraint\LogicalNot logicalNot(PHPUnit\Framework\Constraint\Constraint $constraint)``
       - Logical NOT.
-    * - ``logicalOr()``
+    * - ``PHPUnit\Framework\Constraint\LogicalOr logicalOr(mixed ...$constraints)``
       - Logical OR.
-    * - ``logicalXor()``
+    * - ``PHPUnit\Framework\Constraint\LogicalXor logicalXor(mixed ...$constraints)``
       - Logical XOR.
-    * - ``PHPUnit\Framework\Constraint\PCREMatch matchesRegularExpression(string $pattern)``
-      - Constraint that asserts that the string matches a regular expression.
-    * - ``PHPUnit\Framework\Constraint\StringContains stringContains(string $string, bool $case)``
+    * - ``PHPUnit\Framework\Constraint\StringMatchesFormatDescription matches(string $string)``
+      - Constraint that asserts that the string matches a given format description.
+    * - ``PHPUnit\Framework\Constraint\RegularExpression matchesRegularExpression(string $pattern)``
+      - Constraint that asserts that the string matches a given regular expression.
+    * - ``PHPUnit\Framework\Constraint\ObjectEquals objectEquals(object $object, string $method = 'equals')``
+      - Constraint that asserts that the object is equal to another object, using the comparison method declared on the object.
+    * - ``PHPUnit\Framework\Constraint\StringContains stringContains(string $string, bool $case = true)``
       - Constraint that asserts that the string contains a given string.
     * - ``PHPUnit\Framework\Constraint\StringEndsWith stringEndsWith(string $suffix)``
       - Constraint that asserts that the string ends with a given suffix.
+    * - ``PHPUnit\Framework\Constraint\StringEqualsStringIgnoringLineEndings stringEqualsStringIgnoringLineEndings(string $string)``
+      - Constraint that asserts that the string is equal to another string, ignoring line endings.
     * - ``PHPUnit\Framework\Constraint\StringStartsWith stringStartsWith(string $prefix)``
       - Constraint that asserts that the string starts with a given prefix.
 

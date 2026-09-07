@@ -9,6 +9,7 @@ $exclude = [
     'assertions/FileIsWritableTest.php',
     'assertions/IsReadableTest.php',
     'assertions/IsWritableTest.php',
+    'writing-tests-for-phpunit/DatabaseTest.php',
     'error-handling/SourceClass.php',
     'error-handling/SourceClassTest.php',
     'error-handling/VendorClass.php',
