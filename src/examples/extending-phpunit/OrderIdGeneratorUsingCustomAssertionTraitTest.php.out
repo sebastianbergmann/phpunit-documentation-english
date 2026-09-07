@@ -12,5 +12,5 @@ Location: /path/to/tests/OrderIdGeneratorUsingCustomAssertionTraitTest.php:4
 #3 phar:///usr/local/src/phpunit-documentation-english/tools/phpunit/phpunit/TextUI/Configuration/TestSuiteBuilder.php(84): PHPUnit\TextUI\Configuration\TestSuiteBuilder->testSuiteFromPath()
 #4 phar:///usr/local/src/phpunit-documentation-english/tools/phpunit/phpunit/TextUI/Application.php(297): PHPUnit\TextUI\Configuration\TestSuiteBuilder->build()
 #5 phar:///usr/local/src/phpunit-documentation-english/tools/phpunit/phpunit/TextUI/Application.php(171): PHPUnit\TextUI\Application->buildTestSuite()
-#6 /usr/local/src/phpunit-documentation-english/tools/phpunit(3518): PHPUnit\TextUI\Application->run()
+#6 /usr/local/src/phpunit-documentation-english/tools/phpunit(3520): PHPUnit\TextUI\Application->run()
 #7 {main}
