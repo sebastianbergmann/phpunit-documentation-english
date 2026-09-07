@@ -99,6 +99,7 @@
     "textui\/ArrayWeakComparisonTest.php": "060a60dbaac18cee293d446ebd19ee2dfb5dfc18d2475ab19279fa41b1d9a9ecce1910fb6ff8e2bc95ecf4cf6e7c270635802dd04dbf17aa734b8ed3fc22a4f9",
     "textui\/LongArrayDiffTest.php": "060a60dbaac18cee293d446ebd19ee2dfb5dfc18d2475ab19279fa41b1d9a9ec73d6fb25ac5a4d6013285ed61347b549007f5018b4410104acb7937fb3c21fb8",
     "writing-tests-for-phpunit\/DependencyFailureTest.php": "060a60dbaac18cee293d446ebd19ee2dfb5dfc18d2475ab19279fa41b1d9a9ec78ef1eb94578440e18453705a28ee5ec10804c6a17d46be0ca9539c567791f26",
+    "writing-tests-for-phpunit\/EmailDataProviderTest.php": "060a60dbaac18cee293d446ebd19ee2dfb5dfc18d2475ab19279fa41b1d9a9ec6a487f22973e40b1337a462182d3e38d9bf96cfce208aebd1e006f336d8c5b8a",
     "writing-tests-for-phpunit\/EmailTest.php": "060a60dbaac18cee293d446ebd19ee2dfb5dfc18d2475ab19279fa41b1d9a9ecd914e68941c446110505d995620ce7acd712fda99e9ef971127e5f096a0b7bc0",
     "writing-tests-for-phpunit\/FailedAssertionTest.php": "060a60dbaac18cee293d446ebd19ee2dfb5dfc18d2475ab19279fa41b1d9a9eca51feb2de895b5da668f9e68e0f098546fa4fcc617c5287a8e706dc5e4b8a5dd",
     "writing-tests-for-phpunit\/NamedDataSetsTest.php": "060a60dbaac18cee293d446ebd19ee2dfb5dfc18d2475ab19279fa41b1d9a9ec1ada4b36d0837b8ee6b3925c9b80cc46a1eff0559fc32d5653e995b0107712d2",
