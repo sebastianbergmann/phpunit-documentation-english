@@ -226,7 +226,7 @@ Test stubs are ideal when we only need to control **what the dependency returns*
 * **How**: The test stub is passed to the constructor, satisfying the ``Database`` type requirement
 * **Why**: This is the object we are actually testing and by injecting the test stub, we control the database behavior
 
-**4. Invoking what we want to test**
+**5. Invoking what we want to test**
 
 .. code-block:: php
 
