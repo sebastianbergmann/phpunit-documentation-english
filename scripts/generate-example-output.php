@@ -13,9 +13,13 @@ $exclude = [
     'error-handling/SourceClass.php',
     'error-handling/SourceClassTest.php',
     'error-handling/VendorClass.php',
+    'extending-phpunit/IsValidOrderIdTest.php',
+    'extending-phpunit/MoneyComparatorTest.php',
+    'extending-phpunit/MoneyExporterTest.php',
     'extending-phpunit/OrderIdGeneratorExtendingAbstractTestCaseTest.php',
     'extending-phpunit/OrderIdGeneratorTest.php',
     'extending-phpunit/OrderIdGeneratorUsingAssertionTraitTest.php',
+    'extending-phpunit/OrderIdGeneratorUsingCustomAssertionTraitTest.php',
     'extending-phpunit/OrderIdGeneratorWithDomainSpecificAssertionTest.php',
 ];
 
@@ -43,7 +47,7 @@ foreach (new GlobIterator(__DIR__ . '/../src/examples/**/*Test.php') as $test) {
 
     $command       = $phpunit . ' ';
     $bootstrap     = dirname($test->getRealPath()) . '/src/autoload.php';
-    $hiddenOptions = '--no-configuration --do-not-cache-result ';
+    $hiddenOptions = '--no-configuration --do-not-record-test-run-history ';
     $options       = '';
 
     if (file_exists($bootstrap)) {
