@@ -164,6 +164,8 @@ The ``CoversClass(string $className)`` attribute can be used to :ref:`specify <c
 that a test intends to cover the given class.
 
 
+.. _appendixes.attributes.CoversClassesThatImplementInterface:
+
 ``CoversClassesThatImplementInterface``
 ---------------------------------------
 
@@ -177,6 +179,8 @@ The ``CoversClassesThatImplementInterface(string $interfaceName)`` attribute can
 :ref:`specify <code-coverage.targeting-units-of-code>` that a test intends to cover
 implementations of the given interface.
 
+
+.. _appendixes.attributes.CoversClassesThatExtendClass:
 
 ``CoversClassesThatExtendClass``
 --------------------------------
@@ -325,10 +329,8 @@ is emitted and the attribute is ignored.
 The ``CoversNothing()`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test does not intend to contribute to code coverage.
 
-.. admonition:: Deprecation: using ``CoversNothing`` on a test method is deprecated
-
-   As of PHPUnit 12.3, using the ``CoversNothing`` attribute on a test method is hard-deprecated.
-   Doing so will trigger a deprecation warning. Use the attribute on the test class instead.
+When this attribute is used on a test class, no code coverage is collected for any of its test
+methods. When it is used on a test method, no code coverage is collected for that test method.
 
 
 .. _appendixes.attributes.UsesClass:
@@ -406,7 +408,7 @@ in the context of :ref:`preventing unintentionally covered code <risky-tests.uni
 | yes         | no           | yes        |
 +-------------+--------------+------------+
 
-The ``UsesMethod(string $className)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
+The ``UsesMethod(string $className, string $methodName)`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test allows the execution of code in the given method, but does not intend to cover it. This is relevant
 in the context of :ref:`preventing unintentionally covered code <risky-tests.unintentionally-covered-code>`.
 
@@ -627,9 +629,12 @@ This can be disabled by setting ``validateArgumentCount`` to ``false``:
 | no          | yes          | yes        |
 +-------------+--------------+------------+
 
-The ``TestWith(array $data)`` attribute can be used to define a
+The ``TestWith(array $data[, string $name])`` attribute can be used to define a
 :ref:`data provider <writing-tests-for-phpunit.data-providers>` for a
 test method without having to implement a static data provider method.
+
+The optional second argument names the data set. When it is not used, the data set is
+identified by its number.
 
 .. code-block:: php
     :caption: Using the ``TestWith`` attribute
@@ -686,9 +691,12 @@ Running the test shown above yields the output shown below:
 | no          | yes          | yes        |
 +-------------+--------------+------------+
 
-The ``TestWithJson(string $json)`` attribute can be used to define a
+The ``TestWithJson(string $json[, string $name])`` attribute can be used to define a
 :ref:`data provider <writing-tests-for-phpunit.data-providers>` for a
 test method without having to implement a static data provider method.
+
+The optional second argument names the data set. When it is not used, the data set is
+identified by its number.
 
 .. code-block:: php
     :caption: Using the ``TestWithJson`` attribute
@@ -1369,8 +1377,9 @@ Test Isolation
 | yes         | yes          | no         |
 +-------------+--------------+------------+
 
-The ``BackupGlobals`` attribute can be used to specify that global and super-global variables
-should be backed up before a test and then restored after the test has been run.
+The ``BackupGlobals(bool $enabled)`` attribute can be used to specify whether global and
+super-global variables should be backed up before a test and then restored after the test
+has been run.
 
 
 .. _appendixes.attributes.ExcludeGlobalVariableFromBackup:
@@ -1384,7 +1393,7 @@ should be backed up before a test and then restored after the test has been run.
 | yes         | yes          | yes        |
 +-------------+--------------+------------+
 
-The ``ExcludeGlobalVariableFromBackup($globalVariableName)`` attribute can be used to exclude
+The ``ExcludeGlobalVariableFromBackup(string $globalVariableName)`` attribute can be used to exclude
 the specified global variable from the backup and restore operations for global and super-global
 variables.
 
@@ -1400,8 +1409,9 @@ variables.
 | yes         | yes          | no         |
 +-------------+--------------+------------+
 
-The ``BackupStaticProperties`` attribute can be used to specify that static properties of classes
-should be backed up before a test and then restored after the test has been run.
+The ``BackupStaticProperties(bool $enabled)`` attribute can be used to specify whether static
+properties of classes should be backed up before a test and then restored after the test has
+been run.
 
 
 .. _appendixes.attributes.ExcludeStaticPropertyFromBackup:
@@ -1452,26 +1462,6 @@ of a test case class should be run in separate processes (one separate process p
 This attribute is inherited from parent classes: if a parent class is annotated with
 ``#[RunTestsInSeparateProcesses]``, all child classes will also run their tests in
 separate processes.
-
-
-.. _appendixes.attributes.RunClassInSeparateProcess:
-
-``RunClassInSeparateProcess``
------------------------------
-
-+-------------+--------------+------------+
-| Class Level | Method Level | Repeatable |
-+=============+==============+============+
-| yes         | no           | no         |
-+-------------+--------------+------------+
-
-The ``RunClassInSeparateProcess`` attribute can be used to specify that all tests
-of a test case class should be run in a (single) separate process.
-
-.. admonition:: Deprecation: ``RunClassInSeparateProcess`` is deprecated
-
-   As of PHPUnit 12.4, the ``RunClassInSeparateProcess`` attribute is hard-deprecated.
-   Using it will trigger a deprecation warning. Use :ref:`RunTestsInSeparateProcesses <appendixes.attributes.RunTestsInSeparateProcesses>` instead.
 
 
 .. _appendixes.attributes.PreserveGlobalState:
@@ -1681,9 +1671,9 @@ when the PHP version used to run PHPUnit does not match the specified version re
 
 Here are some examples:
 
-* ``#[RequiresPhp('>= 8.3')]`` — PHP 8.3.0 or newer
-* ``#[RequiresPhp('^8.3')]`` — PHP 8.3.0 or newer, but below 9.0.0 (Composer syntax)
-* ``#[RequiresPhp('~8.3.0')]`` — PHP 8.3.0 or newer, but below 8.4.0 (Composer syntax)
+* ``#[RequiresPhp('>= 8.3')]``: PHP 8.3.0 or newer
+* ``#[RequiresPhp('^8.3')]``: PHP 8.3.0 or newer, but below 9.0.0 (Composer syntax)
+* ``#[RequiresPhp('~8.3.0')]``: PHP 8.3.0 or newer, but below 8.4.0 (Composer syntax)
 
 
 .. _appendixes.attributes.RequiresPhpExtension:
