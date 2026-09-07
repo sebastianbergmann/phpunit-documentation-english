@@ -264,6 +264,11 @@ The ``CoversNamespace(string $namespace)`` attribute can be used to :ref:`specif
 The ``CoversNothing()`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test does not intend to contribute to code coverage.
 
+.. admonition:: Deprecation: using ``CoversNothing`` on a test method is deprecated
+
+   As of PHPUnit 12.3, using the ``CoversNothing`` attribute on a test method is hard-deprecated.
+   Doing so will trigger a deprecation warning. Use the attribute on the test class instead.
+
 
 .. _appendixes.attributes.UsesClass:
 
@@ -1257,6 +1262,11 @@ of a test case class should be run in separate processes (one separate process p
 
 The ``RunClassInSeparateProcess`` attribute can be used to specify that all tests
 of a test case class should be run in a (single) separate process.
+
+.. admonition:: Deprecation: ``RunClassInSeparateProcess`` is deprecated
+
+   As of PHPUnit 12.4, the ``RunClassInSeparateProcess`` attribute is hard-deprecated.
+   Using it will trigger a deprecation warning. Use :ref:`RunTestsInSeparateProcesses <appendixes.attributes.RunTestsInSeparateProcesses>` instead.
 
 
 .. _appendixes.attributes.PreserveGlobalState:
