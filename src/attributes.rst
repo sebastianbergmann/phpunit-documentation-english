@@ -53,7 +53,7 @@ you can use the ``Test`` attribute to mark it as a test method.
 +-------------+--------------+------------+
 | Class Level | Method Level | Repeatable |
 +=============+==============+============+
-| yes         | no           | no         |
+| yes         | yes          | no         |
 +-------------+--------------+------------+
 
 The ``AllowMockObjectsWithoutExpectations`` attribute can be used to opt out of the check that emits the notice for mock objects without expectations.
