@@ -455,10 +455,10 @@ Running the test shown above yields the output shown below:
 
 .. literalinclude:: examples/assertions/ContainsOnlyTest.php.out
 
-.. admonition:: Deprecation: ``assertContainsOnly()`` is deprecated
+.. admonition:: Deprecation: ``assertContainsOnly()`` and ``assertNotContainsOnly()`` are deprecated
 
-   As of PHPUnit 12.0, the ``assertContainsOnly()`` method is hard-deprecated.
-   Using this method will trigger a deprecation warning. The method will be removed in PHPUnit 13.
+   As of PHPUnit 11.5, the ``assertContainsOnly()`` and ``assertNotContainsOnly()`` methods are hard-deprecated.
+   Using these methods will trigger a deprecation warning. The methods will be removed in PHPUnit 13.
 
 .. _appendixes.assertions.assertContainsOnlyArray:
 
