@@ -1,4 +1,4 @@
-./tools/phpunit tests/ContainsOnlyTest.php
+./tools/phpunit tests/MoneyExporterTest.php
 PHPUnit 13.2.6 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.5.10
@@ -9,10 +9,10 @@ Time: 00:00, Memory: 28.00 MB
 
 There was 1 error:
 
-1) ContainsOnlyTest::testFailure
-Error: Call to undefined method ContainsOnlyTest::assertContainsOnly()
+1) MoneyExporterTest::testArrayContainsMoney
+Error: Call to undefined method MoneyExporterTest::registerObjectExporter()
 
-/path/to/tests/ContainsOnlyTest.php:8
+/path/to/tests/MoneyExporterTest.php:8
 
 ERRORS!
 Tests: 1, Assertions: 0, Errors: 1.

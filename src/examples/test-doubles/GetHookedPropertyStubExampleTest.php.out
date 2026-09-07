@@ -1,2 +1,18 @@
 ./tools/phpunit tests/GetHookedPropertyStubExampleTest.php
-Class GetHookedPropertyStubExampleTest cannot be found in /path/to/tests/GetHookedPropertyStubExampleTest.php
+PHPUnit 13.2.6 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.10
+
+E                                                                   1 / 1 (100%)
+
+Time: 00:00, Memory: 28.00 MB
+
+There was 1 error:
+
+1) GetHookedPropertyStubExampleTest::testExample
+PHPUnit\Framework\MockObject\Generator\UnknownTypeException: Class or interface "InterfaceWithGetHookedProperty" does not exist
+
+/path/to/tests/GetHookedPropertyStubExampleTest.php:9
+
+ERRORS!
+Tests: 1, Assertions: 0, Errors: 1.

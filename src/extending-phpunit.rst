@@ -277,15 +277,13 @@ The extension facade is an instance of ``PHPUnit\Runner\Extension\Facade`` and a
 
 The extension facade also provides the following methods for test runner extensions to indicate to the test runner that they intend to replace default functionality or require certain functionality to be activated:
 
-The ``replacesProgressOutput()`` method can be used to disable the test runner's default progress output while it runs the tests.
+The ``replaceProgressOutput()`` method can be used to disable the test runner's default progress output while it runs the tests.
 
-The ``replacesResultOutput()`` method can be used to disable the test runner's default result output after it finished running the tests.
+The ``replaceResultOutput()`` method can be used to disable the test runner's default result output after it finished running the tests.
 
-The ``replacesOutput()`` method combines the effects of ``replacesProgressOutput()`` and ``replacesResultOutput()`` (see above).
+The ``replaceOutput()`` method combines the effects of ``replaceProgressOutput()`` and ``replaceResultOutput()`` (see above).
 
-The ``requiresCodeCoverageCollection()`` method can be used to activate the collection of code coverage information.
-
-The ``requiresExportOfObjects()`` method can be used to activate the export of objects for events such as ``Test\AssertionSucceeded`` and ``Test\AssertionFailed``, for example.
+The ``requireCodeCoverageCollection()`` method can be used to activate the collection of code coverage information.
 
 Implementing an event subscriber
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -819,22 +817,20 @@ to write event information to standard output:
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events
 
     phpunit --no-output --log-events-text php://stdout
-    PHPUnit Started (PHPUnit 10.0.0 using PHP 8.2.1 (cli) on Linux)
+    PHPUnit Started (PHPUnit 12.5.34 using PHP 8.5.10 (cli) on Darwin)
     Test Runner Configured
-    Test Suite Loaded (2 tests)
     Event Facade Sealed
+    Test Suite Loaded (2 tests)
     Test Runner Started
     Test Suite Sorted
     Test Runner Execution Started (2 tests)
     Test Suite Started (ExampleTest, 2 tests)
     Test Preparation Started (ExampleTest::testOne)
     Test Prepared (ExampleTest::testOne)
-    Assertion Succeeded (Constraint: is true)
     Test Passed (ExampleTest::testOne)
     Test Finished (ExampleTest::testOne)
     Test Preparation Started (ExampleTest::testTwo)
     Test Prepared (ExampleTest::testTwo)
-    Assertion Failed (Constraint: is identical to 'foo', Value: 'bar')
     Test Failed (ExampleTest::testTwo)
     Failed asserting that two strings are identical.
     Test Finished (ExampleTest::testTwo)
@@ -852,29 +848,27 @@ and memory usage):
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events-verbose
 
     phpunit --no-output --log-events-verbose-text php://stdout
-    [00:00:00.000046482 / 00:00:00.000006987] [4194304 bytes] PHPUnit Started (PHPUnit 10.0.0 using PHP 8.2.1 (cli) on Linux)
-    [00:00:00.048195557 / 00:00:00.048149075] [4194304 bytes] Test Runner Configured
-    [00:00:00.067646038 / 00:00:00.019450481] [6291456 bytes] Test Suite Loaded (2 tests)
-    [00:00:00.075942220 / 00:00:00.008296182] [6291456 bytes] Event Facade Sealed
-    [00:00:00.076452360 / 00:00:00.000510140] [6291456 bytes] Test Runner Started
-    [00:00:00.084421682 / 00:00:00.007969322] [6291456 bytes] Test Suite Sorted
-    [00:00:00.084664485 / 00:00:00.000242803] [6291456 bytes] Test Runner Execution Started (2 tests)
-    [00:00:00.085240320 / 00:00:00.000575835] [6291456 bytes] Test Suite Started (ExampleTest, 2 tests)
-    [00:00:00.086992385 / 00:00:00.001752065] [6291456 bytes] Test Preparation Started (ExampleTest::testOne)
-    [00:00:00.087443560 / 00:00:00.000451175] [6291456 bytes] Test Prepared (ExampleTest::testOne)
-    [00:00:00.088237489 / 00:00:00.000793929] [6291456 bytes] Assertion Succeeded (Constraint: is true)
-    [00:00:00.089076305 / 00:00:00.000838816] [6291456 bytes] Test Passed (ExampleTest::testOne)
-    [00:00:00.091027624 / 00:00:00.001951319] [6291456 bytes] Test Finished (ExampleTest::testOne)
-    [00:00:00.091110095 / 00:00:00.000082471] [6291456 bytes] Test Preparation Started (ExampleTest::testTwo)
-    [00:00:00.091158739 / 00:00:00.000048644] [6291456 bytes] Test Prepared (ExampleTest::testTwo)
-    [00:00:00.091991799 / 00:00:00.000833060] [6291456 bytes] Assertion Failed (Constraint: is identical to 'foo', Value: 'bar')
-    [00:00:00.099242925 / 00:00:00.007251126] [8388608 bytes] Test Failed (ExampleTest::testTwo)
-                                                              Failed asserting that two strings are identical.
-    [00:00:00.099386498 / 00:00:00.000143573] [8388608 bytes] Test Finished (ExampleTest::testTwo)
-    [00:00:00.099437634 / 00:00:00.000051136] [8388608 bytes] Test Suite Finished (ExampleTest, 2 tests)
-    [00:00:00.103014760 / 00:00:00.003577126] [8388608 bytes] Test Runner Execution Finished
-    [00:00:00.103207309 / 00:00:00.000192549] [8388608 bytes] Test Runner Finished
-    [00:00:00.105879902 / 00:00:00.002672593] [8388608 bytes] PHPUnit Finished (Shell Exit Code: 1)
+    [00:00:00.000009375 / 00:00:00.000009375] [26671776 bytes] PHPUnit Started (PHPUnit 12.5.34 using PHP 8.5.10 (cli) on Darwin)
+    [00:00:00.000231875 / 00:00:00.000222500] [26671776 bytes] Test Runner Configured
+    [00:00:00.000344292 / 00:00:00.000112417] [26671776 bytes] Event Facade Sealed
+    [00:00:00.000605500 / 00:00:00.000261208] [26671776 bytes] Test Suite Loaded (2 tests)
+    [00:00:00.000628875 / 00:00:00.000023375] [26671776 bytes] Test Runner Started
+    [00:00:00.000643083 / 00:00:00.000014208] [26671776 bytes] Test Suite Sorted
+    [00:00:00.000655000 / 00:00:00.000011917] [26671776 bytes] Test Runner Execution Started (2 tests)
+    [00:00:00.000666750 / 00:00:00.000011750] [26671776 bytes] Test Suite Started (ExampleTest, 2 tests)
+    [00:00:00.000716083 / 00:00:00.000049333] [26671776 bytes] Test Preparation Started (ExampleTest::testOne)
+    [00:00:00.000746167 / 00:00:00.000030084] [26267176 bytes] Test Prepared (ExampleTest::testOne)
+    [00:00:00.000933000 / 00:00:00.000186833] [26288088 bytes] Test Passed (ExampleTest::testOne)
+    [00:00:00.000974000 / 00:00:00.000041000] [26288088 bytes] Test Finished (ExampleTest::testOne)
+    [00:00:00.000991625 / 00:00:00.000017625] [26288088 bytes] Test Preparation Started (ExampleTest::testTwo)
+    [00:00:00.001014792 / 00:00:00.000023167] [26267984 bytes] Test Prepared (ExampleTest::testTwo)
+    [00:00:00.001171292 / 00:00:00.000156500] [26308432 bytes] Test Failed (ExampleTest::testTwo)
+                                                               Failed asserting that two strings are identical.
+    [00:00:00.001201083 / 00:00:00.000029791] [26308432 bytes] Test Finished (ExampleTest::testTwo)
+    [00:00:00.001213375 / 00:00:00.000012292] [26308432 bytes] Test Suite Finished (ExampleTest, 2 tests)
+    [00:00:00.001223625 / 00:00:00.000010250] [26308432 bytes] Test Runner Execution Finished
+    [00:00:00.001231333 / 00:00:00.000007708] [26308432 bytes] Test Runner Finished
+    [00:00:00.001253292 / 00:00:00.000021959] [26308432 bytes] PHPUnit Finished (Shell Exit Code: 1)
 
 .. _extending-phpunit.wrapping-the-test-runner:
 

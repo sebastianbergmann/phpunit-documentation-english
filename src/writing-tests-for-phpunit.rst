@@ -144,6 +144,20 @@ The ``expectExceptionMessageIsOrContains()`` method asserts that the actual exce
 
    The ``expectExceptionMessage()`` method was deprecated in PHPUnit 13.2 and will be removed in PHPUnit 15. Use ``expectExceptionMessageIsOrContains()`` instead.
 
+The ``expectExceptionObject(Throwable $exception)`` method can be used to set up expectations for the class, the message, and the code of an exception based on an example object:
+
+.. code-block:: php
+
+    $this->expectExceptionObject(new InvalidArgumentException('message', 1));
+
+The call shown above is equivalent to the three calls shown below:
+
+.. code-block:: php
+
+    $this->expectException(InvalidArgumentException::class);
+    $this->expectExceptionMessage('message');
+    $this->expectExceptionCode(1);
+
 
 .. _writing-tests-for-phpunit.verifying-side-effects:
 

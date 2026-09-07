@@ -53,7 +53,7 @@ you can use the ``Test`` attribute to mark it as a test method.
 +-------------+--------------+------------+
 | Class Level | Method Level | Repeatable |
 +=============+==============+============+
-| yes         | no           | no         |
+| yes         | yes          | no         |
 +-------------+--------------+------------+
 
 The ``AllowMockObjectsWithoutExpectations`` attribute can be used to opt out of the check that emits the notice for mock objects without expectations.
@@ -324,6 +324,11 @@ is emitted and the attribute is ignored.
 
 The ``CoversNothing()`` attribute can be used to :ref:`specify <code-coverage.targeting-units-of-code>`
 that a test does not intend to contribute to code coverage.
+
+.. admonition:: Deprecation: using ``CoversNothing`` on a test method is deprecated
+
+   As of PHPUnit 12.3, using the ``CoversNothing`` attribute on a test method is hard-deprecated.
+   Doing so will trigger a deprecation warning. Use the attribute on the test class instead.
 
 
 .. _appendixes.attributes.UsesClass:
@@ -1464,6 +1469,11 @@ separate processes.
 
 The ``RunClassInSeparateProcess`` attribute can be used to specify that all tests
 of a test case class should be run in a (single) separate process.
+
+.. admonition:: Deprecation: ``RunClassInSeparateProcess`` is deprecated
+
+   As of PHPUnit 12.4, the ``RunClassInSeparateProcess`` attribute is hard-deprecated.
+   Using it will trigger a deprecation warning. Use :ref:`RunTestsInSeparateProcesses <appendixes.attributes.RunTestsInSeparateProcesses>` instead.
 
 
 .. _appendixes.attributes.PreserveGlobalState:
