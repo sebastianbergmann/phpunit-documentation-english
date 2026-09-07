@@ -587,35 +587,6 @@ Whether ``$needle`` is an element of ``$haystack`` is checked using the ``===`` 
 You can use ``assertContainsEquals()`` (and ``assertNotContainsEquals()``) if you need the
 comparison logic implemented by the ``==`` operator.
 
-.. _appendixes.assertions.assertContainsOnly:
-
-``assertContainsOnly()``
-------------------------
-
-``assertContainsOnly(string $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
-
-Reports an error identified by ``$message`` if ``$haystack`` does not contain only variables of type ``$type``.
-
-``$isNativeType`` is a flag used to indicate whether ``$type`` is a native PHP type.
-
-These are the strings supported for ``$type`` when ``$isNativeType`` is ``true``:
-``array``, ``bool``, ``boolean``, ``callable``, ``double``, ``float``, ``int``, ``integer``, ``iterable``, ``null``, ``numeric``, ``object``, ``real``, ``resource``, ``scalar``, or ``string``.
-
-``assertNotContainsOnly()`` is the inverse of this assertion and takes the same arguments.
-
-.. literalinclude:: examples/assertions/ContainsOnlyTest.php
-   :caption: Usage of assertContainsOnly()
-   :language: php
-
-Running the test shown above yields the output shown below:
-
-.. literalinclude:: examples/assertions/ContainsOnlyTest.php.out
-
-.. admonition:: Deprecation: ``assertContainsOnly()`` and ``assertNotContainsOnly()`` are deprecated
-
-   As of PHPUnit 11.5, the ``assertContainsOnly()`` and ``assertNotContainsOnly()`` methods are hard-deprecated.
-   Using these methods will trigger a deprecation warning. The methods will be removed in PHPUnit 13.
-
 .. _appendixes.assertions.assertContainsOnlyArray:
 
 ``assertContainsOnlyArray()``
