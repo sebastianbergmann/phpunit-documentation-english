@@ -57,6 +57,21 @@ Furthermore, by setting ``requireCoverageMetadata="true"`` in PHPUnit's :ref:`XM
 metadata (such as ``CoversClass``, ``CoversMethod``, ``CoversFunction``, ``CoversNothing``, etc.) will be considered risky.
 Unlike the strict coverage check described above, this check is performed regardless of the test's size (``#[Small]``, ``#[Medium]``, or ``#[Large]``).
 
+This check can be configured separately for each test size using the ``requireCoverageMetadataOnSmallTests``, ``requireCoverageMetadataOnMediumTests``, and ``requireCoverageMetadataOnLargeTests`` attributes.
+These attributes have precedence over ``requireCoverageMetadata`` for tests attributed with ``#[Small]``, ``#[Medium]``, and ``#[Large]``, respectively, and default to the value of ``requireCoverageMetadata``.
+This makes it possible to require code coverage metadata only for small tests, for example:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+             requireCoverageMetadataOnSmallTests="true">
+        <!-- ... -->
+    </phpunit>
+
+The value of ``requireCoverageMetadata`` is used for a test that is not attributed with ``#[Small]``, ``#[Medium]``, or ``#[Large]``.
+
 
 .. _risky-tests.no-code-coverage-contribution:
 

@@ -128,6 +128,41 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether a test will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does not indicate the code it intends to cover using an attribute.
 
+For tests that are attributed with ``Small``, ``Medium``, or ``Large``, this attribute can be overridden using ``requireCoverageMetadataOnSmallTests``, ``requireCoverageMetadataOnMediumTests``, and ``requireCoverageMetadataOnLargeTests`` (see below).
+
+.. _appendixes.xml-configuration-file.phpunit.requireCoverageMetadataOnSmallTests:
+
+The ``requireCoverageMetadataOnSmallTests`` Attribute
+-----------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: the value of ``requireCoverageMetadata``)
+
+This attribute configures whether a test that is attributed with ``Small`` will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does not indicate the code it intends to cover using an attribute.
+
+This attribute has precedence over ``requireCoverageMetadata`` (see above) for tests that are attributed with ``Small``.
+
+.. _appendixes.xml-configuration-file.phpunit.requireCoverageMetadataOnMediumTests:
+
+The ``requireCoverageMetadataOnMediumTests`` Attribute
+------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: the value of ``requireCoverageMetadata``)
+
+This attribute configures whether a test that is attributed with ``Medium`` will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does not indicate the code it intends to cover using an attribute.
+
+This attribute has precedence over ``requireCoverageMetadata`` (see above) for tests that are attributed with ``Medium``.
+
+.. _appendixes.xml-configuration-file.phpunit.requireCoverageMetadataOnLargeTests:
+
+The ``requireCoverageMetadataOnLargeTests`` Attribute
+-----------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: the value of ``requireCoverageMetadata``)
+
+This attribute configures whether a test that is attributed with ``Large`` will be marked as risky (see :ref:`risky-tests.unintentionally-covered-code`) when it does not indicate the code it intends to cover using an attribute.
+
+This attribute has precedence over ``requireCoverageMetadata`` (see above) for tests that are attributed with ``Large``.
+
 .. _appendixes.xml-configuration-file.phpunit.requireSealedMockObjects:
 
 The ``requireSealedMockObjects`` Attribute
