@@ -373,7 +373,7 @@ Reporting
    Prints defects in reverse order. This shows the most recently encountered defects first, which can be useful for large test suites.
 
 ``--compact``
-   Replaces the default progress and result output with a compact format that omits the progress section, the timing and memory usage line, and color codes. By default only errors, failures, and risky tests are shown in detail; the ``--display-*`` options can be used to include additional issues. Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. See :ref:`textui.output.alternative-formats.compact` for details.
+   Replaces the default progress and result output with a compact format that omits the progress section, the timing and memory usage line, and color codes. By default only errors, failures, risky tests, and the errors and warnings reported by PHPUnit itself are shown in detail; the ``--display-*`` options can be used to include additional issues, which are otherwise only counted in the summary line. Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. See :ref:`textui.output.alternative-formats.compact` for details.
 
 ``--teamcity``
    Replaces the default progress and result output with TeamCity format. This is used for integration with JetBrains TeamCity and other CI tools that support the TeamCity service message protocol.
