@@ -515,18 +515,19 @@ When tests fail or have other issues, each defect is printed as a clearly delimi
 
     Runtime: PHP 8.5.5
 
-    FAILURES (23 tests, 42 assertions, 1 failure)
 
     --- FAILURE: ExampleTest::testSomething
     Failed asserting that false is true.
 
     /path/to/tests/ExampleTest.php:47
 
-The summary line begins with ``OK`` when all tests pass, ``FAILURES`` when at least one test failed, and ``ERRORS`` when at least one test errored. The counts that follow include the number of tests run and assertions made as well as, when non-zero, the number of errors, failures, deprecations, warnings, notices, skipped tests, incomplete tests, and risky tests.
+    FAILURES (23 tests, 42 assertions, 1 failure)
 
-Defects are listed in this order: errors, failures, deprecations, warnings, notices, errors triggered by tests, risky tests, incomplete tests, skipped tests.
+The summary line begins with ``OK`` when all tests pass, ``FAILURES`` when at least one test failed, and ``ERRORS`` when at least one test errored. The counts that follow include the number of tests run and assertions made as well as, when non-zero, the number of errors, failures, deprecations, PHPUnit deprecations, warnings, PHPUnit warnings, notices, PHPUnit notices, skipped tests, incomplete tests, and risky tests.
 
-By default, only errors, failures, and risky tests are shown in detail. Like the default output, ``--compact`` respects the ``--display-*`` flags described under :ref:`textui.output.controlling`: use ``--display-deprecations``, ``--display-warnings``, ``--display-notices``, ``--display-errors``, ``--display-incomplete``, ``--display-skipped``, or ``--display-all-issues`` to display additional details.
+Errors and failures are printed as soon as they occur, before the summary line. All other defects are listed after the summary line, in this order: errors, warnings, deprecations, and notices reported by PHPUnit itself, deprecations, warnings, notices, errors triggered by tests, risky tests, incomplete tests, skipped tests.
+
+By default, only errors, failures, risky tests, and the errors and warnings reported by PHPUnit itself are shown in detail. Like the default output, ``--compact`` respects the ``--display-*`` flags described under :ref:`textui.output.controlling`: use ``--display-deprecations``, ``--display-warnings``, ``--display-notices``, ``--display-errors``, ``--display-incomplete``, ``--display-skipped``, ``--display-phpunit-deprecations``, ``--display-phpunit-notices``, or ``--display-all-issues`` to display additional details. Issues that are only counted in the summary line are not shown in detail unless the corresponding flag is used.
 
 Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. This makes it easy to enable compact output globally without changing how PHPUnit is invoked, for example when running tests inside an AI-based coding assistant where every token of test output consumes context window budget.
 
@@ -548,6 +549,8 @@ The following options control what is displayed in the test results section. By 
 - ``--display-notices`` shows details for notices triggered by tests
 - ``--display-warnings`` shows details for warnings triggered by tests
 - ``--display-errors`` shows details for errors triggered by tests
+- ``--display-phpunit-deprecations`` shows details for deprecations reported by PHPUnit itself
+- ``--display-phpunit-notices`` shows details for notices reported by PHPUnit itself
 - ``--display-all-issues`` enables all of the above
 
 The ``--colors=<flag>`` option controls the use of colors in terminal output. Accepted values are ``never``, ``auto`` (uses colors when the terminal supports it), and ``always``.
