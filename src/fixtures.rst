@@ -134,17 +134,14 @@ More setUp() than tearDown()
 
 ``setUp()`` and ``tearDown()`` are nicely symmetrical in theory, but not in practice.
 In practice, you only need to implement ``tearDown()`` if you have allocated external
-resources such as files or sockets in ``setUp()``. Unless you create large object graphs
-in your ``setUp()`` and store them in properties of the test object, you can generally
-ignore ``tearDown()``.
+resources such as files or sockets in ``setUp()``, or if ``setUp()`` changed state
+outside the test object, such as an environment variable or a static property.
+Otherwise, you can generally ignore ``tearDown()``.
 
-However, if you create large object graphs in your ``setUp()`` and store them in properties
-of the test object, you may want to ``unset()`` the variables holding those objects in your
-``tearDown()`` so that they can be garbage collected sooner.
-
-Objects created within ``setUp()`` (or test methods) that are stored in properties of the
-test object are only automatically garbage collected at the end of the PHP process that
-runs PHPUnit.
+You do not need ``tearDown()`` to release objects. PHPUnit destructs the test object as
+soon as its test has run, before the next test is run, and the objects stored in its
+properties are released together with it. Unsetting them in ``tearDown()`` does not make
+them eligible for garbage collection any sooner.
 
 .. _fixtures.pre-and-post-conditions:
 
