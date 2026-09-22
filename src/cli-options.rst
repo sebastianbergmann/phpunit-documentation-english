@@ -158,6 +158,9 @@ Execution
 ``--default-time-limit <sec>``
    Sets the timeout in seconds for tests that have no declared size. This is used in conjunction with ``--enforce-time-limit``.
 
+``--timeout <sec>``
+   Stops the test run after the specified number of seconds of wall-clock time for the entire run, including bootstrapping and loading the test suite. When the limit is exceeded, no further tests are started, the logs are written, the result is printed, and PHPUnit exits with exit code ``124``. When the ``pcntl`` extension is available, the test that is running when the limit is exceeded is aborted and reported as an error. See :ref:`textui.time-limit`.
+
 ``--do-not-report-useless-tests``
    Suppresses reporting of useless tests. A test is considered useless if it does not perform any assertions.
 

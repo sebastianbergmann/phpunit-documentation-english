@@ -527,6 +527,15 @@ The summary line begins with ``OK`` when all tests pass, ``FAILURES`` when at le
 
 Errors and failures are printed as soon as they occur, before the summary line. All other defects are listed after the summary line, in this order: errors, warnings, deprecations, and notices reported by PHPUnit itself, deprecations, warnings, notices, errors triggered by tests, risky tests, incomplete tests, skipped tests.
 
+When the time limit for the test run configured with ``--timeout`` (see :ref:`textui.time-limit`) was exceeded, this is printed as a record of its own directly after the summary line, so that it cannot be mistaken for the output of a test:
+
+.. parsed-literal::
+
+    ERRORS (23 tests, 42 assertions, 1 error)
+
+    --- TIME LIMIT EXCEEDED
+    The time limit of 300 seconds for the test run was exceeded.
+
 By default, only errors, failures, risky tests, and the errors and warnings reported by PHPUnit itself are shown in detail. Like the default output, ``--compact`` respects the ``--display-*`` flags described under :ref:`textui.output.controlling`: use ``--display-deprecations``, ``--display-warnings``, ``--display-notices``, ``--display-errors``, ``--display-incomplete``, ``--display-skipped``, ``--display-phpunit-deprecations``, ``--display-phpunit-notices``, or ``--display-all-issues`` to display additional details. Issues that are only counted in the summary line are not shown in detail unless the corresponding flag is used.
 
 Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. This makes it easy to enable compact output globally without changing how PHPUnit is invoked, for example when running tests inside an AI-based coding assistant where every token of test output consumes context window budget.
@@ -595,6 +604,10 @@ The PHPUnit command-line test runner exits with an exit code that indicates the 
 ``2``
 
     At least one test errored
+
+``124``
+
+    The time limit for the test run configured with ``--timeout`` was exceeded (see :ref:`textui.time-limit`)
 
 By default, issues such as deprecations, notices, warnings, and risky tests do not affect the exit code. The ``--fail-on-*`` family of options changes this behaviour:
 
@@ -668,6 +681,54 @@ When used without a value, these options stop execution after the first occurren
 have been encountered.
 
 See :ref:`appendixes.cli-options.execution` for the complete reference.
+
+
+.. _textui.time-limit:
+
+Limiting the duration of the test run
+=====================================
+
+The ``--timeout <sec>`` option sets a wall-clock limit, in seconds, for the entire test run:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --timeout 300
+
+The clock starts as soon as the configuration is known, so bootstrapping and loading the test suite count toward the limit. The limit is checked whenever a test has finished; no PHP extension is required for this. When the limit is exceeded, no further tests are started and the run ends the way a run that was stopped by a ``--stop-on-*`` option ends: the configured logs are written, the result is printed, and a message states that the time limit was exceeded.
+
+When the ``pcntl`` extension is available, a test that is still running when the limit is exceeded is aborted. It is reported as an error whose stack trace shows where the test was stuck:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --timeout 300
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.5.5
+    Configuration: /path/to/project/phpunit.xml
+
+    .......E
+
+    The time limit of 300 seconds for the test run was exceeded.
+
+    Time: 05:00.012, Memory: 12.00 MB
+
+    There was 1 error:
+
+    1) ExampleTest::testSomething
+    PHPUnit\\Runner\\TimeLimit\\TimeLimitExceededException: This test was aborted because the time limit of 300 seconds for the test run was exceeded
+
+    /path/to/tests/ExampleTest.php:47
+
+    ERRORS!
+    Tests: 8, Assertions: 7, Errors: 1.
+
+Without the ``pcntl`` extension, the test that is running when the limit is exceeded is not aborted. The test run stops after it has finished. The same applies to tests that run in a separate process (see :ref:`appendixes.attributes.RunInSeparateProcess`) and to PHPT tests, regardless of whether ``pcntl`` is available.
+
+The shell exit code of a run that exceeded its time limit is ``124``, the value that GNU ``timeout(1)`` uses for a command that exceeded its time limit, regardless of whether the tests that did run passed (see :ref:`textui.exit-codes`). Code coverage reports and the baseline are not generated for such a run, as for a run that was interrupted by a signal. The ``PHPUnit\Event\TestRunner\TimeLimitExceeded`` event (see :ref:`appendixes.events`) is emitted when the limit is exceeded.
+
+``--timeout`` limits the test run as a whole, whereas ``--enforce-time-limit`` limits individual tests based on their size (see :ref:`risky-tests.test-execution-timeout`). The two options can be combined.
+
+``--timeout`` is intended for situations in which PHPUnit is invoked without a person watching the run, for instance by a CI pipeline or by an AI-based coding assistant. Such a caller cannot tell a hung test run from a long one. Without a time limit, its only option is to kill the process, which leaves it without a summary, an exit code, a log file, or any record of which test was running. With ``--timeout``, the run ends on its own with all of these.
 
 
 .. _textui.logging:

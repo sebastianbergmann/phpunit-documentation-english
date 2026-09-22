@@ -451,6 +451,10 @@ Alternative output and event streaming:
 - ``--no-progress``
 - ``--no-results``
 
+Test execution:
+
+- ``--timeout <sec>``
+
 Code coverage:
 
 - ``--coverage-filter <dir>``

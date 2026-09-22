@@ -134,6 +134,9 @@ longer than 1 second to run. This timeout is configurable via the
 ``timeoutForSmallTests`` attribute in the
 :ref:`XML configuration file <appendixes.xml-configuration-file>`.
 
+These time limits apply to individual tests. To limit the wall-clock time of the
+entire test run, use the ``--timeout`` option (see :ref:`textui.time-limit`).
+
 
 .. _risky-tests.global-state-manipulation:
 

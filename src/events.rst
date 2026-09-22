@@ -120,6 +120,11 @@ the ``PHPUnit\Event\TestRunner\ChildProcessReason`` enumeration:
 
     A warning (``E_USER_WARNING``) was triggered outside of a test. This event will be moved to ``PHPUnit\Event\TestRunner\WarningTriggered`` in PHPUnit 14.
 
+``PHPUnit\Event\TestRunner\TimeLimitExceeded``
+
+    The time limit for the test run configured with ``--timeout`` was exceeded; ``timeLimit()``
+    returns the limit in seconds. No further tests are started after this event
+
 ``PHPUnit\Event\TestRunner\ExecutionAborted``
 
     The test runner aborted the execution of tests
