@@ -41,9 +41,6 @@ Configuration
    - ``test-run-history``: Status and duration of each test from the previous test suite run (used for reordering tests based on previous defects or duration with the ``--order-by`` option, for instance)
    - ``code-coverage``: Results of static analysis of tested code and test code (only written when code coverage reporting is requested; significantly improves performance of code coverage analysis on subsequent runs)
 
-``--restrict-file-output <dir>``
-   Names the one directory that PHPUnit may write files to. Before the bootstrap script, extensions, or tests run, every path that the run would write to (log files, code coverage reports, the cache directory, the test run history, a baseline, the list of tests in XML format, and a generated or migrated configuration file) is checked against this directory, regardless of whether it was configured on the command line or in the XML configuration file. When a path is outside the directory, nothing is written, nothing that the code base controls is executed, and PHPUnit exits with exit code ``73``. See :ref:`textui.restricting-file-output`.
-
 ``--generate-configuration``
    Generates a ``phpunit.xml`` configuration file with suggested settings through an interactive wizard. This is a convenient way to bootstrap a new PHPUnit configuration.
 
