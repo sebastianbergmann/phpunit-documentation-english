@@ -455,6 +455,10 @@ Test execution:
 
 - ``--timeout <sec>``
 
+File output:
+
+- ``--restrict-file-output <dir>``
+
 Code coverage:
 
 - ``--coverage-filter <dir>``

@@ -538,7 +538,7 @@ When the time limit for the test run configured with ``--timeout`` (see :ref:`te
 
 By default, only errors, failures, risky tests, and the errors and warnings reported by PHPUnit itself are shown in detail. Like the default output, ``--compact`` respects the ``--display-*`` flags described under :ref:`textui.output.controlling`: use ``--display-deprecations``, ``--display-warnings``, ``--display-notices``, ``--display-errors``, ``--display-incomplete``, ``--display-skipped``, ``--display-phpunit-deprecations``, ``--display-phpunit-notices``, or ``--display-all-issues`` to display additional details. Issues that are only counted in the summary line are not shown in detail unless the corresponding flag is used.
 
-Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. This makes it easy to enable compact output globally without changing how PHPUnit is invoked, for example when running tests inside an AI-based coding assistant where every token of test output consumes context window budget.
+Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. This makes it easy to enable compact output globally without changing how PHPUnit is invoked, for example when running tests inside an LLM-based coding assistant where every token of test output consumes context window budget.
 
 .. admonition:: Note
 
@@ -604,6 +604,10 @@ The PHPUnit command-line test runner exits with an exit code that indicates the 
 ``2``
 
     At least one test errored
+
+``73``
+
+    A file would have been written outside the directory configured with ``--restrict-file-output``; no tests were run (see :ref:`textui.restricting-file-output`)
 
 ``124``
 
@@ -728,7 +732,7 @@ The shell exit code of a run that exceeded its time limit is ``124``, the value 
 
 ``--timeout`` limits the test run as a whole, whereas ``--enforce-time-limit`` limits individual tests based on their size (see :ref:`risky-tests.test-execution-timeout`). The two options can be combined.
 
-``--timeout`` is intended for situations in which PHPUnit is invoked without a person watching the run, for instance by a CI pipeline or by an AI-based coding assistant. Such a caller cannot tell a hung test run from a long one. Without a time limit, its only option is to kill the process, which leaves it without a summary, an exit code, a log file, or any record of which test was running. With ``--timeout``, the run ends on its own with all of these.
+``--timeout`` is intended for situations in which PHPUnit is invoked without a person watching the run, for instance by a CI pipeline or by an LLM-based coding assistant. Such a caller cannot tell a hung test run from a long one. Without a time limit, its only option is to kill the process, which leaves it without a summary, an exit code, a log file, or any record of which test was running. With ``--timeout``, the run ends on its own with all of these.
 
 
 .. _textui.logging:
@@ -753,6 +757,52 @@ The ``--testdox-html`` and ``--testdox-text`` options write a report to a file; 
 Logging can also be configured in the XML configuration file (see :ref:`appendixes.xml-configuration-file.logging`).
 
 The ``--no-logging`` option ignores all logging configured in the XML configuration file.
+
+
+.. _textui.restricting-file-output:
+
+Restricting where files are written
+===================================
+
+Log files, code coverage reports, the cache directory, the test run history, a baseline, the list of tests in XML format, and a generated or migrated configuration file can be pointed anywhere on the filesystem, from the command line as well as from the XML configuration file. The ``--restrict-file-output <dir>`` option names the one directory that PHPUnit may write files to:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --restrict-file-output /path/to/project/build
+
+The directory must exist. Before the bootstrap script, extensions, or tests run, every path that the run would write to is resolved and checked against this directory:
+
+- the JUnit XML, Open Test Reporting XML, TeamCity, TestDox HTML, and TestDox text logs
+- the event logs written by ``--log-events-text`` and ``--log-events-verbose-text``
+- all code coverage reports
+- the cache directory, and with it the test run history and the test index
+- the baseline written by ``--generate-baseline``
+- the file written by ``--list-tests-xml``
+- the ``phpunit.xml`` written by ``--generate-configuration``
+- the configuration file and its backup written by ``--migrate-configuration``
+
+Paths from the XML configuration file are checked in the same way as paths from the command line, since the configuration file is controlled by the code base and not by whoever invokes PHPUnit.
+
+When a path is outside the directory, nothing is written and nothing that the code base controls is executed. PHPUnit prints which paths are affected and what they are for, and exits with exit code ``73``, the value that ``sysexits.h`` defines as ``EX_CANTCREAT`` for a user-specified output file that cannot be created (see :ref:`textui.exit-codes`):
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --restrict-file-output /path/to/project/build --log-junit /tmp/junit.xml
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Cannot proceed because the following paths are outside /path/to/project/build, the directory that --restrict-file-output allows writing to:
+
+      /tmp/junit.xml (JUnit XML log)
+
+The test run history is recorded by default (see :ref:`appendixes.xml-configuration-file.phpunit.recordTestRunHistory`) and its file is located in the cache directory, which by default is next to the configuration file. When the cache directory is outside the allowed directory, the message points to ``--do-not-record-test-run-history`` and ``--cache-directory`` as the two ways to resolve this. The cache directory is not created when it is outside the allowed directory, and the code coverage cache is not placed in the system's temporary directory when that directory is outside the allowed one.
+
+Relative paths are resolved against the working directory. Every existing component of a path is resolved through ``realpath()``, so that a symbolic link inside the allowed directory cannot make a path point outside it, not even when ``..`` follows the link. When the option is used, the resolved absolute paths are what PHPUnit writes to, so that a bootstrap script that changes the working directory cannot move a relative target after the check.
+
+Only ``php://stdout`` and ``php://stderr`` are accepted as streams. Every other stream wrapper is rejected, since ``php://filter``, for instance, can write to arbitrary files.
+
+Temporary files with names chosen by PHPUnit, such as the job files for tests that run in a separate process, are not covered by the option. They do not let the caller choose a path.
+
+Like ``--timeout`` (see :ref:`textui.time-limit`), ``--restrict-file-output`` is intended for situations in which PHPUnit is invoked without a person watching the run, for instance by an LLM-based coding assistant whose harness allows it to run PHPUnit without asking. Without the option, an approved "run the tests" invocation can be turned into "write a file at a path of my choosing", by the assistant itself or by a cloned repository whose ``phpunit.xml`` configures a log file target. PHPUnit cannot sandbox the tests it runs; that is the job of the harness. With the option, the files PHPUnit itself writes are bounded to one directory that the harness chooses.
 
 
 .. _textui.test-execution-order:
