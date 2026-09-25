@@ -364,4 +364,4 @@ Test
 
 ``PHPUnit\Event\Test\AdditionalInformationProvided``
 
-    A test method provided additional information
+    A test method provided additional information using the ``provideAdditionalInformation()`` method of ``PHPUnit\Framework\TestCase``
