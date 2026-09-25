@@ -342,6 +342,29 @@ You can find a list of all events PHPUnit currently emits in the :ref:`appendix 
 
   PHPUnit currently does not support registering custom events.
 
+.. _extending-phpunit.extending-the-test-runner.passing-information-from-a-test-to-an-extension:
+
+Passing information from a test to an extension
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sometimes an extension needs information that only the test method that is currently running has. You can pass such information from a test method to an extension using the ``provideAdditionalInformation()`` method of ``PHPUnit\Framework\TestCase``.
+
+The ``provideAdditionalInformation()`` method accepts a non-empty string. When it is called, PHPUnit emits a ``PHPUnit\Event\Test\AdditionalInformationProvided`` event. This method can be called more than once from the same test method; each call emits a separate event.
+
+.. literalinclude:: examples/extending-phpunit/ExampleTestProvidingAdditionalInformation.php
+   :caption: A test method that passes additional information to an extension
+   :language: php
+
+PHPUnit does not interpret the string that is passed to ``provideAdditionalInformation()``. If you want to pass structured information, you need to serialize it, for instance using JSON, and then unserialize it in your extension.
+
+To receive this information, an extension registers a subscriber for the ``PHPUnit\Event\Test\AdditionalInformationProvided`` event. This event's ``test()`` method returns the test method that provided the information, and its ``additionalInformation()`` method returns the string that was passed to ``provideAdditionalInformation()``.
+
+.. literalinclude:: examples/extending-phpunit/AdditionalInformationSubscriber.php
+   :caption: An event subscriber that receives additional information from a test method
+   :language: php
+
+The article `From Events to Insights <https://phpunit.expert/articles/from-events-to-insights.html?ref=phpunit>`_ shows a use case: an abstract test case class for testing event-sourced code uses ``provideAdditionalInformation()`` to pass structured information about each test's Given, When, and Then phases to a PHPUnit extension. The extension then uses this information to generate documentation in Event Storming notation.
+
 .. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer:
 
 A complete example: custom printer
