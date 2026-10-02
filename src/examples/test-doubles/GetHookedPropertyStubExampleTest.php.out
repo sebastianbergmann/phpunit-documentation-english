@@ -1,10 +1,10 @@
 ./tools/phpunit tests/GetHookedPropertyStubExampleTest.php
-PHPUnit 13.3.2 by Sebastian Bergmann and contributors.
+PHPUnit 13.4.0 by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.10
+Runtime:       PHP 8.5.11
 
 .                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 30.09 MB
+Time: 00:00, Memory: 32.33 MB
 
 OK (1 test, 1 assertion)
