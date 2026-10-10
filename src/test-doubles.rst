@@ -1066,6 +1066,33 @@ The ``with()`` method verifies the arguments passed to the mocked method using `
 If a value passed to ``with()`` is not a ``Constraint`` object then that value is automatically wrapped in a ``Constraint`` object that verifies equality.
 A ``Constraint`` object that verifies equality can be manually created using ``$this->equalTo()``.
 
+Arguments can also be passed to ``with()`` as named arguments.
+A named argument is matched against the parameter of the mocked method that has that name.
+Consider a ``Logger`` interface with a method declared as ``log(string $message, string $level = 'info', array $context = [])``:
+
+.. code-block:: php
+
+   $logger = $this->createMock(Logger::class);
+
+   $logger
+       ->expects($this->once())
+       ->method('log')
+       ->with(level: 'error');
+
+In the example shown above, the call to ``log()`` must pass ``'error'`` as ``$level``, while its message and its context are not verified.
+
+Positional and named arguments can be combined, as in ``->with('Payment failed', level: 'error')``.
+A parameter that is not mentioned is not verified.
+
+The test will fail if:
+
+* A named argument does not name a parameter of the method
+* A parameter is specified both by position and by name
+
+If the method has a variadic parameter, a named argument that does not name one of the other parameters is matched against the named argument of that name that the variadic parameter collects.
+
+Before PHPUnit 12.5.39, the names of named arguments passed to ``with()`` were ignored and the values were matched by position.
+
 .. admonition:: Deprecation: Using ``with()`` on test stubs has no effect
 
    Calling ``with()`` on a test stub (created using ``createStub()``, for instance) has no effect because
