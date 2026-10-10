@@ -102,7 +102,7 @@ A test that emits output, for instance by invoking ``print`` in
 either the test code or the tested code, will be considered risky when this
 check is enabled.
 
-Additionally, when this check is enabled, a test will be considered risky if test code or tested code opens output buffers (using ``ob_start()``) but does not close them before the test finishes.
+Independent of whether this check is enabled, a test will be considered risky if test code or tested code opens output buffers (using ``ob_start()``) but does not close them before the test finishes.
 Similarly, a test will be considered risky if it closes output buffers that it did not open itself.
 
 Independent of whether this check is enabled, a test will be considered risky if output buffering was suspended using ``suspendOutputBuffering()`` and not resumed using ``resumeOutputBuffering()`` before the test finished (see :ref:`extending-phpunit.customizing-test-method-invocation.output-buffering`).
