@@ -1413,6 +1413,52 @@ The test will fail if:
 * The method is called fewer or more times than expected
 
 
+.. _test-doubles.mock-objects.reference.configuring-expectations.with.using-parameter-names-in-parameter-sets:
+
+Using parameter names in parameter sets
+"""""""""""""""""""""""""""""""""""""""
+
+The parameter sets shown above list the expected arguments in the order of the method's parameters.
+When only some of the parameters matter for a call, a parameter set can use the names of the parameters as array keys instead.
+This works with ``withParameterSetsInOrder()``, ``withParameterSetsInAnyOrder()``, and ``withParameterSetsInPartialOrder()``.
+
+Consider a ``Logger`` interface with a method declared as ``log(string $message, string $level = 'info', array $context = [])``:
+
+.. code-block:: php
+
+   $logger = $this->createMock(Logger::class);
+
+   $logger
+       ->expects($this->exactly(2))
+       ->method('log')
+       ->withParameterSetsInOrder(
+           ['level' => 'info'],
+           ['Payment failed', 'level' => 'error'],
+       );
+
+   $service = new Service($logger);
+
+   $service->doSomething();
+
+In the example shown above, the first call to ``log()`` must pass ``'info'`` as ``$level``, while its message and its context are not verified.
+The second call must pass ``'Payment failed'`` as ``$message`` and ``'error'`` as ``$level``.
+
+An entry with an integer key is matched by position, and an entry with a string key is matched by the name of the parameter, just like positional and named arguments in a method call.
+A parameter that is not mentioned in a parameter set is not verified.
+
+The test will fail if:
+
+* A key is not the name of a parameter of the method
+* A parameter is specified both by position and by name
+
+If the method has a variadic parameter, a key that is not the name of one of the other parameters is matched against the named argument of that name that the variadic parameter collects.
+
+A parameter set that uses parameter names is pinned in the same way as any other parameter set: ``['pinned' => ['level' => 'error']]``.
+A parameter set whose only key is ``pinned`` is always treated as a pinned parameter set, even when the method has a parameter named ``$pinned``.
+
+Before PHPUnit 13.4.2, string keys in parameter sets were ignored and the values were matched by position.
+
+
 .. _test-doubles.mock-objects.reference.configuring-expectations.verifying-relative-call-order-between-mock-object-expectations:
 
 Verifying relative call order between mock object expectations
