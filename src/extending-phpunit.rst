@@ -244,6 +244,31 @@ calls the test method with the provided arguments:
 Frameworks that require special execution contexts, such as asynchronous frameworks,
 can override this method to wrap the test method invocation with their runtime scheduler.
 
+.. _extending-phpunit.customizing-test-method-invocation.output-buffering:
+
+Buffering output in another execution context
+---------------------------------------------
+
+PHPUnit starts to buffer the output of a test before it calls the ``setUp()`` method and, therefore, before it calls ``invokeTestMethod()``.
+Some coroutine runtimes give each coroutine its own output buffers.
+When ``invokeTestMethod()`` runs the test method in such a coroutine, the output that is printed inside the coroutine does not reach PHPUnit's output buffer.
+:ref:`Output expectations <writing-tests-for-phpunit.testing-output>` such as ``expectOutputString()`` then do not see this output, and PHPUnit cannot detect output buffers that are left open or closed inside the coroutine.
+
+The ``suspendOutputBuffering()`` and ``resumeOutputBuffering()`` methods of ``PHPUnit\Framework\TestCase`` can be used to take PHPUnit's output buffering into the coroutine and back out of it:
+
+.. literalinclude:: examples/extending-phpunit/CoroutineTestCase.php
+   :caption: An abstract test case class that runs test methods in a coroutine
+   :language: php
+
+``suspendOutputBuffering()`` stops buffering the test's output in the current execution context and ``resumeOutputBuffering()`` starts buffering it again in the execution context it is called in.
+The output that was captured before output buffering was suspended, for instance the output printed by ``setUp()``, is retained, and output expectations are verified against all output that was captured.
+A test that leaves an output buffer open, or closes an output buffer it did not open, while output buffering is resumed inside the coroutine is considered risky, just like it would be when it does not run in a coroutine.
+
+``suspendOutputBuffering()`` has no effect when PHPUnit is not buffering the test's output, and ``resumeOutputBuffering()`` only resumes output buffering that was suspended.
+
+Output that is printed while output buffering is suspended is not captured.
+A test for which output buffering was suspended and not resumed is considered risky.
+
 
 .. _extending-phpunit.extending-the-test-runner:
 
