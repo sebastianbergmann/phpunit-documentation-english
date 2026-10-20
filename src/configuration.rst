@@ -801,8 +801,8 @@ of the ``DeprecationTrigger`` class as a deprecation trigger.
 
 .. _appendixes.configuration.source.ignoreSelfDeprecations:
 
-The ``<ignoreSelfDeprecations>`` Attribute
-------------------------------------------
+The ``ignoreSelfDeprecations`` Attribute
+----------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -811,8 +811,8 @@ Ignore deprecations (``E_DEPRECATED`` and ``E_USER_DEPRECATED``) triggered by fi
 
 .. _appendixes.configuration.source.ignoreDirectDeprecations:
 
-The ``<ignoreDirectDeprecations>`` Attribute
---------------------------------------------
+The ``ignoreDirectDeprecations`` Attribute
+------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -821,8 +821,8 @@ Ignore deprecations (``E_DEPRECATED`` and ``E_USER_DEPRECATED``) triggered by fi
 
 .. _appendixes.configuration.source.ignoreIndirectDeprecations:
 
-The ``<ignoreIndirectDeprecations>`` Attribute
-----------------------------------------------
+The ``ignoreIndirectDeprecations`` Attribute
+--------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``, suggested: ``true``)
 
