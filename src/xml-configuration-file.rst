@@ -1098,8 +1098,8 @@ See :ref:`error-handling.deprecation-filters` for more information about impleme
 
 .. _appendixes.xml-configuration-file.source.identifyIssueTrigger:
 
-The ``<identifyIssueTrigger>`` Attribute
-----------------------------------------
+The ``identifyIssueTrigger`` Attribute
+--------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
@@ -1112,8 +1112,8 @@ See :ref:`error-handling.failing-on-deprecations-by-trigger` for details.
 
 .. _appendixes.xml-configuration-file.source.ignoreSelfDeprecations:
 
-The ``<ignoreSelfDeprecations>`` Attribute
-------------------------------------------
+The ``ignoreSelfDeprecations`` Attribute
+----------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1122,8 +1122,8 @@ Ignore deprecations (``E_DEPRECATED`` and ``E_USER_DEPRECATED``) triggered by fi
 
 .. _appendixes.xml-configuration-file.source.ignoreDirectDeprecations:
 
-The ``<ignoreDirectDeprecations>`` Attribute
---------------------------------------------
+The ``ignoreDirectDeprecations`` Attribute
+------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1132,8 +1132,8 @@ Ignore deprecations (``E_DEPRECATED`` and ``E_USER_DEPRECATED``) triggered by fi
 
 .. _appendixes.xml-configuration-file.source.ignoreIndirectDeprecations:
 
-The ``<ignoreIndirectDeprecations>`` Attribute
-----------------------------------------------
+The ``ignoreIndirectDeprecations`` Attribute
+--------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``, suggested: ``true``)
 
@@ -1142,8 +1142,8 @@ Ignore deprecations (``E_DEPRECATED`` and ``E_USER_DEPRECATED``) triggered by th
 
 .. _appendixes.xml-configuration-file.source.restrictNotices:
 
-The ``<restrictNotices>`` Attribute
------------------------------------
+The ``restrictNotices`` Attribute
+---------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1154,8 +1154,8 @@ list of the project's source code files.
 
 .. _appendixes.xml-configuration-file.source.restrictWarnings:
 
-The ``<restrictWarnings>`` Attribute
-------------------------------------
+The ``restrictWarnings`` Attribute
+----------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1166,8 +1166,8 @@ list of the project's source code files.
 
 .. _appendixes.xml-configuration-file.source.baseline:
 
-The ``<baseline>`` Attribute
-----------------------------
+The ``baseline`` Attribute
+--------------------------
 
 Possible values: string
 
@@ -1176,8 +1176,8 @@ The baseline file to be used when running the test suite.
 
 .. _appendixes.xml-configuration-file.source.ignoreSuppressionOfDeprecations:
 
-The ``<ignoreSuppressionOfDeprecations>`` Attribute
----------------------------------------------------
+The ``ignoreSuppressionOfDeprecations`` Attribute
+-------------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1187,8 +1187,8 @@ Ignore the suppression (using the ``@`` operator) of ``E_USER_DEPRECATED``
 
 .. _appendixes.xml-configuration-file.source.ignoreSuppressionOfPhpDeprecations:
 
-The ``<ignoreSuppressionOfPhpDeprecations>`` Attribute
-------------------------------------------------------
+The ``ignoreSuppressionOfPhpDeprecations`` Attribute
+----------------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1198,8 +1198,8 @@ Ignore the suppression (using the ``@`` operator) of ``E_DEPRECATED``
 
 .. _appendixes.xml-configuration-file.source.ignoreSuppressionOfErrors:
 
-The ``<ignoreSuppressionOfErrors>`` Attribute
----------------------------------------------
+The ``ignoreSuppressionOfErrors`` Attribute
+-------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1209,8 +1209,8 @@ Ignore the suppression (using the ``@`` operator) of ``E_USER_ERROR``
 
 .. _appendixes.xml-configuration-file.source.ignoreSuppressionOfNotices:
 
-The ``<ignoreSuppressionOfNotices>`` Attribute
-----------------------------------------------
+The ``ignoreSuppressionOfNotices`` Attribute
+--------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1220,8 +1220,8 @@ Ignore the suppression (using the ``@`` operator) of ``E_USER_NOTICE``
 
 .. _appendixes.xml-configuration-file.source.ignoreSuppressionOfPhpNotices:
 
-The ``<ignoreSuppressionOfPhpNotices>`` Attribute
--------------------------------------------------
+The ``ignoreSuppressionOfPhpNotices`` Attribute
+-----------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1231,8 +1231,8 @@ Ignore the suppression (using the ``@`` operator) of ``E_STRICT`` and ``E_NOTICE
 
 .. _appendixes.xml-configuration-file.source.ignoreSuppressionOfWarnings:
 
-The ``<ignoreSuppressionOfWarnings>`` Attribute
------------------------------------------------
+The ``ignoreSuppressionOfWarnings`` Attribute
+---------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
@@ -1242,8 +1242,8 @@ Ignore the suppression (using the ``@`` operator) of ``E_USER_WARNING``
 
 .. _appendixes.xml-configuration-file.source.ignoreSuppressionOfPhpWarnings:
 
-The ``<ignoreSuppressionOfPhpWarnings>`` Attribute
---------------------------------------------------
+The ``ignoreSuppressionOfPhpWarnings`` Attribute
+------------------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``false``)
 
