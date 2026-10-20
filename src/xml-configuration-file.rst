@@ -835,8 +835,8 @@ of the ``DeprecationTrigger`` class as a deprecation trigger.
 
 .. _appendixes.xml-configuration-file.source.identifyIssueTrigger:
 
-The ``<identifyIssueTrigger>`` Attribute
-----------------------------------------
+The ``identifyIssueTrigger`` Attribute
+--------------------------------------
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
@@ -846,8 +846,8 @@ classified as being triggered by first-party code (self or direct) or third-part
 Identifying the trigger of an issue requires static analysis of the project's source code files
 and therefore has a noticeable impact on performance. When this is set to ``false``, PHPUnit does
 not perform this analysis. Configuration settings that depend on the classification of an issue
-trigger, such as the ``<ignoreSelfDeprecations>``, ``<ignoreDirectDeprecations>``, and
-``<ignoreIndirectDeprecations>`` attributes documented below, then have no effect. PHPUnit emits
+trigger, such as the ``ignoreSelfDeprecations``, ``ignoreDirectDeprecations``, and
+``ignoreIndirectDeprecations`` attributes documented below, then have no effect. PHPUnit emits
 a warning when one of these attributes is enabled while the identification of issue triggers is disabled.
 
 
