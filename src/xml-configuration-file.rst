@@ -720,6 +720,17 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether details on tests that triggered warnings should be printed.
 
+.. _appendixes.xml-configuration-file.phpunit.triggeringTestsLimit:
+
+The ``triggeringTestsLimit`` Attribute
+--------------------------------------
+
+Possible values: integer (default: ``0``)
+
+This attribute configures the maximum number of entries that are listed for the tests that triggered an issue when details on deprecations, notices, warnings, or errors triggered by tests are printed. The tests are grouped by test method and, if needed, by test class before the limit is applied (see :ref:`error-handling.triggering-tests-limit`).
+
+When set to ``0`` (default) then all tests that triggered an issue are listed individually.
+
 .. _appendixes.xml-configuration-file.phpunit.shortenArraysForExportThreshold:
 
 The ``shortenArraysForExportThreshold`` Attribute

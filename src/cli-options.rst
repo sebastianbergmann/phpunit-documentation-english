@@ -374,6 +374,9 @@ Reporting
    under the control of this CLI option. This is not considered to be a break of
    backward compatibility and rather the expected behaviour of this CLI option.
 
+``--triggering-tests-limit <n>``
+   Groups the tests that triggered an issue and limits the list printed for each issue to ``n`` entries (default: ``0``). This affects the details for deprecations, notices, warnings, and errors triggered by tests that are displayed using the ``--display-*`` options. Data sets of the same test method are listed as a single entry and, when there are still more test methods than ``n``, test methods are grouped by test class. Entries and issues are sorted by how often they were triggered. When ``0`` is used, all tests that triggered an issue are listed individually. See :ref:`error-handling.triggering-tests-limit` for details.
+
 ``--reverse-list``
    Prints defects in reverse order. This shows the most recently encountered defects first, which can be useful for large test suites.
 

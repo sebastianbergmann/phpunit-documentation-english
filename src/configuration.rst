@@ -301,6 +301,9 @@ Reporting
     * - ``--display-warnings``
       - :ref:`displayDetailsOnTestsThatTriggerWarnings <appendixes.xml-configuration-file.phpunit.displayDetailsOnTestsThatTriggerWarnings>` attribute on ``<phpunit>``
       - ``false``
+    * - ``--triggering-tests-limit <n>``
+      - :ref:`triggeringTestsLimit <appendixes.xml-configuration-file.phpunit.triggeringTestsLimit>` attribute on ``<phpunit>``
+      - ``0``
 
 
 .. _appendixes.configuration.logging:

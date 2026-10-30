@@ -568,6 +568,8 @@ The ``--columns`` option controls the width of the progress output. Use ``--colu
 
 The ``--reverse-list`` option prints defects in reverse order, showing the most recently encountered defects first.
 
+The ``--triggering-tests-limit <n>`` option groups the tests that triggered a deprecation, notice, warning, or error and limits the list printed for each of these issues to ``n`` entries (see :ref:`error-handling.triggering-tests-limit`).
+
 See :ref:`appendixes.cli-options.reporting` for the complete reference of all reporting options.
 
 

@@ -157,6 +157,83 @@ The :ref:`failOnDeprecation <appendixes.xml-configuration-file.phpunit.failOnDep
 when issues were triggered. Enabling one of these settings implicitly enables the display of the corresponding
 issue details.
 
+.. _error-handling.triggering-tests-limit:
+
+Limiting the list of triggering tests
+=====================================
+
+By default, the details printed for an issue list every test that triggered it, as shown above. In a large test suite,
+a deprecation in code that is used by many tests can easily be triggered by hundreds of tests, which makes the output
+long and hard to read.
+
+The ``--triggering-tests-limit <n>`` CLI option and the
+:ref:`triggeringTestsLimit <appendixes.xml-configuration-file.phpunit.triggeringTestsLimit>` attribute on the
+``<phpunit>`` element of the XML configuration file group the tests that triggered an issue and limit the list
+printed for each issue to ``n`` entries. Shown below is the output for a test suite with eight tests in two test
+classes, ``OneTest`` and ``TwoTest``:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --display-deprecations --triggering-tests-limit 1
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.5.10
+    Configuration: /path/to/example/phpunit.xml
+
+    DDDDDDDD                                                            8 / 8 (100%)
+
+    Time: 00:00.002, Memory: 8.00 MB
+
+    8 tests triggered 2 deprecations:
+
+    1) /path/to/vendor/ThirdPartyClass.php:10
+    deprecation in third-party code
+
+    Triggered 6 times (direct) by 5 tests in 2 test classes:
+
+    * example\\OneTest (3 tests, 4 times)
+    * ... 1 more test class
+
+    2) /path/to/src/FirstPartyClass.php:13
+    deprecation in first-party code
+
+    Triggered 3 times (self) by 3 tests:
+
+    * example\\OneTest::testWithDataProvider (3 data sets)
+
+    OK, but there were issues!
+    Tests: 8, Assertions: 8, Deprecations: 2.
+
+The deprecation in third-party code was triggered six times by five test methods that are declared in two test
+classes. Because there are more test methods than entries allowed, these test methods are grouped by test class.
+``OneTest`` is listed first because its three tests triggered the deprecation four times. The other test class is
+only counted. The deprecation in first-party code was triggered by a test method that uses a data provider with three
+data sets, which are listed as a single entry.
+
+The list of triggering tests is built according to these rules:
+
+* Tests that use data from a data provider are grouped by test method: a test method is listed once, not once per data set
+* When there are more test methods than ``n`` and these test methods are declared in more than one test class, they are grouped by test class
+* The entries are sorted by the number of times they triggered the issue, most often first. Only the first ``n`` entries are printed, the remaining entries are summarized in a final line such as ``... 3 more tests`` or ``... 1 more test class``
+* The details in parentheses after an entry state how many data sets or tests it represents and, when this is more than the number of tests, how many times the issue was triggered
+* For deprecations, the line before the list states how the deprecation was triggered (``self``, ``direct``, or ``indirect``, see :ref:`error-handling.failing-on-deprecations-by-trigger`) when this could be identified. When a deprecation was triggered in different ways, the number of times for each of them is shown, for instance ``(2 self, 1 direct)``
+
+In addition, the issues themselves are sorted by the number of times they were triggered, most often first.
+
+The limit also applies to the compact output (see :ref:`textui.output.alternative-formats.compact`):
+
+.. parsed-literal::
+
+    --- DEPRECATION: /path/to/vendor/ThirdPartyClass.php:10
+    deprecation in third-party code
+    Triggered 6 times (direct) by 5 tests in 2 test classes
+    Triggered by: example\\OneTest (3 tests, 4 times)
+    Triggered by: ... 1 more test class
+
+The default value, ``0``, disables grouping and limiting: every test that triggered an issue is listed individually.
+As a value passed using the CLI option takes precedence over the XML configuration file, ``--triggering-tests-limit 0``
+can be used to list all tests for a single test run even when a limit is configured in the XML configuration file.
+
 Limiting issues to "your code"
 ==============================
 
