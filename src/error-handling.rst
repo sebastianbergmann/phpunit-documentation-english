@@ -124,10 +124,10 @@ Detailed information, for instance which issue was triggered where, is only prin
 
     Triggered by:
 
-    * example\FirstPartyClassTest::testOne
+    * example\\FirstPartyClassTest::testOne
       /path/to/tests/FirstPartyClassTest.php:17
 
-    * example\FirstPartyClassTest::testTwo
+    * example\\FirstPartyClassTest::testTwo
       /path/to/tests/FirstPartyClassTest.php:22
 
     2) /path/to/src/FirstPartyClass.php:13
@@ -135,10 +135,10 @@ Detailed information, for instance which issue was triggered where, is only prin
 
     Triggered by:
 
-    * example\FirstPartyClassTest::testOne
+    * example\\FirstPartyClassTest::testOne
       /path/to/tests/FirstPartyClassTest.php:17
 
-    * example\FirstPartyClassTest::testTwo
+    * example\\FirstPartyClassTest::testTwo
       /path/to/tests/FirstPartyClassTest.php:22
 
     OK, but there were issues!
@@ -275,10 +275,10 @@ reporting of issues to our own code:
 
     Triggered by:
 
-    * example\FirstPartyClassTest::testOne
+    * example\\FirstPartyClassTest::testOne
       /path/to/tests/FirstPartyClassTest.php:17
 
-    * example\FirstPartyClassTest::testTwo
+    * example\\FirstPartyClassTest::testTwo
       /path/to/tests/FirstPartyClassTest.php:22
 
     2) /path/to/src/FirstPartyClass.php:13
@@ -286,7 +286,7 @@ reporting of issues to our own code:
 
     Triggered by:
 
-    * example\FirstPartyClassTest::testOne
+    * example\\FirstPartyClassTest::testOne
       /path/to/tests/FirstPartyClassTest.php:17
 
     OK, but there were issues!

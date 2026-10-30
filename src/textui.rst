@@ -538,7 +538,7 @@ When the time limit for the test run configured with ``--timeout`` (see :ref:`te
 
 By default, only errors, failures, risky tests, and the errors and warnings reported by PHPUnit itself are shown in detail. Like the default output, ``--compact`` respects the ``--display-*`` flags described under :ref:`textui.output.controlling`: use ``--display-deprecations``, ``--display-warnings``, ``--display-notices``, ``--display-errors``, ``--display-incomplete``, ``--display-skipped``, ``--display-phpunit-deprecations``, ``--display-phpunit-notices``, or ``--display-all-issues`` to display additional details. Issues that are only counted in the summary line are not shown in detail unless the corresponding flag is used.
 
-Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. This makes it easy to enable compact output globally without changing how PHPUnit is invoked, for example when running tests inside an AI-based coding assistant where every token of test output consumes context window budget.
+Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. This makes it easy to enable compact output globally without changing how PHPUnit is invoked, for example when running tests inside an LLM-based coding assistant where every token of test output consumes context window budget.
 
 .. admonition:: Note
 
@@ -730,7 +730,7 @@ The shell exit code of a run that exceeded its time limit is ``124``, the value 
 
 ``--timeout`` limits the test run as a whole, whereas ``--enforce-time-limit`` limits individual tests based on their size (see :ref:`risky-tests.test-execution-timeout`). The two options can be combined.
 
-``--timeout`` is intended for situations in which PHPUnit is invoked without a person watching the run, for instance by a CI pipeline or by an AI-based coding assistant. Such a caller cannot tell a hung test run from a long one. Without a time limit, its only option is to kill the process, which leaves it without a summary, an exit code, a log file, or any record of which test was running. With ``--timeout``, the run ends on its own with all of these.
+``--timeout`` is intended for situations in which PHPUnit is invoked without a person watching the run, for instance by a CI pipeline or by an LLM-based coding assistant. Such a caller cannot tell a hung test run from a long one. Without a time limit, its only option is to kill the process, which leaves it without a summary, an exit code, a log file, or any record of which test was running. With ``--timeout``, the run ends on its own with all of these.
 
 
 .. _textui.logging:
