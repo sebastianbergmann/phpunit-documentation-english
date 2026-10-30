@@ -103,7 +103,7 @@ Detailed information, for instance which issue was triggered where, is only prin
 
     Triggered by:
 
-    * example\SourceClassTest::testSomething (2 times)
+    * example\\SourceClassTest::testSomething (2 times)
       /path/to/example/tests/SourceClassTest.php:8
 
     2) /path/to/example/vendor/VendorClass.php:8
@@ -111,7 +111,7 @@ Detailed information, for instance which issue was triggered where, is only prin
 
     Triggered by:
 
-    * example\SourceClassTest::testSomething (2 times)
+    * example\\SourceClassTest::testSomething (2 times)
       /path/to/example/tests/SourceClassTest.php:8
 
     OK, but there were issues!
@@ -151,7 +151,7 @@ reporting of issues to our own code:
 
     Triggered by:
 
-    * example\SourceClassTest::testSomething (2 times)
+    * example\\SourceClassTest::testSomething (2 times)
       /path/to/example/tests/SourceClassTest.php:8
 
     OK, but there were issues!
