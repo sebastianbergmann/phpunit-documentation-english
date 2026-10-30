@@ -2531,7 +2531,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     There was 1 failure:
 
     1) StringMatchesFormatTest::testFailure
-    Failed asserting that 'foo' matches PCRE pattern "/^[+-]?\d+$/s".
+    Failed asserting that 'foo' matches PCRE pattern "/^[+-]?\\d+$/s".
 
     /home/sb/StringMatchesFormatTest.php:6
 
@@ -2626,7 +2626,7 @@ Reports an error identified by ``$message`` if the ``$string`` does not match th
     There was 1 failure:
 
     1) StringMatchesFormatFileTest::testFailure
-    Failed asserting that 'foo' matches PCRE pattern "/^[+-]?\d+
+    Failed asserting that 'foo' matches PCRE pattern "/^[+-]?\\d+
     $/s".
 
     /home/sb/StringMatchesFormatFileTest.php:6
