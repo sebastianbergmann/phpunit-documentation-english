@@ -85,7 +85,7 @@ The output consists of the following sections:
    The source files that are not considered for code coverage analysis because they are included using ``includeInCodeCoverage="false"``.
 
 ``PHAR extensions``
-   The PHARs that are loaded as test runner extensions from the directory that is configured using the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute.
+   The PHARs that are loaded as test runner extensions from the directory that is configured using the deprecated :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute.
 
 No code from the configuration is executed: the bootstrap script is not included, the PHP settings configured using the ``<php>`` element are not applied, and neither test runner extensions nor test files are loaded.
 
@@ -569,7 +569,7 @@ On the ``<phpunit>`` element:
 - :ref:`timeoutForSmallTests <appendixes.xml-configuration-file.phpunit.timeoutForSmallTests>` (default: ``1``)
 - :ref:`timeoutForMediumTests <appendixes.xml-configuration-file.phpunit.timeoutForMediumTests>` (default: ``10``)
 - :ref:`timeoutForLargeTests <appendixes.xml-configuration-file.phpunit.timeoutForLargeTests>` (default: ``60``)
-- :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>`
+- :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` (deprecated)
 - :ref:`shortenArraysForExportThreshold <appendixes.xml-configuration-file.phpunit.shortenArraysForExportThreshold>`
 
 Test suite definition:

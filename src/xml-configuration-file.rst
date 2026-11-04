@@ -569,6 +569,14 @@ The ``extensionsDirectory`` Attribute
 
 When ``phpunit.phar`` is used then this attribute may be used to configure a directory from which all ``*.phar`` files will be loaded as extensions for the PHPUnit test runner.
 
+.. admonition:: Deprecation: The ``extensionsDirectory`` attribute is deprecated
+
+   Loading extensions from PHARs using the ``extensionsDirectory`` attribute is deprecated.
+   This will no longer be possible in PHPUnit 14.
+
+   Load the PHAR in your :ref:`bootstrap script <appendixes.xml-configuration-file.phpunit.bootstrap>` or install the extension using Composer instead
+   (see :ref:`extending-phpunit.extending-the-test-runner.registering-an-extension-from-a-phar`).
+
 .. _appendixes.xml-configuration-file.phpunit.executionOrder:
 
 The ``executionOrder`` Attribute

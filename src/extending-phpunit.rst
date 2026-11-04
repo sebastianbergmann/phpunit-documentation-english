@@ -810,9 +810,11 @@ You can share a PHPUnit extension as a PHAR or a Composer package.
 Sharing an extension as a PHAR
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When users of your extension prefer to install PHPUnit as a PHAR, it is best to make your extension also available as a PHAR.
+When users of your extension prefer to install PHPUnit as a PHAR, you can make your extension available as a PHAR, too.
+The PHAR is loaded using ``require``, so its stub has to make the classes of your extension available, for instance by registering an autoloader.
 
-To make your extension loadable as a PHAR, you need to include a `PHAR Manifest <https://github.com/phar-io/manifest>`_.
+To make your extension loadable from the directory that is configured using the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute, you need to include a `PHAR Manifest <https://github.com/phar-io/manifest>`_.
+Loading extensions from this directory is deprecated, though (see :ref:`extending-phpunit.extending-the-test-runner.registering-an-extension-from-a-phar`).
 
 .. literalinclude:: examples/extending-phpunit/manifest.xml
    :caption: An example manifest.xml
@@ -828,16 +830,35 @@ Registering an extension
 
 You can register one or more PHPUnit extensions from PHARs or from Composer package using the :ref:`extensions <appendixes.xml-configuration-file.extensions>`, :ref:`bootstrap <appendixes.xml-configuration-file.extensions.bootstrap>`, and :ref:`parameters <appendixes.xml-configuration-file.extensions.extension.arguments>` elements of the :ref:`PHPUnit XML configuration file <appendixes.xml-configuration-file>`.
 
+.. _extending-phpunit.extending-the-test-runner.registering-an-extension-from-a-phar:
+
 Registering an extension from a PHAR
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When you install PHPUnit as a PHAR, it is best to load extensions from a PHAR.
+When you install PHPUnit as a PHAR, you can load an extension that is distributed as a PHAR in your :ref:`bootstrap script <appendixes.xml-configuration-file.phpunit.bootstrap>` and register it using the :ref:`bootstrap <appendixes.xml-configuration-file.extensions.bootstrap>` element.
 
-You can use the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute of the :ref:`phpunit <appendixes.xml-configuration-file.phpunit>` element to configure the directory from which PHPUnit should load extensions as a PHAR.
+.. literalinclude:: examples/extending-phpunit/bootstrap-phar.php
+   :caption: A bootstrap script that loads an extension from a PHAR
+   :language: php
+
+.. literalinclude:: examples/extending-phpunit/phpunit-phar-bootstrap.xml
+   :caption: An XML configuration registering an ExampleExtension with parameters, loaded in the bootstrap script
+   :language: xml
+
+PHPUnit does not check the manifest of a PHAR that is loaded in the bootstrap script, and it does not list the extension in the runtime information.
+
+You can also use the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute of the :ref:`phpunit <appendixes.xml-configuration-file.phpunit>` element to configure the directory from which PHPUnit should load extensions as a PHAR.
 
 .. literalinclude:: examples/extending-phpunit/phpunit-phar.xml
    :caption: An XML configuration registering an ExampleExtension with parameters, loaded from an extensions directory
    :language: xml
+
+.. admonition:: Deprecation: The ``extensionsDirectory`` attribute is deprecated
+
+   Loading extensions from PHARs using the ``extensionsDirectory`` attribute is deprecated.
+   This will no longer be possible in PHPUnit 14.
+
+   Load the PHAR in your bootstrap script, as shown above, or install the extension using Composer instead.
 
 Registering an extension from a Composer package
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

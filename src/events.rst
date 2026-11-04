@@ -34,7 +34,7 @@ TestRunner
 
 ``PHPUnit\Event\TestRunner\ExtensionLoadedFromPhar``
 
-    The test runner loaded an extension from a PHP Archive (PHAR)
+    The test runner loaded an extension from a PHP Archive (PHAR). This event is deprecated and will be removed in PHPUnit 14, together with support for loading extensions from PHARs using the ``extensionsDirectory`` XML configuration attribute.
 
 ``PHPUnit\Event\TestRunner\ExtensionBootstrapped``
 
