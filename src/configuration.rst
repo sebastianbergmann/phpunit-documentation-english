@@ -423,7 +423,7 @@ This attribute configures whether arrays and object graphs that are passed from 
 The ``extensionsDirectory`` Attribute
 -------------------------------------
 
-When ``phpunit.phar`` is used then this attribute may be used to configure a directory from which all ``*.phar`` files will be loaded as extensions for the PHPUnit test runner.
+This attribute may be used to configure a directory from which all ``*.phar`` files will be loaded as extensions for the PHPUnit test runner.
 
 .. _appendixes.configuration.phpunit.executionOrder:
 
