@@ -17,6 +17,83 @@ Each layer overrides the previous one for the settings it touches. Settings that
 The tables in this appendix cross-reference the CLI options (see :ref:`appendixes.cli-options`) and the XML configuration attributes and elements (see :ref:`appendixes.xml-configuration-file`) that participate in this override model, along with their built-in defaults. Options that do not participate (CLI-only or XML-only) are listed at the end.
 
 
+.. _appendixes.configuration.show-effective-configuration:
+
+Showing the Effective Configuration
+===================================
+
+The ``--show-effective-configuration`` CLI option shows the configuration that results from combining these three layers and then exits. This is useful for finding out which value a setting has when it is configured in more than one layer, and for checking which test files and source files are selected by the include and exclude rules of the XML configuration file:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --show-effective-configuration
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Settings:
+      backupGlobals: false
+      backupStaticProperties: false
+      beStrictAboutChangesToGlobalState: false
+      bootstrap: /path/to/project/vendor/autoload.php
+      ...
+      executionOrder: duration-ascending
+      executionOrderDefects: defects
+      ...
+      failOnRisky: true
+      ...
+      php:
+        constants: (none)
+        cookieVariables: (none)
+        envVariables:
+          - force: false
+            name: APP_ENV
+            value: testing
+        ...
+        iniSettings:
+          - name: memory_limit
+            value: -1
+        ...
+
+    Test files:
+      unit:
+        - /path/to/project/tests/unit/GreeterTest.php
+        - /path/to/project/tests/unit/MoneyTest.php
+      integration:
+        - /path/to/project/tests/integration/RepositoryTest.php (groups: database)
+
+    Source files:
+      - /path/to/project/src/Generated/Proxy.php
+      - /path/to/project/src/Greeter.php
+      - /path/to/project/src/Money.php
+
+    Source files excluded from code coverage:
+      - /path/to/project/src/Generated/Proxy.php
+
+    PHAR extensions: (none)
+
+The output consists of the following sections:
+
+``Settings``
+   All settings of the effective configuration, in alphabetical order. A setting that is not set is shown as ``(not set)``, and an empty list is shown as ``(none)``. The names of the settings are those of PHPUnit's internal representation of the configuration. They often, but not always, match the names of the corresponding XML configuration attributes: the directory that is configured using the ``extensionsDirectory`` attribute, for instance, is shown as ``pharExtensionDirectory``, and the file that is configured using ``<junit outputFile="...">`` is shown as ``logfileJunit``.
+
+``Test files``
+   The test files of each test suite after the include and exclude rules of the :ref:`\<testsuites\> <appendixes.xml-configuration-file.testsuites>` element as well as ``--testsuite`` and ``--exclude-testsuite`` have been applied. Test files that are passed as CLI arguments are listed under ``CLI Arguments`` instead. Groups that are assigned using the ``groups`` attribute of the ``<directory>`` and ``<file>`` elements are shown in parentheses.
+
+``Source files``
+   The files that are configured as the project's source code using the :ref:`\<source\> <appendixes.xml-configuration-file.source>` element, after its include and exclude rules have been applied.
+
+``Source files excluded from code coverage``
+   The source files that are not considered for code coverage analysis because they are included using ``includeInCodeCoverage="false"``.
+
+``PHAR extensions``
+   The PHARs that are loaded as test runner extensions from the directory that is configured using the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute.
+
+No code from the configuration is executed: the bootstrap script is not included, the PHP settings configured using the ``<php>`` element are not applied, and neither test runner extensions nor test files are loaded.
+
+Because the test files are not loaded, options such as ``--filter`` or ``--group``, which select tests based on what the test files declare, are not reflected in the ``Test files`` section, and groups that are assigned using the :ref:`Group <appendixes.attributes.Group>` attribute are not shown. Use ``--list-tests`` (see :ref:`textui.selecting-tests.listing`) to find out which tests these options select.
+
+When the test files cannot be determined, for instance because a test file that is passed as a CLI argument does not exist, the reason is shown instead of the list of test files and PHPUnit exits with a shell exit code that indicates failure (see :ref:`textui.exit-codes`).
+
+
 .. _appendixes.configuration.configuration:
 
 Configuration
@@ -419,6 +496,7 @@ Configuration selection and one-shot operations:
 - ``--no-logging``
 - ``--generate-configuration``
 - ``--migrate-configuration``
+- ``--show-effective-configuration``
 - ``--generate-baseline <file>``
 - ``--ignore-baseline``
 - ``--warm-coverage-cache``

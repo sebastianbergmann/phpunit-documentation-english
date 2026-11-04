@@ -50,6 +50,9 @@ Configuration
 ``--validate-configuration``
    Validates the XML configuration file against the XML schema definition for the current PHPUnit version and then exits. Validation errors are reported with the line numbers on which they occur.
 
+``--show-effective-configuration``
+   Shows the configuration that results from PHPUnit's built-in defaults, the XML configuration file, and the CLI options and arguments, and then exits. No code from the configuration is executed: the bootstrap script is not included, the PHP settings configured using the ``<php>`` element are not applied, and neither extensions nor test files are loaded. See :ref:`appendixes.configuration.show-effective-configuration`.
+
 ``--generate-baseline <file>``
    Generates a baseline file that records currently existing issues such as deprecations and warnings. This baseline can later be used to suppress known issues so that only new issues are reported.
 
