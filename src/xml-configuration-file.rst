@@ -592,6 +592,8 @@ The order is the first stage of the pipeline. Exactly one order can be configure
 
 The order may be followed by ``,defects``, for instance ``executionOrder="duration-ascending,defects"``. This adds a second stage that moves the tests that errored or failed during the previous test run to the front. Tests that are not moved to the front keep the order that the first stage established. This requires enabled :ref:`test run history<appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`. ``executionOrder="defects"`` can also be used on its own, without configuring an order.
 
+``default`` resets what the values written before it configured, including ``defects``, so ``executionOrder="random,default,reverse"`` configures one order: ``reverse``. ``default`` also turns the resolution of dependencies between tests back on: ``executionOrder="default"`` resolves them even when ``resolveDependencies="false"`` is configured.
+
 Ordering by modification time is intended for local development and is not meaningful on a continuous integration server, where all files are usually written at the same time (see :ref:`textui.test-execution-order`).
 
 Whether dependencies between tests are resolved is configured using the :ref:`resolveDependencies<appendixes.xml-configuration-file.phpunit.resolveDependencies>` attribute. Dependency resolution is always the last stage of the pipeline.
@@ -600,7 +602,7 @@ The values below are still accepted, but PHPUnit emits a test runner deprecation
 
 - ``depends`` and ``no-depends``: use ``resolveDependencies="true"`` and ``resolveDependencies="false"`` instead
 - ``defects`` written before the order, for instance ``defects,duration-ascending``: the order is currently always applied before defects are moved to the front, no matter how the values are written. PHPUnit 14 will apply the stages in the order in which the values are written. Write the order first, for instance ``duration-ascending,defects``
-- more than one order, for instance ``duration-ascending,reverse``: the order that is written last currently overrides the ones written before it. This will be an error in PHPUnit 14
+- more than one order, for instance ``duration-ascending,reverse``: the order that is written last currently overrides the ones written before it. This will be an error in PHPUnit 14. An order that is written before ``default`` is reset by it and does not count
 - ``duration`` and ``size``: use ``duration-ascending`` and ``size-ascending`` instead
 - a value that PHPUnit does not know: such a value is currently ignored. This will be an error in PHPUnit 14
 
@@ -611,7 +613,7 @@ The ``resolveDependencies`` Attribute
 
 Possible values: ``true`` or ``false`` (default: ``true``)
 
-This attribute configures whether dependencies between tests (expressed using the ``Depends*`` attributes) should be resolved. When they are, the tests of each test suite are reordered so that as many dependencies as possible are satisfied. This reordering is always applied last, after the reordering configured using the :ref:`executionOrder<appendixes.xml-configuration-file.phpunit.executionOrder>` attribute.
+This attribute configures whether dependencies between tests (expressed using the ``Depends*`` attributes) should be resolved. When they are, the tests of each test suite are reordered so that as many dependencies as possible are satisfied. This reordering is always applied last, after the reordering configured using the :ref:`executionOrder<appendixes.xml-configuration-file.phpunit.executionOrder>` attribute. ``executionOrder="default"`` turns the resolution of dependencies back on, even when this attribute is set to ``false``.
 
 .. _appendixes.xml-configuration-file.phpunit.testdox:
 

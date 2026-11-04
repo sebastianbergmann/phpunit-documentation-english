@@ -808,6 +808,17 @@ The order is the first stage of the pipeline. Exactly one order can be configure
 
     Tests are ordered by size in reverse (large, medium, small, unknown)
 
+``default`` resets what the values written before it configured, including ``defects``. ``--order-by random,default`` therefore executes the tests in the order in which they were discovered, and ``--order-by random,default,reverse`` executes them in reverse discovery order. Using ``default`` together with an order like this does not count as configuring more than one order.
+
+.. admonition:: Note
+
+    ``default`` also turns the resolution of dependencies between tests back on.
+    ``--ignore-dependencies --order-by default`` therefore resolves them, whereas
+    ``--order-by default --ignore-dependencies`` does not. ``--order-by default``
+    resolves them even when ``resolveDependencies="false"`` is configured in the XML
+    configuration file, and so does ``executionOrder="default"`` in the XML configuration
+    file itself.
+
 Ordering by modification time
 -----------------------------
 
@@ -902,7 +913,9 @@ The values below are still accepted by ``--order-by`` and by the ``executionOrde
 More than one order
 
     For instance ``duration-ascending,reverse``. The order that is written last currently
-    overrides the ones written before it. This will be an error in PHPUnit 14.
+    overrides the ones written before it. This will be an error in PHPUnit 14. An order
+    that is written before ``default`` is reset by it and does not count, so
+    ``random,default,reverse`` configures one order.
 
 ``duration`` and ``size``
 
