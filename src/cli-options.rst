@@ -135,7 +135,7 @@ Execution
 =========
 
 ``--process-isolation``
-   Runs each test in a separate PHP process. This ensures complete isolation between tests but significantly increases execution time.
+   Runs each test in a separate PHP process. This ensures complete isolation between tests but significantly increases execution time. The before-first-test and after-last-test methods, such as ``setUpBeforeClass()`` and ``tearDownAfterClass()``, are then called in each of these processes and not in the process of the test runner (see :ref:`fixtures.sharing-fixture.separate-processes`).
 
 ``--globals-backup``
    Backs up and restores the ``$GLOBALS`` superglobal before and after each test. This prevents tests from inadvertently affecting each other through global state.

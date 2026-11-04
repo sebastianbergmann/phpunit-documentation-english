@@ -361,6 +361,17 @@ using stubs (see :ref:`test-doubles`), than by creating
 dependencies between tests at runtime and ignoring the opportunity
 to improve your design.
 
+.. _fixtures.sharing-fixture.separate-processes:
+
+Sharing Fixture and Separate Processes
+--------------------------------------
+
+A test that is run in a separate PHP process, for instance because of the :ref:`RunInSeparateProcess <appendixes.attributes.RunInSeparateProcess>` or :ref:`RunTestsInSeparateProcesses <appendixes.attributes.RunTestsInSeparateProcesses>` attribute or the ``--process-isolation`` CLI option, cannot use a fixture that was set up in the process of the test runner. The before-first-test and after-last-test methods, ``setUpBeforeClass()`` and ``tearDownAfterClass()`` as well as the methods that are configured using the ``BeforeClass`` and ``AfterClass`` attributes, are therefore called in the separate process, before and after the test, respectively. A fixture that is shared using these methods is set up and torn down for each test that is run in a separate process.
+
+When all tests of a test class are run in separate processes, its before-first-test and after-last-test methods are only called in these processes, not in the process of the test runner. When only some of its tests are run in separate processes, these methods are also called in the process of the test runner, before its first test and after its last test.
+
+Consequently, when all tests of a test class are run in separate processes and a before-first-test method skips the tests using ``markTestSkipped()`` or throws an exception, a separate process is started for each test, and each test is reported as skipped or as errored. To skip all tests of such a test class without starting a separate process for each of them, express the precondition using one of the :ref:`Requires* attributes <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>` on the test class.
+
 .. _fixtures.global-state:
 
 Global State

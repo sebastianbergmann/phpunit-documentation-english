@@ -1446,6 +1446,10 @@ properties of classes.
 The ``RunInSeparateProcess`` attribute can be used to specify that a test should
 be run in a separate process.
 
+The before-first-test and after-last-test methods of the test class, such as ``setUpBeforeClass()``
+and ``tearDownAfterClass()``, are called in the separate process as well
+(see :ref:`fixtures.sharing-fixture.separate-processes`).
+
 
 .. _appendixes.attributes.RunTestsInSeparateProcesses:
 
@@ -1464,6 +1468,10 @@ of a test case class should be run in separate processes (one separate process p
 This attribute is inherited from parent classes: if a parent class is annotated with
 ``#[RunTestsInSeparateProcesses]``, all child classes will also run their tests in
 separate processes.
+
+The before-first-test and after-last-test methods of the test class, such as ``setUpBeforeClass()``
+and ``tearDownAfterClass()``, are then called in each of these processes and not in the process
+of the test runner (see :ref:`fixtures.sharing-fixture.separate-processes`).
 
 
 .. _appendixes.attributes.PreserveGlobalState:
