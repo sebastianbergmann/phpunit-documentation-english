@@ -1676,12 +1676,12 @@ when the PHP version used to run PHPUnit does not match the specified version re
 
 ``$versionRequirement`` must be one of the following:
 
-* A version number string preceded by a comparison operator supported by PHP's `version_compare() <https://www.php.net/manual/en/function.version-compare.php>`_ function: ``>=``, ``>``, ``<=``, ``<``, ``==``, or ``!=``
-* A `version constraint <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_ in the syntax supported by Composer (e.g. ``^8.3``, ``~8.3.0``, ``>=8.3 <8.5``)
+* A version number string preceded by a comparison operator supported by PHP's `version_compare() <https://www.php.net/manual/en/function.version-compare.php>`_ function: ``>=``, ``>``, ``<=``, ``<``, ``==``, or ``!=``. The version number has to consist of major, minor, and patch version (``8.3.0`` instead of ``8.3``, for instance), otherwise PHPUnit emits a warning
+* A `version constraint <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_ in the syntax supported by Composer (e.g. ``^8.3``, ``~8.3.0``, ``8.3.*``)
 
 Here are some examples:
 
-* ``#[RequiresPhp('>= 8.3')]``: PHP 8.3.0 or newer
+* ``#[RequiresPhp('>= 8.3.0')]``: PHP 8.3.0 or newer
 * ``#[RequiresPhp('^8.3')]``: PHP 8.3.0 or newer, but below 9.0.0 (Composer syntax)
 * ``#[RequiresPhp('~8.3.0')]``: PHP 8.3.0 or newer, but below 8.4.0 (Composer syntax)
 
