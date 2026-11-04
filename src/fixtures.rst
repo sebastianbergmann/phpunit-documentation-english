@@ -370,7 +370,9 @@ A test that is run in a separate PHP process, for instance because of the :ref:`
 
 When all tests of a test class are run in separate processes, its before-first-test and after-last-test methods are only called in these processes, not in the process of the test runner. When only some of its tests are run in separate processes, these methods are also called in the process of the test runner, before its first test and after its last test.
 
-Consequently, when all tests of a test class are run in separate processes and a before-first-test method skips the tests using ``markTestSkipped()`` or throws an exception, a separate process is started for each test, and each test is reported as skipped or as errored. To skip all tests of such a test class without starting a separate process for each of them, express the precondition using one of the :ref:`Requires* attributes <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>` on the test class.
+A before-first-test method skips the tests of its test class when it calls ``markTestSkipped()`` or ``markTestIncomplete()``. The tests are reported as skipped in both cases, not as incomplete, whether they are run in separate processes or not.
+
+Consequently, when all tests of a test class are run in separate processes and a before-first-test method skips the tests or throws an exception, a separate process is started for each test, and each test is reported as skipped or as errored. To skip all tests of such a test class without starting a separate process for each of them, express the precondition using one of the :ref:`Requires* attributes <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>` on the test class.
 
 .. _fixtures.global-state:
 
