@@ -1672,18 +1672,63 @@ For skip logic that goes beyond what these attributes support, use ``markTestSki
 
 The ``RequiresPhp(string $versionRequirement)`` attribute can be used to
 :ref:`skip the execution of a test <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>`
-when the PHP version used to run PHPUnit does not match the specified version requirement.
-
-``$versionRequirement`` must be one of the following:
-
-* A version number string preceded by a comparison operator supported by PHP's `version_compare() <https://www.php.net/manual/en/function.version-compare.php>`_ function: ``>=``, ``>``, ``<=``, ``<``, ``==``, or ``!=``. The version number has to consist of major, minor, and patch version (``8.3.0`` instead of ``8.3``, for instance), otherwise PHPUnit emits a warning
-* A `version constraint <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_ in the syntax supported by Composer (e.g. ``^8.3``, ``~8.3.0``, ``8.3.*``)
+when the PHP version used to run PHPUnit does not satisfy the specified version requirement.
 
 Here are some examples:
 
 * ``#[RequiresPhp('>= 8.3.0')]``: PHP 8.3.0 or newer
-* ``#[RequiresPhp('^8.3')]``: PHP 8.3.0 or newer, but below 9.0.0 (Composer syntax)
-* ``#[RequiresPhp('~8.3.0')]``: PHP 8.3.0 or newer, but below 8.4.0 (Composer syntax)
+* ``#[RequiresPhp('^8.3')]``: PHP 8.3.0 or newer, but below 9.0.0
+* ``#[RequiresPhp('~8.3.0')]``: PHP 8.3.0 or newer, but below 8.4.0
+* ``#[RequiresPhp('8.3.* || 8.4.*')]``: PHP 8.3 or PHP 8.4
+
+``$versionRequirement`` is either a version constraint or a version comparison.
+
+A version constraint uses the syntax of `Composer's version constraints <https://getcomposer.org/doc/articles/versions.md#writing-version-constraints>`_:
+
+.. list-table::
+    :header-rows: 1
+    :widths: 30 70
+
+    * - Version constraint
+      - Satisfied by
+    * - ``8.5.1``
+      - ``8.5.1``
+    * - ``8.5.*`` or ``8.5.x``
+      - ``8.5.0`` or newer, but below ``8.6.0``
+    * - ``8.*`` or ``8.x``
+      - ``8.0.0`` or newer, but below ``9.0.0``
+    * - ``^8.5`` or ``~8.5``
+      - ``8.5.0`` or newer, but below ``9.0.0``
+    * - ``^8.5.1``
+      - ``8.5.1`` or newer, but below ``9.0.0``
+    * - ``~8.5.1``
+      - ``8.5.1`` or newer, but below ``8.6.0``
+    * - ``^8.4 || ^9.0``
+      - Versions that satisfy ``^8.4`` or ``^9.0``
+
+A version without an operator, such as ``8.5.1``, is satisfied by exactly this version and has to consist of
+major, minor, and patch version. A version requirement such as ``8.5`` or ``8`` is ignored, and PHPUnit emits
+a warning. Use ``8.5.*`` or ``^8.5``, for instance, to require a range of versions.
+
+A version comparison consists of one of the operators ``<``, ``<=``, ``>``, ``>=``, ``==``, ``=``, ``!=``, or
+``<>``, followed by a version, for instance ``>= 8.5.0``. It is evaluated using PHP's
+`version_compare() <https://www.php.net/manual/en/function.version-compare.php>`_ function. The version has to
+consist of major, minor, and patch version, otherwise PHPUnit emits a warning: ``version_compare()`` considers
+``8.5.0`` to be greater than ``8.5``, for instance, so ``<= 8.5`` is not satisfied by PHP 8.5.0.
+
+Development builds and release candidates of PHP report versions such as ``8.5.0-dev`` and ``8.5.0RC1``.
+A version constraint treats such a version as the version it is a pre-release of: ``8.5.0`` and ``^8.5`` are
+satisfied by PHP 8.5.0RC1, for instance. A version comparison does not: ``>= 8.5.0`` is not satisfied by
+PHP 8.5.0RC1, but ``< 8.5.0`` is. Use a version comparison such as ``>= 8.5.0RC1`` to compare against a pre-release.
+
+A test errors when its version requirement is neither a version constraint nor a version comparison. This is
+the case for the following syntax, among others, even though Composer supports some of it:
+
+* Combining version requirements with AND, for instance ``>=8.3.0 <8.5.0`` or ``>=8.3.0, <8.5.0``
+* Hyphen ranges, for instance ``8.3 - 8.5``
+* Combining a version comparison with another version requirement using ``||``, for instance ``>= 8.3.0 || < 7.0.0``
+* A version without an operator that has a pre-release suffix but not major, minor, and patch version, or that does not separate the suffix using ``-``, for instance ``8.5-dev`` or ``8.5.0RC1``
+* Stability flags, branch names, build metadata, and versions with more than three numbers, for instance ``^8.5@dev``, ``dev-main``, ``^8.5.0+build``, or ``8.5.0.1``
 
 
 .. _appendixes.attributes.RequiresPhpExtension:
