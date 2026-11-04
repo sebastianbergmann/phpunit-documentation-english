@@ -313,7 +313,7 @@ The default output of PHPUnit's test runner consists of up to four sections.
 Runtime information
 -------------------
 
-This section contains information about the PHPUnit version, PHP version, and PHPUnit's XML configuration file.
+This section contains information about the PHPUnit version, PHP version, and PHPUnit's XML configuration file. When PHPUnit seeds random number generators, this section also shows the seed (see :ref:`textui.random-numbers`).
 
 This section can be disabled using the ``--no-output`` CLI option.
 
@@ -795,8 +795,8 @@ The order is the first stage of the pipeline. Exactly one order can be configure
 
 ``random``
 
-    Tests are executed in random order. Use ``--random-order-seed`` to make the order
-    reproducible
+    Tests are executed in random order. Use ``--random-seed`` to make the order
+    reproducible (see :ref:`textui.random-numbers`)
 
 ``reverse``
 
@@ -867,12 +867,12 @@ Convenience aliases are available: ``--random-order`` (for ``--order-by random``
 
 .. parsed-literal::
 
-    $ ./tools/phpunit --order-by random --random-order-seed 42
+    $ ./tools/phpunit --order-by random --random-seed 42
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Runtime:       PHP 8.5.3
     Configuration: /path/to/project/phpunit.xml
-    Random seed:   42
+    Random Seed:   42
 
     ..                                                                  2 / 2 (100%)
 
@@ -912,4 +912,48 @@ More than one order
 
 A value that PHPUnit does not know is rejected with an error when it is used for ``--order-by``. When it is used for the ``executionOrder`` attribute then it is currently ignored, which is deprecated and will be an error in PHPUnit 14.
 
+The ``--random-order-seed <N>`` CLI option is deprecated as well. Use ``--random-seed <N>`` instead (see :ref:`textui.random-numbers`).
+
 See :ref:`appendixes.cli-options.execution` for the complete reference.
+
+
+.. _textui.random-numbers:
+
+Random numbers
+==============
+
+A test that uses random numbers, for instance to generate test data, may fail for some of them only. To reproduce such a failure, the test has to get the same random numbers when it is run again. The ``--random-seed <N>`` option seeds PHP's random number generators with ``N``:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --random-seed 1234
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Runtime:       PHP 8.5.3
+    Configuration: /path/to/project/phpunit.xml
+    Random Seed:   1234
+
+    ..                                                                  2 / 2 (100%)
+
+    Time: 00:00.077, Memory: 10.00 MB
+
+    OK (2 tests, 2 assertions)
+
+The random number generators are also seeded when the tests are run in random order (see :ref:`textui.test-execution-order`). Unless ``--random-seed`` is used, the current time is used as the seed in this case. The same seed is used for the random order and for the random numbers. Either way, PHPUnit shows the seed in the :ref:`runtime information <textui.output.runtime>`, so that it can be passed to ``--random-seed`` to run the tests with the same random numbers, and in the same random order, again. Otherwise, PHPUnit does not seed the random number generators.
+
+The following random number generators are seeded:
+
+* The Mt19937 random number generator that is used by ``mt_rand()``, ``rand()``, ``shuffle()``, ``str_shuffle()``, and ``array_rand()``
+* The random number generator of the ``gmp`` extension, which is used by ``gmp_random_bits()`` and ``gmp_random_range()``, for instance, when this extension is loaded
+
+``random_int()`` and ``random_bytes()`` use a cryptographically secure random number generator that cannot be seeded, and an object of the ``Random\Randomizer`` class uses the engine it was created with. They are not affected by the seed.
+
+PHPUnit does not seed the random number generators only once. It seeds them again before each test, before the before-first-test methods of each test class, and before each data provider is called, using a seed that is derived from the seed of the test run and from the test, the test class, or the data provider, respectively. For a given seed, a test therefore gets the same random numbers, and a data provider provides the same data, regardless of which other tests are run, in which order the tests are run, and whether a test is run in a separate process. A test that failed can thus be run on its own with the seed of the test run in which it failed:
+
+.. parsed-literal::
+
+    $ ./tools/phpunit --random-seed 1234 --filter testSomething
+
+Each repetition of a :ref:`repeated test <flaky-tests.repeating-tests>` and each attempt of a :ref:`retried test <flaky-tests.retrying-tests>` gets random numbers of its own, which are also the same for a given seed. The random number generators are not seeded for :ref:`PHPT tests <appendixes.phpt>`, which are run in a separate PHP process.
+
+When ``N`` is not a positive integer, ``--random-seed`` is ignored and PHPUnit emits a test runner warning.

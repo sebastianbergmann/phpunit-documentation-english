@@ -196,7 +196,7 @@ Three sorting rules are applied:
 
 The order in which the tests were executed plays no role. Neither does
 :ref:`Depends <writing-tests-for-phpunit.test-dependencies>`, nor
-``--order-by``, nor ``--random-order-seed``.
+``--order-by``, nor ``--random-seed``.
 
 Consider the following test class:
 

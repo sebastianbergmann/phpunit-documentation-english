@@ -10,8 +10,9 @@ of two root causes:
 
 - The code under test, or the test itself, depends on something that is not
   fully under its control: the wall clock, the order in which concurrent
-  operations complete, a remote service, the network, the file system, or the
-  scheduling of operating system processes.
+  operations complete, a remote service, the network, the file system, the
+  scheduling of operating system processes, or random numbers (see
+  :ref:`textui.random-numbers`).
 
 - The code under test manages state (connections, caches, file handles, or
   other resources) that is set up correctly once but leaks or becomes corrupt

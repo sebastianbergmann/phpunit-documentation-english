@@ -543,7 +543,7 @@ Code coverage:
 
 Miscellaneous:
 
-- ``--random-order-seed <N>``
+- ``--random-seed <N>``
 - ``-h``, ``--help``
 - ``--version``
 - ``--atleast-version <min>``
