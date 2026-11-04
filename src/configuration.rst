@@ -416,6 +416,7 @@ Configuration selection and one-shot operations:
 - ``--no-logging``
 - ``--generate-configuration``
 - ``--migrate-configuration``
+- ``--validate-configuration``
 - ``--generate-baseline <file>``
 - ``--ignore-baseline``
 - ``--warm-coverage-cache``
