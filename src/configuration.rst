@@ -496,6 +496,7 @@ Configuration selection and one-shot operations:
 - ``--no-logging``
 - ``--generate-configuration``
 - ``--migrate-configuration``
+- ``--validate-configuration``
 - ``--show-effective-configuration``
 - ``--generate-baseline <file>``
 - ``--ignore-baseline``
