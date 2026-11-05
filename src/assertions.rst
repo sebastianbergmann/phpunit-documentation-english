@@ -1354,6 +1354,10 @@ The format string may contain the following placeholders:
 
   ``%%``: A literal percent character: ``%``.
 
+-
+
+  ``%0``: A null byte
+
 .. admonition:: Deprecation: ``assertStringNotMatchesFormat()`` is deprecated
 
    As of PHPUnit 10.4, the ``assertStringNotMatchesFormat()`` method is soft-deprecated,
