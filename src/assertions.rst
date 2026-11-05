@@ -1497,6 +1497,10 @@ The format string may contain the following placeholders:
 
   ``%%``: A literal percent character: ``%``.
 
+-
+
+  ``%0``: A null byte
+
 .. _appendixes.assertions.assertStringMatchesFormatFile:
 
 ``assertStringMatchesFormatFile()``
