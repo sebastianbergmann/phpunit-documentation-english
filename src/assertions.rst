@@ -818,6 +818,20 @@ Reports an error identified by ``$message`` if ``$actual`` is not empty.
 
 ``assertNotEmpty()`` is the inverse of this assertion and takes the same arguments.
 
+Whether ``$actual`` is empty is determined as follows:
+
+* An ``EmptyIterator`` object is empty
+* An object that implements the ``Countable`` interface is empty when ``count($actual)`` returns ``0``
+* Any other value is empty when ``empty($actual)`` returns ``true``
+
+What ``count()`` returns is up to the class that implements ``Countable``.
+For a ``SimpleXMLElement`` object, for instance, ``count()`` returns the number of child elements.
+An XML element that has attributes or text content, but no child elements, is therefore considered empty.
+
+``empty()`` returns ``false`` for objects of userland classes.
+An ``Iterator`` (other than ``EmptyIterator``) or ``IteratorAggregate`` object that does not implement ``Countable``
+is therefore not considered empty, even when it does not yield any elements.
+
 .. literalinclude:: examples/assertions/EmptyTest.php
    :caption: Usage of assertEmpty()
    :language: php
