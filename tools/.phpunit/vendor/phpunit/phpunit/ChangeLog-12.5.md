@@ -1,0 +1,455 @@
+# Changes in PHPUnit 12.5
+
+All notable changes of the PHPUnit 12.5 release series are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
+
+## [12.5.44] - 2026-MM-DD
+
+### Fixed
+
+* When an order is configured on the command line, for instance using `--order-by random`, `defects` configured using the `executionOrder` attribute in the XML configuration file is still applied, and vice versa
+* `--fail-on-skipped` does not make the test runner exit with a shell exit code that indicates failure when a test class is skipped, for instance because its before-first-test method calls `markTestSkipped()`, although its tests are counted as skipped
+* `--stop-on-skipped` does not stop the test run when a test class is skipped, for instance because its before-first-test method calls `markTestSkipped()`
+* When PHPUnit is installed using Composer, code units in the `PHPUnit\` or `SebastianBergmann\` namespace that do not belong to PHPUnit or one of its dependencies are preloaded on startup, which leads to a fatal error when such a code unit depends on code that is not available
+* Code from `nikic/php-parser` and parts of the code from `phar-io/manifest` are not treated like code from PHPUnit's other dependencies, for instance stack frames from it are not filtered from stack traces
+
+## [12.5.43] - 2026-11-02
+
+### Changed
+
+* Issues whose message refers to an anonymous class could not be ignored using a baseline on PHP 8.6 (as of PHP 8.6, such messages contain the full name of the anonymous class: a NUL byte followed by the file, line, and a counter)
+* Make PHAR build reproducible across filesystems (files are now added to the PHAR sorted by their path instead of in the order in which the filesystem lists them)
+
+### Fixed
+
+* When `method()` is called for a method of a test double that cannot be configured, for instance because it does not exist, every subsequent invocation of a method of that test double fails with `Method name is not configured`
+* When a hook method of a test, for instance `setUp()`, marks the test as incomplete, the hook method is reported as failed
+* When an "after test" method, for instance `tearDown()`, marks a successful test as incomplete or skips it, the test is reported as failed
+* When a before-first-test method, for instance `setUpBeforeClass()`, calls `markTestIncomplete()`, each test of the test class is reported as failed instead of the test class being skipped as it is when `markTestSkipped()` is called
+* When an after-last-test method, for instance `tearDownAfterClass()`, calls `markTestIncomplete()` or `markTestSkipped()` after the tests of the test class have been run, this is reported as a failure, also for each test of the test class that is run in process isolation
+* A failed PHP assertion, made using `assert()`, in a hook method is reported as an error of that method instead of as a failure, and it is counted as an error instead of as a failure when that method is a before-first-test method or an after-last-test method
+* When an assertion fails in an "after test" method, for instance `tearDown()`, of a test that already failed, errored, or was marked as incomplete, a failure is reported in addition to the outcome of the test, so the test is counted more than once and `onNotSuccessfulTest()` is called with the failure from the "after test" method instead of the test's own
+* When a test fails because of an exception of a registered failure type, an error or a failure in an "after test" method, for instance `tearDown()`, is reported in addition to the test's failure, so the test is counted more than once
+* A test that fails because of an exception of a registered failure type is considered risky when it does not perform assertions or, when `requireCoverageMetadata="true"` is configured, when it does not define a code coverage target, unlike a test that fails because an assertion failed
+* The TestDox output does not show the failure of a before-first-test method or an after-last-test method, for instance an assertion failure in `setUpBeforeClass()`
+* Control characters and ANSI escape sequences in user-supplied strings are not made visible in the output of `--debug` and in the logfiles written by `--log-events-text` and `--log-events-verbose-text`
+* Groups configured for a test directory or test file using the `groups` attribute of `<directory>` or `<file>` in the XML configuration file are not assigned to PHPT tests, so `--group` and `--exclude-group` do not select them and `--list-groups` and `--list-tests-xml` report them as being in the `default` group or not at all
+
+### Removed
+
+* The library PHAR (`phpunit-library-X.Y.Z.phar`) is no longer built, it could not be loaded since PHPUnit 9.5.8
+
+## [12.5.42] - 2026-10-27
+
+### Fixed
+
+* The static analysis cache directory that is automatically created in the operating system's path used for temporary files when no cache directory is configured is not used when the POSIX extension is not loaded
+
+## [12.5.41] - 2026-10-27
+
+### Fixed
+
+* The TeamCity logger writes `testSuiteFinished` twice for a test class when one of its before-first-test methods errors or fails
+* The TestDox output shows a less important outcome of a test that has more than one outcome, for instance the failure in `tearDown()` of a test that errored
+* When no static analysis cache directory is configured, the cache directory that is automatically created in the operating system's path used for temporary files is also used when it was created by another user or can be written to by other users
+
+## [12.5.40] - 2026-10-16
+
+### Fixed
+
+* The dependencies of a test that are listed after a dependency on a test that does not return a value, or after a dependency on a larger test, were not checked, so the test was run instead of being skipped when one of these dependencies had not passed
+* Tests could not be run in process isolation when the namespace of the test class begins with a name that the code of the child process imports, for instance `CodeCoverage` or `Facade`
+* A test that is run in process isolation aborts the test run when its data set or a value returned by a test it depends on cannot be serialized, for instance because it is a closure
+* When a before-first-test method or an after-last-test method errors or fails, the remaining methods of the same kind are still called, and each of them that does not error or fail itself is reported with the exception of the earlier method
+* When a hook method of a test, for instance a `#[Before]` method, skips the test, the remaining hook methods of the same kind are still called, so the test is reported as errored instead of skipped when one of them errors
+* An error or failure in a before-first-test method or an after-last-test method that is called again in the child process of a test that is run in process isolation is reported twice, once for the test class and once for the test
+* When a before-first-test method errors, the progress output shows one `E` for the test class instead of one for each of its tests, only one of its tests is counted as run, and the test that is run next is shown as an error
+* When a before-first-test method fails, the progress output shows nothing for the tests of the test class and only one of them is counted as run
+* The Open Test Reporting XML logfile has no start for a test that errors before it is prepared, for instance because it depends on a test that does not exist, and no end for the test that is run after a test that is skipped because a test it depends on did not pass or because one of its
+  requirements is not met
+* The Open Test Reporting XML logfile has an end without an ID for a test that is marked as incomplete before it is prepared, for instance in `setUp()`, and no end for the test that is run after it
+* The Open Test Reporting XML logfile has no end for the test that is run after a test whose preparation errors, for instance because `setUp()` raises an exception or the global state cannot be backed up
+* The Open Test Reporting XML logfile has more than one end for a test that has more than one outcome, for instance because `tearDown()` fails after the test errored
+* The Open Test Reporting XML logfile is not well-formed when a test name, a message, or the string representation of an exception contains `]]>`, bytes that are not valid UTF-8, or characters that are not allowed in XML, for instance the escape character of an ANSI escape sequence
+
+## [12.5.39] - 2026-10-12
+
+### Fixed
+
+* [#7053](https://github.com/sebastianbergmann/phpunit/issues/7053): Extensions loaded using `-d extension` or `-d zend_extension` are not loaded in child processes
+* The status of a test whose mock object raises an exception in its destructor is success although the test is reported as errored, so `tearDown()` sees the wrong status and code coverage records the test as successful
+* Named arguments passed to `with()` were matched by position instead of by name, so an expectation such as `->with(b: 7)` compared the expected value with the first parameter of the method and the parameter named `$b` was not checked
+* When code coverage is collected and no code coverage driver is available in a child process, a test that is run in process isolation errors and a PHPT test fails instead of a warning being emitted
+
+## [12.5.38] - 2026-10-05
+
+### Changed
+
+* The Software Bill of Materials (SBOM) embedded in the PHAR now uses CycloneDX 1.7 and provides the NTIA minimum elements as well as the data fields that BSI TR-03183-2 (version 2.1.0) requires for logical and identified components, including component creators, original, distribution and effective licences, source code URIs, and the PHP runtime and its extensions as external components
+
+### Fixed
+
+* `setUpBeforeClass()` and `tearDownAfterClass()` were run twice for a test class that is the only test class in a test suite of the XML configuration file that has the name of that test class
+* Tests could not be run in process isolation when the path of the bootstrap script, the test file, or the directory for temporary files contained a single quote
+* A test that is run in process isolation aborts the test run when its result cannot be unserialized, for instance because it returns an object that holds a test double
+* Issues that are listed in the baseline are not ignored for tests that are run in a separate process
+* Arguments in the `--ARGS--` section of a PHPT test that start with `-` were interpreted by PHP instead of being passed to the test when the test also has a `--STDIN--` section
+* Recording the tests that passed in a child process copied all tests that had passed so far, which made running many tests in process isolation increasingly slow
+
+## [12.5.37] - 2026-09-29
+
+### Fixed
+
+* The class name argument of `#[RequiresMethod]` is declared as `class-string`, so static analysis reports an error when it refers to a class that does not exist
+* A `#[RequiresMethod]` attribute that refers to a class which cannot be loaded, for instance because its parent class does not exist, aborts the test run instead of skipping the test
+
+## [12.5.36] - 2026-09-25
+
+### Changed
+
+* Control characters and ANSI escape sequences in user-supplied strings such as test names, data set names, and messages are now made visible as `\u{NNNN}` escape sequences instead of being passed through to the terminal
+
+## [12.5.35] - 2026-09-09
+
+### Fixed
+
+* Paths of included files are now escaped when generating the code that is executed in a separate process, so that a path containing special characters no longer produces broken code
+* Tests of a test class that is skipped as a whole are missing from the TestDox output
+* A test that is skipped or marked incomplete before it started is missing from the TestDox output
+* A test that is marked incomplete before it started is not counted in the number of tests that ran
+* No progress is printed for a test that is marked incomplete before it started
+
+## [12.5.34] - 2026-08-27
+
+### Fixed
+
+* [#6904](https://github.com/sebastianbergmann/phpunit/issues/6904): `SourceMap` is built in child process even though `identifyIssueTrigger` is disabled
+
+## [12.5.33] - 2026-07-28
+
+### Fixed
+
+* [#6861](https://github.com/sebastianbergmann/phpunit/issues/6861): Hook methods run twice when a template method is marked with its corresponding attribute
+* Regression that stopped test methods from being sorted by source code location
+
+## [12.5.32] - 2026-07-25
+
+### Fixed
+
+* [#6833](https://github.com/sebastianbergmann/phpunit/issues/6833): `assertArrayHasKey()` does not accept `ArrayAccess` implementations with a specific value type when test code is analysed with PHPStan at level 9
+* [#6854](https://github.com/sebastianbergmann/phpunit/issues/6854): Deprecation triggered in first-party code is wrongly classified as indirect when the first-party code is called from third-party code
+
+## [12.5.31] - 2026-07-06
+
+### Changed
+
+* [#6797](https://github.com/sebastianbergmann/phpunit/issues/6797): Adapt code generated for test double of interface with constructor for PHP 8.6
+
+## [12.5.30] - 2026-06-15
+
+### Fixed
+
+* [#6743](https://github.com/sebastianbergmann/phpunit/issues/6743): Improve error message for invalid version constraint in attribute
+* Class, method, and data-set names in TestDox HTML report are not escaped
+
+## [12.5.29] - 2026-06-04
+
+### Fixed
+
+* [#6683](https://github.com/sebastianbergmann/phpunit/issues/6683): `assertNotEquals()` failure message says "is equal to" instead of "is not equal to" when comparing arrays or objects
+* [#6700](https://github.com/sebastianbergmann/phpunit/issues/6700): `expectOutputString()` and `expectOutputRegex()` silently replace themselves and each other
+
+## [12.5.28] - 2026-05-27
+
+### Fixed
+
+* [#6681](https://github.com/sebastianbergmann/phpunit/pull/6681): XML assertions such as `assertXmlStringEqualsXmlString()` regressed into treating comments as significant
+
+## [12.5.27] - 2026-05-25
+
+### Fixed
+
+* [#6673](https://github.com/sebastianbergmann/phpunit/issues/6673): Empty PHP settings from the parent process override per-test `-d` settings forwarded to child processes (breaks PCOV coverage)
+
+## [12.5.26] - 2026-05-21
+
+### Fixed
+
+* PHP setting values containing `=` need to be quoted before forwarding via `-d`
+
+## [12.5.25] - 2026-05-13
+
+### Changed
+
+* A `Test` or `Tests` prefix is no longer stripped from class names when they are processed for TestDox output
+
+### Fixed
+
+* [#6605](https://github.com/sebastianbergmann/phpunit/issues/6605): Data set names and provider values containing Unicode bidirectional control characters distort terminal output
+* [#6610](https://github.com/sebastianbergmann/phpunit/issues/6610): Per-testsuite bootstrap script not loaded in process isolation
+* TestDox output collapsed separate test classes into a single group when their prettified class names matched
+
+## [12.5.24] - 2026-05-01
+
+### Added
+
+* [#6596](https://github.com/sebastianbergmann/phpunit/issues/6596): Backport `TestCase::invokeTestMethod()` method for customizing test method invocation from PHPUnit 13
+
+### Fixed
+
+* [#6595](https://github.com/sebastianbergmann/phpunit/issues/6595): Crash when before-class or after-class method fails with assertion failure
+* [#6599](https://github.com/sebastianbergmann/phpunit/issues/6599): TeamCity logger does not wrap failures in before-test methods with `testStarted` and `testFinished`
+* [#6601](https://github.com/sebastianbergmann/phpunit/issues/6601): Anonymous classes are not rejected with a clear error when creating a test double
+* `MockBuilder::setMockClassName()` and `TestStubBuilder::setStubClassName()` now reject values that are not valid unqualified PHP class identifiers, throwing the new `InvalidClassNameException`
+* The regular expression used by `Generator::ensureValidMethods()` to validate method names passed to `MockBuilder::onlyMethods()` and `addMethods()` was not anchored, so any string containing a valid identifier substring (including strings with parentheses, braces, comments, or newlines) was accepted
+
+## [12.5.23] - 2026-04-18
+
+### Changed
+
+* Pass `LIBXML_NONET` when parsing/validating XML configuration files to make explicit that no network I/O is performed
+* Verify the result file written by an isolated child process with a random nonce before deserializing it
+
+## [12.5.22] - 2026-04-17
+
+### Fixed
+
+* [#6590](https://github.com/sebastianbergmann/phpunit/issues/6590): Silent failure when configuration file is invalid
+* [#6592](https://github.com/sebastianbergmann/phpunit/pull/6592): INI metacharacters `;` and `"` are not preserved when forwarding settings to child processes
+
+## [12.5.21] - 2026-04-16
+
+### Fixed
+
+* [#5860](https://github.com/sebastianbergmann/phpunit/issues/5860): PHP CLI `-d` settings are not forwarded to child processes for process isolation
+* [#6451](https://github.com/sebastianbergmann/phpunit/issues/6451): Incomplete version in `RequiresPhp` (e.g. `<=8.5`) is compared against full PHP version, causing unexpected skips
+
+## [12.5.20] - 2026-04-15
+
+### Fixed
+
+* [#5993](https://github.com/sebastianbergmann/phpunit/issues/5993): `DefaultJobRunner` deadlocks on child processes that write large amounts of stderr output
+* [#6465](https://github.com/sebastianbergmann/phpunit/issues/6465): SAPI-populated `$_SERVER` entries leak from parent into child process
+* [#6587](https://github.com/sebastianbergmann/phpunit/issues/6587): `failOnEmptyTestSuite="false"` in `phpunit.xml` is ignored when `--group`/`--filter`/`--testsuite` matches no tests
+* [#6588](https://github.com/sebastianbergmann/phpunit/issues/6588): Order of issue baseline entries is not canonicalized
+
+## [12.5.19] - 2026-04-13
+
+### Fixed
+
+* Regression in XML configuration migration introduced in PHPUnit 12.5.8
+
+## [12.5.18] - 2026-04-13
+
+### Fixed
+
+* [#4571](https://github.com/sebastianbergmann/phpunit/issues/4571): No warning when `--random-order-seed` is used when test execution order is not random
+* [#4975](https://github.com/sebastianbergmann/phpunit/issues/4975): `--filter` does not work when filter string starts with `#`
+* [#5354](https://github.com/sebastianbergmann/phpunit/issues/5354): JUnit XML logger does not handle `TestSuiteSkipped` event
+* [#6276](https://github.com/sebastianbergmann/phpunit/issues/6276): Exit with non-zero exit code when explicit test selection (`--filter`, `--group`, `--testsuite`) yields no tests
+* [#6583](https://github.com/sebastianbergmann/phpunit/issues/6583): Failing output expectation skips `tearDown()` and handler restoration, causing subsequent tests to be marked as risky
+
+## [12.5.17] - 2026-04-08
+
+### Changed
+ 
+* [#4793](https://github.com/sebastianbergmann/phpunit/issues/4793): Exit with non-zero exit code when `exit` was called from some test
+
+### Fixed
+
+* [#5881](https://github.com/sebastianbergmann/phpunit/issues/5881): `colors="true"` in XML configuration file does not unconditionally enable colored output
+* [#6019](https://github.com/sebastianbergmann/phpunit/issues/6019): `--migrate-configuration` does not update schema location when XML content already validates against current schema
+* [#6372](https://github.com/sebastianbergmann/phpunit/issues/6372): Assertion failure inside `willReturnCallback()` is silently swallowed when code under test catches exceptions
+* [#6464](https://github.com/sebastianbergmann/phpunit/issues/6464): Process isolation template unconditionally calls `set_include_path()`
+* [#6571](https://github.com/sebastianbergmann/phpunit/issues/6571): Static analysis errors for `TestDoubleBuilder` method chaining
+
+## [12.5.16] - 2026-04-03
+
+### Added
+
+* [#6547](https://github.com/sebastianbergmann/phpunit/pull/6547): Support for `%r...%r` in `EXPECTF` section
+
+### Fixed
+
+* [#6025](https://github.com/sebastianbergmann/phpunit/issues/6025): `FILE_EXTERNAL` breaks `__DIR__`
+* [#6351](https://github.com/sebastianbergmann/phpunit/issues/6351): No warning when the same test runner extension is configured more than once
+* [#6433](https://github.com/sebastianbergmann/phpunit/issues/6433): Logic in `TestSuiteLoader` is brittle and causes "Class FooTest not found" even for valid tests in valid filenames
+* [#6463](https://github.com/sebastianbergmann/phpunit/issues/6463): Process Isolation fails on non-serializable globals and quietly ignore closures
+
+## [12.5.15] - 2026-03-31
+
+### Changed
+
+* [#4440](https://github.com/sebastianbergmann/phpunit/issues/4440): Improve error when configured code coverage file list is empty
+* [#6549](https://github.com/sebastianbergmann/phpunit/pull/6549): Allow to stub both hooks of non-virtual properties
+
+### Fixed
+
+* [#6529](https://github.com/sebastianbergmann/phpunit/pull/6529): Git "detached HEAD state" in Open Test Reporting (OTR) XML logger not handled properly
+* [#6545](https://github.com/sebastianbergmann/phpunit/issues/6545): Stubbing a class with set property hook leaves property uninitialized by default
+* The `RegularExpression` and `StringMatchesFormatDescription` did not handle `preg_match()` errors such as `Compilation failed: regular expression is too large`
+
+## [12.5.14] - 2026-02-18
+
+### Fixed
+
+* [#6521](https://github.com/sebastianbergmann/phpunit/issues/6521): Performance regression in PHPUnit 11.5.54, PHPUnit 12.5.13, and PHPUnit 13.0.4
+
+## [12.5.13] - 2026-02-18
+
+### Fixed
+
+* [#6489](https://github.com/sebastianbergmann/phpunit/pull/6489): Classification of self/direct/indirect deprecation triggers is not aligned with Symfony's bridge for PHPUnit
+
+## [12.5.12] - 2026-02-16
+
+### Fixed
+
+* [#6511](https://github.com/sebastianbergmann/phpunit/issues/6511): TestDox variables out of order with named arguments
+* [#6514](https://github.com/sebastianbergmann/phpunit/issues/6514): `<ini />` can silently fail
+
+## [12.5.11] - 2026-02-10
+
+### Deprecated
+
+* [#6510](https://github.com/sebastianbergmann/phpunit/issues/6510): Deprecate using `with*()` on test stubs
+
+### Fixed
+
+* [#6503](https://github.com/sebastianbergmann/phpunit/issues/6503): Temporary file used by `SourceMapper` may be deleted prematurely when multiple PHPUnit processes run in parallel
+* [#6509](https://github.com/sebastianbergmann/phpunit/issues/6509): "No expectations were configured for the mock object ..." notice is emitted when `with()` is used without `expects()`
+
+## [12.5.10] - 2026-02-08
+
+### Fixed
+
+* [#6495](https://github.com/sebastianbergmann/phpunit/pull/6495): Source map for issue trigger identification is regenerated in process isolation child processes
+
+## [12.5.9] - 2026-02-05
+
+### Added
+
+* [#6488](https://github.com/sebastianbergmann/phpunit/issues/6488): Allow disabling issue trigger identification for improved performance
+
+### Fixed
+
+* [#6486](https://github.com/sebastianbergmann/phpunit/issues/6486): Incorrect file name reported for errors for test methods declared in traits
+* [#6490](https://github.com/sebastianbergmann/phpunit/pull/6490): Incorrect test count when tests are skipped in before-class method
+
+## [12.5.8] - 2026-01-27
+
+### Changed
+
+* To prevent Poisoned Pipeline Execution (PPE) attacks using prepared `.coverage` files in pull requests, a PHPT test will no longer be run if the temporary file for writing code coverage information already exists before the test runs
+
+## [12.5.7] - 2026-01-24
+
+### Fixed
+
+* [#6362](https://github.com/sebastianbergmann/phpunit/issues/6362): Manually instantiated test doubles are broken since PHPUnit 11.2
+* [#6470](https://github.com/sebastianbergmann/phpunit/issues/6470): Infinite recursion in `Count::getCountOf()` for unusal implementations of `Iterator` or `IteratorAggregate`
+
+## [12.5.6] - 2026-01-16
+
+### Changed
+
+* Reverted a change that caused a [build failure](https://github.com/php/php-src/actions/runs/21052584327/job/60542023395#step:14:3729) for the [PHP project's nightly community job](https://phpunit.expert/articles/how-php-and-its-ecosystem-test-each-other.html?ref=github)
+
+## [12.5.5] - 2026-01-15
+
+### Changed
+
+* `PHPUnit\Framework\MockObject` exceptions are now subtypes of `PHPUnit\Exception`
+
+### Deprecated
+
+* [#6461](https://github.com/sebastianbergmann/phpunit/issues/6461): `any()` matcher (soft deprecation)
+
+### Fixed
+
+* [#6470](https://github.com/sebastianbergmann/phpunit/issues/6470): Mocking a class with a property hook setter accepting more types than the property results in a fatal error
+
+## [12.5.4] - 2025-12-15
+
+### Changed
+
+* The `#[AllowMockObjectsWithoutExpectations]` attribute can now be used on the method level
+
+### Fixed
+
+* [#6446](https://github.com/sebastianbergmann/phpunit/issues/6446): Test runner crashes with `Timer::start() has to be called before Timer::stop()`
+
+## [12.5.3] - 2025-12-11
+
+### Changed
+
+* The message emitted when a test method creates a mock object but does not configure any expectations for it has been improved
+
+## [12.5.2] - 2025-12-08
+
+### Added
+
+* Attribute `#[AllowMockObjectsWithoutExpectations]` for excluding tests from the check that emits the notice for test methods that create a mock object but do not configure an expectation for it
+
+## [12.5.1] - 2025-12-06
+
+### Added
+
+* `TestCase::getStubBuilder()` (analogous to `TestCase::getMockBuilder()`) for creating (partial) test stubs using a fluent API
+
+## [12.5.0] - 2025-12-05
+
+### Added
+
+* [#6376](https://github.com/sebastianbergmann/phpunit/issues/6376): `--all` CLI option to ignore test selection configured in XML configuration file
+* [#6422](https://github.com/sebastianbergmann/phpunit/issues/6422): Make `<source>` element in XML code coverage report optional
+
+### Changed
+
+* [#6380](https://github.com/sebastianbergmann/phpunit/pull/6380): Allow `Throwable` in `expectExceptionObject()`
+* A PHPUnit notice is now emitted for test methods that create a mock object but do not configure an expectation for it
+
+[12.5.44]: https://github.com/sebastianbergmann/phpunit/compare/12.5.43...12.5
+[12.5.43]: https://github.com/sebastianbergmann/phpunit/compare/12.5.42...12.5.43
+[12.5.42]: https://github.com/sebastianbergmann/phpunit/compare/12.5.41...12.5.42
+[12.5.41]: https://github.com/sebastianbergmann/phpunit/compare/12.5.40...12.5.41
+[12.5.40]: https://github.com/sebastianbergmann/phpunit/compare/12.5.39...12.5.40
+[12.5.39]: https://github.com/sebastianbergmann/phpunit/compare/12.5.38...12.5.39
+[12.5.38]: https://github.com/sebastianbergmann/phpunit/compare/12.5.37...12.5.38
+[12.5.37]: https://github.com/sebastianbergmann/phpunit/compare/12.5.36...12.5.37
+[12.5.36]: https://github.com/sebastianbergmann/phpunit/compare/12.5.35...12.5.36
+[12.5.35]: https://github.com/sebastianbergmann/phpunit/compare/12.5.34...12.5.35
+[12.5.34]: https://github.com/sebastianbergmann/phpunit/compare/12.5.33...12.5.34
+[12.5.33]: https://github.com/sebastianbergmann/phpunit/compare/12.5.32...12.5.33
+[12.5.32]: https://github.com/sebastianbergmann/phpunit/compare/12.5.31...12.5.32
+[12.5.31]: https://github.com/sebastianbergmann/phpunit/compare/12.5.30...12.5.31
+[12.5.30]: https://github.com/sebastianbergmann/phpunit/compare/12.5.29...12.5.30
+[12.5.29]: https://github.com/sebastianbergmann/phpunit/compare/12.5.28...12.5.29
+[12.5.28]: https://github.com/sebastianbergmann/phpunit/compare/12.5.27...12.5.28
+[12.5.27]: https://github.com/sebastianbergmann/phpunit/compare/12.5.26...12.5.27
+[12.5.26]: https://github.com/sebastianbergmann/phpunit/compare/12.5.25...12.5.26
+[12.5.25]: https://github.com/sebastianbergmann/phpunit/compare/12.5.24...12.5.25
+[12.5.24]: https://github.com/sebastianbergmann/phpunit/compare/12.5.23...12.5.24
+[12.5.23]: https://github.com/sebastianbergmann/phpunit/compare/12.5.22...12.5.23
+[12.5.22]: https://github.com/sebastianbergmann/phpunit/compare/12.5.21...12.5.22
+[12.5.21]: https://github.com/sebastianbergmann/phpunit/compare/12.5.20...12.5.21
+[12.5.20]: https://github.com/sebastianbergmann/phpunit/compare/12.5.19...12.5.20
+[12.5.19]: https://github.com/sebastianbergmann/phpunit/compare/12.5.18...12.5.19
+[12.5.18]: https://github.com/sebastianbergmann/phpunit/compare/12.5.17...12.5.18
+[12.5.17]: https://github.com/sebastianbergmann/phpunit/compare/12.5.16...12.5.17
+[12.5.16]: https://github.com/sebastianbergmann/phpunit/compare/12.5.15...12.5.16
+[12.5.15]: https://github.com/sebastianbergmann/phpunit/compare/12.5.14...12.5.15
+[12.5.14]: https://github.com/sebastianbergmann/phpunit/compare/12.5.13...12.5.14
+[12.5.13]: https://github.com/sebastianbergmann/phpunit/compare/12.5.12...12.5.13
+[12.5.12]: https://github.com/sebastianbergmann/phpunit/compare/12.5.11...12.5.12
+[12.5.11]: https://github.com/sebastianbergmann/phpunit/compare/12.5.10...12.5.11
+[12.5.10]: https://github.com/sebastianbergmann/phpunit/compare/12.5.9...12.5.10
+[12.5.9]: https://github.com/sebastianbergmann/phpunit/compare/12.5.8...12.5.9
+[12.5.8]: https://github.com/sebastianbergmann/phpunit/compare/12.5.7...12.5.8
+[12.5.7]: https://github.com/sebastianbergmann/phpunit/compare/12.5.6...12.5.7
+[12.5.6]: https://github.com/sebastianbergmann/phpunit/compare/12.5.5...12.5.6
+[12.5.5]: https://github.com/sebastianbergmann/phpunit/compare/12.5.4...12.5.5
+[12.5.4]: https://github.com/sebastianbergmann/phpunit/compare/12.5.3...12.5.4
+[12.5.3]: https://github.com/sebastianbergmann/phpunit/compare/12.5.2...12.5.3
+[12.5.2]: https://github.com/sebastianbergmann/phpunit/compare/12.5.1...12.5.2
+[12.5.1]: https://github.com/sebastianbergmann/phpunit/compare/12.5.0...12.5.1
+[12.5.0]: https://github.com/sebastianbergmann/phpunit/compare/12.4.5...12.5.0
