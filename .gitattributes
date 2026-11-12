@@ -1,5 +1,4 @@
 /.github                export-ignore
-/.phive                 export-ignore
 /tools                  export-ignore
 /tools/*                binary
 /.editorconfig          export-ignore

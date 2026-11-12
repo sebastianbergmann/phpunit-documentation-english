@@ -1,0 +1,54 @@
+<?php declare(strict_types=1);
+/*
+ * This file is part of PHPUnit.
+ *
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace PHPUnit\Framework\Constraint;
+
+use function is_array;
+use function is_object;
+use PHPUnit\Util\Exporter;
+
+/**
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
+ */
+final class IsTrue extends Constraint
+{
+    /**
+     * Returns a string representation of the constraint.
+     */
+    public function toString(): string
+    {
+        return 'is true';
+    }
+
+    /**
+     * Returns the negated string representation of the constraint.
+     */
+    protected function negatedToString(): string
+    {
+        return 'is not true';
+    }
+
+    /**
+     * Evaluates the constraint for parameter $other. Returns true if the
+     * constraint is met, false otherwise.
+     */
+    protected function matches(mixed $other): bool
+    {
+        return $other === true;
+    }
+
+    protected function failureDescription(mixed $other): string
+    {
+        if (is_array($other) || is_object($other)) {
+            return $this->valueToTypeStringFragment($other) . $this->toString();
+        }
+
+        return Exporter::export($other) . ' ' . $this->toString();
+    }
+}

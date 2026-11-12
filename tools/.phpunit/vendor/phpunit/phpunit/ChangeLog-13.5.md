@@ -1,0 +1,28 @@
+# Changes in PHPUnit 13.5
+
+All notable changes of the PHPUnit 13.5 release series are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
+
+## [13.5.0] - 2026-12-04
+
+### Added
+
+* [#7038](https://github.com/sebastianbergmann/phpunit/issues/7038): `--show-effective-configuration` to show what a configuration will execute, without executing it
+* [#7039](https://github.com/sebastianbergmann/phpunit/issues/7039): `TestCase::suspendOutputBuffering()` and `TestCase::resumeOutputBuffering()` methods for capturing the output of a test method that `TestCase::invokeTestMethod()` runs in a coroutine with its own output buffers
+* [#7049](https://github.com/sebastianbergmann/phpunit/issues/7049): `--random-seed <N>` CLI option
+* [#7086](https://github.com/sebastianbergmann/phpunit/pull/7086): `--triggering-tests-limit` CLI option and `triggeringTestsLimit` XML attribute to group and limit the tests listed for each issue
+
+### Changed
+
+* [#7049](https://github.com/sebastianbergmann/phpunit/issues/7049): Renamed `phpunit:randomOrderSeed` to `phpunit:randomSeed` in Open Test Reporting XML logfiles
+* [#7051](https://github.com/sebastianbergmann/phpunit/issues/7051): Seed random number generators using `--random-seed <N>`, regardless of whether PHPUnit needs random number generation
+* Before-first-test and after-last-test methods of a test class whose tests all run in separate processes are no longer called in the test runner's process
+* When a before-first-test method, for instance `setUpBeforeClass()`, of a test class whose tests all run in separate processes calls `markTestSkipped()` or `markTestIncomplete()`, fails, or errors, then a separate process is now started for each test of the class and each test is reported as skipped, failed, or errored, instead of the test class being reported once as skipped, failed, or errored
+* Version requirements of `#[RequiresPhp]`, `#[RequiresPhpExtension]`, and `#[RequiresPhpunit]` are handled using [sebastian/version-requirement](https://github.com/sebastianbergmann/version-requirement): a test errors when its version requirement is neither a version constraint such as `^8.5` nor a version comparison such as `>= 8.5.0`, for instance `8.5.0RC1`, `8.5-dev`, or `>=8.3 <8.5`, which were previously interpreted as `>= 8.5.0RC1`, `8.5.*`, and `< 8.5`, respectively
+
+### Deprecated
+
+* [#7049](https://github.com/sebastianbergmann/phpunit/issues/7049): `--random-order-seed <N>` CLI option
+* Calling `markTestSkipped()` or `markTestIncomplete()` in an after-test method, for instance `tearDown()`, or in an after-last-test method, for instance `tearDownAfterClass()`
+* Support for loading test runner extensions from PHARs using the `extensionsDirectory` XML configuration attribute
+
+[13.5.0]: https://github.com/sebastianbergmann/phpunit/compare/13.4...main

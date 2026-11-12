@@ -1,0 +1,47 @@
+{
+    "name": "sebastian/version-requirement",
+    "description": "Library for working with version requirements",
+    "type": "library",
+    "homepage": "https://github.com/sebastianbergmann/version-requirement",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Sebastian Bergmann",
+            "email": "sebastian@phpunit.de",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/sebastianbergmann/version-requirement/issues",
+        "security": "https://github.com/sebastianbergmann/version-requirement/security/policy"
+    },
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.4.6"
+    },
+    "config": {
+        "platform": {
+            "php": "8.4.1"
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    }
+}
