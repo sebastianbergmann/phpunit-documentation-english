@@ -1,0 +1,1637 @@
+<?php declare(strict_types=1);
+/*
+ * This file is part of PHPUnit.
+ *
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace PHPUnit\TextUI\Configuration;
+
+use const DIRECTORY_SEPARATOR;
+use const PATH_SEPARATOR;
+use function array_diff;
+use function array_key_exists;
+use function array_values;
+use function assert;
+use function dirname;
+use function explode;
+use function getenv;
+use function is_int;
+use function is_string;
+use function realpath;
+use function sprintf;
+use function time;
+use LogicException;
+use PHPUnit\Event\Emitter;
+use PHPUnit\Runner\TestSuiteSorter;
+use PHPUnit\TextUI\CliArguments\Configuration as CliConfiguration;
+use PHPUnit\TextUI\CliArguments\Exception;
+use PHPUnit\TextUI\XmlConfiguration\Configuration as XmlConfiguration;
+use PHPUnit\TextUI\XmlConfiguration\LoadedFromFileConfiguration;
+use PHPUnit\TextUI\XmlConfiguration\SchemaDetector;
+use PHPUnit\Util\Filesystem;
+use SebastianBergmann\CodeCoverage\Report\Html\Colors;
+use SebastianBergmann\CodeCoverage\Report\Thresholds;
+use SebastianBergmann\Environment\Console;
+use SebastianBergmann\Invoker\Invoker;
+
+/**
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
+ *
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
+ */
+final readonly class Merger
+{
+    private Emitter $emitter;
+
+    public function __construct(Emitter $emitter)
+    {
+        $this->emitter = $emitter;
+    }
+
+    /**
+     * @throws \PHPUnit\TextUI\XmlConfiguration\Exception
+     * @throws Exception
+     * @throws NoCustomCssFileException
+     */
+    public function merge(CliConfiguration $cliConfiguration, XmlConfiguration $xmlConfiguration): Configuration
+    {
+        $testFilesFile = null;
+
+        if ($cliConfiguration->hasTestFilesFile()) {
+            $testFilesFile = $cliConfiguration->testFilesFile();
+        }
+
+        $configurationFile = null;
+
+        if ($xmlConfiguration->wasLoadedFromFile()) {
+            assert($xmlConfiguration instanceof LoadedFromFileConfiguration);
+
+            $configurationFile = $xmlConfiguration->filename();
+        }
+
+        $bootstrap = null;
+
+        if ($cliConfiguration->hasBootstrap()) {
+            $bootstrap = $cliConfiguration->bootstrap();
+        } elseif ($xmlConfiguration->phpunit()->hasBootstrap()) {
+            $bootstrap = $xmlConfiguration->phpunit()->bootstrap();
+        }
+
+        if ($cliConfiguration->hasRecordTestRunHistory()) {
+            $recordTestRunHistory = $cliConfiguration->recordTestRunHistory();
+        } else {
+            $recordTestRunHistory = $xmlConfiguration->phpunit()->recordTestRunHistory();
+        }
+
+        if ($cliConfiguration->hasCacheTestIndex()) {
+            $cacheTestIndex = $cliConfiguration->cacheTestIndex();
+        } else {
+            $cacheTestIndex = $xmlConfiguration->phpunit()->cacheTestIndex();
+        }
+
+        if ($cliConfiguration->hasWarnWhenPhpIsNotConfiguredForDevelopment()) {
+            $warnWhenPhpIsNotConfiguredForDevelopment = $cliConfiguration->warnWhenPhpIsNotConfiguredForDevelopment();
+        } else {
+            $warnWhenPhpIsNotConfiguredForDevelopment = $xmlConfiguration->phpunit()->warnWhenPhpIsNotConfiguredForDevelopment();
+        }
+
+        $cacheDirectory         = null;
+        $coverageCacheDirectory = null;
+
+        if ($cliConfiguration->hasCacheDirectory() && Filesystem::createDirectory($cliConfiguration->cacheDirectory())) {
+            $cacheDirectory = realpath($cliConfiguration->cacheDirectory());
+        } elseif ($xmlConfiguration->phpunit()->hasCacheDirectory() && Filesystem::createDirectory($xmlConfiguration->phpunit()->cacheDirectory())) {
+            $cacheDirectory = realpath($xmlConfiguration->phpunit()->cacheDirectory());
+        }
+
+        // @codeCoverageIgnoreStart
+        if ($cacheDirectory === false) {
+            $cacheDirectory = null;
+        }
+        // @codeCoverageIgnoreEnd
+
+        if ($cacheDirectory !== null) {
+            $coverageCacheDirectory = $cacheDirectory . DIRECTORY_SEPARATOR . 'code-coverage';
+            $testRunHistoryFile     = $cacheDirectory . DIRECTORY_SEPARATOR . 'test-run-history';
+        }
+
+        if (!isset($testRunHistoryFile)) {
+            if ($xmlConfiguration->wasLoadedFromFile()) {
+                $configurationFileRealpath = realpath($xmlConfiguration->filename());
+
+                if ($configurationFileRealpath !== false) {
+                    $testRunHistoryFile = dirname($configurationFileRealpath) . DIRECTORY_SEPARATOR . '.phpunit.result.cache';
+                    // @codeCoverageIgnoreStart
+                } else {
+                    $testRunHistoryFile = '.phpunit.result.cache';
+                }
+                // @codeCoverageIgnoreEnd
+            } else {
+                $phpSelf = null;
+
+                if (isset($_SERVER['PHP_SELF']) && is_string($_SERVER['PHP_SELF'])) {
+                    $phpSelf = $_SERVER['PHP_SELF'];
+                }
+
+                if ($phpSelf !== null) {
+                    $candidate = realpath($phpSelf);
+                } else {
+                    $candidate = false;
+                }
+
+                if ($candidate !== false) {
+                    $testRunHistoryFile = dirname($candidate) . DIRECTORY_SEPARATOR . '.phpunit.result.cache';
+                } else {
+                    $testRunHistoryFile = '.phpunit.result.cache';
+                }
+            }
+        }
+
+        if ($cliConfiguration->hasDisableCodeCoverageIgnore()) {
+            $disableCodeCoverageIgnore = $cliConfiguration->disableCodeCoverageIgnore();
+        } else {
+            $disableCodeCoverageIgnore = $xmlConfiguration->codeCoverage()->disableCodeCoverageIgnore();
+        }
+
+        $disableCoverageTargeting = false;
+
+        if ($cliConfiguration->hasDisableCoverageTargeting()) {
+            $disableCoverageTargeting = $cliConfiguration->disableCoverageTargeting();
+        }
+
+        if ($cliConfiguration->hasFailOnAllIssues()) {
+            $failOnAllIssues = $cliConfiguration->failOnAllIssues();
+        } else {
+            $failOnAllIssues = $xmlConfiguration->phpunit()->failOnAllIssues();
+        }
+
+        if ($cliConfiguration->hasFailOnDeprecation()) {
+            $failOnDeprecation = $cliConfiguration->failOnDeprecation();
+        } else {
+            $failOnDeprecation = $xmlConfiguration->phpunit()->failOnDeprecation();
+        }
+
+        if ($cliConfiguration->hasFailOnSelfDeprecation()) {
+            $failOnSelfDeprecation = $cliConfiguration->failOnSelfDeprecation();
+        } else {
+            $failOnSelfDeprecation = $xmlConfiguration->phpunit()->failOnSelfDeprecation();
+        }
+
+        if ($cliConfiguration->hasFailOnDirectDeprecation()) {
+            $failOnDirectDeprecation = $cliConfiguration->failOnDirectDeprecation();
+        } else {
+            $failOnDirectDeprecation = $xmlConfiguration->phpunit()->failOnDirectDeprecation();
+        }
+
+        if ($cliConfiguration->hasFailOnIndirectDeprecation()) {
+            $failOnIndirectDeprecation = $cliConfiguration->failOnIndirectDeprecation();
+        } else {
+            $failOnIndirectDeprecation = $xmlConfiguration->phpunit()->failOnIndirectDeprecation();
+        }
+
+        if ($cliConfiguration->hasFailOnPhpunitDeprecation()) {
+            $failOnPhpunitDeprecation = $cliConfiguration->failOnPhpunitDeprecation();
+        } else {
+            $failOnPhpunitDeprecation = $xmlConfiguration->phpunit()->failOnPhpunitDeprecation();
+        }
+
+        if ($cliConfiguration->hasFailOnPhpunitNotice()) {
+            $failOnPhpunitNotice = $cliConfiguration->failOnPhpunitNotice();
+        } else {
+            $failOnPhpunitNotice = $xmlConfiguration->phpunit()->failOnPhpunitNotice();
+        }
+
+        if ($cliConfiguration->hasFailOnPhpunitWarning()) {
+            $failOnPhpunitWarning = $cliConfiguration->failOnPhpunitWarning();
+        } else {
+            $failOnPhpunitWarning = $xmlConfiguration->phpunit()->failOnPhpunitWarning();
+        }
+
+        if ($cliConfiguration->hasFailOnEmptyTestSuite()) {
+            $failOnEmptyTestSuite = $cliConfiguration->failOnEmptyTestSuite();
+        } elseif ($xmlConfiguration->phpunit()->hasFailOnEmptyTestSuite()) {
+            $failOnEmptyTestSuite = $xmlConfiguration->phpunit()->failOnEmptyTestSuite();
+        } else {
+            $failOnEmptyTestSuite = $this->hasExplicitTestSelection($cliConfiguration);
+        }
+
+        if ($cliConfiguration->hasFailOnIncomplete()) {
+            $failOnIncomplete = $cliConfiguration->failOnIncomplete();
+        } else {
+            $failOnIncomplete = $xmlConfiguration->phpunit()->failOnIncomplete();
+        }
+
+        if ($cliConfiguration->hasFailOnNotice()) {
+            $failOnNotice = $cliConfiguration->failOnNotice();
+        } else {
+            $failOnNotice = $xmlConfiguration->phpunit()->failOnNotice();
+        }
+
+        if ($cliConfiguration->hasFailOnRisky()) {
+            $failOnRisky = $cliConfiguration->failOnRisky();
+        } else {
+            $failOnRisky = $xmlConfiguration->phpunit()->failOnRisky();
+        }
+
+        if ($cliConfiguration->hasFailOnSkipped()) {
+            $failOnSkipped = $cliConfiguration->failOnSkipped();
+        } else {
+            $failOnSkipped = $xmlConfiguration->phpunit()->failOnSkipped();
+        }
+
+        if ($cliConfiguration->hasFailOnWarning()) {
+            $failOnWarning = $cliConfiguration->failOnWarning();
+        } else {
+            $failOnWarning = $xmlConfiguration->phpunit()->failOnWarning();
+        }
+
+        $doNotFailOnDeprecation = false;
+
+        if ($cliConfiguration->hasDoNotFailOnDeprecation()) {
+            $doNotFailOnDeprecation = $cliConfiguration->doNotFailOnDeprecation();
+        }
+
+        $doNotFailOnSelfDeprecation = false;
+
+        if ($cliConfiguration->hasDoNotFailOnSelfDeprecation()) {
+            $doNotFailOnSelfDeprecation = $cliConfiguration->doNotFailOnSelfDeprecation();
+        }
+
+        $doNotFailOnDirectDeprecation = false;
+
+        if ($cliConfiguration->hasDoNotFailOnDirectDeprecation()) {
+            $doNotFailOnDirectDeprecation = $cliConfiguration->doNotFailOnDirectDeprecation();
+        }
+
+        $doNotFailOnIndirectDeprecation = false;
+
+        if ($cliConfiguration->hasDoNotFailOnIndirectDeprecation()) {
+            $doNotFailOnIndirectDeprecation = $cliConfiguration->doNotFailOnIndirectDeprecation();
+        }
+
+        $doNotFailOnPhpunitDeprecation = false;
+
+        if ($cliConfiguration->hasDoNotFailOnPhpunitDeprecation()) {
+            $doNotFailOnPhpunitDeprecation = $cliConfiguration->doNotFailOnPhpunitDeprecation();
+        }
+
+        $doNotFailOnPhpunitNotice = false;
+
+        if ($cliConfiguration->hasDoNotFailOnPhpunitNotice()) {
+            $doNotFailOnPhpunitNotice = $cliConfiguration->doNotFailOnPhpunitNotice();
+        }
+
+        $doNotFailOnPhpunitWarning = false;
+
+        if ($cliConfiguration->hasDoNotFailOnPhpunitWarning()) {
+            $doNotFailOnPhpunitWarning = $cliConfiguration->doNotFailOnPhpunitWarning();
+        }
+
+        $doNotFailOnEmptyTestSuite = false;
+
+        if ($cliConfiguration->hasDoNotFailOnEmptyTestSuite()) {
+            $doNotFailOnEmptyTestSuite = $cliConfiguration->doNotFailOnEmptyTestSuite();
+        }
+
+        $doNotFailOnIncomplete = false;
+
+        if ($cliConfiguration->hasDoNotFailOnIncomplete()) {
+            $doNotFailOnIncomplete = $cliConfiguration->doNotFailOnIncomplete();
+        }
+
+        $doNotFailOnNotice = false;
+
+        if ($cliConfiguration->hasDoNotFailOnNotice()) {
+            $doNotFailOnNotice = $cliConfiguration->doNotFailOnNotice();
+        }
+
+        $doNotFailOnRisky = false;
+
+        if ($cliConfiguration->hasDoNotFailOnRisky()) {
+            $doNotFailOnRisky = $cliConfiguration->doNotFailOnRisky();
+        }
+
+        $doNotFailOnSkipped = false;
+
+        if ($cliConfiguration->hasDoNotFailOnSkipped()) {
+            $doNotFailOnSkipped = $cliConfiguration->doNotFailOnSkipped();
+        }
+
+        $doNotFailOnWarning = false;
+
+        if ($cliConfiguration->hasDoNotFailOnWarning()) {
+            $doNotFailOnWarning = $cliConfiguration->doNotFailOnWarning();
+        }
+
+        if ($failOnAllIssues) {
+            if ($xmlConfiguration->phpunit()->hasFailOnDeprecation() && !$xmlConfiguration->phpunit()->failOnDeprecation()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnDeprecation', 'failOnAllIssues', '--do-not-fail-on-deprecation');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnSelfDeprecation() && !$xmlConfiguration->phpunit()->failOnSelfDeprecation()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnSelfDeprecation', 'failOnAllIssues', '--do-not-fail-on-self-deprecation');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnDirectDeprecation() && !$xmlConfiguration->phpunit()->failOnDirectDeprecation()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnDirectDeprecation', 'failOnAllIssues', '--do-not-fail-on-direct-deprecation');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnIndirectDeprecation() && !$xmlConfiguration->phpunit()->failOnIndirectDeprecation()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnIndirectDeprecation', 'failOnAllIssues', '--do-not-fail-on-indirect-deprecation');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnPhpunitDeprecation() && !$xmlConfiguration->phpunit()->failOnPhpunitDeprecation()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnPhpunitDeprecation', 'failOnAllIssues', '--do-not-fail-on-phpunit-deprecation');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnPhpunitNotice() && !$xmlConfiguration->phpunit()->failOnPhpunitNotice()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnPhpunitNotice', 'failOnAllIssues', '--do-not-fail-on-phpunit-notice');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnPhpunitWarning() && !$xmlConfiguration->phpunit()->failOnPhpunitWarning()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnPhpunitWarning', 'failOnAllIssues', '--do-not-fail-on-phpunit-warning');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnEmptyTestSuite() && !$xmlConfiguration->phpunit()->failOnEmptyTestSuite()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnEmptyTestSuite', 'failOnAllIssues', '--do-not-fail-on-empty-test-suite');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnIncomplete() && !$xmlConfiguration->phpunit()->failOnIncomplete()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnIncomplete', 'failOnAllIssues', '--do-not-fail-on-incomplete');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnNotice() && !$xmlConfiguration->phpunit()->failOnNotice()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnNotice', 'failOnAllIssues', '--do-not-fail-on-notice');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnRisky() && !$xmlConfiguration->phpunit()->failOnRisky()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnRisky', 'failOnAllIssues', '--do-not-fail-on-risky');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnSkipped() && !$xmlConfiguration->phpunit()->failOnSkipped()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnSkipped', 'failOnAllIssues', '--do-not-fail-on-skipped');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnWarning() && !$xmlConfiguration->phpunit()->failOnWarning()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnWarning', 'failOnAllIssues', '--do-not-fail-on-warning');
+            }
+        } elseif ($failOnDeprecation && !$doNotFailOnDeprecation) {
+            if ($xmlConfiguration->phpunit()->hasFailOnSelfDeprecation() && !$xmlConfiguration->phpunit()->failOnSelfDeprecation()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnSelfDeprecation', 'failOnDeprecation', '--do-not-fail-on-self-deprecation');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnDirectDeprecation() && !$xmlConfiguration->phpunit()->failOnDirectDeprecation()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnDirectDeprecation', 'failOnDeprecation', '--do-not-fail-on-direct-deprecation');
+            }
+
+            if ($xmlConfiguration->phpunit()->hasFailOnIndirectDeprecation() && !$xmlConfiguration->phpunit()->failOnIndirectDeprecation()) {
+                $this->warnAboutFailOnSettingThatHasNoEffect('failOnIndirectDeprecation', 'failOnDeprecation', '--do-not-fail-on-indirect-deprecation');
+            }
+        }
+
+        if ($cliConfiguration->hasStopOnDefect()) {
+            $stopOnDefect = $cliConfiguration->stopOnDefect();
+        } else {
+            $stopOnDefect = $xmlConfiguration->phpunit()->stopOnDefect();
+        }
+
+        if ($cliConfiguration->hasStopOnDeprecation()) {
+            $stopOnDeprecation = $cliConfiguration->stopOnDeprecation();
+        } else {
+            $stopOnDeprecation = $xmlConfiguration->phpunit()->stopOnDeprecation();
+        }
+
+        $specificDeprecationToStopOn = null;
+
+        if ($cliConfiguration->hasSpecificDeprecationToStopOn()) {
+            $specificDeprecationToStopOn = $cliConfiguration->specificDeprecationToStopOn();
+        }
+
+        if ($cliConfiguration->hasStopOnError()) {
+            $stopOnError = $cliConfiguration->stopOnError();
+        } else {
+            $stopOnError = $xmlConfiguration->phpunit()->stopOnError();
+        }
+
+        if ($cliConfiguration->hasStopOnFailure()) {
+            $stopOnFailure = $cliConfiguration->stopOnFailure();
+        } else {
+            $stopOnFailure = $xmlConfiguration->phpunit()->stopOnFailure();
+        }
+
+        if ($cliConfiguration->hasStopOnIncomplete()) {
+            $stopOnIncomplete = $cliConfiguration->stopOnIncomplete();
+        } else {
+            $stopOnIncomplete = $xmlConfiguration->phpunit()->stopOnIncomplete();
+        }
+
+        if ($cliConfiguration->hasStopOnNotice()) {
+            $stopOnNotice = $cliConfiguration->stopOnNotice();
+        } else {
+            $stopOnNotice = $xmlConfiguration->phpunit()->stopOnNotice();
+        }
+
+        if ($cliConfiguration->hasStopOnRisky()) {
+            $stopOnRisky = $cliConfiguration->stopOnRisky();
+        } else {
+            $stopOnRisky = $xmlConfiguration->phpunit()->stopOnRisky();
+        }
+
+        if ($cliConfiguration->hasStopOnSkipped()) {
+            $stopOnSkipped = $cliConfiguration->stopOnSkipped();
+        } else {
+            $stopOnSkipped = $xmlConfiguration->phpunit()->stopOnSkipped();
+        }
+
+        if ($cliConfiguration->hasStopOnWarning()) {
+            $stopOnWarning = $cliConfiguration->stopOnWarning();
+        } else {
+            $stopOnWarning = $xmlConfiguration->phpunit()->stopOnWarning();
+        }
+
+        if ($cliConfiguration->hasStderr() && $cliConfiguration->stderr()) {
+            $outputToStandardErrorStream = true;
+        } else {
+            $outputToStandardErrorStream = $xmlConfiguration->phpunit()->stderr();
+        }
+
+        if ($cliConfiguration->hasColumns()) {
+            $columns = $cliConfiguration->columns();
+        } else {
+            $columns = $xmlConfiguration->phpunit()->columns();
+        }
+
+        if ($columns === 'max') {
+            $columns = (new Console)->getNumberOfColumns();
+        }
+
+        if ($columns < 16) {
+            $columns = 16;
+
+            $this->emitter->testRunnerTriggeredPhpunitWarning(
+                'Less than 16 columns requested, number of columns set to 16',
+            );
+        }
+
+        assert(is_int($columns));
+
+        $noExtensions = false;
+
+        if ($cliConfiguration->hasNoExtensions() && $cliConfiguration->noExtensions()) {
+            $noExtensions = true;
+        }
+
+        $pharExtensionDirectory = null;
+
+        if ($xmlConfiguration->phpunit()->hasExtensionsDirectory()) {
+            $pharExtensionDirectory = $xmlConfiguration->phpunit()->extensionsDirectory();
+        }
+
+        $extensionBootstrappers = [];
+
+        if ($cliConfiguration->hasExtensions()) {
+            foreach ($cliConfiguration->extensions() as $extension) {
+                if (array_key_exists($extension, $extensionBootstrappers)) {
+                    $this->emitter->testRunnerTriggeredPhpunitWarning(
+                        sprintf(
+                            'Extension "%s" is configured more than once on the command line',
+                            $extension,
+                        ),
+                    );
+                }
+
+                $extensionBootstrappers[$extension] = [
+                    'className'  => $extension,
+                    'parameters' => [],
+                ];
+            }
+        }
+
+        foreach ($xmlConfiguration->extensions() as $extension) {
+            if (array_key_exists($extension->className(), $extensionBootstrappers)) {
+                $this->emitter->testRunnerTriggeredPhpunitWarning(
+                    sprintf(
+                        'Extension "%s" is configured more than once',
+                        $extension->className(),
+                    ),
+                );
+            }
+
+            $extensionBootstrappers[$extension->className()] = [
+                'className'  => $extension->className(),
+                'parameters' => $extension->parameters(),
+            ];
+        }
+
+        if ($cliConfiguration->hasPathCoverage() && $cliConfiguration->pathCoverage()) {
+            $pathCoverage = $cliConfiguration->pathCoverage();
+        } else {
+            $pathCoverage = $xmlConfiguration->codeCoverage()->pathCoverage();
+        }
+
+        if ($cliConfiguration->hasBranchCoverage() && $cliConfiguration->branchCoverage()) {
+            $branchCoverage = $cliConfiguration->branchCoverage();
+        } else {
+            $branchCoverage = $xmlConfiguration->codeCoverage()->branchCoverage();
+        }
+
+        $coverageDriver = null;
+
+        if ($xmlConfiguration->codeCoverage()->hasDriver()) {
+            $coverageDriver = $xmlConfiguration->codeCoverage()->driver();
+        }
+
+        $defaultColors     = Colors::default();
+        $defaultThresholds = Thresholds::default();
+
+        $coverageClover                     = null;
+        $coverageCobertura                  = null;
+        $coverageCrap4j                     = null;
+        $coverageCrap4jThreshold            = 30;
+        $coverageHtml                       = null;
+        $coverageHtmlClassView              = true;
+        $coverageHtmlFileView               = true;
+        $coverageHtmlLowUpperBound          = $defaultThresholds->lowUpperBound();
+        $coverageHtmlHighLowerBound         = $defaultThresholds->highLowerBound();
+        $coverageHtmlColorSuccessLow        = $defaultColors->successLow();
+        $coverageHtmlColorSuccessLowDark    = $defaultColors->successLowDark();
+        $coverageHtmlColorSuccessMedium     = $defaultColors->successMedium();
+        $coverageHtmlColorSuccessMediumDark = $defaultColors->successMediumDark();
+        $coverageHtmlColorSuccessHigh       = $defaultColors->successHigh();
+        $coverageHtmlColorSuccessHighDark   = $defaultColors->successHighDark();
+        $coverageHtmlColorSuccessBar        = $defaultColors->successBar();
+        $coverageHtmlColorSuccessBarDark    = $defaultColors->successBarDark();
+        $coverageHtmlColorWarning           = $defaultColors->warning();
+        $coverageHtmlColorWarningDark       = $defaultColors->warningDark();
+        $coverageHtmlColorWarningBar        = $defaultColors->warningBar();
+        $coverageHtmlColorWarningBarDark    = $defaultColors->warningBarDark();
+        $coverageHtmlColorDanger            = $defaultColors->danger();
+        $coverageHtmlColorDangerDark        = $defaultColors->dangerDark();
+        $coverageHtmlColorDangerBar         = $defaultColors->dangerBar();
+        $coverageHtmlColorDangerBarDark     = $defaultColors->dangerBarDark();
+        $coverageHtmlColorBreadcrumbs       = $defaultColors->breadcrumbs();
+        $coverageHtmlColorBreadcrumbsDark   = $defaultColors->breadcrumbsDark();
+        $coverageHtmlCustomCssFile          = null;
+        $coverageJsonl                      = null;
+        $coverageOpenClover                 = null;
+        $coveragePhp                        = null;
+        $coverageText                       = null;
+        $coverageTextShowUncoveredFiles     = false;
+        $coverageTextShowOnlySummary        = false;
+        $coverageXml                        = null;
+        $coverageXmlIncludeSource           = true;
+        $coverageFromXmlConfiguration       = true;
+
+        if ($cliConfiguration->hasNoCoverage() && $cliConfiguration->noCoverage()) {
+            $coverageFromXmlConfiguration = false;
+        }
+
+        if ($cliConfiguration->hasCoverageClover()) {
+            $coverageClover = $cliConfiguration->coverageClover();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasClover()) {
+            $coverageClover = $xmlConfiguration->codeCoverage()->clover()->target()->path();
+        }
+
+        if ($cliConfiguration->hasCoverageCobertura()) {
+            $coverageCobertura = $cliConfiguration->coverageCobertura();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasCobertura()) {
+            $coverageCobertura = $xmlConfiguration->codeCoverage()->cobertura()->target()->path();
+        }
+
+        if ($xmlConfiguration->codeCoverage()->hasCrap4j()) {
+            $coverageCrap4jThreshold = $xmlConfiguration->codeCoverage()->crap4j()->threshold();
+        }
+
+        if ($cliConfiguration->hasCoverageCrap4J()) {
+            $coverageCrap4j = $cliConfiguration->coverageCrap4J();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasCrap4j()) {
+            $coverageCrap4j = $xmlConfiguration->codeCoverage()->crap4j()->target()->path();
+        }
+
+        if ($xmlConfiguration->codeCoverage()->hasHtml()) {
+            $coverageHtmlHighLowerBound = $xmlConfiguration->codeCoverage()->html()->highLowerBound();
+            $coverageHtmlLowUpperBound  = $xmlConfiguration->codeCoverage()->html()->lowUpperBound();
+
+            if ($coverageHtmlLowUpperBound > $coverageHtmlHighLowerBound) {
+                $coverageHtmlLowUpperBound  = $defaultThresholds->lowUpperBound();
+                $coverageHtmlHighLowerBound = $defaultThresholds->highLowerBound();
+            }
+
+            $coverageHtmlColorSuccessLow        = $xmlConfiguration->codeCoverage()->html()->colorSuccessLow();
+            $coverageHtmlColorSuccessLowDark    = $xmlConfiguration->codeCoverage()->html()->colorSuccessLowDark();
+            $coverageHtmlColorSuccessMedium     = $xmlConfiguration->codeCoverage()->html()->colorSuccessMedium();
+            $coverageHtmlColorSuccessMediumDark = $xmlConfiguration->codeCoverage()->html()->colorSuccessMediumDark();
+            $coverageHtmlColorSuccessHigh       = $xmlConfiguration->codeCoverage()->html()->colorSuccessHigh();
+            $coverageHtmlColorSuccessHighDark   = $xmlConfiguration->codeCoverage()->html()->colorSuccessHighDark();
+            $coverageHtmlColorSuccessBar        = $xmlConfiguration->codeCoverage()->html()->colorSuccessBar();
+            $coverageHtmlColorSuccessBarDark    = $xmlConfiguration->codeCoverage()->html()->colorSuccessBarDark();
+            $coverageHtmlColorWarning           = $xmlConfiguration->codeCoverage()->html()->colorWarning();
+            $coverageHtmlColorWarningDark       = $xmlConfiguration->codeCoverage()->html()->colorWarningDark();
+            $coverageHtmlColorWarningBar        = $xmlConfiguration->codeCoverage()->html()->colorWarningBar();
+            $coverageHtmlColorWarningBarDark    = $xmlConfiguration->codeCoverage()->html()->colorWarningBarDark();
+            $coverageHtmlColorDanger            = $xmlConfiguration->codeCoverage()->html()->colorDanger();
+            $coverageHtmlColorDangerDark        = $xmlConfiguration->codeCoverage()->html()->colorDangerDark();
+            $coverageHtmlColorDangerBar         = $xmlConfiguration->codeCoverage()->html()->colorDangerBar();
+            $coverageHtmlColorDangerBarDark     = $xmlConfiguration->codeCoverage()->html()->colorDangerBarDark();
+            $coverageHtmlColorBreadcrumbs       = $xmlConfiguration->codeCoverage()->html()->colorBreadcrumbs();
+            $coverageHtmlColorBreadcrumbsDark   = $xmlConfiguration->codeCoverage()->html()->colorBreadcrumbsDark();
+
+            if ($xmlConfiguration->codeCoverage()->html()->hasCustomCssFile()) {
+                $coverageHtmlCustomCssFile = $xmlConfiguration->codeCoverage()->html()->customCssFile();
+            }
+        }
+
+        if ($cliConfiguration->hasCoverageHtml()) {
+            $coverageHtml = $cliConfiguration->coverageHtml();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasHtml() && $xmlConfiguration->codeCoverage()->html()->hasTarget()) {
+            $coverageHtml = $xmlConfiguration->codeCoverage()->html()->target()->path();
+        }
+
+        if ($cliConfiguration->hasWithoutClassView()) {
+            $coverageHtmlClassView = !$cliConfiguration->withoutClassView();
+        } elseif ($xmlConfiguration->codeCoverage()->hasHtml()) {
+            $coverageHtmlClassView = $xmlConfiguration->codeCoverage()->html()->classView();
+        }
+
+        if ($cliConfiguration->hasWithoutFileView()) {
+            $coverageHtmlFileView = !$cliConfiguration->withoutFileView();
+        } elseif ($xmlConfiguration->codeCoverage()->hasHtml()) {
+            $coverageHtmlFileView = $xmlConfiguration->codeCoverage()->html()->fileView();
+        }
+
+        if (!$coverageHtmlClassView && !$coverageHtmlFileView) {
+            $this->emitter->testRunnerTriggeredPhpunitWarning(
+                'The class view and the file view of the code coverage report in HTML format cannot both be disabled, rendering both',
+            );
+
+            $coverageHtmlClassView = true;
+            $coverageHtmlFileView  = true;
+        }
+
+        if ($cliConfiguration->hasCoverageJsonl()) {
+            $coverageJsonl = $cliConfiguration->coverageJsonl();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasJsonl()) {
+            $coverageJsonl = $xmlConfiguration->codeCoverage()->jsonl()->target()->path();
+        }
+
+        if ($cliConfiguration->hasCoverageOpenClover()) {
+            $coverageOpenClover = $cliConfiguration->coverageOpenClover();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasOpenClover()) {
+            $coverageOpenClover = $xmlConfiguration->codeCoverage()->openClover()->target()->path();
+        }
+
+        if ($cliConfiguration->hasCoveragePhp()) {
+            $coveragePhp = $cliConfiguration->coveragePhp();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasPhp()) {
+            $coveragePhp = $xmlConfiguration->codeCoverage()->php()->target()->path();
+        }
+
+        if ($xmlConfiguration->codeCoverage()->hasText()) {
+            $coverageTextShowUncoveredFiles = $xmlConfiguration->codeCoverage()->text()->showUncoveredFiles();
+            $coverageTextShowOnlySummary    = $xmlConfiguration->codeCoverage()->text()->showOnlySummary();
+        }
+
+        if ($cliConfiguration->hasCoverageTextShowUncoveredFiles()) {
+            $coverageTextShowUncoveredFiles = $cliConfiguration->coverageTextShowUncoveredFiles();
+        }
+
+        if ($cliConfiguration->hasCoverageTextShowOnlySummary()) {
+            $coverageTextShowOnlySummary = $cliConfiguration->coverageTextShowOnlySummary();
+        }
+
+        if ($cliConfiguration->hasCoverageText()) {
+            $coverageText = $cliConfiguration->coverageText();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasText()) {
+            $coverageText = $xmlConfiguration->codeCoverage()->text()->target()->path();
+        }
+
+        if ($cliConfiguration->hasCoverageXml()) {
+            $coverageXml = $cliConfiguration->coverageXml();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasXml()) {
+            $coverageXml = $xmlConfiguration->codeCoverage()->xml()->target()->path();
+        }
+
+        if ($cliConfiguration->hasExcludeSourceFromXmlCoverage()) {
+            $coverageXmlIncludeSource = !$cliConfiguration->excludeSourceFromXmlCoverage();
+        } elseif ($coverageFromXmlConfiguration && $xmlConfiguration->codeCoverage()->hasXml()) {
+            $coverageXmlIncludeSource = $xmlConfiguration->codeCoverage()->xml()->includeSource();
+        }
+
+        if ($cliConfiguration->hasBackupGlobals()) {
+            $backupGlobals = $cliConfiguration->backupGlobals();
+        } else {
+            $backupGlobals = $xmlConfiguration->phpunit()->backupGlobals();
+        }
+
+        if ($cliConfiguration->hasBackupStaticProperties()) {
+            $backupStaticProperties = $cliConfiguration->backupStaticProperties();
+        } else {
+            $backupStaticProperties = $xmlConfiguration->phpunit()->backupStaticProperties();
+        }
+
+        if ($cliConfiguration->hasBeStrictAboutChangesToGlobalState()) {
+            $beStrictAboutChangesToGlobalState = $cliConfiguration->beStrictAboutChangesToGlobalState();
+        } else {
+            $beStrictAboutChangesToGlobalState = $xmlConfiguration->phpunit()->beStrictAboutChangesToGlobalState();
+        }
+
+        if ($cliConfiguration->hasProcessIsolation()) {
+            $processIsolation = $cliConfiguration->processIsolation();
+        } else {
+            $processIsolation = $xmlConfiguration->phpunit()->processIsolation();
+        }
+
+        if ($cliConfiguration->hasEnforceTimeLimit()) {
+            $enforceTimeLimit = $cliConfiguration->enforceTimeLimit();
+        } else {
+            $enforceTimeLimit = $xmlConfiguration->phpunit()->enforceTimeLimit();
+        }
+
+        if ($enforceTimeLimit && !(new Invoker)->canInvokeWithTimeout()) {
+            $this->emitter->testRunnerTriggeredPhpunitWarning(
+                'The pcntl extension is required for enforcing time limits',
+            );
+        }
+
+        if ($cliConfiguration->hasDefaultTimeLimit()) {
+            $defaultTimeLimit = $cliConfiguration->defaultTimeLimit();
+        } else {
+            $defaultTimeLimit = $xmlConfiguration->phpunit()->defaultTimeLimit();
+        }
+
+        if ($cliConfiguration->hasDiffContext()) {
+            $diffContext = $cliConfiguration->diffContext();
+        } else {
+            $diffContext = $xmlConfiguration->phpunit()->diffContext();
+        }
+
+        $timeoutForSmallTests  = $xmlConfiguration->phpunit()->timeoutForSmallTests();
+        $timeoutForMediumTests = $xmlConfiguration->phpunit()->timeoutForMediumTests();
+        $timeoutForLargeTests  = $xmlConfiguration->phpunit()->timeoutForLargeTests();
+
+        if ($cliConfiguration->hasReportUselessTests()) {
+            $reportUselessTests = $cliConfiguration->reportUselessTests();
+        } else {
+            $reportUselessTests = $xmlConfiguration->phpunit()->beStrictAboutTestsThatDoNotTestAnything();
+        }
+
+        if ($cliConfiguration->hasStrictCoverage()) {
+            $strictCoverage = $cliConfiguration->strictCoverage();
+        } else {
+            $strictCoverage = $xmlConfiguration->phpunit()->beStrictAboutCoverageMetadata();
+        }
+
+        if ($cliConfiguration->hasRequireCoverageContribution()) {
+            $requireCoverageContribution = $cliConfiguration->requireCoverageContribution();
+        } else {
+            $requireCoverageContribution = $xmlConfiguration->phpunit()->requireCoverageContribution();
+        }
+
+        if ($cliConfiguration->hasDisallowTestOutput()) {
+            $disallowTestOutput = $cliConfiguration->disallowTestOutput();
+        } else {
+            $disallowTestOutput = $xmlConfiguration->phpunit()->beStrictAboutOutputDuringTests();
+        }
+
+        if ($cliConfiguration->hasDisplayDetailsOnAllIssues()) {
+            $displayDetailsOnAllIssues = $cliConfiguration->displayDetailsOnAllIssues();
+        } else {
+            $displayDetailsOnAllIssues = $xmlConfiguration->phpunit()->displayDetailsOnAllIssues();
+        }
+
+        if ($cliConfiguration->hasDisplayDetailsOnIncompleteTests()) {
+            $displayDetailsOnIncompleteTests = $cliConfiguration->displayDetailsOnIncompleteTests();
+        } else {
+            $displayDetailsOnIncompleteTests = $xmlConfiguration->phpunit()->displayDetailsOnIncompleteTests();
+        }
+
+        if ($cliConfiguration->hasDisplayDetailsOnSkippedTests()) {
+            $displayDetailsOnSkippedTests = $cliConfiguration->displayDetailsOnSkippedTests();
+        } else {
+            $displayDetailsOnSkippedTests = $xmlConfiguration->phpunit()->displayDetailsOnSkippedTests();
+        }
+
+        if ($cliConfiguration->hasDisplayDetailsOnTestsThatTriggerDeprecations()) {
+            $displayDetailsOnTestsThatTriggerDeprecations = $cliConfiguration->displayDetailsOnTestsThatTriggerDeprecations();
+        } else {
+            $displayDetailsOnTestsThatTriggerDeprecations = $xmlConfiguration->phpunit()->displayDetailsOnTestsThatTriggerDeprecations();
+        }
+
+        if ($cliConfiguration->hasDisplayDetailsOnPhpunitDeprecations()) {
+            $displayDetailsOnPhpunitDeprecations = $cliConfiguration->displayDetailsOnPhpunitDeprecations();
+        } else {
+            $displayDetailsOnPhpunitDeprecations = $xmlConfiguration->phpunit()->displayDetailsOnPhpunitDeprecations();
+        }
+
+        if ($cliConfiguration->hasDisplayDetailsOnPhpunitNotices()) {
+            $displayDetailsOnPhpunitNotices = $cliConfiguration->displayDetailsOnPhpunitNotices();
+        } else {
+            $displayDetailsOnPhpunitNotices = $xmlConfiguration->phpunit()->displayDetailsOnPhpunitNotices();
+        }
+
+        if ($cliConfiguration->hasDisplayDetailsOnTestsThatTriggerErrors()) {
+            $displayDetailsOnTestsThatTriggerErrors = $cliConfiguration->displayDetailsOnTestsThatTriggerErrors();
+        } else {
+            $displayDetailsOnTestsThatTriggerErrors = $xmlConfiguration->phpunit()->displayDetailsOnTestsThatTriggerErrors();
+        }
+
+        if ($cliConfiguration->hasDisplayDetailsOnTestsThatTriggerNotices()) {
+            $displayDetailsOnTestsThatTriggerNotices = $cliConfiguration->displayDetailsOnTestsThatTriggerNotices();
+        } else {
+            $displayDetailsOnTestsThatTriggerNotices = $xmlConfiguration->phpunit()->displayDetailsOnTestsThatTriggerNotices();
+        }
+
+        if ($cliConfiguration->hasDisplayDetailsOnTestsThatTriggerWarnings()) {
+            $displayDetailsOnTestsThatTriggerWarnings = $cliConfiguration->displayDetailsOnTestsThatTriggerWarnings();
+        } else {
+            $displayDetailsOnTestsThatTriggerWarnings = $xmlConfiguration->phpunit()->displayDetailsOnTestsThatTriggerWarnings();
+        }
+
+        if ($cliConfiguration->hasReverseList()) {
+            $reverseDefectList = $cliConfiguration->reverseList();
+        } else {
+            $reverseDefectList = $xmlConfiguration->phpunit()->reverseDefectList();
+        }
+
+        $requireCoverageMetadata              = $xmlConfiguration->phpunit()->requireCoverageMetadata();
+        $requireCoverageMetadataOnSmallTests  = $xmlConfiguration->phpunit()->requireCoverageMetadataOnSmallTests();
+        $requireCoverageMetadataOnMediumTests = $xmlConfiguration->phpunit()->requireCoverageMetadataOnMediumTests();
+        $requireCoverageMetadataOnLargeTests  = $xmlConfiguration->phpunit()->requireCoverageMetadataOnLargeTests();
+        $requireSealedMockObjects             = $xmlConfiguration->phpunit()->requireSealedMockObjects();
+
+        // An order that is configured on the command line replaces the order
+        // that is configured in the XML configuration file as a whole, so that
+        // "defects" from one is not combined with the order from the other
+        $executionOrder        = TestSuiteSorter::ORDER_DEFAULT;
+        $executionOrderDefects = TestSuiteSorter::ORDER_DEFAULT;
+
+        if ($cliConfiguration->hasExecutionOrder() || $cliConfiguration->hasExecutionOrderDefects()) {
+            if ($cliConfiguration->hasExecutionOrder()) {
+                $executionOrder = $cliConfiguration->executionOrder();
+            }
+
+            if ($cliConfiguration->hasExecutionOrderDefects()) {
+                $executionOrderDefects = $cliConfiguration->executionOrderDefects();
+            }
+        } else {
+            $executionOrder = $xmlConfiguration->phpunit()->executionOrder();
+
+            if ($xmlConfiguration->phpunit()->defectsFirst()) {
+                $executionOrderDefects = TestSuiteSorter::ORDER_DEFECTS_FIRST;
+            }
+        }
+
+        if ($cliConfiguration->hasResolveDependencies()) {
+            $resolveDependencies = $cliConfiguration->resolveDependencies();
+        } else {
+            $resolveDependencies = $xmlConfiguration->phpunit()->resolveDependencies();
+        }
+
+        $colors          = false;
+        $colorsSupported = (new Console)->hasColorSupport();
+
+        if ($cliConfiguration->hasColors()) {
+            if ($cliConfiguration->colors() === Configuration::COLOR_ALWAYS) {
+                $colors = true;
+            } elseif ($colorsSupported && $cliConfiguration->colors() === Configuration::COLOR_AUTO) {
+                $colors = true;
+            }
+        } elseif ($xmlConfiguration->phpunit()->colors() === Configuration::COLOR_ALWAYS) {
+            $colors = true;
+        } elseif ($colorsSupported && $xmlConfiguration->phpunit()->colors() === Configuration::COLOR_AUTO) {
+            $colors = true;
+        }
+
+        $logfileTeamcity             = null;
+        $logfileJunit                = null;
+        $logfileOtr                  = null;
+        $logfileTestdoxHtml          = null;
+        $logfileTestdoxText          = null;
+        $loggingFromXmlConfiguration = true;
+
+        if ($cliConfiguration->hasNoLogging() && $cliConfiguration->noLogging()) {
+            $loggingFromXmlConfiguration = false;
+        }
+
+        if ($cliConfiguration->hasTeamcityLogfile()) {
+            $logfileTeamcity = $cliConfiguration->teamcityLogfile();
+        } elseif ($loggingFromXmlConfiguration && $xmlConfiguration->logging()->hasTeamCity()) {
+            $logfileTeamcity = $xmlConfiguration->logging()->teamCity()->target()->path();
+        }
+
+        if ($cliConfiguration->hasJunitLogfile()) {
+            $logfileJunit = $cliConfiguration->junitLogfile();
+        } elseif ($loggingFromXmlConfiguration && $xmlConfiguration->logging()->hasJunit()) {
+            $logfileJunit = $xmlConfiguration->logging()->junit()->target()->path();
+        }
+
+        if ($cliConfiguration->hasOtrLogfile()) {
+            $logfileOtr = $cliConfiguration->otrLogfile();
+        } elseif ($loggingFromXmlConfiguration && $xmlConfiguration->logging()->hasOtr()) {
+            $logfileOtr = $xmlConfiguration->logging()->otr()->target()->path();
+        }
+
+        $includeGitInformation             = false;
+        $includeGitInformationInOtrLogfile = false;
+
+        if ($cliConfiguration->hasIncludeGitInformation()) {
+            $includeGitInformation             = $cliConfiguration->includeGitInformation();
+            $includeGitInformationInOtrLogfile = $cliConfiguration->includeGitInformation();
+        } elseif ($loggingFromXmlConfiguration && $xmlConfiguration->logging()->hasOtr()) {
+            $includeGitInformationInOtrLogfile = $xmlConfiguration->logging()->otr()->includeGitInformation();
+        }
+
+        if ($cliConfiguration->hasTestdoxHtmlFile()) {
+            $logfileTestdoxHtml = $cliConfiguration->testdoxHtmlFile();
+        } elseif ($loggingFromXmlConfiguration && $xmlConfiguration->logging()->hasTestDoxHtml()) {
+            $logfileTestdoxHtml = $xmlConfiguration->logging()->testDoxHtml()->target()->path();
+        }
+
+        if ($cliConfiguration->hasTestdoxTextFile()) {
+            $logfileTestdoxText = $cliConfiguration->testdoxTextFile();
+        } elseif ($loggingFromXmlConfiguration && $xmlConfiguration->logging()->hasTestDoxText()) {
+            $logfileTestdoxText = $xmlConfiguration->logging()->testDoxText()->target()->path();
+        }
+
+        $logEventsText = null;
+
+        if ($cliConfiguration->hasLogEventsText()) {
+            $logEventsText = $cliConfiguration->logEventsText();
+        }
+
+        $logEventsVerboseText = null;
+
+        if ($cliConfiguration->hasLogEventsVerboseText()) {
+            $logEventsVerboseText = $cliConfiguration->logEventsVerboseText();
+        }
+
+        $compactOutput = false;
+
+        if ($cliConfiguration->hasCompactPrinter() && $cliConfiguration->compactPrinter()) {
+            $compactOutput = true;
+        } elseif (getenv('PHPUNIT_COMPACT_OUTPUT') === '1') {
+            $compactOutput = true;
+        }
+
+        $teamCityOutput = false;
+
+        if ($cliConfiguration->hasTeamCityPrinter() && $cliConfiguration->teamCityPrinter()) {
+            $teamCityOutput = true;
+        }
+
+        if ($cliConfiguration->hasTestDoxPrinter() && $cliConfiguration->testdoxPrinter()) {
+            $testDoxOutput = true;
+        } else {
+            $testDoxOutput = $xmlConfiguration->phpunit()->testdoxPrinter();
+        }
+
+        if ($cliConfiguration->hasTestDoxPrinterSummary() && $cliConfiguration->testdoxPrinterSummary()) {
+            $testDoxOutputSummary = true;
+        } else {
+            $testDoxOutputSummary = $xmlConfiguration->phpunit()->testdoxPrinterSummary();
+        }
+
+        $noProgress = false;
+
+        if ($cliConfiguration->hasNoProgress() && $cliConfiguration->noProgress()) {
+            $noProgress = true;
+        }
+
+        $noResults = false;
+
+        if ($cliConfiguration->hasNoResults() && $cliConfiguration->noResults()) {
+            $noResults = true;
+        }
+
+        $noOutput = false;
+
+        if ($cliConfiguration->hasNoOutput() && $cliConfiguration->noOutput()) {
+            $noOutput = true;
+        }
+
+        $testsCovering = null;
+
+        if ($cliConfiguration->hasTestsCovering()) {
+            $testsCovering = $cliConfiguration->testsCovering();
+        }
+
+        $testsUsing = null;
+
+        if ($cliConfiguration->hasTestsUsing()) {
+            $testsUsing = $cliConfiguration->testsUsing();
+        }
+
+        $testsRequiringPhpExtension = null;
+
+        if ($cliConfiguration->hasTestsRequiringPhpExtension()) {
+            $testsRequiringPhpExtension = $cliConfiguration->testsRequiringPhpExtension();
+        }
+
+        $filter = null;
+
+        if ($cliConfiguration->hasFilter()) {
+            $filter = $cliConfiguration->filter();
+        }
+
+        $excludeFilter = null;
+
+        if ($cliConfiguration->hasExcludeFilter()) {
+            $excludeFilter = $cliConfiguration->excludeFilter();
+        }
+
+        $testIdFilterFile = null;
+
+        if ($cliConfiguration->hasTestIdFile()) {
+            $testIdFilterFile = $cliConfiguration->testIdFile();
+        }
+
+        $testIdFilter = null;
+
+        if ($cliConfiguration->hasTestIdFilter()) {
+            $testIdFilter = $cliConfiguration->testIdFilter();
+        }
+
+        $ignoreTestSelectionInXmlConfiguration = false;
+
+        if ($cliConfiguration->hasAll()) {
+            $ignoreTestSelectionInXmlConfiguration = true;
+        }
+
+        $groups = [];
+
+        if ($cliConfiguration->hasGroups()) {
+            $groups = $cliConfiguration->groups();
+        } elseif (!$ignoreTestSelectionInXmlConfiguration) {
+            $groups = $xmlConfiguration->groups()->include()->asArrayOfStrings();
+        }
+
+        $excludeGroups = [];
+
+        if ($cliConfiguration->hasExcludeGroups()) {
+            $excludeGroups = $cliConfiguration->excludeGroups();
+        } elseif (!$ignoreTestSelectionInXmlConfiguration) {
+            $excludeGroups = $xmlConfiguration->groups()->exclude()->asArrayOfStrings();
+        }
+
+        $excludeGroups = array_diff($excludeGroups, $groups);
+
+        if ($cliConfiguration->hasRandomOrderSeed()) {
+            $randomOrderSeed = $cliConfiguration->randomOrderSeed();
+        } else {
+            $randomOrderSeed = time();
+        }
+
+        $repeat = 1;
+
+        if ($cliConfiguration->hasRepeat()) {
+            $repeat = $cliConfiguration->repeat();
+        }
+
+        $retry = 1;
+
+        if ($cliConfiguration->hasRetry()) {
+            $retry = $cliConfiguration->retry();
+        }
+
+        $timeout = 0;
+
+        if ($cliConfiguration->hasTimeout()) {
+            $timeout = $cliConfiguration->timeout();
+        }
+
+        if ($xmlConfiguration->wasLoadedFromFile() && $xmlConfiguration->hasValidationErrors()) {
+            if ((new SchemaDetector)->detect($xmlConfiguration->filename())->detected()) {
+                $this->emitter->testRunnerTriggeredPhpunitDeprecation(
+                    'Your XML configuration validates against a deprecated schema. Migrate your XML configuration using "--migrate-configuration"!',
+                );
+            } else {
+                $this->emitter->testRunnerTriggeredPhpunitWarning(
+                    "Test results may not be as expected because the XML configuration file did not pass validation:\n" .
+                    $xmlConfiguration->validationErrors(),
+                );
+            }
+        }
+
+        $includeUncoveredFiles = $xmlConfiguration->codeCoverage()->includeUncoveredFiles();
+
+        $includePaths = [];
+
+        if ($cliConfiguration->hasIncludePath()) {
+            foreach (explode(PATH_SEPARATOR, $cliConfiguration->includePath()) as $includePath) {
+                if ($includePath === '') {
+                    continue;
+                }
+
+                $includePaths[] = new Directory($includePath);
+            }
+        }
+
+        foreach ($xmlConfiguration->php()->includePaths() as $includePath) {
+            $includePaths[] = $includePath;
+        }
+
+        $iniSettings = [];
+
+        if ($cliConfiguration->hasIniSettings()) {
+            foreach ($cliConfiguration->iniSettings() as $name => $value) {
+                $iniSettings[] = new IniSetting($name, $value);
+            }
+        }
+
+        foreach ($xmlConfiguration->php()->iniSettings() as $iniSetting) {
+            $iniSettings[] = $iniSetting;
+        }
+
+        $includeTestSuite = '';
+
+        if ($cliConfiguration->hasTestSuite()) {
+            $includeTestSuite = $cliConfiguration->testSuite();
+        } elseif ($xmlConfiguration->phpunit()->hasDefaultTestSuite()) {
+            $includeTestSuite = $xmlConfiguration->phpunit()->defaultTestSuite();
+        }
+
+        $excludeTestSuite = '';
+
+        if ($cliConfiguration->hasExcludedTestSuite()) {
+            $excludeTestSuite = $cliConfiguration->excludedTestSuite();
+        }
+
+        $testSuffixes = ['Test.php', '.phpt'];
+
+        if ($cliConfiguration->hasTestSuffixes()) {
+            $testSuffixes = $cliConfiguration->testSuffixes();
+        }
+
+        $sourceIncludeDirectories = [];
+
+        if ($cliConfiguration->hasCoverageFilter()) {
+            foreach ($cliConfiguration->coverageFilter() as $directory) {
+                $sourceIncludeDirectories[] = new FilterDirectory($directory, '', '.php');
+            }
+        }
+
+        foreach ($xmlConfiguration->source()->includeDirectories() as $directory) {
+            $sourceIncludeDirectories[] = $directory;
+        }
+
+        $sourceIncludeFiles       = $xmlConfiguration->source()->includeFiles();
+        $sourceExcludeDirectories = $xmlConfiguration->source()->excludeDirectories();
+        $sourceExcludeFiles       = $xmlConfiguration->source()->excludeFiles();
+
+        $useBaseline      = null;
+        $generateBaseline = null;
+
+        if (!$cliConfiguration->hasGenerateBaseline()) {
+            if ($cliConfiguration->hasUseBaseline()) {
+                $useBaseline = $cliConfiguration->useBaseline();
+            } elseif ($xmlConfiguration->source()->hasBaseline()) {
+                $useBaseline = $xmlConfiguration->source()->baseline();
+            }
+        } else {
+            $generateBaseline = $cliConfiguration->generateBaseline();
+        }
+
+        assert($useBaseline !== '');
+        assert($generateBaseline !== '');
+
+        if ($failOnAllIssues) {
+            $displayDetailsOnAllIssues = true;
+        }
+
+        if ($failOnDeprecation && !$doNotFailOnDeprecation) {
+            $displayDetailsOnTestsThatTriggerDeprecations = true;
+        }
+
+        if ($failOnSelfDeprecation && !$doNotFailOnSelfDeprecation) {
+            $displayDetailsOnTestsThatTriggerDeprecations = true;
+        }
+
+        if ($failOnDirectDeprecation && !$doNotFailOnDirectDeprecation) {
+            $displayDetailsOnTestsThatTriggerDeprecations = true;
+        }
+
+        if ($failOnIndirectDeprecation && !$doNotFailOnIndirectDeprecation) {
+            $displayDetailsOnTestsThatTriggerDeprecations = true;
+        }
+
+        if ($failOnPhpunitDeprecation && !$doNotFailOnPhpunitDeprecation) {
+            $displayDetailsOnPhpunitDeprecations = true;
+        }
+
+        if ($failOnPhpunitNotice && !$doNotFailOnPhpunitNotice) {
+            $displayDetailsOnPhpunitNotices = true;
+        }
+
+        if ($failOnNotice && !$doNotFailOnNotice) {
+            $displayDetailsOnTestsThatTriggerNotices = true;
+        }
+
+        if ($failOnWarning && !$doNotFailOnWarning) {
+            $displayDetailsOnTestsThatTriggerWarnings = true;
+        }
+
+        if ($failOnIncomplete && !$doNotFailOnIncomplete) {
+            $displayDetailsOnIncompleteTests = true;
+        }
+
+        if ($failOnSkipped && !$doNotFailOnSkipped) {
+            $displayDetailsOnSkippedTests = true;
+        }
+
+        $issueTriggerIdentificationNeeded = $xmlConfiguration->source()->ignoreSelfDeprecations() || $xmlConfiguration->source()->ignoreDirectDeprecations() || $xmlConfiguration->source()->ignoreIndirectDeprecations();
+
+        if ($issueTriggerIdentificationNeeded && !$xmlConfiguration->source()->identifyIssueTrigger()) {
+            $this->emitter->testRunnerTriggeredPhpunitWarning(
+                'The identification of issue triggers is disabled. However, ignoring self-deprecations, direct deprecations, or indirect deprecations is requested.',
+            );
+        }
+
+        $testFilesFile                      = $this->nullableNonEmptyString($testFilesFile);
+        $bootstrap                          = $this->nullableNonEmptyString($bootstrap);
+        $coverageClover                     = $this->nullableNonEmptyString($coverageClover);
+        $coverageCobertura                  = $this->nullableNonEmptyString($coverageCobertura);
+        $coverageCrap4j                     = $this->nullableNonEmptyString($coverageCrap4j);
+        $coverageHtml                       = $this->nullableNonEmptyString($coverageHtml);
+        $coverageHtmlLowUpperBound          = $this->clampNonNegativeInt($coverageHtmlLowUpperBound);
+        $coverageHtmlHighLowerBound         = $this->clampNonNegativeInt($coverageHtmlHighLowerBound);
+        $coverageHtmlColorSuccessLow        = $this->requireNonEmptyString($coverageHtmlColorSuccessLow, 'coverage HTML color "success low"');
+        $coverageHtmlColorSuccessLowDark    = $this->requireNonEmptyString($coverageHtmlColorSuccessLowDark, 'coverage HTML color "success low dark"');
+        $coverageHtmlColorSuccessMedium     = $this->requireNonEmptyString($coverageHtmlColorSuccessMedium, 'coverage HTML color "success medium"');
+        $coverageHtmlColorSuccessMediumDark = $this->requireNonEmptyString($coverageHtmlColorSuccessMediumDark, 'coverage HTML color "success medium dark"');
+        $coverageHtmlColorSuccessHigh       = $this->requireNonEmptyString($coverageHtmlColorSuccessHigh, 'coverage HTML color "success high"');
+        $coverageHtmlColorSuccessHighDark   = $this->requireNonEmptyString($coverageHtmlColorSuccessHighDark, 'coverage HTML color "success high dark"');
+        $coverageHtmlColorSuccessBar        = $this->requireNonEmptyString($coverageHtmlColorSuccessBar, 'coverage HTML color "success bar"');
+        $coverageHtmlColorSuccessBarDark    = $this->requireNonEmptyString($coverageHtmlColorSuccessBarDark, 'coverage HTML color "success bar dark"');
+        $coverageHtmlColorWarning           = $this->requireNonEmptyString($coverageHtmlColorWarning, 'coverage HTML color "warning"');
+        $coverageHtmlColorWarningDark       = $this->requireNonEmptyString($coverageHtmlColorWarningDark, 'coverage HTML color "warning dark"');
+        $coverageHtmlColorWarningBar        = $this->requireNonEmptyString($coverageHtmlColorWarningBar, 'coverage HTML color "warning bar"');
+        $coverageHtmlColorWarningBarDark    = $this->requireNonEmptyString($coverageHtmlColorWarningBarDark, 'coverage HTML color "warning bar dark"');
+        $coverageHtmlColorDanger            = $this->requireNonEmptyString($coverageHtmlColorDanger, 'coverage HTML color "danger"');
+        $coverageHtmlColorDangerDark        = $this->requireNonEmptyString($coverageHtmlColorDangerDark, 'coverage HTML color "danger dark"');
+        $coverageHtmlColorDangerBar         = $this->requireNonEmptyString($coverageHtmlColorDangerBar, 'coverage HTML color "danger bar"');
+        $coverageHtmlColorDangerBarDark     = $this->requireNonEmptyString($coverageHtmlColorDangerBarDark, 'coverage HTML color "danger bar dark"');
+        $coverageHtmlColorBreadcrumbs       = $this->requireNonEmptyString($coverageHtmlColorBreadcrumbs, 'coverage HTML color "breadcrumbs"');
+        $coverageHtmlColorBreadcrumbsDark   = $this->requireNonEmptyString($coverageHtmlColorBreadcrumbsDark, 'coverage HTML color "breadcrumbs dark"');
+        $coverageJsonl                      = $this->nullableNonEmptyString($coverageJsonl);
+        $coverageOpenClover                 = $this->nullableNonEmptyString($coverageOpenClover);
+        $coveragePhp                        = $this->nullableNonEmptyString($coveragePhp);
+        $coverageText                       = $this->nullableNonEmptyString($coverageText);
+        $coverageXml                        = $this->nullableNonEmptyString($coverageXml);
+        $stopOnDefect                       = $this->clampNonNegativeInt($stopOnDefect);
+        $stopOnDeprecation                  = $this->clampNonNegativeInt($stopOnDeprecation);
+        $specificDeprecationToStopOn        = $this->nullableNonEmptyString($specificDeprecationToStopOn);
+        $stopOnError                        = $this->clampNonNegativeInt($stopOnError);
+        $stopOnFailure                      = $this->clampNonNegativeInt($stopOnFailure);
+        $stopOnIncomplete                   = $this->clampNonNegativeInt($stopOnIncomplete);
+        $stopOnNotice                       = $this->clampNonNegativeInt($stopOnNotice);
+        $stopOnRisky                        = $this->clampNonNegativeInt($stopOnRisky);
+        $stopOnSkipped                      = $this->clampNonNegativeInt($stopOnSkipped);
+        $stopOnWarning                      = $this->clampNonNegativeInt($stopOnWarning);
+        $defaultTimeLimit                   = $this->clampNonNegativeInt($defaultTimeLimit);
+        $logfileOtr                         = $this->nullableNonEmptyString($logfileOtr);
+        $logEventsText                      = $this->nullableNonEmptyString($logEventsText);
+        $logEventsVerboseText               = $this->nullableNonEmptyString($logEventsVerboseText);
+        $testIdFilterFile                   = $this->nullableNonEmptyString($testIdFilterFile);
+        $testIdFilter                       = $this->nullableNonEmptyString($testIdFilter);
+        $randomOrderSeed                    = $this->clampPositiveInt($randomOrderSeed);
+
+        $normalizedGroups = [];
+
+        foreach ($groups as $group) {
+            // @codeCoverageIgnoreStart
+            if ($group === '') {
+                continue;
+            }
+            // @codeCoverageIgnoreEnd
+
+            $normalizedGroups[] = $group;
+        }
+
+        $groups = $normalizedGroups;
+
+        $normalizedExcludeGroups = [];
+
+        foreach ($excludeGroups as $excludeGroup) {
+            // @codeCoverageIgnoreStart
+            if ($excludeGroup === '') {
+                continue;
+            }
+            // @codeCoverageIgnoreEnd
+
+            $normalizedExcludeGroups[] = $excludeGroup;
+        }
+
+        $excludeGroups = $normalizedExcludeGroups;
+
+        return new Configuration(
+            $cliConfiguration->arguments(),
+            $testFilesFile,
+            $configurationFile,
+            $bootstrap,
+            $xmlConfiguration->phpunit()->bootstrapForTestSuite(),
+            $recordTestRunHistory,
+            $cacheDirectory,
+            $coverageCacheDirectory,
+            new Source(
+                $useBaseline,
+                $cliConfiguration->ignoreBaseline(),
+                FilterDirectoryCollection::fromArray($sourceIncludeDirectories),
+                $sourceIncludeFiles,
+                $sourceExcludeDirectories,
+                $sourceExcludeFiles,
+                $xmlConfiguration->source()->restrictNotices(),
+                $xmlConfiguration->source()->restrictWarnings(),
+                $xmlConfiguration->source()->ignoreSuppressionOfDeprecations(),
+                $xmlConfiguration->source()->ignoreSuppressionOfPhpDeprecations(),
+                $xmlConfiguration->source()->ignoreSuppressionOfErrors(),
+                $xmlConfiguration->source()->ignoreSuppressionOfNotices(),
+                $xmlConfiguration->source()->ignoreSuppressionOfPhpNotices(),
+                $xmlConfiguration->source()->ignoreSuppressionOfWarnings(),
+                $xmlConfiguration->source()->ignoreSuppressionOfPhpWarnings(),
+                $xmlConfiguration->source()->deprecationTriggers(),
+                $xmlConfiguration->source()->ignoreSelfDeprecations(),
+                $xmlConfiguration->source()->ignoreDirectDeprecations(),
+                $xmlConfiguration->source()->ignoreIndirectDeprecations(),
+                $xmlConfiguration->source()->identifyIssueTrigger(),
+                $xmlConfiguration->source()->issueTriggerResolvers(),
+                $xmlConfiguration->source()->deprecationFilters(),
+            ),
+            $testRunHistoryFile,
+            $coverageClover,
+            $coverageCobertura,
+            $coverageCrap4j,
+            $coverageCrap4jThreshold,
+            $coverageHtml,
+            $coverageHtmlClassView,
+            $coverageHtmlFileView,
+            $coverageHtmlLowUpperBound,
+            $coverageHtmlHighLowerBound,
+            $coverageHtmlColorSuccessLow,
+            $coverageHtmlColorSuccessLowDark,
+            $coverageHtmlColorSuccessMedium,
+            $coverageHtmlColorSuccessMediumDark,
+            $coverageHtmlColorSuccessHigh,
+            $coverageHtmlColorSuccessHighDark,
+            $coverageHtmlColorSuccessBar,
+            $coverageHtmlColorSuccessBarDark,
+            $coverageHtmlColorWarning,
+            $coverageHtmlColorWarningDark,
+            $coverageHtmlColorWarningBar,
+            $coverageHtmlColorWarningBarDark,
+            $coverageHtmlColorDanger,
+            $coverageHtmlColorDangerDark,
+            $coverageHtmlColorDangerBar,
+            $coverageHtmlColorDangerBarDark,
+            $coverageHtmlColorBreadcrumbs,
+            $coverageHtmlColorBreadcrumbsDark,
+            $coverageHtmlCustomCssFile,
+            $coverageJsonl,
+            $coverageOpenClover,
+            $coveragePhp,
+            $coverageText,
+            $coverageTextShowUncoveredFiles,
+            $coverageTextShowOnlySummary,
+            $coverageXml,
+            $coverageXmlIncludeSource,
+            $pathCoverage,
+            $branchCoverage,
+            $coverageDriver,
+            $xmlConfiguration->codeCoverage()->ignoreDeprecatedCodeUnits(),
+            $disableCodeCoverageIgnore,
+            $disableCoverageTargeting,
+            $failOnAllIssues,
+            $failOnDeprecation,
+            $failOnSelfDeprecation,
+            $failOnDirectDeprecation,
+            $failOnIndirectDeprecation,
+            $failOnPhpunitDeprecation,
+            $failOnPhpunitNotice,
+            $failOnPhpunitWarning,
+            $failOnEmptyTestSuite,
+            $failOnIncomplete,
+            $failOnNotice,
+            $failOnRisky,
+            $failOnSkipped,
+            $failOnWarning,
+            $doNotFailOnDeprecation,
+            $doNotFailOnSelfDeprecation,
+            $doNotFailOnDirectDeprecation,
+            $doNotFailOnIndirectDeprecation,
+            $doNotFailOnPhpunitDeprecation,
+            $doNotFailOnPhpunitNotice,
+            $doNotFailOnPhpunitWarning,
+            $doNotFailOnEmptyTestSuite,
+            $doNotFailOnIncomplete,
+            $doNotFailOnNotice,
+            $doNotFailOnRisky,
+            $doNotFailOnSkipped,
+            $doNotFailOnWarning,
+            $stopOnDefect,
+            $stopOnDeprecation,
+            $specificDeprecationToStopOn,
+            $stopOnError,
+            $stopOnFailure,
+            $stopOnIncomplete,
+            $stopOnNotice,
+            $stopOnRisky,
+            $stopOnSkipped,
+            $stopOnWarning,
+            $outputToStandardErrorStream,
+            $columns,
+            $noExtensions,
+            $pharExtensionDirectory,
+            array_values($extensionBootstrappers),
+            $backupGlobals,
+            $backupStaticProperties,
+            $beStrictAboutChangesToGlobalState,
+            $colors,
+            $processIsolation,
+            $enforceTimeLimit,
+            $defaultTimeLimit,
+            $diffContext,
+            $timeoutForSmallTests,
+            $timeoutForMediumTests,
+            $timeoutForLargeTests,
+            $reportUselessTests,
+            $strictCoverage,
+            $requireCoverageContribution,
+            $disallowTestOutput,
+            $displayDetailsOnAllIssues,
+            $displayDetailsOnIncompleteTests,
+            $displayDetailsOnSkippedTests,
+            $displayDetailsOnTestsThatTriggerDeprecations,
+            $displayDetailsOnPhpunitDeprecations,
+            $displayDetailsOnPhpunitNotices,
+            $displayDetailsOnTestsThatTriggerErrors,
+            $displayDetailsOnTestsThatTriggerNotices,
+            $displayDetailsOnTestsThatTriggerWarnings,
+            $reverseDefectList,
+            $requireCoverageMetadata,
+            $requireCoverageMetadataOnSmallTests,
+            $requireCoverageMetadataOnMediumTests,
+            $requireCoverageMetadataOnLargeTests,
+            $requireSealedMockObjects,
+            $noProgress,
+            $noResults,
+            $noOutput,
+            $executionOrder,
+            $executionOrderDefects,
+            $resolveDependencies,
+            $logfileTeamcity,
+            $logfileJunit,
+            $logfileOtr,
+            $includeGitInformation,
+            $includeGitInformationInOtrLogfile,
+            $logfileTestdoxHtml,
+            $logfileTestdoxText,
+            $logEventsText,
+            $logEventsVerboseText,
+            $compactOutput,
+            $teamCityOutput,
+            $testDoxOutput,
+            $testDoxOutputSummary,
+            $testsCovering,
+            $testsUsing,
+            $testsRequiringPhpExtension,
+            $filter,
+            $excludeFilter,
+            $testIdFilterFile,
+            $testIdFilter,
+            $groups,
+            $excludeGroups,
+            $randomOrderSeed,
+            $repeat,
+            $retry,
+            $timeout,
+            $includeUncoveredFiles,
+            $xmlConfiguration->testSuite(),
+            $includeTestSuite,
+            $excludeTestSuite,
+            $xmlConfiguration->phpunit()->hasDefaultTestSuite() ? $xmlConfiguration->phpunit()->defaultTestSuite() : null,
+            $ignoreTestSelectionInXmlConfiguration,
+            $testSuffixes,
+            new Php(
+                DirectoryCollection::fromArray($includePaths),
+                IniSettingCollection::fromArray($iniSettings),
+                $xmlConfiguration->php()->constants(),
+                $xmlConfiguration->php()->globalVariables(),
+                $xmlConfiguration->php()->envVariables(),
+                $xmlConfiguration->php()->postVariables(),
+                $xmlConfiguration->php()->getVariables(),
+                $xmlConfiguration->php()->cookieVariables(),
+                $xmlConfiguration->php()->serverVariables(),
+                $xmlConfiguration->php()->filesVariables(),
+                $xmlConfiguration->php()->requestVariables(),
+            ),
+            $xmlConfiguration->phpunit()->controlGarbageCollector(),
+            $xmlConfiguration->phpunit()->numberOfTestsBeforeGarbageCollection(),
+            $generateBaseline,
+            $cliConfiguration->debug(),
+            $cliConfiguration->withTelemetry(),
+            $xmlConfiguration->phpunit()->shortenArraysForExportThreshold(),
+            $warnWhenPhpIsNotConfiguredForDevelopment,
+            $cacheTestIndex,
+        );
+    }
+
+    /**
+     * @return null|non-empty-string
+     */
+    private function nullableNonEmptyString(?string $value): ?string
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @throws LogicException
+     *
+     * @return non-empty-string
+     */
+    private function requireNonEmptyString(string $value, string $context): string
+    {
+        // @codeCoverageIgnoreStart
+        if ($value === '') {
+            throw new LogicException(sprintf('"%s" must not be empty', $context));
+        }
+        // @codeCoverageIgnoreEnd
+
+        return $value;
+    }
+
+    /**
+     * @return non-negative-int
+     */
+    private function clampNonNegativeInt(int $value): int
+    {
+        if ($value < 0) {
+            return 0;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @return positive-int
+     */
+    private function clampPositiveInt(int $value): int
+    {
+        if ($value < 1) {
+            return 1;
+        }
+
+        return $value;
+    }
+
+    private function hasExplicitTestSelection(CliConfiguration $cliConfiguration): bool
+    {
+        if ($cliConfiguration->hasFilter()) {
+            return true;
+        }
+
+        if ($cliConfiguration->hasExcludeFilter()) {
+            return true;
+        }
+
+        if ($cliConfiguration->hasGroups()) {
+            return true;
+        }
+
+        if ($cliConfiguration->hasExcludeGroups()) {
+            return true;
+        }
+
+        if ($cliConfiguration->hasTestSuite()) {
+            return true;
+        }
+
+        if ($cliConfiguration->hasExcludedTestSuite()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param non-empty-string $attribute
+     * @param non-empty-string $enablingSetting
+     * @param non-empty-string $cliOption
+     */
+    private function warnAboutFailOnSettingThatHasNoEffect(string $attribute, string $enablingSetting, string $cliOption): void
+    {
+        $this->emitter->testRunnerTriggeredPhpunitWarning(
+            sprintf(
+                '%s="false" has no effect because %s is enabled. Use the %s CLI option instead',
+                $attribute,
+                $enablingSetting,
+                $cliOption,
+            ),
+        );
+    }
+}

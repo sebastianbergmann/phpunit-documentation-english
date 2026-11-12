@@ -1,0 +1,71 @@
+<?php declare(strict_types=1);
+/*
+ * This file is part of PHPUnit.
+ *
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace PHPUnit\Event\TestRunner;
+
+use function sprintf;
+use PHPUnit\Event\Event;
+use PHPUnit\Event\Telemetry;
+
+/**
+ * @immutable
+ *
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
+ */
+final readonly class ChildProcessErrored implements Event
+{
+    private Telemetry\Info $telemetryInfo;
+    private ChildProcessReason $reason;
+
+    /**
+     * @var non-empty-string
+     */
+    private string $message;
+
+    /**
+     * @param non-empty-string $message
+     *
+     * @internal This method is not covered by the backward compatibility promise for PHPUnit
+     */
+    public function __construct(Telemetry\Info $telemetryInfo, ChildProcessReason $reason, string $message)
+    {
+        $this->telemetryInfo = $telemetryInfo;
+        $this->reason        = $reason;
+        $this->message       = $message;
+    }
+
+    public function telemetryInfo(): Telemetry\Info
+    {
+        return $this->telemetryInfo;
+    }
+
+    public function reason(): ChildProcessReason
+    {
+        return $this->reason;
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function message(): string
+    {
+        return $this->message;
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function asString(): string
+    {
+        return sprintf(
+            'Child Process Errored (%s)',
+            $this->reason->value,
+        );
+    }
+}

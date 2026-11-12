@@ -1,0 +1,1 @@
+     <tr{{class}}{{popover}}><td class="line-number"><a id="{{anchor}}" href="#{{anchor}}">{{lineNumber}}</a></td><td class="hit-count">{{coverageCount}}</td><td class="code">{{lineContent}}</td></tr>

@@ -1,0 +1,999 @@
+<?php declare(strict_types=1);
+/*
+ * This file is part of PHPUnit.
+ *
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace PHPUnit\Framework;
+
+use const PHP_EOL;
+use function array_all;
+use function array_merge;
+use function array_pop;
+use function array_reverse;
+use function assert;
+use function call_user_func;
+use function count;
+use function implode;
+use function is_callable;
+use function is_file;
+use function is_subclass_of;
+use function sprintf;
+use function str_ends_with;
+use function str_starts_with;
+use function trim;
+use AssertionError;
+use Iterator;
+use IteratorAggregate;
+use PHPUnit\Event;
+use PHPUnit\Event\Code\TestMethod;
+use PHPUnit\Event\NoPreviousThrowableException;
+use PHPUnit\Metadata\Api\Dependencies;
+use PHPUnit\Metadata\Api\Groups;
+use PHPUnit\Metadata\Api\HookMethods;
+use PHPUnit\Metadata\Api\Requirements;
+use PHPUnit\Metadata\InvalidAttribute;
+use PHPUnit\Metadata\MetadataCollection;
+use PHPUnit\Metadata\Parser\Registry as MetadataRegistry;
+use PHPUnit\Runner\Exception as RunnerException;
+use PHPUnit\Runner\Filter\Factory;
+use PHPUnit\Runner\Phpt\TestCase as PhptTestCase;
+use PHPUnit\Runner\TestSuiteLoader;
+use PHPUnit\TestRunner\TestResult\Facade as TestResultFacade;
+use PHPUnit\Util\Filter;
+use PHPUnit\Util\Reflection;
+use PHPUnit\Util\Test as TestUtil;
+use ReflectionClass;
+use ReflectionMethod;
+use SebastianBergmann\CodeCoverage\InvalidArgumentException;
+use SebastianBergmann\CodeCoverage\UnintentionallyCoveredCodeException;
+use Throwable;
+
+/**
+ * @template-implements IteratorAggregate<non-negative-int, Test>
+ *
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
+ *
+ * @internal This class is not covered by the backward compatibility promise for PHPUnit
+ */
+class TestSuite implements IteratorAggregate, Reorderable, Test
+{
+    /**
+     * @var non-empty-string
+     */
+    private string $name;
+
+    /**
+     * The name of a group that is a number is an integer key.
+     *
+     * @var array<int|non-empty-string, list<PhptTestCase|TestCase>>
+     */
+    private array $groupedTests = [];
+
+    /**
+     * The name of a group that is a number is an integer key.
+     *
+     * @var ?array<int|non-empty-string, list<non-empty-string>>
+     */
+    private ?array $groups = null;
+
+    /**
+     * @var ?list<ExecutionOrderDependency>
+     */
+    private ?array $requiredTests = null;
+
+    /**
+     * @var list<Test>
+     */
+    private array $tests = [];
+
+    /**
+     * @var ?list<ExecutionOrderDependency>
+     */
+    private ?array $providedTests    = null;
+    private ?Factory $iteratorFilter = null;
+    private bool $wasRun             = false;
+    private Event\Emitter $emitter;
+
+    /**
+     * Whether this test suite holds the tests of a test class, which is only
+     * known from how it was created: a test suite that merely has the name of
+     * a test class, such as a test suite of the XML configuration file that
+     * is named like the test class it holds, is not for that test class.
+     */
+    private bool $isForTestClass = false;
+
+    /**
+     * @param non-empty-string $name
+     */
+    public static function empty(string $name, Event\Emitter $emitter): static
+    {
+        return new static($name, $emitter);
+    }
+
+    /**
+     * @param ReflectionClass<TestCase> $class
+     * @param list<non-empty-string>    $groups
+     * @param positive-int              $numberOfRuns
+     * @param positive-int              $maxAttempts
+     */
+    public static function fromClassReflector(ReflectionClass $class, Event\Emitter $emitter, array $groups = [], int $numberOfRuns = 1, int $maxAttempts = 1): static
+    {
+        $testSuite = new static($class->getName(), $emitter);
+
+        $testSuite->isForTestClass = true;
+
+        foreach (Reflection::publicMethodsDeclaredDirectlyInTestClass($class) as $method) {
+            if (!TestUtil::isTestMethod($method)) {
+                continue;
+            }
+
+            if (new HookMethods($emitter)->isHookMethod($method)) {
+                $emitter->testRunnerTriggeredPhpunitWarning(
+                    sprintf(
+                        'Method %s::%s() cannot be used both as a hook method and as a test method',
+                        $class->getName(),
+                        $method->getName(),
+                    ),
+                );
+
+                continue;
+            }
+
+            $testSuite->addTestMethod($class, $method, $groups, $numberOfRuns, $maxAttempts);
+        }
+
+        if ($testSuite->isEmpty()) {
+            $emitter->testRunnerTriggeredPhpunitWarning(
+                sprintf(
+                    'No tests found in class "%s".',
+                    $class->getName(),
+                ),
+            );
+        }
+
+        return $testSuite;
+    }
+
+    /**
+     * @param non-empty-string $name
+     */
+    final private function __construct(string $name, Event\Emitter $emitter)
+    {
+        $this->name    = $name;
+        $this->emitter = $emitter;
+    }
+
+    /**
+     * Adds a test to the suite.
+     *
+     * @param list<non-empty-string> $groups
+     */
+    public function addTest(Test $test, array $groups = []): void
+    {
+        if ($test instanceof self) {
+            $this->tests[] = $test;
+
+            $this->clearCaches();
+
+            return;
+        }
+
+        assert($test instanceof TestCase || $test instanceof PhptTestCase);
+
+        $this->tests[] = $test;
+
+        $this->clearCaches();
+
+        if ($this->containsOnlyVirtualGroups($groups)) {
+            $groups[] = 'default';
+        }
+
+        $test->setGroups($groups);
+
+        foreach ($groups as $group) {
+            if (!isset($this->groupedTests[$group])) {
+                $this->groupedTests[$group] = [$test];
+            } else {
+                $this->groupedTests[$group][] = $test;
+            }
+        }
+    }
+
+    /**
+     * Adds the tests from the given class to the suite.
+     *
+     * @param ReflectionClass<TestCase> $testClass
+     * @param list<non-empty-string>    $groups
+     * @param positive-int              $numberOfRuns
+     * @param positive-int              $maxAttempts
+     *
+     * @throws Exception
+     */
+    public function addTestSuite(ReflectionClass $testClass, array $groups = [], int $numberOfRuns = 1, int $maxAttempts = 1): void
+    {
+        $className = $testClass->getName();
+
+        if ($testClass->isAbstract()) {
+            throw new Exception(
+                sprintf(
+                    'Class %s is abstract',
+                    $className,
+                ),
+            );
+        }
+
+        if (!is_subclass_of($className, TestCase::class)) {
+            throw new Exception(
+                sprintf(
+                    'Class %s is not a subclass of %s',
+                    $className,
+                    TestCase::class,
+                ),
+            );
+        }
+
+        $this->addTest(self::fromClassReflector($testClass, $this->emitter, $groups, $numberOfRuns, $maxAttempts), $groups);
+    }
+
+    /**
+     * Wraps both <code>addTest()</code> and <code>addTestSuite</code>
+     * as well as the separate import statements for the user's convenience.
+     *
+     * If the named file cannot be read or there are no new tests that can be
+     * added, a <code>PHPUnit\Framework\WarningTestCase</code> will be created instead,
+     * leaving the current test run untouched.
+     *
+     * @param list<non-empty-string> $groups
+     * @param positive-int           $numberOfRuns
+     * @param positive-int           $maxAttempts
+     *
+     * @throws Exception
+     */
+    public function addTestFile(string $filename, array $groups = [], int $numberOfRuns = 1, int $maxAttempts = 1): void
+    {
+        try {
+            if (str_ends_with($filename, '.phpt') && is_file($filename)) {
+                if ($numberOfRuns > 1) {
+                    $this->addTest(
+                        PhptRepeatTestSuite::for($filename, $this->emitter, $numberOfRuns, $groups),
+                        $groups,
+                    );
+                } elseif ($maxAttempts > 1) {
+                    $this->addTest(
+                        PhptRetryTestSuite::for($filename, $this->emitter, $maxAttempts, $groups),
+                        $groups,
+                    );
+                } else {
+                    $this->addTest(new PhptTestCase($filename), $groups);
+                }
+            } else {
+                $this->addTestSuite(
+                    (new TestSuiteLoader)->load($filename),
+                    $groups,
+                    $numberOfRuns,
+                    $maxAttempts,
+                );
+            }
+        } catch (RunnerException $e) {
+            $message = $e->getMessage();
+
+            assert($message !== '');
+
+            $this->emitter->testRunnerTriggeredPhpunitWarning(
+                $message,
+            );
+        }
+    }
+
+    /**
+     * Wrapper for addTestFile() that adds multiple test files.
+     *
+     * @param iterable<string> $fileNames
+     * @param positive-int     $numberOfRuns
+     * @param positive-int     $maxAttempts
+     *
+     * @throws Exception
+     */
+    public function addTestFiles(iterable $fileNames, int $numberOfRuns = 1, int $maxAttempts = 1): void
+    {
+        foreach ($fileNames as $filename) {
+            $this->addTestFile((string) $filename, [], $numberOfRuns, $maxAttempts);
+        }
+    }
+
+    /**
+     * Counts the number of test cases that will be run by this test.
+     */
+    public function count(): int
+    {
+        $numTests = 0;
+
+        foreach ($this as $test) {
+            $numTests += count($test);
+        }
+
+        return $numTests;
+    }
+
+    public function isEmpty(): bool
+    {
+        foreach ($this as $test) {
+            if (count($test) !== 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * The identifiers of the tests are only determined when they are asked
+     * for, which is only the case when tests are filtered by group. A test
+     * that is run builds the event value object that provides its identifier
+     * anyway, and caches it, so determining the identifiers eagerly only adds
+     * work for tests that are never run.
+     *
+     * The name of a group that is a number is an integer key.
+     *
+     * @return array<int|non-empty-string, list<non-empty-string>>
+     */
+    public function groups(): array
+    {
+        if ($this->groups !== null) {
+            return $this->groups;
+        }
+
+        $this->groups = [];
+
+        foreach ($this->groupedTests as $group => $tests) {
+            foreach ($tests as $test) {
+                $this->groups[$group][] = $test->valueObjectForEvents()->id();
+            }
+        }
+
+        return $this->groups;
+    }
+
+    /**
+     * The repetitions of a repeated test and the attempts of a retried test
+     * are aggregated by an IterativeTestSuite whose runTests() method
+     * implements the repetition and retry logic. Running the test cases
+     * returned by this method individually bypasses this logic: an
+     * IterativeTestSuite must be treated as an atomic unit.
+     *
+     * @return list<PhptTestCase|TestCase>
+     */
+    public function collect(): array
+    {
+        $tests = [];
+
+        foreach ($this as $test) {
+            if ($test instanceof self) {
+                $tests = array_merge($tests, $test->collect());
+
+                continue;
+            }
+
+            assert($test instanceof TestCase || $test instanceof PhptTestCase);
+
+            $tests[] = $test;
+        }
+
+        return $tests;
+    }
+
+    /**
+     * @throws Event\RuntimeException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoPreviousThrowableException
+     * @throws UnintentionallyCoveredCodeException
+     */
+    public function run(): void
+    {
+        if ($this->wasRun) {
+            // @codeCoverageIgnoreStart
+            throw new Exception('The tests aggregated by this TestSuite were already run');
+            // @codeCoverageIgnoreEnd
+        }
+
+        $this->wasRun = true;
+
+        if ($this->isEmpty()) {
+            return;
+        }
+
+        $emitter                       = $this->emitter;
+        $testSuiteValueObjectForEvents = Event\TestSuite\TestSuiteBuilder::from($this);
+
+        $emitter->testSuiteStarted($testSuiteValueObjectForEvents);
+
+        if (!$this->invokeMethodsBeforeFirstTest($emitter, $testSuiteValueObjectForEvents)) {
+            return;
+        }
+
+        // runTests() receives the tests as an argument expression so that no
+        // local variable retains a reference to them; this allows each test
+        // object to be destructed as soon as it has run (see #5875)
+        $this->runTests($this->takeTests(), $emitter);
+
+        $this->invokeMethodsAfterLastTest($emitter);
+
+        $emitter->testSuiteFinished($testSuiteValueObjectForEvents);
+    }
+
+    /**
+     * Returns the tests aggregated by this test suite: all of them, and not
+     * only those that the test selection has selected.
+     *
+     * The test selection that --filter, --group, --exclude-group, and
+     * --filter-test-id configure is a filter iterator that injectFilter()
+     * puts on the test suite, so it only takes effect while the test suite is
+     * iterated. Iterate the test suite wherever the selected tests are
+     * wanted, as count(), isEmpty(), and the takeTests() that run() uses do.
+     *
+     * The filter accepts every test suite it is asked about and applies the
+     * selection to the tests inside it, so iterating can yield a test suite
+     * that the selection has emptied.
+     *
+     * @return list<Test>
+     */
+    public function tests(): array
+    {
+        return $this->tests;
+    }
+
+    /**
+     * Set tests of the test suite.
+     *
+     * @param list<Test> $tests
+     */
+    public function setTests(array $tests): void
+    {
+        $this->tests = $tests;
+    }
+
+    /**
+     * Mark the test suite as skipped.
+     *
+     * @throws SkippedTestSuiteError
+     */
+    public function markTestSuiteSkipped(string $message = ''): never
+    {
+        throw new SkippedTestSuiteError($message);
+    }
+
+    /**
+     * @return Iterator<non-negative-int, Test>
+     */
+    public function getIterator(): Iterator
+    {
+        $iterator = new TestSuiteIterator($this);
+
+        if ($this->iteratorFilter !== null) {
+            /** @var Iterator<non-negative-int, Test> $iterator */
+            $iterator = $this->iteratorFilter->factory($iterator, $this);
+        }
+
+        return $iterator;
+    }
+
+    public function injectFilter(Factory $filter): void
+    {
+        $this->iteratorFilter = $filter;
+
+        foreach ($this as $test) {
+            if ($test instanceof self) {
+                $test->injectFilter($filter);
+            }
+        }
+    }
+
+    /**
+     * @return list<ExecutionOrderDependency>
+     */
+    public function provides(): array
+    {
+        if ($this->providedTests === null) {
+            $this->providedTests = [];
+
+            /**
+             * The targets that were provided so far are tracked separately so
+             * that adding a test to the result is not more expensive for the
+             * last test of a large test suite than it is for the first one.
+             *
+             * @var array<string, true> $targets
+             */
+            $targets = [];
+
+            if (is_callable($this->sortId(), true)) {
+                $dependency = new ExecutionOrderDependency($this->sortId());
+
+                $this->providedTests[]             = $dependency;
+                $targets[$dependency->getTarget()] = true;
+            }
+
+            foreach ($this->tests as $test) {
+                if (!$test instanceof Reorderable) {
+                    // @codeCoverageIgnoreStart
+                    continue;
+                    // @codeCoverageIgnoreEnd
+                }
+
+                foreach ($test->provides() as $dependency) {
+                    $target = $dependency->getTarget();
+
+                    if (isset($targets[$target])) {
+                        continue;
+                    }
+
+                    $targets[$target]      = true;
+                    $this->providedTests[] = $dependency;
+                }
+            }
+        }
+
+        return $this->providedTests;
+    }
+
+    /**
+     * @return list<ExecutionOrderDependency>
+     */
+    public function requires(): array
+    {
+        if ($this->requiredTests === null) {
+            $this->requiredTests = [];
+
+            /**
+             * @see provides()
+             *
+             * @var array<string, true> $targets
+             */
+            $targets = [];
+
+            /**
+             * A dependency that does not name both a class and a method is
+             * dropped as soon as another test contributes its dependencies,
+             * so only the one of the test that contributes last is kept.
+             *
+             * @var list<ExecutionOrderDependency> $invalid
+             */
+            $invalid = [];
+
+            foreach ($this->tests as $test) {
+                if (!$test instanceof Reorderable) {
+                    // @codeCoverageIgnoreStart
+                    continue;
+                    // @codeCoverageIgnoreEnd
+                }
+
+                $invalid = [];
+
+                foreach ($test->requires() as $dependency) {
+                    $target = $dependency->getTarget();
+
+                    if ($target === '') {
+                        if ($invalid === []) {
+                            $invalid[] = $dependency;
+                        }
+
+                        continue;
+                    }
+
+                    if (isset($targets[$target])) {
+                        continue;
+                    }
+
+                    $targets[$target]      = true;
+                    $this->requiredTests[] = $dependency;
+                }
+            }
+
+            $this->requiredTests = ExecutionOrderDependency::diff(
+                array_merge($this->requiredTests, $invalid),
+                $this->provides(),
+            );
+        }
+
+        return $this->requiredTests;
+    }
+
+    public function sortId(): string
+    {
+        return $this->name() . '::class';
+    }
+
+    /**
+     * @phpstan-assert-if-true class-string<TestCase> $this->name
+     */
+    public function isForTestClass(): bool
+    {
+        return $this->isForTestClass;
+    }
+
+    /**
+     * Runs the tests aggregated by this test suite.
+     *
+     * @param list<Test> $tests
+     *
+     * @throws Event\RuntimeException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoPreviousThrowableException
+     * @throws UnintentionallyCoveredCodeException
+     */
+    protected function runTests(array $tests, Event\Emitter $emitter): void
+    {
+        // Unless zend.exception_ignore_args is enabled, the stack trace of an
+        // exception holds the current value of each parameter; unsetting $tests
+        // keeps the tests that have not run yet out of such stack traces, which
+        // would otherwise make the garbage collector traverse them (see #7029)
+        $queue = array_reverse($tests);
+
+        unset($tests);
+
+        while (($test = array_pop($queue)) !== null) {
+            if (TestResultFacade::shouldStop()) {
+                $emitter->testRunnerExecutionAborted();
+
+                break;
+            }
+
+            $test->run();
+        }
+    }
+
+    /**
+     * @param ReflectionClass<TestCase> $class
+     * @param list<non-empty-string>    $groups
+     * @param positive-int              $numberOfRuns
+     * @param positive-int              $maxAttempts
+     *
+     * @throws Exception
+     */
+    protected function addTestMethod(ReflectionClass $class, ReflectionMethod $method, array $groups, int $numberOfRuns = 1, int $maxAttempts = 1): void
+    {
+        $className  = $class->getName();
+        $methodName = $method->getName();
+
+        $metadataErrors = $this->metadataErrorsFor($className, $methodName);
+
+        if ($metadataErrors !== []) {
+            $file = $method->getFileName();
+            $line = $method->getStartLine();
+
+            assert($file !== false && $file !== '');
+            assert($line !== false);
+
+            foreach ($metadataErrors as $message) {
+                $this->emitter->testTriggeredPhpunitError(
+                    new TestMethod(
+                        $className,
+                        $methodName,
+                        $file,
+                        $line,
+                        Event\Code\TestDoxBuilder::fromClassNameAndMethodName(
+                            $className,
+                            $methodName,
+                        ),
+                        MetadataCollection::fromArray([]),
+                        Event\TestData\TestDataCollection::fromArray([]),
+                    ),
+                    $message,
+                );
+            }
+
+            return;
+        }
+
+        try {
+            $test = new TestBuilder($this->emitter)->build($class, $methodName, $groups, $numberOfRuns, 1, $maxAttempts);
+        } catch (InvalidDataProviderException $e) {
+            if ($e->getProviderLabel() === null) {
+                $message = sprintf(
+                    "The data provider specified for %s::%s is invalid\n%s",
+                    $className,
+                    $methodName,
+                    $this->exceptionToString($e),
+                );
+            } else {
+                $message = sprintf(
+                    "The data provider %s specified for %s::%s is invalid\n%s",
+                    $e->getProviderLabel(),
+                    $className,
+                    $methodName,
+                    $this->exceptionToString($e),
+                );
+            }
+
+            $file = $method->getFileName();
+            $line = $method->getStartLine();
+
+            assert($file !== false && $file !== '');
+            assert($line !== false);
+
+            $this->emitter->testTriggeredPhpunitError(
+                new TestMethod(
+                    $className,
+                    $methodName,
+                    $file,
+                    $line,
+                    Event\Code\TestDoxBuilder::fromClassNameAndMethodName(
+                        $className,
+                        $methodName,
+                    ),
+                    MetadataCollection::fromArray([]),
+                    Event\TestData\TestDataCollection::fromArray([]),
+                ),
+                $message,
+            );
+
+            return;
+        }
+
+        if ($test instanceof TestCase || $test instanceof DataProviderTestSuite || $test instanceof IterativeTestSuite) {
+            $test->setDependencies(
+                Dependencies::dependencies($class->getName(), $methodName),
+            );
+        }
+
+        $this->addTest(
+            $test,
+            array_merge(
+                $groups,
+                (new Groups)->groups($class->getName(), $methodName),
+            ),
+        );
+    }
+
+    /**
+     * Removes the tests aggregated by this test suite from it and returns them.
+     *
+     * @return list<Test>
+     */
+    private function takeTests(): array
+    {
+        $tests = [];
+
+        foreach ($this as $test) {
+            $tests[] = $test;
+        }
+
+        $this->tests        = [];
+        $this->groupedTests = [];
+        $this->groups       = null;
+
+        return $tests;
+    }
+
+    /**
+     * @param class-string     $className
+     * @param non-empty-string $methodName
+     *
+     * @return list<non-empty-string>
+     */
+    private function metadataErrorsFor(string $className, string $methodName): array
+    {
+        $errors = new Requirements($this->emitter)->invalidVersionRequirementsFor($className, $methodName);
+
+        foreach (MetadataRegistry::parser()->forClassAndMethod($className, $methodName)->isInvalidAttribute() as $metadata) {
+            assert($metadata instanceof InvalidAttribute);
+
+            $errors[] = $metadata->message();
+        }
+
+        return $errors;
+    }
+
+    private function clearCaches(): void
+    {
+        $this->groups        = null;
+        $this->providedTests = null;
+        $this->requiredTests = null;
+    }
+
+    /**
+     * @param list<non-empty-string> $groups
+     */
+    private function containsOnlyVirtualGroups(array $groups): bool
+    {
+        return array_all($groups, static fn (string $group) => str_starts_with($group, '__phpunit_'));
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function exceptionToString(InvalidDataProviderException $e): string
+    {
+        $message = $e->getMessage();
+
+        if (trim($message) === '') {
+            $message = '<no message>';
+        }
+
+        return sprintf(
+            "%s\n%s",
+            $message,
+            Filter::stackTraceFromThrowableAsString($e),
+        );
+    }
+
+    /**
+     * @throws Exception
+     * @throws NoPreviousThrowableException
+     */
+    private function invokeMethodsBeforeFirstTest(Event\Emitter $emitter, Event\TestSuite\TestSuite $testSuiteValueObjectForEvents): bool
+    {
+        if (!$this->isForTestClass()) {
+            return true;
+        }
+
+        $methods         = new HookMethods($emitter)->hookMethods($this->name)['beforeClass']->methodNamesSortedByPriority();
+        $reflector       = new ReflectionClass($this->name);
+        $calledMethods   = [];
+        $emitCalledEvent = true;
+        $result          = true;
+
+        foreach ($methods as $method) {
+            if (Reflection::methodDoesNotExistOrIsDeclaredInTestCase($reflector, $method)) {
+                continue;
+            }
+
+            $calledMethod = new Event\Code\ClassMethod(
+                $this->name,
+                $method,
+            );
+
+            $t = null;
+
+            try {
+                $missingRequirements = new Requirements($emitter)->requirementsNotSatisfiedFor($this->name, $method);
+
+                if ($missingRequirements !== []) {
+                    $emitCalledEvent = false;
+
+                    $this->markTestSuiteSkipped(implode(PHP_EOL, $missingRequirements));
+                }
+
+                /** @var callable $callback */
+                $callback = [$this->name, $method];
+
+                call_user_func($callback);
+            } catch (Throwable $t) {
+            }
+
+            if ($emitCalledEvent) {
+                $emitter->beforeFirstTestMethodCalled(
+                    $this->name,
+                    $calledMethod,
+                );
+
+                $calledMethods[] = $calledMethod;
+            }
+
+            if (isset($t) && ($t instanceof IncompleteTest || $t instanceof SkippedTest)) {
+                /** @var non-empty-string $skippedMessage */
+                $skippedMessage = $t->getMessage();
+
+                $emitter->testSuiteSkipped(
+                    $testSuiteValueObjectForEvents,
+                    $skippedMessage,
+                );
+
+                return false;
+            }
+
+            if (isset($t)) {
+                if ($t instanceof AssertionError || $t instanceof AssertionFailedError) {
+                    $emitter->beforeFirstTestMethodFailed(
+                        $this->name,
+                        $calledMethod,
+                        Event\Code\ThrowableBuilder::from($t),
+                    );
+                } else {
+                    $emitter->beforeFirstTestMethodErrored(
+                        $this->name,
+                        $calledMethod,
+                        Event\Code\ThrowableBuilder::from($t),
+                    );
+                }
+
+                $result = false;
+
+                break;
+            }
+        }
+
+        if ($calledMethods !== []) {
+            $emitter->beforeFirstTestMethodFinished(
+                $this->name,
+                ...$calledMethods,
+            );
+        }
+
+        if (!$result) {
+            $emitter->testSuiteFinished($testSuiteValueObjectForEvents);
+        }
+
+        return $result;
+    }
+
+    private function invokeMethodsAfterLastTest(Event\Emitter $emitter): void
+    {
+        if (!$this->isForTestClass()) {
+            return;
+        }
+
+        $methods       = new HookMethods($emitter)->hookMethods($this->name)['afterClass']->methodNamesSortedByPriority();
+        $reflector     = new ReflectionClass($this->name);
+        $calledMethods = [];
+
+        foreach ($methods as $method) {
+            if (Reflection::methodDoesNotExistOrIsDeclaredInTestCase($reflector, $method)) {
+                continue;
+            }
+
+            $calledMethod = new Event\Code\ClassMethod(
+                $this->name,
+                $method,
+            );
+
+            $t = null;
+
+            try {
+                /** @var callable $callback */
+                $callback = [$this->name, $method];
+
+                call_user_func($callback);
+            } catch (IncompleteTest|SkippedTest) {
+                // the tests of the test class have already been run, so they
+                // can no longer be marked as incomplete or skipped
+            } catch (Throwable $t) {
+            }
+
+            $emitter->afterLastTestMethodCalled(
+                $this->name,
+                $calledMethod,
+            );
+
+            $calledMethods[] = $calledMethod;
+
+            if (isset($t)) {
+                if ($t instanceof AssertionError || $t instanceof AssertionFailedError) {
+                    $emitter->afterLastTestMethodFailed(
+                        $this->name,
+                        $calledMethod,
+                        Event\Code\ThrowableBuilder::from($t),
+                    );
+                } else {
+                    $emitter->afterLastTestMethodErrored(
+                        $this->name,
+                        $calledMethod,
+                        Event\Code\ThrowableBuilder::from($t),
+                    );
+                }
+
+                break;
+            }
+        }
+
+        if ($calledMethods !== []) {
+            $emitter->afterLastTestMethodFinished(
+                $this->name,
+                ...$calledMethods,
+            );
+        }
+    }
+}
