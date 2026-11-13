@@ -31,7 +31,7 @@ Installing the PHP Command-Line Interpreter
 Fedora
 ^^^^^^
 
-At the time of writing, Fedora 44 is the current version of this Linux distribution. It ships with PHP 8.5 by default.
+At the time of writing, Fedora 45 is the current version of this Linux distribution. It ships with PHP 8.5 by default.
 Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
 
 .. code::
@@ -70,7 +70,7 @@ maintained by Ondřej Surý.
 Ubuntu
 ^^^^^^
 
-At the time of writing, Ubuntu 26.04 is the current version of this Linux distribution. It ships with PHP 8.5 by default.
+At the time of writing, Ubuntu 26.10 is the current version of this Linux distribution. It ships with PHP 8.5 by default.
 Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
 
 .. code::
