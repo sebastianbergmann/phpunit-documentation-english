@@ -401,7 +401,7 @@ Reporting
    Replaces the default progress and result output with detailed debugging information. This shows event-by-event details of the test execution process.
 
 ``--with-telemetry``
-   Includes telemetry information such as timing and memory usage in the debugging output. This option is used in conjunction with ``--debug``.
+   Includes telemetry information such as timing and memory usage in the debugging output. This option is used in conjunction with ``--debug`` or ``--log-events-text``.
 
 
 .. _appendixes.cli-options.logging:
@@ -428,10 +428,7 @@ Logging
    Writes the test results in TestDox format as a plain text file. This produces a simple text document of test behaviors. This option is intended for writing a report to a file; for TestDox-formatted console output use ``--testdox`` instead.
 
 ``--log-events-text <file>``
-   Streams all test runner events as plain text to the specified file. This provides a comprehensive log of every event that occurs during the test run.
-
-``--log-events-verbose-text <file>``
-   Streams all test runner events as plain text with extended information to the specified file. This includes additional details compared to ``--log-events-text``.
+   Streams all test runner events as plain text to the specified file. This provides a comprehensive log of every event that occurs during the test run. When combined with ``--with-telemetry``, timing and memory usage information is included for each event.
 
 ``--no-logging``
    Ignores all logging configured in the XML configuration file. No log files will be written regardless of XML configuration settings.

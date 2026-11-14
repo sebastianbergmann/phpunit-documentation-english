@@ -528,7 +528,6 @@ Alternative output and event streaming:
 - ``--with-telemetry``
 - ``--teamcity``
 - ``--log-events-text <file>``
-- ``--log-events-verbose-text <file>``
 - ``--no-output``
 - ``--no-progress``
 - ``--no-results``

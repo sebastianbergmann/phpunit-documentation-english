@@ -908,15 +908,15 @@ to write event information to standard output:
     Test Runner Finished
     PHPUnit Finished (Shell Exit Code: 1)
 
-Alternatively, the ``--log-events-verbose-text`` CLI option can be used to include information
+When ``--log-events-text`` is combined with the ``--with-telemetry`` CLI option, information
 about resource consumption (time since the test runner was started, time since the previous event,
-and memory usage):
+and memory usage) is included for each event:
 
 .. code-block::
-    :caption: Output of ``phpunit --no-output --log-events-verbose-text php://stdout``
-    :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events-verbose
+    :caption: Output of ``phpunit --no-output --log-events-text php://stdout --with-telemetry``
+    :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events-with-telemetry
 
-    phpunit --no-output --log-events-verbose-text php://stdout
+    phpunit --no-output --log-events-text php://stdout --with-telemetry
     [00:00:00.000009375 / 00:00:00.000009375] [26671776 bytes] PHPUnit Started (PHPUnit 13.3.2 using PHP 8.5.10 (cli) on Darwin)
     [00:00:00.000231875 / 00:00:00.000222500] [26671776 bytes] Test Runner Configured
     [00:00:00.000344292 / 00:00:00.000112417] [26671776 bytes] Event Facade Sealed

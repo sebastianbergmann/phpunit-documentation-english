@@ -745,8 +745,7 @@ PHPUnit can write test results to log files in various formats:
 - ``--log-teamcity <file>`` writes test results in TeamCity format (used by PhpStorm)
 - ``--testdox-html <file>`` writes test results in TestDox format as an HTML file
 - ``--testdox-text <file>`` writes test results in TestDox format as a plain text file
-- ``--log-events-text <file>`` writes all test runner events as plain text
-- ``--log-events-verbose-text <file>`` writes all test runner events with extended information
+- ``--log-events-text <file>`` writes all test runner events as plain text; when combined with ``--with-telemetry``, timing and memory usage information is included for each event
 
 These logfiles are commonly used for CI tool integration and reporting.
 
