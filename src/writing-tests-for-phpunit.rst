@@ -283,7 +283,7 @@ Running the test shown above yields the output shown below:
 
 A test may have more than one test dependency attribute.
 
-By default, PHPUnit does not change the order in which tests are executed, so you have to ensure that the dependencies of a test can actually be met before the test is run.
+By default, PHPUnit reorders the tests so that, as far as possible, a test is run after the tests it depends on. This can be disabled by setting the :ref:`resolveDependencies <appendixes.xml-configuration-file.phpunit.resolveDependencies>` attribute of the XML configuration file to ``false``.
 
 A test that has more than one test dependency attribute will get a fixture from the first producer as the first argument, a fixture from the second producer as the second argument, and so on.
 
