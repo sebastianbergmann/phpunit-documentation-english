@@ -869,6 +869,8 @@ A test that has more than one test dependency attribute will get a fixture from 
 
 See :ref:`appendixes.attributes.Depends` and the attributes documented next to it for dependencies on tests in other classes and for the cloning variants.
 
+Test dependencies are the only way for a test to build on another test: a test must not run another test itself, for instance by calling the ``run()`` method of a ``TestCase`` object. A test that does so errors with the message ``A test must not run another test``.
+
 
 .. _writing-tests-for-phpunit.test-outcomes:
 
