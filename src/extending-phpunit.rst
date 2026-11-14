@@ -868,7 +868,7 @@ to write event information to standard output:
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events
 
     phpunit --no-output --log-events-text php://stdout
-    PHPUnit Started (PHPUnit 13.3.2 using PHP 8.5.10 (cli) on Darwin)
+    PHPUnit Started (PHPUnit 14.0.0 using PHP 8.5.10 (cli) on Darwin)
     Test Runner Configured
     Event Facade Sealed
     Test Suite Loaded (2 tests)
@@ -899,7 +899,7 @@ and memory usage) is included for each event:
     :name: extending-phpunit.event-system.event-system.debugging-phpunit.examples.logging-events-with-telemetry
 
     phpunit --no-output --log-events-text php://stdout --with-telemetry
-    [00:00:00.000009375 / 00:00:00.000009375] [26671776 bytes] PHPUnit Started (PHPUnit 13.3.2 using PHP 8.5.10 (cli) on Darwin)
+    [00:00:00.000009375 / 00:00:00.000009375] [26671776 bytes] PHPUnit Started (PHPUnit 14.0.0 using PHP 8.5.10 (cli) on Darwin)
     [00:00:00.000231875 / 00:00:00.000222500] [26671776 bytes] Test Runner Configured
     [00:00:00.000344292 / 00:00:00.000112417] [26671776 bytes] Event Facade Sealed
     [00:00:00.000605500 / 00:00:00.000261208] [26671776 bytes] Test Suite Loaded (2 tests)
