@@ -1134,6 +1134,34 @@ The ``Group(string $name)`` attribute can be used to assign tests to test groups
 Groups can be used, for instance, to :ref:`select <appendixes.cli-options.selection>`
 which tests should be run.
 
+This attribute is inherited from parent classes: the groups of a test are the groups that are
+declared on its test method, on its test case class, and on all parent classes of its test case class.
+
+.. code-block:: php
+    :caption: Declaring a group on a parent class of a test case class
+    :name: appendixes.attributes.group.examples.InvoiceTest.php
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Group;
+    use PHPUnit\Framework\TestCase;
+
+    #[Group('functional')]
+    abstract class FunctionalTestCase extends TestCase
+    {
+    }
+
+    final class InvoiceTest extends FunctionalTestCase
+    {
+        public function testSomething(): void
+        {
+            // ...
+        }
+    }
+
+In the example shown above, ``InvoiceTest::testSomething()`` is in the ``functional`` group: it is run when
+``--group functional`` is used, it is not run when ``--exclude-group functional`` is used, and it is counted
+for the ``functional`` group by ``--list-groups``.
+
 The strings ``small``, ``medium``, and ``large`` may not be used as group names.
 
 A group name that contains ``+`` between two other characters, such as ``database+slow``, cannot be used to select tests: the ``--group`` and ``--exclude-group`` options of the PHPUnit test runner use ``+`` to combine several group names into a selection of the tests that are in all of them (see :ref:`textui.selecting-tests.group`). PHPUnit emits a warning for such a group name, but the group is still assigned to the test.
@@ -1151,6 +1179,11 @@ A group name that contains ``+`` between two other characters, such as ``databas
 
 The ``Small`` attribute marks the tests of a test case class as small. These tests are
 added to a special test group named ``small`` that has special semantics.
+
+This attribute is inherited from parent classes. A test has only one size: when the test case class
+and its parent classes declare more than one of the ``Small``, :ref:`Medium <appendixes.attributes.Medium>`,
+and :ref:`Large <appendixes.attributes.Large>` attributes, the size that is declared on the test case class
+is used. When the test case class does not declare a size, the size that is declared on the nearest parent class is used.
 
 The size of a test is relevant in the context of
 :ref:`test execution timeouts <risky-tests.test-execution-timeout>`, for instance.
@@ -1173,6 +1206,8 @@ to tests that are marked :ref:`medium <appendixes.attributes.Medium>` or
 
 The ``Medium`` attribute marks the tests of a test case class as medium. These tests are
 added to a special test group named ``medium`` that has special semantics.
+
+This attribute is inherited from parent classes in the same way as the :ref:`Small <appendixes.attributes.Small>` attribute.
 
 The size of a test is relevant in the context of
 :ref:`test execution timeouts <risky-tests.test-execution-timeout>`, for instance.
@@ -1197,6 +1232,8 @@ of green compared to test that are marked small :ref:`small <appendixes.attribut
 The ``Large`` attribute marks the tests of a test case class as large. These tests are
 added to a special test group named ``large`` that has special semantics.
 
+This attribute is inherited from parent classes in the same way as the :ref:`Small <appendixes.attributes.Small>` attribute.
+
 The size of a test is relevant in the context of
 :ref:`test execution timeouts <risky-tests.test-execution-timeout>`, for instance.
 
@@ -1218,6 +1255,7 @@ to tests that are marked :ref:`medium <appendixes.attributes.Medium>` or
 +-------------+--------------+------------+
 
 The ``Ticket(string $text)`` attribute is an alias for ``Group(string $text)``.
+Like the :ref:`Group <appendixes.attributes.Group>` attribute, it is inherited from parent classes.
 
 
 Template Methods
