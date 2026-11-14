@@ -1018,6 +1018,7 @@ The method must be called at least once.
 """""""""""""""""""""""""""""""""""""
 
 The method must be called at least ``$requiredInvocations`` times.
+``$requiredInvocations`` has to be a positive integer: a test that passes ``0`` or a negative number to ``atLeast()`` errors.
 
 .. code-block:: php
 
