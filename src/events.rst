@@ -76,25 +76,25 @@ the ``PHPUnit\Event\TestRunner\ChildProcessReason`` enumeration:
 
     The child process runs the ``CLEAN`` section of a PHPT test
 
-``PHPUnit\Event\TestRunner\DeprecationTriggered``
+``PHPUnit\Event\TestRunner\PhpunitDeprecationTriggered``
 
-    PHPUnit itself reports a deprecation about the test runner. This event will be renamed to ``PHPUnit\Event\TestRunner\PhpunitDeprecationTriggered`` in PHPUnit 14.
+    PHPUnit itself reports a deprecation about the test runner
 
-``PHPUnit\Event\TestRunner\NoticeTriggered``
+``PHPUnit\Event\TestRunner\PhpunitNoticeTriggered``
 
-    PHPUnit itself reports a notice about the test runner. This event will be renamed to ``PHPUnit\Event\TestRunner\PhpunitNoticeTriggered`` in PHPUnit 14.
+    PHPUnit itself reports a notice about the test runner
 
-``PHPUnit\Event\TestRunner\WarningTriggered``
+``PHPUnit\Event\TestRunner\PhpunitWarningTriggered``
 
-    PHPUnit itself reports a warning about the test runner. This event will be renamed to ``PHPUnit\Event\TestRunner\PhpunitWarningTriggered`` in PHPUnit 14.
+    PHPUnit itself reports a warning about the test runner
 
 ``PHPUnit\Event\TestRunner\PhpDeprecationTriggered``
 
     A PHP deprecation (``E_DEPRECATED``) was triggered outside of a test
 
-``PHPUnit\Event\TestRunner\Issue\DeprecationTriggered``
+``PHPUnit\Event\TestRunner\DeprecationTriggered``
 
-    A deprecation (``E_USER_DEPRECATED``) was triggered outside of a test. This event will be moved to ``PHPUnit\Event\TestRunner\DeprecationTriggered`` in PHPUnit 14.
+    A deprecation (``E_USER_DEPRECATED``) was triggered outside of a test
 
 ``PHPUnit\Event\TestRunner\ErrorTriggered``
 
@@ -104,17 +104,17 @@ the ``PHPUnit\Event\TestRunner\ChildProcessReason`` enumeration:
 
     A PHP notice (``E_NOTICE``) was triggered outside of a test
 
-``PHPUnit\Event\TestRunner\Issue\NoticeTriggered``
+``PHPUnit\Event\TestRunner\NoticeTriggered``
 
-    A notice (``E_USER_NOTICE``) was triggered outside of a test. This event will be moved to ``PHPUnit\Event\TestRunner\NoticeTriggered`` in PHPUnit 14.
+    A notice (``E_USER_NOTICE``) was triggered outside of a test
 
 ``PHPUnit\Event\TestRunner\PhpWarningTriggered``
 
     A PHP warning (``E_WARNING``) was triggered outside of a test
 
-``PHPUnit\Event\TestRunner\Issue\WarningTriggered``
+``PHPUnit\Event\TestRunner\WarningTriggered``
 
-    A warning (``E_USER_WARNING``) was triggered outside of a test. This event will be moved to ``PHPUnit\Event\TestRunner\WarningTriggered`` in PHPUnit 14.
+    A warning (``E_USER_WARNING``) was triggered outside of a test
 
 ``PHPUnit\Event\TestRunner\TimeLimitExceeded``
 
