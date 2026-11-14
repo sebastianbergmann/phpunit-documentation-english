@@ -761,12 +761,12 @@ The ``--no-logging`` option ignores all logging configured in the XML configurat
 Test execution order
 ====================
 
-By default, PHPUnit executes the tests of each test suite in the order in which it discovered them. The ``--order-by`` option changes that: it configures a pipeline of reordering stages that is applied to the tests of every test suite, one stage after another.
+By default, PHPUnit executes the tests of each test suite in the order in which it discovered them. The ``--order-by`` option changes that: it configures a pipeline of reordering stages that is applied to the tests of every test suite, one stage after another. The stages are applied in the order in which the values that configure them are written.
 
 Order
 -----
 
-The order is the first stage of the pipeline. Exactly one order can be configured:
+An order is a stage that sorts the tests of a test suite. Exactly one order can be configured:
 
 ``default``
 
@@ -811,14 +811,16 @@ The order is the first stage of the pipeline. Exactly one order can be configure
 
 ``default`` resets what the values written before it configured, including ``defects``. ``--order-by random,default`` therefore executes the tests in the order in which they were discovered, and ``--order-by random,default,reverse`` executes them in reverse discovery order. Using ``default`` together with an order like this does not count as configuring more than one order.
 
-.. admonition:: Note
+Configuring more than one order is an error, because sorting the tests again would discard the order that the previous sort established:
 
-    ``default`` also turns the resolution of dependencies between tests back on.
-    ``--ignore-dependencies --order-by default`` therefore resolves them, whereas
-    ``--order-by default --ignore-dependencies`` does not. ``--order-by default``
-    resolves them even when ``resolveDependencies="false"`` is configured in the XML
-    configuration file, and so does ``executionOrder="default"`` in the XML configuration
-    file itself.
+.. parsed-literal::
+
+    $ ./tools/phpunit --order-by duration-ascending,reverse
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    Cannot use more than one order for --order-by: "duration-ascending" and "reverse"
+
+Using a value more than once and using a value that PHPUnit does not know are errors as well. The same rules apply to the ``executionOrder`` attribute in the XML configuration file: an XML configuration file that violates them cannot be loaded.
 
 Ordering by modification time
 -----------------------------
@@ -845,6 +847,8 @@ Running previously defective tests first
 
 The order can be followed by ``defects``, for instance ``--order-by duration-ascending,defects``. This adds a second stage that moves the tests that were defective during the previous test run to the front, so that a defect is reached as fast as possible. Tests that are not moved to the front keep the order that the first stage established.
 
+Because the stages are applied in the order in which they are written, ``defects`` has to be written after the order. With ``--order-by defects,duration-ascending``, the tests are sorted by duration after the defective tests have been moved to the front, and the defective tests do not stay at the front.
+
 Only tests that errored or failed count as defects. A test that was skipped, that was marked as incomplete, or that triggered an issue is not moved to the front. A test suite counts as defective when at least one of the tests it contains counts as defective, so that defects are moved to the front through arbitrarily deeply nested test suites as well.
 
 ``--order-by defects`` can also be used on its own, without configuring an order.
@@ -870,6 +874,8 @@ Dependency resolution is the last stage of the pipeline: it reorders the tests o
 
 Because any stage that ran after it would undo the order it establishes, dependency resolution is always applied last.
 
+Whether dependencies between tests are resolved does not depend on the value of ``--order-by`` or of the ``executionOrder`` attribute: ``default`` resets the stages that are configured using these, but it has no effect on dependency resolution.
+
 Aliases
 -------
 
@@ -889,40 +895,6 @@ Convenience aliases are available: ``--random-order`` (for ``--order-by random``
     Time: 00:00.077, Memory: 10.00 MB
 
     OK (2 tests, 2 assertions)
-
-.. _textui.test-execution-order.deprecated:
-
-Deprecated ways of configuring the execution order
---------------------------------------------------
-
-The values below are still accepted by ``--order-by`` and by the ``executionOrder`` attribute in the XML configuration file, but PHPUnit emits a test runner deprecation for them:
-
-``depends`` and ``no-depends``
-
-    Whether dependencies between tests are resolved is not an order. Use the
-    ``--resolve-dependencies`` and ``--ignore-dependencies`` CLI options, or the
-    ``resolveDependencies`` attribute in the XML configuration file, instead.
-
-``defects`` written before the order
-
-    ``defects,duration-ascending`` and ``duration-ascending,defects`` currently mean the
-    same thing: the order is applied first and defects are moved to the front afterwards.
-    In PHPUnit 14, the stages will be applied in the order in which they are written, and
-    the two values will therefore mean different things. Write the order first, for
-    instance ``duration-ascending,defects``.
-
-More than one order
-
-    For instance ``duration-ascending,reverse``. The order that is written last currently
-    overrides the ones written before it. This will be an error in PHPUnit 14. An order
-    that is written before ``default`` is reset by it and does not count, so
-    ``random,default,reverse`` configures one order.
-
-``duration`` and ``size``
-
-    Use ``duration-ascending`` and ``size-ascending`` instead.
-
-A value that PHPUnit does not know is rejected with an error when it is used for ``--order-by``. When it is used for the ``executionOrder`` attribute then it is currently ignored, which is deprecated and will be an error in PHPUnit 14.
 
 See :ref:`appendixes.cli-options.execution` for the complete reference.
 

@@ -35,8 +35,9 @@ The ``--show-effective-configuration`` CLI option shows the configuration that r
       beStrictAboutChangesToGlobalState: false
       bootstrap: /path/to/project/vendor/autoload.php
       ...
-      executionOrder: duration-ascending
-      executionOrderDefects: defects
+      executionOrder:
+        - duration-ascending
+        - defects
       ...
       failOnRisky: true
       ...
