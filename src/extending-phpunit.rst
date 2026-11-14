@@ -811,14 +811,7 @@ Sharing an extension as a PHAR
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When users of your extension prefer to install PHPUnit as a PHAR, you can make your extension available as a PHAR, too.
-The PHAR is loaded using ``require``, so its stub has to make the classes of your extension available, for instance by registering an autoloader.
-
-To make your extension loadable from the directory that is configured using the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute, you need to include a `PHAR Manifest <https://github.com/phar-io/manifest>`_.
-Loading extensions from this directory is deprecated, though (see :ref:`extending-phpunit.extending-the-test-runner.registering-an-extension-from-a-phar`).
-
-.. literalinclude:: examples/extending-phpunit/manifest.xml
-   :caption: An example manifest.xml
-   :language: xml
+The PHAR is loaded using ``require`` (see :ref:`extending-phpunit.extending-the-test-runner.registering-an-extension-from-a-phar`), so its stub has to make the classes of your extension available, for instance by registering an autoloader.
 
 Sharing an extension as a Composer package
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -845,27 +838,14 @@ When you install PHPUnit as a PHAR, you can load an extension that is distribute
    :caption: An XML configuration registering an ExampleExtension with parameters, loaded in the bootstrap script
    :language: xml
 
-PHPUnit does not check the manifest of a PHAR that is loaded in the bootstrap script, and it does not list the extension in the runtime information.
-
-You can also use the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute of the :ref:`phpunit <appendixes.xml-configuration-file.phpunit>` element to configure the directory from which PHPUnit should load extensions as a PHAR.
-
-.. literalinclude:: examples/extending-phpunit/phpunit-phar.xml
-   :caption: An XML configuration registering an ExampleExtension with parameters, loaded from an extensions directory
-   :language: xml
-
-.. admonition:: Deprecation: The ``extensionsDirectory`` attribute is deprecated
-
-   Loading extensions from PHARs using the ``extensionsDirectory`` attribute is deprecated.
-   This will no longer be possible in PHPUnit 14.
-
-   Load the PHAR in your bootstrap script, as shown above, or install the extension using Composer instead.
+PHPUnit does not load the PHAR of an extension itself, so the bootstrap script has to do it.
 
 Registering an extension from a Composer package
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When you install PHPUnit as a Composer package, it is best to load extensions from Composer packages.
 
-You do not need to configure the :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute, as extensions from Composer packages will be available through the autoloading mechanism of Composer.
+Extensions from Composer packages are available through the autoloading mechanism of Composer.
 
 .. literalinclude:: examples/extending-phpunit/phpunit-composer.xml
    :caption: An XML configuration registering an ExampleExtension with parameters

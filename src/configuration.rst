@@ -69,12 +69,10 @@ The ``--show-effective-configuration`` CLI option shows the configuration that r
     Source files excluded from code coverage:
       - /path/to/project/src/Generated/Proxy.php
 
-    PHAR extensions: (none)
-
 The output consists of the following sections:
 
 ``Settings``
-   All settings of the effective configuration, in alphabetical order. A setting that is not set is shown as ``(not set)``, and an empty list is shown as ``(none)``. The names of the settings are those of PHPUnit's internal representation of the configuration. They often, but not always, match the names of the corresponding XML configuration attributes: the directory that is configured using the ``extensionsDirectory`` attribute, for instance, is shown as ``pharExtensionDirectory``, and the file that is configured using ``<junit outputFile="...">`` is shown as ``logfileJunit``.
+   All settings of the effective configuration, in alphabetical order. A setting that is not set is shown as ``(not set)``, and an empty list is shown as ``(none)``. The names of the settings are those of PHPUnit's internal representation of the configuration. They often, but not always, match the names of the corresponding XML configuration attributes: the ``stderr`` attribute, for instance, is shown as ``outputToStandardErrorStream``, and the file that is configured using ``<junit outputFile="...">`` is shown as ``logfileJunit``.
 
 ``Test files``
    The test files of each test suite after the include and exclude rules of the :ref:`\<testsuites\> <appendixes.xml-configuration-file.testsuites>` element as well as ``--testsuite`` and ``--exclude-testsuite`` have been applied. Test files that are passed as CLI arguments are listed under ``CLI Arguments`` instead. Groups that are assigned using the ``groups`` attribute of the ``<directory>`` and ``<file>`` elements are shown in parentheses.
@@ -84,9 +82,6 @@ The output consists of the following sections:
 
 ``Source files excluded from code coverage``
    The source files that are not considered for code coverage analysis because they are included using ``includeInCodeCoverage="false"``.
-
-``PHAR extensions``
-   The PHARs that are loaded as test runner extensions from the directory that is configured using the deprecated :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` attribute.
 
 No code from the configuration is executed: the bootstrap script is not included, the PHP settings configured using the ``<php>`` element are not applied, and neither test runner extensions nor test files are loaded.
 
@@ -569,7 +564,6 @@ On the ``<phpunit>`` element:
 - :ref:`timeoutForSmallTests <appendixes.xml-configuration-file.phpunit.timeoutForSmallTests>` (default: ``1``)
 - :ref:`timeoutForMediumTests <appendixes.xml-configuration-file.phpunit.timeoutForMediumTests>` (default: ``10``)
 - :ref:`timeoutForLargeTests <appendixes.xml-configuration-file.phpunit.timeoutForLargeTests>` (default: ``60``)
-- :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>` (deprecated)
 - :ref:`shortenArraysForExportThreshold <appendixes.xml-configuration-file.phpunit.shortenArraysForExportThreshold>`
 
 Test suite definition:
