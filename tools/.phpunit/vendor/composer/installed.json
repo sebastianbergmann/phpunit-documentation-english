@@ -541,12 +541,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9a67d9ff4e5b9c79ff565908e159be4440d449a0"
+                "reference": "b5712d808c925c87d65261ef77d8bda426d61c49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9a67d9ff4e5b9c79ff565908e159be4440d449a0",
-                "reference": "9a67d9ff4e5b9c79ff565908e159be4440d449a0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b5712d808c925c87d65261ef77d8bda426d61c49",
+                "reference": "b5712d808c925c87d65261ef77d8bda426d61c49",
                 "shasum": ""
             },
             "require": {
@@ -557,12 +557,14 @@
                 "ext-mbstring": "*",
                 "ext-xmlwriter": "*",
                 "myclabs/deep-copy": "^1.14.0",
+                "nikic/php-parser": "^5.9.0",
                 "php": ">=8.5.12",
                 "phpunit/php-code-coverage": "^14.6@dev",
                 "phpunit/php-file-iterator": "^7.0.2",
                 "phpunit/php-invoker": "^7.0.0",
                 "phpunit/php-text-template": "^6.0.1",
                 "phpunit/php-timer": "^9.0.0",
+                "sebastian/choice-sequence": "^1.0@dev",
                 "sebastian/cli-parser": "^5.0.1",
                 "sebastian/comparator": "^8.4",
                 "sebastian/diff": "^9.0.1",
@@ -578,8 +580,8 @@
                 "sebastian/version-requirement": "^1.0.0",
                 "staabm/side-effects-detector": "^1.0.5"
             },
-            "time": "2026-11-13T11:11:14+00:00",
-            "published-time": "2026-11-13T11:11:49+00:00",
+            "time": "2026-11-14T16:21:12+00:00",
+            "published-time": "2026-11-14T16:21:49+00:00",
             "default-branch": true,
             "bin": [
                 "phpunit"
@@ -629,6 +631,80 @@
                 }
             ],
             "install-path": "../phpunit/phpunit"
+        },
+        {
+            "name": "sebastian/choice-sequence",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/choice-sequence.git",
+                "reference": "4be13d9aa3c67ef09398061feca474ca13836545"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/choice-sequence/zipball/4be13d9aa3c67ef09398061feca474ca13836545",
+                "reference": "4be13d9aa3c67ef09398061feca474ca13836545",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.4.7"
+            },
+            "time": "2026-11-14T13:42:04+00:00",
+            "published-time": "2026-11-14T13:59:07+00:00",
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.0-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Library for drawing, replaying, shrinking, and storing choice sequences",
+            "homepage": "https://github.com/sebastianbergmann/choice-sequence",
+            "support": {
+                "issues": "https://github.com/sebastianbergmann/choice-sequence/issues",
+                "security": "https://github.com/sebastianbergmann/choice-sequence/security/policy",
+                "source": "https://github.com/sebastianbergmann/choice-sequence/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/choice-sequence",
+                    "type": "tidelift"
+                }
+            ],
+            "install-path": "../sebastian/choice-sequence"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1952,6 +2028,7 @@
         "phpunit/php-text-template",
         "phpunit/php-timer",
         "phpunit/phpunit",
+        "sebastian/choice-sequence",
         "sebastian/cli-parser",
         "sebastian/comparator",
         "sebastian/complexity",

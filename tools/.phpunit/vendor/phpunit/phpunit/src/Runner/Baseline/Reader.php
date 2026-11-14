@@ -10,8 +10,12 @@
 namespace PHPUnit\Runner\Baseline;
 
 use const DIRECTORY_SEPARATOR;
+use function array_pop;
 use function assert;
+use function count;
 use function dirname;
+use function explode;
+use function implode;
 use function is_file;
 use function realpath;
 use function sprintf;
@@ -87,7 +91,9 @@ final readonly class Reader
             foreach ($fileElements as $fileElement) {
                 assert($fileElement instanceof DOMElement);
 
-                $file = $baselineDirectory . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $fileElement->getAttribute('path'));
+                $file = $this->withoutParentDirectorySegments(
+                    $baselineDirectory . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $fileElement->getAttribute('path')),
+                );
 
                 $lineElements = $xpath->query('line', $fileElement);
 
@@ -127,5 +133,40 @@ final readonly class Reader
         }
 
         return $baseline;
+    }
+
+    /**
+     * The path of a file that is not in the directory of the baseline, or in
+     * a directory below it, starts with a segment for the parent directory
+     * for each directory that has to be left, for instance ../src/File.php.
+     * These segments are resolved so that the path is the one that is
+     * reported for an issue that is triggered in the file.
+     *
+     * @param non-empty-string $path
+     *
+     * @return non-empty-string
+     */
+    private function withoutParentDirectorySegments(string $path): string
+    {
+        $segments = [];
+
+        foreach (explode(DIRECTORY_SEPARATOR, $path) as $segment) {
+            if ($segment !== '..') {
+                $segments[] = $segment;
+
+                continue;
+            }
+
+            // the first segment is the root of the filesystem
+            if (count($segments) > 1) {
+                array_pop($segments);
+            }
+        }
+
+        $path = implode(DIRECTORY_SEPARATOR, $segments);
+
+        assert($path !== '');
+
+        return $path;
     }
 }

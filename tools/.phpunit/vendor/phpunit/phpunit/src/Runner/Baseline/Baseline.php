@@ -29,6 +29,10 @@ final class Baseline
 
     public function add(Issue $issue): void
     {
+        if ($this->has($issue)) {
+            return;
+        }
+
         if (!isset($this->issues[$issue->file()])) {
             $this->issues[$issue->file()] = [];
         }

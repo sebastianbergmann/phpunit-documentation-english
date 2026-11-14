@@ -4,6 +4,10 @@ All notable changes of the PHPUnit 14.0 release series are documented in this fi
 
 ## [14.0.0] - 2027-02-05
 
+### Added
+
+* [#7052](https://github.com/sebastianbergmann/phpunit/pull/7052): Native support for Property-Based Testing
+
 ### Changed
 
 * [#6498](https://github.com/sebastianbergmann/phpunit/issues/6498): Do not depend on `expects()` for test stub implementation

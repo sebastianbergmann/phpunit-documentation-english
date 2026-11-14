@@ -1,0 +1,42 @@
+{
+    "name": "sebastian/choice-sequence",
+    "description": "Library for drawing, replaying, shrinking, and storing choice sequences",
+    "type": "library",
+    "homepage": "https://github.com/sebastianbergmann/choice-sequence",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Sebastian Bergmann",
+            "email": "sebastian@phpunit.de",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/sebastianbergmann/choice-sequence/issues",
+        "security": "https://github.com/sebastianbergmann/choice-sequence/security/policy"
+    },
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.4.7"
+    },
+    "config": {
+        "platform": {
+            "php": "8.5.12"
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    }
+}

@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => '14.0.x-dev',
         'version' => '14.0.9999999.9999999-dev',
-        'reference' => '716e1c12cb5b7e03b095800ccb42248623c00347',
+        'reference' => 'c34991149ec9461c27b48d00a07d6a6c4899cde8',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => '14.0.x-dev',
             'version' => '14.0.9999999.9999999-dev',
-            'reference' => '716e1c12cb5b7e03b095800ccb42248623c00347',
+            'reference' => 'c34991149ec9461c27b48d00a07d6a6c4899cde8',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -97,11 +97,22 @@
         'phpunit/phpunit' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '9a67d9ff4e5b9c79ff565908e159be4440d449a0',
+            'reference' => 'b5712d808c925c87d65261ef77d8bda426d61c49',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(
                 0 => '14.0.x-dev',
+            ),
+            'dev_requirement' => true,
+        ),
+        'sebastian/choice-sequence' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '4be13d9aa3c67ef09398061feca474ca13836545',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../sebastian/choice-sequence',
+            'aliases' => array(
+                0 => '1.0.x-dev',
             ),
             'dev_requirement' => true,
         ),
