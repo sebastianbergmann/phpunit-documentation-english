@@ -1080,48 +1080,6 @@ The method must not be called.
 ``never()`` is a convenience wrapper for ``exactly(0)``.
 
 
-.. _test-doubles.mock-objects.reference.configuring-expectations.any:
-
-``any()``
-"""""""""
-
-The method may be called zero or more times.
-No expectation is set on the number of invocations, so the test will not fail regardless of how many times the method is called (including not at all).
-
-.. code-block:: php
-
-   $mock = $this->createMock(InterfaceName::class);
-
-   $mock
-       ->expects($this->any())
-       ->method('doSomething')
-       ->willReturn('value');
-
-The mock object configuration shown above is equivalent to the test stub configuration shown below:
-
-.. code-block:: php
-
-   $stub = $this->createStub(InterfaceName::class);
-
-   $stub
-       ->method('doSomething')
-       ->willReturn('value');
-
-.. admonition:: Deprecation: ``any()`` is deprecated
-
-   The ``any()`` matcher, used as ``$this->expects($this->any())``, is deprecated.
-   It will be removed in PHPUnit 14.
-
-   Using ``any()`` with ``expects()`` is contradictory: you are creating a mock object (designed to verify
-   communication between objects) while essentially saying "I don't care if this communication happens at all".
-
-   If you do not need to verify that a method is called, use ``createStub()`` instead of ``createMock()``.
-   Test stubs are the appropriate choice when you only need to control what a dependency returns
-   without verifying how many times it is called.
-
-   See `GitHub issue #6461 <https://github.com/sebastianbergmann/phpunit/issues/6461>`_ for details.
-
-
 .. _test-doubles.mock-objects.reference.configuring-expectations.with:
 
 ``with()``
