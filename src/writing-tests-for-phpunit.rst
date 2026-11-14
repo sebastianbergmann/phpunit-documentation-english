@@ -922,15 +922,13 @@ An incomplete test is denoted by an ``I`` in the output of the PHPUnit command-l
 Assertions that are executed before the call to ``markTestIncomplete()`` are evaluated as usual:
 when one of them fails, the test is reported as a failure and not as incomplete.
 
-.. admonition:: Deprecation: Calling ``markTestIncomplete()`` after a test has run is deprecated
+.. admonition:: ``markTestIncomplete()`` must not be called after a test has run
 
-   Calling ``markTestIncomplete()`` in an after-test method, such as ``tearDown()`` or a method that is configured using the ``After`` attribute,
-   or in an after-last-test method, such as ``tearDownAfterClass()`` or a method that is configured using the ``AfterClass`` attribute, is deprecated.
-   This will no longer be possible in PHPUnit 14.
+   ``markTestIncomplete()`` must not be called in an after-test method, such as ``tearDown()`` or a method that is configured using the ``After`` attribute,
+   or in an after-last-test method, such as ``tearDownAfterClass()`` or a method that is configured using the ``AfterClass`` attribute.
 
-   Currently, a test that passed is reported as incomplete when an after-test method calls ``markTestIncomplete()``,
-   and a call in an after-last-test method has no effect because the tests of the test class have already been run.
-   In both cases, PHPUnit triggers a PHPUnit deprecation.
+   A test that passed is reported as errored when an after-test method calls ``markTestIncomplete()``,
+   and a call in an after-last-test method is reported as an error as well.
    Call ``markTestIncomplete()`` in the test method instead.
 
 
@@ -955,15 +953,13 @@ A test that has been skipped is denoted by an ``S`` in the output of the PHPUnit
 
 .. literalinclude:: examples/writing-tests-for-phpunit/DatabaseTest.php.out
 
-.. admonition:: Deprecation: Calling ``markTestSkipped()`` after a test has run is deprecated
+.. admonition:: ``markTestSkipped()`` must not be called after a test has run
 
-   Calling ``markTestSkipped()`` in an after-test method, such as ``tearDown()`` or a method that is configured using the ``After`` attribute,
-   or in an after-last-test method, such as ``tearDownAfterClass()`` or a method that is configured using the ``AfterClass`` attribute, is deprecated.
-   This will no longer be possible in PHPUnit 14.
+   ``markTestSkipped()`` must not be called in an after-test method, such as ``tearDown()`` or a method that is configured using the ``After`` attribute,
+   or in an after-last-test method, such as ``tearDownAfterClass()`` or a method that is configured using the ``AfterClass`` attribute.
 
-   Currently, a test that passed is reported as skipped when an after-test method calls ``markTestSkipped()``,
-   and a call in an after-last-test method has no effect because the tests of the test class have already been run.
-   In both cases, PHPUnit triggers a PHPUnit deprecation.
+   A test that passed is reported as errored when an after-test method calls ``markTestSkipped()``,
+   and a call in an after-last-test method is reported as an error as well.
    Call ``markTestSkipped()`` in a before-first-test method such as ``setUpBeforeClass()``,
    in a before-test method such as ``setUp()``, or in the test method instead.
 
