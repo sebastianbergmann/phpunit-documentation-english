@@ -1529,8 +1529,8 @@ Using ``after()`` with an ID that has not been registered with ``id()`` will cau
 
 .. admonition:: Deprecation: ``id()`` and ``after()`` are deprecated
 
-   The ``id()`` and ``after()`` methods are soft-deprecated since PHPUnit 13.1.
-   They will be hard-deprecated in PHPUnit 14 and they will be removed in PHPUnit 15.
+   The ``id()`` and ``after()`` methods are deprecated and will be removed in PHPUnit 15.
+   PHPUnit triggers a PHPUnit deprecation when one of them is called.
 
    Use :ref:`an invocation journal <test-doubles.mock-objects.reference.configuring-expectations.recording-the-order-in-which-methods-are-called>` to verify the order in which the methods of mock objects are called.
 
