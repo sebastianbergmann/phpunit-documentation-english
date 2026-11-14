@@ -1,0 +1,11 @@
+./tools/phpunit --random-seed 1234 tests/RunLengthEncodingRobustnessTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.025, Memory: 24.00 MB
+
+OK (1 test, 0 assertions)

@@ -315,6 +315,19 @@ A test that is repeated or retried should therefore not rely on mutating argumen
 State that the test modifies should be created in the test method itself or in ``setUp()``.
 
 
+.. _flaky-tests.properties:
+
+Properties
+==========
+
+Repeating and retrying do not apply to :ref:`properties <property-based-testing>`.
+A property is already run many times, each time with other arguments, and PHPUnit detects on its own when the outcome of a property does not only depend on its arguments (see :ref:`property-based-testing.falsified-properties.flaky-properties`).
+Retrying a property would hide the counterexample that was found.
+
+The ``--repeat`` and ``--retry`` command-line options have no effect on properties.
+PHPUnit emits a warning when the ``#[Repeat]`` or the ``#[Retry]`` attribute is used on a property.
+
+
 .. _flaky-tests.phpt:
 
 PHPT Tests

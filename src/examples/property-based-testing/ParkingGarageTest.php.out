@@ -1,0 +1,28 @@
+./tools/phpunit --random-seed 1234 tests/ParkingGarageTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+.F                                                                  2 / 2 (100%)
+
+Time: 00:00.040, Memory: 24.00 MB
+
+There was 1 failure:
+
+1) ParkingGarageTest::testKeepsTrackOfItsFreeSpaces
+Failed asserting that 4 is identical to 3.
+
+Property falsified after 1 example, counterexample shrunk in 3 steps:
+
+    $tickets1 = $machine->enter();
+    $tickets2 = $machine->enter();
+    $machine->leave(ticket: $tickets1);
+    $tickets3 = $machine->enter();
+    $machine->freeSpacesMatchTheNumberOfParkedCars(); // invariant failed
+
+/path/to/tests/src/ParkingGarageMachine.php:45
+/path/to/tests/ParkingGarageTest.php:25
+
+FAILURES!
+Tests: 2, Assertions: 10, Failures: 1.

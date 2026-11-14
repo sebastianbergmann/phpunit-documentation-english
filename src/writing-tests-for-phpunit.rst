@@ -613,6 +613,7 @@ Data providers
 * The cases require different assertions or a different structure. Write separate test methods instead.
 * The cases only differ in a value that has no bearing on the behaviour under test. One test method is enough then.
 * The data would have to be a service or a large object graph (see :ref:`what a data set may contain <writing-tests-for-phpunit.data-providers.reference.contents-of-a-data-set>`).
+* The test should hold for all values of a certain kind, not only for the ones that you list. Write a :ref:`property <property-based-testing>` and let PHPUnit generate the values instead.
 
 
 .. _writing-tests-for-phpunit.data-providers.common-use-cases:

@@ -1,0 +1,19 @@
+./tools/phpunit --random-seed 1234 tests/EmailAddressByAssumptionTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+R                                                                   1 / 1 (100%)
+
+Time: 00:00.011, Memory: 24.00 MB
+
+There was 1 risky test:
+
+1) EmailAddressByAssumptionTest::testCanBeConvertedToString
+This property was checked for only 0 of 100 examples because generating examples was stopped after 50 examples were rejected by assume() while fewer than 10 examples were checked; generate the values that the property needs instead of rejecting the others
+
+/path/to/tests/EmailAddressByAssumptionTest.php:8
+
+OK, but there were issues!
+Tests: 1, Assertions: 0, Risky: 1.

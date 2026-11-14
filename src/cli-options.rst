@@ -300,13 +300,25 @@ Execution
    Alias for ``--order-by random``.
 
 ``--random-seed <N>``
-   Seeds PHP's random number generators, for instance the one that ``mt_rand()`` uses, with ``N`` and uses ``N`` as the seed when tests are run in random order. Using the same seed produces the same random numbers in a test and the same test order, which is useful for reproducing failures. ``N`` has to be a positive integer. See :ref:`textui.random-numbers`.
+   Seeds PHP's random number generators, for instance the one that ``mt_rand()`` uses, with ``N``, uses ``N`` as the seed when tests are run in random order, and generates the examples of :ref:`properties <property-based-testing>` from ``N``. Using the same seed produces the same random numbers in a test, the same test order, and the same examples, which is useful for reproducing failures. ``N`` has to be a positive integer. See :ref:`textui.random-numbers` and :ref:`property-based-testing.reproducing-failures.random-seed`.
+
+``--random-seed-from-git-commit``
+   Uses a seed that is derived from the Git commit that is checked out in the working directory, so that all test runs of the same commit use the same seed. The seed is used like the one of ``--random-seed``, which takes precedence when both options are used. PHPUnit emits a test runner warning and ignores this option when the commit cannot be determined. See :ref:`property-based-testing.reproducing-failures.random-seed`.
 
 ``--repeat <N>``
    Runs each eligible test ``N`` times, stopping at the first failure. This helps find flaky tests and stress-test stateful code. PHPT tests are repeated as well. See :ref:`flaky-tests.repeating-tests`. Mutually exclusive with ``--retry``.
 
 ``--retry <N>``
    Attempts each eligible test up to ``N`` times, stopping at the first success. This helps tolerate flaky tests that cannot be eliminated, while keeping them visible. PHPT tests are retried as well. See :ref:`flaky-tests.retrying-tests`. Mutually exclusive with ``--repeat``.
+
+``--property-examples <N>``
+   Checks each :ref:`property <property-based-testing>` that does not specify the number of its examples with ``N`` generated examples (default: ``100``). ``N`` has to be a positive integer. This overrides the corresponding XML configuration setting. See :ref:`property-based-testing.configuration`.
+
+``--property-examples-multiplier <N>``
+   Multiplies the number of examples of every property by ``N`` (default: ``1``), including the properties that specify the number of their examples with ``#[Property(examples: ...)]``. ``N`` has to be a positive integer. This overrides the corresponding XML configuration setting.
+
+``--property-maximum-shrinking-attempts <N>``
+   Makes at most ``N`` attempts to :ref:`shrink the counterexample <property-based-testing.falsified-properties.shrinking>` of a property that was falsified (default: ``1000``). ``0`` disables shrinking. This overrides the corresponding XML configuration setting.
 
 ``--reverse-order``
    Alias for ``--order-by reverse``.
@@ -377,6 +389,9 @@ Reporting
 
 ``--triggering-tests-limit <n>``
    Groups the tests that triggered an issue and limits the list printed for each issue to ``n`` entries (default: ``0``). This affects the details for deprecations, notices, warnings, and errors triggered by tests that are displayed using the ``--display-*`` options. Data sets of the same test method are listed as a single entry and, when there are still more test methods than ``n``, test methods are grouped by test class. Entries and issues are sorted by how often they were triggered. When ``0`` is used, all tests that triggered an issue are listed individually. See :ref:`error-handling.triggering-tests-limit` for details.
+
+``--display-property-statistics``
+   Displays statistics of the examples of :ref:`properties <property-based-testing>`: how many examples each property was checked with, how many examples were rejected, how the examples were classified, and which values were observed. This overrides the corresponding XML configuration setting. See :ref:`property-based-testing.knowing-what-was-tested`.
 
 ``--reverse-list``
    Prints defects in reverse order. This shows the most recently encountered defects first, which can be useful for large test suites.

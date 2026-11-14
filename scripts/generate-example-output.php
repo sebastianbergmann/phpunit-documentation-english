@@ -23,6 +23,28 @@ $exclude = [
     'extending-phpunit/OrderIdGeneratorWithDomainSpecificAssertionTest.php',
 ];
 
+$additionalOptions = [
+    'property-based-testing/BinarySearchTest.php'                           => '--random-seed 1234 --display-property-statistics ',
+    'property-based-testing/BinarySearchWithDrawnNeedleTest.php'            => '--random-seed 1234 --display-property-statistics ',
+    'property-based-testing/BinarySearchWithRequiredClassificationTest.php' => '--random-seed 1234 ',
+    'property-based-testing/CustomerTest.php'                               => '--random-seed 1234 ',
+    'property-based-testing/CustomerUsingSharedGeneratorsTest.php'          => '--random-seed 1234 ',
+    'property-based-testing/CustomerWithoutGeneratorTest.php'               => '--random-seed 1234 ',
+    'property-based-testing/EmailAddressByAssumptionTest.php'               => '--random-seed 1234 ',
+    'property-based-testing/MoneySplitTest.php'                             => '--random-seed 1234 ',
+    'property-based-testing/MoneySplitWithExplicitExampleTest.php'          => '--random-seed 1234 ',
+    'property-based-testing/ParkingGarageTest.php'                          => '--random-seed 1234 ',
+    'property-based-testing/RunLengthEncodingRobustnessTest.php'            => '--random-seed 1234 ',
+    'property-based-testing/RunLengthEncodingTest.php'                      => '--random-seed 1234 ',
+    'property-based-testing/RunLengthEncodingWithFormatterTest.php'         => '--random-seed 1234 ',
+    'property-based-testing/ShippingCostTest.php'                           => '--random-seed 1234 --display-property-statistics ',
+    'property-based-testing/SortedListByAssumptionTest.php'                 => '--random-seed 1234 --display-property-statistics ',
+    'property-based-testing/SortedListByConstructionTest.php'               => '--random-seed 1234 --display-property-statistics ',
+    'property-based-testing/SorterTest.php'                                 => '--random-seed 1234 ',
+    'property-based-testing/TruckTest.php'                                  => '--random-seed 1234 ',
+    'property-based-testing/TruckWithTargetTest.php'                        => '--random-seed 1234 ',
+];
+
 $phpunit       = $command = __DIR__ . '/../tools/phpunit';
 $version       = hash('sha256', trim(PHP_VERSION . shell_exec($phpunit . ' --version')));
 $processed     = processed_read();
@@ -38,6 +60,11 @@ foreach (new GlobIterator(__DIR__ . '/../src/examples/**/*Test.php') as $test) {
     }
 
     $currentFileHash = $version . hash_file('sha256', $test->getRealPath());
+    $options         = $additionalOptions[$currentFile] ?? '';
+
+    if ($options !== '') {
+        $currentFileHash .= hash('sha256', $options);
+    }
 
     if (isset($processed[$currentFile]) && $processed[$currentFile] === $currentFileHash) {
         print '[skipped  ] ' . $currentFile . PHP_EOL;
@@ -48,7 +75,6 @@ foreach (new GlobIterator(__DIR__ . '/../src/examples/**/*Test.php') as $test) {
     $command       = $phpunit . ' ';
     $bootstrap     = dirname($test->getRealPath()) . '/src/autoload.php';
     $hiddenOptions = '--no-configuration --do-not-record-test-run-history ';
-    $options       = '';
 
     if (file_exists($bootstrap)) {
         $hiddenOptions .= '--bootstrap ' . $bootstrap . ' ';

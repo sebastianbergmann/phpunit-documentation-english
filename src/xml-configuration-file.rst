@@ -720,6 +720,17 @@ This attribute configures the maximum number of entries that are listed for the 
 
 When set to ``0`` (default) then all tests that triggered an issue are listed individually.
 
+.. _appendixes.xml-configuration-file.phpunit.displayPropertyStatistics:
+
+The ``displayPropertyStatistics`` Attribute
+-------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether statistics of the examples of :ref:`properties <property-based-testing>` are displayed after the tests were run: how many examples each property was checked with, how many examples were rejected, how the examples were classified, and which values were observed (see :ref:`property-based-testing.knowing-what-was-tested`).
+
+This configuration can be enabled for a single run using the ``--display-property-statistics`` CLI option.
+
 .. _appendixes.xml-configuration-file.phpunit.shortenArraysForExportThreshold:
 
 The ``shortenArraysForExportThreshold`` Attribute
@@ -1875,6 +1886,91 @@ The ``outputFile`` Attribute
 Possible values: string
 
 The file to which the test result logfile in TestDox text format is written.
+
+
+.. _appendixes.xml-configuration-file.propertyBasedTesting:
+
+The ``<propertyBasedTesting>`` Element
+======================================
+
+Parent element: ``<phpunit>``
+
+This element configures how :ref:`properties <property-based-testing>` are checked.
+
+.. code-block:: xml
+
+    <propertyBasedTesting examples="100"
+                          examplesMultiplier="1"
+                          maximumShrinkingAttempts="1000"
+                          examplesCheckedUntilHealthIsAssumed="10"
+                          maximumRejectedExamplesUntilHealthIsAssumed="50"
+                          maximumTooLargeExamplesUntilHealthIsAssumed="20"/>
+
+The XML configuration above corresponds to the default behaviour.
+
+.. _appendixes.xml-configuration-file.propertyBasedTesting.examples:
+
+The ``examples`` Attribute
+--------------------------
+
+Possible values: positive integer (default: ``100``)
+
+The number of generated examples that a property is checked with when it does not specify this number with ``#[Property(examples: ...)]``.
+
+This configuration can be overridden for a single run using the ``--property-examples`` CLI option.
+
+.. _appendixes.xml-configuration-file.propertyBasedTesting.examplesMultiplier:
+
+The ``examplesMultiplier`` Attribute
+------------------------------------
+
+Possible values: positive integer (default: ``1``)
+
+The number that the number of examples of every property is multiplied by, including the properties that specify the number of their examples with ``#[Property(examples: ...)]``.
+
+This configuration can be overridden for a single run using the ``--property-examples-multiplier`` CLI option.
+
+.. _appendixes.xml-configuration-file.propertyBasedTesting.maximumShrinkingAttempts:
+
+The ``maximumShrinkingAttempts`` Attribute
+------------------------------------------
+
+Possible values: non-negative integer (default: ``1000``)
+
+The maximum number of attempts to :ref:`shrink the counterexample <property-based-testing.falsified-properties.shrinking>` of a property that was falsified.
+
+When set to ``0`` then counterexamples are not shrunk.
+
+This configuration can be overridden for a single run using the ``--property-maximum-shrinking-attempts`` CLI option.
+
+.. _appendixes.xml-configuration-file.propertyBasedTesting.examplesCheckedUntilHealthIsAssumed:
+
+The ``examplesCheckedUntilHealthIsAssumed`` Attribute
+-----------------------------------------------------
+
+Possible values: non-negative integer (default: ``10``)
+
+PHPUnit stops generating examples for a property, and considers the property risky, when too many of the generated examples are :ref:`rejected <property-based-testing.generating-arguments.assume>` or are too large before the property was checked with this number of examples. Once the property was checked with this number of examples, its generators are assumed to be healthy.
+
+When set to ``0`` then this check is disabled.
+
+.. _appendixes.xml-configuration-file.propertyBasedTesting.maximumRejectedExamplesUntilHealthIsAssumed:
+
+The ``maximumRejectedExamplesUntilHealthIsAssumed`` Attribute
+-------------------------------------------------------------
+
+Possible values: positive integer (default: ``50``)
+
+The number of rejected examples at which PHPUnit stops generating examples for a property that was not yet checked with the number of examples that is configured with ``examplesCheckedUntilHealthIsAssumed``.
+
+.. _appendixes.xml-configuration-file.propertyBasedTesting.maximumTooLargeExamplesUntilHealthIsAssumed:
+
+The ``maximumTooLargeExamplesUntilHealthIsAssumed`` Attribute
+-------------------------------------------------------------
+
+Possible values: positive integer (default: ``20``)
+
+The number of examples that were rejected because they are too large, for instance because they are nested too deeply, at which PHPUnit stops generating examples for a property that was not yet checked with the number of examples that is configured with ``examplesCheckedUntilHealthIsAssumed``.
 
 
 .. _appendixes.xml-configuration-file.groups:

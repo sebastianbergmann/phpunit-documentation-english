@@ -1,0 +1,13 @@
+<?php declare(strict_types=1);
+require __DIR__ . '/BinarySearch.php';
+require __DIR__ . '/Customer.php';
+require __DIR__ . '/DomainGenerators.php';
+require __DIR__ . '/EmailAddress.php';
+require __DIR__ . '/Money.php';
+require __DIR__ . '/ParcelSize.php';
+require __DIR__ . '/ParkingGarage.php';
+require __DIR__ . '/ParkingGarageMachine.php';
+require __DIR__ . '/RunLengthEncoding.php';
+require __DIR__ . '/ShippingCost.php';
+require __DIR__ . '/Sorter.php';
+require __DIR__ . '/Truck.php';

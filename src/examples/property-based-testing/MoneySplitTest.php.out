@@ -1,0 +1,24 @@
+./tools/phpunit --random-seed 1234 tests/MoneySplitTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00.005, Memory: 24.00 MB
+
+There was 1 failure:
+
+1) MoneySplitTest::testPartsAddUpToTheWhole
+Failed asserting that 0 is identical to 1.
+
+Property falsified after 1 example, counterexample shrunk in 2 steps:
+
+    $cents = 1;
+    $parts = 2;
+
+/path/to/tests/MoneySplitTest.php:22
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.

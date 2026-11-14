@@ -20,6 +20,7 @@ Contents:
    organizing-tests
    fixtures
    test-doubles
+   property-based-testing
    code-coverage
    testdox
    risky-tests

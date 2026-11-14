@@ -368,6 +368,14 @@ Test
 
     A test triggered a warning (neither a PHPUnit nor a PHP warning)
 
+``PHPUnit\Event\Test\PropertyFalsified``
+
+    A :ref:`property <property-based-testing>` was falsified. The event carries the minimal counterexample, the counterexamples of the other ways in which the property was falsified, the random seed of the property, the number of examples that were checked, and how the counterexample was shrunk. It is emitted before the event that reports the outcome of the test, for instance ``PHPUnit\Event\Test\Failed``
+
+``PHPUnit\Event\Test\PropertyChecked``
+
+    A :ref:`property <property-based-testing>` was checked. The event carries the random seed of the property, the number of examples and of explicit examples that were checked, the number of examples that were rejected, and what the examples recorded with ``classify()``, ``observe()``, and ``target()``. It is emitted for every property that was run, whether it was falsified or not, before ``PHPUnit\Event\Test\Finished``
+
 ``PHPUnit\Event\Test\Finished``
 
     The test has finished. This is the last event that is emitted for a test, and it is emitted for every test for which ``PHPUnit\Event\Test\PreparationStarted`` was emitted

@@ -1,0 +1,10 @@
+./tools/phpunit tests/MoneyTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00, Memory: 24.00 MB
+
+OK (1 test, 3 assertions)

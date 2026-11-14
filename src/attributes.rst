@@ -636,6 +636,10 @@ test method without having to implement a static data provider method.
 The optional second argument names the data set. When it is not used, the data set is
 identified by its number.
 
+When the attribute is used on a :ref:`property <property-based-testing>`, it specifies an
+:ref:`explicit example <property-based-testing.reproducing-failures.explicit-examples>` that the property is checked with
+before examples are generated.
+
 .. code-block:: php
     :caption: Using the ``TestWith`` attribute
     :name: appendixes.attributes.testwith.examples.ExampleTest.php
@@ -698,6 +702,10 @@ test method without having to implement a static data provider method.
 The optional second argument names the data set. When it is not used, the data set is
 identified by its number.
 
+When the attribute is used on a :ref:`property <property-based-testing>`, it specifies an
+:ref:`explicit example <property-based-testing.reproducing-failures.explicit-examples>` that the property is checked with
+before examples are generated.
+
 .. code-block:: php
     :caption: Using the ``TestWithJson`` attribute
     :name: appendixes.attributes.testwithjson.examples.ExampleTest.php
@@ -740,6 +748,460 @@ Running the test shown above yields the output shown below:
 
     FAILURES!
     Tests: 4, Assertions: 4, Failures: 1.
+
+
+.. _appendixes.attributes.property-based-testing:
+
+Property-Based Testing
+======================
+
+The attributes in this section are explained, together with examples, in the chapter on :ref:`property-based testing <property-based-testing>`.
+
+.. _appendixes.attributes.Property:
+
+``Property``
+------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | yes          | no              | no         |
++-------------+--------------+-----------------+------------+
+
+The ``Property([int $examples])`` attribute marks a method of a test case class as a :ref:`property <property-based-testing.first-property>`:
+a test whose parameters receive generated arguments and that is run once for each generated example.
+A method with this attribute is a test even when its name does not begin with ``test``.
+
+The optional ``$examples`` argument sets the number of examples that are generated for the property.
+When it is not used, the number of examples is the :ref:`configured <property-based-testing.configuration>` one, which is ``100`` by default.
+
+.. code-block:: php
+    :caption: Using the ``Property`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Property;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        /**
+         * @param list<int> $values
+         */
+        #[Property(examples: 500)]
+        public function testReversingTwiceChangesNothing(array $values): void
+        {
+            $this->assertSame($values, array_reverse(array_reverse($values)));
+        }
+    }
+
+The ``Property`` attribute cannot be combined with the ``DataProvider``, ``DataProviderExternal``, and ``DataProviderClosure`` attributes
+or with the ``Depends`` attribute and its variants. The :ref:`TestWith <appendixes.attributes.TestWith>` and
+:ref:`TestWithJson <appendixes.attributes.TestWithJson>` attributes specify
+:ref:`explicit examples <property-based-testing.reproducing-failures.explicit-examples>` when they are used on a property.
+
+
+.. _appendixes.attributes.ForAll:
+
+``ForAll``
+----------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | no           | yes             | no         |
++-------------+--------------+-----------------+------------+
+
+The ``ForAll(Closure|string $generator)`` attribute specifies the :ref:`generator <property-based-testing.generating-arguments.generators>`
+for a parameter of a property, or for a parameter of a rule of a :ref:`state machine <property-based-testing.state-machines>`.
+
+``$generator`` is the name of a public and static method of the class in which the attribute is used.
+This method must not have required parameters and must return a ``PHPUnit\Framework\PropertyBased\ValueGenerator``.
+Alternatively, ``$generator`` is a static closure that returns the generator.
+
+.. code-block:: php
+    :caption: Using the ``ForAll`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\ForAll;
+    use PHPUnit\Framework\Attributes\Property;
+    use PHPUnit\Framework\PropertyBased\Generators;
+    use PHPUnit\Framework\PropertyBased\ValueGenerator;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        public static function evenNumbers(): ValueGenerator
+        {
+            return Generators::integers(-1000, 1000)->map(
+                static fn (int $number): int => $number * 2,
+            );
+        }
+
+        #[Property]
+        public function testEvenNumbersAreDivisibleByTwo(#[ForAll('evenNumbers')] int $number): void
+        {
+            $this->assertSame(0, $number % 2);
+        }
+    }
+
+
+.. _appendixes.attributes.ForAllExternal:
+
+``ForAllExternal``
+------------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | no           | yes             | no         |
++-------------+--------------+-----------------+------------+
+
+The ``ForAllExternal(string $className, string $methodName)`` attribute specifies the generator for a parameter
+like the :ref:`ForAll <appendixes.attributes.ForAll>` attribute does, using a public and static method of another class.
+
+.. code-block:: php
+    :caption: Using the ``ForAllExternal`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\ForAllExternal;
+    use PHPUnit\Framework\Attributes\Property;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        #[Property]
+        public function testEvenNumbersAreDivisibleByTwo(#[ForAllExternal(ExternalGenerators::class, 'evenNumbers')] int $number): void
+        {
+            $this->assertSame(0, $number % 2);
+        }
+    }
+
+
+.. _appendixes.attributes.GeneratorFor:
+
+``GeneratorFor``
+----------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | yes          | no              | no         |
++-------------+--------------+-----------------+------------+
+
+The ``GeneratorFor(string $className)`` attribute :ref:`registers a generator <property-based-testing.generating-arguments.classes>` for a class.
+It is used on a public and static method that returns a ``PHPUnit\Framework\PropertyBased\ValueGenerator``.
+
+The registered generator is used wherever a property of the test case class needs an object of the class:
+for a parameter of the property, for a parameter of a constructor of another class whose objects are created for the property,
+and for a parameter of a rule of a state machine that the property runs.
+
+.. code-block:: php
+    :caption: Using the ``GeneratorFor`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\GeneratorFor;
+    use PHPUnit\Framework\Attributes\Property;
+    use PHPUnit\Framework\PropertyBased\Generators;
+    use PHPUnit\Framework\PropertyBased\ValueGenerator;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        #[GeneratorFor(EmailAddress::class)]
+        public static function emailAddresses(): ValueGenerator
+        {
+            return Generators::emailAddresses()->map(
+                static fn (string $address): EmailAddress => new EmailAddress($address),
+            );
+        }
+
+        #[Property]
+        public function testSomething(EmailAddress $emailAddress): void
+        {
+            // ...
+        }
+    }
+
+
+.. _appendixes.attributes.UseGenerators:
+
+``UseGenerators``
+-----------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| yes         | yes          | no              | yes        |
++-------------+--------------+-----------------+------------+
+
+The ``UseGenerators(string $className)`` attribute makes the generators that another class registers with the
+:ref:`GeneratorFor <appendixes.attributes.GeneratorFor>` attribute available to a property, or to all properties of a test case class.
+
+When more than one generator is registered for a class, a generator that the test case class registers itself takes precedence over
+one of a class that is used for the property, which takes precedence over one of a class that is used for the test case class.
+
+.. code-block:: php
+    :caption: Using the ``UseGenerators`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Property;
+    use PHPUnit\Framework\Attributes\UseGenerators;
+    use PHPUnit\Framework\TestCase;
+
+    #[UseGenerators(DomainGenerators::class)]
+    final class ExampleTest extends TestCase
+    {
+        #[Property]
+        public function testSomething(EmailAddress $emailAddress): void
+        {
+            // ...
+        }
+    }
+
+
+.. _appendixes.attributes.RequireClassification:
+
+``RequireClassification``
+-------------------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | yes          | no              | yes        |
++-------------+--------------+-----------------+------------+
+
+The ``RequireClassification(string $label, float $minimumPercentage)`` attribute
+:ref:`requires <property-based-testing.knowing-what-was-tested.required-classifications>` that at least ``$minimumPercentage``
+percent of the generated examples of a property are classified with ``$label`` using ``classify()``.
+A property that does not meet this requirement is considered risky.
+
+``$minimumPercentage`` must be greater than ``0`` and not greater than ``100``.
+
+.. code-block:: php
+    :caption: Using the ``RequireClassification`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\Property;
+    use PHPUnit\Framework\Attributes\RequireClassification;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        #[Property]
+        #[RequireClassification('negative', 20)]
+        public function testSomething(int $value): void
+        {
+            if ($value < 0) {
+                $this->classify('negative');
+            }
+
+            // ...
+        }
+    }
+
+
+.. _appendixes.attributes.CounterexampleFormatter:
+
+``CounterexampleFormatter``
+---------------------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | yes          | no              | no         |
++-------------+--------------+-----------------+------------+
+
+The ``CounterexampleFormatter(string $methodName)`` attribute specifies a method that
+:ref:`describes a counterexample <property-based-testing.falsified-properties.counterexample-formatter>` of a property.
+
+``$methodName`` is the name of a public and static method of the test case class.
+It is called with the arguments of a counterexample and returns a string, which is reported below these arguments.
+Its parameters must not be passed by reference.
+
+.. code-block:: php
+    :caption: Using the ``CounterexampleFormatter`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\CounterexampleFormatter;
+    use PHPUnit\Framework\Attributes\Property;
+    use PHPUnit\Framework\TestCase;
+
+    final class ExampleTest extends TestCase
+    {
+        public static function asSum(int $a, int $b): string
+        {
+            return sprintf('%d + %d = %d', $a, $b, $a + $b);
+        }
+
+        /**
+         * @param int<0, 100> $a
+         * @param int<0, 100> $b
+         */
+        #[Property]
+        #[CounterexampleFormatter('asSum')]
+        public function testSumIsAtMostTen(int $a, int $b): void
+        {
+            $this->assertLessThanOrEqual(10, $a + $b);
+        }
+    }
+
+
+.. _appendixes.attributes.CounterexampleFormatterExternal:
+
+``CounterexampleFormatterExternal``
+-----------------------------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | yes          | no              | no         |
++-------------+--------------+-----------------+------------+
+
+The ``CounterexampleFormatterExternal(string $className, string $methodName)`` attribute specifies a method that describes
+a counterexample of a property like the :ref:`CounterexampleFormatter <appendixes.attributes.CounterexampleFormatter>`
+attribute does, using a public and static method of another class.
+
+Only one of the two attributes can be used on a property.
+
+
+.. _appendixes.attributes.StateMachineRule:
+
+``StateMachineRule``
+--------------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | yes          | no              | no         |
++-------------+--------------+-----------------+------------+
+
+The ``StateMachineRule([string $precondition, string $produces])`` attribute marks a public method of a
+:ref:`state machine <property-based-testing.state-machines>` as a rule: an operation that can be a step of the sequences
+that ``runStateMachine()`` generates.
+
+The optional ``$precondition`` argument is the name of a method of the state machine that has no required parameters and returns a ``bool``.
+The rule is only used for a step when this method returns ``true``.
+
+The optional ``$produces`` argument is the name of a pool that the value that the rule returns is put into.
+The name of a pool must be a valid name for a variable.
+
+.. code-block:: php
+    :caption: Using the ``StateMachineRule`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\StateMachineRule;
+
+    final class ParkingGarageMachine
+    {
+        // ...
+
+        #[StateMachineRule(precondition: 'hasFreeSpaces', produces: 'tickets')]
+        public function enter(): int
+        {
+            // ...
+        }
+
+        public function hasFreeSpaces(): bool
+        {
+            // ...
+        }
+    }
+
+A method can only have one of the ``StateMachineRule``, ``InitializeStateMachine``, and ``StateMachineInvariant`` attributes.
+
+
+.. _appendixes.attributes.InitializeStateMachine:
+
+``InitializeStateMachine``
+--------------------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | yes          | no              | no         |
++-------------+--------------+-----------------+------------+
+
+The ``InitializeStateMachine([string $produces])`` attribute marks a public method of a
+:ref:`state machine <property-based-testing.state-machines>` as an initialization.
+It is called once before the first step. Its parameters get generated arguments like the parameters of a rule, but they cannot take values from a pool.
+
+The optional ``$produces`` argument is the name of a pool that the value that the method returns is put into.
+
+
+.. _appendixes.attributes.StateMachineInvariant:
+
+``StateMachineInvariant``
+-------------------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | yes          | no              | no         |
++-------------+--------------+-----------------+------------+
+
+The ``StateMachineInvariant([bool $atEnd])`` attribute marks a public method of a
+:ref:`state machine <property-based-testing.state-machines>` as an invariant.
+It must not have required parameters. It is called after the initializations and after every step.
+
+With ``atEnd: true``, the invariant is only called after the initializations and after the last step.
+
+.. code-block:: php
+    :caption: Using the ``StateMachineInvariant`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Assert;
+    use PHPUnit\Framework\Attributes\StateMachineInvariant;
+
+    final class ParkingGarageMachine
+    {
+        // ...
+
+        #[StateMachineInvariant]
+        public function freeSpacesMatchTheNumberOfParkedCars(): void
+        {
+            Assert::assertSame(
+                $this->capacity - $this->parkedCars,
+                $this->garage->freeSpaces(),
+            );
+        }
+    }
+
+
+.. _appendixes.attributes.FromPool:
+
+``FromPool``
+------------
+
++-------------+--------------+-----------------+------------+
+| Class Level | Method Level | Parameter Level | Repeatable |
++=============+==============+=================+============+
+| no          | no           | yes             | no         |
++-------------+--------------+-----------------+------------+
+
+The ``FromPool(string $pool[, bool $consume])`` attribute specifies that a parameter of a rule of a
+:ref:`state machine <property-based-testing.state-machines>` takes a value from a pool:
+one of the values that earlier steps produced with ``#[StateMachineRule(produces: ...)]`` or ``#[InitializeStateMachine(produces: ...)]``.
+The rule is only used for a step when the pool has a value.
+
+With ``consume: true``, the value is removed from the pool.
+
+.. code-block:: php
+    :caption: Using the ``FromPool`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\FromPool;
+    use PHPUnit\Framework\Attributes\StateMachineRule;
+
+    final class ParkingGarageMachine
+    {
+        // ...
+
+        #[StateMachineRule]
+        public function leave(#[FromPool('tickets', consume: true)] int $ticket): void
+        {
+            // ...
+        }
+    }
 
 
 Test Dependencies

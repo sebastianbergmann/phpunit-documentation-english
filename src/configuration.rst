@@ -205,6 +205,15 @@ Execution
     * - ``--resolve-dependencies`` / ``--ignore-dependencies``
       - :ref:`resolveDependencies <appendixes.xml-configuration-file.phpunit.resolveDependencies>` attribute on ``<phpunit>``
       - ``true``
+    * - ``--property-examples <N>``
+      - :ref:`examples <appendixes.xml-configuration-file.propertyBasedTesting.examples>` attribute on ``<propertyBasedTesting>``
+      - ``100``
+    * - ``--property-examples-multiplier <N>``
+      - :ref:`examplesMultiplier <appendixes.xml-configuration-file.propertyBasedTesting.examplesMultiplier>` attribute on ``<propertyBasedTesting>``
+      - ``1``
+    * - ``--property-maximum-shrinking-attempts <N>``
+      - :ref:`maximumShrinkingAttempts <appendixes.xml-configuration-file.propertyBasedTesting.maximumShrinkingAttempts>` attribute on ``<propertyBasedTesting>``
+      - ``1000``
 
 
 .. _appendixes.configuration.stop-on:
@@ -377,6 +386,9 @@ Reporting
     * - ``--triggering-tests-limit <n>``
       - :ref:`triggeringTestsLimit <appendixes.xml-configuration-file.phpunit.triggeringTestsLimit>` attribute on ``<phpunit>``
       - ``0``
+    * - ``--display-property-statistics``
+      - :ref:`displayPropertyStatistics <appendixes.xml-configuration-file.phpunit.displayPropertyStatistics>` attribute on ``<phpunit>``
+      - ``false``
 
 
 .. _appendixes.configuration.logging:
@@ -539,6 +551,7 @@ Code coverage:
 Miscellaneous:
 
 - ``--random-seed <N>``
+- ``--random-seed-from-git-commit``
 - ``-h``, ``--help``
 - ``--version``
 - ``--atleast-version <min>``
@@ -573,6 +586,12 @@ Test suite definition:
 Source code configuration:
 
 - The :ref:`\<source\> <appendixes.xml-configuration-file.source>` element and all of its attributes and children
+
+Property-based testing:
+
+- :ref:`examplesCheckedUntilHealthIsAssumed <appendixes.xml-configuration-file.propertyBasedTesting.examplesCheckedUntilHealthIsAssumed>` attribute on ``<propertyBasedTesting>`` (default: ``10``)
+- :ref:`maximumRejectedExamplesUntilHealthIsAssumed <appendixes.xml-configuration-file.propertyBasedTesting.maximumRejectedExamplesUntilHealthIsAssumed>` attribute on ``<propertyBasedTesting>`` (default: ``50``)
+- :ref:`maximumTooLargeExamplesUntilHealthIsAssumed <appendixes.xml-configuration-file.propertyBasedTesting.maximumTooLargeExamplesUntilHealthIsAssumed>` attribute on ``<propertyBasedTesting>`` (default: ``20``)
 
 Code coverage:
 

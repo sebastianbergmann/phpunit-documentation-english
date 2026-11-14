@@ -1,0 +1,18 @@
+./tools/phpunit --random-seed 1234 --display-property-statistics tests/SortedListByAssumptionTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.083, Memory: 24.00 MB
+
+Statistics of 1 property:
+
+1) SortedListByAssumptionTest::testFindsTheFirstValue
+100 examples checked, 255 rejected
+
+    size of the list: count 100, min 1, median 1, mean 1.61, p90 2, max 4
+
+OK (1 test, 100 assertions)

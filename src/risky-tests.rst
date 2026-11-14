@@ -175,6 +175,21 @@ This check is always active and cannot be disabled.
 See :ref:`error-handling` for details on PHPUnit's error handler.
 
 
+.. _risky-tests.properties:
+
+Properties That Were Not Checked As Intended
+============================================
+
+A :ref:`property <property-based-testing>` is considered risky when it passes, but was not checked the way it was supposed to be checked:
+
+- It was checked with fewer examples than configured because too many of the generated examples were :ref:`rejected <property-based-testing.generating-arguments.assume>` or were too large
+- It was checked with fewer examples than configured because the test run was aborted
+- Fewer of its examples than required by a :ref:`RequireClassification <appendixes.attributes.RequireClassification>` attribute were classified with a label
+- The :ref:`state machine <property-based-testing.state-machines>` that it runs took no step in more than half of its examples
+
+The limits for rejected examples can be configured with the :ref:`\<propertyBasedTesting\> <appendixes.xml-configuration-file.propertyBasedTesting>` element of the XML configuration file.
+
+
 .. _risky-tests.test-size-dependencies:
 
 Test Size Dependencies

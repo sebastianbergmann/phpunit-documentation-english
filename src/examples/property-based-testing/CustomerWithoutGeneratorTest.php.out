@@ -1,0 +1,26 @@
+./tools/phpunit --random-seed 1234 tests/CustomerWithoutGeneratorTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+E                                                                   1 / 1 (100%)
+
+Time: 00:00.002, Memory: 24.00 MB
+
+There was 1 error:
+
+1) CustomerWithoutGeneratorTest::testEmailAddressCanBeChanged
+PHPUnit\Framework\PropertyBased\CannotCreateObjectException: The constructor of class EmailAddress raised InvalidArgumentException for generated arguments: "#ɑ🣮`" is not a valid email address
+
+    new EmailAddress(address: '#ɑ🣮`')
+
+A generator that creates objects of this class with arguments that its constructor accepts can be registered with #[GeneratorFor]
+
+Caused by
+InvalidArgumentException: "#ɑ🣮`" is not a valid email address
+
+/path/to/tests/src/EmailAddress.php:9
+
+ERRORS!
+Tests: 1, Assertions: 0, Errors: 1.

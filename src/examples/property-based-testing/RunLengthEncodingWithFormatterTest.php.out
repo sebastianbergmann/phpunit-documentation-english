@@ -1,0 +1,30 @@
+./tools/phpunit --random-seed 1234 tests/RunLengthEncodingWithFormatterTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00.015, Memory: 24.00 MB
+
+There was 1 failure:
+
+1) RunLengthEncodingWithFormatterTest::testDecodingReversesEncoding
+Failed asserting that two strings are identical.
+--- Expected
++++ Actual
+@@ @@
+-'0a'
++'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+Property falsified after 6 examples, counterexample shrunk in 2 steps:
+
+    $string = '0a';
+
+    encoded: 101a
+
+/path/to/tests/RunLengthEncodingWithFormatterTest.php:17
+
+FAILURES!
+Tests: 1, Assertions: 6, Failures: 1.

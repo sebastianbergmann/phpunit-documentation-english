@@ -1,0 +1,21 @@
+./tools/phpunit --random-seed 1234 --display-property-statistics tests/BinarySearchTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.034, Memory: 24.00 MB
+
+Statistics of 1 property:
+
+1) BinarySearchTest::testFindsExactlyTheValuesThatAreInTheList
+100 examples checked, 0 rejected
+
+     92.0% needle is not in the list
+      8.0% needle is in the list
+
+    size of the list: count 100, min 0, median 3, mean 3.77, p90 8, max 22
+
+OK (1 test, 100 assertions)

@@ -1,0 +1,19 @@
+./tools/phpunit --random-seed 1234 tests/BinarySearchWithRequiredClassificationTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+R                                                                   1 / 1 (100%)
+
+Time: 00:00.027, Memory: 24.00 MB
+
+There was 1 risky test:
+
+1) BinarySearchWithRequiredClassificationTest::testFindsExactlyTheValuesThatAreInTheList
+Only 7.0% of the examples of this property were classified as "needle is in the list", but at least 25.0% are required
+
+/path/to/tests/BinarySearchWithRequiredClassificationTest.php:13
+
+OK, but there were issues!
+Tests: 1, Assertions: 100, Risky: 1.

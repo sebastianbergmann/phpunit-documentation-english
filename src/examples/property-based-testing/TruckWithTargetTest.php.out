@@ -1,0 +1,23 @@
+./tools/phpunit --random-seed 1234 tests/TruckWithTargetTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+F                                                                   1 / 1 (100%)
+
+Time: 00:00.175, Memory: 24.00 MB
+
+There was 1 failure:
+
+1) TruckWithTargetTest::testIsNeverOverloaded
+Failed asserting that 1001 is equal to 1000 or is less than 1000.
+
+Property falsified after 170 examples, counterexample shrunk in 18 steps:
+
+    $parcels = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 86, 100, 100, 100, 100, 100, 100, 100, 100, 100];
+
+/path/to/tests/TruckWithTargetTest.php:21
+
+FAILURES!
+Tests: 1, Assertions: 340, Failures: 1.

@@ -1,0 +1,19 @@
+./tools/phpunit --random-seed 1234 --display-property-statistics tests/BinarySearchWithDrawnNeedleTest.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Random Seed:   1234
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.031, Memory: 24.00 MB
+
+Statistics of 1 property:
+
+1) BinarySearchWithDrawnNeedleTest::testFindsExactlyTheValuesThatAreInTheList
+100 examples checked, 0 rejected
+
+     53.0% needle is in the list
+     47.0% needle is not in the list
+
+OK (1 test, 100 assertions)
