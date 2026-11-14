@@ -32,7 +32,7 @@ use PHPUnit\Framework\MockObject\InvocationJournal;
 use PHPUnit\Framework\MockObject\InvocationJournalImplementation;
 use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\MockObject\Rule\AnyInvokedCount as AnyInvokedCountMatcher;
+use PHPUnit\Framework\MockObject\NonPositiveRequiredInvocationsException;
 use PHPUnit\Framework\MockObject\Rule\InvokedAtLeastCount as InvokedAtLeastCountMatcher;
 use PHPUnit\Framework\MockObject\Rule\InvokedAtLeastOnce as InvokedAtLeastOnceMatcher;
 use PHPUnit\Framework\MockObject\Rule\InvokedAtMostCount as InvokedAtMostCountMatcher;
@@ -53,6 +53,7 @@ use PHPUnit\Framework\TestCase\MockObjectRegistry;
 use PHPUnit\Framework\TestCase\OutputBuffer;
 use PHPUnit\Framework\TestCase\OutputBufferStopResult;
 use PHPUnit\Framework\TestCase\TestDoubleFactory;
+use PHPUnit\Framework\TestRunner\NestedTestRunGuard;
 use PHPUnit\Framework\TestRunner\TestRunner;
 use PHPUnit\Framework\TestSize\TestSize;
 use PHPUnit\Framework\TestStatus\TestStatus;
@@ -275,6 +276,7 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
      * @throws \SebastianBergmann\CodeCoverage\InvalidArgumentException
      * @throws \SebastianBergmann\Template\InvalidArgumentException
      * @throws Exception
+     * @throws NestedTestRunException
      * @throws NoPreviousThrowableException
      * @throws ProcessIsolationException
      * @throws UnintentionallyCoveredCodeException
@@ -283,12 +285,27 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
      */
     final public function run(): void
     {
-        if (!$this->inIsolation &&
-            !(new DependencyResolver)->resolve($this, $this->dependencies, $this->emitter)) {
-            return;
-        }
+        NestedTestRunGuard::testStarts();
 
-        new TestRunner($this->emitter)->run($this);
+        try {
+            $this->emitter->testPreparationStarted(
+                $this->valueObjectForEvents(),
+            );
+
+            if (!$this->inIsolation &&
+                !(new DependencyResolver)->resolve($this, $this->dependencies, $this->emitter)) {
+                $this->emitter->testFinished(
+                    $this->valueObjectForEvents(),
+                    0,
+                );
+
+                return;
+            }
+
+            new TestRunner($this->emitter)->run($this);
+        } finally {
+            NestedTestRunGuard::testEnded();
+        }
     }
 
     /**
@@ -740,14 +757,6 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
     }
 
     /**
-     * @internal This method is not covered by the backward compatibility promise for PHPUnit
-     */
-    final public function wasPrepared(): bool
-    {
-        return $this->wasPrepared;
-    }
-
-    /**
      * @return positive-int
      *
      * @internal This method is not covered by the backward compatibility promise for PHPUnit
@@ -822,23 +831,6 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
     }
 
     /**
-     * Returns a matcher that matches when the method is executed
-     * zero or more times.
-     *
-     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/6461
-     */
-    final protected function any(): AnyInvokedCountMatcher
-    {
-        Event\Facade::emitter()->testTriggeredPhpunitDeprecation(
-            $this->valueObjectForEvents(),
-            'The any() invoked count expectation is deprecated and will be removed in PHPUnit 14. ' .
-            'Use a test stub instead or configure a real invocation count expectation.',
-        );
-
-        return new AnyInvokedCountMatcher;
-    }
-
-    /**
      * Returns a matcher that matches when the method is never executed.
      */
     final protected function never(): InvokedCountMatcher
@@ -849,17 +841,13 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
     /**
      * Returns a matcher that matches when the method is executed
      * at least N times.
+     *
+     * @param positive-int $requiredInvocations
+     *
+     * @throws NonPositiveRequiredInvocationsException
      */
     final protected function atLeast(int $requiredInvocations): InvokedAtLeastCountMatcher
     {
-        if ($requiredInvocations < 1) {
-            Event\Facade::emitter()->testTriggeredPhpunitDeprecation(
-                $this->valueObjectForEvents(),
-                "Calling atLeast() with an argument that is not positive is deprecated.\n" .
-                'This will become an error in PHPUnit 14.',
-            );
-        }
-
         return new InvokedAtLeastCountMatcher(
             $requiredInvocations,
         );
@@ -966,6 +954,12 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
      */
     final protected function expectExceptionMessage(string $message): void
     {
+        Event\Facade::emitter()->testTriggeredPhpunitDeprecation(
+            $this->valueObjectForEvents(),
+            'expectExceptionMessage() is deprecated and will be removed in PHPUnit 15. ' .
+            'Use expectExceptionMessageIsOrContains() instead.',
+        );
+
         $this->expectExceptionMessageIsOrContains($message);
     }
 
@@ -1165,10 +1159,6 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
         error_clear_last();
         clearstatcache();
 
-        $this->emitter->testPreparationStarted(
-            $this->valueObjectForEvents(),
-        );
-
         $this->globalStateCapture->snapshotGlobals($this, $this->emitter, $this->inIsolation, $this->runTestInSeparateProcess);
         $this->globalStateCapture->snapshotErrorHandlers($this, $this->emitter);
         $this->environmentVariables->set(static::class, $this->methodName);
@@ -1314,8 +1304,6 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
             $this->mockObjectRegistry->handleExceptionFromInvokedCountRule($this, $t);
 
             if (!$this->wasPrepared) {
-                $this->wasPrepared = true;
-
                 $this->emitter->testPreparationFailed(
                     $this->valueObjectForEvents(),
                     Event\Code\ThrowableBuilder::from($t),
@@ -1445,33 +1433,8 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
 
             if ($this->inIsolation) {
                 // @codeCoverageIgnoreStart
-                HookMethodInvoker::invokeAfterClass($this, $hookMethods, $this->emitter);
+                HookMethodInvoker::invokeAfterClass($this, $hookMethods);
                 // @codeCoverageIgnoreEnd
-            }
-        } catch (IncompleteTest $t) {
-            if ($testPassed) {
-                $this->status = TestStatus::incomplete($t->getMessage());
-
-                $this->emitter->testMarkedAsIncomplete(
-                    $this->valueObjectForEvents(),
-                    Event\Code\ThrowableBuilder::from($t),
-                );
-
-                return $t;
-            }
-        } catch (SkippedTest $t) {
-            if ($testPassed) {
-                $this->status = TestStatus::skipped($t->getMessage());
-
-                /** @var non-empty-string $skipMessage */
-                $skipMessage = $t->getMessage();
-
-                $this->emitter->testSkipped(
-                    $this->valueObjectForEvents(),
-                    $skipMessage,
-                );
-
-                return $t;
             }
         } catch (AssertionError|AssertionFailedError $t) {
             if ($testPassed || $e instanceof SkippedWithMessageException) {

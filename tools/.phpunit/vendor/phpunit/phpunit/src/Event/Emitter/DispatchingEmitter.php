@@ -113,26 +113,6 @@ final class DispatchingEmitter implements Emitter
     }
 
     /**
-     * @param non-empty-string $filename
-     * @param non-empty-string $name
-     * @param non-empty-string $version
-     *
-     * @throws InvalidArgumentException
-     * @throws UnknownEventTypeException
-     */
-    public function testRunnerLoadedExtensionFromPhar(string $filename, string $name, string $version): void
-    {
-        $this->dispatcher->dispatch(
-            new TestRunner\ExtensionLoadedFromPhar(
-                $this->telemetryInfo(),
-                $filename,
-                $name,
-                $version,
-            ),
-        );
-    }
-
-    /**
      * @param class-string          $className
      * @param array<string, string> $parameters
      *
@@ -214,14 +194,11 @@ final class DispatchingEmitter implements Emitter
      * @throws InvalidArgumentException
      * @throws UnknownEventTypeException
      */
-    public function testSuiteSorted(int $executionOrder, int $executionOrderDefects, bool $resolveDependencies, array $pipeline): void
+    public function testSuiteSorted(array $pipeline): void
     {
         $this->dispatcher->dispatch(
             new TestSuiteSorted(
                 $this->telemetryInfo(),
-                $executionOrder,
-                $executionOrderDefects,
-                $resolveDependencies,
                 $pipeline,
             ),
         );
@@ -1400,7 +1377,7 @@ final class DispatchingEmitter implements Emitter
         }
 
         $this->dispatcher->dispatch(
-            new TestRunner\DeprecationTriggered(
+            new TestRunner\PhpunitDeprecationTriggered(
                 $this->telemetryInfo(),
                 $message,
             ),
@@ -1416,7 +1393,7 @@ final class DispatchingEmitter implements Emitter
     public function testRunnerTriggeredPhpunitNotice(string $message): void
     {
         $this->dispatcher->dispatch(
-            new TestRunner\NoticeTriggered(
+            new TestRunner\PhpunitNoticeTriggered(
                 $this->telemetryInfo(),
                 $message,
             ),
@@ -1432,7 +1409,7 @@ final class DispatchingEmitter implements Emitter
     public function testRunnerTriggeredPhpunitWarning(string $message): void
     {
         $this->dispatcher->dispatch(
-            new TestRunner\WarningTriggered(
+            new TestRunner\PhpunitWarningTriggered(
                 $this->telemetryInfo(),
                 $message,
             ),
@@ -1472,7 +1449,7 @@ final class DispatchingEmitter implements Emitter
     public function testRunnerTriggeredNotice(string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void
     {
         $this->dispatcher->dispatch(
-            new TestRunner\Issue\NoticeTriggered(
+            new TestRunner\NoticeTriggered(
                 $this->telemetryInfo(),
                 $message,
                 $file,
@@ -1516,7 +1493,7 @@ final class DispatchingEmitter implements Emitter
     public function testRunnerTriggeredWarning(string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void
     {
         $this->dispatcher->dispatch(
-            new TestRunner\Issue\WarningTriggered(
+            new TestRunner\WarningTriggered(
                 $this->telemetryInfo(),
                 $message,
                 $file,
@@ -1563,7 +1540,7 @@ final class DispatchingEmitter implements Emitter
     public function testRunnerTriggeredDeprecation(string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline, bool $ignoredByFilter, IssueTrigger $trigger, string $stackTrace): void
     {
         $this->dispatcher->dispatch(
-            new TestRunner\Issue\DeprecationTriggered(
+            new TestRunner\DeprecationTriggered(
                 $this->telemetryInfo(),
                 $message,
                 $file,

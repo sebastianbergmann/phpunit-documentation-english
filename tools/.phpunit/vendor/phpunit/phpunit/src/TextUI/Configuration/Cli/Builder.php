@@ -21,9 +21,10 @@ use function max;
 use function sprintf;
 use function strtolower;
 use PHPUnit\Event\Emitter;
-use PHPUnit\Runner\TestSuiteSorter;
+use PHPUnit\Runner\ExecutionOrder\Order;
 use PHPUnit\TextUI\Configuration\ExecutionOrderParser;
 use PHPUnit\TextUI\Configuration\ExecutionOrderSource;
+use PHPUnit\TextUI\Configuration\InvalidExecutionOrderException;
 use PHPUnit\Util\Filesystem;
 use SebastianBergmann\CliParser\Exception as CliParserException;
 use SebastianBergmann\CliParser\Parser as CliParser;
@@ -42,8 +43,6 @@ final class Builder
         'all',
         'atleast-version=',
         'bootstrap=',
-        'cache-result',
-        'do-not-cache-result',
         'record-test-run-history',
         'do-not-record-test-run-history',
         'cache-test-index',
@@ -128,7 +127,6 @@ final class Builder
         'process-isolation',
         'do-not-report-useless-tests',
         'random-order',
-        'random-order-seed=',
         'random-seed=',
         'repeat=',
         'retry=',
@@ -191,7 +189,6 @@ final class Builder
         'test-id-filter-file=',
         'run-test-id=',
         'log-events-text=',
-        'log-events-verbose-text=',
         'version',
         'debug',
         'with-telemetry',
@@ -204,10 +201,7 @@ final class Builder
      * @var list<array{non-empty-string, non-empty-string}>
      */
     private const array CONFLICTING_OPTIONS = [
-        ['--cache-result', '--do-not-cache-result'],
         ['--record-test-run-history', '--do-not-record-test-run-history'],
-        ['--cache-result', '--do-not-record-test-run-history'],
-        ['--record-test-run-history', '--do-not-cache-result'],
         ['--cache-test-index', '--do-not-cache-test-index'],
         ['--warn-when-php-is-not-configured-for-development', '--do-not-warn-when-php-is-not-configured-for-development'],
         ['--fail-on-deprecation', '--do-not-fail-on-deprecation'],
@@ -343,7 +337,6 @@ final class Builder
         $enforceTimeLimit                         = null;
         $excludeGroups                            = null;
         $executionOrder                           = null;
-        $executionOrderDefects                    = null;
         $failOnAllIssues                          = null;
         $failOnDeprecation                        = null;
         $failOnSelfDeprecation                    = null;
@@ -413,7 +406,6 @@ final class Builder
         $noResults                                = null;
         $noLogging                                = null;
         $processIsolation                         = null;
-        $randomOrderSeed                          = null;
         $randomSeed                               = null;
         $repeat                                   = null;
         $retry                                    = null;
@@ -436,7 +428,6 @@ final class Builder
         $useDefaultConfiguration                  = true;
         $version                                  = false;
         $logEventsText                            = null;
-        $logEventsVerboseText                     = null;
         $printerCompact                           = null;
         $printerTeamCity                          = null;
         $printerTestDox                           = null;
@@ -474,26 +465,8 @@ final class Builder
 
                     break;
 
-                case '--cache-result':
-                    $recordTestRunHistory = true;
-
-                    $this->emitter->testRunnerTriggeredPhpunitDeprecation(
-                        'The "--cache-result" CLI option is deprecated and will be removed in PHPUnit 14. Use "--record-test-run-history" instead.',
-                    );
-
-                    break;
-
                 case '--record-test-run-history':
                     $recordTestRunHistory = true;
-
-                    break;
-
-                case '--do-not-cache-result':
-                    $recordTestRunHistory = false;
-
-                    $this->emitter->testRunnerTriggeredPhpunitDeprecation(
-                        'The "--do-not-cache-result" CLI option is deprecated and will be removed in PHPUnit 14. Use "--do-not-record-test-run-history" instead.',
-                    );
 
                     break;
 
@@ -849,28 +822,14 @@ final class Builder
                 case '--order-by':
                     assert($option[1] !== null);
 
-                    $parsedExecutionOrder = new ExecutionOrderParser($this->emitter)->parse(
-                        $option[1],
-                        ExecutionOrderSource::CommandLineOption,
-                        $executionOrder,
-                        $executionOrderDefects,
-                        $resolveDependencies,
-                    );
-
-                    $unknownTokens = $parsedExecutionOrder->unknownTokens();
-
-                    if ($unknownTokens !== []) {
-                        throw new Exception(
-                            sprintf(
-                                'unrecognized --order-by option: %s',
-                                $unknownTokens[0],
-                            ),
+                    try {
+                        $executionOrder = (new ExecutionOrderParser)->parse(
+                            $option[1],
+                            ExecutionOrderSource::CommandLineOption,
                         );
+                    } catch (InvalidExecutionOrderException $e) {
+                        throw new Exception($e->getMessage());
                     }
-
-                    $executionOrder        = $parsedExecutionOrder->executionOrder();
-                    $executionOrderDefects = $parsedExecutionOrder->executionOrderDefects();
-                    $resolveDependencies   = $parsedExecutionOrder->resolveDependencies();
 
                     break;
 
@@ -1290,16 +1249,7 @@ final class Builder
                     break;
 
                 case '--random-order':
-                    $executionOrder = TestSuiteSorter::ORDER_RANDOMIZED;
-
-                    break;
-
-                case '--random-order-seed':
-                    $randomOrderSeed = (int) $option[1];
-
-                    $this->emitter->testRunnerTriggeredPhpunitDeprecation(
-                        'The "--random-order-seed" CLI option is deprecated and will be removed in PHPUnit 14. Use "--random-seed" instead.',
-                    );
+                    $executionOrder = [Order::Random];
 
                     break;
 
@@ -1390,7 +1340,7 @@ final class Builder
                     break;
 
                 case '--reverse-order':
-                    $executionOrder = TestSuiteSorter::ORDER_REVERSED;
+                    $executionOrder = [Order::Reverse];
 
                     break;
 
@@ -1403,21 +1353,6 @@ final class Builder
                             sprintf(
                                 'The path "%s" specified for the --log-events-text option could not be resolved',
                                 $logEventsTextPath,
-                            ),
-                        );
-                    }
-
-                    break;
-
-                case '--log-events-verbose-text':
-                    $logEventsVerboseTextPath = $this->requireNonEmptyValue($option[1], '--log-events-verbose-text');
-                    $logEventsVerboseText     = Filesystem::resolveStreamOrFile($logEventsVerboseTextPath);
-
-                    if ($logEventsVerboseText === false) {
-                        throw new Exception(
-                            sprintf(
-                                'The path "%s" specified for the --log-events-verbose-text option could not be resolved',
-                                $logEventsVerboseTextPath,
                             ),
                         );
                     }
@@ -1458,12 +1393,6 @@ final class Builder
         }
 
         $this->warnAboutConflictingOptions();
-
-        if ($randomOrderSeed !== null && $executionOrder !== TestSuiteSorter::ORDER_RANDOMIZED) {
-            $this->emitter->testRunnerTriggeredPhpunitWarning(
-                '--random-order-seed is only used when execution order is "random" (use --order-by random or --random-order)',
-            );
-        }
 
         $arguments = [];
 
@@ -1522,7 +1451,6 @@ final class Builder
             $enforceTimeLimit,
             $excludeGroups,
             $executionOrder,
-            $executionOrderDefects,
             $failOnAllIssues,
             $failOnDeprecation,
             $failOnSelfDeprecation,
@@ -1592,7 +1520,6 @@ final class Builder
             $noResults,
             $noLogging,
             $processIsolation,
-            $randomOrderSeed,
             $randomSeed,
             $repeat,
             $retry,
@@ -1622,7 +1549,6 @@ final class Builder
             $version,
             $coverageFilter,
             $logEventsText,
-            $logEventsVerboseText,
             $printerCompact,
             $printerTeamCity,
             $printerTestDox,

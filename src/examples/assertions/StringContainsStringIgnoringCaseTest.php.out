@@ -1,11 +1,11 @@
 ./tools/phpunit tests/StringContainsStringIgnoringCaseTest.php
-PHPUnit 13.4.0 by Sebastian Bergmann and contributors.
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.11
+Runtime:       PHP 8.5.12
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 32.33 MB
+Time: 00:00, Memory: 20.00 MB
 
 There was 1 failure:
 

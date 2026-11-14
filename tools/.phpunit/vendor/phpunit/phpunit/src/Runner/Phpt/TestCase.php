@@ -56,10 +56,12 @@ use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExecutionOrderDependency;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\IncompleteTestError;
+use PHPUnit\Framework\NestedTestRunException;
 use PHPUnit\Framework\PhptAssertionFailedError;
 use PHPUnit\Framework\Reorderable;
 use PHPUnit\Framework\SelfDescribing;
 use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestRunner\NestedTestRunGuard;
 use PHPUnit\Runner\CodeCoverage;
 use PHPUnit\Runner\Exception;
 use PHPUnit\TestRunner\TestResult\Facade as TestResultFacade;
@@ -194,12 +196,125 @@ final class TestCase implements Reorderable, SelfDescribing, Test
      * @throws \SebastianBergmann\Template\InvalidArgumentException
      * @throws Exception
      * @throws InvalidArgumentException
+     * @throws NestedTestRunException
      * @throws NoPreviousThrowableException
      * @throws ReflectionException
      * @throws TestIdMissingException
      * @throws UnintentionallyCoveredCodeException
      */
     public function run(): void
+    {
+        NestedTestRunGuard::testStarts();
+
+        try {
+            $this->runTest();
+        } finally {
+            NestedTestRunGuard::testEnded();
+        }
+    }
+
+    /**
+     * Returns the name of the test case.
+     */
+    public function getName(): string
+    {
+        return $this->toString();
+    }
+
+    /**
+     * Returns a string representation of the test case.
+     */
+    public function toString(): string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * The file that declares this test.
+     *
+     * @return non-empty-string
+     */
+    public function file(): string
+    {
+        return $this->filename;
+    }
+
+    public function sortId(): string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @return list<string>
+     *
+     * @internal This method is not covered by the backward compatibility promise for PHPUnit
+     */
+    public function groups(): array
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @param list<string> $groups
+     *
+     * @internal This method is not covered by the backward compatibility promise for PHPUnit
+     */
+    public function setGroups(array $groups): void
+    {
+        $this->groups = $groups;
+    }
+
+    /**
+     * @return list<ExecutionOrderDependency>
+     */
+    public function provides(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<ExecutionOrderDependency>
+     */
+    public function requires(): array
+    {
+        return [];
+    }
+
+    /**
+     * @internal This method is not covered by the backward compatibility promise for PHPUnit
+     */
+    public function valueObjectForEvents(): Phpt
+    {
+        return new Phpt(
+            $this->filename,
+            $this->repetition,
+            $this->totalRepetitions,
+            $this->attempt,
+            $this->maxAttempts,
+        );
+    }
+
+    /**
+     * @return positive-int
+     *
+     * @internal This method is not covered by the backward compatibility promise for PHPUnit
+     */
+    public function repetition(): int
+    {
+        return $this->repetition;
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \SebastianBergmann\Template\InvalidArgumentException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     * @throws NoPreviousThrowableException
+     * @throws ReflectionException
+     * @throws TestIdMissingException
+     * @throws UnintentionallyCoveredCodeException
+     */
+    private function runTest(): void
     {
         $emitter = EventFacade::emitter();
         $parser  = new Parser;
@@ -211,7 +326,7 @@ final class TestCase implements Reorderable, SelfDescribing, Test
         try {
             $sections = $parser->parse($this->filename);
         } catch (Exception $e) {
-            $emitter->testPrepared($this->valueObjectForEvents());
+            $emitter->testPreparationErrored($this->valueObjectForEvents(), ThrowableBuilder::from($e));
             $emitter->testErrored($this->valueObjectForEvents(), ThrowableBuilder::from($e));
             $emitter->testFinished($this->valueObjectForEvents(), 0);
 
@@ -483,97 +598,6 @@ final class TestCase implements Reorderable, SelfDescribing, Test
         $this->runClean($sections, CodeCoverage::instance()->isActive(), $emitter);
 
         $emitter->testFinished($this->valueObjectForEvents(), 1);
-    }
-
-    /**
-     * Returns the name of the test case.
-     */
-    public function getName(): string
-    {
-        return $this->toString();
-    }
-
-    /**
-     * Returns a string representation of the test case.
-     */
-    public function toString(): string
-    {
-        return $this->filename;
-    }
-
-    /**
-     * The file that declares this test.
-     *
-     * @return non-empty-string
-     */
-    public function file(): string
-    {
-        return $this->filename;
-    }
-
-    public function sortId(): string
-    {
-        return $this->filename;
-    }
-
-    /**
-     * @return list<string>
-     *
-     * @internal This method is not covered by the backward compatibility promise for PHPUnit
-     */
-    public function groups(): array
-    {
-        return $this->groups;
-    }
-
-    /**
-     * @param list<string> $groups
-     *
-     * @internal This method is not covered by the backward compatibility promise for PHPUnit
-     */
-    public function setGroups(array $groups): void
-    {
-        $this->groups = $groups;
-    }
-
-    /**
-     * @return list<ExecutionOrderDependency>
-     */
-    public function provides(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return list<ExecutionOrderDependency>
-     */
-    public function requires(): array
-    {
-        return [];
-    }
-
-    /**
-     * @internal This method is not covered by the backward compatibility promise for PHPUnit
-     */
-    public function valueObjectForEvents(): Phpt
-    {
-        return new Phpt(
-            $this->filename,
-            $this->repetition,
-            $this->totalRepetitions,
-            $this->attempt,
-            $this->maxAttempts,
-        );
-    }
-
-    /**
-     * @return positive-int
-     *
-     * @internal This method is not covered by the backward compatibility promise for PHPUnit
-     */
-    public function repetition(): int
-    {
-        return $this->repetition;
     }
 
     /**

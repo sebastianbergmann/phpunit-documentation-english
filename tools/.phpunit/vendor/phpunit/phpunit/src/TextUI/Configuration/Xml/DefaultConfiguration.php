@@ -9,7 +9,6 @@
  */
 namespace PHPUnit\TextUI\XmlConfiguration;
 
-use PHPUnit\Runner\TestSuiteSorter;
 use PHPUnit\TextUI\Configuration\ConstantCollection;
 use PHPUnit\TextUI\Configuration\DirectoryCollection;
 use PHPUnit\TextUI\Configuration\ExtensionBootstrapCollection;
@@ -164,7 +163,6 @@ final readonly class DefaultConfiguration extends Configuration
                 0,
                 0,
                 0,
-                null,
                 false,
                 false,
                 true,
@@ -176,9 +174,8 @@ final readonly class DefaultConfiguration extends Configuration
                 10,
                 60,
                 null,
-                TestSuiteSorter::ORDER_DEFAULT,
+                [],
                 true,
-                false,
                 false,
                 false,
                 false,
@@ -193,10 +190,5 @@ final readonly class DefaultConfiguration extends Configuration
             ),
             TestSuiteCollection::fromArray([]),
         );
-    }
-
-    public function isDefault(): bool
-    {
-        return true;
     }
 }

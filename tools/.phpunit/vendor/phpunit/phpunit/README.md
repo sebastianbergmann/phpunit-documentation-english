@@ -63,8 +63,6 @@ In addition to the components listed above, PHPUnit depends on the components li
 
 * [myclabs/deep-copy](https://github.com/myclabs/DeepCopy)
 * [nikic/php-parser](https://github.com/nikic/php-parser)
-* [phar-io/manifest](https://github.com/phar-io/manifest)
-* [phar-io/version](https://github.com/phar-io/version)
 * [staabm/side-effects-detector](https://github.com/staabm/side-effects-detector)
 
 These tools are used to develop PHPUnit:

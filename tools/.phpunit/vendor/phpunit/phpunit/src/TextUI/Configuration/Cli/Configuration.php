@@ -9,6 +9,8 @@
  */
 namespace PHPUnit\TextUI\CliArguments;
 
+use PHPUnit\Runner\ExecutionOrder\Order;
+
 /**
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
  *
@@ -81,8 +83,11 @@ final readonly class Configuration
      * @var ?non-empty-list<non-empty-string>
      */
     private ?array $excludeGroups;
-    private ?int $executionOrder;
-    private ?int $executionOrderDefects;
+
+    /**
+     * @var ?list<Order>
+     */
+    private ?array $executionOrder;
     private ?bool $failOnAllIssues;
     private ?bool $failOnDeprecation;
     private ?bool $failOnSelfDeprecation;
@@ -172,7 +177,10 @@ final readonly class Configuration
     private ?bool $noResults;
     private ?bool $noLogging;
     private ?bool $processIsolation;
-    private ?int $randomOrderSeed;
+
+    /**
+     * @var ?positive-int
+     */
     private ?int $randomSeed;
 
     /**
@@ -221,7 +229,6 @@ final readonly class Configuration
     private ?bool $displayDetailsOnTestsThatTriggerWarnings;
     private bool $version;
     private ?string $logEventsText;
-    private ?string $logEventsVerboseText;
     private bool $debug;
     private bool $withTelemetry;
 
@@ -236,11 +243,13 @@ final readonly class Configuration
      * @param ?positive-int                                        $diffContext
      * @param ?non-negative-int                                    $triggeringTestsLimit
      * @param ?non-empty-list<non-empty-string>                    $excludeGroups
+     * @param ?list<Order>                                         $executionOrder
      * @param ?non-empty-list<non-empty-string>                    $groups
      * @param ?non-empty-list<non-empty-string>                    $testsCovering
      * @param ?non-empty-list<non-empty-string>                    $testsUsing
      * @param ?non-empty-list<non-empty-string>                    $testsRequiringPhpExtension
      * @param ?non-empty-array<non-empty-string, non-empty-string> $iniSettings
+     * @param ?positive-int                                        $randomSeed
      * @param ?positive-int                                        $repeat
      * @param ?positive-int                                        $retry
      * @param ?positive-int                                        $timeout
@@ -248,7 +257,7 @@ final readonly class Configuration
      * @param ?non-empty-list<non-empty-string>                    $coverageFilter
      * @param ?non-empty-list<non-empty-string>                    $extensions
      */
-    public function __construct(array $arguments, ?string $testFilesFile, ?string $testIdFile, ?string $testIdFilter, ?bool $all, ?string $atLeastVersion, ?bool $backupGlobals, ?bool $backupStaticProperties, ?bool $beStrictAboutChangesToGlobalState, ?string $bootstrap, ?string $cacheDirectory, ?bool $recordTestRunHistory, bool $checkPhpConfiguration, ?bool $warnWhenPhpIsNotConfiguredForDevelopment, bool $checkVersion, ?string $colors, null|int|string $columns, ?string $configurationFile, ?string $coverageClover, ?string $coverageCobertura, ?string $coverageCrap4J, ?string $coverageHtml, ?bool $withoutClassView, ?bool $withoutFileView, ?string $coverageJsonl, ?string $coverageOpenClover, ?string $coveragePhp, ?string $coverageText, ?bool $coverageTextShowUncoveredFiles, ?bool $coverageTextShowOnlySummary, ?string $coverageXml, ?bool $coverageXmlIncludeSource, ?bool $pathCoverage, ?bool $branchCoverage, bool $warmCoverageCache, ?int $defaultTimeLimit, ?int $diffContext, ?int $triggeringTestsLimit, ?bool $disableCodeCoverageIgnore, ?bool $disableCoverageTargeting, ?bool $disallowTestOutput, ?bool $enforceTimeLimit, ?array $excludeGroups, ?int $executionOrder, ?int $executionOrderDefects, ?bool $failOnAllIssues, ?bool $failOnDeprecation, ?bool $failOnSelfDeprecation, ?bool $failOnDirectDeprecation, ?bool $failOnIndirectDeprecation, ?bool $failOnPhpunitDeprecation, ?bool $failOnPhpunitNotice, ?bool $failOnPhpunitWarning, ?bool $failOnEmptyTestSuite, ?bool $failOnIncomplete, ?bool $failOnNotice, ?bool $failOnRisky, ?bool $failOnSkipped, ?bool $failOnWarning, ?bool $doNotFailOnDeprecation, ?bool $doNotFailOnSelfDeprecation, ?bool $doNotFailOnDirectDeprecation, ?bool $doNotFailOnIndirectDeprecation, ?bool $doNotFailOnPhpunitDeprecation, ?bool $doNotFailOnPhpunitNotice, ?bool $doNotFailOnPhpunitWarning, ?bool $doNotFailOnEmptyTestSuite, ?bool $doNotFailOnIncomplete, ?bool $doNotFailOnNotice, ?bool $doNotFailOnRisky, ?bool $doNotFailOnSkipped, ?bool $doNotFailOnWarning, ?int $stopOnDefect, ?int $stopOnDeprecation, ?string $specificDeprecationToStopOn, ?int $stopOnError, ?int $stopOnFailure, ?int $stopOnIncomplete, ?int $stopOnNotice, ?int $stopOnRisky, ?int $stopOnSkipped, ?int $stopOnWarning, ?string $filter, ?string $excludeFilter, ?string $generateBaseline, ?string $useBaseline, bool $ignoreBaseline, bool $generateConfiguration, bool $migrateConfiguration, bool $validateConfiguration, bool $showEffectiveConfiguration, ?array $groups, ?array $testsCovering, ?array $testsUsing, ?array $testsRequiringPhpExtension, bool $help, ?string $includePath, ?array $iniSettings, ?string $junitLogfile, ?string $otrLogfile, ?bool $includeGitInformation, bool $listGroups, bool $listSuites, bool $listTestFiles, bool $listTestIds, bool $listTests, ?string $listTestsXml, ?bool $noCoverage, ?bool $noExtensions, ?bool $noOutput, ?bool $noProgress, ?bool $noResults, ?bool $noLogging, ?bool $processIsolation, ?int $randomOrderSeed, ?int $randomSeed, ?int $repeat, ?int $retry, ?int $timeout, ?bool $reportUselessTests, ?bool $resolveDependencies, ?bool $reverseList, ?bool $stderr, ?bool $strictCoverage, ?bool $requireCoverageContribution, ?string $teamcityLogfile, ?string $testdoxHtmlFile, ?string $testdoxTextFile, ?array $testSuffixes, ?string $testSuite, ?string $excludeTestSuite, bool $useDefaultConfiguration, ?bool $displayDetailsOnAllIssues, ?bool $displayDetailsOnIncompleteTests, ?bool $displayDetailsOnSkippedTests, ?bool $displayDetailsOnTestsThatTriggerDeprecations, ?bool $displayDetailsOnPhpunitDeprecations, ?bool $displayDetailsOnPhpunitNotices, ?bool $displayDetailsOnTestsThatTriggerErrors, ?bool $displayDetailsOnTestsThatTriggerNotices, ?bool $displayDetailsOnTestsThatTriggerWarnings, bool $version, ?array $coverageFilter, ?string $logEventsText, ?string $logEventsVerboseText, ?bool $printerCompact, ?bool $printerTeamCity, ?bool $testdoxPrinter, ?bool $testdoxPrinterSummary, bool $debug, bool $withTelemetry, ?array $extensions, ?bool $cacheTestIndex)
+    public function __construct(array $arguments, ?string $testFilesFile, ?string $testIdFile, ?string $testIdFilter, ?bool $all, ?string $atLeastVersion, ?bool $backupGlobals, ?bool $backupStaticProperties, ?bool $beStrictAboutChangesToGlobalState, ?string $bootstrap, ?string $cacheDirectory, ?bool $recordTestRunHistory, bool $checkPhpConfiguration, ?bool $warnWhenPhpIsNotConfiguredForDevelopment, bool $checkVersion, ?string $colors, null|int|string $columns, ?string $configurationFile, ?string $coverageClover, ?string $coverageCobertura, ?string $coverageCrap4J, ?string $coverageHtml, ?bool $withoutClassView, ?bool $withoutFileView, ?string $coverageJsonl, ?string $coverageOpenClover, ?string $coveragePhp, ?string $coverageText, ?bool $coverageTextShowUncoveredFiles, ?bool $coverageTextShowOnlySummary, ?string $coverageXml, ?bool $coverageXmlIncludeSource, ?bool $pathCoverage, ?bool $branchCoverage, bool $warmCoverageCache, ?int $defaultTimeLimit, ?int $diffContext, ?int $triggeringTestsLimit, ?bool $disableCodeCoverageIgnore, ?bool $disableCoverageTargeting, ?bool $disallowTestOutput, ?bool $enforceTimeLimit, ?array $excludeGroups, ?array $executionOrder, ?bool $failOnAllIssues, ?bool $failOnDeprecation, ?bool $failOnSelfDeprecation, ?bool $failOnDirectDeprecation, ?bool $failOnIndirectDeprecation, ?bool $failOnPhpunitDeprecation, ?bool $failOnPhpunitNotice, ?bool $failOnPhpunitWarning, ?bool $failOnEmptyTestSuite, ?bool $failOnIncomplete, ?bool $failOnNotice, ?bool $failOnRisky, ?bool $failOnSkipped, ?bool $failOnWarning, ?bool $doNotFailOnDeprecation, ?bool $doNotFailOnSelfDeprecation, ?bool $doNotFailOnDirectDeprecation, ?bool $doNotFailOnIndirectDeprecation, ?bool $doNotFailOnPhpunitDeprecation, ?bool $doNotFailOnPhpunitNotice, ?bool $doNotFailOnPhpunitWarning, ?bool $doNotFailOnEmptyTestSuite, ?bool $doNotFailOnIncomplete, ?bool $doNotFailOnNotice, ?bool $doNotFailOnRisky, ?bool $doNotFailOnSkipped, ?bool $doNotFailOnWarning, ?int $stopOnDefect, ?int $stopOnDeprecation, ?string $specificDeprecationToStopOn, ?int $stopOnError, ?int $stopOnFailure, ?int $stopOnIncomplete, ?int $stopOnNotice, ?int $stopOnRisky, ?int $stopOnSkipped, ?int $stopOnWarning, ?string $filter, ?string $excludeFilter, ?string $generateBaseline, ?string $useBaseline, bool $ignoreBaseline, bool $generateConfiguration, bool $migrateConfiguration, bool $validateConfiguration, bool $showEffectiveConfiguration, ?array $groups, ?array $testsCovering, ?array $testsUsing, ?array $testsRequiringPhpExtension, bool $help, ?string $includePath, ?array $iniSettings, ?string $junitLogfile, ?string $otrLogfile, ?bool $includeGitInformation, bool $listGroups, bool $listSuites, bool $listTestFiles, bool $listTestIds, bool $listTests, ?string $listTestsXml, ?bool $noCoverage, ?bool $noExtensions, ?bool $noOutput, ?bool $noProgress, ?bool $noResults, ?bool $noLogging, ?bool $processIsolation, ?int $randomSeed, ?int $repeat, ?int $retry, ?int $timeout, ?bool $reportUselessTests, ?bool $resolveDependencies, ?bool $reverseList, ?bool $stderr, ?bool $strictCoverage, ?bool $requireCoverageContribution, ?string $teamcityLogfile, ?string $testdoxHtmlFile, ?string $testdoxTextFile, ?array $testSuffixes, ?string $testSuite, ?string $excludeTestSuite, bool $useDefaultConfiguration, ?bool $displayDetailsOnAllIssues, ?bool $displayDetailsOnIncompleteTests, ?bool $displayDetailsOnSkippedTests, ?bool $displayDetailsOnTestsThatTriggerDeprecations, ?bool $displayDetailsOnPhpunitDeprecations, ?bool $displayDetailsOnPhpunitNotices, ?bool $displayDetailsOnTestsThatTriggerErrors, ?bool $displayDetailsOnTestsThatTriggerNotices, ?bool $displayDetailsOnTestsThatTriggerWarnings, bool $version, ?array $coverageFilter, ?string $logEventsText, ?bool $printerCompact, ?bool $printerTeamCity, ?bool $testdoxPrinter, ?bool $testdoxPrinterSummary, bool $debug, bool $withTelemetry, ?array $extensions, ?bool $cacheTestIndex)
     {
         $this->arguments                                    = $arguments;
         $this->testFilesFile                                = $testFilesFile;
@@ -295,7 +304,6 @@ final readonly class Configuration
         $this->enforceTimeLimit                             = $enforceTimeLimit;
         $this->excludeGroups                                = $excludeGroups;
         $this->executionOrder                               = $executionOrder;
-        $this->executionOrderDefects                        = $executionOrderDefects;
         $this->failOnAllIssues                              = $failOnAllIssues;
         $this->failOnDeprecation                            = $failOnDeprecation;
         $this->failOnSelfDeprecation                        = $failOnSelfDeprecation;
@@ -365,7 +373,6 @@ final readonly class Configuration
         $this->noResults                                    = $noResults;
         $this->noLogging                                    = $noLogging;
         $this->processIsolation                             = $processIsolation;
-        $this->randomOrderSeed                              = $randomOrderSeed;
         $this->randomSeed                                   = $randomSeed;
         $this->repeat                                       = $repeat;
         $this->retry                                        = $retry;
@@ -394,7 +401,6 @@ final readonly class Configuration
         $this->displayDetailsOnTestsThatTriggerWarnings     = $displayDetailsOnTestsThatTriggerWarnings;
         $this->version                                      = $version;
         $this->logEventsText                                = $logEventsText;
-        $this->logEventsVerboseText                         = $logEventsVerboseText;
         $this->compactPrinter                               = $printerCompact;
         $this->teamCityPrinter                              = $printerTeamCity;
         $this->testdoxPrinter                               = $testdoxPrinter;
@@ -1266,34 +1272,16 @@ final readonly class Configuration
 
     /**
      * @throws Exception
+     *
+     * @return list<Order>
      */
-    public function executionOrder(): int
+    public function executionOrder(): array
     {
         if (!$this->hasExecutionOrder()) {
             throw new Exception;
         }
 
         return $this->executionOrder;
-    }
-
-    /**
-     * @phpstan-assert-if-true !null $this->executionOrderDefects
-     */
-    public function hasExecutionOrderDefects(): bool
-    {
-        return $this->executionOrderDefects !== null;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function executionOrderDefects(): int
-    {
-        if (!$this->hasExecutionOrderDefects()) {
-            throw new Exception;
-        }
-
-        return $this->executionOrderDefects;
     }
 
     /**
@@ -2522,26 +2510,6 @@ final readonly class Configuration
     }
 
     /**
-     * @phpstan-assert-if-true !null $this->randomOrderSeed
-     */
-    public function hasRandomOrderSeed(): bool
-    {
-        return $this->randomOrderSeed !== null;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function randomOrderSeed(): int
-    {
-        if (!$this->hasRandomOrderSeed()) {
-            throw new Exception;
-        }
-
-        return $this->randomOrderSeed;
-    }
-
-    /**
      * @phpstan-assert-if-true !null $this->randomSeed
      */
     public function hasRandomSeed(): bool
@@ -2551,6 +2519,8 @@ final readonly class Configuration
 
     /**
      * @throws Exception
+     *
+     * @return positive-int
      */
     public function randomSeed(): int
     {
@@ -3157,26 +3127,6 @@ final readonly class Configuration
         }
 
         return $this->logEventsText;
-    }
-
-    /**
-     * @phpstan-assert-if-true !null $this->logEventsVerboseText
-     */
-    public function hasLogEventsVerboseText(): bool
-    {
-        return $this->logEventsVerboseText !== null;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function logEventsVerboseText(): string
-    {
-        if (!$this->hasLogEventsVerboseText()) {
-            throw new Exception;
-        }
-
-        return $this->logEventsVerboseText;
     }
 
     public function debug(): bool

@@ -292,22 +292,6 @@ class TestSuite implements IteratorAggregate, Reorderable, Test
     }
 
     /**
-     * Wrapper for addTestFile() that adds multiple test files.
-     *
-     * @param iterable<string> $fileNames
-     * @param positive-int     $numberOfRuns
-     * @param positive-int     $maxAttempts
-     *
-     * @throws Exception
-     */
-    public function addTestFiles(iterable $fileNames, int $numberOfRuns = 1, int $maxAttempts = 1): void
-    {
-        foreach ($fileNames as $filename) {
-            $this->addTestFile((string) $filename, [], $numberOfRuns, $maxAttempts);
-        }
-    }
-
-    /**
      * Counts the number of test cases that will be run by this test.
      */
     public function count(): int
@@ -428,20 +412,20 @@ class TestSuite implements IteratorAggregate, Reorderable, Test
         $hookMethodsAreCalled = !$this->isForTestClass() || $this->hasTestThatIsRunInThisProcess(new ProcessIsolation($emitter));
 
         if ($hookMethodsAreCalled) {
-            if (!$this->invokeMethodsBeforeFirstTest($emitter, $testSuiteValueObjectForEvents)) {
-                return;
-            }
-        } elseif (!$this->requirementsOfMethodsBeforeFirstTestAreSatisfied($emitter, $testSuiteValueObjectForEvents)) {
-            return;
+            $testsAreRun = $this->invokeMethodsBeforeFirstTest($emitter, $testSuiteValueObjectForEvents);
+        } else {
+            $testsAreRun = $this->requirementsOfMethodsBeforeFirstTestAreSatisfied($emitter, $testSuiteValueObjectForEvents);
         }
 
-        // runTests() receives the tests as an argument expression so that no
-        // local variable retains a reference to them; this allows each test
-        // object to be destructed as soon as it has run (see #5875)
-        $this->runTests($this->takeTests(), $emitter);
+        if ($testsAreRun) {
+            // runTests() receives the tests as an argument expression so that no
+            // local variable retains a reference to them; this allows each test
+            // object to be destructed as soon as it has run (see #5875)
+            $this->runTests($this->takeTests(), $emitter);
 
-        if ($hookMethodsAreCalled) {
-            $this->invokeMethodsAfterLastTest($emitter);
+            if ($hookMethodsAreCalled) {
+                $this->invokeMethodsAfterLastTest($emitter);
+            }
         }
 
         $emitter->testSuiteFinished($testSuiteValueObjectForEvents);
@@ -476,16 +460,6 @@ class TestSuite implements IteratorAggregate, Reorderable, Test
     public function setTests(array $tests): void
     {
         $this->tests = $tests;
-    }
-
-    /**
-     * Mark the test suite as skipped.
-     *
-     * @throws SkippedTestSuiteError
-     */
-    public function markTestSuiteSkipped(string $message = ''): never
-    {
-        throw new SkippedTestSuiteError($message);
     }
 
     /**
@@ -853,11 +827,11 @@ class TestSuite implements IteratorAggregate, Reorderable, Test
             return true;
         }
 
-        $methods         = new HookMethods($emitter)->hookMethods($this->name)['beforeClass']->methodNamesSortedByPriority();
-        $reflector       = new ReflectionClass($this->name);
-        $calledMethods   = [];
-        $emitCalledEvent = true;
-        $result          = true;
+        $methods        = new HookMethods($emitter)->hookMethods($this->name)['beforeClass']->methodNamesSortedByPriority();
+        $reflector      = new ReflectionClass($this->name);
+        $calledMethods  = [];
+        $skippedMessage = null;
+        $result         = true;
 
         new RandomNumberGeneratorSeeder(ConfigurationRegistry::get())->seedFor($this->name);
 
@@ -871,17 +845,25 @@ class TestSuite implements IteratorAggregate, Reorderable, Test
                 $method,
             );
 
+            $missingRequirements = new Requirements($emitter)->requirementsNotSatisfiedFor($this->name, $method);
+
+            if ($missingRequirements !== []) {
+                $skippedMessage = implode("\n", $missingRequirements);
+                $result         = false;
+
+                break;
+            }
+
+            $emitter->beforeFirstTestMethodCalled(
+                $this->name,
+                $calledMethod,
+            );
+
+            $calledMethods[] = $calledMethod;
+
             $t = null;
 
             try {
-                $missingRequirements = new Requirements($emitter)->requirementsNotSatisfiedFor($this->name, $method);
-
-                if ($missingRequirements !== []) {
-                    $emitCalledEvent = false;
-
-                    $this->markTestSuiteSkipped(implode("\n", $missingRequirements));
-                }
-
                 /** @var callable $callback */
                 $callback = [$this->name, $method];
 
@@ -889,25 +871,12 @@ class TestSuite implements IteratorAggregate, Reorderable, Test
             } catch (Throwable $t) {
             }
 
-            if ($emitCalledEvent) {
-                $emitter->beforeFirstTestMethodCalled(
-                    $this->name,
-                    $calledMethod,
-                );
-
-                $calledMethods[] = $calledMethod;
-            }
-
             if (isset($t) && ($t instanceof IncompleteTest || $t instanceof SkippedTest)) {
                 /** @var non-empty-string $skippedMessage */
                 $skippedMessage = $t->getMessage();
+                $result         = false;
 
-                $emitter->testSuiteSkipped(
-                    $testSuiteValueObjectForEvents,
-                    $skippedMessage,
-                );
-
-                return false;
+                break;
             }
 
             if (isset($t)) {
@@ -938,8 +907,11 @@ class TestSuite implements IteratorAggregate, Reorderable, Test
             );
         }
 
-        if (!$result) {
-            $emitter->testSuiteFinished($testSuiteValueObjectForEvents);
+        if ($skippedMessage !== null) {
+            $emitter->testSuiteSkipped(
+                $testSuiteValueObjectForEvents,
+                $skippedMessage,
+            );
         }
 
         return $result;
@@ -1021,6 +993,13 @@ class TestSuite implements IteratorAggregate, Reorderable, Test
 
             $t = null;
 
+            $emitter->afterLastTestMethodCalled(
+                $this->name,
+                $calledMethod,
+            );
+
+            $calledMethods[] = $calledMethod;
+
             try {
                 /** @var callable $callback */
                 $callback = [$this->name, $method];
@@ -1029,29 +1008,9 @@ class TestSuite implements IteratorAggregate, Reorderable, Test
             } catch (IncompleteTest|SkippedTest $e) {
                 // the tests of the test class have already been run, so they
                 // can no longer be marked as incomplete or skipped
-                $markingMethod = 'markTestSkipped';
-
-                if ($e instanceof IncompleteTest) {
-                    $markingMethod = 'markTestIncomplete';
-                }
-
-                $emitter->testRunnerTriggeredPhpunitDeprecation(
-                    sprintf(
-                        'Calling %s() in after-last-test method %s::%s() is deprecated and will no longer be possible in PHPUnit 14.',
-                        $markingMethod,
-                        $this->name,
-                        $method,
-                    ),
-                );
+                $t = new MarkedIncompleteOrSkippedInAfterHookMethodException($e, 'after-last-test', $this->name, $method);
             } catch (Throwable $t) {
             }
-
-            $emitter->afterLastTestMethodCalled(
-                $this->name,
-                $calledMethod,
-            );
-
-            $calledMethods[] = $calledMethod;
 
             if (isset($t)) {
                 if ($t instanceof AssertionError || $t instanceof AssertionFailedError) {

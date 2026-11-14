@@ -60,7 +60,6 @@ use PHPUnit\Runner\ErrorHandler;
 use PHPUnit\Runner\Extension\ExtensionBootstrapper;
 use PHPUnit\Runner\Extension\ExtensionCapabilities;
 use PHPUnit\Runner\Extension\ExtensionFacade;
-use PHPUnit\Runner\Extension\PharLoader;
 use PHPUnit\Runner\GarbageCollection\GarbageCollectionHandler;
 use PHPUnit\Runner\IssueTriggerResolver\Resolver;
 use PHPUnit\Runner\PhpConfiguration\PhpConfigurationChecker;
@@ -75,7 +74,6 @@ use PHPUnit\Runner\TestRunHistory\DefaultTestRunHistory;
 use PHPUnit\Runner\TestRunHistory\NullTestRunHistory;
 use PHPUnit\Runner\TestRunHistory\TestRunHistory;
 use PHPUnit\Runner\TestRunHistory\TestRunHistoryHandler;
-use PHPUnit\Runner\TestSuiteSorter;
 use PHPUnit\Runner\TimeLimit\TimeLimitHandler;
 use PHPUnit\Runner\Version;
 use PHPUnit\TestRunner\IssueFilter;
@@ -180,16 +178,9 @@ final readonly class Application
 
             $this->executeCommandsThatDoNotRequireTheTestSuite($configuration, $cliConfiguration);
 
-            $pharExtensions        = null;
             $extensionCapabilities = ExtensionCapabilities::none();
 
             if (!$configuration->noExtensions()) {
-                if ($configuration->hasPharExtensionDirectory()) {
-                    $pharExtensions = new PharLoader($this->emitter)->loadPharExtensionsInDirectory(
-                        $configuration->pharExtensionDirectory(),
-                    );
-                }
-
                 $extensionCapabilities = $this->bootstrapExtensions($configuration);
             }
 
@@ -268,7 +259,6 @@ final readonly class Application
 
             if (!$configuration->debug() && !$extensionCapabilities->replacesOutput()) {
                 $this->writeRuntimeInformation($printer, $configuration);
-                $this->writePharExtensionInformation($printer, $pharExtensions);
                 $this->writeRandomSeedInformation($printer, $configuration);
 
                 $printer->print(PHP_EOL);
@@ -463,7 +453,7 @@ final readonly class Application
         }
 
         try {
-            return new Loader($this->emitter)->load($configurationFile);
+            return (new Loader)->load($configurationFile);
         } catch (Throwable $e) {
             $this->exitWithErrorMessage($e->getMessage());
         }
@@ -665,24 +655,6 @@ final readonly class Application
         }
     }
 
-    /**
-     * @param ?list<string> $pharExtensions
-     */
-    private function writePharExtensionInformation(Printer $printer, ?array $pharExtensions): void
-    {
-        if ($pharExtensions === null) {
-            return;
-        }
-
-        foreach ($pharExtensions as $extension) {
-            $this->writeMessage(
-                $printer,
-                'Extension',
-                $extension,
-            );
-        }
-    }
-
     private function writeMessage(Printer $printer, string $type, string $message): void
     {
         $printer->print(
@@ -716,23 +688,6 @@ final readonly class Application
                 new EventLogger(
                     $configuration->logEventsText(),
                     $configuration->withTelemetry(),
-                ),
-            );
-        }
-
-        if ($configuration->hasLogEventsVerboseText()) {
-            $this->emitter->testRunnerTriggeredPhpunitDeprecation(
-                'The "--log-events-verbose-text <file>" CLI option is deprecated and will be removed in PHPUnit 14. Use "--log-events-text <file> --with-telemetry" instead.',
-            );
-
-            if (is_file($configuration->logEventsVerboseText())) {
-                unlink($configuration->logEventsVerboseText());
-            }
-
-            EventFacade::instance()->registerTracer(
-                new EventLogger(
-                    $configuration->logEventsVerboseText(),
-                    true,
                 ),
             );
         }
@@ -930,16 +885,16 @@ final readonly class Application
             return $testRunHistory;
         }
 
-        if ($configuration->executionOrderDefects() === TestSuiteSorter::ORDER_DEFECTS_FIRST) {
-            $this->emitter->testRunnerTriggeredPhpunitWarning(
-                'Tests cannot be ordered by defects because recording of the test run history is disabled',
-            );
-        }
+        foreach ($configuration->executionOrder() as $order) {
+            if (!$order->requiresTestRunHistory()) {
+                continue;
+            }
 
-        if ($configuration->executionOrder() === TestSuiteSorter::ORDER_DURATION_ASCENDING ||
-            $configuration->executionOrder() === TestSuiteSorter::ORDER_DURATION_DESCENDING) {
             $this->emitter->testRunnerTriggeredPhpunitWarning(
-                'Tests cannot be ordered by duration because recording of the test run history is disabled',
+                sprintf(
+                    'Tests cannot be ordered by "%s" because recording of the test run history is disabled',
+                    $order->token(),
+                ),
             );
         }
 

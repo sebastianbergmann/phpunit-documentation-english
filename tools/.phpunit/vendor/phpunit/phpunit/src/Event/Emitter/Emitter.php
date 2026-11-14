@@ -39,13 +39,6 @@ interface Emitter
     public function testRunnerBootstrapFinished(string $filename): void;
 
     /**
-     * @param non-empty-string $filename
-     * @param non-empty-string $name
-     * @param non-empty-string $version
-     */
-    public function testRunnerLoadedExtensionFromPhar(string $filename, string $name, string $version): void;
-
-    /**
      * @param class-string          $className
      * @param array<string, string> $parameters
      */
@@ -62,7 +55,7 @@ interface Emitter
     /**
      * @param list<non-empty-string> $pipeline
      */
-    public function testSuiteSorted(int $executionOrder, int $executionOrderDefects, bool $resolveDependencies, array $pipeline): void;
+    public function testSuiteSorted(array $pipeline): void;
 
     public function testRunnerEventFacadeSealed(): void;
 

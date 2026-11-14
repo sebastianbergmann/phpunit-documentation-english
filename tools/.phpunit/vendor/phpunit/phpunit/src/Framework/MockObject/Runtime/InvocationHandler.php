@@ -19,7 +19,6 @@ use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\InvalidArgumentException;
-use PHPUnit\Framework\MockObject\Rule\AnyInvokedCount;
 use PHPUnit\Framework\MockObject\Rule\InvocationOrder;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use PHPUnit\Framework\MockObject\Rule\MethodName;
@@ -91,11 +90,6 @@ final class InvocationHandler
         $this->isMockObject          = $isMockObject;
     }
 
-    public function isMockObject(): bool
-    {
-        return $this->isMockObject;
-    }
-
     /**
      * @param ?non-empty-string                         $label
      * @param array<non-empty-string, non-empty-string> $methodLabels
@@ -151,14 +145,6 @@ final class InvocationHandler
         );
     }
 
-    public function hasParametersRule(): bool
-    {
-        return array_any(
-            $this->matchers,
-            static fn (Matcher $matcher) => $matcher->hasParametersRule(),
-        );
-    }
-
     /**
      * Looks up the match builder with identification $id and returns it.
      *
@@ -189,24 +175,16 @@ final class InvocationHandler
     /**
      * @throws TestDoubleSealedException
      */
-    public function expects(InvocationOrder $rule): InvocationMocker|InvocationStubber
+    public function expects(InvocationOrder $rule): InvocationMocker
     {
         if ($this->sealed) {
             throw new TestDoubleSealedException;
         }
 
-        $matcher = new Matcher($rule, $this->className);
+        $matcher = new Matcher($this->className, $rule);
         $this->addMatcher($matcher);
 
-        if ($this->isMockObject) {
-            return new InvocationMockerImplementation(
-                $this,
-                $matcher,
-                ...$this->configurableMethods,
-            );
-        }
-
-        return new InvocationStubberImplementation(
+        return new InvocationMockerImplementation(
             $this,
             $matcher,
             ...$this->configurableMethods,
@@ -224,30 +202,21 @@ final class InvocationHandler
      * @throws MethodCannotBeConfiguredException
      * @throws TestDoubleSealedException
      */
-    public function method(Constraint|PropertyHook|string $constraint): InvocationStubber
+    public function stub(Constraint|PropertyHook|string $constraint): InvocationStubber
     {
         if ($this->sealed) {
             throw new TestDoubleSealedException;
         }
 
-        $matcher = new Matcher(new AnyInvokedCount, $this->className);
+        $matcher = new Matcher($this->className);
 
-        if ($this->isMockObject) {
-            $stubber = new InvocationMockerImplementation(
-                $this,
-                $matcher,
-                ...$this->configurableMethods,
-            );
-        } else {
-            $stubber = new InvocationStubberImplementation(
-                $this,
-                $matcher,
-                ...$this->configurableMethods,
-            );
-        }
+        $stubber = new InvocationStubberImplementation(
+            $this,
+            $matcher,
+            ...$this->configurableMethods,
+        );
 
         $stubber->method($constraint);
-        $stubber->markAsCreatedWithoutExplicitExpects();
 
         $this->addMatcher($matcher);
 
@@ -320,7 +289,7 @@ final class InvocationHandler
         }
     }
 
-    public function seal(bool $isMockObject): void
+    public function seal(): void
     {
         if ($this->sealed) {
             return;
@@ -328,7 +297,7 @@ final class InvocationHandler
 
         $this->sealed = true;
 
-        if (!$isMockObject) {
+        if (!$this->isMockObject) {
             return;
         }
 
@@ -336,7 +305,7 @@ final class InvocationHandler
 
         foreach ($this->configurableMethods as $method) {
             if (!in_array($method->name(), $configuredMethods, true)) {
-                $matcher = new Matcher(new InvokedCount(0), $this->className);
+                $matcher = new Matcher($this->className, new InvokedCount(0));
 
                 $matcher->setMethodNameRule(new MethodName($method->name()));
 
@@ -381,7 +350,7 @@ final class InvocationHandler
     /**
      * Returns the list of method names that have been configured with expectations.
      * Only considers exact string matches for method names.
-     * Methods with any() expectation are considered configured.
+     * Methods that are only stubbed using method() are considered configured.
      *
      * @return list<non-empty-string>
      */

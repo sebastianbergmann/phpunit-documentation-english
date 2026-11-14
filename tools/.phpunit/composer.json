@@ -1,6 +1,6 @@
 {
     "minimum-stability": "dev",
     "require-dev": {
-        "phpunit/phpunit": "13.5.x-dev"
+        "phpunit/phpunit": "14.0.x-dev"
     }
 }

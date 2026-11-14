@@ -10,7 +10,7 @@
 namespace PHPUnit\TestRunner\TestResult\Issues;
 
 use function array_filter;
-use function array_values;
+use function array_first;
 use function assert;
 use function count;
 use PHPUnit\Event\Code\IssueTrigger\IssueTrigger;
@@ -170,7 +170,7 @@ final class Issue
     public function triggeredInTest(): bool
     {
         return count($this->triggeringTests) === 1 &&
-               $this->file === array_values($this->triggeringTests)[0]['test']->file();
+               $this->file === array_first($this->triggeringTests)['test']->file();
     }
 
     /**

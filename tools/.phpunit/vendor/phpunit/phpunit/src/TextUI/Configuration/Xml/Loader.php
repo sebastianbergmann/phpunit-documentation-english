@@ -31,8 +31,6 @@ use DOMElement;
 use DOMNode;
 use DOMNodeList;
 use DOMXPath;
-use PHPUnit\Event\Emitter;
-use PHPUnit\Runner\TestSuiteSorter;
 use PHPUnit\Runner\Version;
 use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Configuration\Constant;
@@ -53,6 +51,7 @@ use PHPUnit\TextUI\Configuration\Group;
 use PHPUnit\TextUI\Configuration\GroupCollection;
 use PHPUnit\TextUI\Configuration\IniSetting;
 use PHPUnit\TextUI\Configuration\IniSettingCollection;
+use PHPUnit\TextUI\Configuration\InvalidExecutionOrderException;
 use PHPUnit\TextUI\Configuration\Php;
 use PHPUnit\TextUI\Configuration\Source;
 use PHPUnit\TextUI\Configuration\TestDirectory;
@@ -93,13 +92,6 @@ use Throwable;
  */
 final readonly class Loader
 {
-    private Emitter $emitter;
-
-    public function __construct(Emitter $emitter)
-    {
-        $this->emitter = $emitter;
-    }
-
     /**
      * @throws Exception
      */
@@ -155,6 +147,15 @@ final readonly class Loader
                 $this->php($configurationFileRealpath, $xpath),
                 $this->phpunit($configurationFileRealpath, $document, $xpath),
                 $this->testSuite($configurationFileRealpath, $xpath),
+            );
+        } catch (InvalidExecutionOrderException $e) {
+            throw new Exception(
+                sprintf(
+                    'Cannot load XML configuration file %s: %s',
+                    $configurationFileRealpath,
+                    $e->getMessage(),
+                ),
+                previous: $e,
             );
         } catch (Throwable $t) {
             $message = sprintf(
@@ -826,23 +827,6 @@ final readonly class Loader
         );
     }
 
-    private function parseRecordTestRunHistoryAttribute(DOMElement $element): bool
-    {
-        if ($element->hasAttribute('recordTestRunHistory')) {
-            return $this->parseBooleanAttribute($element, 'recordTestRunHistory', true);
-        }
-
-        if ($element->hasAttribute('cacheResult')) {
-            $this->emitter->testRunnerTriggeredPhpunitDeprecation(
-                'The "cacheResult" attribute is deprecated and will be removed in PHPUnit 14. Use "recordTestRunHistory" instead.',
-            );
-
-            return $this->parseBooleanAttribute($element, 'cacheResult', true);
-        }
-
-        return true;
-    }
-
     private function parseBooleanAttribute(DOMElement $element, string $attribute, bool $default): bool
     {
         if (!$element->hasAttribute($attribute)) {
@@ -1122,36 +1106,16 @@ final readonly class Loader
 
         assert($documentElement !== null);
 
-        $executionOrder      = TestSuiteSorter::ORDER_DEFAULT;
-        $defectsFirst        = false;
+        $executionOrder      = [];
         $resolveDependencies = $this->parseBooleanAttribute($documentElement, 'resolveDependencies', true);
 
         $configuredExecutionOrder = $this->parseStringAttribute($documentElement, 'executionOrder');
 
         if ($configuredExecutionOrder !== null) {
-            $parsedExecutionOrder = new ExecutionOrderParser($this->emitter)->parse(
+            $executionOrder = (new ExecutionOrderParser)->parse(
                 $configuredExecutionOrder,
                 ExecutionOrderSource::XmlAttribute,
-                $executionOrder,
-                TestSuiteSorter::ORDER_DEFAULT,
-                $resolveDependencies,
             );
-
-            foreach ($parsedExecutionOrder->unknownTokens() as $unknownToken) {
-                $this->emitter->testRunnerTriggeredPhpunitDeprecation(
-                    sprintf(
-                        'Using "%s" for the executionOrder attribute is deprecated and will be an error in PHPUnit 14. The value is ignored.',
-                        $unknownToken,
-                    ),
-                );
-            }
-
-            $executionOrder      = $parsedExecutionOrder->executionOrder();
-            $defectsFirst        = $parsedExecutionOrder->executionOrderDefects() === TestSuiteSorter::ORDER_DEFECTS_FIRST;
-            $resolveDependencies = $parsedExecutionOrder->resolveDependencies();
-
-            assert($executionOrder !== null);
-            assert($resolveDependencies !== null);
         }
 
         $cacheDirectory = $this->parseStringAttribute($documentElement, 'cacheDirectory');
@@ -1164,16 +1128,6 @@ final readonly class Loader
 
         if ($bootstrap !== null) {
             $bootstrap = $this->toAbsolutePath($filename, $bootstrap);
-        }
-
-        $extensionsDirectory = $this->parseStringAttribute($documentElement, 'extensionsDirectory');
-
-        if ($extensionsDirectory !== null) {
-            $this->emitter->testRunnerTriggeredPhpunitDeprecation(
-                'The "extensionsDirectory" attribute is deprecated and will be removed in PHPUnit 14. Install the extension using Composer or load it in your bootstrap script instead.',
-            );
-
-            $extensionsDirectory = $this->toAbsolutePath($filename, $extensionsDirectory);
         }
 
         $backupStaticProperties = false;
@@ -1232,7 +1186,7 @@ final readonly class Loader
 
         return new PHPUnit(
             $cacheDirectory,
-            $this->parseRecordTestRunHistoryAttribute($documentElement),
+            $this->parseBooleanAttribute($documentElement, 'recordTestRunHistory', true),
             $this->parseColumns($document),
             $this->parseColors($document),
             $this->parseBooleanAttribute($documentElement, 'stderr', false),
@@ -1290,7 +1244,6 @@ final readonly class Loader
             (int) $this->parseBooleanAttribute($documentElement, 'stopOnRisky', false),
             (int) $this->parseBooleanAttribute($documentElement, 'stopOnSkipped', false),
             (int) $this->parseBooleanAttribute($documentElement, 'stopOnWarning', false),
-            $extensionsDirectory,
             $this->parseBooleanAttribute($documentElement, 'beStrictAboutChangesToGlobalState', false),
             $this->parseBooleanAttribute($documentElement, 'beStrictAboutOutputDuringTests', false),
             $this->parseBooleanAttribute($documentElement, 'beStrictAboutTestsThatDoNotTestAnything', true),
@@ -1304,7 +1257,6 @@ final readonly class Loader
             $this->parseNullableNonEmptyStringAttribute($documentElement, 'defaultTestSuite'),
             $executionOrder,
             $resolveDependencies,
-            $defectsFirst,
             $this->parseBooleanAttribute($documentElement, 'backupGlobals', false),
             $backupStaticProperties,
             $this->parseBooleanAttribute($documentElement, 'testdox', false),

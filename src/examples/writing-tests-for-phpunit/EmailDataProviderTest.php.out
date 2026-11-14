@@ -1,10 +1,10 @@
 ./tools/phpunit tests/EmailDataProviderTest.php
-PHPUnit 13.4.0 by Sebastian Bergmann and contributors.
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.11
+Runtime:       PHP 8.5.12
 
 ....                                                                4 / 4 (100%)
 
-Time: 00:00.001, Memory: 32.33 MB
+Time: 00:00.001, Memory: 20.00 MB
 
 OK (4 tests, 4 assertions)

@@ -18,6 +18,7 @@ use function assert;
 use function dirname;
 use function explode;
 use function getenv;
+use function in_array;
 use function is_int;
 use function is_string;
 use function realpath;
@@ -25,7 +26,7 @@ use function sprintf;
 use function time;
 use LogicException;
 use PHPUnit\Event\Emitter;
-use PHPUnit\Runner\TestSuiteSorter;
+use PHPUnit\Runner\ExecutionOrder\Order;
 use PHPUnit\TextUI\CliArguments\Configuration as CliConfiguration;
 use PHPUnit\TextUI\CliArguments\Exception;
 use PHPUnit\TextUI\XmlConfiguration\Configuration as XmlConfiguration;
@@ -484,12 +485,6 @@ final readonly class Merger
             $noExtensions = true;
         }
 
-        $pharExtensionDirectory = null;
-
-        if ($xmlConfiguration->phpunit()->hasExtensionsDirectory()) {
-            $pharExtensionDirectory = $xmlConfiguration->phpunit()->extensionsDirectory();
-        }
-
         $extensionBootstrappers = [];
 
         if ($cliConfiguration->hasExtensions()) {
@@ -868,26 +863,10 @@ final readonly class Merger
         $requireCoverageMetadataOnLargeTests  = $xmlConfiguration->phpunit()->requireCoverageMetadataOnLargeTests();
         $requireSealedMockObjects             = $xmlConfiguration->phpunit()->requireSealedMockObjects();
 
-        // An order that is configured on the command line replaces the order
-        // that is configured in the XML configuration file as a whole, so that
-        // "defects" from one is not combined with the order from the other
-        $executionOrder        = TestSuiteSorter::ORDER_DEFAULT;
-        $executionOrderDefects = TestSuiteSorter::ORDER_DEFAULT;
-
-        if ($cliConfiguration->hasExecutionOrder() || $cliConfiguration->hasExecutionOrderDefects()) {
-            if ($cliConfiguration->hasExecutionOrder()) {
-                $executionOrder = $cliConfiguration->executionOrder();
-            }
-
-            if ($cliConfiguration->hasExecutionOrderDefects()) {
-                $executionOrderDefects = $cliConfiguration->executionOrderDefects();
-            }
+        if ($cliConfiguration->hasExecutionOrder()) {
+            $executionOrder = $cliConfiguration->executionOrder();
         } else {
             $executionOrder = $xmlConfiguration->phpunit()->executionOrder();
-
-            if ($xmlConfiguration->phpunit()->defectsFirst()) {
-                $executionOrderDefects = TestSuiteSorter::ORDER_DEFECTS_FIRST;
-            }
         }
 
         if ($cliConfiguration->hasResolveDependencies()) {
@@ -966,12 +945,6 @@ final readonly class Merger
 
         if ($cliConfiguration->hasLogEventsText()) {
             $logEventsText = $cliConfiguration->logEventsText();
-        }
-
-        $logEventsVerboseText = null;
-
-        if ($cliConfiguration->hasLogEventsVerboseText()) {
-            $logEventsVerboseText = $cliConfiguration->logEventsVerboseText();
         }
 
         $compactOutput = false;
@@ -1084,13 +1057,11 @@ final readonly class Merger
 
         $excludeGroups = array_diff($excludeGroups, $groups);
 
-        $seedRandomNumberGenerators = $executionOrder === TestSuiteSorter::ORDER_RANDOMIZED;
+        $seedRandomNumberGenerators = in_array(Order::Random, $executionOrder, true);
 
         if ($cliConfiguration->hasRandomSeed()) {
             $randomSeed                 = $cliConfiguration->randomSeed();
             $seedRandomNumberGenerators = true;
-        } elseif ($cliConfiguration->hasRandomOrderSeed()) {
-            $randomSeed = $cliConfiguration->randomOrderSeed();
         } else {
             $randomSeed = time();
         }
@@ -1304,10 +1275,8 @@ final readonly class Merger
         $defaultTimeLimit                   = $this->clampNonNegativeInt($defaultTimeLimit);
         $logfileOtr                         = $this->nullableNonEmptyString($logfileOtr);
         $logEventsText                      = $this->nullableNonEmptyString($logEventsText);
-        $logEventsVerboseText               = $this->nullableNonEmptyString($logEventsVerboseText);
         $testIdFilterFile                   = $this->nullableNonEmptyString($testIdFilterFile);
         $testIdFilter                       = $this->nullableNonEmptyString($testIdFilter);
-        $randomSeed                         = $this->clampPositiveInt($randomSeed);
 
         $normalizedGroups = [];
 
@@ -1453,7 +1422,6 @@ final readonly class Merger
             $outputToStandardErrorStream,
             $columns,
             $noExtensions,
-            $pharExtensionDirectory,
             array_values($extensionBootstrappers),
             $backupGlobals,
             $backupStaticProperties,
@@ -1490,7 +1458,6 @@ final readonly class Merger
             $noResults,
             $noOutput,
             $executionOrder,
-            $executionOrderDefects,
             $resolveDependencies,
             $logfileTeamcity,
             $logfileJunit,
@@ -1500,7 +1467,6 @@ final readonly class Merger
             $logfileTestdoxHtml,
             $logfileTestdoxText,
             $logEventsText,
-            $logEventsVerboseText,
             $compactOutput,
             $teamCityOutput,
             $testDoxOutput,
@@ -1585,18 +1551,6 @@ final readonly class Merger
     {
         if ($value < 0) {
             return 0;
-        }
-
-        return $value;
-    }
-
-    /**
-     * @return positive-int
-     */
-    private function clampPositiveInt(int $value): int
-    {
-        if ($value < 1) {
-            return 1;
         }
 
         return $value;

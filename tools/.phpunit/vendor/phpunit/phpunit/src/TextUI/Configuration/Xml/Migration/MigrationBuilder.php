@@ -92,13 +92,14 @@ final readonly class MigrationBuilder
             RenameExecutionOrderOptionsDurationAndSize::class,
         ],
 
-        '13.3' => [
-            RenameCacheResultAttribute::class,
-        ],
-
         '13.4' => [
             MoveDependencyResolutionOutOfExecutionOrder::class,
             MoveDefectsAfterOrderInExecutionOrder::class,
+        ],
+
+        '13.5' => [
+            RenameCacheResultAttribute::class,
+            RemoveExtensionsDirectoryAttribute::class,
         ],
     ];
 

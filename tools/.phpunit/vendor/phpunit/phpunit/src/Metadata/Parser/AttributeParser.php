@@ -10,6 +10,7 @@
 namespace PHPUnit\Metadata\Parser;
 
 use const JSON_THROW_ON_ERROR;
+use function array_merge;
 use function assert;
 use function class_exists;
 use function is_numeric;
@@ -101,6 +102,7 @@ use PHPUnit\Framework\Attributes\WithEnvironmentVariable;
 use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Metadata\Group as GroupMetadata;
+use PHPUnit\Metadata\InvalidAttribute;
 use PHPUnit\Metadata\InvalidVersionRequirementException;
 use PHPUnit\Metadata\Metadata;
 use PHPUnit\Metadata\MetadataCollection;
@@ -119,25 +121,25 @@ use ReflectionMethod;
 final class AttributeParser implements Parser
 {
     /**
-     * The attributes that add a test to a group and that are ignored when they
-     * are declared on a parent class of a test class. This will change in
-     * PHPUnit 14, see https://github.com/sebastianbergmann/phpunit/issues/6961.
+     * The attributes that add a test to a group. On the class level, they are
+     * not only read from the test class, but also from its parent classes,
+     * see groupsOf().
      *
-     * @var array<class-string, non-empty-string>
+     * @var array<class-string, true>
      */
     private const array GROUP_ATTRIBUTES = [
-        Group::class  => '#[Group]',
-        Large::class  => '#[Large]',
-        Medium::class => '#[Medium]',
-        Small::class  => '#[Small]',
-        Ticket::class => '#[Ticket]',
+        Group::class  => true,
+        Large::class  => true,
+        Medium::class => true,
+        Small::class  => true,
+        Ticket::class => true,
     ];
     private readonly Emitter $emitter;
 
     /**
-     * @var array<non-empty-string, true>
+     * @var array<class-string, list<Metadata>>
      */
-    private array $deprecatedGroupAttributes = [];
+    private array $groupsDeclaredOnClass = [];
 
     public function __construct(Emitter $emitter)
     {
@@ -154,10 +156,6 @@ final class AttributeParser implements Parser
         $reflector = new ReflectionClass($className);
         $result    = [];
 
-        $small  = false;
-        $medium = false;
-        $large  = false;
-
         foreach ($reflector->getAttributes() as $attribute) {
             if (!str_starts_with($attribute->getName(), 'PHPUnit\\Framework\\Attributes\\')) {
                 continue;
@@ -167,26 +165,14 @@ final class AttributeParser implements Parser
                 continue;
             }
 
+            if (isset(self::GROUP_ATTRIBUTES[$attribute->getName()])) {
+                continue;
+            }
+
             try {
                 $attributeInstance = $attribute->newInstance();
             } catch (Error $e) {
-                $file    = $reflector->getFileName();
-                $line    = $reflector->getStartLine();
-                $message = $e->getMessage();
-
-                assert($file !== false && $file !== '');
-                assert($line !== false);
-                assert($message !== '');
-
-                $result[] = Metadata::invalidAttributeOnClass(
-                    $this->invalidAttributeMessage(
-                        $attribute->getName(),
-                        'class ' . $className,
-                        $file,
-                        $line,
-                        $message,
-                    ),
-                );
+                $result[] = $this->invalidAttributeOnClass($reflector, $attribute, $e);
 
                 continue;
             }
@@ -315,65 +301,6 @@ final class AttributeParser implements Parser
                         $attributeInstance->className(),
                         $attributeInstance->propertyName(),
                     );
-
-                    break;
-
-                case Group::class:
-                    assert($attributeInstance instanceof Group);
-
-                    if (!$this->isSizeGroup($attributeInstance->name(), $className)) {
-                        $this->warnAboutGroupNameThatCannotBeSelected($attributeInstance->name(), $className);
-
-                        $result[] = Metadata::groupOnClass($attributeInstance->name());
-                    }
-
-                    break;
-
-                case Small::class:
-                    if (!$medium && !$large) {
-                        $result[] = Metadata::groupOnClass('small');
-
-                        $small = true;
-                    } else {
-                        $this->emitter->testRunnerTriggeredPhpunitWarning(
-                            sprintf(
-                                '#[Small] cannot be combined with #[Medium] or #[Large] for %s',
-                                $this->testAsString($className),
-                            ),
-                        );
-                    }
-
-                    break;
-
-                case Medium::class:
-                    if (!$small && !$large) {
-                        $result[] = Metadata::groupOnClass('medium');
-
-                        $medium = true;
-                    } else {
-                        $this->emitter->testRunnerTriggeredPhpunitWarning(
-                            sprintf(
-                                '#[Medium] cannot be combined with #[Small] or #[Large] for %s',
-                                $this->testAsString($className),
-                            ),
-                        );
-                    }
-
-                    break;
-
-                case Large::class:
-                    if (!$small && !$medium) {
-                        $result[] = Metadata::groupOnClass('large');
-
-                        $large = true;
-                    } else {
-                        $this->emitter->testRunnerTriggeredPhpunitWarning(
-                            sprintf(
-                                '#[Large] cannot be combined with #[Small] or #[Medium] for %s',
-                                $this->testAsString($className),
-                            ),
-                        );
-                    }
 
                     break;
 
@@ -538,13 +465,6 @@ final class AttributeParser implements Parser
 
                     break;
 
-                case Ticket::class:
-                    assert($attributeInstance instanceof Ticket);
-
-                    $result[] = Metadata::groupOnClass($attributeInstance->text());
-
-                    break;
-
                 case UsesNamespace::class:
                     assert($attributeInstance instanceof UsesNamespace);
 
@@ -620,11 +540,9 @@ final class AttributeParser implements Parser
             }
         }
 
-        $metadata = MetadataCollection::fromArray($result);
-
-        $this->deprecateGroupAttributesOnParentClassesOf($reflector, $metadata);
-
-        return $metadata;
+        return MetadataCollection::fromArray(
+            array_merge($result, $this->groupsOf($reflector)),
+        );
     }
 
     /**
@@ -1162,6 +1080,179 @@ final class AttributeParser implements Parser
     }
 
     /**
+     * The groups of the tests of a test class are the union of the groups
+     * declared on the test class and on all of its parent classes up to
+     * TestCase. A test has only one size, which is declared by the nearest of
+     * these classes that declares one.
+     *
+     * A group that is declared on more than one of these classes is only
+     * listed once, as not everything that lists the groups of a test removes
+     * duplicates.
+     *
+     * An attribute that cannot be instantiated is reported for the class that
+     * declares it, as the groups that the tests would be in are not known.
+     *
+     * @param ReflectionClass<object> $class
+     *
+     * @return list<Metadata>
+     */
+    private function groupsOf(ReflectionClass $class): array
+    {
+        $result         = [];
+        $groups         = [];
+        $sizeIsDeclared = false;
+        $current        = $class;
+
+        while ($current !== false && $current->getName() !== TestCase::class) {
+            $currentDeclaresSize = false;
+
+            foreach ($this->groupsDeclaredOn($current) as $metadata) {
+                if (!$metadata->isGroup()) {
+                    $result[] = $metadata;
+
+                    continue;
+                }
+
+                assert($metadata instanceof GroupMetadata);
+
+                $groupName = $metadata->groupName();
+
+                if ($groupName === 'small' || $groupName === 'medium' || $groupName === 'large') {
+                    $currentDeclaresSize = true;
+
+                    if ($sizeIsDeclared) {
+                        continue;
+                    }
+                }
+
+                if (isset($groups[$groupName])) {
+                    continue;
+                }
+
+                $groups[$groupName] = true;
+                $result[]           = $metadata;
+            }
+
+            if ($currentDeclaresSize) {
+                $sizeIsDeclared = true;
+            }
+
+            $current = $current->getParentClass();
+        }
+
+        return $result;
+    }
+
+    /**
+     * A class is only parsed once, no matter how many test classes extend it,
+     * so that a problem with one of its attributes is only reported once.
+     *
+     * @param ReflectionClass<object> $class
+     *
+     * @return list<Metadata>
+     */
+    private function groupsDeclaredOn(ReflectionClass $class): array
+    {
+        $className = $class->getName();
+
+        if (isset($this->groupsDeclaredOnClass[$className])) {
+            return $this->groupsDeclaredOnClass[$className];
+        }
+
+        $result = [];
+
+        $small  = false;
+        $medium = false;
+        $large  = false;
+
+        foreach ($class->getAttributes() as $attribute) {
+            if (!isset(self::GROUP_ATTRIBUTES[$attribute->getName()])) {
+                continue;
+            }
+
+            try {
+                $attributeInstance = $attribute->newInstance();
+            } catch (Error $e) {
+                $result[] = $this->invalidAttributeOnClass($class, $attribute, $e);
+
+                continue;
+            }
+
+            switch ($attribute->getName()) {
+                case Group::class:
+                    assert($attributeInstance instanceof Group);
+
+                    if (!$this->isSizeGroup($attributeInstance->name(), $className)) {
+                        $this->warnAboutGroupNameThatCannotBeSelected($attributeInstance->name(), $className);
+
+                        $result[] = Metadata::groupOnClass($attributeInstance->name());
+                    }
+
+                    break;
+
+                case Small::class:
+                    if (!$medium && !$large) {
+                        $result[] = Metadata::groupOnClass('small');
+
+                        $small = true;
+                    } else {
+                        $this->emitter->testRunnerTriggeredPhpunitWarning(
+                            sprintf(
+                                '#[Small] cannot be combined with #[Medium] or #[Large] for %s',
+                                $this->testAsString($className),
+                            ),
+                        );
+                    }
+
+                    break;
+
+                case Medium::class:
+                    if (!$small && !$large) {
+                        $result[] = Metadata::groupOnClass('medium');
+
+                        $medium = true;
+                    } else {
+                        $this->emitter->testRunnerTriggeredPhpunitWarning(
+                            sprintf(
+                                '#[Medium] cannot be combined with #[Small] or #[Large] for %s',
+                                $this->testAsString($className),
+                            ),
+                        );
+                    }
+
+                    break;
+
+                case Large::class:
+                    if (!$small && !$medium) {
+                        $result[] = Metadata::groupOnClass('large');
+
+                        $large = true;
+                    } else {
+                        $this->emitter->testRunnerTriggeredPhpunitWarning(
+                            sprintf(
+                                '#[Large] cannot be combined with #[Small] or #[Medium] for %s',
+                                $this->testAsString($className),
+                            ),
+                        );
+                    }
+
+                    break;
+
+                case Ticket::class:
+                    assert($attributeInstance instanceof Ticket);
+
+                    $result[] = Metadata::groupOnClass($attributeInstance->text());
+
+                    break;
+            }
+        }
+
+        $this->groupsDeclaredOnClass[$className] = $result;
+
+        return $result;
+    }
+
+    /**
      * @param non-empty-string  $groupName
      * @param class-string      $testClassName
      * @param ?non-empty-string $testMethodName
@@ -1183,114 +1274,6 @@ final class AttributeParser implements Parser
         );
 
         return true;
-    }
-
-    /**
-     * In PHPUnit 14, the tests of a test class inherit the groups declared on
-     * its parent classes, and their size from the nearest class that declares
-     * one. An attribute on a parent class only triggers a deprecation when
-     * this would change the groups or the size of the tests of the test class,
-     * which is not the case when the test class itself declares the same
-     * groups and a size.
-     *
-     * The deprecation keeps the test file of such a test class from being
-     * skipped by the test index, which never skips a file that PHPUnit had
-     * something to say about while it was loaded.
-     *
-     * @param ReflectionClass<object> $class
-     */
-    private function deprecateGroupAttributesOnParentClassesOf(ReflectionClass $class, MetadataCollection $metadata): void
-    {
-        $groups = [];
-
-        foreach ($metadata->isGroup() as $group) {
-            assert($group instanceof GroupMetadata);
-
-            $groups[$group->groupName()] = true;
-        }
-
-        $sizeIsDeclared = isset($groups['small']) || isset($groups['medium']) || isset($groups['large']);
-        $parent         = $class->getParentClass();
-
-        while ($parent !== false && $parent->getName() !== TestCase::class) {
-            $parentDeclaresSize = false;
-
-            foreach ($parent->getAttributes() as $attribute) {
-                $attributeName = $attribute->getName();
-
-                if (!isset(self::GROUP_ATTRIBUTES[$attributeName])) {
-                    continue;
-                }
-
-                if ($attributeName === Small::class || $attributeName === Medium::class || $attributeName === Large::class) {
-                    $parentDeclaresSize = true;
-
-                    if ($sizeIsDeclared) {
-                        continue;
-                    }
-                } elseif ($this->isDeclaredGroup($attribute, $groups)) {
-                    continue;
-                }
-
-                $this->deprecateGroupAttribute(self::GROUP_ATTRIBUTES[$attributeName], $parent->getName());
-            }
-
-            if ($parentDeclaresSize) {
-                $sizeIsDeclared = true;
-            }
-
-            $parent = $parent->getParentClass();
-        }
-    }
-
-    /**
-     * An attribute that cannot be instantiated does not add a test to a group,
-     * so it is treated as if its group was declared.
-     *
-     * @param ReflectionAttribute<object> $attribute
-     * @param array<string, true>         $groups
-     */
-    private function isDeclaredGroup(ReflectionAttribute $attribute, array $groups): bool
-    {
-        try {
-            $attributeInstance = $attribute->newInstance();
-        } catch (Error) {
-            return true;
-        }
-
-        if ($attributeInstance instanceof Ticket) {
-            return isset($groups[$attributeInstance->text()]);
-        }
-
-        assert($attributeInstance instanceof Group);
-
-        return isset($groups[$attributeInstance->name()]);
-    }
-
-    /**
-     * Each attribute of a parent class only triggers the deprecation once, no
-     * matter how many test classes extend it.
-     *
-     * @param non-empty-string $attribute
-     * @param class-string     $className
-     */
-    private function deprecateGroupAttribute(string $attribute, string $className): void
-    {
-        $key = $className . '::' . $attribute;
-
-        if (isset($this->deprecatedGroupAttributes[$key])) {
-            return;
-        }
-
-        $this->deprecatedGroupAttributes[$key] = true;
-
-        $this->emitter->testRunnerTriggeredPhpunitDeprecation(
-            sprintf(
-                'Class-level %s attribute on %s is ignored, but will be inherited by its subclasses in PHPUnit 14',
-                $attribute,
-                $className,
-            ),
-        );
     }
 
     /**
@@ -1356,6 +1339,31 @@ final class AttributeParser implements Parser
                 ),
             );
         }
+    }
+
+    /**
+     * @param ReflectionClass<object>     $class
+     * @param ReflectionAttribute<object> $attribute
+     */
+    private function invalidAttributeOnClass(ReflectionClass $class, ReflectionAttribute $attribute, Error $e): InvalidAttribute
+    {
+        $file    = $class->getFileName();
+        $line    = $class->getStartLine();
+        $message = $e->getMessage();
+
+        assert($file !== false && $file !== '');
+        assert($line !== false);
+        assert($message !== '');
+
+        return Metadata::invalidAttributeOnClass(
+            $this->invalidAttributeMessage(
+                $attribute->getName(),
+                'class ' . $class->getName(),
+                $file,
+                $line,
+                $message,
+            ),
+        );
     }
 
     /**

@@ -51,8 +51,7 @@ abstract class AbstractInvocationImplementation implements InvocationStubber
     /**
      * @var ?array<string, int>
      */
-    protected ?array $configurableMethodNames     = null;
-    protected bool $createdWithoutExplicitExpects = false;
+    protected ?array $configurableMethodNames = null;
 
     final public function __construct(InvocationHandler $handler, Matcher $matcher, ConfigurableMethod ...$configurableMethods)
     {
@@ -186,34 +185,9 @@ abstract class AbstractInvocationImplementation implements InvocationStubber
         return $this->will($stub);
     }
 
-    /**
-     * @internal This method is not covered by the backward compatibility promise for PHPUnit
-     */
-    final public function markAsCreatedWithoutExplicitExpects(): static
-    {
-        $this->createdWithoutExplicitExpects = true;
-
-        return $this;
-    }
-
     final public function seal(): void
     {
-        $this->invocationHandler->seal($this->invocationHandler->isMockObject());
-    }
-
-    /**
-     * @throws MethodNameNotConfiguredException
-     * @throws MethodParametersAlreadyConfiguredException
-     */
-    final protected function ensureParametersCanBeConfigured(): void
-    {
-        if (!$this->matcher->hasMethodNameRule()) {
-            throw new MethodNameNotConfiguredException;
-        }
-
-        if ($this->matcher->hasParametersRule()) {
-            throw new MethodParametersAlreadyConfiguredException;
-        }
+        $this->invocationHandler->seal();
     }
 
     private function configuredMethod(): ?ConfigurableMethod

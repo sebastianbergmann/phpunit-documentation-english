@@ -1,19 +1,19 @@
 ./tools/phpunit tests/ContainsOnlyInstancesOfTest.php
-PHPUnit 13.4.0 by Sebastian Bergmann and contributors.
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
 
-Runtime:       PHP 8.5.11
+Runtime:       PHP 8.5.12
 
 F                                                                   1 / 1 (100%)
 
-Time: 00:00, Memory: 32.33 MB
+Time: 00:00, Memory: 20.00 MB
 
 There was 1 failure:
 
 1) ContainsOnlyInstancesOfTest::testFailure
 Failed asserting that Array &0 [
-    0 => Foo Object #531 (),
-    1 => Bar Object #539 (),
-    2 => Foo Object #530 (),
+    0 => Foo Object #544 (),
+    1 => Bar Object #545 (),
+    2 => Foo Object #432 (),
 ] contains only values of type "Foo".
 
 /path/to/tests/ContainsOnlyInstancesOfTest.php:8

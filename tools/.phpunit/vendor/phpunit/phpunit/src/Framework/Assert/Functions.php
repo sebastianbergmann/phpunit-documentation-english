@@ -12,7 +12,6 @@ namespace PHPUnit\Framework;
 use function function_exists;
 use ArrayAccess;
 use Countable;
-use PHPUnit\Event\Facade as EventFacade;
 use PHPUnit\Framework\Constraint\ArrayHasKey;
 use PHPUnit\Framework\Constraint\Callback;
 use PHPUnit\Framework\Constraint\Constraint;
@@ -55,7 +54,7 @@ use PHPUnit\Framework\Constraint\StringStartsWith;
 use PHPUnit\Framework\Constraint\TraversableContainsEqual;
 use PHPUnit\Framework\Constraint\TraversableContainsIdentical;
 use PHPUnit\Framework\Constraint\TraversableContainsOnly;
-use PHPUnit\Framework\MockObject\Rule\AnyInvokedCount as AnyInvokedCountMatcher;
+use PHPUnit\Framework\MockObject\NonPositiveRequiredInvocationsException;
 use PHPUnit\Framework\MockObject\Rule\InvokedAtLeastCount as InvokedAtLeastCountMatcher;
 use PHPUnit\Framework\MockObject\Rule\InvokedAtLeastOnce as InvokedAtLeastOnceMatcher;
 use PHPUnit\Framework\MockObject\Rule\InvokedAtMostCount as InvokedAtMostCountMatcher;
@@ -3714,19 +3713,6 @@ if (!function_exists('PHPUnit\Framework\callback')) {
     }
 }
 
-if (!function_exists('PHPUnit\Framework\any')) {
-    /**
-     * Returns a matcher that matches when the method is executed
-     * zero or more times.
-     *
-     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/6461
-     */
-    function any(): AnyInvokedCountMatcher
-    {
-        return new AnyInvokedCountMatcher;
-    }
-}
-
 if (!function_exists('PHPUnit\Framework\never')) {
     /**
      * Returns a matcher that matches when the method is never executed.
@@ -3741,17 +3727,13 @@ if (!function_exists('PHPUnit\Framework\atLeast')) {
     /**
      * Returns a matcher that matches when the method is executed
      * at least N times.
+     *
+     * @param positive-int $requiredInvocations
+     *
+     * @throws NonPositiveRequiredInvocationsException
      */
     function atLeast(int $requiredInvocations): InvokedAtLeastCountMatcher
     {
-        if ($requiredInvocations < 1) {
-            EventFacade::emitter()->testTriggeredPhpunitDeprecation(
-                null,
-                "Calling atLeast() with an argument that is not positive is deprecated.\n" .
-                'This will become an error in PHPUnit 14.',
-            );
-        }
-
         return new InvokedAtLeastCountMatcher(
             $requiredInvocations,
         );
