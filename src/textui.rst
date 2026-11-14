@@ -924,8 +924,6 @@ More than one order
 
 A value that PHPUnit does not know is rejected with an error when it is used for ``--order-by``. When it is used for the ``executionOrder`` attribute then it is currently ignored, which is deprecated and will be an error in PHPUnit 14.
 
-The ``--random-order-seed <N>`` CLI option is deprecated as well. Use ``--random-seed <N>`` instead (see :ref:`textui.random-numbers`).
-
 See :ref:`appendixes.cli-options.execution` for the complete reference.
 
 

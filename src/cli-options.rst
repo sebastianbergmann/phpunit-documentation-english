@@ -304,8 +304,6 @@ Execution
 ``--random-seed <N>``
    Seeds PHP's random number generators, for instance the one that ``mt_rand()`` uses, with ``N`` and uses ``N`` as the seed when tests are run in random order. Using the same seed produces the same random numbers in a test and the same test order, which is useful for reproducing failures. ``N`` has to be a positive integer. See :ref:`textui.random-numbers`.
 
-   The ``--random-order-seed <N>`` option is deprecated and will be removed in PHPUnit 14. Unlike ``--random-seed``, it only has an effect when tests are run in random order. When both options are used, ``--random-seed`` takes precedence.
-
 ``--repeat <N>``
    Runs each eligible test ``N`` times, stopping at the first failure. This helps find flaky tests and stress-test stateful code. PHPT tests are repeated as well. See :ref:`flaky-tests.repeating-tests`. Mutually exclusive with ``--retry``.
 
