@@ -933,7 +933,7 @@ as ParaTest.
 For the actual running of tests, ``PHPUnit\TextUI\Application`` uses ``PHPUnit\TextUI\TestRunner::run()``.
 
 ``PHPUnit\TextUI\TestRunner::run()`` requires a ``PHPUnit\TextUI\Configuration\Configuration``,
-a ``PHPUnit\Runner\ResultCache\ResultCache``, and a ``PHPUnit\Framework\TestSuite``.
+a ``PHPUnit\Runner\TestRunHistory\TestRunHistory``, and a ``PHPUnit\Framework\TestSuite``.
 
 A ``PHPUnit\TextUI\Configuration\Configuration`` can be built using ``PHPUnit\TextUI\Configuration\Builder::build()``.
 You need to pass ``$_SERVER['argv']`` to this method. The method then parses CLI arguments/options and loads an XML
