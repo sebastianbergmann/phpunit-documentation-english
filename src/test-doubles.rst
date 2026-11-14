@@ -1141,13 +1141,16 @@ If the method has a variadic parameter, a named argument that does not name one 
 
 Before PHPUnit 12.5.39 and PHPUnit 13.4.2, the names of named arguments passed to ``with()`` were ignored and the values were matched by position.
 
-.. admonition:: Deprecation: Using ``with()`` without ``expects()`` is deprecated
+.. admonition:: ``with()`` cannot be used without ``expects()``
 
-   Using ``with()`` on a mock object without also using ``expects()`` is deprecated.
-   This will no longer be possible in PHPUnit 14.
+   The ``with()`` method, as well as the ``withParameterSetsInOrder()``, ``withParameterSetsInAnyOrder()``,
+   ``withParameterSetsInPartialOrder()``, and ``withAnyParameters()`` methods, can only be used after ``expects()``.
+   When ``method()`` is called on a mock object without ``expects()`` being called first, it returns an object
+   that only has the methods for configuring behavior. Calling ``with()`` on that object is an error
+   (``Call to undefined method``), and the test errors.
 
    The ``with()`` method is used to verify the arguments passed to a method, which is an expectation about
-   how the mock object is called. Using ``with()`` without ``expects()`` is contradictory: you are specifying
+   how the mock object is called. Using ``with()`` without ``expects()`` would be contradictory: you would specify
    which arguments a method should be called with while not setting up an expectation for how many times the
    method should be called. Use ``expects()`` together with ``with()`` to make the intent of your test explicit.
 
