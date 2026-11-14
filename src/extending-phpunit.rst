@@ -589,7 +589,7 @@ TestPreparationStartedSubscriber
         }
     }
 
-This subscriber fires just before PHPUnit sets up a test (before ``setUp()`` runs).
+This subscriber is notified when PHPUnit starts to run a test, before the test is prepared (before ``setUp()`` runs, for instance).
 It reads the test identifier from ``$event->test()->id()`` (which returns a string such as ``ExampleTest::testPasses``) and the current high-resolution time from ``$event->telemetryInfo()->time()``.
 
 .. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.subscribers.outcome:
@@ -743,6 +743,8 @@ It passes the current high-resolution time to ``Printer::testFinished()``, which
     3. ``Test\Finished``
 
     Because outcome events fire before ``Test\Finished``, the ``Printer`` always knows the outcome when it writes the completed line.
+
+    PHPUnit guarantees that ``Test\Finished`` is emitted for every test for which ``Test\PreparationStarted`` was emitted, also when the test is skipped or errors before its test method is called (see :ref:`appendixes.events.guarantees`).
 
 .. _extending-phpunit.extending-the-test-runner.a-complete-example-custom-printer.configuration:
 

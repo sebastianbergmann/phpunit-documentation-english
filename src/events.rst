@@ -190,7 +190,7 @@ Test
 
 ``PHPUnit\Event\Test\PreparationStarted``
 
-    The preparation of a test for execution was started
+    The preparation of a test for execution was started. This is the first event that is emitted for a test
 
 ``PHPUnit\Event\Test\PreparationErrored``
 
@@ -218,7 +218,7 @@ Test
 
 ``PHPUnit\Event\Test\BeforeFirstTestMethodCalled``
 
-    A "before first test" method was called for a test case class
+    A "before first test" method is about to be called for a test case class
 
 ``PHPUnit\Event\Test\BeforeFirstTestMethodErrored``
 
@@ -234,7 +234,7 @@ Test
 
 ``PHPUnit\Event\Test\BeforeTestMethodCalled``
 
-    A "before test" method was called for a test method
+    A "before test" method is about to be called for a test method
 
 ``PHPUnit\Event\Test\BeforeTestMethodErrored``
 
@@ -250,7 +250,7 @@ Test
 
 ``PHPUnit\Event\Test\PreConditionCalled``
 
-    A "precondition" method was called for a test method
+    A "precondition" method is about to be called for a test method
 
 ``PHPUnit\Event\Test\PreConditionErrored``
 
@@ -370,11 +370,11 @@ Test
 
 ``PHPUnit\Event\Test\Finished``
 
-    The execution of a test method finished
+    The test has finished. This is the last event that is emitted for a test, and it is emitted for every test for which ``PHPUnit\Event\Test\PreparationStarted`` was emitted
 
 ``PHPUnit\Event\Test\PostConditionCalled``
 
-    A "postcondition" method was called for a test method
+    A "postcondition" method is about to be called for a test method
 
 ``PHPUnit\Event\Test\PostConditionErrored``
 
@@ -390,7 +390,7 @@ Test
 
 ``PHPUnit\Event\Test\AfterTestMethodCalled``
 
-    An "after test" method was called for a test method
+    An "after test" method is about to be called for a test method
 
 ``PHPUnit\Event\Test\AfterTestMethodErrored``
 
@@ -406,7 +406,7 @@ Test
 
 ``PHPUnit\Event\Test\AfterLastTestMethodCalled``
 
-    An "after last test" method was called for a test case class
+    An "after last test" method is about to be called for a test case class
 
 ``PHPUnit\Event\Test\AfterLastTestMethodErrored``
 
@@ -423,3 +423,37 @@ Test
 ``PHPUnit\Event\Test\AdditionalInformationProvided``
 
     A test method provided additional information using the ``provideAdditionalInformation()`` method of ``PHPUnit\Framework\TestCase``
+
+.. _appendixes.events.guarantees:
+
+Guarantees
+==========
+
+PHPUnit guarantees that tests, test suites, and hook methods are bracketed by events. An event subscriber that needs to know when one of them begins and ends can rely on the following:
+
+Tests
+    Every ``PHPUnit\Event\Test\PreparationStarted`` event is followed by exactly one ``PHPUnit\Event\Test\Finished`` event for the same test, and all other events for that test are emitted between these two events. This also holds for a test whose preparation errored or failed, for a test that was skipped, and for a test that is reported as skipped or errored without being run, for instance because a test it depends on did not pass.
+
+    ``PHPUnit\Event\Test\Prepared`` is only emitted when the preparation of a test succeeded. A subscriber that needs to know whether a test was prepared can rely on this event, but it does not need it to find out when a test ends.
+
+Test suites
+    Every ``PHPUnit\Event\TestSuite\Started`` event is followed by exactly one ``PHPUnit\Event\TestSuite\Finished`` event for the same test suite. When a "before first test" method skips the tests of a test case class, ``PHPUnit\Event\TestSuite\Skipped`` is emitted before ``PHPUnit\Event\TestSuite\Finished``.
+
+Hook methods
+    The ``*Called`` event for a hook method, for instance ``PHPUnit\Event\Test\BeforeTestMethodCalled``, is emitted before the hook method is invoked. The events that are emitted while a hook method runs are bracketed by its ``*Called`` event and the next ``*Called``, ``*Errored``, ``*Failed``, or ``*Finished`` event of the same kind of hook method. The ``*Finished`` event, for instance ``PHPUnit\Event\Test\BeforeTestMethodFinished``, is emitted after all hook methods of that kind have been invoked.
+
+Child processes
+    ``PHPUnit\Event\TestRunner\ChildProcessStarted`` and ``PHPUnit\Event\TestRunner\ChildProcessFinished`` (or ``PHPUnit\Event\TestRunner\ChildProcessErrored``) for a test that is run in a separate process are emitted between the ``PHPUnit\Event\Test\PreparationStarted`` and ``PHPUnit\Event\Test\Finished`` events for that test.
+
+This is, for instance, the sequence of events for a test that is skipped in its ``setUp()`` method. No ``PHPUnit\Event\Test\Prepared`` event is emitted because the preparation of the test did not succeed, but the test is finished nevertheless:
+
+.. code-block::
+
+    Test Preparation Started (ExampleTest::testOne)
+    Before Test Method Called (ExampleTest::setUp)
+    Before Test Method Finished:
+    - ExampleTest::setUp
+    Test Skipped (ExampleTest::testOne)
+    Test Finished (ExampleTest::testOne)
+
+When a "before first test" method errors or fails, the tests of the test case class are not run and no events are emitted for them.
