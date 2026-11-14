@@ -346,7 +346,8 @@ Otherwise, it asserts that the actual exception message contains the expected me
 
 .. admonition:: Deprecation: ``expectExceptionMessage()`` is deprecated
 
-   The ``expectExceptionMessage()`` method was deprecated in PHPUnit 13.2 and will be removed in PHPUnit 15.
+   The ``expectExceptionMessage()`` method is deprecated and will be removed in PHPUnit 15.
+   PHPUnit triggers a PHPUnit deprecation when it is called.
    Use ``expectExceptionMessageIsOrContains()`` instead.
 
 
@@ -380,7 +381,7 @@ The call shown above is equivalent to the three calls shown below:
 .. code-block:: php
 
     $this->expectException(InvalidArgumentException::class);
-    $this->expectExceptionMessage('message');
+    $this->expectExceptionMessageIsOrContains('message');
     $this->expectExceptionCode(1);
 
 
