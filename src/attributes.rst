@@ -1089,7 +1089,7 @@ Running the test shown above with TestDox output enabled yields the output shown
     $ ./tools/phpunit --no-progress --testdox tests/ExampleTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Runtime:       PHP 8.4.10
+    Runtime:       PHP 8.5.10
 
     Time: 00:00.224, Memory: 25.77 MB
 
@@ -1676,10 +1676,10 @@ when the PHP version used to run PHPUnit does not satisfy the specified version 
 
 Here are some examples:
 
-* ``#[RequiresPhp('>= 8.3.0')]``: PHP 8.3.0 or newer
-* ``#[RequiresPhp('^8.3')]``: PHP 8.3.0 or newer, but below 9.0.0
-* ``#[RequiresPhp('~8.3.0')]``: PHP 8.3.0 or newer, but below 8.4.0
-* ``#[RequiresPhp('8.3.* || 8.4.*')]``: PHP 8.3 or PHP 8.4
+* ``#[RequiresPhp('>= 8.5.0')]``: PHP 8.5.0 or newer
+* ``#[RequiresPhp('^8.5')]``: PHP 8.5.0 or newer, but below 9.0.0
+* ``#[RequiresPhp('~8.5.0')]``: PHP 8.5.0 or newer, but below 8.6.0
+* ``#[RequiresPhp('8.5.* || 8.6.*')]``: PHP 8.5 or PHP 8.6
 
 ``$versionRequirement`` is either a version constraint or a version comparison.
 
@@ -1703,8 +1703,8 @@ A version constraint uses the syntax of `Composer's version constraints <https:/
       - ``8.5.1`` or newer, but below ``9.0.0``
     * - ``~8.5.1``
       - ``8.5.1`` or newer, but below ``8.6.0``
-    * - ``^8.4 || ^9.0``
-      - Versions that satisfy ``^8.4`` or ``^9.0``
+    * - ``^8.5 || ^9.0``
+      - Versions that satisfy ``^8.5`` or ``^9.0``
 
 A version without an operator, such as ``8.5.1``, is satisfied by exactly this version and has to consist of
 major, minor, and patch version. A version requirement such as ``8.5`` or ``8`` is ignored, and PHPUnit emits
@@ -1724,9 +1724,9 @@ PHP 8.5.0RC1, but ``< 8.5.0`` is. Use a version comparison such as ``>= 8.5.0RC1
 A test errors when its version requirement is neither a version constraint nor a version comparison. This is
 the case for the following syntax, among others, even though Composer supports some of it:
 
-* Combining version requirements with AND, for instance ``>=8.3.0 <8.5.0`` or ``>=8.3.0, <8.5.0``
-* Hyphen ranges, for instance ``8.3 - 8.5``
-* Combining a version comparison with another version requirement using ``||``, for instance ``>= 8.3.0 || < 7.0.0``
+* Combining version requirements with AND, for instance ``>=8.5.0 <8.7.0`` or ``>=8.5.0, <8.7.0``
+* Hyphen ranges, for instance ``8.5 - 8.7``
+* Combining a version comparison with another version requirement using ``||``, for instance ``>= 8.5.0 || < 7.0.0``
 * A version without an operator that has a pre-release suffix but not major, minor, and patch version, or that does not separate the suffix using ``-``, for instance ``8.5-dev`` or ``8.5.0RC1``
 * Stability flags, branch names, build metadata, and versions with more than three numbers, for instance ``^8.5@dev``, ``dev-main``, ``^8.5.0+build``, or ``8.5.0.1``
 

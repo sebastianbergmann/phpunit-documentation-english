@@ -14,7 +14,7 @@ is executed on a web server.
 PHPUnit provides a framework for writing tests as well as a command-line tool for running these tests. Before we discuss
 obtaining and using PHPUnit, let us have a look at installing and configuring the PHP command-line interpreter.
 
-PHPUnit 13 requires PHP 8.4; using the latest version of PHP is highly recommended.
+PHPUnit 14 requires PHP 8.5; using the latest version of PHP is highly recommended.
 
 
 .. _installation.php-on-the-command-line:
@@ -51,20 +51,18 @@ Remi Collet <https://rpms.remirepo.net/>`_.
 Debian
 ^^^^^^
 
-At the time of writing, Debian 13 is the current version of this Linux distribution. It ships with PHP 8.4 by default.
-Here is how you install PHP's command-line interpreter together with the extensions required for PHPUnit:
+At the time of writing, Debian 13 is the current version of this Linux distribution. It ships with PHP 8.4 by default,
+which is not supported by PHPUnit 14. PHP 8.5 is available from the `package repository <https://deb.sury.org/>`_
+maintained by Ondřej Surý. Once this repository is set up, here is how you install PHP's command-line interpreter
+together with the extensions required for PHPUnit:
 
 .. code::
 
-    sudo apt install php-cli \
-                     php-json \
-                     php-mbstring \
-                     php-xml \
-                     php-pcov \
-                     php-xdebug
-
-If you use an older version of Debian then you should have a look at the `package repository <https://deb.sury.org/>`_
-maintained by Ondřej Surý.
+    sudo apt install php8.5-cli \
+                     php8.5-mbstring \
+                     php8.5-xml \
+                     php8.5-pcov \
+                     php8.5-xdebug
 
 
 Ubuntu
@@ -100,11 +98,11 @@ The following command will fetch these formulae:
     brew tap shivammathur/php
     brew tap shivammathur/extensions
 
-The following command will install PHP 8.4:
+The following command will install PHP 8.5:
 
 .. code::
 
-    brew install shivammathur/php/php@8.4
+    brew install shivammathur/php/php@8.5
 
 The following extensions required by PHPUnit are already installed and enabled by default:
 
@@ -124,13 +122,13 @@ The following command will install and enable the ``pcov`` extension:
 
 .. code::
 
-  brew install pcov@8.4
+  brew install pcov@8.5
 
 The following command will install and enable the ``xdebug`` extension:
 
 .. code::
 
-  brew install xdebug@8.4
+  brew install xdebug@8.5
 
 
 Windows
