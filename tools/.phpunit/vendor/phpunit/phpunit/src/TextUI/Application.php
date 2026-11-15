@@ -61,6 +61,9 @@ use PHPUnit\Runner\Filter\Factory;
 use PHPUnit\Runner\GarbageCollection\GarbageCollectionHandler;
 use PHPUnit\Runner\PhpConfiguration\PhpConfigurationChecker;
 use PHPUnit\Runner\Phpt\TestCase as PhptTestCase;
+use PHPUnit\Runner\Receipt\Invocation;
+use PHPUnit\Runner\Receipt\InvocationBuilder;
+use PHPUnit\Runner\Receipt\OutcomeBuilder;
 use PHPUnit\Runner\TestIndex\DefaultTestFileSkipper;
 use PHPUnit\Runner\TestIndex\GroupPruner;
 use PHPUnit\Runner\TestIndex\NameFilterPruner;
@@ -156,6 +159,16 @@ final readonly class Application
             );
 
             $this->executeCommandsThatMustNotExecuteCodeFromTheConfiguration($configuration, $cliConfiguration);
+
+            // the first part of the receipt of the test run is written before
+            // the bootstrap script, the extensions, or the tests can end the
+            // process: only then does the logfile of a test run that dies say
+            // what was run
+            $invocation = new InvocationBuilder(
+                new BootstrapLoader($this->emitter),
+            )->build($configuration, $argv, $this->phar());
+
+            $otrLogger = $this->registerOtrLogfileWriter($configuration, $invocation);
 
             DifferBuilder::configureComparatorFactory();
 
@@ -264,15 +277,25 @@ final readonly class Application
             $timer = new Timer;
             $timer->start();
 
+            $started = false;
+
             if ($coverageInitializationStatus === CodeCoverageInitializationStatus::NOT_REQUESTED ||
                 $coverageInitializationStatus === CodeCoverageInitializationStatus::SUCCEEDED) {
-                $runner = new TestRunner($this->emitter);
+                $started = true;
 
-                $runner->run(
-                    $configuration,
-                    $testRunHistory,
-                    $testSuite,
-                );
+                if ($configuration->numberOfParallelWorkers() > 1) {
+                    new ParallelTestRunner()->run(
+                        $configuration,
+                        $testRunHistory,
+                        $testSuite,
+                    );
+                } else {
+                    new TestRunner($this->emitter)->run(
+                        $configuration,
+                        $testRunHistory,
+                        $testSuite,
+                    );
+                }
             }
 
             $duration = $timer->stop();
@@ -377,6 +400,23 @@ final readonly class Application
                 $configuration,
                 $result,
             );
+
+            // the second part of the receipt of the test run is the last thing
+            // that is written, after the shell exit code is known
+            $outcome = (new OutcomeBuilder)->build(
+                $result,
+                $shellExitCode,
+                $started,
+                TestResultFacade::wasInterrupted(),
+            );
+
+            if ($otrLogger !== null) {
+                $otrLogger->finish($outcome);
+            }
+
+            if (!$extensionCapabilities->replacesResultOutput()) {
+                OutputFacade::printReceipt($invocation, $outcome);
+            }
 
             $this->emitter->applicationFinished($shellExitCode);
 
@@ -648,6 +688,17 @@ final readonly class Application
                 $configuration->configurationFile(),
             );
         }
+
+        if ($configuration->numberOfParallelWorkers() > 1) {
+            $this->writeMessage(
+                $printer,
+                'Parallel',
+                sprintf(
+                    '%d workers',
+                    $configuration->numberOfParallelWorkers(),
+                ),
+            );
+        }
     }
 
     private function writeMessage(Printer $printer, string $type, string $message): void
@@ -747,25 +798,6 @@ final readonly class Application
             }
         }
 
-        if ($configuration->hasLogfileOtr()) {
-            try {
-                new OtrXmlLogger(
-                    EventFacade::instance(),
-                    $configuration->logfileOtr(),
-                    $configuration->includeGitInformationInOtrLogfile(),
-                    $configuration->randomSeed(),
-                );
-            } catch (CannotOpenUriForWritingException $e) {
-                $this->emitter->testRunnerTriggeredPhpunitWarning(
-                    sprintf(
-                        'Cannot log test results in Open Test Reporting XML format to "%s": %s',
-                        $configuration->logfileOtr(),
-                        $e->getMessage(),
-                    ),
-                );
-            }
-        }
-
         if ($configuration->hasLogfileTeamcity()) {
             try {
                 new TeamCityLogger(
@@ -784,6 +816,47 @@ final readonly class Application
                 );
             }
         }
+    }
+
+    private function registerOtrLogfileWriter(Configuration $configuration, Invocation $invocation): ?OtrXmlLogger
+    {
+        if (!$configuration->hasLogfileOtr()) {
+            return null;
+        }
+
+        try {
+            return new OtrXmlLogger(
+                EventFacade::instance(),
+                $configuration->logfileOtr(),
+                $configuration->includeGitInformationInOtrLogfile(),
+                $configuration->randomSeed(),
+                $invocation,
+            );
+        } catch (CannotOpenUriForWritingException $e) {
+            $this->emitter->testRunnerTriggeredPhpunitWarning(
+                sprintf(
+                    'Cannot log test results in Open Test Reporting XML format to "%s": %s',
+                    $configuration->logfileOtr(),
+                    $e->getMessage(),
+                ),
+            );
+        }
+
+        return null;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    private function phar(): ?string
+    {
+        // @codeCoverageIgnoreStart
+        if (defined('__PHPUNIT_PHAR__') && is_string(__PHPUNIT_PHAR__) && __PHPUNIT_PHAR__ !== '') {
+            return __PHPUNIT_PHAR__;
+        }
+        // @codeCoverageIgnoreEnd
+
+        return null;
     }
 
     private function testDoxResultCollector(Configuration $configuration): ?TestDoxResultCollector

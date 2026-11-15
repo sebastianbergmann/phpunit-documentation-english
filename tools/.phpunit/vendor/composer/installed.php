@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => '14.0.x-dev',
         'version' => '14.0.9999999.9999999-dev',
-        'reference' => 'c34991149ec9461c27b48d00a07d6a6c4899cde8',
+        'reference' => '17415ce003f2cf68037a021cc7098bc39e501a74',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,11 +13,20 @@
         '__root__' => array(
             'pretty_version' => '14.0.x-dev',
             'version' => '14.0.9999999.9999999-dev',
-            'reference' => 'c34991149ec9461c27b48d00a07d6a6c4899cde8',
+            'reference' => '17415ce003f2cf68037a021cc7098bc39e501a74',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'fidry/cpu-core-counter' => array(
+            'pretty_version' => '1.4.1',
+            'version' => '1.4.1.0',
+            'reference' => 'd384a7d0d6e67aa497327260ca95023e92dc2032',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../fidry/cpu-core-counter',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'myclabs/deep-copy' => array(
             'pretty_version' => '1.x-dev',
@@ -97,7 +106,7 @@
         'phpunit/phpunit' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'b5712d808c925c87d65261ef77d8bda426d61c49',
+            'reference' => 'b601fd5e2f80676c6343620991c7e5a2965550b9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(

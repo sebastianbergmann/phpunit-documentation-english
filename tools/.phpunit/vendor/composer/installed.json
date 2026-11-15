@@ -1,6 +1,72 @@
 {
     "packages": [
         {
+            "name": "fidry/cpu-core-counter",
+            "version": "1.4.1",
+            "version_normalized": "1.4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/theofidry/cpu-core-counter.git",
+                "reference": "d384a7d0d6e67aa497327260ca95023e92dc2032"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/theofidry/cpu-core-counter/zipball/d384a7d0d6e67aa497327260ca95023e92dc2032",
+                "reference": "d384a7d0d6e67aa497327260ca95023e92dc2032",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "fidry/makefile": "^0.2.0 || ^1.1.2",
+                "fidry/php-cs-fixer-config": "^1.1.2",
+                "phpstan/extension-installer": "^1.2.0",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-deprecation-rules": "^2.0.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpunit/phpunit": "^8.5.31 || ^9.5.26",
+                "symfony/polyfill-mbstring": "^1.33",
+                "webmozarts/strict-phpunit": "^7.5"
+            },
+            "time": "2026-09-29T22:11:39+00:00",
+            "published-time": "2026-09-29T22:12:43+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Fidry\\CpuCoreCounter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Théo FIDRY",
+                    "email": "theo.fidry@gmail.com"
+                }
+            ],
+            "description": "Tiny utility to get the number of CPU cores.",
+            "keywords": [
+                "CPU",
+                "core"
+            ],
+            "support": {
+                "issues": "https://github.com/theofidry/cpu-core-counter/issues",
+                "source": "https://github.com/theofidry/cpu-core-counter/tree/1.4.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/theofidry",
+                    "type": "github"
+                }
+            ],
+            "install-path": "../fidry/cpu-core-counter"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.x-dev",
             "version_normalized": "1.9999999.9999999.9999999-dev",
@@ -541,12 +607,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b5712d808c925c87d65261ef77d8bda426d61c49"
+                "reference": "b601fd5e2f80676c6343620991c7e5a2965550b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b5712d808c925c87d65261ef77d8bda426d61c49",
-                "reference": "b5712d808c925c87d65261ef77d8bda426d61c49",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b601fd5e2f80676c6343620991c7e5a2965550b9",
+                "reference": "b601fd5e2f80676c6343620991c7e5a2965550b9",
                 "shasum": ""
             },
             "require": {
@@ -556,6 +622,7 @@
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
                 "ext-xmlwriter": "*",
+                "fidry/cpu-core-counter": "^1.3",
                 "myclabs/deep-copy": "^1.14.0",
                 "nikic/php-parser": "^5.9.0",
                 "php": ">=8.5.12",
@@ -580,8 +647,8 @@
                 "sebastian/version-requirement": "^1.0.0",
                 "staabm/side-effects-detector": "^1.0.5"
             },
-            "time": "2026-11-14T16:21:12+00:00",
-            "published-time": "2026-11-14T16:21:49+00:00",
+            "time": "2026-11-15T11:17:51+00:00",
+            "published-time": "2026-11-15T11:20:44+00:00",
             "default-branch": true,
             "bin": [
                 "phpunit"
@@ -2020,6 +2087,7 @@
     ],
     "dev": true,
     "dev-package-names": [
+        "fidry/cpu-core-counter",
         "myclabs/deep-copy",
         "nikic/php-parser",
         "phpunit/php-code-coverage",

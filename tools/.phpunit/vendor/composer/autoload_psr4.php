@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
+    'Fidry\\CpuCoreCounter\\' => array($vendorDir . '/fidry/cpu-core-counter/src'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
 );

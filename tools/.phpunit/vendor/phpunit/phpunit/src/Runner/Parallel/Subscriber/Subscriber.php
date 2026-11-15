@@ -7,24 +7,24 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace PHPUnit\Logging\OpenTestReporting;
-
-use PHPUnit\Event\InvalidArgumentException;
-use PHPUnit\Event\TestRunner\ExecutionFinished;
-use PHPUnit\Event\TestRunner\ExecutionFinishedSubscriber;
+namespace PHPUnit\Runner\Parallel;
 
 /**
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
  *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-final readonly class TestRunnerFinishedSubscriber extends Subscriber implements ExecutionFinishedSubscriber
+abstract readonly class Subscriber
 {
-    /**
-     * @throws InvalidArgumentException
-     */
-    public function notify(ExecutionFinished $event): void
+    private PassedTestsRecorder $recorder;
+
+    public function __construct(PassedTestsRecorder $recorder)
     {
-        $this->logger()->testRunnerFinished();
+        $this->recorder = $recorder;
+    }
+
+    protected function recorder(): PassedTestsRecorder
+    {
+        return $this->recorder;
     }
 }

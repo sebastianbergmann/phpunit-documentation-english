@@ -6,7 +6,8 @@ All notable changes of the PHPUnit 14.0 release series are documented in this fi
 
 ### Added
 
-* [#7052](https://github.com/sebastianbergmann/phpunit/pull/7052): Native support for Property-Based Testing
+* [#6784](https://github.com/sebastianbergmann/phpunit/pull/6784): Parallel test execution
+* [#7052](https://github.com/sebastianbergmann/phpunit/pull/7052): Native support for [Property-Based Testing](https://docs.phpunit.de/en/14.0/property-based-testing.html)
 
 ### Changed
 
