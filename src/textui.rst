@@ -873,7 +873,7 @@ The first part of the receipt is the ``phpunit:invocation`` element in the ``inf
 .. code-block:: xml
 
     <?xml version="1.0"?>
-    <e:events xmlns="https://schemas.opentest4j.org/reporting/core/0.2.0" xmlns:e="https://schemas.opentest4j.org/reporting/events/0.2.0" xmlns:php="https://schema.phpunit.de/otr/php/0.1.0" xmlns:phpunit="https://schema.phpunit.de/otr/phpunit/0.4.0">
+    <e:events xmlns="https://schemas.opentest4j.org/reporting/core/0.2.0" xmlns:e="https://schemas.opentest4j.org/reporting/events/0.2.0" xmlns:php="https://schema.phpunit.de/otr/php/0.1.0" xmlns:phpunit="https://schema.phpunit.de/otr/phpunit/0.5.0">
      <infrastructure>
       <!-- ... -->
       <php:phpVersion>8.5.5</php:phpVersion>
@@ -911,7 +911,7 @@ The ``phpunit:phar`` and ``phpunit:configurationFile`` elements are only present
 
 The first part of the receipt is written to the logfile, together with the start of the node for the test run, before the bootstrap script is loaded. The logfile of a test run that a bootstrap script, an extension, or a test ends therefore says what was run. Such a logfile ends after its last event, without the ``phpunit:outcome`` element. It is not a well-formed XML document, because its root element is not closed.
 
-The elements of the receipt are in the namespace ``https://schema.phpunit.de/otr/phpunit/0.4.0``. A logfile with a receipt validates against the schemas of the Open Test Reporting format.
+The elements of the receipt are in the namespace ``https://schema.phpunit.de/otr/phpunit/0.5.0``. A logfile with a receipt validates against the schemas of the Open Test Reporting format.
 
 
 .. _textui.receipt.compact:
