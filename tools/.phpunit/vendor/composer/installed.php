@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => '14.0.x-dev',
         'version' => '14.0.9999999.9999999-dev',
-        'reference' => '17415ce003f2cf68037a021cc7098bc39e501a74',
+        'reference' => '3765a77bc64607515dfc8a154f6bb1f876ef7c15',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => '14.0.x-dev',
             'version' => '14.0.9999999.9999999-dev',
-            'reference' => '17415ce003f2cf68037a021cc7098bc39e501a74',
+            'reference' => '3765a77bc64607515dfc8a154f6bb1f876ef7c15',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -106,7 +106,7 @@
         'phpunit/phpunit' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'b601fd5e2f80676c6343620991c7e5a2965550b9',
+            'reference' => '51a5b505e61b76f33181f0e8e9a42584becfa4c1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(
