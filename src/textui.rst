@@ -495,7 +495,7 @@ The ``--teamcity`` option replaces the default progress and result output with T
 Compact
 ^^^^^^^
 
-The ``--compact`` option replaces the default progress and result output with a compact format that is stripped down to what is actionable: there is no progress section, no timing or memory usage line, and no use of color. When all tests pass, only the runtime information section and a single summary line are printed:
+The ``--compact`` option replaces the default progress and result output with a compact format that is stripped down to what is actionable: there is no progress section, no timing or memory usage line, and no use of color. When all tests pass, only the runtime information section, a single summary line, and the receipt of the test run are printed:
 
 .. parsed-literal::
 
@@ -505,6 +505,23 @@ The ``--compact`` option replaces the default progress and result output with a 
     Runtime: PHP 8.5.5
 
     OK (4699 tests, 13576 assertions)
+
+    --- RECEIPT
+    PHPUnit: |version|.0
+    PHP: 8.5.5
+    Arguments: --compact tests
+    Working directory: /path/to/project
+    Configuration: (none)
+    Bootstrap: (none)
+    Extensions: (none)
+    Started: 2027-02-05T10:00:00+00:00
+    Ended: 2027-02-05T10:00:02+00:00 (completed)
+    Shell exit code: 0
+    Tests: 4699 run, 13576 assertions
+    Issues triggered by tests: (none)
+    Issues triggered by the test runner: (none)
+
+The record that begins with ``--- RECEIPT`` is the receipt of the test run. It records what was run and how the run ended, and it is always the last record of the compact output (see :ref:`textui.receipt`). It is left out of the other examples in this section.
 
 When tests fail or have other issues, each defect is printed as a clearly delimited block with the test name, the assertion message, and the file location:
 
@@ -610,6 +627,8 @@ The PHPUnit command-line test runner exits with an exit code that indicates the 
 ``124``
 
     The time limit for the test run configured with ``--timeout`` was exceeded (see :ref:`textui.time-limit`)
+
+The exit code is a single number. It does not say whether the selected tests were run: a run in which no test matched the selection, in which every test was skipped, or which was stopped before its first test can exit with ``0``. The receipt of the test run records what the exit code cannot (see :ref:`textui.receipt`).
 
 By default, issues such as deprecations, notices, warnings, and risky tests do not affect the exit code. The ``--fail-on-*`` family of options changes this behaviour:
 
@@ -751,9 +770,208 @@ These logfiles are commonly used for CI tool integration and reporting.
 
 The ``--testdox-html`` and ``--testdox-text`` options write a report to a file; they are not intended to replace or augment the console output. For TestDox-formatted console output use ``--testdox`` (see :ref:`textui.output.alternative-formats.testdox`).
 
+The logfile in Open Test Reporting XML format contains the receipt of the test run, which records what was run and how the run ended (see :ref:`textui.receipt`).
+
 Logging can also be configured in the XML configuration file (see :ref:`appendixes.xml-configuration-file.logging`).
 
 The ``--no-logging`` option ignores all logging configured in the XML configuration file.
+
+
+.. _textui.receipt:
+
+Receipt of the test run
+=======================
+
+A process that runs PHPUnit learns one number from it: the shell exit code (see :ref:`textui.exit-codes`). That number cannot say which version of PHPUnit was run with which arguments and which configuration, and it cannot say whether the selected tests were run at all.
+
+The receipt of the test run records this information. It is written whenever ``--log-otr`` or ``--compact`` is used; there is no option to request it. It is intended for callers that are not a person watching the run:
+
+- A tool that runs PHPUnit and interprets the result, for instance a mutation testing tool, reads the receipt instead of parsing output that is meant for humans.
+- A person who checks the work of a CI pipeline or of an LLM-based coding assistant can verify afterwards what "all tests pass" refers to.
+
+The receipt has two parts.
+
+The first part records what is being run. It is determined when the test run starts, before the bootstrap script, extensions, or tests are loaded:
+
+- the version of PHPUnit and, when PHPUnit is run from a PHAR, the path of that PHAR and the SHA-256 checksum of its contents
+- the version of PHP
+- the arguments that PHPUnit was invoked with, without the name of the script
+- the working directory
+- the path of the XML configuration file and the SHA-256 checksum of its contents, when an XML configuration file is used
+- the bootstrap script, followed by the bootstrap scripts of the test suites that are not left out of the test run
+- the bootstrap classes of the extensions that are configured; they are not recorded when ``--no-extensions`` is used
+- the time at which the test run started
+
+The second part records how the test run ended. It is the last thing that PHPUnit writes, after the shell exit code is known:
+
+- the time at which the test run ended
+- how the test run ended (see :ref:`textui.receipt.status`)
+- the shell exit code
+- the number of tests that were run and, of those, the number of tests that errored, failed, were skipped, were marked incomplete, or were considered risky
+- the number of assertions
+- the number of issues, separately for the issues that were triggered by tests and for the issues that were triggered by the test runner (see :ref:`textui.receipt.issues`)
+
+Because the second part is written last, its presence shows that the test run reached its end.
+
+
+.. _textui.receipt.status:
+
+How the test run ended
+----------------------
+
+``completed``
+
+    Every selected test was run. This is also the case when no test was selected.
+
+``stopped``
+
+    A ``--stop-on-*`` option, or its counterpart in the XML configuration file, ended the test run before every selected test was run (see :ref:`textui.stopping-early`).
+
+``interrupted``
+
+    An interrupt signal (``SIGINT``) ended the test run before every selected test was run.
+
+``time-limit-exceeded``
+
+    The time limit for the test run configured with ``--timeout`` was exceeded (see :ref:`textui.time-limit`).
+
+``not-started``
+
+    No test was run because the test run could not be started. This is the case when a code coverage report is requested and code coverage cannot be collected, for instance because no code coverage driver is available.
+
+Only ``completed`` together with a number of tests run that is greater than zero means that the selected tests were run. A shell exit code of ``0`` does not: it is also the shell exit code of a test run in which every test was skipped and, when ``--do-not-fail-on-empty-test-suite`` is used, of a test run for which no test was selected.
+
+
+.. _textui.receipt.issues:
+
+Numbers of issues
+-----------------
+
+The numbers of issues are recorded twice: once for the issues that were triggered by tests and once for the issues that were triggered by the test runner. The latter are the issues that PHPUnit reports about the test run itself, for instance a warning about the configuration, as well as the issues that were triggered while no test was running, for instance in a bootstrap script or in a data provider.
+
+This distinction is not available from the shell exit code. When ``--fail-on-warning`` and ``--fail-on-phpunit-warning`` are in effect, for instance, the shell exit code is ``1`` both when a test triggered a warning and when PHPUnit warned about the configuration.
+
+For each origin, these issues are counted:
+
+- errors, deprecations, notices, and warnings; the deprecations, notices, and warnings that are triggered by PHP itself are included
+- the errors, deprecations, notices, and warnings that are reported by PHPUnit
+
+The numbers are taken from the result that the shell exit code is calculated from, so the receipt and the shell exit code cannot disagree about what happened.
+
+
+.. _textui.receipt.otr:
+
+In the Open Test Reporting XML logfile
+--------------------------------------
+
+The first part of the receipt is the ``phpunit:invocation`` element in the ``infrastructure`` element. The second part is the ``phpunit:outcome`` element. It is carried by the last event of the logfile, which finishes the node for the test run:
+
+.. code-block:: xml
+
+    <?xml version="1.0"?>
+    <e:events xmlns="https://schemas.opentest4j.org/reporting/core/0.2.0" xmlns:e="https://schemas.opentest4j.org/reporting/events/0.2.0" xmlns:php="https://schema.phpunit.de/otr/php/0.1.0" xmlns:phpunit="https://schema.phpunit.de/otr/phpunit/0.4.0">
+     <infrastructure>
+      <!-- ... -->
+      <php:phpVersion>8.5.5</php:phpVersion>
+      <php:threadModel>NTS</php:threadModel>
+      <phpunit:randomSeed>1764842400</phpunit:randomSeed>
+      <phpunit:invocation version="14.0.0" workingDirectory="/path/to/project" time="2027-02-05T10:00:00.000000Z">
+       <phpunit:phar path="/path/to/project/tools/phpunit" sha256="..."/>
+       <phpunit:argument>--log-otr</phpunit:argument>
+       <phpunit:argument>build/otr.xml</phpunit:argument>
+       <phpunit:configurationFile path="/path/to/project/phpunit.xml" sha256="..."/>
+       <phpunit:bootstrap path="/path/to/project/tests/bootstrap.php"/>
+       <phpunit:extension className="Vendor\Extension\Bootstrap"/>
+      </phpunit:invocation>
+     </infrastructure>
+     <e:started id="0" name="PHPUnit" time="2027-02-05T10:00:00.000000Z"/>
+     <e:started id="1" parentId="0" name="/path/to/project/phpunit.xml" time="2027-02-05T10:00:00.100000Z"/>
+     <!-- the events for the test suites and the tests -->
+     <e:finished id="1" time="2027-02-05T10:00:01.900000Z">
+      <!-- ... -->
+     </e:finished>
+     <e:finished id="0" time="2027-02-05T10:00:02.000000Z">
+      <attachments>
+       <phpunit:outcome status="completed" shellExitCode="1" time="2027-02-05T10:00:02.000000Z">
+        <phpunit:tests run="12" assertions="30" errored="0" failed="0" skipped="1" incomplete="0" risky="1"/>
+        <phpunit:issuesTriggeredByTests errors="0" deprecations="2" notices="0" warnings="0" phpunitErrors="0" phpunitDeprecations="0" phpunitNotices="0" phpunitWarnings="0"/>
+        <phpunit:issuesTriggeredByTestRunner errors="0" deprecations="0" notices="0" warnings="0" phpunitErrors="0" phpunitDeprecations="0" phpunitNotices="0" phpunitWarnings="1"/>
+       </phpunit:outcome>
+      </attachments>
+     </e:finished>
+    </e:events>
+
+The node for the test run has the id ``0`` and the name ``PHPUnit``. It is started right after the ``infrastructure`` element and it is the parent of the nodes for the outermost test suites. The ids of the nodes for test suites and tests are positive integers.
+
+The ``phpunit:phar`` and ``phpunit:configurationFile`` elements are only present when PHPUnit is run from a PHAR and when an XML configuration file is used, respectively. There is one ``phpunit:argument`` element for each argument, one ``phpunit:bootstrap`` element for each bootstrap script, and one ``phpunit:extension`` element for the bootstrap class of each extension.
+
+The first part of the receipt is written to the logfile, together with the start of the node for the test run, before the bootstrap script is loaded. The logfile of a test run that a bootstrap script, an extension, or a test ends therefore says what was run. Such a logfile ends after its last event, without the ``phpunit:outcome`` element. It is not a well-formed XML document, because its root element is not closed.
+
+The elements of the receipt are in the namespace ``https://schema.phpunit.de/otr/phpunit/0.4.0``. A logfile with a receipt validates against the schemas of the Open Test Reporting format.
+
+
+.. _textui.receipt.compact:
+
+In the compact output
+---------------------
+
+Both parts of the receipt are printed as the last record of the compact output (see :ref:`textui.output.alternative-formats.compact`):
+
+.. parsed-literal::
+
+    FAILURES (12 tests, 30 assertions, 2 deprecations, 1 PHPUnit warning, 1 skipped, 1 risky)
+
+    --- RECEIPT
+    PHPUnit: |version|.0 (PHAR: /path/to/project/tools/phpunit, SHA-256: ...)
+    PHP: 8.5.5
+    Arguments: --compact
+    Working directory: /path/to/project
+    Configuration: /path/to/project/phpunit.xml (SHA-256: ...)
+    Bootstrap: /path/to/project/tests/bootstrap.php
+    Extensions: Vendor\\Extension\\Bootstrap
+    Started: 2027-02-05T10:00:00+00:00
+    Ended: 2027-02-05T10:00:02+00:00 (completed)
+    Shell exit code: 1
+    Tests: 12 run, 30 assertions, 1 skipped, 1 risky
+    Issues triggered by tests: 2 deprecations
+    Issues triggered by the test runner: 1 PHPUnit warning
+
+Each line of the record has a label and a value:
+
+- ``(none)`` is printed for a value that is empty.
+- An argument that is not made of characters that are safe in every shell is enclosed in single quotes, so that it can be told where one argument ends and where the next one begins.
+- Times are in UTC.
+- How the test run ended is printed in parentheses after the time at which it ended.
+- A number of tests or issues that is zero is not printed, with the exception of the number of tests run and the number of assertions.
+- Control characters and line breaks in a value are made visible, so that a value cannot be mistaken for another line of the record.
+
+A test run that does not reach its end does not print the record.
+
+The record is not printed when an extension replaces the output of the test results.
+
+
+.. _textui.receipt.limitations:
+
+Limitations
+-----------
+
+The receipt is not a signature
+    The receipt is written by the process that runs the test code, into a file and a stream that the test code can write to as well. It makes a result checkable; it does not make it tamper-proof. In the compact output, text that test code prints can imitate the record.
+
+A test run that does not reach its end has no complete receipt
+    A fatal error, ``exit()`` in a bootstrap script or in a test, a crash of PHPUnit, a second interrupt signal, and ``SIGKILL`` all end the process before the second part is written. When the CLI options or the XML configuration file are invalid, PHPUnit exits before the logfile is opened. A tool therefore has to make sure that it does not read the logfile of an earlier test run, for instance by deleting it before it runs PHPUnit.
+
+Commands that do not run tests leave a logfile without the second part
+    When ``--log-otr`` is combined with an option that makes PHPUnit do something other than running tests, for instance ``--list-tests``, the logfile has the first part of the receipt only.
+
+The receipt describes the test run, not individual tests
+    The outcome of each test, the type of the throwable for a test that errored or failed, and the issues that a test triggered are reported by the events of the Open Test Reporting XML logfile.
+
+The extensions are those that are configured
+    The receipt names the bootstrap classes of the extensions before they are bootstrapped. When an extension cannot be bootstrapped, the test runner triggers a warning, which is counted in the second part.
+
+Arguments are recorded as they were passed
+    A command line that contains a secret puts that secret into the logfile and into the compact output.
 
 
 .. _textui.test-execution-order:
