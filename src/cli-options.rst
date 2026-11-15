@@ -378,7 +378,7 @@ Reporting
    Prints defects in reverse order. This shows the most recently encountered defects first, which can be useful for large test suites.
 
 ``--compact``
-   Replaces the default progress and result output with a compact format that omits the progress section, the timing and memory usage line, and color codes. By default only errors, failures, risky tests, and the errors and warnings reported by PHPUnit itself are shown in detail; the ``--display-*`` options can be used to include additional issues, which are otherwise only counted in the summary line. Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. See :ref:`textui.output.alternative-formats.compact` for details.
+   Replaces the default progress and result output with a compact format that omits the progress section, the timing and memory usage line, and color codes. By default only errors, failures, risky tests, and the errors and warnings reported by PHPUnit itself are shown in detail; the ``--display-*`` options can be used to include additional issues, which are otherwise only counted in the summary line. The last record of the compact output is the receipt of the test run, which records what was run and how the run ended (see :ref:`textui.receipt`). Compact output can also be activated by setting the ``PHPUNIT_COMPACT_OUTPUT`` environment variable to ``1``. See :ref:`textui.output.alternative-formats.compact` for details.
 
 ``--teamcity``
    Replaces the default progress and result output with TeamCity format. This is used for integration with JetBrains TeamCity and other CI tools that support the TeamCity service message protocol.
@@ -405,7 +405,7 @@ Logging
    Writes the test results in JUnit XML format to the specified file. This format is widely supported by CI/CD tools for test result reporting.
 
 ``--log-otr <file>``
-   Writes the test results in Open Test Reporting XML format to the specified file. This is a newer, standardized format for test result reporting.
+   Writes the test results in Open Test Reporting XML format to the specified file. This is a newer, standardized format for test result reporting. The logfile contains the receipt of the test run, which records what was run and how the run ended (see :ref:`textui.receipt`).
 
 ``--include-git-information``
    Includes Git information (such as branch and commit hash) in the Open Test Reporting XML logfile. This helps associate test results with specific code versions.

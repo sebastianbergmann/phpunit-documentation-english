@@ -1813,6 +1813,8 @@ Parent element: ``<logging>``
 
 Configures a test result logfile in Open Test Reporting (OTR) XML format.
 
+The logfile contains the receipt of the test run, which records what was run and how the run ended (see :ref:`textui.receipt`).
+
 The ``outputFile`` Attribute
 ****************************
 
