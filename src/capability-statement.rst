@@ -68,7 +68,13 @@ variables, and thereby the conditions under which the code listed above is execu
 No code from the sources listed above, with the exception of Composer's autoloader, is executed
 when PHPUnit is invoked with ``--help``, ``--version``, ``--atleast-version``,
 ``--check-version``, ``--check-php-configuration``, ``--generate-configuration``,
-``--migrate-configuration``, or ``--validate-configuration``.
+``--migrate-configuration``, ``--validate-configuration``, or
+``--show-effective-configuration``.
+
+The ``--show-effective-configuration`` option
+(see :ref:`appendixes.configuration.show-effective-configuration`) can therefore be used to
+inspect which bootstrap scripts, extensions, test files, and targets for output a configuration
+names before any of it is used.
 
 
 .. _appendixes.capability-statement.processes:
@@ -85,7 +91,9 @@ The PHP binary
    :ref:`appendixes.attributes.RunTestsInSeparateProcesses`) and for each section of a
    :ref:`PHPT test <appendixes.phpt>` that is executed. Before the first of these
    processes is started, the PHP binary is started to find out which settings and extensions
-   have to be passed on to them.
+   have to be passed on to them. When code coverage is collected with PHP 8.6 or later, the
+   PHP binary is also started to have OPcache compile, but not execute, the files that are
+   analysed for code coverage.
 
 ``git``
    Git is invoked to read the remote, branch, commit, and status of the working directory when
@@ -216,6 +224,12 @@ PHPT tests and code coverage
    for the time that this test is run. The name of this directory is ``phpunit-phpt-`` followed
    by a random string, and only the current user can access it. PHPUnit writes two files to
    this directory and deletes them, and the directory, when the test has finished.
+
+Static analysis for code coverage
+   When the PHP binary is started to compile the files that are analysed for code coverage,
+   the list of these files is passed to it through a file in the operating system's directory
+   for temporary files. The name of this file starts with ``php-code-coverage-bytecode-``.
+   It is deleted when that process has finished.
 
 Anonymous temporary files
    PHPUnit also uses temporary files that have no name it could pass on, for instance to
