@@ -44,10 +44,9 @@ Bootstrap scripts
 
 Extensions for the test runner
    The classes configured with the ``--extension`` option or the
-   :ref:`\<extensions\> <appendixes.xml-configuration-file.extensions>` element, and all
-   ``*.phar`` files in the directory configured with the
-   :ref:`extensionsDirectory <appendixes.xml-configuration-file.phpunit.extensionsDirectory>`
-   attribute. The ``--no-extensions`` option prevents both.
+   :ref:`\<extensions\> <appendixes.xml-configuration-file.extensions>` element. The
+   ``--no-extensions`` option prevents this. PHPUnit does not load the PHP Archive (PHAR) of an
+   extension itself.
 
 Test files
    The files that are searched for tests, as selected on the command-line or in the
@@ -64,6 +63,13 @@ The :ref:`\<php\> <appendixes.xml-configuration-file.php>` element of the XML co
 and the ``-d`` and ``--include-path`` options do not execute code. They do change the
 configuration of PHP, its ``include_path``, constants, global variables, and environment
 variables, and thereby the conditions under which the code listed above is executed.
+
+When tests are :ref:`run in parallel <parallel-test-execution>`, Composer's autoloader and the
+bootstrap scripts are also loaded in each
+:ref:`worker process <parallel-test-execution.workers>`, as are the test files of the tests
+that the worker runs. The extensions for the test runner that are
+:ref:`implemented for this <extending-phpunit.extending-the-test-runner.child-processes>`
+are bootstrapped there as well.
 
 No code from the sources listed above, with the exception of Composer's autoloader, is executed
 when PHPUnit is invoked with ``--help``, ``--version``, ``--atleast-version``,
@@ -88,8 +94,10 @@ The PHP binary
    The PHP binary that PHPUnit itself is run with is started for each test that is run in a
    separate process (see ``--process-isolation`` in :ref:`appendixes.cli-options.execution`,
    :ref:`appendixes.attributes.RunInSeparateProcess`, and
-   :ref:`appendixes.attributes.RunTestsInSeparateProcesses`) and for each section of a
-   :ref:`PHPT test <appendixes.phpt>` that is executed. Before the first of these
+   :ref:`appendixes.attributes.RunTestsInSeparateProcesses`), for each section of a
+   :ref:`PHPT test <appendixes.phpt>` that is executed, and for each
+   :ref:`worker process <parallel-test-execution.workers>` of a test run that is requested
+   with ``--parallel``, including the workers that replace others. Before the first of these
    processes is started, the PHP binary is started to find out which settings and extensions
    have to be passed on to them. When code coverage is collected with PHP 8.6 or later, the
    PHP binary is also started to have OPcache compile, but not execute, the files that are
@@ -97,9 +105,15 @@ The PHP binary
 
 ``git``
    Git is invoked to read the remote, branch, commit, and status of the working directory when
-   the ``--include-git-information`` option is used together with ``--log-otr``. It is also
-   invoked with ``describe`` to determine PHPUnit's version number when PHPUnit is run from a
-   Git checkout of its own repository rather than from a release.
+   the ``--include-git-information`` option is used together with ``--log-otr``, and to read the
+   commit that is checked out when the ``--random-seed-from-git-commit`` option is used. It is
+   also invoked with ``describe`` to determine PHPUnit's version number when PHPUnit is run
+   from a Git checkout of its own repository rather than from a release.
+
+Commands that report the number of CPU cores
+   When ``--parallel auto`` is used, commands of the operating system are invoked to find out
+   how many CPU cores are available: ``nproc``, ``getconf``, ``lscpu``, or ``sysctl``, and on
+   Windows ``wmic``, ``powershell``, or ``reg``.
 
 ``dot``
    The ``dot`` command of `Graphviz <https://graphviz.org/>`_ is invoked to render control flow
@@ -157,8 +171,7 @@ the XML configuration file, and only when it is requested. A file that already e
 overwritten. For most logs and code coverage reports, directories that are missing are created.
 
 - Logs: ``--log-otr``, ``--log-junit``, ``--log-teamcity``, ``--testdox-html``,
-  ``--testdox-text``, ``--log-events-text``, and ``--log-events-verbose-text``
-  (see :ref:`textui.logging`) as well as the
+  ``--testdox-text``, and ``--log-events-text`` (see :ref:`textui.logging`) as well as the
   :ref:`\<logging\> <appendixes.xml-configuration-file.logging>` element
 - Code coverage reports: ``--coverage-clover``, ``--coverage-cobertura``, ``--coverage-crap4j``,
   ``--coverage-html``, ``--coverage-jsonl``, ``--coverage-openclover``, ``--coverage-php``,
@@ -212,11 +225,14 @@ Temporary Files
 PHP processes that PHPUnit starts
    PHPUnit passes code and data to a test that is run in a separate process, and receives the
    result of that test, through files in the operating system's directory for temporary files.
-   The code of a :ref:`PHPT test <appendixes.phpt>` that has a ``--STDIN--`` section
-   is passed to its process in the same way. The names of these files start with ``phpunit_``.
-   PHPUnit deletes them when the process has finished, with one exception: a file with the list
-   of the files of the code under test is created once per invocation of ``phpunit`` and is
-   deleted when PHPUnit exits.
+   It communicates in the same way with the
+   :ref:`worker processes <parallel-test-execution.workers>` of a test run that is requested
+   with ``--parallel``. The code of a :ref:`PHPT test <appendixes.phpt>` that has a
+   ``--STDIN--`` section is passed to its process in the same way, too. The names of these
+   files start with ``phpunit_``. PHPUnit deletes each of them when it is no longer needed, at
+   the latest when the process that it was created for has finished, with one exception: a
+   file with the list of the files of the code under test is created once per invocation of
+   ``phpunit`` and is deleted when PHPUnit exits.
 
 PHPT tests and code coverage
    While code coverage is collected, PHPUnit creates a directory for each
