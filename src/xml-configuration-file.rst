@@ -119,6 +119,19 @@ Possible values: integer (default: ``100``)
 
 Configures the number of tests to execute before garbage collection is triggered (see above).
 
+.. _appendixes.xml-configuration-file.phpunit.numberOfTestClassesBeforeWorkerRecycling:
+
+The ``numberOfTestClassesBeforeWorkerRecycling`` Attribute
+----------------------------------------------------------
+
+Possible values: non-negative integer (default: ``0``)
+
+This attribute configures the number of test classes that a worker process of a parallel test run runs before it is replaced with a new process. The default value ``0`` means that a worker process is never replaced. See :ref:`parallel-test-execution.workers.recycling`.
+
+This attribute has no effect unless tests are run in parallel, which is requested using the ``--parallel`` CLI option.
+
+This configuration can be overridden for a single run using the ``--recycle-workers-after`` CLI option.
+
 .. _appendixes.xml-configuration-file.phpunit.requireCoverageMetadata:
 
 The ``requireCoverageMetadata`` Attribute

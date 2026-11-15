@@ -1,0 +1,11 @@
+./tools/phpunit --parallel 3 tests
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+Parallel:      3 workers
+
+......                                                              6 / 6 (100%)
+
+Time: 00:01.335, Memory: 24.00 MB
+
+OK (6 tests, 6 assertions)

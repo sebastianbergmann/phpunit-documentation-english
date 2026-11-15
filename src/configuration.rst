@@ -166,6 +166,9 @@ Execution
     * - ``--process-isolation``
       - :ref:`processIsolation <appendixes.xml-configuration-file.phpunit.processIsolation>` attribute on ``<phpunit>``
       - ``false``
+    * - ``--recycle-workers-after <n>``
+      - :ref:`numberOfTestClassesBeforeWorkerRecycling <appendixes.xml-configuration-file.phpunit.numberOfTestClassesBeforeWorkerRecycling>` attribute on ``<phpunit>``
+      - ``0``
     * - ``--globals-backup``
       - :ref:`backupGlobals <appendixes.xml-configuration-file.phpunit.backupGlobals>` attribute on ``<phpunit>``
       - ``false``
@@ -542,6 +545,7 @@ Alternative output and event streaming:
 
 Test execution:
 
+- ``--parallel <n>``
 - ``--timeout <sec>``
 
 Code coverage:

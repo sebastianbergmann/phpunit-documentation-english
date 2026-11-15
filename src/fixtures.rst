@@ -374,6 +374,15 @@ A before-first-test method skips the tests of its test class when it calls ``mar
 
 Consequently, when all tests of a test class are run in separate processes and a before-first-test method skips the tests or throws an exception, a separate process is started for each test, and each test is reported as skipped or as errored. To skip all tests of such a test class without starting a separate process for each of them, express the precondition using one of the :ref:`Requires* attributes <writing-tests-for-phpunit.skipping-tests.skipping-tests-using-attributes>` on the test class.
 
+.. _fixtures.sharing-fixture.parallel:
+
+Sharing Fixture and Parallel Test Execution
+-------------------------------------------
+
+When tests are run in parallel (see :ref:`parallel-test-execution`), all tests of a test class are run by the same worker process. The before-first-test and after-last-test methods are called once, in this worker process, and a fixture that is shared using these methods is available to all tests of the test class, as it is when tests are not run in parallel.
+
+Test classes that are run at the same time by different worker processes do not share anything inside PHP. They can still get in each other's way when their fixtures use the same resource outside of PHP, for instance the same database. :ref:`parallel-test-execution.writing-tests.worker-identity` explains how each worker process can be given a resource of its own.
+
 .. _fixtures.global-state:
 
 Global State

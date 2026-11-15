@@ -328,6 +328,18 @@ The ``--repeat`` and ``--retry`` command-line options have no effect on properti
 PHPUnit emits a warning when the ``#[Repeat]`` or the ``#[Retry]`` attribute is used on a property.
 
 
+.. _flaky-tests.parallel:
+
+Parallel Test Execution
+=======================
+
+Repeating and retrying work as described in this chapter when tests are run in parallel (see :ref:`parallel-test-execution`).
+All repetitions and attempts of a test are run by the worker process that runs the test class of the test.
+
+A test that passes when the tests are run one after another and only fails every now and then when they are run in parallel is rarely made reliable by retrying it.
+Such a test usually uses something that another test uses at the same time, for instance a database or a file (see :ref:`parallel-test-execution.writing-tests`).
+
+
 .. _flaky-tests.phpt:
 
 PHPT Tests

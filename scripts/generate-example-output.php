@@ -45,6 +45,15 @@ $additionalOptions = [
     'property-based-testing/TruckWithTargetTest.php'                        => '--random-seed 1234 ',
 ];
 
+// Examples that run all tests in the tests/ directory of an example directory
+// instead of a single test file: output file => options
+$directories = [
+    'parallel-test-execution/crash/parallel.out'        => '--parallel 2 ',
+    'parallel-test-execution/dependencies/parallel.out' => '--parallel 2 --display-phpunit-notices ',
+    'parallel-test-execution/slow-tests/parallel.out'   => '--parallel 3 ',
+    'parallel-test-execution/slow-tests/sequential.out' => '',
+];
+
 $phpunit       = $command = __DIR__ . '/../tools/phpunit';
 $version       = hash('sha256', trim(PHP_VERSION . shell_exec($phpunit . ' --version')));
 $processed     = processed_read();
@@ -111,6 +120,40 @@ foreach (new GlobIterator(__DIR__ . '/../src/examples/**/*Test.php') as $test) {
     $processed[$currentFile] = $currentFileHash;
 
     print '[processed] ' . $currentFile . PHP_EOL;
+}
+
+foreach ($directories as $outputFile => $options) {
+    $directory = $rootDirectory . dirname($outputFile);
+    $files     = array_merge(glob($directory . '/src/*.php'), glob($directory . '/tests/*.php'));
+
+    sort($files);
+
+    $currentHash = $version . hash('sha256', implode('', array_map(static fn (string $file): string => hash_file('sha256', $file), $files))) . hash('sha256', $options);
+
+    if (isset($processed[$outputFile]) && $processed[$outputFile] === $currentHash) {
+        print '[skipped  ] ' . $outputFile . PHP_EOL;
+
+        continue;
+    }
+
+    $bootstrap     = $directory . '/src/autoload.php';
+    $hiddenOptions = '--no-configuration --do-not-record-test-run-history ';
+
+    if (file_exists($bootstrap)) {
+        $hiddenOptions .= '--bootstrap ' . $bootstrap . ' ';
+    }
+
+    $output = shell_exec($phpunit . ' ' . $hiddenOptions . $options . $directory . '/tests');
+
+    file_put_contents(
+        $rootDirectory . $outputFile,
+        './tools/phpunit ' . $options . 'tests' . PHP_EOL .
+        str_replace($directory . '/tests', '/path/to/tests', $output)
+    );
+
+    $processed[$outputFile] = $currentHash;
+
+    print '[processed] ' . $outputFile . PHP_EOL;
 }
 
 ksort($processed);

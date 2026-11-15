@@ -25,6 +25,7 @@ Contents:
    testdox
    risky-tests
    flaky-tests
+   parallel-test-execution
    error-handling
    extending-phpunit
 

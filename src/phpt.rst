@@ -382,6 +382,38 @@ Like the code from the ``--SKIPIF--`` section, the code from the ``--CLEAN--`` s
 Otherwise it is executed in a new PHP process.
 
 
+.. _appendixes.phpt.sections.conflicts:
+
+``--CONFLICTS--``
+-----------------
+
+The names of the resources that the test uses and that must not be used by another test at the same time, one name per line.
+Empty lines are ignored, and ``#`` starts a comment.
+The names are freely chosen: a name stands for a file, a directory, a port, a database, or anything else that tests can get in each other's way with.
+
+This section only has an effect when tests are run in parallel (see :ref:`appendixes.phpt.parallel`).
+Two PHPT tests that declare the same name are then not run at the same time.
+
+.. code-block:: none
+   :caption: Using ``--CONFLICTS--``
+
+    --TEST--
+    The cache file is created
+    --CONFLICTS--
+    cache.txt
+    --FILE--
+    <?php declare(strict_types=1);
+    ...
+    --EXPECT--
+    ...
+    --CLEAN--
+    <?php declare(strict_types=1);
+    unlink(__DIR__ . '/cache.txt');
+
+The name ``all`` is reserved.
+A PHPT test that declares it is not run at the same time as any other test, be it a PHPT test or a test that is implemented as a method of a test class.
+
+
 .. _appendixes.phpt.sections.ignored:
 
 Ignored Sections
@@ -391,7 +423,6 @@ The sections listed below are part of the PHPT format, but they have no effect w
 They are accepted so that PHPT tests written for PHP's own test runner do not have to be modified:
 
 - ``--CAPTURE_STDIO--``
-- ``--CONFLICTS--``
 - ``--CREDITS--``
 - ``--DESCRIPTION--``
 - ``--FLAKY--``
@@ -510,6 +541,23 @@ Repeating and Retrying
 PHPT tests can be repeated using the ``--repeat`` CLI option and retried using the ``--retry`` CLI option.
 Because attributes cannot be used in a PHPT file, the ``#[Repeat]`` and ``#[Retry]`` attributes have no equivalent for PHPT tests.
 This is documented in :ref:`the chapter on flaky tests <flaky-tests.phpt>`.
+
+
+.. _appendixes.phpt.parallel:
+
+Parallel Test Execution
+=======================
+
+When tests are run in parallel, using the ``--parallel`` CLI option, PHPT tests are run in parallel as well (see :ref:`parallel-test-execution.main-process.phpt`).
+PHPUnit then runs the child processes of several PHPT tests at the same time.
+
+PHPT tests that use the same resource, for instance because they create a file with the same name, must not be run at the same time.
+Use the ``--CONFLICTS--`` section to declare this (see :ref:`appendixes.phpt.sections.conflicts`).
+
+The tests of a test run are stopped early when the ``--stop-on-*`` CLI options are used.
+The code from the ``--CLEAN--`` section of a PHPT test that is running at this moment is still executed.
+
+PHPT tests are run one after another while code coverage is collected.
 
 
 .. _appendixes.phpt.when-to-use:

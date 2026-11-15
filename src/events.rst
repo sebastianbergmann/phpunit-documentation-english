@@ -76,6 +76,10 @@ the ``PHPUnit\Event\TestRunner\ChildProcessReason`` enumeration:
 
     The child process runs the ``CLEAN`` section of a PHPT test
 
+``ChildProcessReason::ParallelWorker``
+
+    The child process is a worker process of a parallel test run (see :ref:`parallel-test-execution`)
+
 ``PHPUnit\Event\TestRunner\PhpunitDeprecationTriggered``
 
     PHPUnit itself reports a deprecation about the test runner
@@ -452,6 +456,11 @@ Hook methods
 
 Child processes
     ``PHPUnit\Event\TestRunner\ChildProcessStarted`` and ``PHPUnit\Event\TestRunner\ChildProcessFinished`` (or ``PHPUnit\Event\TestRunner\ChildProcessErrored``) for a test that is run in a separate process are emitted between the ``PHPUnit\Event\Test\PreparationStarted`` and ``PHPUnit\Event\Test\Finished`` events for that test.
+
+    This does not apply to the worker processes of a parallel test run, which run many tests (see :ref:`parallel-test-execution`). ``PHPUnit\Event\TestRunner\ChildProcessStarted`` is emitted when a worker process is started, and ``PHPUnit\Event\TestRunner\ChildProcessFinished`` (or ``PHPUnit\Event\TestRunner\ChildProcessErrored``) is emitted when it has ended. This is not tied to a test: these events can be emitted before the first test suite is started, after the last test has finished, and at any point in between, for instance when a worker process is replaced.
+
+Parallel test execution
+    The events of a test that was run by a worker process of a parallel test run are emitted in the worker process and replayed in the main process. They are replayed in the order in which a sequential test run would emit them, so that the guarantees described above also hold for a parallel test run. The ``processId()`` method of the telemetry information of an event returns the ID of the process in which the event was emitted (see :ref:`extending-phpunit.extending-the-test-runner.child-processes`).
 
 This is, for instance, the sequence of events for a test that is skipped in its ``setUp()`` method. No ``PHPUnit\Event\Test\Prepared`` event is emitted because the preparation of the test did not succeed, but the test is finished nevertheless:
 

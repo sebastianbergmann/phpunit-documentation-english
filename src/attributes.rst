@@ -2061,6 +2061,54 @@ When multiple ``WithEnvironmentVariable`` attributes are specified for the same 
 the last one wins.
 
 
+.. _appendixes.attributes.parallel-test-execution:
+
+Parallel Test Execution
+=======================
+
+The attribute documented in this section is used for :ref:`running tests in parallel <parallel-test-execution>`.
+
+.. _appendixes.attributes.DoNotRunInParallel:
+
+``DoNotRunInParallel``
+----------------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | no         |
++-------------+--------------+------------+
+
+The ``DoNotRunInParallel`` attribute can be used to exclude a test class from parallel test execution.
+When tests are run in parallel, using the ``--parallel`` CLI option, the tests of such a test class are not run by a worker process.
+They are run in the main process, and no other test is run while they are run.
+
+The tests of a test class are always run by the same process.
+Using the attribute on a test method therefore has the same effect as using it on the test class of that method.
+
+This attribute is inherited from parent classes: if a parent class is annotated with ``#[DoNotRunInParallel]``, all child classes are excluded from parallel test execution as well.
+
+The attribute has no effect when tests are not run in parallel.
+
+.. code-block:: php
+    :caption: Using the ``DoNotRunInParallel`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\DoNotRunInParallel;
+    use PHPUnit\Framework\TestCase;
+
+    #[DoNotRunInParallel]
+    final class SchemaMigrationTest extends TestCase
+    {
+        public function testSchemaCanBeMigrated(): void
+        {
+            // ...
+        }
+    }
+
+See :ref:`parallel-test-execution.main-process.do-not-run-in-parallel` for details.
+
+
 Flaky Tests
 ===========
 

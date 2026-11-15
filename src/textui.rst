@@ -313,7 +313,7 @@ The default output of PHPUnit's test runner consists of up to four sections.
 Runtime information
 -------------------
 
-This section contains information about the PHPUnit version, PHP version, and PHPUnit's XML configuration file. When PHPUnit seeds random number generators, this section also shows the seed (see :ref:`textui.random-numbers`).
+This section contains information about the PHPUnit version, PHP version, and PHPUnit's XML configuration file. When PHPUnit seeds random number generators, this section also shows the seed (see :ref:`textui.random-numbers`). When the tests are run in parallel, this section also shows the number of worker processes (see :ref:`parallel-test-execution`).
 
 This section can be disabled using the ``--no-output`` CLI option.
 
@@ -701,6 +701,8 @@ When used without a value, these options stop execution after the first occurren
 ``n`` is specified (for example, ``--stop-on-failure=3``), execution continues until ``n`` occurrences
 have been encountered.
 
+These options can be used when tests are run in parallel (see :ref:`parallel-test-execution.other-features`).
+
 See :ref:`appendixes.cli-options.execution` for the complete reference.
 
 
@@ -744,6 +746,8 @@ When the ``pcntl`` extension is available, a test that is still running when the
     Tests: 8, Assertions: 7, Errors: 1.
 
 Without the ``pcntl`` extension, the test that is running when the limit is exceeded is not aborted. The test run stops after it has finished. The same applies to tests that run in a separate process (see :ref:`appendixes.attributes.RunInSeparateProcess`) and to PHPT tests, regardless of whether ``pcntl`` is available.
+
+When tests are run in parallel (see :ref:`parallel-test-execution`), the tests that the worker processes are running when the limit is exceeded are aborted.
 
 The shell exit code of a run that exceeded its time limit is ``124``, the value that GNU ``timeout(1)`` uses for a command that exceeded its time limit, regardless of whether the tests that did run passed (see :ref:`textui.exit-codes`). Code coverage reports and the baseline are not generated for such a run, as for a run that was interrupted by a signal. The ``PHPUnit\Event\TestRunner\TimeLimitExceeded`` event (see :ref:`appendixes.events`) is emitted when the limit is exceeded.
 

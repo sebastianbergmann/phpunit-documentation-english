@@ -1366,6 +1366,10 @@ Repeating, retrying, and process isolation
     The ``#[Repeat]``, ``#[Retry]``, and ``#[RunInSeparateProcess]`` attributes have no effect on a property, and PHPUnit emits a warning when they are used on one.
     The corresponding command-line options and settings of the XML configuration file do not apply to properties either.
 
+Parallel test execution
+    When tests are run in :ref:`parallel <parallel-test-execution>`, a property is checked by the worker process that runs its test class.
+    The examples are generated from the random seed of the test run and are the same as in a test run that does not run tests in parallel.
+
 Events
     The ``PHPUnit\Event\Test\PropertyFalsified`` and ``PHPUnit\Event\Test\PropertyChecked`` :ref:`events <appendixes.events>` carry the counterexample and the statistics of a property for extensions.
     The other events for a test are emitted once for a property.

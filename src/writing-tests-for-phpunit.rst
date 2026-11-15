@@ -759,6 +759,8 @@ All data providers are executed before both the call to a before-class method su
 Because of this, you cannot access any properties of the actual test case object within a data provider.
 This also means that no code coverage data is collected while data provider methods are executed.
 
+When tests are run in parallel, a data provider is executed more than once and has to provide the same data sets, under the same names, each time (see :ref:`parallel-test-execution.writing-tests.data-providers`).
+
 
 .. _writing-tests-for-phpunit.data-providers.reference.contents-of-a-data-set:
 
@@ -869,6 +871,8 @@ By default, PHPUnit reorders the tests so that, as far as possible, a test is ru
 A test that has more than one test dependency attribute will get a fixture from the first producer as the first argument, a fixture from the second producer as the second argument, and so on.
 
 See :ref:`appendixes.attributes.Depends` and the attributes documented next to it for dependencies on tests in other classes and for the cloning variants.
+
+When tests are run in parallel, a dependency on a test of another test class limits what can be run in parallel (see :ref:`parallel-test-execution.main-process.dependencies`).
 
 Test dependencies are the only way for a test to build on another test: a test must not run another test itself, for instance by calling the ``run()`` method of a ``TestCase`` object. A test that does so errors with the message ``A test must not run another test``.
 

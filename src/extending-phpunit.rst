@@ -367,6 +367,58 @@ You can find a list of all events PHPUnit currently emits in the :ref:`appendix 
 
   PHPUnit currently does not support registering custom events.
 
+.. _extending-phpunit.extending-the-test-runner.child-processes:
+
+Extensions and child processes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Not every test is run in the process in which an extension is bootstrapped. A test is run in a child process when it is run in a separate process (see :ref:`appendixes.attributes.RunInSeparateProcess`) and when it is run by a worker process of a parallel test run (see :ref:`parallel-test-execution`).
+
+The events of such a test are emitted in the child process and replayed in the main process afterwards. The subscribers and tracers that an extension registers in its ``bootstrap()`` method therefore receive the events of all tests, and an extension that only observes the test run, for instance to print or log results, needs no change to support child processes.
+
+This is different for an extension that has to act in the process in which a test is run, for instance to reset global state or to start a database transaction before each test. When the test is run in a child process, a subscriber in the main process is notified after the fact, in the wrong process. Such an extension implements the ``PHPUnit\Runner\Extension\ChildProcessExtension`` interface instead of the ``PHPUnit\Runner\Extension\Extension`` interface. It is registered like any other extension.
+
+.. literalinclude:: examples/extending-phpunit/ResetTimezoneExtension.php
+   :caption: An extension that acts in the main process and in child processes
+   :language: php
+
+.. literalinclude:: examples/extending-phpunit/ResetTimezoneSubscriber.php
+   :caption: An event subscriber that resets the default timezone before each test
+   :language: php
+
+The ``ChildProcessExtension`` interface extends the ``Extension`` interface and declares two additional methods:
+
+``bootstrapChildProcess()``
+    This method is called in a child process before the child process runs its first test. It accepts the PHPUnit configuration, the facade for child processes, and the extension parameter collection.
+
+    The facade for child processes is an instance of ``PHPUnit\Runner\Extension\ChildProcessFacade``. It allows you to register event subscribers using the methods ``registerSubscribers()`` and ``registerSubscriber()``. These subscribers receive the events of the tests that the child process runs, when they are emitted, in the child process. Event tracers cannot be registered in a child process, and the methods for replacing output and for requiring the collection of code coverage do not exist there, as both are concerns of the main process.
+
+``shutdownChildProcess()``
+    This method is called in a child process after the child process has run its last test, on the object whose ``bootstrapChildProcess()`` method was called. It is not called when the child process ends unexpectedly or is terminated, for instance because a test calls ``exit()``, triggers a fatal error, or is aborted because a time limit was exceeded.
+
+The ``bootstrap()`` method is called in the main process only.
+
+How often the two methods are called depends on the kind of child process:
+
+- A separate process runs a single test. ``bootstrapChildProcess()`` and ``shutdownChildProcess()`` are called once for each test that is run in a separate process.
+- A worker process of a parallel test run runs many tests. ``bootstrapChildProcess()`` is called once in each worker process, and the state of the extension is kept from one test to the next. ``shutdownChildProcess()`` is called when the test run ends and when the worker process is replaced with a new process (see :ref:`parallel-test-execution.workers.recycling`).
+
+The environment variable ``PHPUNIT_WORKER_ID`` is set in a worker process and is not set in a separate process, which allows an extension to tell the two apart (see :ref:`parallel-test-execution.writing-tests.worker-identity`).
+
+No test runner events, such as ``PHPUnit\Event\TestRunner\Started`` or ``PHPUnit\Event\TestRunner\Finished``, are emitted in a child process. What an extension would do when the test runner starts is done in ``bootstrapChildProcess()``, and what it would do when the test runner finishes is done in ``shutdownChildProcess()``.
+
+When ``bootstrapChildProcess()`` or ``shutdownChildProcess()`` throws an exception, PHPUnit emits a test runner warning.
+
+**Subscribing to the events of the current process**
+
+Tests are also run in the main process: all of them in a test run that neither runs tests in parallel nor in separate processes, and some of them in a parallel test run (see :ref:`parallel-test-execution.main-process`). An extension that acts in the process in which a test is run therefore registers its subscribers in the main process as well.
+
+A subscriber that is registered using ``registerSubscriber()`` in the main process would be notified of the replayed events of the tests that were run in child processes, too, and act a second time for these tests. The extension facade of the main process provides the methods ``registerSubscribersForEventsOfThisProcess()`` and ``registerSubscriberForEventsOfThisProcess()`` for this situation. A subscriber that is registered using one of them is only notified of the events that were emitted in the main process.
+
+The example shown above registers the same subscriber in both places: in ``bootstrap()`` using ``registerSubscriberForEventsOfThisProcess()``, and in ``bootstrapChildProcess()`` using the ``registerSubscriber()`` method of the facade for child processes. The default timezone is then reset once before each test, in the process that runs the test, no matter which process this is.
+
+The process in which an event was emitted is available to every subscriber and tracer: ``$event->telemetryInfo()->processId()`` returns the ID of that process, which can be compared with the return value of ``getmypid()``.
+
 .. _extending-phpunit.extending-the-test-runner.passing-information-from-a-test-to-an-extension:
 
 Passing information from a test to an extension

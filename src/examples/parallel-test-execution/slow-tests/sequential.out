@@ -1,0 +1,10 @@
+./tools/phpunit tests
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12
+
+......                                                              6 / 6 (100%)
+
+Time: 00:03.010, Memory: 24.00 MB
+
+OK (6 tests, 6 assertions)

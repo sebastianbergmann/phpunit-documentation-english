@@ -137,6 +137,12 @@ Execution
 ``--process-isolation``
    Runs each test in a separate PHP process. This ensures complete isolation between tests but significantly increases execution time. The before-first-test and after-last-test methods, such as ``setUpBeforeClass()`` and ``tearDownAfterClass()``, are then called in each of these processes and not in the process of the test runner (see :ref:`fixtures.sharing-fixture.separate-processes`).
 
+``--parallel <n>``
+   Runs test classes in parallel using ``<n>`` worker processes. Use ``auto`` for ``<n>`` to use one worker process for each CPU core that is available. With ``--parallel 1``, the tests are run sequentially. A value that is neither a positive integer nor ``auto`` is ignored with a warning. This option has no XML configuration counterpart. See :ref:`parallel-test-execution`.
+
+``--recycle-workers-after <n>``
+   Replaces a worker process of a parallel test run with a new process after it has run ``<n>`` test classes. Use ``0`` to never replace a worker process. This option has no effect unless tests are run in parallel. This overrides the corresponding XML configuration setting. See :ref:`parallel-test-execution.workers.recycling`.
+
 ``--globals-backup``
    Backs up and restores the ``$GLOBALS`` superglobal before and after each test. This prevents tests from inadvertently affecting each other through global state.
 

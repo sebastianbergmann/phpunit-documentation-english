@@ -602,8 +602,11 @@ PHPCOV provides two commands: ``merge`` for merging code coverage data from mult
 Merging Code Coverage Data
 --------------------------
 
-When tests are run in parallel or across separate processes, each run can produce its own serialized code coverage file using the ``--coverage-php`` option of PHPUnit.
+When the tests of a test suite are run using more than one invocation of PHPUnit, for instance by parallel jobs of a CI pipeline, each run can produce its own serialized code coverage file using the ``--coverage-php`` option of PHPUnit.
 The ``phpcov merge`` command merges these files and generates a combined code coverage report.
+
+This is not required when a single invocation of PHPUnit runs the tests in parallel using the ``--parallel`` CLI option.
+PHPUnit then combines the code coverage data that its worker processes collect (see :ref:`parallel-test-execution.other-features`).
 
 .. code-block:: bash
 
