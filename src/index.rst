@@ -39,6 +39,7 @@ Contents:
    xml-configuration-file
    events
    phpt
+   capability-statement
    copyright
 
 
