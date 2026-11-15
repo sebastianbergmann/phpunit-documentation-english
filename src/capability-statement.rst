@@ -58,7 +58,7 @@ Test files
 
 PHPT tests
    The ``--FILE--``, ``--SKIPIF--``, and ``--CLEAN--`` sections of a
-   :ref:`PHPT test <textui.running-tests.phpt>`, each in a PHP process of its own.
+   :ref:`PHPT test <appendixes.phpt>`, each in a PHP process of its own.
 
 The :ref:`\<php\> <appendixes.xml-configuration-file.php>` element of the XML configuration file
 and the ``-d`` and ``--include-path`` options do not execute code. They do change the
@@ -67,8 +67,8 @@ variables, and thereby the conditions under which the code listed above is execu
 
 No code from the sources listed above, with the exception of Composer's autoloader, is executed
 when PHPUnit is invoked with ``--help``, ``--version``, ``--atleast-version``,
-``--check-version``, ``--check-php-configuration``, ``--generate-configuration``, or
-``--migrate-configuration``.
+``--check-version``, ``--check-php-configuration``, ``--generate-configuration``,
+``--migrate-configuration``, or ``--validate-configuration``.
 
 
 .. _appendixes.capability-statement.processes:
@@ -83,7 +83,7 @@ The PHP binary
    separate process (see ``--process-isolation`` in :ref:`appendixes.cli-options.execution`,
    :ref:`appendixes.attributes.RunInSeparateProcess`, and
    :ref:`appendixes.attributes.RunTestsInSeparateProcesses`) and for each section of a
-   :ref:`PHPT test <textui.running-tests.phpt>` that is executed. Before the first of these
+   :ref:`PHPT test <appendixes.phpt>` that is executed. Before the first of these
    processes is started, the PHP binary is started to find out which settings and extensions
    have to be passed on to them.
 
@@ -92,6 +92,11 @@ The PHP binary
    the ``--include-git-information`` option is used together with ``--log-otr``. It is also
    invoked with ``describe`` to determine PHPUnit's version number when PHPUnit is run from a
    Git checkout of its own repository rather than from a release.
+
+``dot``
+   The ``dot`` command of `Graphviz <https://graphviz.org/>`_ is invoked to render control flow
+   graphs when a code coverage report in HTML format is generated and path coverage data has
+   been collected (see ``--path-coverage`` in :ref:`appendixes.cli-options.code-coverage`).
 
 ``stty``
    On Windows ``mode CON``. It is invoked to find out the width of the terminal for ``--help``
@@ -148,10 +153,10 @@ overwritten. For most logs and code coverage reports, directories that are missi
   (see :ref:`textui.logging`) as well as the
   :ref:`\<logging\> <appendixes.xml-configuration-file.logging>` element
 - Code coverage reports: ``--coverage-clover``, ``--coverage-cobertura``, ``--coverage-crap4j``,
-  ``--coverage-html``, ``--coverage-openclover``, ``--coverage-php``, ``--coverage-text``, and
-  ``--coverage-xml`` (see :ref:`appendixes.cli-options.code-coverage`) as well as the
-  :ref:`\<report\> <appendixes.xml-configuration-file.coverage.report>` element.
-  ``--coverage-html`` and ``--coverage-xml`` write a directory of files.
+  ``--coverage-html``, ``--coverage-jsonl``, ``--coverage-openclover``, ``--coverage-php``,
+  ``--coverage-text``, and ``--coverage-xml`` (see :ref:`appendixes.cli-options.code-coverage`)
+  as well as the :ref:`\<report\> <appendixes.xml-configuration-file.coverage.report>` element.
+  ``--coverage-html``, ``--coverage-jsonl``, and ``--coverage-xml`` write a directory of files.
 - ``--generate-baseline`` writes a baseline file
 - ``--list-tests-xml`` writes a list of tests
 - ``--generate-configuration`` writes ``phpunit.xml`` to the current working directory
@@ -164,13 +169,18 @@ overwritten. For most logs and code coverage reports, directories that are missi
 State That Is Kept Between Runs
 -------------------------------
 
-Test result cache
-   The results of the previous run are written at the end of a run, unless this is disabled
-   with ``--do-not-cache-result`` or the
-   :ref:`cacheResult <appendixes.xml-configuration-file.phpunit.cacheResult>` attribute. The
-   file is ``test-results`` in the cache directory. When no cache directory is configured, it
-   is ``.phpunit.result.cache`` in the directory of the XML configuration file or, when no XML
-   configuration file is used, in the directory of the ``phpunit`` script.
+Test run history
+   The status and duration of each test are written at the end of a run, unless this is
+   disabled with ``--do-not-record-test-run-history`` or the
+   :ref:`recordTestRunHistory <appendixes.xml-configuration-file.phpunit.recordTestRunHistory>`
+   attribute. The file is ``test-run-history`` in the cache directory. When no cache directory
+   is configured, it is ``.phpunit.result.cache`` in the directory of the XML configuration
+   file or, when no XML configuration file is used, in the directory of the ``phpunit`` script.
+
+Test index
+   An index of the test files is written to ``test-index`` in the cache directory when this is
+   enabled with ``--cache-test-index`` or the ``cacheTestIndex`` attribute of the ``<phpunit>``
+   element. It is not written when no cache directory is configured.
 
 Cache for static analysis
    The results of the static analysis that is performed for code coverage are written when
@@ -194,18 +204,18 @@ Temporary Files
 PHP processes that PHPUnit starts
    PHPUnit passes code and data to a test that is run in a separate process, and receives the
    result of that test, through files in the operating system's directory for temporary files.
-   The code of a :ref:`PHPT test <textui.running-tests.phpt>` that has a ``--STDIN--`` section
+   The code of a :ref:`PHPT test <appendixes.phpt>` that has a ``--STDIN--`` section
    is passed to its process in the same way. The names of these files start with ``phpunit_``.
    PHPUnit deletes them when the process has finished, with one exception: a file with the list
-   of the files of the code under test is created once per invocation of ``phpunit`` and is not
-   deleted.
+   of the files of the code under test is created once per invocation of ``phpunit`` and is
+   deleted when PHPUnit exits.
 
 PHPT tests and code coverage
-   While code coverage is collected, PHPUnit writes two files next to a
-   :ref:`PHPT test <textui.running-tests.phpt>` for the time that this test is run: for
-   ``example.phpt`` these are ``example.php`` and ``example.coverage``. PHPUnit deletes them
-   when the test has finished. An existing file with one of these names is overwritten and
-   deleted.
+   While code coverage is collected, PHPUnit creates a directory for each
+   :ref:`PHPT test <appendixes.phpt>` in the operating system's directory for temporary files
+   for the time that this test is run. The name of this directory is ``phpunit-phpt-`` followed
+   by a random string, and only the current user can access it. PHPUnit writes two files to
+   this directory and deletes them, and the directory, when the test has finished.
 
 Anonymous temporary files
    PHPUnit also uses temporary files that have no name it could pass on, for instance to
