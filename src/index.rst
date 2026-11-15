@@ -37,6 +37,7 @@ Contents:
    cli-options
    xml-configuration-file
    events
+   capability-statement
    copyright
 
 
