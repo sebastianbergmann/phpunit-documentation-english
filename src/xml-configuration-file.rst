@@ -71,9 +71,13 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 This attribute configures whether colors are used in PHPUnit's output.
 
-Setting this attribute to ``true`` is equivalent to using the ``--colors=auto`` CLI option.
+Setting this attribute to ``true`` is equivalent to using the ``--colors=always`` CLI option: colors are used unconditionally, even when the output is not written to a terminal that supports them.
 
 Setting this attribute to ``false`` is equivalent to using the ``--colors=never`` CLI option.
+
+The XML configuration file has no equivalent for ``--colors=auto``, which uses colors only when the terminal supports them. The ``--colors`` CLI option takes precedence over this attribute.
+
+Before PHPUnit 12.5.17, setting this attribute to ``true`` was equivalent to using the ``--colors=auto`` CLI option.
 
 .. _appendixes.xml-configuration-file.phpunit.columns:
 
