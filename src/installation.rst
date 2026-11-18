@@ -214,6 +214,22 @@ than PHP is allowed to use by default:
 
     memory_limit=-1
 
+The ``zend.exception_ignore_args`` configuration directive controls whether the stack trace of an exception contains
+the arguments that were passed to the functions and methods on the call stack. We do not recommend a specific value
+for this setting. Keep in mind, though, that an argument that is referenced by the stack trace of an exception is kept
+alive for as long as that exception exists. This affects, for instance, when an object is destructed or when a resource
+such as a file handle is closed.
+
+Tests that assert on such cleanup after an exception was raised are sensitive to this setting. They should configure it
+explicitly, for instance using the :ref:`\<ini\> <appendixes.xml-configuration-file.php.ini>` element of PHPUnit's
+XML configuration file, so that they do not depend on the PHP configuration file that happens to be used:
+
+.. code-block:: xml
+
+    <php>
+      <ini name="zend.exception_ignore_args" value="0"/>
+    </php>
+
 It is recommended to only load Xdebug when it is needed, for instance when you want to use it for debugging or to collect code coverage data.
 
 When it comes to collecting code coverage data and when you are interested only in line coverage, the
