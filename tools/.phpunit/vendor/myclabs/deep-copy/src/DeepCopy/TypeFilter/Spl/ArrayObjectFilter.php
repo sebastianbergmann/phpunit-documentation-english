@@ -10,7 +10,10 @@ use DeepCopy\TypeFilter\TypeFilter;
  */
 final class ArrayObjectFilter implements TypeFilter
 {
-    private DeepCopy $copier;
+    /**
+     * @var DeepCopy
+     */
+    private $copier;
 
     public function __construct(DeepCopy $copier)
     {
@@ -20,7 +23,7 @@ final class ArrayObjectFilter implements TypeFilter
     /**
      * {@inheritdoc}
      */
-    public function apply(mixed $arrayObject)
+    public function apply($arrayObject)
     {
         $clone = clone $arrayObject;
         foreach ($arrayObject->getArrayCopy() as $k => $v) {

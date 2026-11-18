@@ -9,11 +9,15 @@
  */
 namespace SebastianBergmann\ChoiceSequence;
 
+use const PHP_INT_MAX;
 use function array_key_exists;
 use function array_shift;
 use function array_slice;
+use function assert;
 use function count;
+use function intdiv;
 use function max;
+use function min;
 use function range;
 use Random\Randomizer;
 
@@ -24,7 +28,9 @@ use Random\Randomizer;
  * For each label, the search climbs from the choice sequence of the example
  * with the highest score: it changes one choice of the sequence at a time,
  * first to larger and then to smaller choices, and doubles the change for as
- * long as the score increases. The choices are changed in a random order.
+ * long as the score increases. A choice is not changed to a larger choice
+ * than the largest choice that it could have been, when the choice sequence
+ * knows it. The choices are changed in a random order.
  * Once no change to any of the choices increased the score, the example is
  * a local maximum, and the search for the label ends, until an example with
  * an even higher score is checked. The climbs of the labels take turns.
@@ -44,7 +50,7 @@ final class TargetedSearch
      * direction and the size of the change, and whether a change increased
      * the score in the current pass.
      *
-     * @var array<non-empty-string, array{score: float|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool}>
+     * @var array<non-empty-string, array{score: float<min, max>|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool}>
      */
     private array $labels = [];
 
@@ -105,9 +111,10 @@ final class TargetedSearch
 
     /**
      * Records the scores of an example that was checked, which is either the
-     * candidate that nextCandidate() returned last or another example.
+     * candidate that nextCandidate() returned last or another example. A
+     * score is not NAN, which is neither higher nor lower than another score.
      *
-     * @param array<non-empty-string, float|int> $scores
+     * @param array<non-empty-string, float<min, max>|int> $scores
      */
     public function exampleChecked(ChoiceSequence $sequence, array $scores): void
     {
@@ -129,7 +136,7 @@ final class TargetedSearch
                 // the climb goes on in the same direction with a larger change
                 $labels[$label]['score']     = $score;
                 $labels[$label]['sequence']  = $sequence;
-                $labels[$label]['change']    = 2 * $labels[$label]['change'];
+                $labels[$label]['change']    = self::doubled($labels[$label]['change']);
                 $labels[$label]['increased'] = true;
 
                 $candidateIncreasedItsScore = true;
@@ -165,7 +172,7 @@ final class TargetedSearch
      * The highest score of each label, in the order in which the labels
      * were first used.
      *
-     * @return list<array{label: non-empty-string, highestScore: float|int}>
+     * @return list<array{label: non-empty-string, highestScore: float<min, max>|int}>
      */
     public function highestScores(): array
     {
@@ -193,9 +200,9 @@ final class TargetedSearch
      * The next candidate of a climb, null when the climb has reached a local
      * maximum, and the state of the climb after it.
      *
-     * @param array{score: float|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool} $state
+     * @param array{score: float<min, max>|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool} $state
      *
-     * @return array{0: ?ChoiceSequence, 1: array{score: float|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool}}
+     * @return array{0: ?ChoiceSequence, 1: array{score: float<min, max>|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool}}
      */
     private function candidate(array $state): array
     {
@@ -235,7 +242,22 @@ final class TargetedSearch
                 continue;
             }
 
-            $choice = max(0, $choices[$index] + $state['direction'] * $state['change']);
+            if ($state['direction'] === 1) {
+                // a choice cannot be larger than the largest integer, and a
+                // choice source replays a choice that is larger than the
+                // largest choice that it could have been as that choice
+                $maximum = $state['sequence']->maximumAt($index);
+
+                if ($maximum === null) {
+                    $maximum = PHP_INT_MAX;
+                }
+
+                $choice = $choices[$index] + min($state['change'], max(0, $maximum - $choices[$index]));
+            } else {
+                $choice = max(0, $choices[$index] - $state['change']);
+            }
+
+            assert($choice >= 0);
 
             if ($choice === $choices[$index]) {
                 $state = self::changeNextChoice($state);
@@ -264,13 +286,27 @@ final class TargetedSearch
     }
 
     /**
+     * @param positive-int $change
+     *
+     * @return positive-int twice the change, as far as it is not larger than the largest integer
+     */
+    private static function doubled(int $change): int
+    {
+        if ($change > intdiv(PHP_INT_MAX, 2)) {
+            return PHP_INT_MAX;
+        }
+
+        return 2 * $change;
+    }
+
+    /**
      * Changes the choice in the other direction once it was changed to
      * larger choices, and the next choice once it was changed in both
      * directions.
      *
-     * @param array{score: float|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool} $state
+     * @param array{score: float<min, max>|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool} $state
      *
-     * @return array{score: float|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool}
+     * @return array{score: float<min, max>|int, sequence: ChoiceSequence, indexes: ?list<non-negative-int>, index: ?non-negative-int, direction: -1|1, change: positive-int, increased: bool}
      */
     private static function changeNextChoice(array $state): array
     {

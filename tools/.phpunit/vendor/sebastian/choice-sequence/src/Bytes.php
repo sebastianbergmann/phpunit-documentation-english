@@ -11,6 +11,8 @@ namespace SebastianBergmann\ChoiceSequence;
 
 use function assert;
 use function chr;
+use function ord;
+use function strlen;
 use function var_export;
 
 /**
@@ -40,7 +42,9 @@ final readonly class Bytes
 
     /**
      * @param non-negative-int  $minimumLength
-     * @param ?non-negative-int $maximumLength
+     * @param ?non-negative-int $maximumLength not smaller than the minimum length, null when the string has no maximum length
+     *
+     * @throws InvalidArgumentException when the maximum length is smaller than the minimum length
      */
     public function __construct(int $minimumLength, ?int $maximumLength)
     {
@@ -89,5 +93,25 @@ final readonly class Bytes
         );
 
         return $bytes;
+    }
+
+    /**
+     * The choices from which draw() draws the binary string. A string that is
+     * longer than the maximum length is cut off, and the choices of a string
+     * that is shorter than the minimum length are replayed as the string
+     * followed by as many bytes 0x00 as it is short of (see
+     * Repetition::choicesFor()).
+     *
+     * @return list<non-negative-int>
+     */
+    public function choicesFor(string $bytes): array
+    {
+        $elements = [];
+
+        for ($i = 0; $i < strlen($bytes); $i++) {
+            $elements[] = [ord($bytes[$i])];
+        }
+
+        return $this->repetition->choicesFor($elements);
     }
 }

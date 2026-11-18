@@ -18,6 +18,7 @@ use PHPUnit\Framework\PropertyBased\Derivation\GeneratorRegistry;
 use PHPUnit\Framework\PropertyBased\Generator\DeferredGenerator;
 use Random\Randomizer;
 use SebastianBergmann\ChoiceSequence\Bytes;
+use SebastianBergmann\ChoiceSequence\Characters;
 use SebastianBergmann\ChoiceSequence\ChoiceSequence;
 use SebastianBergmann\ChoiceSequence\ChoiceSource as Choices;
 use SebastianBergmann\ChoiceSequence\ChoiceTree;
@@ -305,6 +306,20 @@ final class ChoiceSource
     }
 
     /**
+     * Draws the characters of a string of Unicode characters.
+     *
+     * @throws ExampleRejectedException
+     */
+    public function characters(Characters $characters): string
+    {
+        try {
+            return $characters->draw($this->choices);
+        } catch (TooManyChoicesException $e) {
+            throw ExampleRejectedException::tooManyChoices($e->maximumNumberOfChoices());
+        }
+    }
+
+    /**
      * Adds a value to a pool, and draws the choice that marks it as a value
      * that later choices can refer to.
      *
@@ -379,12 +394,26 @@ final class ChoiceSource
      * @template T
      *
      * @param non-empty-list<T> $candidates
+     * @param float<0, 1>       $probability
      *
      * @return ?T
      */
     public function suggest(array $candidates, float $probability): mixed
     {
         return $this->choices->suggest($candidates, $probability);
+    }
+
+    /**
+     * Returns, while choices are drawn at random, an integer that is drawn
+     * uniformly from the range [$minimum, $maximum], and null otherwise.
+     *
+     * No choice is drawn, as for suggest().
+     *
+     * @param int $maximum not smaller than the minimum
+     */
+    public function suggestInteger(int $minimum, int $maximum): ?int
+    {
+        return $this->choices->suggestInteger($minimum, $maximum);
     }
 
     /**

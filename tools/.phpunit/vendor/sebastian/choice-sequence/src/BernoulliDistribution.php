@@ -18,8 +18,14 @@ use Random\Randomizer;
  */
 final readonly class BernoulliDistribution implements Distribution
 {
+    /**
+     * @var float<0, 1>
+     */
     private float $probabilityOfOne;
 
+    /**
+     * @param float<0, 1> $probabilityOfOne
+     */
     public function __construct(float $probabilityOfOne)
     {
         $this->probabilityOfOne = $probabilityOfOne;

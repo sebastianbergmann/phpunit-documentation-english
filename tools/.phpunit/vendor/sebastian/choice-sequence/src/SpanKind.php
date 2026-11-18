@@ -19,9 +19,13 @@ namespace SebastianBergmann\ChoiceSequence;
  * The label of a span tells which spans are drawn the same way, but it is an
  * opaque hash. The kind of a span is optional and tells what it holds.
  *
+ * The value of a kind is the name under which tools store it or pass it to
+ * each other, so that a kind is recreated from it with SpanKind::from() or
+ * SpanKind::tryFrom().
+ *
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise for sebastian/choice-sequence
  */
-enum SpanKind
+enum SpanKind: string
 {
     /**
      * A binary string that is drawn as a collection of bytes. The bytes that
@@ -39,7 +43,7 @@ enum SpanKind
      *
      * Bytes draws the bytes of a binary string this way.
      */
-    case Bytes;
+    case Bytes = 'bytes';
 
     /**
      * A string of Unicode characters that is drawn as a collection of
@@ -55,8 +59,10 @@ enum SpanKind
      *
      * A character can be inserted where a choice decides whether there is
      * another character, as a byte can be inserted into a binary string.
+     *
+     * Characters draws the characters of a string this way.
      */
-    case Characters;
+    case Characters = 'characters';
 
     /**
      * An element of a collection that a choice added: the choice 1 ("another
@@ -72,7 +78,7 @@ enum SpanKind
      *
      * Repetition draws the elements of a collection this way.
      */
-    case Element;
+    case Element = 'element';
 
     /**
      * An element of a collection that the minimum size of the collection
@@ -89,7 +95,7 @@ enum SpanKind
      *
      * Repetition draws the elements of a collection this way.
      */
-    case RequiredElement;
+    case RequiredElement = 'requiredelement';
 
     /**
      * A value that later choices can refer to, the value that a step of a
@@ -100,7 +106,7 @@ enum SpanKind
      * Pool marks the values that are added to it this way, and draws the
      * references to them.
      */
-    case Referable;
+    case Referable = 'referable';
 
     /**
      * A reference to one of the values that spans of the kind Referable with
@@ -116,12 +122,12 @@ enum SpanKind
      * shrinker changes the choice of the reference then, so that it keeps
      * referring to the same value.
      */
-    case Reference;
+    case Reference = 'reference';
 
     /**
      * A reference, as described for the kind Reference, that consumes the
      * value that it refers to: references that are drawn after it cannot
      * refer to the value.
      */
-    case ConsumingReference;
+    case ConsumingReference = 'consumingreference';
 }

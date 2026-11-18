@@ -4,12 +4,15 @@ namespace DeepCopy\TypeMatcher;
 
 class TypeMatcher
 {
-    private string $type;
+    /**
+     * @var string
+     */
+    private $type;
 
     /**
      * @param string $type
      */
-    public function __construct(string $type)
+    public function __construct($type)
     {
         $this->type = $type;
     }
@@ -19,7 +22,7 @@ class TypeMatcher
      *
      * @return boolean
      */
-    public function matches(mixed $element)
+    public function matches($element)
     {
         return is_object($element) ? is_a($element, $this->type) : gettype($element) === $this->type;
     }

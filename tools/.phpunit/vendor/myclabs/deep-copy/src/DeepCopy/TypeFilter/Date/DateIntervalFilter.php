@@ -20,7 +20,7 @@ class DateIntervalFilter implements TypeFilter
      *
      * @see http://news.php.net/php.bugs/205076
      */
-    public function apply(mixed $element)
+    public function apply($element)
     {
         $copy = new DateInterval('P0D');
 

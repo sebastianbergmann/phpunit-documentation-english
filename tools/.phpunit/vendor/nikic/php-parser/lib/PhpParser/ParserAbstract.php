@@ -248,60 +248,37 @@ abstract class ParserAbstract implements Parser {
 
         $this->errorState = 0;
 
-        // Parser tables are read on every iteration: local variables are cheaper to access than properties.
-        $tokens = $this->tokens;
-        $dropTokens = $this->dropTokens;
-        $phpTokenToSymbol = $this->phpTokenToSymbol;
-        $actionBase = $this->actionBase;
-        $actionTableSize = $this->actionTableSize;
-        $actionCheck = $this->actionCheck;
-        $actionTable = $this->action;
-        $defaultAction = $this->defaultAction;
-        $numNonLeafStates = $this->numNonLeafStates;
-        $YY2TBLSTATE = $this->YY2TBLSTATE;
-        $actionDefault = $this->actionDefault;
-        $ruleToLength = $this->ruleToLength;
-        $reduceCallbacks = $this->reduceCallbacks;
-        $ruleToNonTerminal = $this->ruleToNonTerminal;
-        $gotoBase = $this->gotoBase;
-        $gotoTableSize = $this->gotoTableSize;
-        $gotoCheck = $this->gotoCheck;
-        $gotoTable = $this->goto;
-        $gotoDefault = $this->gotoDefault;
-        $unexpectedTokenRule = $this->unexpectedTokenRule;
-        $errorSymbol = $this->errorSymbol;
-
         for (;;) {
             //$this->traceNewState($state, $symbol);
 
-            if ($actionBase[$state] === 0) {
-                $rule = $actionDefault[$state];
+            if ($this->actionBase[$state] === 0) {
+                $rule = $this->actionDefault[$state];
             } else {
                 if ($symbol === self::SYMBOL_NONE) {
                     do {
-                        $token = $tokens[++$this->tokenPos];
+                        $token = $this->tokens[++$this->tokenPos];
                         $tokenId = $token->id;
-                    } while (isset($dropTokens[$tokenId]));
+                    } while (isset($this->dropTokens[$tokenId]));
 
                     // Map the lexer token id to the internally used symbols.
                     $tokenValue = $token->text;
-                    if (!isset($phpTokenToSymbol[$tokenId])) {
+                    if (!isset($this->phpTokenToSymbol[$tokenId])) {
                         throw new \RangeException(sprintf(
                             'The lexer returned an invalid token (id=%d, value=%s)',
                             $tokenId, $tokenValue
                         ));
                     }
-                    $symbol = $phpTokenToSymbol[$tokenId];
+                    $symbol = $this->phpTokenToSymbol[$tokenId];
 
                     //$this->traceRead($symbol);
                 }
 
-                $idx = $actionBase[$state] + $symbol;
-                if ((($idx >= 0 && $idx < $actionTableSize && $actionCheck[$idx] === $symbol)
-                     || ($state < $YY2TBLSTATE
-                         && ($idx = $actionBase[$state + $numNonLeafStates] + $symbol) >= 0
-                         && $idx < $actionTableSize && $actionCheck[$idx] === $symbol))
-                    && ($action = $actionTable[$idx]) !== $defaultAction) {
+                $idx = $this->actionBase[$state] + $symbol;
+                if ((($idx >= 0 && $idx < $this->actionTableSize && $this->actionCheck[$idx] === $symbol)
+                     || ($state < $this->YY2TBLSTATE
+                         && ($idx = $this->actionBase[$state + $this->numNonLeafStates] + $symbol) >= 0
+                         && $idx < $this->actionTableSize && $this->actionCheck[$idx] === $symbol))
+                    && ($action = $this->action[$idx]) !== $this->defaultAction) {
                     /*
                      * >= numNonLeafStates: shift and reduce
                      * > 0: shift
@@ -324,17 +301,17 @@ abstract class ParserAbstract implements Parser {
                             --$this->errorState;
                         }
 
-                        if ($action < $numNonLeafStates) {
+                        if ($action < $this->numNonLeafStates) {
                             continue;
                         }
 
                         /* $yyn >= numNonLeafStates means shift-and-reduce */
-                        $rule = $action - $numNonLeafStates;
+                        $rule = $action - $this->numNonLeafStates;
                     } else {
                         $rule = -$action;
                     }
                 } else {
-                    $rule = $actionDefault[$state];
+                    $rule = $this->actionDefault[$state];
                 }
             }
 
@@ -344,13 +321,13 @@ abstract class ParserAbstract implements Parser {
                     //$this->traceAccept();
                     return $this->semValue;
                 }
-                if ($rule !== $unexpectedTokenRule) {
+                if ($rule !== $this->unexpectedTokenRule) {
                     /* reduce */
                     //$this->traceReduce($rule);
 
-                    $ruleLength = $ruleToLength[$rule];
+                    $ruleLength = $this->ruleToLength[$rule];
                     try {
-                        $callback = $reduceCallbacks[$rule];
+                        $callback = $this->reduceCallbacks[$rule];
                         if ($callback !== null) {
                             $callback($this, $stackPos);
                         } elseif ($ruleLength > 0) {
@@ -358,7 +335,7 @@ abstract class ParserAbstract implements Parser {
                         }
                     } catch (Error $e) {
                         if (-1 === $e->getStartLine()) {
-                            $e->setStartLine($tokens[$this->tokenPos]->line);
+                            $e->setStartLine($this->tokens[$this->tokenPos]->line);
                         }
 
                         $this->emitError($e);
@@ -369,12 +346,12 @@ abstract class ParserAbstract implements Parser {
                     /* Goto - shift nonterminal */
                     $lastTokenEnd = $this->tokenEndStack[$stackPos];
                     $stackPos -= $ruleLength;
-                    $nonTerminal = $ruleToNonTerminal[$rule];
-                    $idx = $gotoBase[$nonTerminal] + $stateStack[$stackPos];
-                    if ($idx >= 0 && $idx < $gotoTableSize && $gotoCheck[$idx] === $nonTerminal) {
-                        $state = $gotoTable[$idx];
+                    $nonTerminal = $this->ruleToNonTerminal[$rule];
+                    $idx = $this->gotoBase[$nonTerminal] + $stateStack[$stackPos];
+                    if ($idx >= 0 && $idx < $this->gotoTableSize && $this->gotoCheck[$idx] === $nonTerminal) {
+                        $state = $this->goto[$idx];
                     } else {
-                        $state = $gotoDefault[$nonTerminal];
+                        $state = $this->gotoDefault[$nonTerminal];
                     }
 
                     ++$stackPos;
@@ -399,12 +376,12 @@ abstract class ParserAbstract implements Parser {
 
                             // Pop until error-expecting state uncovered
                             while (!(
-                                (($idx = $actionBase[$state] + $errorSymbol) >= 0
-                                    && $idx < $actionTableSize && $actionCheck[$idx] === $errorSymbol)
-                                || ($state < $YY2TBLSTATE
-                                    && ($idx = $actionBase[$state + $numNonLeafStates] + $errorSymbol) >= 0
-                                    && $idx < $actionTableSize && $actionCheck[$idx] === $errorSymbol)
-                            ) || ($action = $actionTable[$idx]) === $defaultAction) { // Not totally sure about this
+                                (($idx = $this->actionBase[$state] + $this->errorSymbol) >= 0
+                                    && $idx < $this->actionTableSize && $this->actionCheck[$idx] === $this->errorSymbol)
+                                || ($state < $this->YY2TBLSTATE
+                                    && ($idx = $this->actionBase[$state + $this->numNonLeafStates] + $this->errorSymbol) >= 0
+                                    && $idx < $this->actionTableSize && $this->actionCheck[$idx] === $this->errorSymbol)
+                            ) || ($action = $this->action[$idx]) === $this->defaultAction) { // Not totally sure about this
                                 if ($stackPos <= 0) {
                                     // Could not recover from error
                                     return null;
@@ -435,12 +412,12 @@ abstract class ParserAbstract implements Parser {
                     }
                 }
 
-                if ($state < $numNonLeafStates) {
+                if ($state < $this->numNonLeafStates) {
                     break;
                 }
 
                 /* >= numNonLeafStates means shift-and-reduce */
-                $rule = $state - $numNonLeafStates;
+                $rule = $state - $this->numNonLeafStates;
             }
         }
     }

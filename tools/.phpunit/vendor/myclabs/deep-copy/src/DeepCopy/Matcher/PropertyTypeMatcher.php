@@ -15,12 +15,15 @@ use ReflectionException;
  */
 class PropertyTypeMatcher implements Matcher
 {
-    private string $propertyType;
+    /**
+     * @var string
+     */
+    private $propertyType;
 
     /**
      * @param string $propertyType Property type
      */
-    public function __construct(string $propertyType)
+    public function __construct($propertyType)
     {
         $this->propertyType = $propertyType;
     }
@@ -28,7 +31,7 @@ class PropertyTypeMatcher implements Matcher
     /**
      * {@inheritdoc}
      */
-    public function matches(object $object, string $property)
+    public function matches($object, $property)
     {
         try {
             $reflectionProperty = ReflectionHelper::getProperty($object, $property);

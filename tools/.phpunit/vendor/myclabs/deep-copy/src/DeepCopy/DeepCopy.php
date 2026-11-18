@@ -31,31 +31,37 @@ class DeepCopy
     /**
      * @var WeakMap<object, object> Map of source objects to their copies.
      */
-    private WeakMap $objectMap;
+    private $objectMap;
 
     /**
      * Filters to apply.
      *
      * @var array Array of ['filter' => Filter, 'matcher' => Matcher] pairs.
      */
-    private array $filters = [];
+    private $filters = [];
 
     /**
      * Type Filters to apply.
      *
      * @var array Array of ['filter' => Filter, 'matcher' => Matcher] pairs.
      */
-    private array $typeFilters = [];
+    private $typeFilters = [];
 
-    private bool $skipUncloneable = false;
+    /**
+     * @var bool
+     */
+    private $skipUncloneable = false;
 
-    private bool $useCloneMethod;
+    /**
+     * @var bool
+     */
+    private $useCloneMethod;
 
     /**
      * @param bool $useCloneMethod   If set to true, when an object implements the __clone() function, it will be used
      *                               instead of the regular deep cloning.
      */
-    public function __construct(bool $useCloneMethod = false)
+    public function __construct($useCloneMethod = false)
     {
         $this->useCloneMethod = $useCloneMethod;
         $this->objectMap = new WeakMap();
@@ -69,9 +75,11 @@ class DeepCopy
     /**
      * If enabled, will not throw an exception when coming across an uncloneable property.
      *
+     * @param $skipUncloneable
+     *
      * @return $this
      */
-    public function skipUncloneable(bool $skipUncloneable = true)
+    public function skipUncloneable($skipUncloneable = true)
     {
         $this->skipUncloneable = $skipUncloneable;
 
@@ -87,7 +95,7 @@ class DeepCopy
      *
      * @return TObject
      */
-    public function copy(mixed $object)
+    public function copy($object)
     {
         $this->objectMap = new WeakMap();
 
@@ -126,7 +134,7 @@ class DeepCopy
         ]);
     }
 
-    private function recursiveCopy(mixed $var): mixed
+    private function recursiveCopy($var)
     {
         // Matches Type Filter
         if ($filter = $this->getFirstMatchedTypeFilter($this->typeFilters, $var)) {
@@ -162,7 +170,7 @@ class DeepCopy
      * @param array $array
      * @return array
      */
-    private function copyArray(array $array): array
+    private function copyArray(array $array)
     {
         foreach ($array as $key => $value) {
             $array[$key] = $this->recursiveCopy($value);
@@ -180,7 +188,7 @@ class DeepCopy
      *
      * @return object
      */
-    private function copyObject(object $object): object
+    private function copyObject($object)
     {
         if (isset($this->objectMap[$object])) {
             return $this->objectMap[$object];
@@ -222,7 +230,7 @@ class DeepCopy
         return $newObject;
     }
 
-    private function copyObjectProperty(object $object, ReflectionProperty $property): void
+    private function copyObjectProperty($object, ReflectionProperty $property)
     {
         // Ignore static properties
         if ($property->isStatic()) {
@@ -245,7 +253,7 @@ class DeepCopy
                 $filter->apply(
                     $object,
                     $property->getName(),
-                    function (mixed $object): mixed {
+                    function ($object) {
                         return $this->recursiveCopy($object);
                     }
                 );
@@ -283,11 +291,11 @@ class DeepCopy
      *
      * @return TypeFilter|null
      */
-    private function getFirstMatchedTypeFilter(array $filterRecords, mixed $var): ?TypeFilter
+    private function getFirstMatchedTypeFilter(array $filterRecords, $var)
     {
         $matched = $this->first(
             $filterRecords,
-            function (array $record) use ($var): bool {
+            function (array $record) use ($var) {
                 /* @var TypeMatcher $matcher */
                 $matcher = $record['matcher'];
 
@@ -307,7 +315,7 @@ class DeepCopy
      * @return array|null Associative array with 2 members: 'filter' with value of type {@see TypeFilter} and 'matcher'
      *                    with value of type {@see TypeMatcher} or `null`.
      */
-    private function first(array $elements, callable $predicate): ?array
+    private function first(array $elements, callable $predicate)
     {
         foreach ($elements as $element) {
             if (call_user_func($predicate, $element)) {

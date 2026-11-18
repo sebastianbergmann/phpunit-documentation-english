@@ -30,6 +30,7 @@ use PHPUnit\Framework\ProcessIsolationException;
 use PHPUnit\Framework\SkippedTest;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Metadata\Api\CodeCoverage as CodeCoverageMetadataApi;
+use PHPUnit\Metadata\Api\Fixtures;
 use PHPUnit\Metadata\Parser\Registry as MetadataRegistry;
 use PHPUnit\Runner\CodeCoverage;
 use PHPUnit\Runner\ErrorHandler;
@@ -157,12 +158,27 @@ final class TestRunner
      */
     public function runExampleOfProperty(TestCase $example, bool $collectCodeCoverage, ?int $timeLimit = null, ?Closure $describe = null): ExampleRun
     {
+        /*
+         * What an example executes for which no code coverage is collected is
+         * not recorded for test impact analysis, neither for the property nor
+         * as something that is executed outside of the tests: a property that
+         * was falsified is run again whatever changed, and what it depends on
+         * is what the examples that were checked executed.
+         */
+        if (!$collectCodeCoverage) {
+            CodeCoverage::instance()->pauseRecordingWhatIsExecutedOutsideOfTests();
+        }
+
         try {
             ShutdownHandler::setMessage(self::messageForPrematureEndOfProcess($example), $describe);
 
             $contributedToCodeCoverage = $this->runInProcess($example, true, $collectCodeCoverage, $timeLimit);
         } finally {
             ShutdownHandler::setMessage(self::messageForPrematureEndOfProcess($example));
+
+            if (!$collectCodeCoverage) {
+                CodeCoverage::instance()->resumeRecordingWhatIsExecutedOutsideOfTests();
+            }
         }
 
         return new ExampleRun(
@@ -222,6 +238,7 @@ final class TestRunner
             }
 
             $this->performSanityChecks($test, $coversTargets, $usesTargets, $coversNothingContradiction);
+            $this->warnAboutFixturesThatCannotBeUsed($test);
         }
 
         $error      = false;
@@ -250,8 +267,31 @@ final class TestRunner
                                $shouldCodeCoverageBeCollected &&
                                $collectCodeCoverageForTest;
 
+        /*
+         * A test that declares that it covers nothing still executes code, and
+         * what it executed is what test impact analysis has to know about.
+         * What is collected for it must not reach the code coverage report,
+         * though, which is what passing false instead of the code coverage
+         * targets of the test achieves.
+         *
+         * Nothing is collected for an example of a property that is run while
+         * the property is shrunk, or for the final replay of its minimal
+         * counterexample, see runExampleOfProperty().
+         */
+        $collectCodeCoverageForTestImpactDataOnly = false;
+
+        if (!$collectCodeCoverage &&
+            $collectCodeCoverageForTest &&
+            CodeCoverage::instance()->isActive() &&
+            CodeCoverage::instance()->isRecordingTestImpactData()) {
+            $collectCodeCoverage                      = true;
+            $collectCodeCoverageForTestImpactDataOnly = true;
+            $coversTargets                            = false;
+            $usesTargets                              = null;
+        }
+
         if ($collectCodeCoverage) {
-            CodeCoverage::instance()->start($test);
+            CodeCoverage::instance()->start($test, $collectCodeCoverageForTestImpactDataOnly);
         }
 
         try {
@@ -302,8 +342,12 @@ final class TestRunner
         // property performed assertions, and therefore whether the data is
         // appended, is decided on all of its examples; it is not held back
         // when the example would be considered risky for lacking code
-        // coverage metadata had it performed assertions
+        // coverage metadata had it performed assertions, and it is not held
+        // back when it is only collected so that what the example executed
+        // can be recorded: nothing of it reaches the code coverage report,
+        // so there is nothing to decide
         $holdBackCodeCoverage = $collectCodeCoverage &&
+                                !$collectCodeCoverageForTestImpactDataOnly &&
                                 $riskyBecauseOfNoAssertions !== null &&
                                 $exampleOfProperty &&
                                 $test->status()->isSuccess() &&
@@ -351,7 +395,14 @@ final class TestRunner
                 $error = true;
             }
 
+            /*
+             * A test that is only collected so that what it executed can be
+             * recorded is a test that opted out of code coverage. Whether it
+             * contributes to code coverage is not asked of such a test: it did
+             * not contribute before test impact data was recorded either.
+             */
             if ($append && !$error && !$failure && !$coveredUnintentionally &&
+                !$collectCodeCoverageForTestImpactDataOnly &&
                 $this->configuration->requireCoverageContribution()) {
                 $contributedToCodeCoverage = CodeCoverage::instance()->lastTestContributedToCoverage();
 
@@ -441,6 +492,32 @@ final class TestRunner
         }
 
         return $this->configuration->requireCoverageMetadata();
+    }
+
+    /**
+     * A fixture that is not there cannot be compared to what it will be later,
+     * and the attribute that names it is therefore ignored, just as a code
+     * coverage target that cannot be used is ignored.
+     *
+     * What a test declares that it uses is only looked at when the run records
+     * test impact data, which is why the metadata of a test is not parsed for
+     * fixtures when that is switched off.
+     */
+    private function warnAboutFixturesThatCannotBeUsed(TestCase $test): void
+    {
+        if (!$this->configuration->recordTestImpactData()) {
+            return;
+        }
+
+        foreach ((new Fixtures)->thatCannotBeResolved($test::class, $test->name()) as $path) {
+            $this->emitter->testTriggeredPhpunitWarning(
+                $test->valueObjectForEvents(),
+                sprintf(
+                    'Fixture "%s" does not exist, the attribute is ignored',
+                    $path,
+                ),
+            );
+        }
     }
 
     /**

@@ -82,12 +82,11 @@ class Lexer {
 
         for ($i = 0; $i < $numTokens; $i++) {
             $token = $tokens[$i];
-            $id = $token->id;
-            if ($id === \T_BAD_CHARACTER) {
+            if ($token->id === \T_BAD_CHARACTER) {
                 $this->handleInvalidCharacter($token, $errorHandler);
             }
 
-            if ($id === \ord('&')) {
+            if ($token->id === \ord('&')) {
                 $next = $i + 1;
                 while (isset($tokens[$next]) && $tokens[$next]->id === \T_WHITESPACE) {
                     $next++;

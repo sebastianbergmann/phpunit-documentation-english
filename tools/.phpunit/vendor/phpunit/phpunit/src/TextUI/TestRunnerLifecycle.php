@@ -12,6 +12,7 @@ namespace PHPUnit\TextUI;
 use PHPUnit\Event;
 use PHPUnit\Framework\PropertyTestSuite;
 use PHPUnit\Framework\TestSuite;
+use PHPUnit\Runner\CodeCoverage;
 use PHPUnit\Runner\ExecutionOrder\ReorderPipeline;
 use PHPUnit\Runner\RandomNumberGeneratorSeeder;
 use PHPUnit\Runner\TestRunHistory\TestRunHistory;
@@ -42,11 +43,12 @@ final readonly class TestRunnerLifecycle
     }
 
     /**
-     * @param callable(): void $execution
+     * @param ?list<non-empty-string> $selectedTests
+     * @param callable(): void        $execution
      *
      * @throws RuntimeException
      */
-    public function run(Configuration $configuration, TestRunHistory $testRunHistory, TestSuite $suite, callable $execution): void
+    public function run(Configuration $configuration, TestRunHistory $testRunHistory, TestSuite $suite, ?array $selectedTests, callable $execution): void
     {
         try {
             $this->emitter->testRunnerStarted();
@@ -63,6 +65,7 @@ final readonly class TestRunnerLifecycle
             $pipeline = ReorderPipeline::fromConfiguration(
                 $configuration->executionOrder(),
                 $configuration->resolveDependencies(),
+                $configuration->randomSeed(),
             );
 
             if (!$pipeline->isEmpty()) {
@@ -71,7 +74,9 @@ final readonly class TestRunnerLifecycle
                 $this->emitter->testSuiteSorted($pipeline->describe());
             }
 
-            new TestSuiteFilterProcessor($this->emitter)->process($configuration, $suite);
+            new TestSuiteFilterProcessor($this->emitter)->process($configuration, $suite, $selectedTests);
+
+            CodeCoverage::instance()->setTestRunConsistsOfASingleTest($suite->count() === 1);
 
             $this->emitter->testRunnerExecutionStarted(
                 Event\TestSuite\TestSuiteBuilder::from($suite),

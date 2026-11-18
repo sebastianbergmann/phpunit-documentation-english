@@ -7,15 +7,21 @@ namespace DeepCopy\Matcher;
  */
 class PropertyMatcher implements Matcher
 {
-    private string $class;
+    /**
+     * @var string
+     */
+    private $class;
 
-    private string $property;
+    /**
+     * @var string
+     */
+    private $property;
 
     /**
      * @param string $class    Class name
      * @param string $property Property name
      */
-    public function __construct(string $class, string $property)
+    public function __construct($class, $property)
     {
         $this->class = $class;
         $this->property = $property;
@@ -26,7 +32,7 @@ class PropertyMatcher implements Matcher
      *
      * {@inheritdoc}
      */
-    public function matches(object $object, string $property)
+    public function matches($object, $property)
     {
         return ($object instanceof $this->class) && $property == $this->property;
     }

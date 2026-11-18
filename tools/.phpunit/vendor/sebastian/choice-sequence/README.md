@@ -8,7 +8,7 @@ Library for drawing, replaying, shrinking, and storing choice sequences.
 
 A choice sequence is the list of non-negative integers from which a value was generated: whenever the code that generates the value has to decide something, such as the length of a list or the next character of a string, it draws a choice, and 0 stands for the simplest option. Replaying the same choices generates the same value, so a value can be made simpler by making its choice sequence simpler: shorter, or lexicographically smaller.
 
-This library provides the choice sequence, the drawing and replaying of choices, and the shrinker that searches for the simplest choice sequence that still fails in the same way, independent of how values are generated from the choices and of how a failure is detected. It also draws the collections, binary strings, and references to values whose choices tools have to tell apart.
+This library provides the choice sequence, the drawing and replaying of choices, and the shrinker that searches for the simplest choice sequence that still fails in the same way, independent of how values are generated from the choices and of how a failure is detected. It also draws the collections, binary strings, strings of Unicode characters, and references to values whose choices tools have to tell apart.
 
 ## Installation
 
@@ -75,6 +75,8 @@ The label of a span identifies how its choices are drawn: code that draws choice
 
 A span may also have a kind, which tells tools that change choice sequences without knowing the code that draws them what the choices stand for: `SpanKind::Bytes` for a binary string that is drawn as a collection of bytes, `SpanKind::Characters` for a string of Unicode characters that is drawn as a collection of characters, each the index of its code point in the order of `CodePoints`, and `SpanKind::Element` and `SpanKind::RequiredElement` for an element of a collection, for instance one byte or one character of such a string. The elements that the minimum length of a string requires are spans of the kind `SpanKind::RequiredElement` and hold only their value. Every other element is a span of the kind `SpanKind::Element` and starts with the choice that decided that there is another element, whose maximum is 1, which tells tools where elements can be inserted, and which elements can be deleted. `SpanKind::Referable` marks a value that later choices can refer to, the value that a step of a state machine adds to a pool, for instance, and `SpanKind::Reference` and `SpanKind::ConsumingReference` mark a choice that refers to such a value: the position of the value among the values with the same label that have not been consumed, counted from the one that was contributed last. When the shrinker deletes a span, it changes the references after it so that they keep referring to the same values.
 
+The value of a kind is the name under which tools store it or pass it to each other, `'element'` for `SpanKind::Element`, for instance: `SpanKind::from()` and `SpanKind::tryFrom()` recreate the kind from it.
+
 `CodePoints` orders the Unicode scalar values so that simpler characters come first, starting with the printable ASCII characters. A character that is drawn as the index of its code point in this order shrinks towards simpler characters:
 
 ```php
@@ -91,7 +93,7 @@ use SebastianBergmann\ChoiceSequence\SpanKind;
 $source->startSpan(Label::of('bytes', '0', '4096'), SpanKind::Bytes);
 ```
 
-### Collections, binary strings, and pools of values
+### Collections, strings, and pools of values
 
 The encodings that the kinds of spans describe are implemented by this library, so that every tool that uses it draws these values in the same way.
 
@@ -128,6 +130,37 @@ $source->startSpan($bytes->label(), SpanKind::Bytes);
 $string = $bytes->draw($source);
 
 $source->endSpan();
+```
+
+`Characters` draws the characters of a string of Unicode characters this way, each as the index of its code point in the order of `CodePoints`, and tells the label of the span of the string:
+
+```php
+use SebastianBergmann\ChoiceSequence\Characters;
+use SebastianBergmann\ChoiceSequence\SpanKind;
+
+$characters = new Characters(0, 100);
+
+$source->startSpan($characters->label(), SpanKind::Characters);
+
+$string = $characters->draw($source);
+
+$source->endSpan();
+```
+
+`choicesFor()` tells the choices from which a collection, a binary string, or a string of Unicode characters is drawn, to replay a value that was not generated, the content of a file, for instance:
+
+```php
+use SebastianBergmann\ChoiceSequence\Bytes;
+use SebastianBergmann\ChoiceSequence\ChoiceSequence;
+use SebastianBergmann\ChoiceSequence\ChoiceSource;
+
+$bytes = new Bytes(0, 4096);
+
+// [1, 71, 1, 73, 1, 70, 0]
+$choices = $bytes->choicesFor('GIF');
+
+// 'GIF'
+$string = $bytes->draw(ChoiceSource::replay(new ChoiceSequence($choices)));
 ```
 
 `Pool` holds the values that choices refer to, the values that the steps of a state machine produce and that later steps take, for instance. It marks a value that is added with a span of the kind `SpanKind::Referable`, and draws a reference to a value, its position counted from the value that was added last, in a span of the kind `SpanKind::Reference` or `SpanKind::ConsumingReference`:
@@ -174,7 +207,7 @@ print $result->numberOfSteps() . ' steps, ' . $result->numberOfAttempts() . ' at
 
 ```
 10
-3 steps, 22 attempts
+5 steps, 30 attempts
 ```
 
 ### Telling failures apart

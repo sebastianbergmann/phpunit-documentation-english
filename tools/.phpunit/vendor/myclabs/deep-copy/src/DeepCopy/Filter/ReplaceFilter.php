@@ -27,7 +27,7 @@ class ReplaceFilter implements Filter
      *
      * {@inheritdoc}
      */
-    public function apply(object $object, string $property, ?callable $objectCopier)
+    public function apply($object, $property, $objectCopier)
     {
         $reflectionProperty = ReflectionHelper::getProperty($object, $property);
         if (PHP_VERSION_ID < 80100) {

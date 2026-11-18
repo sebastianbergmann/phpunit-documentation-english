@@ -74,23 +74,17 @@ class String_ extends Scalar {
             $bLength = 1;
         }
 
-        $quote = $str[$bLength];
-        $str = substr($str, $bLength + 1, -1);
-
-        if ('\'' === $quote) {
-            // Fast path: a string without any backslash contains no escape sequences.
-            if (false === strpos($str, '\\')) {
-                return $str;
-            }
-
+        if ('\'' === $str[$bLength]) {
             return str_replace(
                 ['\\\\', '\\\''],
                 ['\\', '\''],
-                $str
+                substr($str, $bLength + 1, -1)
+            );
+        } else {
+            return self::parseEscapeSequences(
+                substr($str, $bLength + 1, -1), '"', $parseUnicodeEscape
             );
         }
-
-        return self::parseEscapeSequences($str, '"', $parseUnicodeEscape);
     }
 
     /**
@@ -105,18 +99,13 @@ class String_ extends Scalar {
      * @return string String with escape sequences parsed
      */
     public static function parseEscapeSequences(string $str, ?string $quote, bool $parseUnicodeEscape = true): string {
-        // Fast path: a string without any backslash contains no escape sequences.
-        if (false === strpos($str, '\\')) {
-            return $str;
-        }
-
         if (null !== $quote) {
             $str = str_replace('\\' . $quote, $quote, $str);
         }
 
         $extra = '';
         if ($parseUnicodeEscape) {
-            $extra = '|u\{([0-9a-fA-F]+)\}|u\{';
+            $extra = '|u\{([0-9a-fA-F]+)\}';
         }
 
         return preg_replace_callback(
@@ -131,9 +120,6 @@ class String_ extends Scalar {
                     return chr(hexdec(substr($str, 1)));
                 }
                 if ('u' === $str[0]) {
-                    if (!isset($matches[2])) {
-                        throw new Error('Invalid UTF-8 codepoint escape sequence');
-                    }
                     // PHP 8.6 warns when hexdec() produces a float.
                     $dec = @hexdec($matches[2]);
                     // If it overflowed to float, treat as INT_MAX, it will throw an error anyway.

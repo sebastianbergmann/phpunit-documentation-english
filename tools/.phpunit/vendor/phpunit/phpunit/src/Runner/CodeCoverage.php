@@ -10,8 +10,11 @@
 namespace PHPUnit\Runner;
 
 use const PHP_OS_FAMILY;
+use function array_unique;
+use function array_values;
 use function assert;
 use function class_exists;
+use function get_included_files;
 use function implode;
 use function is_subclass_of;
 use function sprintf;
@@ -21,6 +24,13 @@ use PHPUnit\Event\Code\Test;
 use PHPUnit\Event\Emitter;
 use PHPUnit\Event\Facade as EventFacade;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Metadata\Api\Fixtures;
+use PHPUnit\Runner\TestImpactAnalysis\DefaultTestImpactData;
+use PHPUnit\Runner\TestImpactAnalysis\ExecutedFiles;
+use PHPUnit\Runner\TestImpactAnalysis\ExecutionOutsideOfTests;
+use PHPUnit\Runner\TestImpactAnalysis\NullTestImpactData;
+use PHPUnit\Runner\TestImpactAnalysis\TestImpactData;
+use PHPUnit\Runner\TestIndex\TestFiles;
 use PHPUnit\TextUI\Configuration\CodeCoverageFilterRegistry;
 use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Output\Printer;
@@ -32,12 +42,14 @@ use SebastianBergmann\CodeCoverage\Driver\Granularity;
 use SebastianBergmann\CodeCoverage\Driver\Selector;
 use SebastianBergmann\CodeCoverage\Exception as CodeCoverageException;
 use SebastianBergmann\CodeCoverage\Filter;
+use SebastianBergmann\CodeCoverage\FilterProcessor;
 use SebastianBergmann\CodeCoverage\Report\Facade as ReportFacade;
 use SebastianBergmann\CodeCoverage\Report\Html\Colors;
 use SebastianBergmann\CodeCoverage\Report\Html\CustomCssFile;
 use SebastianBergmann\CodeCoverage\Report\Html\Views;
 use SebastianBergmann\CodeCoverage\Report\Thresholds;
 use SebastianBergmann\CodeCoverage\Serialization\Serializer;
+use SebastianBergmann\CodeCoverage\StaticAnalysis\Registry as StaticAnalysisRegistry;
 use SebastianBergmann\CodeCoverage\Test\Target\TargetCollection;
 use SebastianBergmann\CodeCoverage\Test\Target\ValidationFailure;
 use SebastianBergmann\CodeCoverage\Test\TestSize;
@@ -88,6 +100,21 @@ final class CodeCoverage
     private bool $collectsBranchCoverage = false;
     private bool $collectsPathCoverage   = false;
     private readonly Emitter $emitter;
+    private bool $recordTestImpactData                        = false;
+    private bool $collectForTestImpactDataOnly                = false;
+    private ?TestImpactData $testImpactData                   = null;
+    private ?ExecutionOutsideOfTests $executionOutsideOfTests = null;
+    private bool $testRunConsistsOfASingleTest                = false;
+
+    /**
+     * @var ?non-empty-string
+     */
+    private ?string $propertyWhoseExamplesAreRecorded = null;
+
+    /**
+     * @var list<non-empty-string>
+     */
+    private array $filesOfExamplesRecordedBefore = [];
 
     public static function instance(): self
     {
@@ -114,9 +141,36 @@ final class CodeCoverage
 
     public function init(Configuration $configuration, CodeCoverageFilterRegistry $codeCoverageFilterRegistry, bool $extensionRequiresCodeCoverageCollection): CodeCoverageInitializationStatus
     {
-        $codeCoverageFilterRegistry->init($configuration, $extensionRequiresCodeCoverageCollection);
+        /*
+         * Recording which source files each test executed needs the code
+         * coverage driver, and nothing else: it is a reason of its own for
+         * collecting code coverage, and does not require a code coverage
+         * report to be generated. It does need somewhere to keep what it
+         * records, though, which is why it is only switched on here when there
+         * is a cache directory; the test runner warns about the missing cache
+         * directory before this is reached.
+         *
+         * Working out what each test depends on from the code coverage targets
+         * it declares needs no driver at all, and must therefore not be a
+         * reason for collecting code coverage.
+         */
+        $this->recordTestImpactData = $configuration->recordTestImpactData() &&
+                                      $configuration->hasCacheDirectory() &&
+                                      !$configuration->deriveTestImpactDataFromCoverageTargets();
 
-        if (!$configuration->hasCoverageReport() && !$extensionRequiresCodeCoverageCollection) {
+        /*
+         * The source filter was initialized before the bootstrap script was
+         * loaded when what is executed outside of the tests is recorded, and
+         * the code coverage driver that records it uses that filter.
+         */
+        if ($this->executionOutsideOfTests === null) {
+            $codeCoverageFilterRegistry->init(
+                $configuration,
+                $extensionRequiresCodeCoverageCollection || $this->recordTestImpactData,
+            );
+        }
+
+        if (!$configuration->hasCoverageReport() && !$extensionRequiresCodeCoverageCollection && !$this->recordTestImpactData) {
             return CodeCoverageInitializationStatus::NOT_REQUESTED;
         }
 
@@ -126,28 +180,40 @@ final class CodeCoverage
             $coverageDriver = $configuration->coverageDriver();
         }
 
+        /*
+         * Recording which source files each test executed is a reason of its
+         * own for collecting code coverage, but it is not a reason for not
+         * running the tests: a run that cannot record what the tests executed
+         * still has to run them, and is warned that it will not get what it
+         * asked for instead of being told about code coverage it never asked
+         * for. A run that was asked for a code coverage report, on the other
+         * hand, cannot deliver it and fails.
+         */
+        $onlyRequestedForTestImpactData = $this->recordTestImpactData &&
+                                          !$configuration->hasCoverageReport() &&
+                                          !$extensionRequiresCodeCoverageCollection;
+
         $this->activate(
             $codeCoverageFilterRegistry->get(),
             $configuration->branchCoverage(),
             $configuration->pathCoverage(),
             $coverageDriver,
+            $onlyRequestedForTestImpactData,
         );
 
         if (!$this->isActive()) {
+            $this->recordTestImpactData = false;
+
+            if ($onlyRequestedForTestImpactData) {
+                return CodeCoverageInitializationStatus::NOT_REQUESTED;
+            }
+
             return CodeCoverageInitializationStatus::FAILED;
         }
 
-        if ($configuration->hasCoverageCacheDirectory()) {
-            $coverageCacheDirectory = $configuration->coverageCacheDirectory();
-        } else {
-            $candidate = $this->temporaryCoverageCacheDirectory();
+        $coverageCacheDirectory = $this->coverageCacheDirectory($configuration);
 
-            if ($candidate !== false) {
-                $coverageCacheDirectory = $candidate;
-            }
-        }
-
-        if (isset($coverageCacheDirectory)) {
+        if ($coverageCacheDirectory !== null) {
             $this->codeCoverage()->cacheStaticAnalysis($coverageCacheDirectory);
         }
 
@@ -177,9 +243,9 @@ final class CodeCoverage
 
         $this->requireCoverageContribution = $configuration->requireCoverageContribution();
 
-        $this->warnIfFilterIsNotConfigured($codeCoverageFilterRegistry, $configuration);
+        $this->warnIfFilterIsNotConfigured($codeCoverageFilterRegistry, $configuration, $onlyRequestedForTestImpactData);
 
-        if ($this->isActive() && isset($coverageCacheDirectory) && $configuration->includeUncoveredFiles()) {
+        if ($this->isActive() && $coverageCacheDirectory !== null && $configuration->includeUncoveredFiles()) {
             $this->emitter->testRunnerStartedStaticAnalysisForCodeCoverage();
 
             /** @phpstan-ignore method.internal */
@@ -192,6 +258,253 @@ final class CodeCoverage
         }
 
         return CodeCoverageInitializationStatus::SUCCEEDED;
+    }
+
+    /**
+     * What is executed outside of the tests is recorded from as early as
+     * possible: before the bootstrap script is loaded, when the code coverage
+     * driver is available then. A code coverage driver that is configured
+     * by the name of its class may only be available once the bootstrap
+     * script has registered an autoloader, which is why this is tried again
+     * after the bootstrap script was loaded.
+     *
+     * This only ever happens for a test run that records test impact data,
+     * and nothing is said about a code coverage driver that is not available
+     * or about a source filter that matches no files: init() does that, as it
+     * does for a test run that records test impact data without this.
+     */
+    public function startRecordingWhatIsExecutedOutsideOfTests(Configuration $configuration, CodeCoverageFilterRegistry $codeCoverageFilterRegistry): void
+    {
+        if ($this->executionOutsideOfTests !== null) {
+            return;
+        }
+
+        if (!$configuration->recordTestImpactData() ||
+            !$configuration->hasCacheDirectory() ||
+            $configuration->deriveTestImpactDataFromCoverageTargets()) {
+            return;
+        }
+
+        if (!$codeCoverageFilterRegistry->configured()) {
+            $codeCoverageFilterRegistry->init($configuration, true);
+        }
+
+        $filter = $codeCoverageFilterRegistry->get();
+
+        if ($filter->isEmpty()) {
+            return;
+        }
+
+        $driverClass = null;
+
+        if ($configuration->hasCoverageDriver()) {
+            $driverClass = $configuration->coverageDriver();
+        }
+
+        try {
+            $this->driver = $this->createDriver($filter, $configuration->branchCoverage(), $configuration->pathCoverage(), $driverClass);
+        } catch (CodeCoverageDriverException|CodeCoverageException) {
+            return;
+        }
+
+        /**
+         * The static analysis that decides which lines are executable is the
+         * one the code coverage report uses, so that what is executed outside
+         * of the tests is filtered the way what a test executes is.
+         *
+         * @phpstan-ignore staticMethod.internalClass
+         */
+        $analyser = StaticAnalysisRegistry::analyser(
+            $this->coverageCacheDirectory($configuration),
+            !$configuration->disableCodeCoverageIgnore(),
+            $configuration->ignoreDeprecatedCodeUnitsFromCodeCoverage(),
+        );
+
+        $this->executionOutsideOfTests = new ExecutionOutsideOfTests(
+            $this->driver,
+            $filter,
+            $analyser,
+            !$configuration->disableCodeCoverageIgnore(),
+        );
+
+        $this->executionOutsideOfTests->start();
+    }
+
+    /**
+     * What was executed outside of the tests is added to what the tests
+     * executed before what was recorded is persisted, and only when test
+     * impact data is recorded: a test run that ends up not recording it, for
+     * instance because the source filter matches no files, stops collecting
+     * and discards what it collected.
+     */
+    public function stopRecordingWhatIsExecutedOutsideOfTests(): void
+    {
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->stop();
+
+        if ($this->isRecordingTestImpactData()) {
+            $this->executionOutsideOfTests->addTo($this->testImpactData());
+        }
+    }
+
+    /**
+     * What is executed while recording is paused is not recorded for any
+     * test, see TestRunner::runExampleOfProperty().
+     */
+    public function pauseRecordingWhatIsExecutedOutsideOfTests(): void
+    {
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->pause();
+    }
+
+    public function resumeRecordingWhatIsExecutedOutsideOfTests(): void
+    {
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->resume();
+    }
+
+    /**
+     * @param non-empty-string $className
+     */
+    public function enterTestClass(string $className): void
+    {
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->enterTestClass($className);
+    }
+
+    public function leaveTestClass(): void
+    {
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->leaveTestClass();
+    }
+
+    /**
+     * @param non-empty-string $className
+     * @param non-empty-string $methodName the test method the data is provided for
+     */
+    public function enterDataProvider(string $className, string $methodName): void
+    {
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->enterDataProvider($className, $methodName);
+    }
+
+    public function leaveDataProvider(): void
+    {
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->leaveDataProvider();
+    }
+
+    /**
+     * A test run that consists of a single test gives that test a process of
+     * its own, and what that process loaded is then what the test depends on,
+     * see recordTestImpactDataFor().
+     */
+    public function setTestRunConsistsOfASingleTest(bool $testRunConsistsOfASingleTest): void
+    {
+        $this->testRunConsistsOfASingleTest = $testRunConsistsOfASingleTest;
+    }
+
+    public function testRunConsistsOfASingleTest(): bool
+    {
+        return $this->testRunConsistsOfASingleTest;
+    }
+
+    /**
+     * What a test that was run in a process of its own executed is recorded
+     * in that process, and is recorded here for the test that was run.
+     *
+     * @param non-empty-string       $recordedTest
+     * @param list<non-empty-string> $files
+     */
+    public function recordTestImpactDataOf(TestCase $test, string $recordedTest, array $files): void
+    {
+        $this->testImpactData()->record($recordedTest, $files);
+
+        $this->testWasRecorded($test, $recordedTest);
+    }
+
+    /**
+     * What a test that was run in a worker process of a parallel test run
+     * executed is recorded in that process, together with what was executed
+     * there for its test class and for its data provider, and is recorded
+     * here for the test that was run. What the main process executed for its
+     * data provider, when it built the test suite, is added to it as it is
+     * added to what a test executed that was run in the main process.
+     *
+     * @param non-empty-string       $className
+     * @param non-empty-string       $methodName
+     * @param non-empty-string       $recordedTest
+     * @param list<non-empty-string> $files
+     */
+    public function recordTestImpactDataOfTestRunInWorker(string $className, string $methodName, string $recordedTest, array $files): void
+    {
+        $this->testImpactData()->record($recordedTest, $files);
+
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->testWasRecorded($recordedTest, $className, $methodName);
+    }
+
+    /**
+     * What a worker process of a parallel test run executed outside of the
+     * tests it ran is recorded in that process, and is recorded here as
+     * executed outside of the tests.
+     *
+     * @param list<non-empty-string> $files
+     */
+    public function recordExecutedOutsideOfTestsInWorker(array $files): void
+    {
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->recordExecutedOutsideOfTestsInWorker($files);
+    }
+
+    /**
+     * What was recorded since this was last asked for: what the main process
+     * records when a worker process of a parallel test run ships it with the
+     * result of the tests of a test class it ran.
+     *
+     * @return array{tests: array<non-empty-string, array{className: non-empty-string, methodName: non-empty-string, files: list<non-empty-string>}>, executedOutsideOfTests: list<non-empty-string>}
+     */
+    public function collectedTestImpactData(): array
+    {
+        if ($this->executionOutsideOfTests === null || !$this->isRecordingTestImpactData()) {
+            return [
+                'tests'                  => [],
+                'executedOutsideOfTests' => [],
+            ];
+        }
+
+        $collected = $this->executionOutsideOfTests->handOver($this->testImpactData());
+
+        $this->testImpactData = new DefaultTestImpactData;
+
+        return $collected;
     }
 
     /**
@@ -250,61 +563,72 @@ final class CodeCoverage
         return $nameAndVersion;
     }
 
-    public function start(TestCase $test): void
+    /**
+     * A test that opted out of code coverage is only collected so that the
+     * source files it executed can be recorded. Nothing it executed may reach
+     * the code coverage report, which is why the driver is used directly for
+     * such a test and the code coverage object never sees its data.
+     */
+    public function start(TestCase $test, bool $forTestImpactDataOnly = false): void
     {
         if ($this->collecting) {
             return;
         }
 
+        if ($this->executionOutsideOfTests !== null) {
+            $this->executionOutsideOfTests->pause();
+        }
+
+        $this->collectForTestImpactDataOnly = $forTestImpactDataOnly;
+
         $this->test = $test;
 
         assert($this->codeCoverage !== null);
 
-        $this->codeCoverage->start(
-            $test->valueObjectForEvents()->id(),
-            $this->sizeOf($test),
-        );
+        if ($this->collectForTestImpactDataOnly) {
+            assert($this->driver !== null);
+
+            /** @phpstan-ignore method.internalClass */
+            $this->driver->start();
+        } else {
+            $this->codeCoverage->start(
+                $test->valueObjectForEvents()->id(),
+                $this->sizeOf($test),
+            );
+        }
 
         $this->collecting = true;
 
         $this->timer()->start();
     }
 
+    /**
+     * What is executed outside of the tests is recorded again once the test
+     * is no longer collected for, whatever happened while it was.
+     */
     public function stop(bool $append, null|false|TargetCollection $covers = null, ?TargetCollection $uses = null): void
     {
         if (!$this->collecting) {
             return;
         }
 
-        assert($this->codeCoverage !== null);
-        assert($this->test !== null);
-
-        $time             = $this->timer()->stop()->asSeconds();
-        $this->collecting = false;
-
-        if ($this->test->status()->isSuccess()) {
-            $status = TestStatus::Success;
-        } else {
-            $status = TestStatus::Failure;
+        try {
+            $this->stopCollecting($append, $covers, $uses);
+        } finally {
+            if ($this->executionOutsideOfTests !== null) {
+                $this->executionOutsideOfTests->resume();
+            }
         }
-
-        if (!$this->targetsAreValid($this->test->valueObjectForEvents(), $covers, $uses)) {
-            $append = false;
-        }
-
-        $rawData = $this->codeCoverage->stop($append, $status, $covers, $uses, $time);
-
-        if ($this->requireCoverageContribution) {
-            $this->lastTestContributedToCoverage = $this->contributes($rawData);
-        }
-
-        $this->test = null;
     }
 
     /**
      * Stops collecting code coverage data for the current test, an example of
      * a property that passed without performing assertions, and holds the
      * data back instead of appending it, see appendHeldBack().
+     *
+     * What the example executed is recorded all the same: the property
+     * depends on it, whether the data ends up in the code coverage report or
+     * not.
      */
     public function stopAndHoldBack(null|false|TargetCollection $covers, ?TargetCollection $uses): void
     {
@@ -329,7 +653,18 @@ final class CodeCoverage
             'uses'   => $uses,
         ];
 
+        if ($this->recordTestImpactData) {
+            $this->recordTestImpactDataFor(
+                $this->test,
+                $this->codeCoverage->dataNotFilteredUsingTargets(),
+            );
+        }
+
         $this->test = null;
+
+        if ($this->executionOutsideOfTests !== null) {
+            $this->executionOutsideOfTests->resume();
+        }
     }
 
     /**
@@ -403,6 +738,25 @@ final class CodeCoverage
     public function discardHeldBack(string $id): void
     {
         unset($this->heldBack[$id]);
+    }
+
+    /**
+     * Recording depends on the code coverage driver, so it stops when the
+     * driver does: the source filter that matches no files, for instance,
+     * deactivates code coverage after it was activated.
+     */
+    public function isRecordingTestImpactData(): bool
+    {
+        return $this->recordTestImpactData && $this->isActive();
+    }
+
+    public function testImpactData(): TestImpactData
+    {
+        if ($this->testImpactData === null) {
+            $this->testImpactData = new NullTestImpactData;
+        }
+
+        return $this->testImpactData;
     }
 
     public function lastTestContributedToCoverage(): bool
@@ -633,15 +987,28 @@ final class CodeCoverage
         }
     }
 
-    public function warnIfFilterIsNotConfigured(CodeCoverageFilterRegistry $codeCoverageFilterRegistry, Configuration $configuration): void
+    /**
+     * Which files are first-party code is what test impact analysis records
+     * what each test depends on in terms of, just as it is what code coverage
+     * is processed for. A run that only needs the source filter for test
+     * impact data is therefore told what it will not get, and not told about
+     * code coverage it never asked for.
+     */
+    public function warnIfFilterIsNotConfigured(CodeCoverageFilterRegistry $codeCoverageFilterRegistry, Configuration $configuration, bool $forTestImpactDataOnly = false): void
     {
         if (!$codeCoverageFilterRegistry->get()->isEmpty()) {
             return;
         }
 
+        $consequence = 'code coverage will not be processed';
+
+        if ($forTestImpactDataOnly) {
+            $consequence = 'test impact data will not be recorded';
+        }
+
         if (!$codeCoverageFilterRegistry->configured()) {
             $this->emitter->testRunnerTriggeredPhpunitWarning(
-                'No filter is configured, code coverage will not be processed',
+                'No filter is configured, ' . $consequence,
             );
 
             $this->deactivate();
@@ -661,38 +1028,251 @@ final class CodeCoverage
 
         $this->emitter->testRunnerTriggeredPhpunitWarning(
             sprintf(
-                'Configured source filter (include-path: %s) does not match any files, code coverage will not be processed',
+                'Configured source filter (include-path: %s) does not match any files, %s',
                 implode(', ', $paths),
+                $consequence,
             ),
         );
 
         $this->deactivate();
     }
 
-    private function activate(Filter $filter, bool $branchCoverage, bool $pathCoverage, ?string $driverClass = null): void
+    private function stopCollecting(bool $append, null|false|TargetCollection $covers, ?TargetCollection $uses): void
+    {
+        assert($this->codeCoverage !== null);
+        assert($this->test !== null);
+
+        $time             = $this->timer()->stop()->asSeconds();
+        $this->collecting = false;
+
+        if ($this->collectForTestImpactDataOnly) {
+            $this->stopCollectingForTestImpactDataOnly();
+
+            return;
+        }
+
+        if ($this->test->status()->isSuccess()) {
+            $status = TestStatus::Success;
+        } else {
+            $status = TestStatus::Failure;
+        }
+
+        if (!$this->targetsAreValid($this->test->valueObjectForEvents(), $covers, $uses)) {
+            $append = false;
+        }
+
+        $rawData = $this->codeCoverage->stop($append, $status, $covers, $uses, $time);
+
+        if ($this->recordTestImpactData) {
+            $this->recordTestImpactDataFor(
+                $this->test,
+                $this->codeCoverage->dataNotFilteredUsingTargets(),
+            );
+        }
+
+        if ($this->requireCoverageContribution) {
+            $this->lastTestContributedToCoverage = $this->contributes($rawData);
+        }
+
+        $this->test = null;
+    }
+
+    /**
+     * The data of a test that opted out of code coverage must not reach the
+     * code coverage report, and not appending it is not enough: the files a
+     * test executed are added to the report as files no test covered before
+     * the data of a test that covers nothing is discarded. The data is
+     * therefore taken from the driver, and only the source filter that the
+     * code coverage report is based on is applied to it.
+     */
+    private function stopCollectingForTestImpactDataOnly(): void
+    {
+        assert($this->codeCoverage !== null);
+        assert($this->driver !== null);
+        assert($this->test !== null);
+
+        /** @phpstan-ignore method.internalClass */
+        $data = $this->driver->stop();
+
+        /** @phpstan-ignore new.internalClass, method.internalClass */
+        (new FilterProcessor)->applyFilter($data, $this->codeCoverage->filter());
+
+        if ($this->recordTestImpactData) {
+            $this->recordTestImpactDataFor($this->test, $data);
+        }
+
+        $this->test = null;
+    }
+
+    /**
+     * A test that was skipped, or that was marked incomplete, stopped before
+     * it executed the code it would have executed. What was collected for it
+     * is not what it depends on, and recording it would make the test look as
+     * if it depended on less than it does.
+     *
+     * @phpstan-ignore parameter.internalClass
+     */
+    private function recordTestImpactDataFor(TestCase $test, RawCodeCoverageData $data): void
+    {
+        $status = $test->status();
+
+        if ($status->isSkipped() || $status->isIncomplete()) {
+            return;
+        }
+
+        foreach ($test->registeredFixturesThatCannotBeResolved() as $path) {
+            $this->emitter->testTriggeredPhpunitWarning(
+                $test->valueObjectForEvents(),
+                sprintf(
+                    'Fixture "%s" does not exist, it is ignored',
+                    $path,
+                ),
+            );
+        }
+
+        $files = ExecutedFiles::in($data);
+
+        /*
+         * Reading a file is not executing code, so what a test declares that
+         * it uses as a fixture cannot be observed and has to be added here.
+         */
+        foreach ((new Fixtures)->for($test::class, $test->name()) as $fixture) {
+            $files[] = $fixture;
+        }
+
+        /*
+         * The same goes for what a test registers as a fixture while it runs:
+         * the code a web server loaded while it handled the requests the test
+         * sent, for instance, was executed in another process.
+         */
+        foreach ($test->registeredFixtures() as $fixture) {
+            $files[] = $fixture;
+        }
+
+        /*
+         * PHP loads a file once per process, so the source files a process
+         * that ran no other test loaded are source files the test depends on,
+         * whether a line of them was executed or not: using a constant or an
+         * inherited method of a class, reflecting on it, and creating a test
+         * double for it executes no line of the file that declares it. In a
+         * process that runs other tests as well, a file is loaded by the first
+         * test that needs it, and that it was loaded says nothing about the
+         * tests that come after it.
+         */
+        if ($test->isInIsolation() || $this->testRunConsistsOfASingleTest) {
+            assert($this->codeCoverage !== null);
+
+            $filter = $this->codeCoverage->filter();
+
+            foreach (get_included_files() as $file) {
+                if ($filter->isExcluded($file)) {
+                    continue;
+                }
+
+                assert($file !== '');
+
+                $files[] = $file;
+            }
+        }
+
+        /*
+         * A test that changed is a test that has to be run, and the files the
+         * test itself is made of are what a change to it is seen in. They
+         * cannot be observed: a test file is not code that is subject to code
+         * coverage analysis.
+         */
+        $filesOfTest = TestFiles::of(new ReflectionClass($test));
+
+        if ($filesOfTest === null) {
+            return;
+        }
+
+        foreach ($filesOfTest as $file) {
+            $files[] = $file;
+        }
+
+        $recordedTest = $test->valueObjectForEvents()->idWithoutRepetitionAndAttempt();
+        $files        = array_values(array_unique($files));
+
+        if ($test->propertyExample() !== null) {
+            $files = $this->withFilesOfExamplesRecordedBefore($test, $files);
+        }
+
+        $this->testImpactData()->record($recordedTest, $files);
+
+        $this->testWasRecorded($test, $recordedTest);
+    }
+
+    /**
+     * The examples of a property are recorded as the property, and what a
+     * property depends on is what all of its examples executed: an example
+     * executes what its arguments lead it to, and the arguments of the next
+     * example may lead it somewhere else. What was recorded for the examples
+     * that were run before is therefore kept for as long as the examples are
+     * those of the same property. A repetition and another attempt start
+     * over, as they do for every other test.
+     *
+     * @param list<non-empty-string> $files
+     *
+     * @return list<non-empty-string>
+     */
+    private function withFilesOfExamplesRecordedBefore(TestCase $example, array $files): array
+    {
+        $property = $example->valueObjectForEvents()->id();
+
+        if ($this->propertyWhoseExamplesAreRecorded !== $property) {
+            $this->propertyWhoseExamplesAreRecorded = $property;
+            $this->filesOfExamplesRecordedBefore    = [];
+        }
+
+        foreach ($files as $file) {
+            $this->filesOfExamplesRecordedBefore[] = $file;
+        }
+
+        $this->filesOfExamplesRecordedBefore = array_values(array_unique($this->filesOfExamplesRecordedBefore));
+
+        return $this->filesOfExamplesRecordedBefore;
+    }
+
+    /**
+     * @param non-empty-string $recordedTest
+     */
+    private function testWasRecorded(TestCase $test, string $recordedTest): void
+    {
+        if ($this->executionOutsideOfTests === null) {
+            return;
+        }
+
+        $this->executionOutsideOfTests->testWasRecorded($recordedTest, $test::class, $test->name());
+    }
+
+    private function activate(Filter $filter, bool $branchCoverage, bool $pathCoverage, ?string $driverClass, bool $onlyRequestedForTestImpactData): void
     {
         try {
-            $granularity = Granularity::Line;
-
-            if ($branchCoverage) {
-                $granularity = Granularity::LineAndBranch;
-            }
-
             if ($pathCoverage) {
                 $branchCoverage = true;
-                $granularity    = Granularity::LineBranchAndPath;
             }
 
-            if ($driverClass !== null) {
-                $this->driver = $this->instantiateDriver($driverClass, $filter, $granularity);
-            } else {
-                $this->driver = (new Selector)->select($filter, $granularity);
+            /*
+             * The code coverage driver that records what is executed outside
+             * of the tests is the one that records what the tests execute:
+             * code coverage is never collected for two purposes at the same
+             * time, and a second driver would not know about the first.
+             */
+            if ($this->driver === null) {
+                $this->driver = $this->createDriver($filter, $branchCoverage, $pathCoverage, $driverClass);
             }
 
             $this->codeCoverage = new \SebastianBergmann\CodeCoverage\CodeCoverage(
                 $this->driver,
                 $filter,
             );
+
+            if ($this->recordTestImpactData) {
+                $this->codeCoverage->enableCollectionOfDataNotFilteredUsingTargets();
+
+                $this->testImpactData = new DefaultTestImpactData;
+            }
 
             $this->collectsBranchCoverage = $branchCoverage;
             $this->collectsPathCoverage   = $pathCoverage;
@@ -703,8 +1283,42 @@ final class CodeCoverage
                 $message = 'Code coverage cannot be initialized';
             }
 
+            /*
+             * A run that only collects code coverage so that it can record
+             * what the tests executed is told what it will not get, and not
+             * told about code coverage it never asked for.
+             */
+            if ($onlyRequestedForTestImpactData) {
+                $message .= ', test impact data will not be recorded';
+            }
+
             $this->emitter->testRunnerTriggeredPhpunitWarning($message);
         }
+    }
+
+    /**
+     * @throws CodeCoverageDriverException
+     * @throws CodeCoverageException
+     *
+     * @phpstan-ignore return.internalClass
+     */
+    private function createDriver(Filter $filter, bool $branchCoverage, bool $pathCoverage, ?string $driverClass): Driver
+    {
+        $granularity = Granularity::Line;
+
+        if ($branchCoverage) {
+            $granularity = Granularity::LineAndBranch;
+        }
+
+        if ($pathCoverage) {
+            $granularity = Granularity::LineBranchAndPath;
+        }
+
+        if ($driverClass !== null) {
+            return $this->instantiateDriver($driverClass, $filter, $granularity);
+        }
+
+        return (new Selector)->select($filter, $granularity);
     }
 
     /**
@@ -839,6 +1453,24 @@ final class CodeCoverage
                 $e->getMessage(),
             ),
         );
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    private function coverageCacheDirectory(Configuration $configuration): ?string
+    {
+        if ($configuration->hasCoverageCacheDirectory()) {
+            return $configuration->coverageCacheDirectory();
+        }
+
+        $candidate = $this->temporaryCoverageCacheDirectory();
+
+        if ($candidate !== false) {
+            return $candidate;
+        }
+
+        return null;
     }
 
     private function timer(): Timer

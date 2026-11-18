@@ -44,7 +44,7 @@ final readonly class FailureSignature
     private string $signature;
 
     /**
-     * @param class-string     $className the class of the throwable that ended the example
+     * @param non-empty-string $className the class of the throwable that ended the example, which does not have to be loaded
      * @param non-empty-string $location  where the throwable was raised, for instance "/path/to/FooTest.php:12"
      */
     public static function forThrowable(string $className, string $location): self

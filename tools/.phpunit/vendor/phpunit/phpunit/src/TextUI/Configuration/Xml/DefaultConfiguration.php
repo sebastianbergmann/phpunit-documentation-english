@@ -9,6 +9,7 @@
  */
 namespace PHPUnit\TextUI\XmlConfiguration;
 
+use PHPUnit\TextUI\Configuration\AddedFilesAreReachedThroughChanges;
 use PHPUnit\TextUI\Configuration\ConstantCollection;
 use PHPUnit\TextUI\Configuration\DirectoryCollection;
 use PHPUnit\TextUI\Configuration\ExtensionBootstrapCollection;
@@ -18,6 +19,7 @@ use PHPUnit\TextUI\Configuration\GroupCollection;
 use PHPUnit\TextUI\Configuration\IniSettingCollection;
 use PHPUnit\TextUI\Configuration\Php;
 use PHPUnit\TextUI\Configuration\Source;
+use PHPUnit\TextUI\Configuration\TestImpactAnalysis;
 use PHPUnit\TextUI\Configuration\TestSuiteCollection;
 use PHPUnit\TextUI\Configuration\VariableCollection;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\CodeCoverage;
@@ -188,6 +190,8 @@ final readonly class DefaultConfiguration extends Configuration
                 0,
                 false,
                 false,
+                false,
+                false,
                 0,
             ),
             TestSuiteCollection::fromArray([]),
@@ -198,6 +202,16 @@ final readonly class DefaultConfiguration extends Configuration
                 PropertyBasedTesting::DEFAULT_EXAMPLES_CHECKED_UNTIL_HEALTH_IS_ASSUMED,
                 PropertyBasedTesting::DEFAULT_MAXIMUM_REJECTED_EXAMPLES_UNTIL_HEALTH_IS_ASSUMED,
                 PropertyBasedTesting::DEFAULT_MAXIMUM_TOO_LARGE_EXAMPLES_UNTIL_HEALTH_IS_ASSUMED,
+            ),
+            new TestImpactAnalysis(
+                FilterDirectoryCollection::fromArray([]),
+                FilterFileCollection::fromArray([]),
+                new AddedFilesAreReachedThroughChanges(
+                    FilterDirectoryCollection::fromArray([]),
+                    FilterFileCollection::fromArray([]),
+                    FilterDirectoryCollection::fromArray([]),
+                    FilterFileCollection::fromArray([]),
+                ),
             ),
         );
     }

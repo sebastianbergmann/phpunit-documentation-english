@@ -10,5 +10,5 @@ interface Matcher
      *
      * @return boolean
      */
-    public function matches(object $object, string $property);
+    public function matches($object, $property);
 }

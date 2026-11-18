@@ -35,13 +35,15 @@ final readonly class TestSuiteFilterProcessor
     }
 
     /**
+     * @param ?list<non-empty-string> $selectedTests the tests that test impact analysis selected, when it selected any
+     *
      * @throws Event\RuntimeException
      * @throws FilterNotConfiguredException
      * @throws RuntimeException
      */
-    public function process(Configuration $configuration, TestSuite $suite): void
+    public function process(Configuration $configuration, TestSuite $suite, ?array $selectedTests = null): void
     {
-        $factory = $this->filter($configuration);
+        $factory = $this->filter($configuration, $selectedTests);
 
         if ($factory === null) {
             return;
@@ -58,12 +60,15 @@ final readonly class TestSuiteFilterProcessor
      * Returns the filter for the test selection that is configured, null when
      * no test selection is configured.
      *
+     * @param ?list<non-empty-string> $selectedTests the tests that test impact analysis selected, when it selected any
+     *
      * @throws FilterNotConfiguredException
      * @throws RuntimeException
      */
-    public function filter(Configuration $configuration): ?Factory
+    public function filter(Configuration $configuration, ?array $selectedTests = null): ?Factory
     {
-        if (!$configuration->hasFilter() &&
+        if ($selectedTests === null &&
+            !$configuration->hasFilter() &&
             !$configuration->hasExcludeFilter() &&
             !$configuration->hasTestIdFilterFile() &&
             !$configuration->hasTestIdFilter() &&
@@ -138,6 +143,10 @@ final readonly class TestSuiteFilterProcessor
 
         if ($configuration->hasTestIdFilter()) {
             $factory->addTestIdFilter([$configuration->testIdFilter()]);
+        }
+
+        if ($selectedTests !== null) {
+            $factory->addTestIdFilter($selectedTests);
         }
 
         if ($configuration->hasExcludeFilter()) {

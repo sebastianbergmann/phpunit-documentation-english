@@ -243,6 +243,7 @@ final class ChoiceSource
      * @template T
      *
      * @param non-empty-list<T> $candidates
+     * @param float<0, 1>       $probability
      *
      * @return ?T
      *
@@ -266,6 +267,27 @@ final class ChoiceSource
     }
 
     /**
+     * Returns, while choices are drawn at random, an integer that is drawn
+     * uniformly from the range [$minimum, $maximum], and null otherwise.
+     *
+     * No choice is drawn, as for suggest(): a generator uses the integer only
+     * to decide which choices it draws next, how many elements it draws,
+     * for instance, and not to interpret them.
+     *
+     * @param int $maximum not smaller than the minimum
+     *
+     * @phpstan-impure
+     */
+    public function suggestInteger(int $minimum, int $maximum): ?int
+    {
+        if ($this->randomizer === null) {
+            return null;
+        }
+
+        return $this->randomizer->getInt($minimum, $maximum);
+    }
+
+    /**
      * Marks the start of a span: the choices that are drawn until the span is
      * ended form one part of the value, for instance an element of a list.
      *
@@ -284,11 +306,19 @@ final class ChoiceSource
         ];
     }
 
+    /**
+     * Marks the end of the span that was started last and has not been ended
+     * yet.
+     *
+     * @throws NoSpanToEndException
+     */
     public function endSpan(): void
     {
         $index = array_pop($this->openSpans);
 
-        assert($index !== null);
+        if ($index === null) {
+            throw new NoSpanToEndException;
+        }
 
         $this->spans[$index]['end'] = count($this->choices);
     }
@@ -297,7 +327,8 @@ final class ChoiceSource
      * The choices that have been drawn, with the spans that were ended and
      * contain at least one choice, and the largest choice that each choice
      * could have been. The parent of a span is the closest of these spans
-     * that it is part of.
+     * that it is part of. The spans are in the order in which they were
+     * started, so that a span comes after its parent.
      */
     public function sequence(): ChoiceSequence
     {

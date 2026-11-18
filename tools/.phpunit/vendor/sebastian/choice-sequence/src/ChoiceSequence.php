@@ -40,7 +40,7 @@ final readonly class ChoiceSequence
 
     /**
      * @param list<non-negative-int> $choices
-     * @param list<Span>             $spans
+     * @param list<Span>             $spans   in the order in which they were started, so that a span comes after the span it is part of
      * @param list<non-negative-int> $maxima  the largest choice that each choice could have been, empty when this is not known
      */
     public function __construct(array $choices, array $spans = [], array $maxima = [])
@@ -59,6 +59,9 @@ final readonly class ChoiceSequence
     }
 
     /**
+     * The spans in the order in which they were started: a span comes after
+     * the span it is part of, and before the spans that start after it.
+     *
      * @return list<Span>
      */
     public function spans(): array

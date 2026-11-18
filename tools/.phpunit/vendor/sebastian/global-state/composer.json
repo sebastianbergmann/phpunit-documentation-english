@@ -24,12 +24,12 @@
     },
     "require": {
         "php": ">=8.4",
-        "sebastian/object-reflector": "^6.1.0",
-        "sebastian/recursion-context": "^8.0.1"
+        "sebastian/object-reflector": "^6.0",
+        "sebastian/recursion-context": "^8.0"
     },
     "require-dev": {
         "ext-dom": "*",
-        "phpunit/phpunit": "^13.4.7"
+        "phpunit/phpunit": "^13.1.13"
     },
     "autoload": {
         "classmap": [

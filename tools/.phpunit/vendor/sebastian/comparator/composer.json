@@ -29,8 +29,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.4",
-        "sebastian/diff": "^9.0.1",
-        "sebastian/exporter": "^8.2.1",
+        "sebastian/diff": "^9.0",
+        "sebastian/exporter": "^8.2",
         "ext-dom": "*",
         "ext-mbstring": "*"
     },
@@ -38,7 +38,7 @@
         "ext-bcmath": "For comparing BcMath\\Number objects"
     },
     "require-dev": {
-        "phpunit/phpunit": "^13.4.7"
+        "phpunit/phpunit": "^13.3"
     },
     "config": {
         "platform": {

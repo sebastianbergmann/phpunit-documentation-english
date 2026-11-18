@@ -1,4 +1,5 @@
 {
+    "prefer-stable": true,
     "minimum-stability": "dev",
     "require-dev": {
         "phpunit/phpunit": "14.0.x-dev"

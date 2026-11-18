@@ -10,7 +10,7 @@
 namespace SebastianBergmann\ChoiceSequence;
 
 use function hash;
-use function implode;
+use function strlen;
 
 /**
  * Computes the label of a span, which identifies how the choices of the span
@@ -21,7 +21,9 @@ use function implode;
  * A label is computed from a name, for instance the name of a generator, and
  * its components, for instance the parameters of the generator and the
  * labels of the generators it is composed of. It is hashed, so that it is
- * short however many components it has. Tools that compute labels in the
+ * short however many components it has. A name and its components may
+ * consist of any characters: different names and components have different
+ * labels, however they are divided into a name and components. Tools that compute labels in the
  * same way label spans whose choices are drawn in the same way with the same
  * label.
  *
@@ -36,6 +38,15 @@ final readonly class Label
      */
     public static function of(string $name, string ...$components): string
     {
-        return hash('xxh3', $name . '(' . implode(',', $components) . ')');
+        $encoded = '';
+
+        // each part is preceded by its length, so that different names and
+        // components are never hashed as the same string, whatever
+        // characters they consist of
+        foreach ([$name, ...$components] as $part) {
+            $encoded .= strlen($part) . ':' . $part;
+        }
+
+        return hash('xxh3', $encoded);
     }
 }

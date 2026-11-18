@@ -9,6 +9,7 @@ use PHPUnit\Runner\Parallel\CommandStream;
 use PHPUnit\Runner\Parallel\PassedTestsRecorder;
 use PHPUnit\Runner\Parallel\WorkerDataProvider;
 use PHPUnit\Runner\Parallel\WorkerException;
+use PHPUnit\Runner\Preloader;
 use PHPUnit\TextUI\Configuration\Registry as ConfigurationRegistry;
 use PHPUnit\TextUI\Configuration\CodeCoverageFilterRegistry;
 use PHPUnit\TextUI\Configuration\PhpHandler;
@@ -35,12 +36,31 @@ if ($__phpunit_displayErrors !== false) {
     ini_set('display_errors', $__phpunit_displayErrors);
 }
 
+// A sequential run preloads the code of PHPUnit and of its dependencies before
+// the configuration and the bootstrap script are applied, so that no test
+// triggers the loading of this code: a test may have changed how, or whether,
+// code can be loaded, by replacing a stream wrapper or by registering an
+// autoloader, for instance. The worker preloads the same code at the same
+// point, so that the tests it runs see the same code loaded.
+Preloader::preload();
+
 {childProcessConfiguration}
 
 $__phpunit_configuration = ConfigurationRegistry::get();
 
 if ({collectCodeCoverageInformation}) {
+    // What is executed outside of the tests is recorded when test impact
+    // data is recorded. It is recorded from before the bootstrap script is
+    // run (see PersistentWorker); a code coverage driver that is only
+    // available once the bootstrap script has registered an autoloader is
+    // started here.
+    CodeCoverage::instance()->startRecordingWhatIsExecutedOutsideOfTests($__phpunit_configuration, CodeCoverageFilterRegistry::instance());
+
     CodeCoverage::instance()->init($__phpunit_configuration, CodeCoverageFilterRegistry::instance(), true);
+
+    // A test run that consists of a single test gives that test a process of
+    // its own, which is this worker process.
+    CodeCoverage::instance()->setTestRunConsistsOfASingleTest({testRunConsistsOfASingleTest});
 }
 
 ErrorHandlerBootstrapper::bootstrap($__phpunit_configuration);
@@ -341,10 +361,15 @@ function __phpunit_worker_run_unit(array $command, array $extensionSubscribers, 
         $codeCoverage = CodeCoverage::instance()->collectedCodeCoverage();
     }
 
+    // What the tests of the unit executed, and what was executed outside of
+    // them, is shipped to the parent process with the result of the unit. It
+    // is handed over here, so that the next unit executed by this worker does
+    // not ship it a second time.
     $envelope = (object) [
-        'codeCoverage' => $codeCoverage,
-        'events'       => $dispatcher->flush(),
-        'passedTests'  => PassedTests::instance()->withoutReturnValues(),
+        'codeCoverage'   => $codeCoverage,
+        'testImpactData' => CodeCoverage::instance()->collectedTestImpactData(),
+        'events'         => $dispatcher->flush(),
+        'passedTests'    => PassedTests::instance()->withoutReturnValues(),
     ];
 
     if ($failure !== null) {

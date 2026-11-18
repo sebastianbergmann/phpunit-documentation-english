@@ -72,6 +72,10 @@ final readonly class Repetition
     private ?int $maximumSize;
     private BernoulliDistribution $anotherElement;
     private ExactDistribution $certainlyAnotherElement;
+
+    /**
+     * @var float<0, 1>
+     */
     private float $probabilityOfAimingForMaximumSize;
 
     /**
@@ -80,12 +84,19 @@ final readonly class Repetition
     private string $label;
 
     /**
-     * @param non-empty-string  $label       the label of the spans of the elements (see Label)
+     * @param non-empty-string  $label                       the label of the spans of the elements (see Label)
      * @param non-negative-int  $minimumSize
-     * @param ?non-negative-int $maximumSize
+     * @param ?non-negative-int $maximumSize                 not smaller than the minimum size, null when the collection has no maximum size
+     * @param float<0, 1>       $probabilityOfAnotherElement
+     *
+     * @throws InvalidArgumentException when the maximum size is smaller than the minimum size
      */
     public function __construct(string $label, int $minimumSize, ?int $maximumSize, float $probabilityOfAnotherElement = self::DEFAULT_PROBABILITY_OF_ANOTHER_ELEMENT)
     {
+        if ($maximumSize !== null && $maximumSize < $minimumSize) {
+            throw InvalidArgumentException::maximumSizeSmallerThanMinimumSize($minimumSize, $maximumSize);
+        }
+
         $this->label                             = $label;
         $this->minimumSize                       = $minimumSize;
         $this->maximumSize                       = $maximumSize;
@@ -115,21 +126,24 @@ final readonly class Repetition
                 $source->startSpan($this->label, SpanKind::Element);
             }
 
-            if ($size >= $this->minimumSize) {
-                if ($aimsForMaximumSize === null) {
-                    $aimsForMaximumSize = $this->aimsForMaximumSize($source);
+            // the span is ended when a choice cannot be drawn as well, so
+            // that the code that draws the collection ends its own span,
+            // and not this one, when it ends a span then
+            try {
+                if ($size >= $this->minimumSize) {
+                    if ($aimsForMaximumSize === null) {
+                        $aimsForMaximumSize = $this->aimsForMaximumSize($source);
+                    }
+
+                    if ($source->draw(1, $this->anotherElement($size, $aimsForMaximumSize)) === 0) {
+                        return;
+                    }
                 }
 
-                if ($source->draw(1, $this->anotherElement($size, $aimsForMaximumSize)) === 0) {
-                    $source->endSpan();
-
-                    return;
-                }
+                $added = $element();
+            } finally {
+                $source->endSpan();
             }
-
-            $added = $element();
-
-            $source->endSpan();
 
             if ($added) {
                 $size++;
@@ -151,6 +165,50 @@ final readonly class Repetition
 
             return;
         }
+    }
+
+    /**
+     * The choices from which repeat() draws a collection with the given
+     * elements: the choices of the elements that the minimum size requires,
+     * then, for each other element, the choice 1 followed by the choices of
+     * the element, and, unless the collection has its maximum size, the
+     * choice 0 that ends it.
+     *
+     * Elements beyond the maximum size are left out. When there are fewer
+     * elements than the minimum size requires, the choices are replayed as a
+     * collection whose other required elements are drawn from choices that
+     * are 0, as the choices beyond the end of a choice sequence are.
+     *
+     * @param list<list<non-negative-int>> $elements the choices of each element, in order
+     *
+     * @return list<non-negative-int>
+     */
+    public function choicesFor(array $elements): array
+    {
+        $choices = [];
+        $size    = 0;
+
+        foreach ($elements as $element) {
+            if ($this->maximumSize !== null && $size >= $this->maximumSize) {
+                break;
+            }
+
+            if ($size >= $this->minimumSize) {
+                $choices[] = 1;
+            }
+
+            foreach ($element as $choice) {
+                $choices[] = $choice;
+            }
+
+            $size++;
+        }
+
+        if ($size >= $this->minimumSize && ($this->maximumSize === null || $size < $this->maximumSize)) {
+            $choices[] = 0;
+        }
+
+        return $choices;
     }
 
     /**
@@ -192,13 +250,22 @@ final readonly class Repetition
      *
      * @param non-negative-int  $minimumSize
      * @param ?non-negative-int $maximumSize
+     * @param float<0, 1>       $probabilityOfAnotherElement
+     *
+     * @return float<0, 1>
      */
     private static function probabilityOfAimingForMaximumSize(int $minimumSize, ?int $maximumSize, float $probabilityOfAnotherElement): float
     {
-        // without a maximum size, there is nothing to aim for, and aiming
-        // for it only affects the choices before the one for the element
-        // that reaches the maximum size
-        if ($maximumSize === null || $minimumSize >= $maximumSize - 1) {
+        // without a maximum size, there is nothing to aim for
+        if ($maximumSize === null) {
+            return 0.0;
+        }
+
+        $largestNumberOfElementsThatAreAdded = $maximumSize - $minimumSize;
+
+        // aiming for the maximum size only affects the choices before the
+        // one for the element that reaches the maximum size
+        if ($largestNumberOfElementsThatAreAdded < 2) {
             return 0.0;
         }
 
@@ -212,7 +279,7 @@ final readonly class Repetition
 
         return min(
             self::MAXIMUM_PROBABILITY_OF_AIMING_FOR_MAXIMUM_SIZE,
-            self::GROWTH_OF_MEAN_SIZE * $meanSize / ($maximumSize - $minimumSize),
+            self::GROWTH_OF_MEAN_SIZE * $meanSize / $largestNumberOfElementsThatAreAdded,
         );
     }
 }

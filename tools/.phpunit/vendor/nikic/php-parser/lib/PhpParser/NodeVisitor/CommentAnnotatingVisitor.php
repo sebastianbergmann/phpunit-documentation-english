@@ -26,8 +26,7 @@ class CommentAnnotatingVisitor extends NodeVisitorAbstract {
         // Collect positions of comments. We use this to avoid traversing parts of the AST where
         // there are no comments.
         foreach ($tokens as $i => $token) {
-            $id = $token->id;
-            if ($id === \T_COMMENT || $id === \T_DOC_COMMENT) {
+            if ($token->id === \T_COMMENT || $token->id === \T_DOC_COMMENT) {
                 $this->commentPositions[] = $i;
             }
         }
