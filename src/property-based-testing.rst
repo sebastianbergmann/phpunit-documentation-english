@@ -1370,6 +1370,10 @@ Parallel test execution
     When tests are run in :ref:`parallel <parallel-test-execution>`, a property is checked by the worker process that runs its test class.
     The examples are generated from the random seed of the test run and are the same as in a test run that does not run tests in parallel.
 
+Test impact analysis
+    When :ref:`test impact data <test-impact-analysis>` is recorded, what the examples that the property is checked with execute is recorded for the property.
+    Nothing is recorded for the attempts to shrink a counterexample.
+
 Events
     The ``PHPUnit\Event\Test\PropertyFalsified`` and ``PHPUnit\Event\Test\PropertyChecked`` :ref:`events <appendixes.events>` carry the counterexample and the statistics of a property for extensions.
     The other events for a test are emitted once for a property.

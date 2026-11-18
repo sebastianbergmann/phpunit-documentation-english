@@ -111,6 +111,12 @@ Configuration
     * - ``--record-test-run-history`` / ``--do-not-record-test-run-history``
       - :ref:`recordTestRunHistory <appendixes.xml-configuration-file.phpunit.recordTestRunHistory>` attribute on ``<phpunit>``
       - ``true``
+    * - ``--record-test-impact-data`` / ``--do-not-record-test-impact-data``
+      - :ref:`recordTestImpactData <appendixes.xml-configuration-file.phpunit.recordTestImpactData>` attribute on ``<phpunit>``
+      - ``false``
+    * - ``--derive-test-impact-data-from-coverage-targets`` / ``--do-not-derive-test-impact-data-from-coverage-targets``
+      - :ref:`deriveTestImpactDataFromCoverageTargets <appendixes.xml-configuration-file.phpunit.deriveTestImpactDataFromCoverageTargets>` attribute on ``<phpunit>``
+      - ``false``
     * - ``--warn-when-php-is-not-configured-for-development`` / ``--do-not-warn-when-php-is-not-configured-for-development``
       - :ref:`warnWhenPhpIsNotConfiguredForDevelopment <appendixes.xml-configuration-file.phpunit.warnWhenPhpIsNotConfiguredForDevelopment>` attribute on ``<phpunit>``
       - ``false``

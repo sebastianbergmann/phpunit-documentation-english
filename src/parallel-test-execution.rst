@@ -421,6 +421,10 @@ Output of tests
 Test run history
     The test run history is recorded by the main process and covers the tests that were run by workers.
 
+Test impact analysis
+    Test impact data is recorded in the workers and combined by the main process.
+    When only the tests that are affected by a change are run, only these tests are distributed among the workers (see :ref:`test-impact-analysis`).
+
 Test runner extensions
     A test runner extension is bootstrapped in the main process and receives the events of all tests, including those that were run by workers.
     An extension that has to act in the process in which a test is run needs to be implemented for this (see :ref:`extending-phpunit.extending-the-test-runner.child-processes`).

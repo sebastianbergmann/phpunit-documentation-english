@@ -269,6 +269,14 @@ The ``--test-id-filter-file`` option runs the tests whose IDs are listed in the 
 3. Run a batch: ``phpunit --test-id-filter-file batch-1.txt``
 
 
+.. _textui.selecting-tests.impacted:
+
+Running only the tests that are affected by a change
+-----------------------------------------------------
+
+The ``--only-impacted`` option runs only the tests that can be affected by what changed since PHPUnit recorded what each test depends on. The ``--impacted-by`` and ``--impacted-by-file`` options run only the tests that can be affected by a change to the files and directories that are named. See :ref:`test-impact-analysis` for details.
+
+
 .. _textui.selecting-tests.listing:
 
 Listing tests
@@ -313,7 +321,7 @@ The default output of PHPUnit's test runner consists of up to four sections.
 Runtime information
 -------------------
 
-This section contains information about the PHPUnit version, PHP version, and PHPUnit's XML configuration file. When PHPUnit seeds random number generators, this section also shows the seed (see :ref:`textui.random-numbers`). When the tests are run in parallel, this section also shows the number of worker processes (see :ref:`parallel-test-execution`).
+This section contains information about the PHPUnit version, PHP version, and PHPUnit's XML configuration file. When PHPUnit seeds random number generators, this section also shows the seed (see :ref:`textui.random-numbers`). When the tests are run in parallel, this section also shows the number of worker processes (see :ref:`parallel-test-execution`). When only the tests that are affected by a change are run, this section also shows how many tests can be affected and when the test impact data that this is based on was recorded (see :ref:`test-impact-analysis.selecting`).
 
 This section can be disabled using the ``--no-output`` CLI option.
 

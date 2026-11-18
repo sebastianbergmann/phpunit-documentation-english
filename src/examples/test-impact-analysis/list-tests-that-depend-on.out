@@ -1,0 +1,10 @@
+./tools/phpunit --list-tests-that-depend-on src/Vat.php
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Recorded at 2026-11-18 07:07:46 UTC from what the tests executed and, for a test that ran in a process of its own, what that process loaded.
+
+Tests that depend on /path/to/project/src/Vat.php as it is now:
+ - InvoiceTest::testTotalIncludesVat
+ - InvoiceTest::testTotalOfInvoiceWithoutItemsIsZero
+ - VatTest::testCalculatesVat#0
+ - VatTest::testCalculatesVat#1

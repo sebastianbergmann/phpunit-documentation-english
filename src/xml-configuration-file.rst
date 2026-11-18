@@ -64,6 +64,30 @@ Use ``--do-not-record-test-run-history`` on the command line or set this attribu
 
 PHPUnit emits a test runner warning such as ``Tests cannot be ordered by defects because recording of the test run history is disabled`` when ordering by defects or duration is configured while the recording of the test run history is disabled.
 
+.. _appendixes.xml-configuration-file.phpunit.recordTestImpactData:
+
+The ``recordTestImpactData`` Attribute
+--------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures the recording of what each test depends on in the ``test-impact-data`` file in the :ref:`cache directory <appendixes.xml-configuration-file.phpunit.cacheDirectory>`. This is what PHPUnit uses to run only the tests that can be affected by a change (see :ref:`test-impact-analysis`).
+
+Recording requires a cache directory, a :ref:`\<source\> <appendixes.xml-configuration-file.source>` element, and a code coverage driver. PHPUnit emits a test runner warning when test impact data cannot be recorded (see :ref:`test-impact-analysis.recording.not-possible`).
+
+Use ``--do-not-record-test-impact-data`` on the command line or set this attribute to ``false`` to prevent the writing of the ``test-impact-data`` file.
+
+.. _appendixes.xml-configuration-file.phpunit.deriveTestImpactDataFromCoverageTargets:
+
+The ``deriveTestImpactDataFromCoverageTargets`` Attribute
+---------------------------------------------------------
+
+Possible values: ``true`` or ``false`` (default: ``false``)
+
+This attribute configures whether the test impact data is derived from the code coverage targets that the tests declare, instead of from what the tests execute (see :ref:`test-impact-analysis.coverage-targets`). Setting this attribute to ``true`` also enables the recording of test impact data.
+
+PHPUnit emits a test runner warning and does not derive test impact data when code coverage metadata is not required for all tests (see :ref:`appendixes.xml-configuration-file.phpunit.requireCoverageMetadata`).
+
 .. _appendixes.xml-configuration-file.phpunit.colors:
 
 The ``colors`` Attribute
@@ -1277,6 +1301,148 @@ Possible values: ``true`` or ``false`` (default: ``false``)
 
 Ignore the suppression (using the ``@`` operator) of ``E_WARNING``
 `errors <https://www.php.net/manual/en/errorfunc.constants.php>`_.
+
+
+.. _appendixes.xml-configuration-file.testImpactAnalysis:
+
+The ``<testImpactAnalysis>`` Element
+====================================
+
+Parent element: ``<phpunit>``
+
+The ``<testImpactAnalysis>`` element and its children can be used to configure :ref:`test impact analysis <test-impact-analysis>`:
+
+.. code-block:: xml
+
+    <testImpactAnalysis>
+        <watch>
+            <directory>config</directory>
+            <file>.env.testing</file>
+        </watch>
+
+        <addedFilesAreReachedThroughChanges>
+            <include>
+                <directory>src</directory>
+            </include>
+
+            <exclude>
+                <directory>src/Listeners</directory>
+            </exclude>
+        </addedFilesAreReachedThroughChanges>
+    </testImpactAnalysis>
+
+The recording of test impact data is enabled using the :ref:`recordTestImpactData <appendixes.xml-configuration-file.phpunit.recordTestImpactData>` attribute of the ``<phpunit>`` element.
+
+
+.. _appendixes.xml-configuration-file.testImpactAnalysis.watch:
+
+The ``<watch>`` Element
+-----------------------
+
+Parent element: ``<testImpactAnalysis>``
+
+Configures files that are not part of the project's source code files and for which a change is nevertheless noticed. When such a file changed or was added, the tests that are recorded as depending on it are run and, when there is no such test, every test is run (see :ref:`test-impact-analysis.dependencies.watched-files`).
+
+.. code-block:: xml
+
+    <watch>
+        <directory>config</directory>
+        <directory suffix=".yaml">resources</directory>
+        <file>.env.testing</file>
+    </watch>
+
+The example shown above instructs PHPUnit to watch all files with ``.php`` suffix in the ``config`` directory and its sub-directories, all files with ``.yaml`` suffix in the ``resources`` directory and its sub-directories, and the ``.env.testing`` file.
+
+The PHP files in the directories of the test suites that are not test files are watched without being configured here.
+
+
+.. _appendixes.xml-configuration-file.testImpactAnalysis.addedFilesAreReachedThroughChanges:
+
+The ``<addedFilesAreReachedThroughChanges>`` Element
+----------------------------------------------------
+
+Parent element: ``<testImpactAnalysis>``
+
+Configures the files that, when they are added, can only affect a test through another file that was changed to use them. A file that is added and that is configured here does not cause every test to be run when only the tests that are affected by a change are run (see :ref:`test-impact-analysis.dependencies.added-files`).
+
+The files are configured using the child elements ``<include>`` and ``<exclude>``.
+
+A change to what is configured here causes test impact data that was recorded before to be discarded.
+
+
+.. _appendixes.xml-configuration-file.testImpactAnalysis.include:
+
+The ``<include>`` Element
+-------------------------
+
+Parent element: ``<addedFilesAreReachedThroughChanges>``
+
+Configures a set of files that, when they are added, can only affect a test through another file that was changed to use them.
+
+.. code-block:: xml
+
+    <include>
+        <directory>src</directory>
+    </include>
+
+The example shown above instructs PHPUnit to not run every test because a file with ``.php`` suffix was added to the ``src`` directory or to one of its sub-directories.
+
+
+.. _appendixes.xml-configuration-file.testImpactAnalysis.exclude:
+
+The ``<exclude>`` Element
+-------------------------
+
+Parent element: ``<addedFilesAreReachedThroughChanges>``
+
+Configures a set of files to be excluded from the files that are configured using ``<include>``.
+
+.. code-block:: xml
+
+    <include>
+        <directory>src</directory>
+    </include>
+
+    <exclude>
+        <directory>src/Listeners</directory>
+        <file>src/Kernel.php</file>
+    </exclude>
+
+The example shown above instructs PHPUnit to run every test when a file with ``.php`` suffix is added to the ``src/Listeners`` directory or to one of its sub-directories, for instance because the classes in this directory are discovered by looking at the file system.
+
+
+.. _appendixes.xml-configuration-file.testImpactAnalysis.directory:
+
+The ``<directory>`` Element
+---------------------------
+
+Parent elements: ``<watch>``, ``<include>``, ``<exclude>``
+
+Configures a directory and its sub-directories.
+
+The ``prefix`` Attribute
+************************
+
+Possible values: string
+
+Configures a prefix-based filter that is applied to the names of files in the directory and its sub-directories.
+
+The ``suffix`` Attribute
+************************
+
+Possible values: string (default: ``'.php'``)
+
+Configures a suffix-based filter that is applied to the names of files in the directory and its sub-directories.
+
+
+.. _appendixes.xml-configuration-file.testImpactAnalysis.file:
+
+The ``<file>`` Element
+----------------------
+
+Parent elements: ``<watch>``, ``<include>``, ``<exclude>``
+
+Configures a file.
 
 
 .. _appendixes.xml-configuration-file.coverage:

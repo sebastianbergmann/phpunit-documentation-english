@@ -2109,6 +2109,56 @@ The attribute has no effect when tests are not run in parallel.
 See :ref:`parallel-test-execution.main-process.do-not-run-in-parallel` for details.
 
 
+.. _appendixes.attributes.test-impact-analysis:
+
+Test Impact Analysis
+====================
+
+The attribute documented in this section is used for :ref:`test impact analysis <test-impact-analysis>`.
+
+.. _appendixes.attributes.UsesFixture:
+
+``UsesFixture``
+---------------
+
++-------------+--------------+------------+
+| Class Level | Method Level | Repeatable |
++=============+==============+============+
+| yes         | yes          | yes        |
++-------------+--------------+------------+
+
+The ``UsesFixture(string $path)`` attribute can be used to declare that a test depends on a file or a directory that the test does not execute, for instance a file with test data.
+When test impact data is recorded, the file or directory is recorded for the test, and the test is run when it changed and only the tests that are affected by a change are run.
+
+The attribute can be used on a test class, on a test method, and on a data provider method.
+Used on a data provider method, it applies to the tests that the data provider provides data for.
+
+A relative path is resolved against the directory of the file in which the attribute is used.
+
+This attribute is inherited from parent classes: if a parent class is annotated with ``#[UsesFixture]``, the attribute applies to the tests of all child classes as well.
+
+The attribute has no effect when test impact data is not recorded.
+
+.. code-block:: php
+    :caption: Using the ``UsesFixture`` attribute
+
+    <?php declare(strict_types=1);
+    use PHPUnit\Framework\Attributes\UsesFixture;
+    use PHPUnit\Framework\TestCase;
+
+    #[UsesFixture('fixtures/schema.sql')]
+    final class ImportTest extends TestCase
+    {
+        #[UsesFixture('fixtures/orders')]
+        public function testOrdersCanBeImported(): void
+        {
+            // ...
+        }
+    }
+
+See :ref:`test-impact-analysis.dependencies.uses-fixture` for details.
+
+
 Flaky Tests
 ===========
 

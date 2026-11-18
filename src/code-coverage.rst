@@ -275,6 +275,8 @@ should be excluded:
         }
     }
 
+The units of code that tests declare to cover and to use can also be used to run only the tests that can be affected by a change (see :ref:`test-impact-analysis.coverage-targets`).
+
 .. _code-coverage.ignoring-code-blocks:
 
 Ignoring Code Blocks

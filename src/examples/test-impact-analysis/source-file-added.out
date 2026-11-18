@@ -1,0 +1,13 @@
+./tools/phpunit --only-impacted
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12 with Xdebug 3.5.3
+Configuration: /path/to/project/phpunit.xml
+Impact:        every test is run: /path/to/project/src/Discount.php was not there, or was not first-party code, when what is known was recorded
+Recorded:      2026-11-18 07:07:46 UTC
+
+......                                                              6 / 6 (100%)
+
+Time: 00:00.025, Memory: 28.00 MB
+
+OK (6 tests, 6 assertions)

@@ -340,6 +340,15 @@ A test that passes when the tests are run one after another and only fails every
 Such a test usually uses something that another test uses at the same time, for instance a database or a file (see :ref:`parallel-test-execution.writing-tests`).
 
 
+.. _flaky-tests.test-impact-analysis:
+
+Test Impact Analysis
+====================
+
+When test impact data is recorded, the repetitions of a test that is repeated and the attempts of a test that is retried are recorded as one test (see :ref:`test-impact-analysis`).
+A test that did not pass when it was last run is run again when only the tests that are affected by a change are run.
+
+
 .. _flaky-tests.phpt:
 
 PHPT Tests

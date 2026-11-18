@@ -203,6 +203,16 @@ Test index
    enabled with ``--cache-test-index`` or the ``cacheTestIndex`` attribute of the ``<phpunit>``
    element. It is not written when no cache directory is configured.
 
+Test impact data
+   What each test depends on is written to ``test-impact-data`` in the cache directory at the
+   end of a run when this is enabled with ``--record-test-impact-data``,
+   ``--derive-test-impact-data-from-coverage-targets``, or the
+   :ref:`recordTestImpactData <appendixes.xml-configuration-file.phpunit.recordTestImpactData>`
+   and
+   :ref:`deriveTestImpactDataFromCoverageTargets <appendixes.xml-configuration-file.phpunit.deriveTestImpactDataFromCoverageTargets>`
+   attributes (see :ref:`test-impact-analysis`). It is not written when no cache directory is
+   configured.
+
 Cache for static analysis
    The results of the static analysis that is performed for code coverage are written when
    code coverage is collected and for ``--warm-coverage-cache``. The directory is

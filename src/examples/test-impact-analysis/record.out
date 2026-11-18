@@ -1,0 +1,11 @@
+./tools/phpunit
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12 with Xdebug 3.5.3
+Configuration: /path/to/project/phpunit.xml
+
+......                                                              6 / 6 (100%)
+
+Time: 00:00.025, Memory: 30.00 MB
+
+OK (6 tests, 6 assertions)

@@ -54,6 +54,29 @@ $directories = [
     'parallel-test-execution/slow-tests/sequential.out' => '',
 ];
 
+// Examples that run PHPUnit several times in a copy of an example project and
+// change files of that copy between the runs: project directory => steps
+//
+// - ['run', output file, options] runs PHPUnit in the copy of the project and
+//   writes its output to the output file next to the project directory
+// - ['replace', file, search, replace] changes a file of the copy
+// - ['write', file, contents] adds a file to the copy
+$scenarios = [
+    'test-impact-analysis/project' => [
+        ['run', 'record.out', ''],
+        ['run', 'nothing-changed.out', '--only-impacted '],
+        ['replace', 'src/Vat.php', 'intdiv($netAmount * $this->rate, 100)', '(int) round($netAmount * $this->rate / 100)'],
+        ['run', 'source-file-changed.out', '--only-impacted '],
+        ['run', 'impacted-by.out', '--impacted-by src/Slug.php '],
+        ['run', 'explain-impacted.out', '--explain-impacted --impacted-by src/Vat.php '],
+        ['run', 'list-tests-that-depend-on.out', '--list-tests-that-depend-on src/Vat.php '],
+        ['replace', 'tests/fixtures/vat.csv', '19,100,19', '19,200,38'],
+        ['run', 'fixture-changed.out', '--explain-impacted '],
+        ['write', 'src/Discount.php', "<?php declare(strict_types=1);\nfinal class Discount\n{\n}\n"],
+        ['run', 'source-file-added.out', '--only-impacted '],
+    ],
+];
+
 $phpunit       = $command = __DIR__ . '/../tools/phpunit';
 $version       = hash('sha256', trim(PHP_VERSION . shell_exec($phpunit . ' --version')));
 $processed     = processed_read();
@@ -156,9 +179,112 @@ foreach ($directories as $outputFile => $options) {
     print '[processed] ' . $outputFile . PHP_EOL;
 }
 
+foreach ($scenarios as $project => $steps) {
+    $directory = $rootDirectory . $project;
+    $files     = files_in($directory);
+
+    $currentHash = $version . hash('sha256', implode('', array_map(static fn (string $file): string => hash_file('sha256', $file), $files))) . hash('sha256', serialize($steps));
+
+    if (isset($processed[$project]) && $processed[$project] === $currentHash) {
+        print '[skipped  ] ' . $project . PHP_EOL;
+
+        continue;
+    }
+
+    $copy = sys_get_temp_dir() . '/phpunit-documentation-' . bin2hex(random_bytes(8));
+
+    copy_directory($directory, $copy);
+
+    $copy = realpath($copy);
+
+    foreach ($steps as $step) {
+        switch ($step[0]) {
+            case 'run':
+                // XDEBUG_MODE only has an effect when Xdebug is the code coverage driver
+                $output = shell_exec('cd ' . escapeshellarg($copy) . ' && XDEBUG_MODE=coverage ' . $phpunit . ' ' . $step[2]);
+
+                file_put_contents(
+                    dirname($directory) . '/' . $step[1],
+                    rtrim('./tools/phpunit ' . $step[2]) . PHP_EOL .
+                    rtrim(str_replace($copy, '/path/to/project', $output)) . PHP_EOL
+                );
+
+                break;
+
+            case 'replace':
+                file_put_contents(
+                    $copy . '/' . $step[1],
+                    str_replace($step[2], $step[3], file_get_contents($copy . '/' . $step[1]))
+                );
+
+                break;
+
+            case 'write':
+                file_put_contents($copy . '/' . $step[1], $step[2]);
+
+                break;
+        }
+    }
+
+    delete_directory($copy);
+
+    $processed[$project] = $currentHash;
+
+    print '[processed] ' . $project . PHP_EOL;
+}
+
 ksort($processed);
 
 file_put_contents(PROCESSED_JSON_FILE, json_encode($processed, JSON_PRETTY_PRINT));
+
+/**
+ * @return list<string>
+ */
+function files_in(string $directory): array
+{
+    $files = [];
+
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS)) as $file) {
+        $files[] = $file->getPathname();
+    }
+
+    sort($files);
+
+    return $files;
+}
+
+function copy_directory(string $from, string $to): void
+{
+    foreach (files_in($from) as $file) {
+        $target = $to . substr($file, strlen($from));
+
+        if (!is_dir(dirname($target))) {
+            mkdir(dirname($target), 0o777, true);
+        }
+
+        copy($file, $target);
+    }
+}
+
+function delete_directory(string $directory): void
+{
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS),
+        RecursiveIteratorIterator::CHILD_FIRST
+    );
+
+    foreach ($iterator as $file) {
+        if ($file->isDir() && !$file->isLink()) {
+            rmdir($file->getPathname());
+
+            continue;
+        }
+
+        unlink($file->getPathname());
+    }
+
+    rmdir($directory);
+}
 
 function processed_read(): array
 {

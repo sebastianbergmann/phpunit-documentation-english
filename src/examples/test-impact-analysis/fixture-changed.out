@@ -1,0 +1,12 @@
+./tools/phpunit --explain-impacted
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Recorded at 2026-11-18 07:07:46 UTC from what the tests executed and, for a test that ran in a process of its own, what that process loaded.
+
+2 of 6 tests can be affected by what changed.
+
+2 tests depend on something that changed:
+ - VatTest::testCalculatesVat#0
+   /path/to/project/tests/fixtures/vat.csv
+ - VatTest::testCalculatesVat#1
+   /path/to/project/tests/fixtures/vat.csv

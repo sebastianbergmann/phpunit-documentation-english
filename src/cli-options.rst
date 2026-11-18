@@ -287,6 +287,33 @@ Execution
 ``--do-not-record-test-run-history``
    Disables the recording of the status and duration of each test in the ``test-run-history`` file. This overrides the corresponding XML configuration setting. PHPUnit emits a test runner warning when this is combined with ``--order-by defects`` or ``--order-by duration-*``, as those cannot work without the test run history.
 
+``--record-test-impact-data``
+   Enables the recording of what each test depends on in the ``test-impact-data`` file in the cache directory. This requires a cache directory, a ``<source>`` element in the XML configuration file, and a code coverage driver. This overrides the corresponding XML configuration setting. Cannot be used together with ``--no-coverage``. See :ref:`test-impact-analysis.recording` for details.
+
+``--do-not-record-test-impact-data``
+   Disables the recording of test impact data, including test impact data that is derived from code coverage targets. This overrides the corresponding XML configuration settings.
+
+``--derive-test-impact-data-from-coverage-targets``
+   Derives the test impact data from the code coverage targets that the tests declare, instead of recording what the tests execute. This does not require a code coverage driver, but requires that code coverage metadata is required for all tests. This overrides the corresponding XML configuration setting. See :ref:`test-impact-analysis.coverage-targets` for details.
+
+``--do-not-derive-test-impact-data-from-coverage-targets``
+   Disables the derivation of test impact data from code coverage targets. This overrides the corresponding XML configuration setting.
+
+``--list-tests-that-depend-on <file>``
+   Lists the tests that are recorded as depending on ``<file>`` and then exits. No tests are executed. See :ref:`test-impact-analysis.explaining` for details.
+
+``--only-impacted``
+   Only runs the tests that can be affected by what changed since the test impact data was recorded. Every test is run when what was recorded cannot account for what changed. This requires a cache directory and the test run history. Cannot be used together with ``--impacted-by`` and ``--impacted-by-file``. See :ref:`test-impact-analysis.selecting` for details.
+
+``--explain-impacted``
+   Reports which tests can be affected by what changed, and why each of them would be run, and then exits. No tests are executed. Can be combined with ``--impacted-by`` and ``--impacted-by-file``. See :ref:`test-impact-analysis.explaining` for details.
+
+``--impacted-by <path>``
+   Only runs the tests that can be affected by a change to the file or directory ``<path>``. A relative path is resolved against the current working directory. This option can be used multiple times. See :ref:`test-impact-analysis.selecting.naming-what-changed` for details.
+
+``--impacted-by-file <file>``
+   Only runs the tests that can be affected by a change to the files and directories listed in ``<file>``, with one path per line. Use ``-`` to read the list from standard input. Can be combined with ``--impacted-by``.
+
 ``--warn-when-php-is-not-configured-for-development``
    Enables the triggering of a test runner warning when PHP is not configured for development (see :ref:`installation.configuring-php-for-development`). A warning is triggered for each PHP configuration setting that is not configured as recommended. This overrides the corresponding XML configuration setting.
 

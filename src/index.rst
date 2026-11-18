@@ -26,6 +26,7 @@ Contents:
    risky-tests
    flaky-tests
    parallel-test-execution
+   test-impact-analysis
    error-handling
    extending-phpunit
 

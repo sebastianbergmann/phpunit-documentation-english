@@ -1,0 +1,9 @@
+./tools/phpunit --only-impacted
+PHPUnit 14.0-dev by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.5.12 with Xdebug 3.5.3
+Configuration: /path/to/project/phpunit.xml
+Impact:        0 of 6 tests can be affected by what changed; 6 tests are not run
+Recorded:      2026-11-18 07:07:45 UTC
+
+No tests executed!
