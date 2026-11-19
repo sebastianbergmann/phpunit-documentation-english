@@ -16,7 +16,7 @@ final class ParkingGarageMachine
         $this->capacity = $capacity;
     }
 
-    #[StateMachineRule(precondition: 'hasFreeSpaces', produces: 'tickets')]
+    #[StateMachineRule('hasFreeSpaces', 'tickets')]
     public function enter(): int
     {
         $ticket = $this->garage->enter();
@@ -27,7 +27,7 @@ final class ParkingGarageMachine
     }
 
     #[StateMachineRule]
-    public function leave(#[FromPool('tickets', consume: true)] int $ticket): void
+    public function leave(#[FromPool('tickets', true)] int $ticket): void
     {
         $this->garage->leave($ticket);
 

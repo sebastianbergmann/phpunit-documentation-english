@@ -348,7 +348,7 @@ Execution
    Checks each :ref:`property <property-based-testing>` that does not specify the number of its examples with ``N`` generated examples (default: ``100``). ``N`` has to be a positive integer. This overrides the corresponding XML configuration setting. See :ref:`property-based-testing.configuration`.
 
 ``--property-examples-multiplier <N>``
-   Multiplies the number of examples of every property by ``N`` (default: ``1``), including the properties that specify the number of their examples with ``#[Property(examples: ...)]``. ``N`` has to be a positive integer. This overrides the corresponding XML configuration setting.
+   Multiplies the number of examples of every property by ``N`` (default: ``1``), including the properties that specify the number of their examples with the ``#[Property]`` attribute. ``N`` has to be a positive integer. This overrides the corresponding XML configuration setting.
 
 ``--property-maximum-shrinking-attempts <N>``
    Makes at most ``N`` attempts to :ref:`shrink the counterexample <property-based-testing.falsified-properties.shrinking>` of a property that was falsified (default: ``1000``). ``0`` disables shrinking. This overrides the corresponding XML configuration setting.

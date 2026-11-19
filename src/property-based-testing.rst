@@ -945,7 +945,7 @@ A car that enters gets a ticket, and it needs the ticket to leave.
 
 .. code-block:: php
 
-   #[StateMachineRule(precondition: 'hasFreeSpaces', produces: 'tickets')]
+   #[StateMachineRule('hasFreeSpaces', 'tickets')]
    public function enter(): int
    {
        $ticket = $this->garage->enter();
@@ -959,7 +959,7 @@ A car that enters gets a ticket, and it needs the ticket to leave.
 * **How**: A rule is a public method with the ``#[StateMachineRule]`` attribute. It performs the operation on the object under test and on the model
 * **Why**: PHPUnit builds sequences from the rules of the state machine
 
-The rule has a **precondition**: ``precondition: 'hasFreeSpaces'`` names a method of the state machine that returns a ``bool``.
+The rule has a **precondition**: the first argument of the attribute, ``'hasFreeSpaces'``, names a method of the state machine that returns a ``bool``.
 The rule is only used for a step when this method returns ``true``, so a car never tries to enter a garage that is full.
 
 **3. Pools**
@@ -967,7 +967,7 @@ The rule is only used for a step when this method returns ``true``, so a car nev
 .. code-block:: php
 
    #[StateMachineRule]
-   public function leave(#[FromPool('tickets', consume: true)] int $ticket): void
+   public function leave(#[FromPool('tickets', true)] int $ticket): void
    {
        $this->garage->leave($ticket);
 
@@ -975,7 +975,7 @@ The rule is only used for a step when this method returns ``true``, so a car nev
    }
 
 * **What**: Declares an operation that needs a value that an earlier step produced
-* **How**: ``produces: 'tickets'`` on the ``enter()`` rule puts the value that the rule returns into a pool named ``tickets``. ``#[FromPool('tickets')]`` on a parameter takes a value from this pool. With ``consume: true``, the value is removed from the pool, as a ticket can only be used once
+* **How**: The second argument of ``#[StateMachineRule]`` on the ``enter()`` rule, ``'tickets'``, puts the value that the rule returns into a pool named ``tickets``. ``#[FromPool('tickets')]`` on a parameter takes a value from this pool. With ``true`` as the second argument of ``#[FromPool]``, the value is removed from the pool, as a ticket can only be used once
 * **Why**: A car can only leave with a ticket that was issued before. A ticket that is generated at random would not be a valid one
 
 A rule whose parameter takes a value from a pool is only used for a step when the pool has a value.
@@ -1039,8 +1039,8 @@ The code of the counterexample can be pasted into such a test once the bug is kn
 
 **More about state machines**
 
-* A public method with the ``#[InitializeStateMachine]`` attribute is called once before the first step, for instance to put the object under test into a certain state. With ``produces:``, the value that it returns is put into a pool
-* An invariant with ``#[StateMachineInvariant(atEnd: true)]`` is only checked before the first step and after the last step. Use this for checks that are expensive
+* A public method with the ``#[InitializeStateMachine]`` attribute is called once before the first step, for instance to put the object under test into a certain state. With the name of a pool as its argument, the value that it returns is put into this pool
+* An invariant with ``#[StateMachineInvariant(true)]`` is only checked before the first step and after the last step. Use this for checks that are expensive
 * The rules, invariants, and initializations of a parent class come before those of the class that extends it
 * ``runStateMachine()`` can be called once in an example. The property can have parameters, and it can draw values before it runs the state machine
 * The number of steps of each example, and the number of steps with each rule, are :ref:`observed <property-based-testing.knowing-what-was-tested>`, so that ``--display-property-statistics`` shows how long the sequences were and which rules were used
@@ -1275,13 +1275,13 @@ More examples find more bugs and take more time.
 
 .. code-block:: php
 
-   #[Property(examples: 500)]
+   #[Property(500)]
    public function testSomething(int $value): void
    {
        // ...
    }
 
-``#[Property(examples: 500)]``
+``#[Property(500)]``
     Sets the number of examples for one property.
 
 ``--property-examples <N>``

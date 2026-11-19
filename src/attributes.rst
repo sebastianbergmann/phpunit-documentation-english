@@ -787,7 +787,7 @@ When it is not used, the number of examples is the :ref:`configured <property-ba
         /**
          * @param list<int> $values
          */
-        #[Property(examples: 500)]
+        #[Property(500)]
         public function testReversingTwiceChangesNothing(array $values): void
         {
             $this->assertSame($values, array_reverse(array_reverse($values)));
@@ -1095,7 +1095,7 @@ The name of a pool must be a valid name for a variable.
     {
         // ...
 
-        #[StateMachineRule(precondition: 'hasFreeSpaces', produces: 'tickets')]
+        #[StateMachineRule('hasFreeSpaces', 'tickets')]
         public function enter(): int
         {
             // ...
@@ -1143,7 +1143,7 @@ The ``StateMachineInvariant([bool $atEnd])`` attribute marks a public method of 
 :ref:`state machine <property-based-testing.state-machines>` as an invariant.
 It must not have required parameters. It is called after the initializations and after every step.
 
-With ``atEnd: true``, the invariant is only called after the initializations and after the last step.
+When ``true`` is passed for the optional ``$atEnd`` argument, the invariant is only called after the initializations and after the last step.
 
 .. code-block:: php
     :caption: Using the ``StateMachineInvariant`` attribute
@@ -1180,10 +1180,10 @@ With ``atEnd: true``, the invariant is only called after the initializations and
 
 The ``FromPool(string $pool[, bool $consume])`` attribute specifies that a parameter of a rule of a
 :ref:`state machine <property-based-testing.state-machines>` takes a value from a pool:
-one of the values that earlier steps produced with ``#[StateMachineRule(produces: ...)]`` or ``#[InitializeStateMachine(produces: ...)]``.
+one of the values that earlier steps put into this pool with the ``$produces`` argument of ``#[StateMachineRule]`` or ``#[InitializeStateMachine]``.
 The rule is only used for a step when the pool has a value.
 
-With ``consume: true``, the value is removed from the pool.
+When ``true`` is passed for the optional ``$consume`` argument, the value is removed from the pool.
 
 .. code-block:: php
     :caption: Using the ``FromPool`` attribute
@@ -1197,7 +1197,7 @@ With ``consume: true``, the value is removed from the pool.
         // ...
 
         #[StateMachineRule]
-        public function leave(#[FromPool('tickets', consume: true)] int $ticket): void
+        public function leave(#[FromPool('tickets', true)] int $ticket): void
         {
             // ...
         }

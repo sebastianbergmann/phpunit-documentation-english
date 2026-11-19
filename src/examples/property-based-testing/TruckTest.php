@@ -7,7 +7,7 @@ final class TruckTest extends TestCase
     /**
      * @param list<int<1, 100>> $parcels
      */
-    #[Property(examples: 300)]
+    #[Property(300)]
     public function testIsNeverOverloaded(array $parcels): void
     {
         $truck = new Truck(1000);

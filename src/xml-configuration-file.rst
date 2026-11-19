@@ -2100,7 +2100,7 @@ The ``examples`` Attribute
 
 Possible values: positive integer (default: ``100``)
 
-The number of generated examples that a property is checked with when it does not specify this number with ``#[Property(examples: ...)]``.
+The number of generated examples that a property is checked with when it does not specify this number with the ``#[Property]`` attribute.
 
 This configuration can be overridden for a single run using the ``--property-examples`` CLI option.
 
@@ -2111,7 +2111,7 @@ The ``examplesMultiplier`` Attribute
 
 Possible values: positive integer (default: ``1``)
 
-The number that the number of examples of every property is multiplied by, including the properties that specify the number of their examples with ``#[Property(examples: ...)]``.
+The number that the number of examples of every property is multiplied by, including the properties that specify the number of their examples with the ``#[Property]`` attribute.
 
 This configuration can be overridden for a single run using the ``--property-examples-multiplier`` CLI option.
 
