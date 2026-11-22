@@ -217,6 +217,14 @@ Ignoring previously reported issues
 PHPUnit's test runner supports declaring the currently reported list of issues. Issues that are on this so-called baseline
 are no longer reported. This allows you to focus on new issues that are triggered by new or changed code.
 
+Only issues, in the sense in which this chapter uses the term, are written to the baseline: deprecations, notices, and
+warnings. A test that fails or errors is not an issue. Failures and errors are never written to the baseline and cannot be
+ignored using a baseline. When your tests do not trigger any issues then the baseline that is generated is empty.
+
+A test that is known to fail and that cannot be fixed right away can be marked as
+:ref:`incomplete <writing-tests-for-phpunit.incomplete-tests>` or
+:ref:`skipped <writing-tests-for-phpunit.skipping-tests>` instead.
+
 When you run your test suite using the ``--generate-baseline`` CLI option then PHPUnit's test runner
 will write a list of all issues that are triggered to an XML file:
 
