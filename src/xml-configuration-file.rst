@@ -2327,7 +2327,9 @@ The ``<env>`` Element
 
 Parent element: ``<php>``
 
-This element can be used to set a value in the super-global array ``$_ENV``.
+This element can be used to set an environment variable. The variable is set
+in the super-global array ``$_ENV`` and, using ``putenv()``, in the environment
+of the PHP process that runs PHPUnit.
 
 .. code-block:: xml
 
@@ -2340,6 +2342,18 @@ The XML configuration above corresponds to the following PHP code:
 .. code-block:: php
 
     $_ENV['foo'] = 'bar';
+    putenv('foo=bar');
+
+Because the variable is set in the environment of the PHP process that runs
+PHPUnit, it is inherited by the processes that this process starts. These
+include the processes that are used to run tests in isolation.
+
+PHP populates ``$_SERVER`` with the environment variables that exist when a
+process is started, unless ``variables_order`` is configured to not include
+``S``. A variable that is set using ``<env>`` is therefore not available in
+``$_SERVER`` in the process that set it, but it is available in ``$_SERVER``
+in the processes that this process starts, for instance when a test is run in
+isolation.
 
 By default, environment variables are not overwritten if they exist already.
 To force overwriting existing variables, use the ``force`` attribute:
